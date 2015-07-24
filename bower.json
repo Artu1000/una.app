@@ -1,0 +1,22 @@
+{
+  "name": "una",
+  "version": "0.0.0",
+  "author": [
+    "Arthur <arthur.lorent@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "public/assets/vendor"
+  ],
+  "authors": [
+    "Arthur LORENT"
+  ],
+  "dependencies": {
+    "bootstrap-sass-official": "~3.3.5"
+  }
+}

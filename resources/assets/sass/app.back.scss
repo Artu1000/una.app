@@ -1,0 +1,220 @@
+@import 'bootstrap';
+@import 'app.common';
+
+/***********************************************************************************************************************
+[ GLOBAL HTML ELEMENTS ]
+***********************************************************************************************************************/
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+
+
+
+/***********************************************************************************************************************
+[ MAIN ELEMENTS STYLES ]
+***********************************************************************************************************************/
+a{
+  color: #245269;
+}
+a:hover, a:focus{
+  text-decoration: none;
+  opacity: 0.9;
+}
+h1, h2, h3, h4, h5{
+  color: #245269;
+}
+h3{
+  padding: 10px 0 20px;
+}
+h4, h5{
+  padding: 15px 0 10px;
+  margin: 0;
+}
+.glyphicon{
+  font-size: 16px;
+}
+label{
+  margin: 0;
+}
+.form-group{
+  margin: 0 0 10px 0;
+}
+
+
+
+
+/***********************************************************************************************************************
+[ GLOBAL EFFECTS STYLE ]
+***********************************************************************************************************************/
+.box_shadow{
+  -webkit-box-shadow: 2px 2px 10px 0px rgba(50, 50, 50, 0.6);
+  -moz-box-shadow:    2px 2px 10px 0px rgba(50, 50, 50, 0.6);
+  box-shadow:         2px 2px 10px 0px rgba(50, 50, 50, 0.6);
+}
+
+
+
+
+/***********************************************************************************************************************
+[ HEADER ]
+***********************************************************************************************************************/
+header > .container{
+  padding: 10px 0;
+}
+#carportal_icon, header > .container > .titleblock{
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+}
+#carportal_icon{
+  background-color: #245269;
+  padding: 15px;
+  border-radius: 7px;
+}
+#carportal_icon > .glyphicon{
+  font-size: 110px;
+  color: #fff
+}
+header > .container h1{
+  text-transform: uppercase;
+}
+header > .container h1, header > .container h2{
+  margin: 0;
+}
+header > .container > .titleblock{
+  margin-left: 20px;
+}
+
+
+
+
+/***********************************************************************************************************************
+[ NAVBAR ]
+***********************************************************************************************************************/
+.navbar > .container{
+  padding: 0;
+}
+.navbar-default .navbar-collapse, .navbar-default .navbar-form{
+  padding: 0;
+}
+.navbar-right{
+  margin: 0;
+}
+
+
+
+
+/***********************************************************************************************************************
+[ GLOBAL CONTAINER ]
+***********************************************************************************************************************/
+body > .container {
+  padding: 15px 0 40px;
+}
+.container .text-muted {
+  margin: 20px 0;
+}
+
+
+
+
+/***********************************************************************************************************************
+[ LOGIN / RESET EMAIL PAGES ]
+***********************************************************************************************************************/
+.container.login{
+  padding-top: 60px;
+}
+.login h1{
+  font-size: 59px;
+  margin: 20px 0 0;
+}
+.login h2{
+  margin: 5px 0 15px;
+}
+.login #carportal_icon{
+  width: 100%;
+  text-align: center;
+  padding: 50px 0;
+}
+.login #carportal_icon > .glyphicon{
+  font-size: 250px;
+  vertical-align: middle;
+}
+.login .btn-primary{
+  background-color: #245269;
+}
+.login .btn-primary:hover{
+  background-color: #327391;
+}
+.login .forgotten-pswd{
+  position: relative;
+}
+#emailResetFormGroup{
+  position: absolute;
+  bottom: 150px;
+  left: 120px;
+}
+#resetPasswordSubmit{
+  text-decoration: underline;
+  border: 0;
+  background-color: transparent;
+  color: #245269;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  bottom: 70px;
+}
+
+
+
+
+/***********************************************************************************************************************
+[ FOOTER ]
+***********************************************************************************************************************/
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+
+
+
+/***********************************************************************************************************************
+[ ERROR 404 ]
+***********************************************************************************************************************/
+.error-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+.error-actions {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.error-actions .btn {
+  margin-right: 10px;
+}
+
+
+
+
+/***********************************************************************************************************************
+[ NOSCRIPT ]
+***********************************************************************************************************************/
+.noscript{
+  background-color: #F0F2F1;
+  padding: 30px;
+  margin: 30px auto;
+}
