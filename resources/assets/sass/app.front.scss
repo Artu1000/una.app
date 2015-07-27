@@ -1,16 +1,991 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************************************
+ * COMMON TO ALL SIZES OF DEVICES
+ **********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/***********************************************************************************************************************
+ * IMPORTS & VARIABLES
+ **********************************************************************************************************************/
+
 @import 'app.common';
+$logo_header_footer: '../../img/logo-una-header-large-white.png';
 
-#main {
-  width: 97%;
+$footer_1920_background: '/img/footer-bg-1920.png';
+$footer_1119_background: '/img/footer-bg-1119.png';
+$footer_991_background: '/img/footer-bg-991.png';
+$footer_767_background: '/img/footer-bg-767.png';
 
-  p, div {
-    font-size: 2em;
-    a { font-weight: bold; }
-  }
+$header_1920_background: '/img/header-bg-1920.png';
+$header_1119_background: '/img/header-bg-1119.png';
+$header_991_background: '/img/header-bg-991.png';
+$header_767_background: '/img/header-bg-767.png';
 
-  pre { font-size: 3em; }
+
+/***********************************************************************************************************************
+ * GENERAL
+ **********************************************************************************************************************/
+body{
+  padding: 0;
+  height: 100%;
 }
 
-.foo{
-  border-radius: 10px;
+#layout{
+  position: relative;
+}
+
+.gradient {
+  @include gradient-vertical(#000, #111);
+}
+
+.box_shadow{
+  @include box-shadow(5px 0px 5px 0px rgba(0, 0, 0, 0.5));
+}
+
+i.fa{
+  font-size: 13px;
+}
+
+/***********************************************************************************************************************
+ * HEADER
+ **********************************************************************************************************************/
+
+header{
+  position: relative;
+  z-index: 5550;
+  text-transform: uppercase;
+
+  .navbar.navbar-inverse {
+    background-color: transparent;
+    padding: 20px 0 0;
+    @include border-radius(0);
+    border: none;
+
+    .navbar-header{
+
+      .navbar-brand {
+
+        .logo{
+          display: inline-block;
+          padding: 0;
+          margin: 0;
+          vertical-align: top;
+        }
+
+        &:hover {
+          @include transition(background-color 0.2s ease);
+        }
+
+        h1 {
+          display: inline-block;
+          vertical-align: middle;
+          color: #fff;
+          margin: 0;
+          padding: 7px 0;
+
+          &:hover{
+            color: #5a5a5a;
+          }
+        }
+      }
+    }
+
+    #navbar{
+
+      .nav.navbar-nav{
+
+        li{
+
+          a{
+
+            &:hover{
+              color: #EEE;
+              @include transition(color 0.2s ease);
+              background-color: #07141B;
+            }
+            &:focus{
+              color: #9d9d9d;
+            }
+          }
+
+          &.open{
+
+            ul{
+              margin-top: 15px;
+
+              li{
+
+                a{
+                  padding: 10px 15px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+#header_background{
+  background-repeat: no-repeat;
+  background-position: center top;
+  width: 100%;
+  position: absolute;
+  top: -1px;
+  z-index: 5000;
+  padding-bottom: 150px;
+}
+
+/*********************************************************************************************************************
+  * GOOGLE MAP
+  *********************************************************************************************************************/
+
+#map-canvas{
+  display: block;
+  background-color: #CCC;
+}
+
+/***********************************************************************************************************************
+ * FOOTER
+ **********************************************************************************************************************/
+
+#footer_layout{
+  position: relative;
+  z-index: 100;
+  color: #fff;
+  text-transform: uppercase;
+
+  a{
+
+    &:hover{
+      color: #fff;
+    }
+  }
+
+  #footer_background{
+    background-image: url($footer_1920_background);
+    background-repeat: no-repeat;
+    background-position: center top;
+    width: 100%;
+    position: relative;
+    z-index: 50;
+  }
+
+  footer{
+    padding: 25px 0 15px;
+    width: 100%;
+    font-size: 15px;
+    position: relative;
+    z-index: 100;
+
+    .container{
+      display: table;
+      width: 100%;
+      padding: 0 40px;
+
+      i.fa{
+        font-size: 15px;
+        margin: 0 5px;
+      }
+
+      .left_part{
+        display: table-cell;
+        vertical-align: middle;
+        text-align: right;
+        width: 50%;
+
+        p, a{
+          margin: 0;
+        }
+
+        .contact{
+          display: inline-block;
+          vertical-align: middle;
+        }
+
+        .logo{
+          display: inline-block;
+          vertical-align: middle;
+          padding-left: 15px;
+        }
+      }
+
+      .delimiter{
+        display: table-cell;
+        width: 10px;
+        height: 100%;
+        vertical-align: middle;
+
+        span{
+          background-color: #5a5a5a;
+          display: block;
+          width: 1px;
+          height: 80px;
+          margin: 0 40px;
+        }
+      }
+
+      .right_part{
+        display: table-cell;
+        vertical-align: middle;
+        width: 50%;
+
+        .social{
+          margin: 0 3px;
+
+          i.fa{
+            font-size: 30px;
+          }
+        }
+
+        .copyright{
+          margin-top: 5px;
+
+          p{
+            margin: 0;
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+
+  #footer_color_fill{
+    background-color: #000;
+    height: 100px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+  }
+}
+
+/***********************************************************************************************************************
+ * COOKIE BAR
+ **********************************************************************************************************************/
+
+#cookie_bar {
+  text-transform: none;
+  padding: 10px 0;
+  text-align: center;
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 5000;
+  @include box-shadow(0 0 10px 0 #000);
+
+  p{
+    padding-top: 3px;
+    color: #000;
+  }
+
+  button, p{
+    display: inline-block;
+    margin: 0 5px;
+    position: relative;
+    z-index: 5500;
+  }
+}
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************************************
+ * EXTRA LARGE DEVICES DESKTOPS : 1200 & MORE
+ **********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+@media screen and (min-width: 1921px){
+
+  /*********************************************************************************************************************
+  * HEADER
+  *********************************************************************************************************************/
+
+  #header_color_fill{
+    background-color: #07141B;
+    height: 25px;
+  }
+
+  header{
+
+    .navbar.navbar-inverse {
+
+      .navbar-header{
+
+        .navbar-brand {
+          padding: 7px 25px 7px 20px;
+          height: 80px;
+          margin-right: 30px;
+
+          h1 {
+
+            span {
+              display: block;
+
+              &:first-of-type {
+                font-size: 30px;
+                vertical-align: middle;
+              }
+
+              &:last-of-type {
+                font-size: 21.7px;
+              }
+            }
+          }
+        }
+      }
+
+      #navbar{
+
+        .nav.navbar-nav{
+          padding-top: 18px;
+
+          li{
+
+            &.active{
+
+              a{
+                background-color: transparent;
+
+                &:hover, &:focus{
+                  background-color: transparent;
+                }
+              }
+            }
+
+            a{
+
+              .fa{
+                font-size: 15px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #header_background{
+    background-image: url($header_1920_background);
+    height: 403px;
+    background-size: cover;
+  }
+
+  /*********************************************************************************************************************
+  * GOOGLE MAP
+  *********************************************************************************************************************/
+
+  #map-canvas{
+    height: 600px;
+    margin-bottom: -305px;
+  }
+
+  /*********************************************************************************************************************
+  * FOOTER
+  *********************************************************************************************************************/
+
+  #footer_layout{
+
+    #footer_background{
+      height: 382px;
+      margin-bottom: -38px;
+      background-size: cover;
+    }
+  }
+
+}
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************************************
+ * LARGE DEVICES DESKTOPS : 1920 <=> 1200 (LG)
+ **********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@media screen and (max-width: 1920px) and (min-width: 1200px){
+
+  /*********************************************************************************************************************
+  * HEADER
+  *********************************************************************************************************************/
+
+  header{
+
+    .navbar.navbar-inverse {
+
+      .navbar-header{
+
+        .navbar-brand {
+          padding: 7px 25px 7px 20px;
+          height: 80px;
+          margin-right: 30px;
+
+          h1 {
+
+            span {
+              display: block;
+
+              &:first-of-type {
+                font-size: 30px;
+                vertical-align: middle;
+              }
+
+              &:last-of-type {
+                font-size: 21.7px;
+              }
+            }
+          }
+        }
+      }
+
+      #navbar{
+
+        .nav.navbar-nav{
+          padding-top: 18px;
+
+          li{
+
+            &.active{
+
+              a{
+                background-color: transparent;
+
+                &:hover, &:focus{
+                  background-color: transparent;
+                }
+              }
+            }
+
+            a{
+
+              .fa{
+                font-size: 15px;
+              }
+            }
+          }
+        }
+      }
+
+      .nav.navbar-nav.navbar-right{
+        padding-right: 50px;
+      }
+    }
+  }
+
+  #header_background{
+    background-image: url($header_1920_background);
+    height: 302px;
+    background-size: 1920px auto;
+  }
+
+  /*********************************************************************************************************************
+  * GOOGLE MAP
+  *********************************************************************************************************************/
+
+  #map-canvas{
+    height: 600px;
+    margin-bottom: -240px;
+  }
+
+  /*********************************************************************************************************************
+  * FOOTER
+  *********************************************************************************************************************/
+
+  #footer_layout{
+
+    #footer_background{
+      height: 287px;
+      margin-bottom: -38px;
+    }
+  }
+
+}
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************************************
+ * MEDIUM DEVICES DESKTOPS : : 1199 <=> 992 (MD)
+ **********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+@media screen and (max-width: 1199px) and (min-width: 992px){
+
+  /*********************************************************************************************************************
+  * HEADER
+  *********************************************************************************************************************/
+
+  #header_color_fill{
+    background-color: #07141B;
+    height: 40px;
+  }
+
+  header{
+    margin-top: -30px;
+
+    .navbar.navbar-inverse {
+      padding: 5px 0 0;
+    }
+
+    .navbar-header {
+
+      .navbar-brand {
+        padding: 7px 25px 7px 20px;
+        height: 80px;
+        margin-right: 22px;
+
+        h1 {
+
+          span {
+            display: block;
+
+            &:first-of-type {
+              font-size: 30px;
+              vertical-align: middle;
+            }
+
+            &:last-of-type {
+              font-size: 21.7px;
+            }
+          }
+        }
+      }
+    }
+
+    #navbar{
+
+      .nav.navbar-nav{
+        padding-top: 32px;
+
+        li{
+
+          &.active{
+
+            a{
+              background-color: transparent;
+
+              &:hover, &:focus{
+                background-color: transparent;
+              }
+            }
+          }
+
+          a{
+            padding: 0 9px;
+
+            .fa{
+              font-size: 15px;
+            }
+          }
+        }
+      }
+    }
+
+    .nav.navbar-nav.navbar-right{
+      padding-right: 80px;
+    }
+  }
+
+  #header_background{
+    background-image: url($header_1119_background);
+    height: 189px;
+    background-size: 1199px auto;
+    margin-top: 40px;
+  }
+
+  /*********************************************************************************************************************
+  * GOOGLE MAP
+  *********************************************************************************************************************/
+
+  #map-canvas{
+    height: 450px;
+    margin-bottom: -145px;
+  }
+
+  /*********************************************************************************************************************
+  * FOOTER
+  *********************************************************************************************************************/
+
+  #footer_background{
+    background-image: url($footer_1119_background);
+    height: 179px;
+    background-size: 1199px auto;
+    margin-bottom: -28px;
+  }
+}
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************************************
+ * SMALL DEVICES TABLETS : 991 <=> 768 (SM)
+ **********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+@media screen and (max-width: 991px) and (min-width: 768px){
+
+  /*********************************************************************************************************************
+  * HEADER
+  *********************************************************************************************************************/
+
+  #header_color_fill{
+    background-color: #07141B;
+    height: 35px;
+  }
+
+  header{
+    margin-top: -22px;
+
+    .navbar.navbar-inverse {
+      padding: 5px 0 0;
+    }
+
+    .navbar-header {
+      width: 175px;
+      position: relative;
+
+      .navbar-brand {
+        padding: 0;
+        height: 66px;
+        margin-right: 0;
+
+        h1 {
+          position: absolute;
+          left: 55px;
+          top: 7px;
+
+          span {
+            display: block;
+
+            &:first-of-type {
+              font-size: 23px;
+              line-height: 22px;
+            }
+
+            &:last-of-type {
+              font-size: 16.1px;
+            }
+          }
+        }
+      }
+    }
+    #navbar {
+
+      .nav.navbar-nav {
+        padding-top: 24px;
+        height: 60px;
+        margin-right: 0;
+        margin-left: 13px;
+
+        li {
+
+          &.active{
+
+            a{
+              background-color: transparent;
+
+              &:hover, &:focus{
+                background-color: transparent;
+              }
+            }
+          }
+
+          a {
+            padding: 0 7px;
+            font-size: 13px;
+          }
+        }
+      }
+    }
+
+    .nav.navbar-nav.navbar-right{
+      padding-right: 44px;
+    }
+  }
+
+  #header_background{
+    background-image: url($header_991_background);
+    height: 156px;
+    background-size: 991px auto;
+    margin-top: 35px;
+  }
+
+  /*********************************************************************************************************************
+  * GOOGLE MAP
+  *********************************************************************************************************************/
+
+  #map-canvas{
+    height: 425px;
+    margin-bottom: -130px;
+  }
+
+  /*********************************************************************************************************************
+  * FOOTER
+  *********************************************************************************************************************/
+
+  #footer_layout {
+    position: relative;
+    z-index: 1000;
+
+    #footer_background {
+      background-image: url($footer_991_background);
+      height: 148px;
+      background-size: 991px auto;
+      margin-bottom: -20px;
+    }
+
+    footer {
+      font-size: 13px;
+
+      .container {
+
+        i.fa {
+          font-size: 13px;
+          margin: 0 3px;
+        }
+
+        .left_part {
+
+          .logo {
+            padding: 0 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************************************
+ * EXTRA SMALL DEVICES : 767 & LESS (SM)
+ **********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+@media screen and (max-width: 767px){
+
+  /*********************************************************************************************************************
+  * HEADER
+  *********************************************************************************************************************/
+
+  #header_color_fill{
+    background-color: #07141B;
+    height: 40px;
+  }
+
+  header{
+    margin-top: -28px;
+
+    .navbar.navbar-inverse {
+      padding: 0;
+    }
+
+    .navbar-header {
+      position: relative;
+
+      .navbar-toggle{
+        margin-top: 15px;
+        background-color: #fff;
+        height: 38px;
+        width: 50px;
+
+        &:hover, &:focus{
+          background-color: #9d9d9d;
+        }
+
+        .icon-bar{
+          background-color: #000;
+          width: auto;
+        }
+      }
+
+      .navbar-brand {
+        padding: 0;
+        height: 66px;
+        margin-right: 0;
+
+        h1 {
+          position: absolute;
+          left: 70px;
+          top: 7px;
+
+          span {
+            display: block;
+
+            &:first-of-type {
+              font-size: 23px;
+              line-height: 22px;
+            }
+
+            &:last-of-type {
+              font-size: 16.1px;
+            }
+          }
+        }
+      }
+    }
+
+    #navbar{
+      background-color: #fff;
+      opacity: 0.8;
+      margin: 6px -30px 0;
+      @include box-shadow(5px 0px 5px 0px rgba(0, 0, 0, 0.5));
+
+      .nav.navbar-nav{
+        padding: 0 15px;
+        margin: 0 -30px 0;
+
+        li{
+          border-top: solid 1px #fff;
+
+          a{
+            color: #000000;
+            padding: 10px 15px;
+            font-size: 15px;
+          }
+
+          &.active{
+
+            a{
+              background-color: #07141B;
+              color: #fff;
+
+              &:hover, &:focus{
+                background-color: #07141B;
+                color: #ffffff !important;
+              }
+            }
+          }
+
+          &.open{
+            background-color: #eeeeee;
+            border-bottom: solid 1px #9d9d9d;
+
+            a{
+              background-color: #07141B;
+              color: #fff;
+            }
+
+            ul{
+
+              li{
+                padding: 0 15px;
+                border: none;
+
+                &.divider{
+                  margin: 9px 30px;
+                  background-color: #9d9d9d;
+                  opacity: 0.3;
+                }
+
+                a{
+                  background-color: transparent;
+                  color: #000;
+                  font-size: 13px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #header_background{
+    background-image: url($header_767_background);
+    height: 121px;
+    background-size: 767px auto;
+    margin-top: 40px;
+  }
+
+  /*********************************************************************************************************************
+  * GOOGLE MAP
+  *********************************************************************************************************************/
+
+  #map-canvas{
+    height: 350px;
+    margin-bottom: -130px;
+  }
+
+  /*********************************************************************************************************************
+  * FOOTER
+  *********************************************************************************************************************/
+
+  #footer_layout {
+    position: relative;
+    z-index: 1000;
+
+    #footer_background {
+      background-image: url($footer_991_background);
+      height: 115px;
+      background-size: 767px auto;
+      margin-bottom: -26px;
+    }
+
+    footer {
+      font-size: 13px;
+
+      .container {
+
+        i.fa {
+          font-size: 13px;
+          margin: 0 3px;
+        }
+
+        .left_part {
+          display: block;
+          text-align: center;
+          width: 100%;
+
+          .logo {
+            padding: 0 15px;
+          }
+        }
+
+        .right_part{
+          display: block;
+          text-align: center;
+          width: 100%;
+
+          .social{
+            margin-top: 5px;
+
+            i.fa {
+              font-size: 40px;
+              margin: 0 8px;
+            }
+          }
+        }
+      }
+    }
+
+    #footer_color_fill{
+      height: 115px;
+    }
+  }
+
+
 }

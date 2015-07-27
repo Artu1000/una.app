@@ -3,8 +3,8 @@
 namespace App\Exceptions;
 
 use Exception;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -14,7 +14,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        HttpException::class,
+        HttpException::class
     ];
 
     /**
@@ -22,7 +22,7 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $e
+     * @param  \Exception $e
      * @return void
      */
     public function report(Exception $e)
@@ -33,12 +33,42 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $e
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $e
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $e)
     {
-        return parent::render($request, $e);
+        if ($this->isHttpException($e)) {
+            return $this->renderHttpException($e);
+        } else {
+            return parent::render($request, $e);
+        }
     }
+
+    /**
+     * Render the given HttpException.
+     *
+     * @param  \Symfony\Component\HttpKernel\Exception\HttpException $e
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function renderHttpException(HttpException $e)
+    {
+        if (view()->exists('errors.' . $e->getStatusCode())) {
+
+            $seoMeta = [
+                'page_title' => 'Erreur '.$e->getStatusCode(),
+                'meta_desc' => '',
+                'meta_keywords' => ''
+            ];
+            $data = [
+                'seoMeta' => $seoMeta,
+            ];
+
+            return response()->view('errors.' . $e->getStatusCode(), $data, $e->getStatusCode());
+        } else {
+            return (new SymfonyDisplayer(config('app.debug')))->createResponse($e);
+        }
+    }
+
 }

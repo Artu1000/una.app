@@ -10,19 +10,9 @@ abstract class Controller extends BaseController
 {
     use DispatchesJobs, ValidatesRequests;
 
-    private $seoMeta = [
+    public $seoMeta = [
         'page_title',
-        'description',
-        'keywords'
+        'meta_desc',
+        'meta_keywords'
     ];
-
-    public function getSeoMeta()
-    {
-        return $this->seoMeta;
-    }
-
-    public function setSeoMeta(array $seoMeta)
-    {
-        $this->seoMeta = $seoMeta;
-    }
 }

@@ -24,16 +24,14 @@ class HomeController extends Controller
 //        dd('coucou');
 
         // SEO Meta settings
-        $this->setSeoMeta([
-            'page_title' => 'Accueil',
-            'description' => 'Bienvenue sur le site du club Université Nantes Aviron, le plus grand club d\'aviron
-            universitaire de France, ouvert à tous les publics !',
-            'keywords' => 'club, universite, nantes, aviron, sport, universitaire, etudiant, ramer'
-        ]);
+        $this->seoMeta['page_title'] = 'Accueil';
+        $this->seoMeta['meta_desc'] = 'Bienvenue sur le site du club Université Nantes Aviron,
+        le plus grand club d\'aviron universitaire de France, ouvert à tous les publics !';
+        $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, sport, universitaire, etudiant, ramer';
 
         // prepare data for the view
         $data = [
-            'seoMeta' => $this->getSeoMeta(),
+            'seoMeta' => $this->seoMeta,
             'dependency' => 'none'
         ];
 

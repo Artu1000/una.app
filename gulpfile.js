@@ -1,4 +1,5 @@
 var elixir = require('laravel-elixir');
+require('laravel-elixir-imagemin');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,8 +14,12 @@ var elixir = require('laravel-elixir');
 
 var paths = {
     'jquery': './resources/assets/vendor/jquery/',
+    'jquery_easing': './resources/assets/vendor/jquery.easing/',
     'bootstrap': './resources/assets/vendor/bootstrap-sass-official/assets/',
-    'app' : './resources/assets/js/'
+    'fontawesome': './resources/assets/vendor/fontawesome/',
+    'lato': './resources/assets/vendor/lato-font/',
+    'js' : './resources/assets/js/',
+    'img' : './resources/assets/img/'
 };
 
 elixir(function (mix) {
@@ -39,19 +44,32 @@ elixir(function (mix) {
                 ]
             }
         )
-        // copy fonts into public folder
+        // copy glyphicon fonts into public folder
+        .imagemin("*", "public/img/")
+        // copy glyphicon fonts into public folder
         .copy(
             paths.bootstrap + 'fonts/bootstrap/**',
-            'public/build/fonts/bootstrap'
+            'public/fonts/bootstrap'
+        )
+        // copy glyphicon fonts into public folder
+        .copy(
+            paths.fontawesome + 'fonts/**',
+            'public/fonts/fontawesome'
+        )
+        // copy lato fonts into public folder
+        .copy(
+            paths.lato + 'fonts/**',
+            'public/fonts/lato'
         )
         // mix front js files
         .scripts(
             [
                 paths.jquery + "dist/jquery.js",
+                paths.jquery_easing + "js/jquery.easing.js",
                 paths.bootstrap + "javascripts/bootstrap.js",
-                paths.app + 'ie10-viewport-bug-workaround.js',
-                paths.app + 'app.common.js',
-                paths.app + 'app.front.js'
+                paths.js + 'ie10-viewport-bug-workaround.js',
+                paths.js + 'app.common.js',
+                paths.js + 'app.front.js'
             ],
             'public/js/app.front.js',
             './'
@@ -61,9 +79,9 @@ elixir(function (mix) {
             [
                 paths.jquery + "dist/jquery.js",
                 paths.bootstrap + "javascripts/bootstrap.js",
-                paths.app + 'ie10-viewport-bug-workaround.js',
-                paths.app + 'app.common.js',
-                paths.app + 'app.back.js'
+                paths.js + 'ie10-viewport-bug-workaround.js',
+                paths.js + 'app.common.js',
+                paths.js + 'app.back.js'
             ],
             'public/js/app.back.js',
             './'

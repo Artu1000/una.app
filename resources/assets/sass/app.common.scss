@@ -1,7 +1,102 @@
-@import 'bootstrap';
+/***********************************************************************************************************************
+ * IMPORTS
+ **********************************************************************************************************************/
 
+@import '../vendor/bootstrap-sass-official/assets/stylesheets/bootstrap';
+@import '../vendor/fontawesome/scss/font-awesome';
+@import '../vendor/lato-font/scss/public-api';
+
+
+
+/***********************************************************************************************************************
+ * VARIABLES & INCLUSIONS
+ **********************************************************************************************************************/
+$lato-font-path: '/fonts/lato';
+
+@include lato-include-font('black');
+@include lato-include-font('medium');
+@include lato-include-font('light');
+@include lato-include-font('light');
+@include lato-include-font('thin');
+
+
+
+/***********************************************************************************************************************
+ * MIXINS
+ **********************************************************************************************************************/
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+
+
+/***********************************************************************************************************************
+ * GENERAL
+ **********************************************************************************************************************/
+
+body{
+  @include lato-font('light');
+  font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6{
+  margin: 10px 0;
+}
+
+h1{
+  @include lato-font('thin');
+  color: #5a5a5a;
+}
+
+h2{
+  @include lato-font('thin');
+}
+
+p.quote{
+    @include lato-font('light', italic);
+}
+
+a.btn{
+    @include lato-font('light');
+}
 .noscript{
   background-color: #761c19;
   padding: 15px;
   color: #FFFFFF;
+}
+a:hover{
+  text-decoration: none;
+  @include transition(color 0.2s ease);
+}
+b, strong{
+  @include lato-font('medium');
+}
+
+
+
+/***********************************************************************************************************************
+ * ERROR PAGES
+ **********************************************************************************************************************/
+
+.error{
+  margin-top: 50px;
+
+  .error_title{
+    margin: 40px 0 0;
+  }
+
+  .error_details{
+    margin: 0 0 40px;
+    font-size: 18px;
+  }
+
+  .error_actions{
+    i{
+      font-size: 20px;
+    }
+  }
+
 }

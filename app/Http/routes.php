@@ -35,7 +35,7 @@ Event::listen('illuminate.query', function($sql, $bindings)
 
 Route::resource('/', 'Front\Home\HomeController', [
     'names' => [
-        'home' => 'home.index'
+        'index' => 'front.home'
     ]
 ]);
 

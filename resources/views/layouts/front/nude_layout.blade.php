@@ -1,29 +1,41 @@
 <html>
 
+    {{-- head inclusion--}}
     <head>
-        @include('layouts.common.head')
+        @include('layouts.front.head')
     </head>
 
+    {{-- body inclusion--}}
     <body>
-
-        {{-- no script specifications --}}
-        <noscript>
-            <div class="container noscript text-muted">
-                <h3>Attention !</h3>
-                Vous naviguez actuellement en version dégragée.<br/>
-                Merci d'activer votre Javascript pour bénéficier de l'ensemble des fonctionnalités de l'application.
+    {{-- no script specifications --}}
+    <noscript>
+        <div class="container-fluid noscript text-muted">
+            <div class="col-lg-offset-2 col-lg-8">
+                <h3>
+                    <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                    Attention
+                    <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                </h3>
+                Le Javascript de votre navigateur est désactivé et vous naviguez actuellement en version dégradée.<br/>
+                Merci de réactiver votre Javascript pour bénéficier de l'ensemble des fonctionnalités de l'application.
             </div>
-        </noscript>
+        </div>
+    </noscript>
 
-        @yield('content')
-        @if(Session::get('alert'))
-            @include('composers.modalAlert')
-        @endif
-        @if(Session::get('confirm'))
-            @include('composers.modalConfirm')
-        @endif
+    {{-- content inclusion --}}
+    @yield('content')
+
+    {{-- alerts management --}}
+    @if(Session::get('alert'))
+        @include('composers.modalAlert')
+    @endif
+    @if(Session::get('confirm'))
+        @include('composers.modalConfirm')
+    @endif
+
     </body>
 
-    @include('layouts.back.pre_footer')
+    {{-- end file inclusion --}}
+    @include('layouts.front.end')
 
 </html>
