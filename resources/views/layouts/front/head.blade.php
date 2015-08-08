@@ -15,11 +15,12 @@
 {{-- csrf token --}}
 <meta content="{{ csrf_token() }}" name="csrf-token" />
 
-{{-- minified versionned front css --}}
-<link href="{{ elixir('css/app.front.css') }}" rel="stylesheet">
+{{-- minified versionned css --}}
+<link href="{{ isset($css) ? $css : elixir('css/app.front.css') }}" rel="stylesheet">
 
-{{-- js base url --}}
+{{-- js data --}}
 <script type="text/javascript">
-    var base_url = '<?php echo url(); ?>';
-    var site_name = '<?php echo env('SITE_NAME'); ?>';
+    var base_url = <?php echo json_encode(url('/')); ?>;
+    var site_name = <?php echo json_encode(env('SITE_NAME')); ?>;
+    var page_data = <?php echo !empty($jsPageData) ? json_encode($jsPageData) : ''; ?>;
 </script>

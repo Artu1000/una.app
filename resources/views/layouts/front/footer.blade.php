@@ -7,7 +7,7 @@
 
     <div id="footer_background"></div>
 
-    <footer id="#contact">
+    <footer id="contact">
         <div class="container">
             <div class="left_part">
                 <div class="contact">

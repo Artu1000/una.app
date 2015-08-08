@@ -1,0 +1,426 @@
+@import 'app.front';
+
+/***********************************************************************************************************************
+ * CAROUSEL
+ **********************************************************************************************************************/
+#content.home{
+
+  .text-content{
+    width: 100%;
+    padding: 100px 0;
+    text-align: justify;
+
+    &:nth-child(odd){
+      background-color: #F7F7F7;
+    }
+
+    .container{
+
+      h2{
+        margin-bottom: 50px;
+        font-size: 45px;
+
+        i.fa{
+          font-size: inherit;
+        }
+      }
+
+      p{
+        margin: 0 0 30px;
+      }
+    }
+
+    &#last_news{
+
+      .news{
+        display: table;
+        text-align: justify;
+
+        .img, .content{
+          display: table-cell;
+          vertical-align: top;
+
+          a{
+            padding: 0;
+            @include border-radius(50%);
+
+            &:hover{
+              opacity: 0.7;
+              @include transition(opacity 0.2s ease);
+            }
+
+            img{
+              @include border-radius(50%);
+              border: dashed 1px;
+              padding: 10px;
+            }
+          }
+        }
+
+        .content{
+          padding: 0 15px;
+
+          h3{
+            margin-top: 0;
+          }
+
+          .sum_up{
+            margin-top: 14px;
+          }
+
+          .button{
+            margin-top: 12px;
+          }
+        }
+      }
+    }
+
+    &#partners{
+
+      .container{
+        display: table;
+
+
+        div{
+          display: table-cell;
+          text-align: center;
+
+          a{
+
+            &:hover{
+              opacity: 0.7;
+              @include transition(opacity 0.2s ease);
+            }
+
+            img{
+
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #carousel{
+    position: relative;
+
+    .fill{
+      height: 100% !important;
+      min-height: 100% !important;
+    }
+
+    .glide__wrapper{
+
+      .glide__track{
+        padding: 0;
+        margin: 0;
+
+        .glide__slide{
+          background-color: transparent;
+          @include gradient-radial(#0D1417, #111822);
+
+          section{
+            background-repeat: no-repeat;
+            background-position: center center;
+            position: relative;
+
+            .background_img, .slide_content{
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+            }
+
+            .slide_content{
+              z-index: 1;
+
+              div{
+                display: table;
+                width: 100%;
+                vertical-align: middle;
+
+                div{
+                  display: table-cell;
+                  vertical-align: middle;
+                  color: #fff;
+
+                  .picto{
+                    border: dashed 2px #fff;
+                    @include border-radius(50%);
+                  }
+
+                  .title{
+                    @include lato-font('medium');
+                    font-size: 45px;
+                    letter-spacing: 10px;
+                    text-transform: uppercase;
+                    margin: 40px 0 25px;
+                    text-shadow: 0 0 5px rgba(255, 255, 255, 1);
+                  }
+
+                  .quote{
+                    @include lato-font('thin');
+                    font-size: 24px;
+                    //color: #9d9d9d;
+                    text-shadow: 0 0 2px rgba(255, 255, 255, 1);
+                  }
+                }
+              }
+            }
+
+            .background_img{
+              opacity: 0.3;
+              z-index: 0;
+              background-size: cover;
+              background-position: center center;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************************************
+ * EXTRA LARGE DEVICES DESKTOPS : 1200 & MORE
+ **********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@media screen and (min-width: 1921px){
+  #carousel{
+    //height: 1100px;
+
+    .glide__wrapper{
+
+      .glide__track{
+
+        .glide__slide{
+
+          section{
+
+            .slide_content{
+
+              div{
+
+                div{
+
+                  .picto{
+                  }
+
+                  .title{
+                  }
+
+                  .quote{
+                  }
+                }
+              }
+            }
+
+            .background_img{
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #last_news{
+    padding: 48px 0;
+
+    h2{
+      margin-bottom: 30px;
+
+      i.fa{
+        font-size: inherit;
+      }
+    }
+
+    .news{
+      display: table;
+      text-align: justify;
+
+      .img, .content{
+        display: table-cell;
+        vertical-align: top;
+      }
+
+      .content{
+        padding-left: 15px;
+
+        h3{
+          margin-top: 0;
+        }
+
+        .sum_up{
+          margin-top: 15px;
+        }
+
+        .button{
+          margin-top: 12px;
+        }
+      }
+    }
+  }
+
+  #una-club{
+    margin-bottom: 0;
+    text-align: justify;
+
+    h2{
+      margin-bottom: 30px;
+
+      i.fa{
+        font-size: inherit;
+      }
+    }
+    p{
+      font-size: 16px;
+      @include lato-font('light');
+    }
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************************************
+ * LARGE DEVICES DESKTOPS : 1920 <=> 1200 (LG)
+ **********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@media screen and (max-width: 1920px) and (min-width: 1200px){
+
+  #carousel{
+    position: relative;
+    height: 800px;
+
+    .fill{
+      height: 100% !important;
+      min-height: 100% !important;
+    }
+
+    .glide__wrapper{
+
+      .glide__track{
+        padding: 0;
+        margin: 0;
+
+        .glide__slide{
+          background-color: transparent;
+          @include gradient-radial(#0D1417, #111822);
+
+          section{
+            background-repeat: no-repeat;
+            background-position: center center;
+            position: relative;
+
+            .background_img, .slide_content{
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+            }
+
+            .slide_content{
+              z-index: 1;
+
+              div{
+                display: table;
+                width: 100%;
+                vertical-align: middle;
+
+                div{
+                  display: table-cell;
+                  vertical-align: middle;
+                  color: #fff;
+
+                  .picto{
+                    border: dashed 2px #fff;
+                    @include border-radius(50%);
+                  }
+
+                  .title{
+                    @include lato-font('medium');
+                    font-size: 45px;
+                    letter-spacing: 10px;
+                    text-transform: uppercase;
+                    margin: 40px 0 25px;
+                    text-shadow: 0 0 5px rgba(255, 255, 255, 1);
+                  }
+
+                  .quote{
+                    @include lato-font('thin');
+                    font-size: 24px;
+                    //color: #9d9d9d;
+                    text-shadow: 0 0 2px rgba(255, 255, 255, 1);
+                  }
+                }
+              }
+            }
+
+            .background_img{
+              opacity: 0.3;
+              z-index: 0;
+              background-size: cover;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #last_news{
+    padding: 48px 0;
+
+    h2{
+      margin-bottom: 30px;
+
+      i.fa{
+        font-size: inherit;
+      }
+    }
+
+    .news{
+      display: table;
+      text-align: justify;
+
+      .img, .content{
+        display: table-cell;
+        vertical-align: top;
+      }
+
+      .content{
+        padding-left: 15px;
+
+        h3{
+          margin-top: 0;
+        }
+
+        .sum_up{
+          margin-top: 15px;
+        }
+
+        .button{
+          margin-top: 12px;
+        }
+      }
+    }
+  }
+
+  #una-club{
+    margin-bottom: 0;
+    text-align: justify;
+
+    h2{
+      margin-bottom: 30px;
+
+      i.fa{
+        font-size: inherit;
+      }
+    }
+    p{
+      font-size: 16px;
+      @include lato-font('light');
+    }
+  }
+}

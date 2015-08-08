@@ -73,7 +73,8 @@ gmap ={
     },
     load : function() {
         var draggable = null;
-        var latlng = new google.maps.LatLng(47.28000, -1.549000);
+        var latlng = new google.maps.LatLng(47.236516, -1.551113);
+
         var screenWidth = screen.width;
 
         // manage drag for large / mobile devices
@@ -81,7 +82,6 @@ gmap ={
             draggable = true;
         }
         else{
-            latlng = new google.maps.LatLng(47.28000, -1.549000);
             draggable = false;
         }
 
@@ -91,102 +91,18 @@ gmap ={
             center: latlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             draggable: draggable,
-            scrollwheel: false,
-            styles : [
-                {
-                    "elementType": "labels.icon",
-                    "stylers": [
-                        {
-                            "visibility": "off"
-                        }
-                    ]
-                },
-                {
-                    "featureType": "water",
-                    "elementType": "geometry",
-                    "stylers": [
-                        {
-                            "color": "#CFCFCF"
-                        }
-                    ]
-                },
-                {
-                    "elementType": "labels.text",
-                    "stylers": [
-                        {
-                            "color": "#666666"
-                        },
-                        {
-                            "weight": 0.1
-                        }
-                    ]
-                },
-                {
-                    "featureType": "transit",
-                    "elementType": "geometry",
-                    "stylers": [
-                        {
-                            "color": "#BFBFBF"
-                        }
-                    ]
-                },
-                {
-                    "featureType": "road",
-                    "elementType": "geometry",
-                    "stylers": [
-                        {
-                            "color": "#BFBFBF"
-                        }
-                    ]
-                },
-                {
-                    "featureType": "poi",
-                    "elementType": "geometry",
-                    "stylers": [
-                        {
-                            "color": "#D4D4D4"
-                        }
-                    ]
-                },
-                {
-                    "featureType": "landscape",
-                    "stylers": [
-                        {
-                            "color": "#D0D0D0"
-                        }
-                    ]
-                },
-                {
-                    "featureType": "administrative",
-                    "elementType": "geometry",
-                    "stylers": [
-                        {
-                            "color": "#AFAFAF"
-                        }
-                    ]
-                },
-                { }
-            ]
+            scrollwheel: false
         };
         var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-        //var image = {
-            // icon image
-            //url: url_img+'site/acid-solutions_contact-picto.png',
-            // icon size
-            //size: new google.maps.Size(119, 150),
-            // image origin (often 0, 0)
-            //origin: new google.maps.Point(0,0),
-            // image anchor point
-            //anchor: new google.maps.Point(20, 70)
-        //};
+
         // marker configuration
-        //var marker = new google.maps.Marker({
-        //    map: map,
-        //    draggable: false,
-        //    position: new google.maps.LatLng(47.211807, -1.550832),
-        //    title: 'ACID-Solutions',
-        //    icon: image
-        //});
+        var marker = new google.maps.Marker({
+            draggable: false,
+            position: latlng,
+            map: map,
+            title: site_name
+        });
+
     },
     scrollTreatment : function() {
         gmap.analyseScrollPos();
@@ -210,17 +126,19 @@ $(function(){
     // load gmap when scroll on it
     $(window).scroll(gmap.scrollTreatment);
 
-    // gestion du défilement lors du clic sur une ancre
-    $('header a[href^="#"], footer a[href^="#"]').on( 'click', function( evt ) {
-        evt.preventDefault();
-        var id = $(this).attr("href");
-        offset = $(id).offset().top;
-        $('html, body').animate({
-                scrollTop: offset
-            },
-            'slow',
-            'easeInOutQuint'
-        );
+    $(function() {
+        $('a[href*=#]:not([href=#])').click(function() {
+            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+                if (target.length) {
+                    $('html,body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
+                }
+            }
+        });
     });
 
     // hide bootstrap menu on click
@@ -234,18 +152,6 @@ $(function(){
     $(".social a").on("click", function(event){
         event.preventDefault();
         window.open(this.href);
-    });
-
-    // animated scroll when clicking on an anchor
-    $(window).scroll(function () {
-        if ($(window).height() + $(window).scrollTop() >= $("#map-canvas").offset().top) {
-            $(".menu_tab").removeClass("active");
-            $("#contact").addClass("active");
-        }
-        else{
-            $("#onglet_"+page_name).addClass("active");
-            $("#onglet_contact").removeClass("active");
-        }
     });
 
     // Cookie acceptation verification

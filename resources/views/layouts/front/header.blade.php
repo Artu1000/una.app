@@ -41,7 +41,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="menu_tab">
-                                <a href="presentation.html" title="Présentation">
+                                <a href="#una-club" title="Présentation">
                                     <i class="fa fa-comments"></i> Présentation
                                 </a>
                             </li>
@@ -110,7 +110,7 @@
                             <i class="fa fa-user"></i> Espace membre
                         </a>
                     </li>
-                    <li id="contact" class="menu_tab">
+                    <li class="menu_tab">
                         <a title="Contact" href="#contact">
                             <i class="fa fa-pencil-square"></i> Contact
                         </a>
