@@ -1660,11 +1660,11 @@ var slideshow = {
                 transition: '1s ease-out',
 
                 // fade in
-                '-webkit-animation': 'fadeIn 3s',
-                '-moz-animation': 'fadeIn 3s',
-                '-ms-animation': 'fadeIn 3s',
-                '-o-animation': 'fadeIn 3s',
-                'animation': 'fadeIn 3s'
+                '-webkit-animation': 'fadeIn 8s ease-out',
+                '-moz-animation': 'fadeIn 8s ease-out',
+                '-ms-animation': 'fadeIn 8s ease-out',
+                '-o-animation': 'fadeIn 8s ease-out',
+                'animation': 'fadeIn 8s ease-out'
             }).promise().done(function(){
                 // keep visible
                 $(this).css('opacity', 1);
@@ -1673,11 +1673,11 @@ var slideshow = {
             // title
             $('#carousel .slide_content .title').css({
                 // move
-                '-webkit-transform': 'translate(0.3em, 0)',
-                '-moz-transform': 'translate(0.3em, 0)',
-                '-ms-transform': 'translate(0.3em, 0)',
-                '-o-transform': 'translate(0.3em, 0)',
-                transform: 'translate(0.3em, 0)',
+                '-webkit-transform': 'translate(0, 0)',
+                '-moz-transform': 'translate(0, 0)',
+                '-ms-transform': 'translate(0, 0)',
+                '-o-transform': 'translate(0, 0)',
+                transform: 'translate(0, 0)',
 
                 // transition duration
                 '-webkit-transition': '6s ease-out',
@@ -1701,11 +1701,11 @@ var slideshow = {
             setTimeout(function(){
                 $('#carousel .slide_content .quote').css({
                     // move
-                    '-webkit-transform': 'translate(0.3em, -0.3em)',
-                    '-moz-transform': 'translate(0.3em, -0.3em)',
-                    '-ms-transform': 'translate(0.3em, -0.3em)',
-                    '-o-transform': 'translate(0.3em, -0.3em)',
-                    transform: 'translate(0.3em, -0.3em)',
+                    '-webkit-transform': 'translate(0, -0.3em)',
+                    '-moz-transform': 'translate(0, -0.3em)',
+                    '-ms-transform': 'translate(0, -0.3em)',
+                    '-o-transform': 'translate(0, -0.3em)',
+                    transform: 'translate(0, -0.3em)',
 
                     // transition duration
                     '-webkit-transition': '5s ease-out',
@@ -1756,11 +1756,11 @@ var slideshow = {
 
                 // cancel title move
                 $('#carousel .slide_content .title').css({
-                    '-webkit-transform': 'translate(-0.5em, 0)',
-                    '-moz-transform': 'translate(-0.5em, 0)',
-                    '-ms-transform': 'translate(-0.5em, 0)',
-                    '-o-transform': 'translate(-0.5em, 0)',
-                    transform: 'translate(-0.5em, 0)',
+                    '-webkit-transform': 'translate(-0.6em, 0)',
+                    '-moz-transform': 'translate(-0.6em, 0)',
+                    '-ms-transform': 'translate(-0.6em, 0)',
+                    '-o-transform': 'translate(-0.6em, 0)',
+                    transform: 'translate(-0.6em, 0)',
 
                     '-webkit-transition': '200ms linear',
                     '-moz-transition': '200ms linear',
@@ -1771,11 +1771,11 @@ var slideshow = {
 
                 // cancel quote move
                 $('#carousel .slide_content .quote').css({
-                    '-webkit-transform': 'translate(-0.3em, 0.3em)',
-                    '-moz-transform': 'translate(-0.3em, 0.3em)',
-                    '-ms-transform': 'translate(-0.3em, 0.3em)',
-                    '-o-transform': 'translate(-0.3em, 0.3em)',
-                    transform: 'translate(-0.3em, 0.3em)',
+                    '-webkit-transform': 'translate(-0.6em, 0.3em)',
+                    '-moz-transform': 'translate(-0.6em, 0.3em)',
+                    '-ms-transform': 'translate(-0.6em, 0.3em)',
+                    '-o-transform': 'translate(-0.6em, 0.3em)',
+                    transform: 'translate(-0.6em, 0.3em)',
 
                     '-webkit-transition': '200ms linear',
                     '-moz-transition': '200ms linear',

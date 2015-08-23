@@ -34,7 +34,7 @@ class HomeController extends Controller
         $slides = [];
         // UNA
         $slides[] = [
-            'picto' => url('/').'/img/home/una_picto_logo_club.png',
+            'picto' => url('/').'/img/home/una_picto_club.png',
             'title' => 'Club d\'aviron à Nantes',
             'quote' => 'Nous sommes ouvert à tous les publics, (collegiens, lycéens, étudiants ou actifs), <br/>
                         Lancez-vous, venez vous initier gratuitement à notre sport !<br/>',
@@ -43,7 +43,7 @@ class HomeController extends Controller
         ];
         // univ
         $slides[] = [
-            'picto' => url('/').'/img/home/una_picto_logo_club.png',
+            'picto' => url('/').'/img/home/una_picto_aviron_universitaire.png',
             'title' => 'Aviron universitaire',
             'quote' => 'Rejoignez le plus grand club d\'aviron universitaire de France.<br/>
                         Nous proposons des tarifs avantageux pour tous les étudiants nantais !',
@@ -92,6 +92,7 @@ class HomeController extends Controller
         $lastNews = [];
         $lastNews[] = [
             'title' => 'News 1',
+            'date_of_release' => '2015-03-15',
             'src' => 'img1',
             'content' => '<p>Ultima Syriarum est Palaestina per intervalla magna protenta, cultis abundans terris et nitidis et civitates habens quasdam egregias, nullam nulli cedentem sed sibi vicissim velut ad perpendiculum aemulas: Caesaream, quam ad honorem Octaviani principis exaedificavit Herodes, et Eleutheropolim et Neapolim itidemque Ascalonem Gazam aevo superiore exstructas.</p>
             <p>Fuerit toto in consulatu sine provincia, cui fuerit, antequam designatus est, decreta provincia. Sortietur an non? Nam et non sortiri absurdum est, et, quod sortitus sis, non habere. Proficiscetur paludatus? Quo? Quo pervenire ante certam diem non licebit. ianuario, Februario, provinciam non habebit; Kalendis ei denique Martiis nascetur repente provincia.</p>
@@ -101,6 +102,7 @@ class HomeController extends Controller
         ];
         $lastNews[] = [
             'title' => 'News 2',
+            'date_of_release' => '2015-04-02',
             'src' => 'img2',
             'content' => '<p>Ultima Syriarum est Palaestina per intervalla magna protenta, cultis abundans terris et nitidis et civitates habens quasdam egregias, nullam nulli cedentem sed sibi vicissim velut ad perpendiculum aemulas: Caesaream, quam ad honorem Octaviani principis exaedificavit Herodes, et Eleutheropolim et Neapolim itidemque Ascalonem Gazam aevo superiore exstructas.</p>
             <p>Fuerit toto in consulatu sine provincia, cui fuerit, antequam designatus est, decreta provincia. Sortietur an non? Nam et non sortiri absurdum est, et, quod sortitus sis, non habere. Proficiscetur paludatus? Quo? Quo pervenire ante certam diem non licebit. ianuario, Februario, provinciam non habebit; Kalendis ei denique Martiis nascetur repente provincia.</p>

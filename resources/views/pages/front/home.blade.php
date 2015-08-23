@@ -16,7 +16,7 @@
                     @foreach($slides as $slide)
                         <li class="glide__slide fill">
                             <section class="fill">
-                                <div class="row fill slide_content text-center">
+                                <div class="fill slide_content text-center">
                                     <div class="fill">
                                         <div class="fill">
                                             @if(!empty($slide['picto']))
@@ -40,13 +40,13 @@
             <ul class="glide__bullets"></ul>
         </div>
 
-        <div id="last_news" class="row text-content">
+        <div id="last_news" class="text-content">
             <div class="container">
-                <h2><i class="fa fa-paper-plane"></i> Fresh news</h2>
-                @foreach($lastNews as $news)
-                    <div class="news col-md-6">
+                <h2><i class="fa fa-paper-plane"></i> Nouvelle fraîches</h2>
+                @foreach($lastNews as $key => $news)
+                    <div class="news col-xs-12 col-sm-12 col-md-6">
                         <div class="row">
-                            <div class="img">
+                            <div class="img hidden-xs">
                                 <a class="btn btn-default" href="#" role="button" title="{{ $news['title'] }}">
                                     <img width="150" height="150" src="{{ $news['src'] }}" alt="{{ $news['title'] }}">
                                 </a>
@@ -55,12 +55,15 @@
                                 <h3>
                                     <a href="" title="{{ $news['title'] }}">{{ $news['title'] }}</a>
                                 </h3>
+                                <div class="date">
+                                    {{ Carbon\Carbon::createFromFormat('Y-m-d', $news['date_of_release'])->format('d/m/Y') }}
+                                </div>
                                 <div class="sum_up">
-                                    {{ str_limit(strip_tags($news['content']), 120) }}
+                                    {{ str_limit(strip_tags($news['content']), 100) }}
                                 </div>
                                 <div class="button">
                                     <button class="btn btn-default" href="#" role="button" title="{{ $news['title'] }}">
-                                        <i class="fa fa-plus"></i> Plus d'infos
+                                        <i class="fa fa-search-plus"></i> Voir plus
                                     </button>
                                 </div>
                             </div>
@@ -70,9 +73,9 @@
             </div>
         </div>
 
-        <div id="una-club" class="row text-content">
+        <div id="una_club" class="text-content">
             <div class="container">
-                <h2><i class="fa fa-comment"></i> Bienvenue au club Université Nantes Aviron (UNA)</h2>
+                <h2><i class="fa fa-hand-spock-o"></i> Bienvenue au club Université Nantes Aviron (UNA)</h2>
                 <p>Créé en 1985, le club Université Nantes Aviron (UNA) est LE club d'aviron des étudiants nantais.
                     Conventionné avec plusieurs écoles supérieures nantaises, l'UNA est lié à l'Université de Nantes
                     et gère l'activité aviron au sein de la structure, en complément des autres activités sportives
@@ -111,22 +114,26 @@
                     auprès de la population étudiante française.
                 </p>
                 <ol>
-                    <b>A noter :</b>
+                    <p><i class="fa fa-exclamation-circle"></i> A noter :</p>
                    <li>
                         Pour les universitaires, l'inscription à l'aviron doit s'effectuer directement au club Université Nantes Aviron pour bénéficier de l'ensemble des créneaux d'encadrement (et non pas via le SUAPS).
                    </li>
                     <li>
-                        Des tarifs préférenciels sont appliqués pour tous les étudiants nantais, sur présentation de justificatif. Des réductions plus avantageuses sont appliqués pour les membres de l'Université de Nantes ou écoles conventionnées avec l'UNA.
+                        Des tarifs préférenciels sont appliqués pour tous les étudiants nantais, sur présentation de justificatif. Des réductions plus avantageuses sont appliqués pour les membres de l'Université de Nantes ou d'écoles conventionnées avec l'UNA.
                     </li>
                 </ol>
+
+                <p>
+                    <iframe width="100%" src="https://www.youtube.com/embed/PIUdOHcrleo" frameborder="0" allowfullscreen></iframe>
+                </p>
             </div>
         </div>
 
-        <div id="partners" class="row text-content">
+        <div id="partners" class="text-content">
             <div class="container">
                 @foreach($partners as $partner)
                     <div>
-                        <a href="{{ $partner['url'] }}" title="{{ $partner['title'] }}">
+                        <a class="new_window" href="{{ $partner['url'] }}" title="{{ $partner['title'] }}">
                             <img height="60" src="{{ $partner['src'] }}" alt="{{ $partner['title'] }}">
                         </a>
                     </div>

@@ -1,36 +1,117 @@
-@import 'app.front';
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************************************
+ * COMMON TO ALL SIZES OF DEVICES
+ **********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 /***********************************************************************************************************************
- * CAROUSEL
+ * IMPORTS & VARIABLES
+ **********************************************************************************************************************/
+@import 'app.front';
+$background_img_2560 : '/img/home/una_club_background_img.jpg';
+$background_img_1920 : '/img/home/una_club_background_img.jpg';
+$background_img_1119 : '/img/home/una_club_background_img.jpg';
+$background_img_991 : '/img/home/una_club_background_img.jpg';
+$background_img_767 : '/img/home/una_club_background_img.jpg';
+
+/***********************************************************************************************************************
+ * GENERAL
  **********************************************************************************************************************/
 #content.home{
 
+  #carousel{
+    position: relative;
+    @include gradient-radial(#0D1417, #111822);
+
+    .fill{
+      height: 100% !important;
+      min-height: 100% !important;
+    }
+
+    .glide__wrapper{
+
+      .glide__track{
+        padding: 0;
+        margin: 0;
+
+        .glide__slide{
+          background-color: transparent;
+
+          section{
+            background-repeat: no-repeat;
+            background-position: center center;
+            position: relative;
+
+            .background_img, .slide_content{
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+            }
+
+            .slide_content{
+              z-index: 1;
+
+              div{
+                display: table;
+                width: 100%;
+                vertical-align: middle;
+
+                div{
+                  display: table-cell;
+                  vertical-align: middle;
+                  color: #fff;
+
+                  .picto{
+                    @include border-radius(50%);
+                  }
+
+                  .title{
+                    @include lato-font('medium');
+                    text-transform: uppercase;
+                  }
+
+                  .quote{
+                    @include lato-font('thin');
+                  }
+                }
+              }
+            }
+
+            .background_img{
+              opacity: 0.3;
+              z-index: 0;
+              background-size: cover;
+              background-position: center center;
+            }
+          }
+        }
+      }
+    }
+
+    .glide__bullets{
+      padding: 0;
+    }
+  }
+
   .text-content{
     width: 100%;
-    padding: 100px 0;
     text-align: justify;
-
-    &:nth-child(odd){
-      background-color: #F7F7F7;
-    }
+    background-color: #ffffff;
 
     .container{
 
       h2{
-        margin-bottom: 50px;
-        font-size: 45px;
 
         i.fa{
           font-size: inherit;
         }
       }
-
-      p{
-        margin: 0 0 30px;
-      }
     }
 
     &#last_news{
+      background-color: #F7F7F7;
 
       .news{
         display: table;
@@ -38,7 +119,7 @@
 
         .img, .content{
           display: table-cell;
-          vertical-align: top;
+          vertical-align: middle;
 
           a{
             padding: 0;
@@ -58,32 +139,68 @@
         }
 
         .content{
-          padding: 0 15px;
 
           h3{
-            margin-top: 0;
+            margin: 5px 0 0 0;
+          }
+
+          .date{
+            margin-top: 2px;
           }
 
           .sum_up{
-            margin-top: 14px;
+            margin-top: 8px;
           }
 
           .button{
-            margin-top: 12px;
+            margin-top: 10px;
           }
         }
       }
     }
 
+    &#una_club{
+      margin-bottom: 0;
+      text-align: justify;
+
+      p{
+        font-size: 16px;
+        @include lato-font('light');
+
+      }
+
+      ol{
+        margin: 0;
+        padding: 0;
+
+        p{
+          @include lato-font('medium');
+          margin: 0 0 10px 0;
+
+          i.fa{
+            font-size: inherit;
+          }
+        }
+
+        li{
+          margin: 0 0 5px 25px;
+          padding: 0;
+        }
+      }
+
+      iframe{
+        margin-top: 30px;
+      }
+    }
+
     &#partners{
+      background-color: #F7F7F7;
 
       .container{
-        display: table;
-
+        text-align: center;
 
         div{
-          display: table-cell;
-          text-align: center;
+          display: inline-block;
 
           a{
 
@@ -91,95 +208,19 @@
               opacity: 0.7;
               @include transition(opacity 0.2s ease);
             }
-
-            img{
-
-            }
-          }
-        }
-      }
-    }
-  }
-
-  #carousel{
-    position: relative;
-
-    .fill{
-      height: 100% !important;
-      min-height: 100% !important;
-    }
-
-    .glide__wrapper{
-
-      .glide__track{
-        padding: 0;
-        margin: 0;
-
-        .glide__slide{
-          background-color: transparent;
-          @include gradient-radial(#0D1417, #111822);
-
-          section{
-            background-repeat: no-repeat;
-            background-position: center center;
-            position: relative;
-
-            .background_img, .slide_content{
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 100%;
-            }
-
-            .slide_content{
-              z-index: 1;
-
-              div{
-                display: table;
-                width: 100%;
-                vertical-align: middle;
-
-                div{
-                  display: table-cell;
-                  vertical-align: middle;
-                  color: #fff;
-
-                  .picto{
-                    border: dashed 2px #fff;
-                    @include border-radius(50%);
-                  }
-
-                  .title{
-                    @include lato-font('medium');
-                    font-size: 45px;
-                    letter-spacing: 10px;
-                    text-transform: uppercase;
-                    margin: 40px 0 25px;
-                    text-shadow: 0 0 5px rgba(255, 255, 255, 1);
-                  }
-
-                  .quote{
-                    @include lato-font('thin');
-                    font-size: 24px;
-                    //color: #9d9d9d;
-                    text-shadow: 0 0 2px rgba(255, 255, 255, 1);
-                  }
-                }
-              }
-            }
-
-            .background_img{
-              opacity: 0.3;
-              z-index: 0;
-              background-size: cover;
-              background-position: center center;
-            }
           }
         }
       }
     }
   }
 }
+
+
+
+
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
@@ -188,36 +229,39 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @media screen and (min-width: 1921px){
-  #carousel{
-    //height: 1100px;
 
-    .glide__wrapper{
+  &#carousel {
 
-      .glide__track{
+    .glide__wrapper {
 
-        .glide__slide{
+      .glide__track {
 
-          section{
+        .glide__slide {
 
-            .slide_content{
+          section {
 
-              div{
+            .slide_content {
 
-                div{
+              div {
 
-                  .picto{
+                div {
+
+                  .picto {
+                    border: dashed 2px #fff;
+                    padding: 12px;
                   }
 
-                  .title{
+                  .title {
+                    font-size: 45px;
+                    letter-spacing: 10px;
+                    margin: 40px 0 25px;
                   }
 
-                  .quote{
+                  .quote {
+                    font-size: 24px;
                   }
                 }
               }
-            }
-
-            .background_img{
             }
           }
         }
@@ -225,61 +269,66 @@
     }
   }
 
-  #last_news{
-    padding: 48px 0;
+  .text-content {
+    padding: 150px 0;
 
-    h2{
-      margin-bottom: 30px;
+    .container {
 
-      i.fa{
-        font-size: inherit;
+      h2 {
+        margin-bottom: 50px;
+        font-size: 45px;
+      }
+
+      p {
+        margin: 0 0 30px;
       }
     }
 
-    .news{
-      display: table;
-      text-align: justify;
+    &#last_news {
 
-      .img, .content{
-        display: table-cell;
-        vertical-align: top;
+      h2 {
+        margin-bottom: 30px;
       }
 
-      .content{
-        padding-left: 15px;
+      .news {
 
-        h3{
-          margin-top: 0;
+        .content{
+          padding: 0 15px;
         }
 
-        .sum_up{
-          margin-top: 15px;
-        }
+        &:last-of-type{
 
-        .button{
-          margin-top: 12px;
+          .content{
+            padding: 0 0 0 15px;
+          }
         }
       }
     }
-  }
 
-  #una-club{
-    margin-bottom: 0;
-    text-align: justify;
+    &#una_club{
 
-    h2{
-      margin-bottom: 30px;
-
-      i.fa{
-        font-size: inherit;
+      iframe{
+        height: 630px;
       }
     }
-    p{
-      font-size: 16px;
-      @include lato-font('light');
+
+    &#partners{
+
+      .container{
+
+        div{
+          padding:  0 70px;
+        }
+      }
     }
   }
 }
+
+
+
+
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -288,80 +337,40 @@
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@media screen and (max-width: 1920px) and (min-width: 1200px){
+@media screen and (max-width: 1920px) and (min-width: 1200px) {
 
-  #carousel{
-    position: relative;
-    height: 800px;
+  &#carousel {
 
-    .fill{
-      height: 100% !important;
-      min-height: 100% !important;
-    }
+    .glide__wrapper {
 
-    .glide__wrapper{
+      .glide__track {
 
-      .glide__track{
-        padding: 0;
-        margin: 0;
+        .glide__slide {
 
-        .glide__slide{
-          background-color: transparent;
-          @include gradient-radial(#0D1417, #111822);
+          section {
 
-          section{
-            background-repeat: no-repeat;
-            background-position: center center;
-            position: relative;
+            .slide_content {
 
-            .background_img, .slide_content{
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 100%;
-            }
+              div {
 
-            .slide_content{
-              z-index: 1;
+                div {
 
-              div{
-                display: table;
-                width: 100%;
-                vertical-align: middle;
-
-                div{
-                  display: table-cell;
-                  vertical-align: middle;
-                  color: #fff;
-
-                  .picto{
+                  .picto {
                     border: dashed 2px #fff;
-                    @include border-radius(50%);
+                    padding: 12px;
                   }
 
-                  .title{
-                    @include lato-font('medium');
+                  .title {
                     font-size: 45px;
                     letter-spacing: 10px;
-                    text-transform: uppercase;
                     margin: 40px 0 25px;
-                    text-shadow: 0 0 5px rgba(255, 255, 255, 1);
                   }
 
-                  .quote{
-                    @include lato-font('thin');
+                  .quote {
                     font-size: 24px;
-                    //color: #9d9d9d;
-                    text-shadow: 0 0 2px rgba(255, 255, 255, 1);
                   }
                 }
               }
-            }
-
-            .background_img{
-              opacity: 0.3;
-              z-index: 0;
-              background-size: cover;
             }
           }
         }
@@ -369,58 +378,375 @@
     }
   }
 
-  #last_news{
-    padding: 48px 0;
+  .text-content {
+    padding: 120px 0;
 
-    h2{
-      margin-bottom: 30px;
+    .container {
 
-      i.fa{
-        font-size: inherit;
+      h2 {
+        margin-bottom: 50px;
+        font-size: 45px;
+      }
+
+      p {
+        margin: 0 0 30px;
       }
     }
 
-    .news{
-      display: table;
-      text-align: justify;
+    &#last_news {
 
-      .img, .content{
-        display: table-cell;
-        vertical-align: top;
+      h2 {
+        margin-bottom: 30px;
       }
 
-      .content{
-        padding-left: 15px;
+      .news {
 
-        h3{
-          margin-top: 0;
+        .content{
+          padding: 0 15px;
         }
 
-        .sum_up{
-          margin-top: 15px;
-        }
+        &:last-of-type{
 
-        .button{
-          margin-top: 12px;
+          .content{
+            padding: 0 0 0 15px;
+          }
+        }
+      }
+    }
+
+    &#una_club{
+
+      iframe{
+        height: 630px;
+      }
+    }
+
+    &#partners{
+
+      .container{
+
+        div{
+          padding:  0 60px;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************************************
+ * MEDIUM DEVICES DESKTOPS : : 1199 <=> 992 (MD)
+ **********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+@media screen and (max-width: 1199px) and (min-width: 992px){
+
+  &#carousel {
+
+    .glide__wrapper {
+
+      .glide__track {
+
+        .glide__slide {
+
+          section {
+
+            .slide_content {
+
+              div {
+
+                div {
+
+                  .picto {
+                    border: dashed 2px #fff;
+                    padding: 12px;
+                    width: 230px;
+                  }
+
+                  .title {
+                    font-size: 30px;
+                    letter-spacing: 5px;
+                    margin: 30px 0 15px;
+                  }
+
+                  .quote {
+                    font-size: 18px;
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
   }
 
-  #una-club{
-    margin-bottom: 0;
-    text-align: justify;
+  .text-content {
+    padding: 80px 0;
 
-    h2{
-      margin-bottom: 30px;
+    .container {
 
-      i.fa{
-        font-size: inherit;
+      h2 {
+        margin-bottom: 30px;
+        font-size: 30px;
+      }
+
+      p {
+        margin: 0 0 30px;
       }
     }
-    p{
-      font-size: 16px;
-      @include lato-font('light');
+
+    &#last_news {
+
+      .news {
+
+        .content{
+          padding: 0 15px;
+        }
+
+        &:last-of-type{
+          padding: 0 15px 0 30px;
+
+          .content{
+            padding: 0 0 0 15px;
+          }
+        }
+      }
+    }
+
+    &#una_club{
+
+      iframe{
+        height: 530px;
+      }
+    }
+
+    &#partners{
+
+      .container{
+
+        div{
+          padding:  0 40px;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************************************
+ * SMALL DEVICES TABLETS : 991 <=> 768 (SM)
+ **********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+@media screen and (max-width: 991px) and (min-width: 768px){
+
+  &#carousel {
+
+    .glide__wrapper {
+
+      .glide__track {
+
+        .glide__slide {
+
+          section {
+
+            .slide_content {
+
+              div {
+
+                div {
+
+                  .picto {
+                    border: dashed 2px #fff;
+                    padding: 12px;
+                    width: 230px;
+                  }
+
+                  .title {
+                    font-size: 30px;
+                    letter-spacing: 5px;
+                    margin: 30px 0 15px;
+                  }
+
+                  .quote {
+                    font-size: 18px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .text-content {
+    padding: 80px 0;
+
+    .container {
+
+      h2 {
+        margin-bottom: 30px;
+        font-size: 30px;
+      }
+
+      p {
+        margin: 0 0 30px;
+      }
+    }
+
+    &#last_news {
+
+      .news {
+
+        .content{
+          padding: 30px 0 5px 15px;
+        }
+      }
+    }
+
+    &#una_club{
+
+      iframe{
+        height: 400px;
+      }
+    }
+
+    &#partners{
+
+      .container{
+
+        div{
+          padding:  0 10px;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************************************
+ * EXTRA SMALL DEVICES : 767 & LESS (SM)
+ **********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+@media screen and (max-width: 767px){
+
+  &#carousel {
+
+    .glide__wrapper {
+
+      .glide__track {
+
+        .glide__slide {
+
+          section {
+
+            .slide_content {
+
+              div {
+
+                div {
+                  width: 320px;
+                  padding: 0 15px;
+
+                  .picto {
+                    border: dashed 2px #fff;
+                    padding: 12px;
+                    width: 230px;
+                  }
+
+                  .title {
+                    font-size: 25px;
+                    letter-spacing: 5px;
+                    margin: 30px 0 15px;
+                  }
+
+                  .quote {
+                    font-size: 16px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .text-content {
+    padding: 60px 0;
+
+    .container {
+
+      h2 {
+        margin-bottom: 30px;
+        font-size: 30px;
+        text-align: center;
+      }
+
+      p {
+        margin: 0 0 30px;
+      }
+    }
+
+    &#last_news {
+
+      .news {
+        margin: 15px 0;
+
+        .content{
+          padding: 0 0 0 15px;
+        }
+
+        .button{
+
+          button{
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    &#una_club{
+
+      iframe{
+        height: 400px;
+      }
+    }
+
+    &#partners{
+
+      .container{
+
+        div{
+          padding: 10px;
+
+          a{
+
+            img{
+              height: 50px;
+            }
+          }
+        }
+      }
     }
   }
 }

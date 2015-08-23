@@ -11883,7 +11883,6 @@ var cookie = {
 // Google map
 gmap ={
     active : false,
-    resized : false,
     screenOnMap : false,
     url : 'https://maps.googleapis.com/maps/api/js?v=3.exp&',
     analyseScrollPos : function(){
@@ -11937,16 +11936,9 @@ gmap ={
     },
     scrollTreatment : function() {
         gmap.analyseScrollPos();
-        if(gmap.screenOnMap === true && gmap.active === false && screen.width > 767){
+        if(gmap.screenOnMap === true && gmap.active === false){
             gmap.active = true;
-//			console.log('ajax gmap request + load map');
             gmap.callScript();
-        }
-        if(gmap.screenOnMap === true && gmap.active === true && gmap.resized === true && screen.width > 767){
-            gmap.active = true;
-            gmap.resized = false;
-//			console.log('load when screen resized off view then scroll down on it');
-            gmap.load();
         }
     }
 };
@@ -11979,8 +11971,8 @@ $(function(){
         }
     });
 
-    // open new window on social footer link click
-    $(".social a").on("click", function(event){
+    // open new window when clicking on the link
+    $(".new_window").on("click", function(event){
         event.preventDefault();
         window.open(this.href);
     });
