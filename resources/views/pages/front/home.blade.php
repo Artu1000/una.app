@@ -13,7 +13,7 @@
             <div class="glide__wrapper">
                 <ul class="glide__track">
 
-                    @foreach($slides as $slide)
+                    @foreach($slides as $key => $slide)
                         <li class="glide__slide fill">
                             <section class="fill">
                                 <div class="fill slide_content text-center">
@@ -31,7 +31,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="background_img fill" style="background-image: url('{{ $slide['src'] }}')"></div>
+                                @if($key === 1)
+                                    <div class="background_responsive_img fill" data-background-image="{{ $slide['src'] }}" style="background-image: url({{ $slide['src'] }})"></div>
+                                @endif
+                                <div class="background_responsive_img fill" data-background-image="{{ $slide['src'] }}"></div>
                             </section>
                         </li>
                     @endforeach

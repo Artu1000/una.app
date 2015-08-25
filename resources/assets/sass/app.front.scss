@@ -11,15 +11,17 @@
 @import 'app.common';
 $logo_header_footer: '../../img/logo-una-header-large-white.png';
 
-$footer_1920_background: '/img/footer-bg-1920.png';
-$footer_1119_background: '/img/footer-bg-1119.png';
-$footer_991_background: '/img/footer-bg-991.png';
-$footer_767_background: '/img/footer-bg-767.png';
+$footer_2560_background: '/img/footer-bg-2560x383.png';
+$footer_1920_background: '/img/footer-bg-1920x287.png';
+$footer_1199_background: '/img/footer-bg-1199x167.png';
+$footer_991_background: '/img/footer-bg-991x148.png';
+$footer_767_background: '/img/footer-bg-767x115.png';
 
-$header_1920_background: '/img/header-bg-1920.png';
-$header_1119_background: '/img/header-bg-1119.png';
-$header_991_background: '/img/header-bg-991.png';
-$header_767_background: '/img/header-bg-767.png';
+$header_2560_background: '/img/header-bg-2560x403.png';
+$header_1920_background: '/img/header-bg-1920x302.png';
+$header_1199_background: '/img/header-bg-1199x176.png';
+$header_991_background: '/img/header-bg-991x156.png';
+$header_767_background: '/img/header-bg-767x121.png';
 
 
 /***********************************************************************************************************************
@@ -177,7 +179,6 @@ header{
   }
 
   #footer_background{
-    background-image: url($footer_1920_background);
     background-repeat: no-repeat;
     background-position: center top;
     width: 100%;
@@ -384,7 +385,7 @@ header{
   }
 
   #header_background{
-    background-image: url($header_1920_background);
+    background-image: url($header_2560_background);
     height: 403px;
     background-size: cover;
   }
@@ -405,6 +406,7 @@ header{
   #footer_layout{
 
     #footer_background{
+      background-image: url($footer_2560_background);
       height: 382px;
       margin-bottom: -38px;
       background-size: cover;
@@ -517,6 +519,7 @@ header{
   #footer_layout{
 
     #footer_background{
+      background-image: url($footer_1920_background);
       height: 287px;
       margin-bottom: -38px;
     }
@@ -614,7 +617,7 @@ header{
   }
 
   #header_background{
-    background-image: url($header_1119_background);
+    background-image: url($header_1199_background);
     height: 189px;
     background-size: 1199px auto;
     margin-top: 40px;
@@ -634,7 +637,7 @@ header{
   *********************************************************************************************************************/
 
   #footer_background{
-    background-image: url($footer_1119_background);
+    background-image: url($footer_1199_background);
     height: 179px;
     background-size: 1199px auto;
     margin-bottom: -28px;
@@ -940,7 +943,7 @@ header{
   *********************************************************************************************************************/
 
   #map-canvas{
-    height: 350px;
+    height: 400px;
     margin-bottom: -130px;
   }
 

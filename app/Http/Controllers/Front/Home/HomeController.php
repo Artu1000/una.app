@@ -34,7 +34,7 @@ class HomeController extends Controller
         $slides = [];
         // UNA
         $slides[] = [
-            'picto' => url('/').'/img/home/una_picto_club.png',
+            'picto' => url('/').'/img/home/una_picto_club_300.png',
             'title' => 'Club d\'aviron à Nantes',
             'quote' => 'Nous sommes ouvert à tous les publics, (collegiens, lycéens, étudiants ou actifs), <br/>
                         Lancez-vous, venez vous initier gratuitement à notre sport !<br/>',
@@ -43,7 +43,7 @@ class HomeController extends Controller
         ];
         // univ
         $slides[] = [
-            'picto' => url('/').'/img/home/una_picto_aviron_universitaire.png',
+            'picto' => url('/').'/img/home/una_picto_aviron_universitaire_300.png',
             'title' => 'Aviron universitaire',
             'quote' => 'Rejoignez le plus grand club d\'aviron universitaire de France.<br/>
                         Nous proposons des tarifs avantageux pour tous les étudiants nantais !',
@@ -52,7 +52,7 @@ class HomeController extends Controller
         ];
         // competition
         $slides[] = [
-            'picto' => url('/').'/img/home/una_picto_aviron_competition.png',
+            'picto' => url('/').'/img/home/una_picto_aviron_competition_300.png',
             'title' => 'Aviron en compétition',
             'quote' => 'Sport de glisse et de vitesse par excellence, <br/>
                         choisissez l\'aviron de compétition et rejoignez nos athlètes !',
@@ -61,7 +61,7 @@ class HomeController extends Controller
         ];
         // école d'aviron
         $slides[] = [
-            'picto' => url('/').'/img/home/una_picto_ecole_aviron.png',
+            'picto' => url('/').'/img/home/una_picto_ecole_aviron_300.png',
             'title' => 'école d\'aviron',
             'quote' => 'Nous encadrons et formons les collegiens et lycéens de 18 ans et moins.<br/>
                         Evoluez avec d\'autres jeunes et intégrez un groupe performant et dynamique !',
@@ -70,7 +70,7 @@ class HomeController extends Controller
         ];
         // aviron féminin
         $slides[] = [
-            'picto' => url('/').'/img/home/una_picto_aviron_feminin.png',
+            'picto' => url('/').'/img/home/una_picto_aviron_feminin_300.png',
             'title' => 'Aviron sport féminin',
             'quote' => 'Pour la compétition ou la pratique loisir, rejoignez nos équipes 100% féminines.<br/>
                         Favorisez le développement harmonieux de vos muscles et de votre endurance !',
@@ -79,7 +79,7 @@ class HomeController extends Controller
         ];
         // pratique loisir
         $slides[] = [
-            'picto' => url('/').'/img/home/una_picto_aviron_loisir.png',
+            'picto' => url('/').'/img/home/una_picto_aviron_loisir_300.png',
             'title' => 'Pratique loisir',
             'quote' => 'L\'UNA est une association sportive ouverte à la pratique loisir.<br/>
                         Ballades, détente, ... Profitez de l\'Erdre, réputée plus belle rivière de France !',

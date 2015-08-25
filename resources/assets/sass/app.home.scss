@@ -11,7 +11,7 @@
 @import 'app.front';
 $background_img_2560 : '/img/home/una_club_background_img.jpg';
 $background_img_1920 : '/img/home/una_club_background_img.jpg';
-$background_img_1119 : '/img/home/una_club_background_img.jpg';
+$background_img_1199 : '/img/home/una_club_background_img.jpg';
 $background_img_991 : '/img/home/una_club_background_img.jpg';
 $background_img_767 : '/img/home/una_club_background_img.jpg';
 
@@ -43,7 +43,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
             background-position: center center;
             position: relative;
 
-            .background_img, .slide_content{
+            .background_responsive_img, .slide_content{
               position: absolute;
               top: 0;
               left: 0;
@@ -79,10 +79,11 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
               }
             }
 
-            .background_img{
+            .background_responsive_img{
               opacity: 0.3;
               z-index: 0;
               background-size: cover;
+              background-repeat: no-repeat;
               background-position: center center;
             }
           }
@@ -92,6 +93,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
     .glide__bullets{
       padding: 0;
+      bottom: 5%;
     }
   }
 
@@ -231,6 +233,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 @media screen and (min-width: 1921px){
 
   &#carousel {
+    margin-top: -100px;
 
     .glide__wrapper {
 
@@ -340,6 +343,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 @media screen and (max-width: 1920px) and (min-width: 1200px) {
 
   &#carousel {
+    margin-top: -50px;
 
     .glide__wrapper {
 
@@ -448,6 +452,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 @media screen and (max-width: 1199px) and (min-width: 992px){
 
   &#carousel {
+    margin-top: -50px;
 
     .glide__wrapper {
 
@@ -553,6 +558,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 @media screen and (max-width: 991px) and (min-width: 768px){
 
   &#carousel {
+    margin-top: -50px;
 
     .glide__wrapper {
 
@@ -650,6 +656,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 @media screen and (max-width: 767px){
 
   &#carousel {
+    margin-top: -20px;
 
     .glide__wrapper {
 

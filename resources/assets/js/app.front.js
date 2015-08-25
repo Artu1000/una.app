@@ -1,4 +1,7 @@
-// Cookie policy message
+// get screen width
+var screen_width = $( window ).width();
+
+// cookie policy message
 var cookie = {
     set: function(name, value, days) {
         var expires;
@@ -50,7 +53,7 @@ var cookie = {
 };
 
 // Google map
-gmap ={
+var gmap = {
     active : false,
     screenOnMap : false,
     url : 'https://maps.googleapis.com/maps/api/js?v=3.exp&',
@@ -74,10 +77,8 @@ gmap ={
         var draggable = null;
         var latlng = new google.maps.LatLng(47.236516, -1.551113);
 
-        var screenWidth = screen.width;
-
         // manage drag for large / mobile devices
-        if(screenWidth > 767){
+        if(screen_width > 767){
             draggable = true;
         }
         else{
@@ -109,11 +110,48 @@ gmap ={
             gmap.active = true;
             gmap.callScript();
         }
+    },
+};
+
+var responsiveBackgroundImage = {
+    responsive_width : null,
+    setImageSize: function(){
+        $('.background_responsive_img').each(function( index, element ) {
+            var bg_img_url = $(this).attr('data-background-image');
+            console.log(bg_img_url);
+            bg_img_url = bg_img_url.substr(0, bg_img_url.length -4);
+            $(this).css('background-image', 'url(' + bg_img_url + '_' + responsiveBackgroundImage.responsive_width + '.jpg)');
+        });
+    },
+    process : function(){
+        switch(true) {
+            case screen_width >= 1921 :
+                responsiveBackgroundImage.responsive_width = 2560;
+                break;
+            case screen_width >= 1200 && screen_width <= 1920:
+                responsiveBackgroundImage.responsive_width = 1920;
+                break;
+            case screen_width >= 992 && screen_width <= 1199:
+                responsiveBackgroundImage.responsive_width = 1199;
+                break;
+            case screen_width >= 768 && screen_width <= 991:
+                responsiveBackgroundImage.responsive_width = 991;
+                break;
+            case screen_width <= 767:
+                responsiveBackgroundImage.responsive_width = 767;
+                break;
+        }
+        console.log(screen_width);
+        console.log(responsiveBackgroundImage.responsive_width);
+        responsiveBackgroundImage.setImageSize();
     }
 };
 
 // When DOM is ready
 $(function(){
+
+    // load image depending on the screen size
+    responsiveBackgroundImage.process();
 
     // load gmap when scroll on it
     $(window).scroll(gmap.scrollTreatment);
