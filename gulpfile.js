@@ -29,11 +29,13 @@ elixir(function (mix) {
         * SASS
         ***************************************************************************************************************/
         // compile front css
-        //.sass("app.front.scss", 'public/css/app.front.css', {})
-        // compile back css
-        //.sass("app.back.scss", 'public/css/app.back.css', {})
+        .sass("app.front.scss", 'public/css/app.front.css', {})
         // compile home css
         .sass("app.home.scss", './resources/assets/compiled_sass_to_merge/app.home.css', {})
+        // compile page css
+        .sass("app.page.scss", 'public/css/app.page.css', {})
+        //compile back css
+        //.sass("app.back.scss", 'public/css/app.back.css', {})
 
         /***************************************************************************************************************
          * CSS
@@ -88,16 +90,17 @@ elixir(function (mix) {
         ], 'public/js/app.home.js', './')
 
         /***************************************************************************************************************
-         * VERSIONNING
+         * VERSIONS
          ***************************************************************************************************************/
         // version all files
         .version([
-            //'public/css/app.front.css',
-            //'public/css/app.back.css',
+            'public/css/app.front.css',
             'public/css/app.home.css',
+            'public/css/app.page.css',
+            //'public/css/app.back.css',
 
             'public/js/app.front.js',
-            //'public/js/app.back.js',
             'public/js/app.home.js'
+            //'public/js/app.back.js',
         ]);
 });

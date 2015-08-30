@@ -45,7 +45,7 @@
 
         <div id="last_news" class="text-content">
             <div class="container">
-                <h2><i class="fa fa-paper-plane"></i> Nouvelle fraîches</h2>
+                <h2><i class="fa fa-paper-plane"></i> Nouvelles fraîches</h2>
                 @foreach($lastNews as $key => $news)
                     <div class="news col-xs-12 col-sm-12 col-md-6">
                         <div class="row">
@@ -76,7 +76,7 @@
             </div>
         </div>
 
-        <div id="una_club" class="text-content">
+        <div id="una-club" class="text-content">
             <div class="container">
                 <h2><i class="fa fa-hand-spock-o"></i> Bienvenue au club Université Nantes Aviron (UNA)</h2>
                 <p>Créé en 1985, le club Université Nantes Aviron (UNA) est LE club d'aviron des étudiants nantais.
@@ -117,7 +117,7 @@
                     auprès de la population étudiante française.
                 </p>
                 <ol>
-                    <p><i class="fa fa-exclamation-circle"></i> A noter :</p>
+                    <p class="strong"><i class="fa fa-exclamation-circle"></i> A noter :</p>
                    <li>
                         Pour les universitaires, l'inscription à l'aviron doit s'effectuer directement au club Université Nantes Aviron pour bénéficier de l'ensemble des créneaux d'encadrement (et non pas via le SUAPS).
                    </li>

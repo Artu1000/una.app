@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
+use App\Repositories\Page\PageRepository;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class RepositoryServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
@@ -23,8 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if ($this->app->environment() == 'local') {
-            $this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
-        }
+
+        $this->app->bind('App\Repositories\Page\PageRepositoryInterface', function(){
+            return new PageRepository();
+        });
     }
 }

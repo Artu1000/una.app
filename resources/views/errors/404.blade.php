@@ -1,4 +1,4 @@
-@extends('layouts.front.nude_layout')
+{{--@extends('layouts.front.nude_layout')--}}
 
 @section('content')
 

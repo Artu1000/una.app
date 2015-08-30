@@ -1,5 +1,5 @@
 {{-- page title --}}
-<title>{{env('SITE_NAME')}} - {{$seoMeta['page_title']}}</title>
+<title>{{$seoMeta['page_title']}} - {{env('SITE_NAME')}}</title>
 
 {{-- favicon --}}
 <link rel="icon" href="{{ url('/') }}/favicon.ico">
@@ -22,5 +22,5 @@
 <script type="text/javascript">
     var base_url = <?php echo json_encode(url('/')); ?>;
     var site_name = <?php echo json_encode(env('SITE_NAME')); ?>;
-    var page_data = <?php echo !empty($jsPageData) ? json_encode($jsPageData) : ''; ?>;
+    var page_data = <?php echo !empty($jsPageData) ? json_encode($jsPageData) : '""'; ?>;
 </script>

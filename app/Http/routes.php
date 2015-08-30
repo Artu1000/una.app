@@ -4,20 +4,18 @@
  * LOGS
  **********************************************************************************************************************/
 
-// Log each HTTP request
+// log each http request
 if (!empty($_SERVER['REQUEST_URI'])) {
-    $method = !empty($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD']:'';
-    $uri    = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI']: '';
+    $method = !empty($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '';
+    $uri = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
     \Log::info(implode(' - ', array($method, $uri)));
 }
 
 // log each database query
-Event::listen('illuminate.query', function($sql, $bindings)
-{
+Event::listen('illuminate.query', function ($sql, $bindings) {
     foreach ($bindings as $val) {
         $sql = preg_replace('/\?/', "'{$val}'", $sql, 1);
     }
-
     Log::info($sql);
 });
 
@@ -26,18 +24,27 @@ Event::listen('illuminate.query', function($sql, $bindings)
  * FRONTEND ROUTES
  **********************************************************************************************************************/
 
-//Route::get('/', function () {
-//    dd('coucou');
-//    return view('welcome');
-//});
-
-//Route::controller('home', 'Front\Home\HomeController');
-
+// home
 Route::resource('/', 'Front\Home\HomeController', [
     'names' => [
         'index' => 'front.home'
     ]
 ]);
+
+// news
+Route::resource('/news', 'Front\News\NewsController', [
+    'names' => [
+        'index' => 'front.news.list'
+    ]
+]);
+
+// at last, pages
+Route::resource('/{page_key}', 'Front\Pages\PageController', [
+    'names' => [
+        'index' => 'front.page'
+    ]
+]);
+
 
 // Verify csrf for Ajax request
 //Route::filter('csrf', function(){
@@ -45,8 +52,6 @@ Route::resource('/', 'Front\Home\HomeController', [
 //    if (Session::token() != $token)
 //        throw new Illuminate\Session\TokenMismatchException;
 //});
-
-
 
 
 // Routes with no auth needed
@@ -68,11 +73,11 @@ Route::resource('auth', 'Back\Auth\AuthController', [
 // Routes with auth needed
 Route::group([
     'middleware' => 'auth'
-], function(){
-    Route::resource('account', 'AccountController', [
-        'names' => [
-            'index' => 'account.index'
-        ]
-    ]);
+], function () {
+//    Route::resource('account', 'AccountController', [
+//        'names' => [
+//            'index' => 'account.index'
+//        ]
+//    ]);
 });
 

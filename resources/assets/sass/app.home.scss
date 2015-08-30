@@ -98,19 +98,6 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
   }
 
   .text-content{
-    width: 100%;
-    text-align: justify;
-    background-color: #ffffff;
-
-    .container{
-
-      h2{
-
-        i.fa{
-          font-size: inherit;
-        }
-      }
-    }
 
     &#last_news{
       background-color: #F7F7F7;
@@ -161,34 +148,9 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
       }
     }
 
-    &#una_club{
+    &#una-club{
       margin-bottom: 0;
       text-align: justify;
-
-      p{
-        font-size: 16px;
-        @include lato-font('light');
-
-      }
-
-      ol{
-        margin: 0;
-        padding: 0;
-
-        p{
-          @include lato-font('medium');
-          margin: 0 0 10px 0;
-
-          i.fa{
-            font-size: inherit;
-          }
-        }
-
-        li{
-          margin: 0 0 5px 25px;
-          padding: 0;
-        }
-      }
 
       iframe{
         margin-top: 30px;
@@ -273,19 +235,6 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
   }
 
   .text-content {
-    padding: 150px 0;
-
-    .container {
-
-      h2 {
-        margin-bottom: 50px;
-        font-size: 45px;
-      }
-
-      p {
-        margin: 0 0 30px;
-      }
-    }
 
     &#last_news {
 
@@ -308,7 +257,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
       }
     }
 
-    &#una_club{
+    &#una-club{
 
       iframe{
         height: 630px;
@@ -383,19 +332,6 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
   }
 
   .text-content {
-    padding: 120px 0;
-
-    .container {
-
-      h2 {
-        margin-bottom: 50px;
-        font-size: 45px;
-      }
-
-      p {
-        margin: 0 0 30px;
-      }
-    }
 
     &#last_news {
 
@@ -418,7 +354,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
       }
     }
 
-    &#una_club{
+    &#una-club{
 
       iframe{
         height: 630px;
@@ -493,19 +429,6 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
   }
 
   .text-content {
-    padding: 80px 0;
-
-    .container {
-
-      h2 {
-        margin-bottom: 30px;
-        font-size: 30px;
-      }
-
-      p {
-        margin: 0 0 30px;
-      }
-    }
 
     &#last_news {
 
@@ -525,7 +448,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
       }
     }
 
-    &#una_club{
+    &#una-club{
 
       iframe{
         height: 530px;
@@ -599,19 +522,6 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
   }
 
   .text-content {
-    padding: 80px 0;
-
-    .container {
-
-      h2 {
-        margin-bottom: 30px;
-        font-size: 30px;
-      }
-
-      p {
-        margin: 0 0 30px;
-      }
-    }
 
     &#last_news {
 
@@ -623,7 +533,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
       }
     }
 
-    &#una_club{
+    &#una-club{
 
       iframe{
         height: 400px;
@@ -699,20 +609,6 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
   }
 
   .text-content {
-    padding: 60px 0;
-
-    .container {
-
-      h2 {
-        margin-bottom: 30px;
-        font-size: 30px;
-        text-align: center;
-      }
-
-      p {
-        margin: 0 0 30px;
-      }
-    }
 
     &#last_news {
 
@@ -732,7 +628,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
       }
     }
 
-    &#una_club{
+    &#una-club{
 
       iframe{
         height: 400px;

@@ -117,13 +117,16 @@ var responsiveBackgroundImage = {
     responsive_width : null,
     setImageSize: function(){
         $('.background_responsive_img').each(function( index, element ) {
+            // we get the url of the background-image
             var bg_img_url = $(this).attr('data-background-image');
-            console.log(bg_img_url);
+            // we remove the extension (has to be jpg)
             bg_img_url = bg_img_url.substr(0, bg_img_url.length -4);
+            // we add the responsive size
             $(this).css('background-image', 'url(' + bg_img_url + '_' + responsiveBackgroundImage.responsive_width + '.jpg)');
         });
     },
     process : function(){
+        // we get the responsive size of the screen
         switch(true) {
             case screen_width >= 1921 :
                 responsiveBackgroundImage.responsive_width = 2560;
@@ -141,8 +144,7 @@ var responsiveBackgroundImage = {
                 responsiveBackgroundImage.responsive_width = 767;
                 break;
         }
-        console.log(screen_width);
-        console.log(responsiveBackgroundImage.responsive_width);
+        // we load the background image
         responsiveBackgroundImage.setImageSize();
     }
 };
