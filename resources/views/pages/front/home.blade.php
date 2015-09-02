@@ -127,20 +127,10 @@
                 </ol>
 
                 <p>
+                <div class="embed-responsive embed-responsive-16by9">
                     <iframe width="100%" src="https://www.youtube.com/embed/PIUdOHcrleo" frameborder="0" allowfullscreen></iframe>
+                </div>
                 </p>
-            </div>
-        </div>
-
-        <div id="partners" class="text-content">
-            <div class="container">
-                @foreach($partners as $partner)
-                    <div>
-                        <a class="new_window" href="{{ $partner['url'] }}" title="{{ $partner['title'] }}">
-                            <img height="60" src="{{ $partner['src'] }}" alt="{{ $partner['title'] }}">
-                        </a>
-                    </div>
-                @endforeach
             </div>
         </div>
     </div>

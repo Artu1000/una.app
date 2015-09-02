@@ -111,30 +111,6 @@ class HomeController extends Controller
             <p>Orientis vero limes in longum protentus et rectum ab Euphratis fluminis ripis ad usque supercilia porrigitur Nili, laeva Saracenis conterminans gentibus, dextra pelagi fragoribus patens, quam plagam Nicator Seleucus occupatam auxit magnum in modum, cum post Alexandri Macedonis obitum successorio iure teneret regna Persidis, efficaciae inpetrabilis rex, ut indicat cognomentum.</p>'
         ];
 
-
-
-        $partners = [];
-        $partners[] = [
-            'title' => 'Ville de Nantes',
-            'url' => 'http://www.nantes.fr',
-            'src' => url('/').'/img/home/logo-ville-nantes.png'
-        ];
-        $partners[] = [
-            'title' => 'Université de Nantes',
-            'url' => 'http://www.univ-nantes.fr',
-            'src' => url('/').'/img/home/logo-univ-nantes.png'
-        ];
-        $partners[] = [
-            'title' => 'Fédération Française d\'Aviron',
-            'url' => 'http://avironfrance.fr',
-            'src' => url('/').'/img/home/logo-ffa.png'
-        ];
-        $partners[] = [
-            'title' => 'Fédération Française des Sports Universitaires',
-            'url' => 'http://www.sport-u.com',
-            'src' => url('/').'/img/home/logo-ffsu.png'
-        ];
-
         // prepare js data
         $jsPageData = [
             'slides_count' => sizeof($slides)
@@ -145,7 +121,6 @@ class HomeController extends Controller
             'seoMeta' => $this->seoMeta,
             'slides' => $slides,
             'lastNews' => $lastNews,
-            'partners' => $partners,
             'css' => elixir('css/app.home.css'),
             'js' => 'home',
             'jsPageData' => $jsPageData

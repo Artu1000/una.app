@@ -2,7 +2,7 @@
 
     {{-- head inclusion--}}
     <head>
-        @include('layouts.front.head')
+        @include('layouts.front.partials.head')
     </head>
 
     {{-- body inclusion--}}
@@ -26,13 +26,16 @@
             </noscript>
 
             {{-- header inclusion --}}
-            @include('layouts.front.header')
+            @include('layouts.front.partials.header')
 
             {{-- content inclusion --}}
             @yield('content')
 
+            {{-- partners inclusion --}}
+            @include('layouts.front.partials.partners')
+
             {{-- footer inclusion --}}
-            @include('layouts.front.footer')
+            @include('layouts.front.partials.footer')
 
             {{-- alerts management --}}
             @if(Session::get('alert'))
@@ -48,6 +51,6 @@
     </body>
 
     {{-- end file inclusion --}}
-    @include('layouts.front.end')
+    @include('layouts.front.partials.end')
 
 </html>

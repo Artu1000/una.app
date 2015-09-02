@@ -8370,14 +8370,15 @@ b, .strong {
   font-weight: 400;
   font-style: normal; }
 
-ol, ul {
+.text-content ol, .text-content ul {
   margin: 0;
   padding: 0; }
-  ol p, ul p {
+  .text-content ol p, .text-content ul p {
     margin: 0 0 10px 0; }
-    ol p i.fa, ul p i.fa {
-      font-size: inherit; }
-  ol li, ul li {
+    .text-content ol p i.fa, .text-content ul p i.fa {
+      font-size: inherit;
+      color: inherit; }
+  .text-content ol li, .text-content ul li {
     margin: 0 0 5px 25px;
     padding: 0; }
 
@@ -8534,10 +8535,23 @@ header {
   width: 100%;
   text-align: justify;
   background-color: #ffffff; }
-  #content .text-content .container h2:first-child {
+  #content .text-content .container h2:first-of-type {
     margin: 0 0 50px; }
   #content .text-content .container h2 i.fa {
     font-size: inherit; }
+
+/***********************************************************************************************************************
+ * PARTNERS
+ **********************************************************************************************************************/
+#partners {
+  background-color: #F7F7F7; }
+  #partners .container {
+    text-align: center; }
+    #partners .container div {
+      display: inline-block; }
+      #partners .container div a:hover {
+        opacity: 0.7;
+        transition: opacity 0.2s ease; }
 
 /***********************************************************************************************************************
  * GOOGLE MAP
@@ -8678,8 +8692,13 @@ header {
   /*********************************************************************************************************************
   * CONTENT
   *********************************************************************************************************************/
-  #content .text-content {
+  .text-content {
     padding: 150px 0; }
+  /*********************************************************************************************************************
+  * PARTNERS
+  *********************************************************************************************************************/
+  #partners .container div {
+    padding: 0 70px; }
   /*********************************************************************************************************************
   * GOOGLE MAP
   *********************************************************************************************************************/
@@ -8730,8 +8749,13 @@ header {
   /*********************************************************************************************************************
   * CONTENT
   *********************************************************************************************************************/
-  #content .text-content {
+  .text-content {
     padding: 120px 0; }
+  /*********************************************************************************************************************
+  * PARTNERS
+  *********************************************************************************************************************/
+  #partners .container div {
+    padding: 0 60px; }
   /*********************************************************************************************************************
   * GOOGLE MAP
   *********************************************************************************************************************/
@@ -8791,8 +8815,13 @@ header {
   /*********************************************************************************************************************
   * CONTENT
   *********************************************************************************************************************/
-  #content .text-content {
+  .text-content {
     padding: 80px 0; }
+  /*********************************************************************************************************************
+  * PARTNERS
+  *********************************************************************************************************************/
+  #partners .container div {
+    padding: 0 40px; }
   /*********************************************************************************************************************
   * GOOGLE MAP
   *********************************************************************************************************************/
@@ -8862,8 +8891,13 @@ header {
   /*********************************************************************************************************************
   * CONTENT
   *********************************************************************************************************************/
-  #content .text-content {
+  .text-content {
     padding: 80px 0; }
+  /*********************************************************************************************************************
+  * PARTNERS
+  *********************************************************************************************************************/
+  #partners .container div {
+    padding: 0 10px; }
   /*********************************************************************************************************************
   * GOOGLE MAP
   *********************************************************************************************************************/
@@ -8976,16 +9010,23 @@ header {
   /*********************************************************************************************************************
   * CONTENT
   *********************************************************************************************************************/
-  #content .text-content {
+  .text-content {
     padding: 60px 0; }
-    #content .text-content .container h2 {
+    .text-content .container h2 {
       margin-bottom: 30px;
       font-size: 30px;
       text-align: center; }
-    #content .text-content .container h3 {
+    .text-content .container h3 {
       font-size: 22px; }
-    #content .text-content .container p {
+    .text-content .container p {
       margin: 0 0 30px; }
+  /*********************************************************************************************************************
+  * PARTNERS
+  *********************************************************************************************************************/
+  #partners .container div {
+    padding: 20px 10px; }
+    #partners .container div a img {
+      height: 50px; }
   /*********************************************************************************************************************
   * GOOGLE MAP
   *********************************************************************************************************************/
@@ -9002,7 +9043,7 @@ header {
       background-image: url("/img/footer-bg-991x148.png");
       height: 115px;
       background-size: 767px auto;
-      margin-bottom: -26px; }
+      margin-bottom: -33px; }
     #footer_layout footer {
       font-size: 13px; }
       #footer_layout footer .container i.fa {
@@ -9067,7 +9108,8 @@ header {
                 font-family: "Lato Medium";
                 font-weight: 400;
                 font-style: normal;
-                text-transform: uppercase; }
+                text-transform: uppercase;
+                color: #fff; }
               #content.home #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .quote {
                 /* Lato (thin, normal) */
                 font-family: Lato;
@@ -9113,18 +9155,8 @@ header {
 #content.home .text-content#una-club {
   margin-bottom: 0;
   text-align: justify; }
-  #content.home .text-content#una-club iframe {
+  #content.home .text-content#una-club .embed-responsive {
     margin-top: 30px; }
-
-#content.home .text-content#partners {
-  background-color: #F7F7F7; }
-  #content.home .text-content#partners .container {
-    text-align: center; }
-    #content.home .text-content#partners .container div {
-      display: inline-block; }
-      #content.home .text-content#partners .container div a:hover {
-        opacity: 0.7;
-        transition: opacity 0.2s ease; }
 
 /***********************************************************************************************************************
  * EXTRA LARGE DEVICES DESKTOPS : 1200 & MORE
@@ -9146,11 +9178,7 @@ header {
   .text-content#last_news .news .content {
     padding: 0 15px; }
   .text-content#last_news .news:last-of-type .content {
-    padding: 0 0 0 15px; }
-  .text-content#una-club iframe {
-    height: 630px; }
-  .text-content#partners .container div {
-    padding: 0 70px; } }
+    padding: 0 0 0 15px; } }
 
 /***********************************************************************************************************************
  * LARGE DEVICES DESKTOPS : 1920 <=> 1200 (LG)
@@ -9172,11 +9200,7 @@ header {
   .text-content#last_news .news .content {
     padding: 0 15px; }
   .text-content#last_news .news:last-of-type .content {
-    padding: 0 0 0 15px; }
-  .text-content#una-club iframe {
-    height: 630px; }
-  .text-content#partners .container div {
-    padding: 0 60px; } }
+    padding: 0 0 0 15px; } }
 
 /***********************************************************************************************************************
  * MEDIUM DEVICES DESKTOPS : : 1199 <=> 992 (MD)
@@ -9199,11 +9223,7 @@ header {
   .text-content#last_news .news:last-of-type {
     padding: 0 15px 0 30px; }
     .text-content#last_news .news:last-of-type .content {
-      padding: 0 0 0 15px; }
-  .text-content#una-club iframe {
-    height: 530px; }
-  .text-content#partners .container div {
-    padding: 0 40px; } }
+      padding: 0 0 0 15px; } }
 
 /***********************************************************************************************************************
  * SMALL DEVICES TABLETS : 991 <=> 768 (SM)
@@ -9222,11 +9242,7 @@ header {
     #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .quote {
       font-size: 18px; }
   .text-content#last_news .news .content {
-    padding: 30px 0 5px 15px; }
-  .text-content#una-club iframe {
-    height: 400px; }
-  .text-content#partners .container div {
-    padding: 0 10px; } }
+    padding: 30px 0 5px 15px; } }
 
 /***********************************************************************************************************************
  * EXTRA SMALL DEVICES : 767 & LESS (SM)
@@ -9252,13 +9268,7 @@ header {
     .text-content#last_news .news .content {
       padding: 0 0 0 15px; }
     .text-content#last_news .news .button button {
-      width: 100%; }
-  .text-content#una-club iframe {
-    height: 400px; }
-  .text-content#partners .container div {
-    padding: 10px; }
-    .text-content#partners .container div a img {
-      height: 50px; } }
+      width: 100%; } }
 
 /*# sourceMappingURL=app.home.css.map */
 /*# sourceMappingURL=app.home.css.map */

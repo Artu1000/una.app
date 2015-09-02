@@ -24,10 +24,12 @@ Event::listen('illuminate.query', function ($sql, $bindings) {
  * FRONTEND ROUTES
  **********************************************************************************************************************/
 
+
+
 // home
 Route::resource('/', 'Front\Home\HomeController', [
     'names' => [
-        'index' => 'front.home'
+        'index' => 'front.home',
     ]
 ]);
 
@@ -44,7 +46,6 @@ Route::resource('/{page_key}', 'Front\Pages\PageController', [
         'index' => 'front.page'
     ]
 ]);
-
 
 // Verify csrf for Ajax request
 //Route::filter('csrf', function(){

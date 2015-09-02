@@ -41,7 +41,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="menu_tab">
-                                <a href="#una-club" title="Présentation">
+                                <a href="{{ url('/') }}#una-club" title="Présentation">
                                     <i class="fa fa-comments"></i> Présentation
                                 </a>
                             </li>
@@ -111,7 +111,7 @@
                         </a>
                     </li>
                     <li class="menu_tab">
-                        <a title="Contact" href="#contact">
+                        <a title="Contact" href="{{ url('/') }}#contact">
                             <i class="fa fa-pencil-square"></i> Contact
                         </a>
                     </li>

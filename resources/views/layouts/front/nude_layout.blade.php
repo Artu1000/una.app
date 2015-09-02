@@ -2,7 +2,7 @@
 
     {{-- head inclusion--}}
     <head>
-        @include('layouts.front.head')
+        @include('layouts.front.partials.head')
     </head>
 
     {{-- body inclusion--}}
@@ -36,6 +36,6 @@
     </body>
 
     {{-- end file inclusion --}}
-    @include('layouts.front.end')
+    @include('layouts.front.partials.end')
 
 </html>

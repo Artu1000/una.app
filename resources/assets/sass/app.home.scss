@@ -70,6 +70,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
                   .title{
                     @include lato-font('medium');
                     text-transform: uppercase;
+                    color: #fff;
                   }
 
                   .quote{
@@ -152,28 +153,8 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
       margin-bottom: 0;
       text-align: justify;
 
-      iframe{
+      .embed-responsive{
         margin-top: 30px;
-      }
-    }
-
-    &#partners{
-      background-color: #F7F7F7;
-
-      .container{
-        text-align: center;
-
-        div{
-          display: inline-block;
-
-          a{
-
-            &:hover{
-              opacity: 0.7;
-              @include transition(opacity 0.2s ease);
-            }
-          }
-        }
       }
     }
   }
@@ -253,23 +234,6 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
           .content{
             padding: 0 0 0 15px;
           }
-        }
-      }
-    }
-
-    &#una-club{
-
-      iframe{
-        height: 630px;
-      }
-    }
-
-    &#partners{
-
-      .container{
-
-        div{
-          padding:  0 70px;
         }
       }
     }
@@ -353,23 +317,6 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
     }
-
-    &#una-club{
-
-      iframe{
-        height: 630px;
-      }
-    }
-
-    &#partners{
-
-      .container{
-
-        div{
-          padding:  0 60px;
-        }
-      }
-    }
   }
 }
 
@@ -447,23 +394,6 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
     }
-
-    &#una-club{
-
-      iframe{
-        height: 530px;
-      }
-    }
-
-    &#partners{
-
-      .container{
-
-        div{
-          padding:  0 40px;
-        }
-      }
-    }
   }
 }
 
@@ -529,23 +459,6 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
         .content{
           padding: 30px 0 5px 15px;
-        }
-      }
-    }
-
-    &#una-club{
-
-      iframe{
-        height: 400px;
-      }
-    }
-
-    &#partners{
-
-      .container{
-
-        div{
-          padding:  0 10px;
         }
       }
     }
@@ -623,30 +536,6 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
           button{
             width: 100%;
-          }
-        }
-      }
-    }
-
-    &#una-club{
-
-      iframe{
-        height: 400px;
-      }
-    }
-
-    &#partners{
-
-      .container{
-
-        div{
-          padding: 10px;
-
-          a{
-
-            img{
-              height: 50px;
-            }
           }
         }
       }
