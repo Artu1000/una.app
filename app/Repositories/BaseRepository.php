@@ -3,6 +3,9 @@
 namespace App\Repositories;
 
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+
 abstract class BaseRepository implements BaseRepositoryInterface
 {
     /**
@@ -94,6 +97,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function create(array $data)
     {
         $this->unsetClauses();
+        $data['created_at'] = Carbon::now();
+        $data['updated_at'] = Carbon::now();
         return $this->model->create($data);
     }
 

@@ -1,17 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Partner extends Model
+class Manager extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'partners';
+    protected $table = 'managers';
 
     /**
      * The attributes that are not assignable.
@@ -28,9 +28,8 @@ class Partner extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'logo',
-        'url'
+        'user_id',
+        'type_id'
     ];
 
     /**

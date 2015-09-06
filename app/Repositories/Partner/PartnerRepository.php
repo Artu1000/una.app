@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Partner;
 
-use App\Partner;
+use App\Models\Partner;
 use App\Repositories\BaseRepository;
 
 class PartnerRepository extends BaseRepository implements PartnerRepositoryInterface

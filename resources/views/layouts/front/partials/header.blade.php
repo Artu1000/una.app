@@ -51,7 +51,7 @@
                                 </a>
                             </li>
                             <li class="menu_tab">
-                                <a href="{{ URL::route('front.page', 'palmares') }}" title="Palmarès">
+                                <a href="{{ URL::route('front.palmares.list') }}" title="Palmarès">
                                     <i class="fa fa-trophy"></i> Palmarès
                                 </a>
                             </li>

@@ -12013,7 +12013,7 @@ var anchor = {
     },
     listen: function(){
         $('a[href*=#]:not([href=#])').click(function(event){
-            
+
             // we prevent the redirection
             event.preventDefault();
 

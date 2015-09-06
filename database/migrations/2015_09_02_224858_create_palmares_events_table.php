@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePartnersTable extends Migration
+class CreatePalmaresEventsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,11 @@ class CreatePartnersTable extends Migration
      */
     public function up()
     {
-        Schema::create('partners', function (Blueprint $table) {
+        Schema::create('palmares_events', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('logo');
-            $table->string('url');
-            $table->integer('position');
+            $table->integer('category_id');
+            $table->string('location');
+            $table->date('date');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreatePartnersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('partners');
+        Schema::drop('palmares_events');
     }
 }

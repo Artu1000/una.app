@@ -37,20 +37,14 @@ class PageController extends Controller
 
         // SEO Meta settings
         $this->seoMeta['page_title'] = strip_tags($page->title);
-        $this->seoMeta['meta_desc'] = str_limit(strip_tags($page->content), 150);
+        $this->seoMeta['meta_desc'] = str_limit($page->meta_description);
         $this->seoMeta['meta_keywords'] = $page->meta_keywords;
-
-        // prepare js data
-        $jsPageData = [
-        ];
 
         // prepare data for the view
         $data = [
             'seoMeta' => $this->seoMeta,
             'page' => $page,
-            'css' => elixir('css/app.page.css'),
-//            'js' => 'pages',
-//            'jsPageData' => $jsPageData
+            'css' => elixir('css/app.page.css')
         ];
 
         // return the view with data

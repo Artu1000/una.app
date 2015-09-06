@@ -40,6 +40,13 @@ Route::resource('/news', 'Front\News\NewsController', [
     ]
 ]);
 
+// palmares
+Route::resource('/palmares', 'Front\Palmares\PalmaresController', [
+    'names' => [
+        'index' => 'front.palmares.list'
+    ]
+]);
+
 // at last, pages
 Route::resource('/{page_key}', 'Front\Pages\PageController', [
     'names' => [

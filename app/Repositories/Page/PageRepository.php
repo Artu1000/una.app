@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Page;
 
-use App\Page;
+use App\Models\Page;
 use App\Repositories\BaseRepository;
 
 class PageRepository extends BaseRepository implements PageRepositoryInterface

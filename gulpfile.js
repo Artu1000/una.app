@@ -34,6 +34,8 @@ elixir(function (mix) {
         .sass("app.home.scss", './resources/assets/compiled_sass_to_merge/app.home.css', {})
         // compile page css
         .sass("app.page.scss", 'public/css/app.page.css', {})
+        // compile palmares css
+        .sass("app.palmares.scss", 'public/css/app.palmares.css', {})
         //compile back css
         //.sass("app.back.scss", 'public/css/app.back.css', {})
 
@@ -97,6 +99,7 @@ elixir(function (mix) {
             'public/css/app.front.css',
             'public/css/app.home.css',
             'public/css/app.page.css',
+            'public/css/app.palmares.css',
             //'public/css/app.back.css',
 
             'public/js/app.front.js',

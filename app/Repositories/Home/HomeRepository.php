@@ -8,6 +8,6 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
 {
     public function __construct()
     {
-
+        $this->model = new Home();
     }
 }

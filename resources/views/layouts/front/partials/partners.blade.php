@@ -4,7 +4,7 @@
         @foreach($partners as $partner)
             <div>
                 <a class="new_window" href="{{ $partner->url }}" title="{{ $partner->name }}">
-                    <img height="60" src="{{ url('/').$partner->logo }}" alt="{{ $partner->title }}">
+                    <img height="60" src="{{ url('/').'/'.$partner->logo }}" alt="{{ $partner->title }}">
                 </a>
             </div>
         @endforeach
