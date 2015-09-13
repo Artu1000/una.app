@@ -14,9 +14,9 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <a class="navbar-brand" title="Retour à l'accueil" href="{{ URL::route('front.home') }}">
+                <a class="navbar-brand" title="Retour à l'accueil" href="{{ route('front.home') }}">
                     <span class="logo">
-                        <img width="70" height="66" src="img/logo-una-small.png" alt="Logo Club Université Nantes Aviron (UNA)">
+                        <img width="70" height="66" src="{{ url('/') }}/img/logo-una-small.png" alt="Logo Club Université Nantes Aviron (UNA)">
                     </span>
                     <h1>
                         <span>Université</span>
@@ -46,28 +46,28 @@
                                 </a>
                             </li>
                             <li class="menu_tab">
-                                <a href="{{ URL::route('front.page', 'historique') }}" title="Historique">
+                                <a href="{{ route('front.page', 'historique') }}" title="Historique">
                                     <i class="fa fa-university"></i> Historique
                                 </a>
                             </li>
                             <li class="menu_tab">
-                                <a href="{{ URL::route('front.palmares.list') }}" title="Palmarès">
+                                <a href="{{ route('front.palmares.list') }}" title="Palmarès">
                                     <i class="fa fa-trophy"></i> Palmarès
                                 </a>
                             </li>
                             <li class="divider"></li>
                             <li class="menu_tab">
-                                <a href="{{ URL::route('front.page', 'equipe-dirigeante') }}" title="Equipe dirigeante">
+                                <a href="{{ route('front.page', 'equipe-dirigeante') }}" title="Equipe dirigeante">
                                     <i class="fa fa-cogs"></i> Equipe dirigeante
                                 </a>
                             </li>
                             <li class="menu_tab">
-                                <a href="{{ URL::route('front.page', 'statuts') }}" title="Statuts">
+                                <a href="{{ route('front.page', 'statuts') }}" title="Statuts">
                                     <i class="fa fa-compass"></i> Statuts
                                 </a>
                             </li>
                             <li class="menu_tab">
-                                <a href="{{ URL::route('front.page', 'reglement-interieur') }}" title="Règlement intérieur">
+                                <a href="{{ route('front.page', 'reglement-interieur') }}" title="Règlement intérieur">
                                     <i class="fa fa-gavel"></i> Règlement intérieur
                                 </a>
                             </li>
@@ -80,23 +80,23 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="menu_tab">
-                                <a href="{{ URL::route('front.page', 'inscription') }}" title="Inscription">
+                                <a href="{{ route('front.page', 'inscription') }}" title="Inscription">
                                     <i class="fa fa-sign-in"></i> Inscription
                                 </a>
                             </li>
                             <li class="menu_tab">
-                                <a href="{{ URL::route('front.page', 'horaires') }}" title="Horaires">
+                                <a href="{{ route('front.page', 'horaires') }}" title="Horaires">
                                     <i class="fa fa-clock-o"></i> Horaires
                                 </a>
                             </li>
                             <li class="divider"></li>
                             <li class="menu_tab">
-                                <a href="{{ URL::route('front.page', 'calendrier') }}" title="Calendrier">
+                                <a href="{{ route('front.page', 'calendrier') }}" title="Calendrier">
                                     <i class="fa fa-calendar"></i> Calendrier
                                 </a>
                             </li>
                             <li class="menu_tab">
-                                <a href="{{ URL::route('front.page', 'textile') }}" title="Textile">
+                                <a href="{{ route('front.page', 'textile') }}" title="Textile">
                                     <i class="fa fa-shopping-cart"></i> Textile
                                 </a>
                             </li>
@@ -111,7 +111,7 @@
                         </a>
                     </li>
                     <li class="menu_tab">
-                        <a title="Contact" href="{{ url('/') }}#contact">
+                        <a title="Contact" href="#contact">
                             <i class="fa fa-pencil-square"></i> Contact
                         </a>
                     </li>

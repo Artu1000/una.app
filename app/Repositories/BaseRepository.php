@@ -216,7 +216,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      *
      * @return $this
      */
-    public function limit($limit)
+    public function take($limit)
     {
         $this->take = $limit;
         return $this;

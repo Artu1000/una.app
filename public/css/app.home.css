@@ -8334,7 +8334,8 @@ h1, h2, h3, h4, h5, h6 {
   font-family: Lato;
   font-weight: 200;
   font-style: normal;
-  color: #5a5a5a; }
+  color: #5a5a5a;
+  text-align: left; }
 
 p {
   font-size: 16px;
@@ -8381,6 +8382,11 @@ b, .strong {
   .text-content ol li, .text-content ul li {
     margin: 0 0 5px 25px;
     padding: 0; }
+
+ul.pagination {
+  margin: 30px 0 20px; }
+  ul.pagination li {
+    margin: inherit; }
 
 /***********************************************************************************************************************
  * ERROR PAGES
@@ -8439,13 +8445,24 @@ b, .strong {
  * EXTRA SMALL DEVICES : 767 & LESS (SM)
  **********************************************************************************************************************/
 @media screen and (max-width: 767px) {
-  h2 {
+  .text-content h2 {
     margin-bottom: 30px;
     font-size: 30px; }
-  h3 {
+  .text-content h3 {
     font-size: 22px; }
-  p {
-    margin: 0 0 30px; } }
+  .text-content p {
+    margin: 0 0 30px; }
+  .text-content ol, .text-content ul {
+    margin: 0;
+    padding: 0; }
+    .text-content ol p, .text-content ul p {
+      margin: 0 0 5px 0; }
+      .text-content ol p i.fa, .text-content ul p i.fa {
+        font-size: inherit;
+        color: inherit; }
+    .text-content ol li, .text-content ul li {
+      margin: 0 0 5px 25px;
+      padding: 0; } }
 
 /***********************************************************************************************************************
  * GENERAL
@@ -8475,9 +8492,9 @@ body {
 i.fa {
   font-size: 13px; }
 
-/***********************************************************************************************************************
- * CSS PARALLAX EFFECT
- **********************************************************************************************************************/
+hr {
+  margin: 20px 0 50px; }
+
 /***********************************************************************************************************************
  * HEADER
  **********************************************************************************************************************/
@@ -8528,8 +8545,9 @@ header {
 /***********************************************************************************************************************
  * CONTENT
  **********************************************************************************************************************/
-#content .parallax_img {
-  min-height: 300px; }
+#content .parallax_img .background_responsive_img {
+  min-height: 300px;
+  background-size: cover; }
 
 #content .text-content {
   width: 100%;
@@ -8661,6 +8679,13 @@ header {
  **********************************************************************************************************************/
 @media screen and (min-width: 1921px) {
   /*********************************************************************************************************************
+   * GENERAL
+   ********************************************************************************************************************/
+  .parallax_img {
+    min-height: 200px; }
+    .parallax_img .background_responsive_img {
+      height: 1000px; }
+  /*********************************************************************************************************************
   * HEADER
   *********************************************************************************************************************/
   #header_color_fill {
@@ -8719,6 +8744,13 @@ header {
  **********************************************************************************************************************/
 @media screen and (max-width: 1920px) and (min-width: 1200px) {
   /*********************************************************************************************************************
+   * GENERAL
+   ********************************************************************************************************************/
+  .parallax_img {
+    min-height: 150px; }
+    .parallax_img .background_responsive_img {
+      height: 700px; }
+  /*********************************************************************************************************************
   * HEADER
   *********************************************************************************************************************/
   header .navbar.navbar-inverse .navbar-header .navbar-brand {
@@ -8775,6 +8807,13 @@ header {
  **********************************************************************************************************************/
 @media screen and (max-width: 1199px) and (min-width: 992px) {
   /*********************************************************************************************************************
+   * GENERAL
+   ********************************************************************************************************************/
+  .parallax_img {
+    min-height: 100px; }
+    .parallax_img .background_responsive_img {
+      height: 625px; }
+  /*********************************************************************************************************************
   * HEADER
   *********************************************************************************************************************/
   #header_color_fill {
@@ -8826,7 +8865,7 @@ header {
   * GOOGLE MAP
   *********************************************************************************************************************/
   #map-canvas {
-    height: 600px;
+    height: 550px;
     margin-bottom: -145px; }
   /*********************************************************************************************************************
   * FOOTER
@@ -8841,6 +8880,13 @@ header {
  * SMALL DEVICES TABLETS : 991 <=> 768 (SM)
  **********************************************************************************************************************/
 @media screen and (max-width: 991px) and (min-width: 768px) {
+  /*********************************************************************************************************************
+   * GENERAL
+   ********************************************************************************************************************/
+  .parallax_img {
+    min-height: 75px; }
+    .parallax_img .background_responsive_img {
+      height: 550px; }
   /*********************************************************************************************************************
   * HEADER
   *********************************************************************************************************************/
@@ -8902,7 +8948,7 @@ header {
   * GOOGLE MAP
   *********************************************************************************************************************/
   #map-canvas {
-    height: 425px;
+    height: 500px;
     margin-bottom: -130px; }
   /*********************************************************************************************************************
   * FOOTER
@@ -8927,6 +8973,13 @@ header {
  * EXTRA SMALL DEVICES : 767 & LESS (SM)
  **********************************************************************************************************************/
 @media screen and (max-width: 767px) {
+  /*********************************************************************************************************************
+   * GENERAL
+   ********************************************************************************************************************/
+  .parallax_img {
+    min-height: 75px; }
+    .parallax_img .background_responsive_img {
+      height: 475px; }
   /*********************************************************************************************************************
   * HEADER
   *********************************************************************************************************************/
@@ -9012,14 +9065,8 @@ header {
   *********************************************************************************************************************/
   .text-content {
     padding: 60px 0; }
-    .text-content .container h2 {
-      margin-bottom: 30px;
-      font-size: 30px;
-      text-align: center; }
-    .text-content .container h3 {
-      font-size: 22px; }
-    .text-content .container p {
-      margin: 0 0 30px; }
+    .text-content .container ul {
+      margin: 0 0 30px 0; }
   /*********************************************************************************************************************
   * PARTNERS
   *********************************************************************************************************************/
@@ -9126,31 +9173,42 @@ header {
     bottom: 5%; }
 
 #content.home .text-content#last_news {
-  background-color: #F7F7F7; }
-  #content.home .text-content#last_news .news {
-    display: table;
-    text-align: justify; }
-    #content.home .text-content#last_news .news .img, #content.home .text-content#last_news .news .content {
-      display: table-cell;
+  background-color: #F7F7F7;
+  margin-bottom: -50px; }
+  #content.home .text-content#last_news .container hr {
+    margin: 20px 0 20px; }
+  #content.home .text-content#last_news .table {
+    margin: 0; }
+    #content.home .text-content#last_news .table tr.news td {
+      text-align: justify;
+      border: none; }
+    #content.home .text-content#last_news .table tr.news .img, #content.home .text-content#last_news .table tr.news .content, #content.home .text-content#last_news .table tr.news .button {
       vertical-align: middle; }
-      #content.home .text-content#last_news .news .img a, #content.home .text-content#last_news .news .content a {
+      #content.home .text-content#last_news .table tr.news .img a, #content.home .text-content#last_news .table tr.news .content a, #content.home .text-content#last_news .table tr.news .button a {
         padding: 0;
-        border-radius: 50%; }
-        #content.home .text-content#last_news .news .img a:hover, #content.home .text-content#last_news .news .content a:hover {
+        border-radius: 50%;
+        background-color: transparent; }
+        #content.home .text-content#last_news .table tr.news .img a:hover, #content.home .text-content#last_news .table tr.news .content a:hover, #content.home .text-content#last_news .table tr.news .button a:hover {
           opacity: 0.7;
           transition: opacity 0.2s ease; }
-        #content.home .text-content#last_news .news .img a img, #content.home .text-content#last_news .news .content a img {
-          border-radius: 50%;
-          border: dashed 1px;
-          padding: 10px; }
-    #content.home .text-content#last_news .news .content h3 {
+    #content.home .text-content#last_news .table tr.news .img img {
+      border-radius: 50%;
+      border: dashed 1px;
+      padding: 10px; }
+    #content.home .text-content#last_news .table tr.news .content h3 {
       margin: 5px 0 0 0; }
-    #content.home .text-content#last_news .news .content .date {
+    #content.home .text-content#last_news .table tr.news .content .date {
       margin-top: 2px; }
-    #content.home .text-content#last_news .news .content .sum_up {
+    #content.home .text-content#last_news .table tr.news .content .sum_up {
       margin-top: 8px; }
-    #content.home .text-content#last_news .news .content .button {
-      margin-top: 10px; }
+    #content.home .text-content#last_news .table tr.news .button button {
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      background-color: #fff; }
+      #content.home .text-content#last_news .table tr.news .button button i.fa {
+        font-size: 40px;
+        color: #337ab7; }
 
 #content.home .text-content#una-club {
   margin-bottom: 0;
@@ -9162,113 +9220,133 @@ header {
  * EXTRA LARGE DEVICES DESKTOPS : 1200 & MORE
  **********************************************************************************************************************/
 @media screen and (min-width: 1921px) {
-  #carousel {
+  #content.home div#carousel {
     margin-top: -100px; }
-    #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .picto {
+    #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .picto {
       border: dashed 2px #fff;
       padding: 12px; }
-    #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .title {
+    #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .title {
       font-size: 45px;
       letter-spacing: 10px;
       margin: 40px 0 25px; }
-    #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .quote {
+    #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .quote {
       font-size: 24px; }
-  .text-content#last_news h2 {
+  #content.home .text-content#last_news h2 {
     margin-bottom: 30px; }
-  .text-content#last_news .news .content {
-    padding: 0 15px; }
-  .text-content#last_news .news:last-of-type .content {
-    padding: 0 0 0 15px; } }
+  #content.home .text-content#last_news .table tr.news td {
+    height: 220px; }
+  #content.home .text-content#last_news .table tr.news td.img {
+    padding-left: 40px; }
+  #content.home .text-content#last_news .table tr.news td.button {
+    padding-right: 40px; } }
 
 /***********************************************************************************************************************
  * LARGE DEVICES DESKTOPS : 1920 <=> 1200 (LG)
  **********************************************************************************************************************/
 @media screen and (max-width: 1920px) and (min-width: 1200px) {
-  #carousel {
+  #content.home div#carousel {
     margin-top: -50px; }
-    #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .picto {
+    #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .picto {
       border: dashed 2px #fff;
       padding: 12px; }
-    #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .title {
+    #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .title {
       font-size: 45px;
       letter-spacing: 10px;
       margin: 40px 0 25px; }
-    #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .quote {
+    #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .quote {
       font-size: 24px; }
-  .text-content#last_news h2 {
+  #content.home .text-content#last_news h2 {
     margin-bottom: 30px; }
-  .text-content#last_news .news .content {
-    padding: 0 15px; }
-  .text-content#last_news .news:last-of-type .content {
-    padding: 0 0 0 15px; } }
+  #content.home .text-content#last_news .table tr.news td {
+    height: 220px; }
+  #content.home .text-content#last_news .table tr.news td.img {
+    padding-left: 40px; }
+  #content.home .text-content#last_news .table tr.news td.button {
+    padding-right: 40px; } }
 
 /***********************************************************************************************************************
  * MEDIUM DEVICES DESKTOPS : : 1199 <=> 992 (MD)
  **********************************************************************************************************************/
 @media screen and (max-width: 1199px) and (min-width: 992px) {
-  #carousel {
+  #content.home div#carousel {
     margin-top: -50px; }
-    #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .picto {
+    #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .picto {
       border: dashed 2px #fff;
       padding: 12px;
       width: 230px; }
-    #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .title {
+    #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .title {
       font-size: 30px;
       letter-spacing: 5px;
       margin: 30px 0 15px; }
-    #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .quote {
+    #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .quote {
       font-size: 18px; }
-  .text-content#last_news .news .content {
-    padding: 0 15px; }
-  .text-content#last_news .news:last-of-type {
-    padding: 0 15px 0 30px; }
-    .text-content#last_news .news:last-of-type .content {
-      padding: 0 0 0 15px; } }
+  #content.home .text-content#last_news .table tr.news td {
+    height: 180px; }
+  #content.home .text-content#last_news .table tr.news td.img {
+    padding-left: 30px; }
+  #content.home .text-content#last_news .table tr.news td.button {
+    padding-right: 30px; } }
 
 /***********************************************************************************************************************
  * SMALL DEVICES TABLETS : 991 <=> 768 (SM)
  **********************************************************************************************************************/
 @media screen and (max-width: 991px) and (min-width: 768px) {
-  #carousel {
+  #content.home div#carousel {
     margin-top: -50px; }
-    #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .picto {
+    #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .picto {
       border: dashed 2px #fff;
       padding: 12px;
       width: 230px; }
-    #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .title {
+    #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .title {
       font-size: 30px;
       letter-spacing: 5px;
       margin: 30px 0 15px; }
-    #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .quote {
+    #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .quote {
       font-size: 18px; }
-  .text-content#last_news .news .content {
-    padding: 30px 0 5px 15px; } }
+  #content.home .text-content#last_news .table tr.news td {
+    height: 0; }
+  #content.home .text-content#last_news .table tr.news td.img {
+    padding-left: 0; }
+  #content.home .text-content#last_news .table tr.news td.button {
+    padding-right: 0; } }
 
 /***********************************************************************************************************************
  * EXTRA SMALL DEVICES : 767 & LESS (SM)
  **********************************************************************************************************************/
 @media screen and (max-width: 767px) {
-  #carousel {
+  #content.home div#carousel {
     margin-top: -20px; }
-    #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div {
+    #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div {
       width: 320px;
       padding: 0 15px; }
-      #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .picto {
+      #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .picto {
         border: dashed 2px #fff;
         padding: 12px;
         width: 230px; }
-      #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .title {
+      #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .title {
         font-size: 25px;
         letter-spacing: 5px;
         margin: 30px 0 15px; }
-      #carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .quote {
+      #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div .quote {
         font-size: 16px; }
-  .text-content#last_news .news {
-    margin: 15px 0; }
-    .text-content#last_news .news .content {
-      padding: 0 0 0 15px; }
-    .text-content#last_news .news .button button {
-      width: 100%; } }
+  #content.home .text-content#last_news {
+    margin-bottom: 0; }
+    #content.home .text-content#last_news .table tr.news:nth-of-type(3) td {
+      padding-top: 25px; }
+    #content.home .text-content#last_news .table tr.news:nth-of-type(2) {
+      border-bottom: 1px solid #eeeeee; }
+      #content.home .text-content#last_news .table tr.news:nth-of-type(2) td {
+        padding-bottom: 35px; }
+    #content.home .text-content#last_news .table tr.news td {
+      height: 0; }
+    #content.home .text-content#last_news .table tr.news .img {
+      padding-left: 0; }
+    #content.home .text-content#last_news .table tr.news .button.mobile button {
+      border-radius: 6px;
+      width: 100%;
+      height: auto; }
+      #content.home .text-content#last_news .table tr.news .button.mobile button > i.fa {
+        font-size: 16px; } }
 
 /*# sourceMappingURL=app.home.css.map */
 /*# sourceMappingURL=app.home.css.map */

@@ -127,6 +127,7 @@ h1, h2, h3, h4, h5, h6{
   margin: 10px 0;
   @include lato-font('thin');
   color: #5a5a5a;
+  text-align: left;
 }
 
 p{
@@ -175,6 +176,16 @@ b, .strong{
     }
   }
 }
+
+ul.pagination {
+  margin: 30px 0 20px;
+
+  li {
+    margin: inherit;
+  }
+}
+
+
 
 
 
@@ -283,16 +294,43 @@ b, .strong{
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 767px){
-  h2 {
-    margin-bottom: 30px;
-    font-size: 30px;
-  }
 
-  h3{
-    font-size: 22px;
-  }
+  .text-content {
 
-  p {
-    margin: 0 0 30px;
+    h2 {
+      margin-bottom: 30px;
+      font-size: 30px;
+    }
+
+    h3{
+      font-size: 22px;
+    }
+
+    h4 {
+
+    }
+
+    p {
+      margin: 0 0 30px;
+    }
+
+    ol, ul {
+      margin: 0;
+      padding: 0;
+
+      p {
+        margin: 0 0 5px 0;
+
+        i.fa {
+          font-size: inherit;
+          color: inherit;
+        }
+      }
+
+      li {
+        margin: 0 0 5px 25px;
+        padding: 0;
+      }
+    }
   }
 }

@@ -8185,7 +8185,8 @@ h1, h2, h3, h4, h5, h6 {
   font-family: Lato;
   font-weight: 200;
   font-style: normal;
-  color: #5a5a5a; }
+  color: #5a5a5a;
+  text-align: left; }
 
 p {
   font-size: 16px;
@@ -8232,6 +8233,11 @@ b, .strong {
   .text-content ol li, .text-content ul li {
     margin: 0 0 5px 25px;
     padding: 0; }
+
+ul.pagination {
+  margin: 30px 0 20px; }
+  ul.pagination li {
+    margin: inherit; }
 
 /***********************************************************************************************************************
  * ERROR PAGES
@@ -8290,13 +8296,24 @@ b, .strong {
  * EXTRA SMALL DEVICES : 767 & LESS (SM)
  **********************************************************************************************************************/
 @media screen and (max-width: 767px) {
-  h2 {
+  .text-content h2 {
     margin-bottom: 30px;
     font-size: 30px; }
-  h3 {
+  .text-content h3 {
     font-size: 22px; }
-  p {
-    margin: 0 0 30px; } }
+  .text-content p {
+    margin: 0 0 30px; }
+  .text-content ol, .text-content ul {
+    margin: 0;
+    padding: 0; }
+    .text-content ol p, .text-content ul p {
+      margin: 0 0 5px 0; }
+      .text-content ol p i.fa, .text-content ul p i.fa {
+        font-size: inherit;
+        color: inherit; }
+    .text-content ol li, .text-content ul li {
+      margin: 0 0 5px 25px;
+      padding: 0; } }
 
 /***********************************************************************************************************************
  * GENERAL
@@ -8326,9 +8343,9 @@ body {
 i.fa {
   font-size: 13px; }
 
-/***********************************************************************************************************************
- * CSS PARALLAX EFFECT
- **********************************************************************************************************************/
+hr {
+  margin: 20px 0 50px; }
+
 /***********************************************************************************************************************
  * HEADER
  **********************************************************************************************************************/
@@ -8379,8 +8396,9 @@ header {
 /***********************************************************************************************************************
  * CONTENT
  **********************************************************************************************************************/
-#content .parallax_img {
-  min-height: 300px; }
+#content .parallax_img .background_responsive_img {
+  min-height: 300px;
+  background-size: cover; }
 
 #content .text-content {
   width: 100%;
@@ -8512,6 +8530,13 @@ header {
  **********************************************************************************************************************/
 @media screen and (min-width: 1921px) {
   /*********************************************************************************************************************
+   * GENERAL
+   ********************************************************************************************************************/
+  .parallax_img {
+    min-height: 200px; }
+    .parallax_img .background_responsive_img {
+      height: 1000px; }
+  /*********************************************************************************************************************
   * HEADER
   *********************************************************************************************************************/
   #header_color_fill {
@@ -8570,6 +8595,13 @@ header {
  **********************************************************************************************************************/
 @media screen and (max-width: 1920px) and (min-width: 1200px) {
   /*********************************************************************************************************************
+   * GENERAL
+   ********************************************************************************************************************/
+  .parallax_img {
+    min-height: 150px; }
+    .parallax_img .background_responsive_img {
+      height: 700px; }
+  /*********************************************************************************************************************
   * HEADER
   *********************************************************************************************************************/
   header .navbar.navbar-inverse .navbar-header .navbar-brand {
@@ -8626,6 +8658,13 @@ header {
  **********************************************************************************************************************/
 @media screen and (max-width: 1199px) and (min-width: 992px) {
   /*********************************************************************************************************************
+   * GENERAL
+   ********************************************************************************************************************/
+  .parallax_img {
+    min-height: 100px; }
+    .parallax_img .background_responsive_img {
+      height: 625px; }
+  /*********************************************************************************************************************
   * HEADER
   *********************************************************************************************************************/
   #header_color_fill {
@@ -8677,7 +8716,7 @@ header {
   * GOOGLE MAP
   *********************************************************************************************************************/
   #map-canvas {
-    height: 600px;
+    height: 550px;
     margin-bottom: -145px; }
   /*********************************************************************************************************************
   * FOOTER
@@ -8692,6 +8731,13 @@ header {
  * SMALL DEVICES TABLETS : 991 <=> 768 (SM)
  **********************************************************************************************************************/
 @media screen and (max-width: 991px) and (min-width: 768px) {
+  /*********************************************************************************************************************
+   * GENERAL
+   ********************************************************************************************************************/
+  .parallax_img {
+    min-height: 75px; }
+    .parallax_img .background_responsive_img {
+      height: 550px; }
   /*********************************************************************************************************************
   * HEADER
   *********************************************************************************************************************/
@@ -8753,7 +8799,7 @@ header {
   * GOOGLE MAP
   *********************************************************************************************************************/
   #map-canvas {
-    height: 425px;
+    height: 500px;
     margin-bottom: -130px; }
   /*********************************************************************************************************************
   * FOOTER
@@ -8778,6 +8824,13 @@ header {
  * EXTRA SMALL DEVICES : 767 & LESS (SM)
  **********************************************************************************************************************/
 @media screen and (max-width: 767px) {
+  /*********************************************************************************************************************
+   * GENERAL
+   ********************************************************************************************************************/
+  .parallax_img {
+    min-height: 75px; }
+    .parallax_img .background_responsive_img {
+      height: 475px; }
   /*********************************************************************************************************************
   * HEADER
   *********************************************************************************************************************/
@@ -8863,14 +8916,8 @@ header {
   *********************************************************************************************************************/
   .text-content {
     padding: 60px 0; }
-    .text-content .container h2 {
-      margin-bottom: 30px;
-      font-size: 30px;
-      text-align: center; }
-    .text-content .container h3 {
-      font-size: 22px; }
-    .text-content .container p {
-      margin: 0 0 30px; }
+    .text-content .container ul {
+      margin: 0 0 30px 0; }
   /*********************************************************************************************************************
   * PARTNERS
   *********************************************************************************************************************/
@@ -8918,11 +8965,11 @@ header {
     #footer_layout #footer_color_fill {
       height: 115px; } }
 
-.timeline {
+ul.timeline {
   list-style: none;
   padding: 20px 0 20px;
   position: relative; }
-  .timeline:before {
+  ul.timeline:before {
     top: 0;
     bottom: 0;
     position: absolute;
@@ -8931,17 +8978,17 @@ header {
     background-color: #eeeeee;
     left: 50%;
     margin-left: -1.5px; }
-  .timeline li {
-    margin: 0 0 20px !important;
+  ul.timeline li {
+    margin: 0 0 20px;
     position: relative; }
-    .timeline li:before {
+    ul.timeline li:before {
       content: " ";
       display: table; }
-    .timeline li:after {
+    ul.timeline li:after {
       content: " ";
       display: table;
       clear: both; }
-    .timeline li .timeline-panel {
+    ul.timeline li .timeline-panel {
       width: 46%;
       float: left;
       border: 1px solid #d4d4d4;
@@ -8950,9 +8997,9 @@ header {
       position: relative;
       box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
       border-radius: 7px; }
-      .timeline li .timeline-panel h3, .timeline li .timeline-panel h4 {
+      ul.timeline li .timeline-panel h3, ul.timeline li .timeline-panel h4 {
         margin: 0 0 0 10px; }
-      .timeline li .timeline-panel:before {
+      ul.timeline li .timeline-panel:before {
         position: absolute;
         top: 26px;
         right: -15px;
@@ -8962,7 +9009,7 @@ header {
         border-right: 0 solid #ccc;
         border-bottom: 15px solid transparent;
         content: " "; }
-      .timeline li .timeline-panel:after {
+      ul.timeline li .timeline-panel:after {
         position: absolute;
         top: 27px;
         right: -14px;
@@ -8972,10 +9019,10 @@ header {
         border-right: 0 solid #fff;
         border-bottom: 14px solid transparent;
         content: " "; }
-      .timeline li .timeline-panel.title-panel {
+      ul.timeline li .timeline-panel.title-panel {
         background-color: #eee;
         display: table; }
-        .timeline li .timeline-panel.title-panel .logo {
+        ul.timeline li .timeline-panel.title-panel .logo {
           background-color: #fff;
           border-radius: 50%;
           width: 60px;
@@ -8983,41 +9030,45 @@ header {
           padding: 10px;
           display: table-cell;
           vertical-align: middle; }
-        .timeline li .timeline-panel.title-panel .title {
+        ul.timeline li .timeline-panel.title-panel .title {
           display: table-cell;
           vertical-align: middle;
           text-align: left; }
-        .timeline li .timeline-panel.title-panel:before {
+        ul.timeline li .timeline-panel.title-panel:before {
           border-left: 15px solid #ccc;
           border-right: 0 solid #ccc; }
-        .timeline li .timeline-panel.title-panel:after {
+        ul.timeline li .timeline-panel.title-panel:after {
           border-left: 14px solid #eee;
           border-right: 0 solid #eee; }
-      .timeline li .timeline-panel.result-panel h4 {
+      ul.timeline li .timeline-panel.result-panel h4 {
         font-size: 16px;
         /* Lato (medium, normal) */
         font-family: "Lato Medium";
         font-weight: 400;
         font-style: normal;
         margin-bottom: 10px; }
-      .timeline li .timeline-panel.result-panel table {
+      ul.timeline li .timeline-panel.result-panel table {
         margin: 0;
         font-size: 12px; }
-        .timeline li .timeline-panel.result-panel table tr td {
+        ul.timeline li .timeline-panel.result-panel table tr td {
           vertical-align: middle; }
-          .timeline li .timeline-panel.result-panel table tr td.position {
+          ul.timeline li .timeline-panel.result-panel table tr td.position {
             min-width: 50px; }
-          .timeline li .timeline-panel.result-panel table tr td.boat {
+          ul.timeline li .timeline-panel.result-panel table tr td.boat {
             min-width: 65px; }
-          .timeline li .timeline-panel.result-panel table tr td i.fa {
-            font-size: inherit; }
-            .timeline li .timeline-panel.result-panel table tr td i.fa.gold {
-              color: gold; }
-            .timeline li .timeline-panel.result-panel table tr td i.fa.silver {
-              color: silver; }
-            .timeline li .timeline-panel.result-panel table tr td i.fa.bronze {
-              color: #CD7F32; }
-    .timeline li .timeline-badge {
+          ul.timeline li .timeline-panel.result-panel table tr td .medal {
+            background-color: #EEEEEE;
+            padding: 5px;
+            border-radius: 50%; }
+            ul.timeline li .timeline-panel.result-panel table tr td .medal i.fa {
+              font-size: 16px; }
+              ul.timeline li .timeline-panel.result-panel table tr td .medal i.fa.gold {
+                color: #F4C300; }
+              ul.timeline li .timeline-panel.result-panel table tr td .medal i.fa.silver {
+                color: #818181; }
+              ul.timeline li .timeline-panel.result-panel table tr td .medal i.fa.bronze {
+                color: #CD7F32; }
+    ul.timeline li .timeline-badge {
       color: #fff;
       width: 50px;
       height: 50px;
@@ -9030,27 +9081,27 @@ header {
       z-index: 100;
       background-color: #eee;
       border-radius: 50%; }
-      .timeline li .timeline-badge.red {
+      ul.timeline li .timeline-badge.red {
         color: #DF0024; }
-      .timeline li .timeline-badge.blue {
+      ul.timeline li .timeline-badge.blue {
         color: #0085C7; }
-      .timeline li .timeline-badge.yellow {
+      ul.timeline li .timeline-badge.yellow {
         color: #F4C300; }
-      .timeline li .timeline-badge.green {
+      ul.timeline li .timeline-badge.green {
         color: #009F3D; }
-      .timeline li .timeline-badge.black {
+      ul.timeline li .timeline-badge.black {
         color: #000; }
-      .timeline li .timeline-badge .fa {
+      ul.timeline li .timeline-badge .fa {
         font-size: 40px;
         padding-top: 5px; }
-    .timeline li.timeline-inverted .timeline-panel {
+    ul.timeline li.timeline-inverted .timeline-panel {
       float: right; }
-      .timeline li.timeline-inverted .timeline-panel:before {
+      ul.timeline li.timeline-inverted .timeline-panel:before {
         border-left-width: 0;
         border-right-width: 15px;
         left: -15px;
         right: auto; }
-      .timeline li.timeline-inverted .timeline-panel:after {
+      ul.timeline li.timeline-inverted .timeline-panel:after {
         border-left-width: 0;
         border-right-width: 14px;
         left: -14px;

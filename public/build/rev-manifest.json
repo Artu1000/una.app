@@ -1,8 +1,9 @@
 {
-  "css/app.front.css": "css/app.front-59e21604.css",
-  "css/app.home.css": "css/app.home-aad949cd.css",
-  "css/app.page.css": "css/app.page-fc1dec30.css",
-  "css/app.palmares.css": "css/app.palmares-5c227260.css",
-  "js/app.front.js": "js/app.front-19fd1433.js",
+  "css/app.front.css": "css/app.front-22f2d5c6.css",
+  "css/app.home.css": "css/app.home-270ed0d8.css",
+  "css/app.page.css": "css/app.page-71008e6f.css",
+  "css/app.palmares.css": "css/app.palmares-deb2d5ee.css",
+  "css/app.news.css": "css/app.news-90fc9dac.css",
+  "js/app.front.js": "js/app.front-f79b7088.js",
   "js/app.home.js": "js/app.home-1ba34c34.js"
 }

@@ -36,7 +36,8 @@ Route::resource('/', 'Front\Home\HomeController', [
 // news
 Route::resource('/news', 'Front\News\NewsController', [
     'names' => [
-        'index' => 'front.news.list'
+        'index' => 'front.news.list',
+        'show' => 'front.news.detail'
     ]
 ]);
 

@@ -23,7 +23,7 @@
                 </div>
                 <div class="logo hidden-xs">
                     <a href="{{ url('/') }}#top" title="Revenir en haut de la page">
-                        <img width="70" height="66" src="img/logo-una-small.png" alt="Logo Club Université Nantes Aviron (UNA)">
+                        <img width="70" height="66" src="{{ url('/') }}/img/logo-una-small.png" alt="Logo Club Université Nantes Aviron (UNA)">
                     </a>
                 </div>
             </div>

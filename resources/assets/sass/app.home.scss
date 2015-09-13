@@ -102,48 +102,77 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
     &#last_news{
       background-color: #F7F7F7;
+      margin-bottom: -50px;
 
-      .news{
-        display: table;
-        text-align: justify;
+      & .container hr {
+        margin: 20px 0 20px;
+      }
 
-        .img, .content{
-          display: table-cell;
-          vertical-align: middle;
+      .table {
+        margin: 0;
 
-          a{
-            padding: 0;
-            @include border-radius(50%);
+        tr {
 
-            &:hover{
-              opacity: 0.7;
-              @include transition(opacity 0.2s ease);
+          &.news {
+
+            td {
+              text-align: justify;
+              border: none;
             }
 
-            img{
-              @include border-radius(50%);
-              border: dashed 1px;
-              padding: 10px;
+            .img, .content, .button {
+              vertical-align: middle;
+
+              a {
+                padding: 0;
+                @include border-radius(50%);
+                background-color: transparent;
+
+                &:hover {
+                  opacity: 0.7;
+                  @include transition(opacity 0.2s ease);
+                }
+              }
             }
-          }
-        }
 
-        .content{
+            .img {
 
-          h3{
-            margin: 5px 0 0 0;
-          }
+              img {
+                @include border-radius(50%);
+                border: dashed 1px;
+                padding: 10px;
+              }
+            }
 
-          .date{
-            margin-top: 2px;
-          }
+            .content {
 
-          .sum_up{
-            margin-top: 8px;
-          }
+              h3 {
+                margin: 5px 0 0 0;
+              }
 
-          .button{
-            margin-top: 10px;
+              .date {
+                margin-top: 2px;
+              }
+
+              .sum_up {
+                margin-top: 8px;
+              }
+            }
+
+            .button {
+
+              button {
+                @include border-radius(50%);
+                width: 60px;
+                height: 60px;
+                background-color: #fff;
+
+                i.fa {
+                  font-size: 40px;
+                  color: #337ab7;
+                }
+              }
+            }
           }
         }
       }
@@ -172,39 +201,41 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
  * EXTRA LARGE DEVICES DESKTOPS : 1200 & MORE
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 @media screen and (min-width: 1921px){
 
-  &#carousel {
-    margin-top: -100px;
+  #content.home {
 
-    .glide__wrapper {
+    div#carousel {
+      margin-top: -100px;
 
-      .glide__track {
+      .glide__wrapper {
 
-        .glide__slide {
+        .glide__track {
 
-          section {
+          .glide__slide {
 
-            .slide_content {
+            section {
 
-              div {
+              .slide_content {
 
                 div {
 
-                  .picto {
-                    border: dashed 2px #fff;
-                    padding: 12px;
-                  }
+                  div {
 
-                  .title {
-                    font-size: 45px;
-                    letter-spacing: 10px;
-                    margin: 40px 0 25px;
-                  }
+                    .picto {
+                      border: dashed 2px #fff;
+                      padding: 12px;
+                    }
 
-                  .quote {
-                    font-size: 24px;
+                    .title {
+                      font-size: 45px;
+                      letter-spacing: 10px;
+                      margin: 40px 0 25px;
+                    }
+
+                    .quote {
+                      font-size: 24px;
+                    }
                   }
                 }
               }
@@ -213,26 +244,30 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
     }
-  }
 
-  .text-content {
+    .text-content {
 
-    &#last_news {
+      &#last_news {
 
-      h2 {
-        margin-bottom: 30px;
-      }
-
-      .news {
-
-        .content{
-          padding: 0 15px;
+        h2 {
+          margin-bottom: 30px;
         }
 
-        &:last-of-type{
+        .table {
 
-          .content{
-            padding: 0 0 0 15px;
+          tr.news {
+
+            td {
+              height: 220px;
+            }
+
+            td.img {
+              padding-left: 40px;
+            }
+
+            td.button {
+              padding-right: 40px;
+            }
           }
         }
       }
@@ -252,39 +287,41 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
  * LARGE DEVICES DESKTOPS : 1920 <=> 1200 (LG)
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 @media screen and (max-width: 1920px) and (min-width: 1200px) {
 
-  &#carousel {
-    margin-top: -50px;
+  #content.home {
 
-    .glide__wrapper {
+    div#carousel {
+      margin-top: -50px;
 
-      .glide__track {
+      .glide__wrapper {
 
-        .glide__slide {
+        .glide__track {
 
-          section {
+          .glide__slide {
 
-            .slide_content {
+            section {
 
-              div {
+              .slide_content {
 
                 div {
 
-                  .picto {
-                    border: dashed 2px #fff;
-                    padding: 12px;
-                  }
+                  div {
 
-                  .title {
-                    font-size: 45px;
-                    letter-spacing: 10px;
-                    margin: 40px 0 25px;
-                  }
+                    .picto {
+                      border: dashed 2px #fff;
+                      padding: 12px;
+                    }
 
-                  .quote {
-                    font-size: 24px;
+                    .title {
+                      font-size: 45px;
+                      letter-spacing: 10px;
+                      margin: 40px 0 25px;
+                    }
+
+                    .quote {
+                      font-size: 24px;
+                    }
                   }
                 }
               }
@@ -293,26 +330,30 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
     }
-  }
 
-  .text-content {
+    .text-content {
 
-    &#last_news {
+      &#last_news {
 
-      h2 {
-        margin-bottom: 30px;
-      }
-
-      .news {
-
-        .content{
-          padding: 0 15px;
+        h2 {
+          margin-bottom: 30px;
         }
 
-        &:last-of-type{
+        .table {
 
-          .content{
-            padding: 0 0 0 15px;
+          tr.news {
+
+            td {
+              height: 220px;
+            }
+
+            td.img {
+              padding-left: 40px;
+            }
+
+            td.button {
+              padding-right: 40px;
+            }
           }
         }
       }
@@ -334,37 +375,40 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 1199px) and (min-width: 992px){
 
-  &#carousel {
-    margin-top: -50px;
+  #content.home {
 
-    .glide__wrapper {
+    div#carousel {
+      margin-top: -50px;
 
-      .glide__track {
+      .glide__wrapper {
 
-        .glide__slide {
+        .glide__track {
 
-          section {
+          .glide__slide {
 
-            .slide_content {
+            section {
 
-              div {
+              .slide_content {
 
                 div {
 
-                  .picto {
-                    border: dashed 2px #fff;
-                    padding: 12px;
-                    width: 230px;
-                  }
+                  div {
 
-                  .title {
-                    font-size: 30px;
-                    letter-spacing: 5px;
-                    margin: 30px 0 15px;
-                  }
+                    .picto {
+                      border: dashed 2px #fff;
+                      padding: 12px;
+                      width: 230px;
+                    }
 
-                  .quote {
-                    font-size: 18px;
+                    .title {
+                      font-size: 30px;
+                      letter-spacing: 5px;
+                      margin: 30px 0 15px;
+                    }
+
+                    .quote {
+                      font-size: 18px;
+                    }
                   }
                 }
               }
@@ -373,23 +417,26 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
     }
-  }
 
-  .text-content {
+    .text-content {
 
-    &#last_news {
+      &#last_news {
 
-      .news {
+        .table {
 
-        .content{
-          padding: 0 15px;
-        }
+          tr.news {
 
-        &:last-of-type{
-          padding: 0 15px 0 30px;
+            td {
+              height: 180px;
+            }
 
-          .content{
-            padding: 0 0 0 15px;
+            td.img {
+              padding-left: 30px;
+            }
+
+            td.button {
+              padding-right: 30px;
+            }
           }
         }
       }
@@ -410,37 +457,40 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 991px) and (min-width: 768px){
 
-  &#carousel {
-    margin-top: -50px;
+  #content.home {
 
-    .glide__wrapper {
+    div#carousel {
+      margin-top: -50px;
 
-      .glide__track {
+      .glide__wrapper {
 
-        .glide__slide {
+        .glide__track {
 
-          section {
+          .glide__slide {
 
-            .slide_content {
+            section {
 
-              div {
+              .slide_content {
 
                 div {
 
-                  .picto {
-                    border: dashed 2px #fff;
-                    padding: 12px;
-                    width: 230px;
-                  }
+                  div {
 
-                  .title {
-                    font-size: 30px;
-                    letter-spacing: 5px;
-                    margin: 30px 0 15px;
-                  }
+                    .picto {
+                      border: dashed 2px #fff;
+                      padding: 12px;
+                      width: 230px;
+                    }
 
-                  .quote {
-                    font-size: 18px;
+                    .title {
+                      font-size: 30px;
+                      letter-spacing: 5px;
+                      margin: 30px 0 15px;
+                    }
+
+                    .quote {
+                      font-size: 18px;
+                    }
                   }
                 }
               }
@@ -449,16 +499,27 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
     }
-  }
 
-  .text-content {
+    .text-content {
 
-    &#last_news {
+      &#last_news {
 
-      .news {
+        .table {
 
-        .content{
-          padding: 30px 0 5px 15px;
+          tr.news {
+
+            td {
+              height: 0;
+            }
+
+            td.img {
+              padding-left: 0;
+            }
+
+            td.button {
+              padding-right: 0;
+            }
+          }
         }
       }
     }
@@ -478,39 +539,42 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 767px){
 
-  &#carousel {
-    margin-top: -20px;
+  #content.home {
 
-    .glide__wrapper {
+    div#carousel {
+      margin-top: -20px;
 
-      .glide__track {
+      .glide__wrapper {
 
-        .glide__slide {
+        .glide__track {
 
-          section {
+          .glide__slide {
 
-            .slide_content {
+            section {
 
-              div {
+              .slide_content {
 
                 div {
-                  width: 320px;
-                  padding: 0 15px;
 
-                  .picto {
-                    border: dashed 2px #fff;
-                    padding: 12px;
-                    width: 230px;
-                  }
+                  div {
+                    width: 320px;
+                    padding: 0 15px;
 
-                  .title {
-                    font-size: 25px;
-                    letter-spacing: 5px;
-                    margin: 30px 0 15px;
-                  }
+                    .picto {
+                      border: dashed 2px #fff;
+                      padding: 12px;
+                      width: 230px;
+                    }
 
-                  .quote {
-                    font-size: 16px;
+                    .title {
+                      font-size: 25px;
+                      letter-spacing: 5px;
+                      margin: 30px 0 15px;
+                    }
+
+                    .quote {
+                      font-size: 16px;
+                    }
                   }
                 }
               }
@@ -519,23 +583,51 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
     }
-  }
 
-  .text-content {
+    .text-content {
 
-    &#last_news {
+      &#last_news {
+        margin-bottom: 0;
 
-      .news {
-        margin: 15px 0;
+        .table {
 
-        .content{
-          padding: 0 0 0 15px;
-        }
+          tr.news {
 
-        .button{
+            &:nth-of-type(3) {
 
-          button{
-            width: 100%;
+              td {
+                padding-top: 25px;
+              }
+            }
+
+            &:nth-of-type(2) {
+              border-bottom: 1px solid #eeeeee;
+
+              td {
+                padding-bottom: 35px;
+              }
+            }
+
+            td {
+              height: 0;
+            }
+
+            .img {
+              padding-left: 0;
+            }
+
+            .button.mobile {
+
+              button {
+                @include border-radius(6px);
+                width: 100%;
+                height: auto;
+
+                & > i.fa {
+                  font-size: 16px;
+                }
+              }
+            }
           }
         }
       }

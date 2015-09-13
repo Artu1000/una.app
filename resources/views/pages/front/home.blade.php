@@ -45,35 +45,48 @@
 
         <div id="last_news" class="text-content">
             <div class="container">
-                <h2><i class="fa fa-paper-plane"></i> Nouvelles fraîches</h2>
+                <h2><i class="fa fa-paper-plane"></i> Dernières nouvelles</h2>
                 <hr>
-                @foreach($lastNews as $key => $news)
-                    <div class="news col-xs-12 col-sm-12 col-md-6">
-                        <div class="row">
-                            <div class="img hidden-xs">
-                                <a class="btn btn-default" href="#" role="button" title="{{ $news['title'] }}">
-                                    <img width="150" height="150" src="{{ $news['src'] }}" alt="{{ $news['title'] }}">
-                                </a>
-                            </div>
-                            <div class="content">
-                                <h3>
-                                    <a href="" title="{{ $news['title'] }}">{{ $news['title'] }}</a>
-                                </h3>
-                                <div class="date">
-                                    {{ Carbon\Carbon::createFromFormat('Y-m-d', $news['date_of_release'])->format('d/m/Y') }}
-                                </div>
-                                <div class="sum_up">
-                                    {{ str_limit(strip_tags($news['content']), 100) }}
-                                </div>
-                                <div class="button">
-                                    <button class="btn btn-default" href="#" role="button" title="{{ $news['title'] }}">
-                                        <i class="fa fa-search-plus"></i> Voir plus
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+                <table class="table table-striped table-hover">
+                    <tbody>
+                        @foreach($last_news as $key => $news)
+                            <tr class="news">
+                                <td class="img hidden-xs">
+                                    <a class="btn btn-default" href="{{ route('front.news.detail', $news->id) }}" role="button" title="{{ $news->title }}">
+                                        <img width="150" height="150" src="{{ url('/') . '/' . $news->image }}" alt="{{ $news->title }}">
+                                    </a>
+                                </td>
+                                <td class="content">
+                                    <h3>
+                                        <a href="{{ route('front.news.detail', $news->id) }}" title="{{ $news->title }}">{{ $news->title }}</a>
+                                    </h3>
+                                    <div class="date">
+                                        {{ Carbon\Carbon::createFromFormat('Y-m-d', $news->released_at)->format('d/m/Y') }}
+                                    </div>
+                                    <div class="sum_up">
+                                        {{ str_limit(strip_tags($news->content), 250) }}
+                                    </div>
+                                </td>
+                                <td class="button hidden-xs">
+                                    <a href="{{ route('front.news.detail', $news->id) }}" title="{{ $news->title }}">
+                                        <button class="btn btn-default" role="button">
+                                            <i class="fa fa-chevron-circle-right"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr class="news visible-xs">
+                                <td class="button mobile">
+                                    <a href="{{ route('front.news.detail', $news->id) }}" title="{{ $news->title }}">
+                                        <button class="btn btn-lg btn-default btn-block" role="button">
+                                            <i class="fa fa-chevron-circle-right"></i> Lire plus
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -127,7 +140,8 @@
                         Des tarifs préférenciels sont appliqués pour tous les étudiants nantais, sur présentation de justificatif. Des réductions plus avantageuses sont appliqués pour les membres de l'Université de Nantes ou d'écoles conventionnées avec l'UNA.
                     </li>
                 </ol>
-
+                <br/>
+                <hr>
                 <p>
                 <div class="embed-responsive embed-responsive-16by9">
                     <iframe width="100%" src="https://www.youtube.com/embed/PIUdOHcrleo" frameborder="0" allowfullscreen></iframe>

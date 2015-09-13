@@ -9,7 +9,7 @@
  **********************************************************************************************************************/
 @import 'app.front';
 
-.timeline {
+ul.timeline {
   list-style: none;
   padding: 20px 0 20px;
   position: relative;
@@ -26,7 +26,7 @@
   }
 
   li{
-    margin: 0 0 20px !important;
+    margin: 0 0 20px;
     position: relative;
 
     &:before{
@@ -134,19 +134,25 @@
                 min-width: 65px;
               }
 
-              i.fa {
-                font-size: inherit;
+              .medal {
+                background-color: #EEEEEE;
+                padding: 5px;
+                @include border-radius(50%);
 
-                &.gold {
-                  color: gold;
-                }
+                i.fa {
+                  font-size: 16px;
 
-                &.silver {
-                  color: silver;
-                }
+                  &.gold {
+                    color: #F4C300;
+                  }
 
-                &.bronze {
-                  color: #CD7F32;
+                  &.silver {
+                    color: #818181;
+                  }
+
+                  &.bronze {
+                    color: #CD7F32;
+                  }
                 }
               }
             }

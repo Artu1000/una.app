@@ -192,13 +192,12 @@ var anchor = {
 
             // if the url of the link contain a hash
             if (splitted_target_url[1]) {
-                console.log('click on link with anchor');
 
-                // we set a cookie with the anchor
-                cookie.set('anchor', splitted_target_url[1]);
+                // if the targetted url is not the current url, we make a redirection
+                if (splitted_target_url[0] && location.href != splitted_target_url[0]+'/') {
 
-                // if the targetted url is not the page where we are, we make a redirection
-                if (location.href != splitted_target_url[0]+'/') {
+                    // we set a cookie with the anchor
+                    cookie.set('anchor', splitted_target_url[1]);
 
                     // we load the new url
                     location.href = splitted_target_url[0];
@@ -217,7 +216,7 @@ var anchor = {
             }
         });
     },
-    detection: function(){
+    detect: function(){
         anchor.analyseCookies();
         anchor.listen();
     }
@@ -233,7 +232,7 @@ $(function () {
     $(window).scroll(gmap.scrollTreatment);
 
     // we launch the anchor treatment
-    anchor.detection();
+    anchor.detect();
 
     // hide bootstrap menu on click
     $(document).on('click', function () {

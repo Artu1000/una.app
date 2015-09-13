@@ -140,12 +140,12 @@ class PagesTableSeeder extends Seeder
                                     <li>des cotisations de ses membres dont le montant est ratifié par l’Assemblée Générale</li>
                                     <li>de subventions qui peuvent lui être accordées</li>
                                     <li>des intérêts et revenus de biens et valeurs qu’elle pourrait posséder et de toutes autres ressources légalement reconnues et compatibles avec sa capacité civile</li>
-                                    <li>e dons manuels</li>
+                                    <li>de dons manuels</li>
                                     Ces ressources servent uniquement à pouvoir au bon fonctionnement de l’ensemble de ses activités.
                                     </ul>
 
                                     <h4>Article 14</h4>
-                                    Il est tenu à jour une comptabilité des recettes et des dépenses avec les journaux annexes. Le budget annuel de la section et le bilan de l’exercice sont arrêtés au 30 septembre de chaque année.
+                                    <p>Il est tenu à jour une comptabilité des recettes et des dépenses avec les journaux annexes. Le budget annuel de la section et le bilan de l’exercice sont arrêtés au 30 septembre de chaque année.</p>
 
                                     <h3>D/ Modification & dissolution</h3>
 

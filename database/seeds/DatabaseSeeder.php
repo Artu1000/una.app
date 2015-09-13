@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
          $this->call('PagesTableSeeder');
          $this->call('PartnersTableSeeder');
          $this->call('PalmaresTableSeeder');
+         $this->call('NewsTableSeeder');
 
         Model::reguard();
 
