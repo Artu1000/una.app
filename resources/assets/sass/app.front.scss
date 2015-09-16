@@ -3,11 +3,11 @@
  * COMMON TO ALL SIZES OF DEVICES
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 /***********************************************************************************************************************
  * IMPORTS & VARIABLES
  **********************************************************************************************************************/
 @import 'app.common';
+
 $logo_header_footer: '../../img/logo-una-header-large-white.png';
 
 $footer_2560_background: '/img/footer-bg-2560x383.png';
@@ -22,51 +22,14 @@ $header_1199_background: '/img/header-bg-1199x176.png';
 $header_991_background: '/img/header-bg-991x156.png';
 $header_767_background: '/img/header-bg-767x121.png';
 
-
 /***********************************************************************************************************************
  * GENERAL
  **********************************************************************************************************************/
-html{
-  height: 100%;
-}
-
-body{
-  padding: 0;
-  margin: 0;
-  height: 100%;
-}
-
-#layout{
-  position: relative;
-}
-
-.gradient {
-  @include gradient-vertical(#000, #111);
-}
-
-.box_shadow{
-  @include box-shadow(0px 0px 7px 0px rgba(0, 0, 0, .7));
-}
-.box_shadow_inset{
-  @include box-shadow(inset 0px 0px 7px 0px rgba(0, 0, 0, .7));
-}
-
-i.fa{
-  font-size: 13px;
-}
-
-hr{
-  margin: 20px 0 50px;
-}
-
-
-
-
 
 /***********************************************************************************************************************
  * HEADER
  **********************************************************************************************************************/
-header{
+header {
   position: relative;
   text-transform: uppercase;
   z-index: 1000;
@@ -77,11 +40,11 @@ header{
     @include border-radius(0);
     border: none;
 
-    .navbar-header{
+    .navbar-header {
 
-      .navbar-brand {
+      a.navbar-brand {
 
-        .logo{
+        .logo {
           display: inline-block;
           padding: 0;
           margin: 0;
@@ -95,44 +58,36 @@ header{
         h1 {
           display: inline-block;
           vertical-align: middle;
-          color: #fff;
-          margin: 0;
-          padding: 7px 0;
+          color: #9d9d9d !important;
+          margin: 5px 0 0 0 !important;
 
-          &:hover{
-            color: #5a5a5a;
+          &:hover {
+            color: #eee !important;
+            @include transition(color 0.2s ease);
           }
         }
       }
     }
 
-    #navbar{
+    #navbar {
 
-      .nav.navbar-nav{
+      .nav.navbar-nav {
 
-        li{
+        li {
 
-          a{
+          &.open {
 
-            &:hover{
-              color: #EEE;
-              @include transition(color 0.2s ease);
-              background-color: #07141B;
-            }
-            &:focus{
-              color: #9d9d9d;
-            }
-          }
-
-          &.open{
-
-            ul{
+            ul {
               margin-top: 15px;
 
-              li{
+              li {
 
-                a{
+                a {
                   padding: 10px 15px;
+
+                  &:hover {
+                    background-color: #07141B;
+                  }
                 }
               }
             }
@@ -143,7 +98,7 @@ header{
   }
 }
 
-#header_background{
+#header_background {
   background-repeat: no-repeat;
   background-position: center top;
   width: 100%;
@@ -158,25 +113,21 @@ header{
  **********************************************************************************************************************/
 #content {
 
-  .parallax_img{
+  .parallax_img {
 
     .background_responsive_img {
-
-      min-height: 300px;
       background-size: cover;
     }
   }
 
   .text-content {
-    width: 100%;
     text-align: justify;
-    background-color: #ffffff;
 
     .container {
 
       h2 {
 
-        &:first-of-type{
+        &:first-of-type {
           margin: 0 0 50px;
         }
 
@@ -191,31 +142,29 @@ header{
 /***********************************************************************************************************************
  * PARTNERS
  **********************************************************************************************************************/
-#partners{
+#partners {
   background-color: #F7F7F7;
 
-  .container{
+  .container {
     text-align: center;
 
-    div{
+    div {
       display: inline-block;
 
-      a{
+      a {
 
-        &:hover{
+        &:hover {
           opacity: 0.7;
-          @include transition(opacity 0.2s ease);
         }
       }
     }
   }
 }
 
-
 /***********************************************************************************************************************
  * GOOGLE MAP
  **********************************************************************************************************************/
-#map-canvas{
+#map-canvas {
   display: block;
   background-color: #CCC;
 }
@@ -223,20 +172,20 @@ header{
 /***********************************************************************************************************************
  * FOOTER
  **********************************************************************************************************************/
-#footer_layout{
+#footer_layout {
   position: relative;
   z-index: 100;
   color: #fff;
   text-transform: uppercase;
 
-  a{
+  a {
 
-    &:hover{
+    &:hover {
       color: #fff;
     }
   }
 
-  #footer_background{
+  #footer_background {
     background-repeat: no-repeat;
     background-position: center top;
     width: 100%;
@@ -244,52 +193,52 @@ header{
     z-index: 50;
   }
 
-  footer{
+  footer {
     padding: 25px 0 15px;
     width: 100%;
     font-size: 15px;
     position: relative;
     z-index: 100;
 
-    .container{
+    .container {
       display: table;
       width: 100%;
       padding: 0 40px;
 
-      i.fa{
+      i.fa {
         font-size: 15px;
         margin: 0 5px;
       }
 
-      .left_part{
+      .left_part {
         display: table-cell;
         vertical-align: middle;
         text-align: right;
         width: 50%;
 
-        p, a{
+        p, a {
           margin: 0;
         }
 
-        .contact{
+        .contact {
           display: inline-block;
           vertical-align: middle;
         }
 
-        .logo{
+        .logo {
           display: inline-block;
           vertical-align: middle;
           padding-left: 15px;
         }
       }
 
-      .delimiter{
+      .delimiter {
         display: table-cell;
         width: 10px;
         height: 100%;
         vertical-align: middle;
 
-        span{
+        span {
           background-color: #5a5a5a;
           display: block;
           width: 1px;
@@ -298,23 +247,23 @@ header{
         }
       }
 
-      .right_part{
+      .right_part {
         display: table-cell;
         vertical-align: middle;
         width: 50%;
 
-        .social{
+        .social {
           margin: 0 3px;
 
-          i.fa{
+          i.fa {
             font-size: 30px;
           }
         }
 
-        .copyright{
+        .copyright {
           margin-top: 5px;
 
-          p{
+          p {
             margin: 0;
             padding: 0;
           }
@@ -323,7 +272,7 @@ header{
     }
   }
 
-  #footer_color_fill{
+  #footer_color_fill {
     background-color: #000;
     height: 100px;
     width: 100%;
@@ -346,12 +295,12 @@ header{
   z-index: 5000;
   @include box-shadow(0 0 10px 0 #000);
 
-  p{
+  p {
     padding-top: 3px;
     color: #000;
   }
 
-  button, p{
+  button, p {
     display: inline-block;
     margin: 0 5px;
     position: relative;
@@ -359,24 +308,17 @@ header{
   }
 }
 
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
  * EXTRA LARGE DEVICES DESKTOPS : 1921 & MORE
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (min-width: 1921px){
+@media screen and (min-width: 1921px) {
 
   /*********************************************************************************************************************
    * GENERAL
    ********************************************************************************************************************/
-  .parallax_img{
+  .parallax_img {
     min-height: 200px;
 
     .background_responsive_img {
@@ -388,16 +330,16 @@ header{
   /*********************************************************************************************************************
   * HEADER
   *********************************************************************************************************************/
-  #header_color_fill{
+  #header_color_fill {
     background-color: #07141B;
     height: 25px;
   }
 
-  header{
+  header {
 
     .navbar.navbar-inverse {
 
-      .navbar-header{
+      .navbar-header {
 
         .navbar-brand {
           padding: 7px 25px 7px 20px;
@@ -422,27 +364,39 @@ header{
         }
       }
 
-      #navbar{
+      #navbar {
 
-        .nav.navbar-nav{
+        .nav.navbar-nav {
           padding-top: 18px;
 
-          li{
+          li {
 
-            &.active{
+            a {
 
-              a{
+              &:hover {
+                color: #eee;
+              }
+
+              &:focus {
+                color: #eee;
+                background-color: transparent;
+              }
+            }
+
+            &.active {
+
+              a {
                 background-color: transparent;
 
-                &:hover, &:focus{
+                &:hover, &:focus {
                   background-color: transparent;
                 }
               }
             }
 
-            a{
+            a {
 
-              .fa{
+              .fa {
                 font-size: 15px;
               }
             }
@@ -452,7 +406,7 @@ header{
     }
   }
 
-  #header_background{
+  #header_background {
     background-image: url($header_2560_background);
     height: 403px;
     background-size: cover;
@@ -465,16 +419,15 @@ header{
     padding: 150px 0;
   }
 
-
   /*********************************************************************************************************************
   * PARTNERS
   *********************************************************************************************************************/
-  #partners{
+  #partners {
 
-    .container{
+    .container {
 
-      div{
-        padding:  0 70px;
+      div {
+        padding: 0 70px;
       }
     }
   }
@@ -482,7 +435,7 @@ header{
   /*********************************************************************************************************************
   * GOOGLE MAP
   *********************************************************************************************************************/
-  #map-canvas{
+  #map-canvas {
     height: 1000px;
     margin-bottom: -305px;
   }
@@ -490,9 +443,9 @@ header{
   /*********************************************************************************************************************
   * FOOTER
   *********************************************************************************************************************/
-  #footer_layout{
+  #footer_layout {
 
-    #footer_background{
+    #footer_background {
       background-image: url($footer_2560_background);
       height: 382px;
       margin-bottom: -38px;
@@ -502,24 +455,17 @@ header{
 
 }
 
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
  * LARGE DEVICES DESKTOPS : 1920 <=> 1200 (LG)
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (max-width: 1920px) and (min-width: 1200px){
+@media screen and (max-width: 1920px) and (min-width: 1200px) {
 
   /*********************************************************************************************************************
    * GENERAL
    ********************************************************************************************************************/
-  .parallax_img{
+  .parallax_img {
     min-height: 150px;
 
     .background_responsive_img {
@@ -531,11 +477,11 @@ header{
   /*********************************************************************************************************************
   * HEADER
   *********************************************************************************************************************/
-  header{
+  header {
 
     .navbar.navbar-inverse {
 
-      .navbar-header{
+      .navbar-header {
 
         .navbar-brand {
           padding: 7px 25px 7px 20px;
@@ -560,27 +506,39 @@ header{
         }
       }
 
-      #navbar{
+      #navbar {
 
-        .nav.navbar-nav{
+        .nav.navbar-nav {
           padding-top: 18px;
 
-          li{
+          li {
 
-            &.active{
+            a {
 
-              a{
+              &:hover {
+                color: #eee;
+              }
+
+              &:focus {
+                color: #eee;
+                background-color: transparent;
+              }
+            }
+
+            &.active {
+
+              a {
                 background-color: transparent;
 
-                &:hover, &:focus{
+                &:hover, &:focus {
                   background-color: transparent;
                 }
               }
             }
 
-            a{
+            a {
 
-              .fa{
+              .fa {
                 font-size: 15px;
               }
             }
@@ -588,13 +546,13 @@ header{
         }
       }
 
-      .nav.navbar-nav.navbar-right{
+      .nav.navbar-nav.navbar-right {
         padding-right: 50px;
       }
     }
   }
 
-  #header_background{
+  #header_background {
     background-image: url($header_1920_background);
     height: 302px;
     background-size: 1920px auto;
@@ -610,12 +568,12 @@ header{
   /*********************************************************************************************************************
   * PARTNERS
   *********************************************************************************************************************/
-  #partners{
+  #partners {
 
-    .container{
+    .container {
 
-      div{
-        padding:  0 60px;
+      div {
+        padding: 0 60px;
       }
     }
   }
@@ -623,7 +581,7 @@ header{
   /*********************************************************************************************************************
   * GOOGLE MAP
   *********************************************************************************************************************/
-  #map-canvas{
+  #map-canvas {
     height: 670px;
     margin-bottom: -240px;
   }
@@ -631,9 +589,9 @@ header{
   /*********************************************************************************************************************
   * FOOTER
   *********************************************************************************************************************/
-  #footer_layout{
+  #footer_layout {
 
-    #footer_background{
+    #footer_background {
       background-image: url($footer_1920_background);
       height: 287px;
       margin-bottom: -38px;
@@ -642,24 +600,17 @@ header{
 
 }
 
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
  * MEDIUM DEVICES DESKTOPS : : 1199 <=> 992 (MD)
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (max-width: 1199px) and (min-width: 992px){
+@media screen and (max-width: 1199px) and (min-width: 992px) {
 
   /*********************************************************************************************************************
    * GENERAL
    ********************************************************************************************************************/
-  .parallax_img{
+  .parallax_img {
     min-height: 100px;
 
     .background_responsive_img {
@@ -671,12 +622,12 @@ header{
   /*********************************************************************************************************************
   * HEADER
   *********************************************************************************************************************/
-  #header_color_fill{
+  #header_color_fill {
     background-color: #07141B;
     height: 40px;
   }
 
-  header{
+  header {
     margin-top: -30px;
 
     .navbar.navbar-inverse {
@@ -708,28 +659,40 @@ header{
       }
     }
 
-    #navbar{
+    #navbar {
 
-      .nav.navbar-nav{
+      .nav.navbar-nav {
         padding-top: 32px;
 
-        li{
+        li {
 
-          &.active{
+          a {
 
-            a{
+            &:hover {
+              color: #eee;
+            }
+
+            &:focus {
+              color: #eee;
+              background-color: transparent;
+            }
+          }
+
+          &.active {
+
+            a {
               background-color: transparent;
 
-              &:hover, &:focus{
+              &:hover, &:focus {
                 background-color: transparent;
               }
             }
           }
 
-          a{
+          a {
             padding: 0 9px;
 
-            .fa{
+            .fa {
               font-size: 15px;
             }
           }
@@ -737,12 +700,12 @@ header{
       }
     }
 
-    .nav.navbar-nav.navbar-right{
+    .nav.navbar-nav.navbar-right {
       padding-right: 80px;
     }
   }
 
-  #header_background{
+  #header_background {
     background-image: url($header_1199_background);
     height: 189px;
     background-size: 1199px auto;
@@ -759,12 +722,12 @@ header{
   /*********************************************************************************************************************
   * PARTNERS
   *********************************************************************************************************************/
-  #partners{
+  #partners {
 
-    .container{
+    .container {
 
-      div{
-        padding:  0 40px;
+      div {
+        padding: 0 40px;
       }
     }
   }
@@ -772,7 +735,7 @@ header{
   /*********************************************************************************************************************
   * GOOGLE MAP
   *********************************************************************************************************************/
-  #map-canvas{
+  #map-canvas {
     height: 550px;
     margin-bottom: -145px;
   }
@@ -780,7 +743,7 @@ header{
   /*********************************************************************************************************************
   * FOOTER
   *********************************************************************************************************************/
-  #footer_background{
+  #footer_background {
     background-image: url($footer_1199_background);
     height: 179px;
     background-size: 1199px auto;
@@ -788,24 +751,17 @@ header{
   }
 }
 
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
  * SMALL DEVICES TABLETS : 991 <=> 768 (SM)
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (max-width: 991px) and (min-width: 768px){
+@media screen and (max-width: 991px) and (min-width: 768px) {
 
   /*********************************************************************************************************************
    * GENERAL
    ********************************************************************************************************************/
-  .parallax_img{
+  .parallax_img {
     min-height: 75px;
 
     .background_responsive_img {
@@ -816,12 +772,12 @@ header{
   /*********************************************************************************************************************
   * HEADER
   *********************************************************************************************************************/
-  #header_color_fill{
+  #header_color_fill {
     background-color: #07141B;
     height: 35px;
   }
 
-  header{
+  header {
     margin-top: -22px;
 
     .navbar.navbar-inverse {
@@ -867,12 +823,24 @@ header{
 
         li {
 
-          &.active{
+          a {
 
-            a{
+            &:hover {
+              color: #eee;
+            }
+
+            &:focus {
+              color: #eee;
+              background-color: transparent;
+            }
+          }
+
+          &.active {
+
+            a {
               background-color: transparent;
 
-              &:hover, &:focus{
+              &:hover, &:focus {
                 background-color: transparent;
               }
             }
@@ -886,12 +854,12 @@ header{
       }
     }
 
-    .nav.navbar-nav.navbar-right{
+    .nav.navbar-nav.navbar-right {
       padding-right: 44px;
     }
   }
 
-  #header_background{
+  #header_background {
     background-image: url($header_991_background);
     height: 156px;
     background-size: 991px auto;
@@ -908,12 +876,12 @@ header{
   /*********************************************************************************************************************
   * PARTNERS
   *********************************************************************************************************************/
-  #partners{
+  #partners {
 
-    .container{
+    .container {
 
-      div{
-        padding:  0 10px;
+      div {
+        padding: 0 10px;
       }
     }
   }
@@ -921,7 +889,7 @@ header{
   /*********************************************************************************************************************
   * GOOGLE MAP
   *********************************************************************************************************************/
-  #map-canvas{
+  #map-canvas {
     height: 500px;
     margin-bottom: -130px;
   }
@@ -961,24 +929,17 @@ header{
   }
 }
 
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
  * EXTRA SMALL DEVICES : 767 & LESS (SM)
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (max-width: 767px){
+@media screen and (max-width: 767px) {
 
   /*********************************************************************************************************************
    * GENERAL
    ********************************************************************************************************************/
-  .parallax_img{
+  .parallax_img {
     min-height: 75px;
 
     .background_responsive_img {
@@ -990,12 +951,12 @@ header{
   /*********************************************************************************************************************
   * HEADER
   *********************************************************************************************************************/
-  #header_color_fill{
+  #header_color_fill {
     background-color: #07141B;
     height: 40px;
   }
 
-  header{
+  header {
     margin-top: -28px;
 
     .navbar.navbar-inverse {
@@ -1006,17 +967,17 @@ header{
     .navbar-header {
       position: relative;
 
-      .navbar-toggle{
+      .navbar-toggle {
         margin-top: 15px;
         background-color: #fff;
         height: 38px;
         width: 50px;
 
-        &:hover, &:focus{
+        &:hover, &:focus {
           background-color: #9d9d9d;
         }
 
-        .icon-bar{
+        .icon-bar {
           background-color: #000;
           width: auto;
         }
@@ -1048,60 +1009,68 @@ header{
       }
     }
 
-    #navbar{
+    #navbar {
       background-color: #fff;
       opacity: 0.8;
       margin: 6px -30px 0;
       @include box-shadow(5px 0px 5px 0px rgba(0, 0, 0, 0.5));
 
-      .nav.navbar-nav{
+      .nav.navbar-nav {
         padding: 0 15px;
         margin: 0 -30px 0;
 
-        li{
+        li {
           border-top: solid 1px #fff;
+          margin: 0;
 
-          a{
+          a {
             color: #000000;
-            padding: 10px 15px;
+            padding: 15px 15px;
             font-size: 15px;
           }
 
-          &.active{
+          &.active {
 
-            a{
-              background-color: #07141B;
+            a {
+              background-color: #07141B !important;
               color: #fff;
 
-              &:hover, &:focus{
+              &:hover, &:focus {
                 background-color: #07141B;
                 color: #ffffff !important;
               }
             }
           }
 
-          &.open{
+          &.open {
             background-color: #eeeeee;
             border-bottom: solid 1px #9d9d9d;
+            margin: 0;
 
-            a{
+            a {
               background-color: #07141B;
               color: #fff;
+
+              &:hover, &:focus {
+                background-color: #07141B;
+              }
             }
 
-            ul{
+            ul {
+              margin: 0 !important;
 
-              li{
+              li {
                 padding: 0 15px;
                 border: none;
+                margin: 0;
 
-                &.divider{
+                &.divider {
                   margin: 9px 30px;
                   background-color: #9d9d9d;
                   opacity: 0.3;
                 }
 
-                a{
+                a {
                   background-color: transparent;
                   color: #000;
                   font-size: 13px;
@@ -1114,7 +1083,7 @@ header{
     }
   }
 
-  #header_background{
+  #header_background {
     background-image: url($header_767_background);
     height: 121px;
     background-size: 767px auto;
@@ -1126,28 +1095,21 @@ header{
   *********************************************************************************************************************/
   .text-content {
     padding: 60px 0;
-
-    .container {
-
-      ul {
-        margin: 0 0 30px 0;
-      }
-    }
   }
 
   /*********************************************************************************************************************
   * PARTNERS
   *********************************************************************************************************************/
-  #partners{
+  #partners {
 
-    .container{
+    .container {
 
-      div{
+      div {
         padding: 20px 10px;
 
-        a{
+        a {
 
-          img{
+          img {
             height: 50px;
           }
         }
@@ -1158,7 +1120,7 @@ header{
   /*********************************************************************************************************************
   * GOOGLE MAP
   *********************************************************************************************************************/
-  #map-canvas{
+  #map-canvas {
     height: 400px;
     margin-bottom: -130px;
   }
@@ -1197,12 +1159,12 @@ header{
           }
         }
 
-        .right_part{
+        .right_part {
           display: block;
           text-align: center;
           width: 100%;
 
-          .social{
+          .social {
             margin-top: 5px;
 
             i.fa {
@@ -1214,7 +1176,7 @@ header{
       }
     }
 
-    #footer_color_fill{
+    #footer_color_fill {
       height: 115px;
     }
   }

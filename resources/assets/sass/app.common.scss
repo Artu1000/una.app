@@ -118,70 +118,124 @@ $lato-font-path: '/fonts/lato';
 /***********************************************************************************************************************
  * GENERAL
  **********************************************************************************************************************/
-body{
-  @include lato-font('light');
-  font-size: 16px;
-}
 
-h1, h2, h3, h4, h5, h6{
-  margin: 10px 0;
-  @include lato-font('thin');
-  color: #5a5a5a;
-  text-align: left;
-}
+html {
+  height: 100%;
 
-p{
-  font-size: 16px;
-  @include lato-font('light');
-}
-
-p.quote{
-    @include lato-font('light', italic);
-}
-
-a.btn{
+  body {
     @include lato-font('light');
-}
-.noscript{
-  background-color: #761c19;
-  padding: 15px;
-  color: #FFFFFF;
-}
-a:hover{
-  text-decoration: none;
-  @include transition(color 0.2s ease);
-}
-b, .strong{
-  @include lato-font('medium');
-}
+    font-size: 16px;
+    height: 100%;
 
-.text-content {
+    #layout {
+      position: relative;
 
-  ol, ul {
-    margin: 0;
-    padding: 0;
+      h1, h2, h3, h4, h5, h6 {
+        margin: 10px 0;
+        @include lato-font('thin');
+        color: #5a5a5a;
+      }
 
-    p {
-      margin: 0 0 10px 0;
+      p {
+        font-size: 16px;
+        @include lato-font('light');
+      }
+
+      p.quote {
+        @include lato-font('light', italic);
+      }
+
+      a.btn {
+        @include lato-font('light');
+      }
+
+      .noscript {
+        background-color: #761c19;
+        padding: 15px;
+        color: #FFFFFF;
+      }
+
+      a {
+
+        &:hover {
+          text-decoration: none;
+          @include transition(0.2s ease);
+        }
+      }
+
+      img {
+
+        &:hover {
+          @include transition(0.2s ease);
+        }
+      }
+
+      b, .strong {
+        @include lato-font('medium');
+      }
+
+      #content {
+
+        ol, ul {
+          margin: 0;
+          padding: 0;
+
+          p {
+            margin: 0 0 10px 0;
+
+            i.fa {
+              font-size: inherit;
+              color: inherit;
+            }
+          }
+
+          li {
+            margin: 0 0 5px 25px;
+            padding: 0;
+          }
+        }
+      }
+
+      ul.pagination {
+        margin: 30px 0 20px;
+
+        li {
+          margin: inherit;
+        }
+      }
+
+      .fill {
+        height: 100%;
+        min-height: 100%;
+      }
+
+      .display-table {
+        display: table;
+        width: 100%;
+        max-width: 100%
+      }
+
+      .table-cell {
+        display: table-cell;
+        vertical-align: middle;
+      }
+
+      hr {
+        margin: 20px 0 50px;
+      }
 
       i.fa {
-        font-size: inherit;
-        color: inherit;
+        font-size: 13px;
+      }
+
+      .box_shadow {
+        @include box-shadow(0px 0px 7px 0px rgba(0, 0, 0, .7));
+      }
+
+      .box_shadow_inset {
+        @include box-shadow(inset 0px 0px 7px 0px rgba(0, 0, 0, .7));
       }
     }
-
-    li {
-      margin: 0 0 5px 25px;
-      padding: 0;
-    }
-  }
-}
-
-ul.pagination {
-  margin: 30px 0 20px;
-
-  li {
-    margin: inherit;
   }
 }
 
@@ -192,21 +246,23 @@ ul.pagination {
 /***********************************************************************************************************************
  * ERROR PAGES
  **********************************************************************************************************************/
-.error{
-  margin-top: 50px;
+#content.error{
 
-  .error_title{
-    margin: 40px 0 0;
-  }
+  .container {
 
-  .error_details{
-    margin: 0 0 40px;
-    font-size: 18px;
-  }
+    .title {
+      margin: 40px 0 0;
+    }
 
-  .error_actions{
-    i{
-      font-size: 20px;
+    .details {
+      margin: 0 0 40px;
+      font-size: 18px;
+    }
+
+    .actions {
+      i {
+        font-size: 20px;
+      }
     }
   }
 }
@@ -222,23 +278,27 @@ ul.pagination {
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (min-width: 1921px){
-  h2 {
-    margin: 100px 0 50px;
-    font-size: 45px;
-  }
 
-  h3{
-    font-size: 30px;
-    margin: 75px 0 30px;
-  }
+  body {
 
-  h4{
-    font-size: 22px;
-    margin: 50px 0 15px;
-  }
+    h2 {
+      margin: 100px 0 50px;
+      font-size: 45px;
+    }
 
-  p, ul, ol {
-    margin: 15px 0;
+    h3 {
+      font-size: 30px;
+      margin: 75px 0 30px;
+    }
+
+    h4 {
+      font-size: 22px;
+      margin: 50px 0 15px;
+    }
+
+    p, ul, ol {
+      margin: 15px 0;
+    }
   }
 }
 
@@ -250,17 +310,21 @@ ul.pagination {
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 1920px) and (min-width: 1200px){
-  h2 {
-    margin-bottom: 50px;
-    font-size: 45px;
-  }
 
-  h3{
-    font-size: 30px;
-  }
+  body {
 
-  p {
-    margin: 0 0 30px;
+    h2 {
+      margin-bottom: 50px;
+      font-size: 45px;
+    }
+
+    h3 {
+      font-size: 30px;
+    }
+
+    p {
+      margin: 0 0 30px;
+    }
   }
 }
 
@@ -272,17 +336,21 @@ ul.pagination {
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 1199px) and (min-width: 992px){
-  h2 {
-    margin-bottom: 30px;
-    font-size: 30px;
-  }
 
-  h3{
-    font-size: 22px;
-  }
+  body {
 
-  p {
-    margin: 0 0 30px;
+    h2 {
+      margin-bottom: 30px;
+      font-size: 30px;
+    }
+
+    h3 {
+      font-size: 22px;
+    }
+
+    p {
+      margin: 0 0 30px;
+    }
   }
 }
 
@@ -295,14 +363,14 @@ ul.pagination {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 767px){
 
-  .text-content {
+  body {
 
     h2 {
       margin-bottom: 30px;
       font-size: 30px;
     }
 
-    h3{
+    h3 {
       font-size: 22px;
     }
 

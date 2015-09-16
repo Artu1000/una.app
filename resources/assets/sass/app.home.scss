@@ -24,11 +24,6 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
     position: relative;
     @include gradient-radial(#0D1417, #111822);
 
-    .fill{
-      height: 100% !important;
-      min-height: 100% !important;
-    }
-
     .glide__wrapper{
 
       .glide__track{
@@ -37,6 +32,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
         .glide__slide{
           background-color: transparent;
+          margin: 0;
 
           section{
             background-repeat: no-repeat;
@@ -71,6 +67,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
                     @include lato-font('medium');
                     text-transform: uppercase;
                     color: #fff;
+                    text-align: center;
                   }
 
                   .quote{
