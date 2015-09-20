@@ -60,15 +60,14 @@ class AuthController extends Controller
     protected function show(){
 
         // SEO settings
-        $this->seo['page_title']     = 'Espace connexion';
-        $this->seo['description']   = 'Connectez-vous à votre espace personnel afin de profiter' .
-                                      'des différentes fonctionnalités de l\'application';
-        $this->seo['keywords']      = 'universite, nantes, aviron, espace, connexion';
+        $this->seoMeta['page_title'] = 'Espace connexion';
+        $this->seoMeta['meta_desc'] = 'Connectez-vous à votre espace personnel afin de profiter des différentes
+        fonctionnalités de l\'application';
+        $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, espace, connexion';
 
         // data send to the view
         $data = [
-            'seo' => $this->seo,
-            'dependency' => 'back.login'
+            'seoMeta' => $this->seoMeta
         ];
         return view('pages.back.auth.login')->with($data);
 

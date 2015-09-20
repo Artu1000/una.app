@@ -13,8 +13,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG'),
-//    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -199,7 +198,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-        'String'    => App\Facades\StringHelperFacade::class,
+        'String'        => App\Facades\StringHelperFacade::class
     ],
 
 ];

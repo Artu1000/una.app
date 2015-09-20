@@ -13,6 +13,28 @@
 
   .text-content{
 
+    .categories {
+
+      a {
+
+        &:after {
+          content: " - ";
+          color: #000;
+        }
+
+        &:last-of-type {
+
+          &:after {
+            content: "";
+          }
+        }
+
+        &.selected {
+          @include lato-font('medium');
+        }
+      }
+    }
+
     .table {
 
       tbody {
@@ -51,11 +73,20 @@
           .content {
 
             h3 {
-              margin: 5px 0 0 0;
+              margin: 5px 0;
             }
 
-            .date {
-              margin-top: 2px;
+            .date, .category, .comments {
+              display: inline-block;
+            }
+
+            .category {
+                margin-left: 20px;
+            }
+
+            .comments {
+              color: #337ab7;
+              margin-left: 20px;
             }
 
             .sum_up {
@@ -110,6 +141,10 @@
 
     .text-content{
 
+      .categories {
+        margin: - 30px 0 45px;
+      }
+
       .table {
 
         tr.news {
@@ -127,6 +162,25 @@
           }
         }
       }
+    }
+  }
+
+  #content.news-detail {
+
+    .text-content {
+
+      .container {
+
+        h2 {
+          margin-bottom: 10px;
+        }
+
+        .date {
+          margin-bottom: 45px;
+        }
+
+      }
+
     }
   }
 }

@@ -6,7 +6,7 @@
 
         {{-- parallax img --}}
         <div class="parallax_img">
-            <div class="background_responsive_img fill" data-background-image=""></div>
+            <div class="background_responsive_img fill" data-background-image="{{url()}}/img/palmares/una-palmares.jpg"></div>
         </div>
 
         <div class="text-content">
@@ -32,11 +32,13 @@
                                 @endif">
                                     <i class="fa fa-star"></i>
                                 </div>
-                                <div class="timeline-panel title-panel">
-                                    <div class="logo">
-                                        <img width="40" src="{{ url('/').'/'.$p['category']['logo'] }}" alt="{{ $p['category']['title'] }}">
+                                <div class="timeline-panel title-panel display-table">
+                                    <div class="logo fill table-cell">
+                                        <div class="text-center table-cell">
+                                            <img width="40" src="{{ url('/').'/'.$p['category']['logo'] }}" alt="{{ $p['category']['title'] }}">
+                                        </div>
                                     </div>
-                                    <div class="title">
+                                    <div class="title table-cell text-left">
                                         <h3>{{ $p['category']['title'] }}</h3>
                                     </div>
                                 </div>

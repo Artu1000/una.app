@@ -7,6 +7,8 @@ use App\Repositories\Page\PageRepository;
 use App\Repositories\Palmares\PalmaresEventRepository;
 use App\Repositories\Palmares\PalmaresResultRepository;
 use App\Repositories\Partner\PartnerRepository;
+use App\Repositories\Rss\RssRepository;
+use App\Repositories\Sitemap\SitemapRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -49,6 +51,16 @@ class RepositoryServiceProvider extends ServiceProvider
         // news
         $this->app->bind('App\Repositories\News\NewsRepositoryInterface', function(){
             return new NewsRepository();
+        });
+
+        // sitemap
+        $this->app->bind('App\Repositories\Sitemap\SitemapRepositoryInterface', function(){
+            return new SitemapRepository();
+        });
+
+        // rss
+        $this->app->bind('App\Repositories\Rss\RssRepositoryInterface', function(){
+            return new RssRepository();
         });
     }
 }

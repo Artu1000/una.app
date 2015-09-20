@@ -10,7 +10,7 @@ class PagesTableSeeder extends Seeder
 
         $page_repo->createMultiple([
             [
-                'page_key' => 'historique',
+                'key' => 'historique',
                 'title' => '<i class="fa fa-university"></i> Le club Université Nantes Aviron (UNA) en quelques dates ...',
                 'image' => '',
                 'content' => "<h3>La naissance de l'ASU Nantes</h3>
@@ -28,7 +28,7 @@ class PagesTableSeeder extends Seeder
                 'meta_keywords' => 'club, université, nantes, aviron, historique, histoire'
             ],
             [
-                'page_key' => 'statuts',
+                'key' => 'statuts',
                 'title' => '<i class="fa fa-compass"></i> Les statuts du club Université Nantes Aviron (UNA)',
                 'image' => '',
                 'content' => "<h3>A/ Objet et composition de l'association</h3>
@@ -160,7 +160,7 @@ class PagesTableSeeder extends Seeder
                 'meta_keywords' => 'club, université, nantes, aviron, statuts, officiels'
             ],
             [
-                'page_key' => 'reglement-interieur',
+                'key' => 'reglement-interieur',
                 'title' => '<i class="fa fa-gavel"></i> Le règlement intérieur du club Université Nantes Aviron (UNA)',
                 'image' => '',
                 'content' => "<p class='quote'>La lecture du règlement intérieur est obligatoire pour tous les membres de l'association Université Nantes Aviron. Tout non-respect pourra entraîner des sanctions allant jusqu'à l'exclusion du club</p>
@@ -225,7 +225,7 @@ class PagesTableSeeder extends Seeder
                 'meta_keywords' => 'club, université, nantes, aviron, reglement, interieur'
             ],
             [
-                'page_key' => 'calendrier',
+                'key' => 'calendrier',
                 'title' => '<i class="fa fa-calendar"></i> Le calendrier du club Université Nantes Aviron (UNA)',
                 'image' => '',
                 'content' => '<div class="embed-responsive embed-responsive-4by3">

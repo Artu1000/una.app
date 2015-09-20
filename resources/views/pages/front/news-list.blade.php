@@ -13,7 +13,22 @@
             <div class="container">
 
                 <h2><i class="fa fa-paper-plane"></i> Les actualités du club Université Nantes Aviron (UNA)</h2>
+
                 <hr>
+
+                <div class="categories">
+                    <i class="fa fa-cubes"></i> Trier par catégorie :
+                    @foreach(config('news.categories') as $id => $cat)
+                        <a class="{{ $cat['key'] }}
+                            @if($current_category == $id)
+                                selected
+                            @endif"
+                           href="{{ route('front.news.list', ['category' => $id]) }}"
+                           title="{{ $cat['title'] }}">{{ $cat['title'] }}</a>
+                    @endforeach
+                    @if($current_category)<a href="{{ route('front.news.list') }}" title="Tout afficher">Tout afficher</a>
+                    @endif
+                </div>
                 <table class="table table-striped table-hover">
                     <tbody>
                         @foreach($news_list as $news)
@@ -25,16 +40,22 @@
                                 </td>
                                 <td class="content">
                                     <h3>
-                                        <a href="{{ route('front.news.detail', $news->id) }}" title="{{ $news->title }}">{{ $news->title }}</a>
+                                        <a href="{{ route('front.news.detail', $news->key) }}" title="{{ $news->title }}"><i class="fa fa-newspaper-o"></i> {{ $news->title }}</a>
                                     </h3>
                                     <div class="date">
-                                        {{ Carbon\Carbon::createFromFormat('Y-m-d', $news->released_at)->format('d/m/Y') }}
+                                        <i class="fa fa-clock-o"></i> {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $news->released_at)->format('d/m/Y H:i') }}
+                                    </div>
+                                    <div class="category {{ \config('news.categories.' . $news->category_id . '.key') }}" >
+                                        <i class="fa fa-cube"></i> {{ \config('news.categories.' . $news->category_id . '.title') }}
+                                    </div>
+                                    <div class="comments">
+                                        <i class="fa fa-comments"></i> <a href="{{ route('front.news.detail', $news->key) }}#disqus_thread" title="Commentaires"></a>
                                     </div>
                                     <div class="sum_up">
                                         {{ str_limit(strip_tags($news->content), 250) }}
                                     </div>
                                     <div class="button mobile visible-xs">
-                                        <a href="{{ route('front.news.detail', $news->id) }}" title="{{ $news->title }}">
+                                        <a href="{{ route('front.news.detail', $news->key) }}" title="{{ $news->title }}">
                                             <button class="btn btn-lg btn-default btn-block" role="button">
                                                 <i class="fa fa-chevron-circle-right"></i> Lire plus
                                             </button>
@@ -42,7 +63,7 @@
                                     </div>
                                 </td>
                                 <td class="button hidden-xs">
-                                    <a href="{{ route('front.news.detail', $news->id) }}" title="{{ $news->title }}">
+                                    <a href="{{ route('front.news.detail', $news->key) }}" title="{{ $news->title }}">
                                         <button class="btn btn-default" role="button">
                                             <i class="fa fa-chevron-circle-right"></i>
                                         </button>
@@ -62,5 +83,18 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES * * */
+        var disqus_shortname = 'una-club';
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
 
 @endsection

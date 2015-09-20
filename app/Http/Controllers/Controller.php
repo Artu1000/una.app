@@ -10,9 +10,17 @@ abstract class Controller extends BaseController
 {
     use DispatchesJobs, ValidatesRequests;
 
-    public $seoMeta = [
+    protected $seoMeta = [
         'page_title',
         'meta_desc',
         'meta_keywords'
     ];
+
+    protected function loadBaseJs()
+    {
+        \JavaScript::put([
+            'base_url' => url('/'),
+            'site_name' => env('SITE_NAME')
+        ]);
+    }
 }

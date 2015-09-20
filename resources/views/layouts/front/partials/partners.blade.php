@@ -1,5 +1,5 @@
 {{-- partners --}}
-<div id="partners" class="text-content">
+<div id="partners" class="text-content row">
     <div class="container">
         @foreach($partners as $partner)
             <div>

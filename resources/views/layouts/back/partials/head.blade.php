@@ -11,7 +11,6 @@
 <meta name="description" content='{{$seoMeta['meta_desc']}}'>
 <meta name="keywords" content="{{$seoMeta['meta_keywords']}}">
 <meta name="author" content='Arthur LORENT'>
-<link rel="alternate" type="application/rss+xml" href="{{ url('rss') }}" title="Flux RSS des actualités du {{ env('SITE_NAME') }}">
 
 {{-- csrf token --}}
 <meta content="{{ csrf_token() }}" name="csrf-token" />

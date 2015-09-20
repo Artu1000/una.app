@@ -28,7 +28,7 @@ var cookie = {
     },
     showCookieBar: function () {
         var cookieBar = '<div id="cookie_bar" class="container">' +
-            '<p>Le site <b>' + site_name + '</b> utilise des cookies afin d\'améliorer votre expérience utilisateur.</p>' +
+            '<p>Le site <b>' + app.site_name + '</b> utilise des cookies afin d\'améliorer votre expérience utilisateur.</p>' +
             '<button id="cookie_acceptation" class="btn btn-success"><i class="fa fa-check-circle"></i> Je comprends</button>' +
             '<button id="cookie_information" class="btn btn-primary"><i class="fa fa-question-circle"></i> En savoir plus</button>' +
             '</div>';
@@ -100,7 +100,7 @@ var gmap = {
             draggable: false,
             position: latlng,
             map: map,
-            title: site_name
+            title: app.site_name
         });
 
     },

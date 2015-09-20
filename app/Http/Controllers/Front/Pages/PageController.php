@@ -19,6 +19,7 @@ class PageController extends Controller
     public function __construct(PageRepositoryInterface $page)
     {
         $this->page = $page;
+        $this->loadBaseJs();
     }
 
     /**
@@ -28,7 +29,7 @@ class PageController extends Controller
     {
 
         // we get the page from its page key
-        $page = $this->page->findBy('page_key', $page_key);
+        $page = $this->page->findBy('key', $page_key);
 
         // if no page is found, we return a 404 error
         if (!$page) {

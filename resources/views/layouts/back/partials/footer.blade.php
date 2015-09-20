@@ -34,16 +34,13 @@
             </div>
             <div class="right_part">
                 <div class="social">
-                    <a class="new_window" href="https://fr-fr.facebook.com/UniversiteNantesAviron" title="Facebook {{ env('SITE_NAME') }}">
+                    <a class="new_window" href="https://fr-fr.facebook.com/UniversiteNantesAviron" target="_blank" title="Facebook club Université Nantes Aviron (UNA)">
                         <i class="fa fa-facebook-square fa-3"></i></a>
-                    <a class="new_window" href="https://twitter.com/UNAClub" title="Twitter {{ env('SITE_NAME') }}">
+                    <a class="new_window" href="https://twitter.com/UNAClub" target="_blank" title="Twitter club Université Nantes Aviron (UNA)">
                         <i class="fa fa-twitter-square fa-3"></i>
                     </a>
-                    <a class="new_window" rel=publisher" href="https://plus.google.com/+Univ-nantes-avironFr" title="Google+ {{ env('SITE_NAME') }}">
+                    <a class="new_window" rel=publisher" href="https://plus.google.com/+Univ-nantes-avironFr" target="_blank" title="Google+ club Université Nantes Aviron (UNA)">
                         <i class="fa fa-google-plus-square fa-3"></i>
-                    </a>
-                    <a class="new_window" href="{{ url('rss') }}" title="Flux RSS des actualités - {{ env('SITE_NAME') }}">
-                        <i class="fa fa-rss-square fa-3"></i>
                     </a>
                 </div>
                 <div class="copyright hidden-xs">

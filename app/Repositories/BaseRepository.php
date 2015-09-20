@@ -30,6 +30,13 @@ abstract class BaseRepository implements BaseRepositoryInterface
     protected $take;
 
     /**
+     * Alias for the query limit
+     *
+     * @var int
+     */
+    protected $skip;
+
+    /**
      * Array of related models to eager load
      *
      * @var array
@@ -223,6 +230,19 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
+     * Set the query skip
+     *
+     * @param int $skip
+     *
+     * @return $this
+     */
+    public function skip($start)
+    {
+        $this->skip = $start;
+        return $this;
+    }
+
+    /**
      * Set an ORDER BY clause
      *
      * @param string $column
@@ -338,6 +358,12 @@ abstract class BaseRepository implements BaseRepositoryInterface
         if (isset($this->take) and !is_null($this->take)) {
             $this->query->take($this->take);
         }
+        if (isset($this->skip) and !is_null($this->skip)) {
+            $this->query->skip($this->skip);
+        }
+        if (isset($this->paginate) and !is_null($this->paginate)) {
+            $this->query->paginate($this->paginate);
+        }
         return $this;
     }
 
@@ -377,6 +403,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function paginate($perPage = 15, $columns = array('*'))
     {
-        return $this->model->paginate($perPage, $columns);
+        $this->newQuery()->eagerLoad()->setClauses()->setScopes();
+        $models = $this->query->paginate($perPage, $columns);
+        $this->unsetClauses();
+        return $models;
     }
 }

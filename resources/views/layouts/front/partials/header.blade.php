@@ -106,7 +106,7 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="menu_tab">
-                        <a title="Espace membre" href="http://prototype.una-club.fr/una-backoffice-site" target="_blank">
+                        <a title="Espace membre" href="{{ route('back.account') }}">
                             <i class="fa fa-user"></i> Espace membre
                         </a>
                     </li>

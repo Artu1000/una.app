@@ -1,1 +1,0 @@
-<script src="{{ elixir('js/app.home.js') }}"></script>

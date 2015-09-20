@@ -18,6 +18,7 @@ class HomeController extends Controller
     public function __construct(NewsRepositoryInterface $news)
     {
         $this->news = $news;
+        $this->loadBaseJs();
     }
 
     /**
@@ -30,8 +31,6 @@ class HomeController extends Controller
         $this->seoMeta['meta_desc'] = 'Bienvenue sur le site du club Université Nantes Aviron,
         le plus grand club d\'aviron universitaire de France, ouvert à tous les publics !';
         $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, sport, universitaire, etudiant, ramer';
-
-
 
         // prepare slides data
         $slides = [];
@@ -90,14 +89,13 @@ class HomeController extends Controller
             'bg_color' => ''
         ];
 
-
-
+        // we get the two last news
         $last_news = $this->news->orderBy('released_at', 'desc')->take(2)->get();
 
-        // prepare js data
-        $jsPageData = [
+        // js data insertion
+        \JavaScript::put([
             'slides_count' => sizeof($slides)
-        ];
+        ]);
 
         // prepare data for the view
         $data = [
@@ -105,8 +103,7 @@ class HomeController extends Controller
             'slides' => $slides,
             'last_news' => $last_news,
             'css' => elixir('css/app.home.css'),
-            'js' => 'home',
-            'jsPageData' => $jsPageData
+            'js' => elixir('js/app.home.js')
         ];
 
         // return the view with data

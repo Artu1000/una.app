@@ -25,6 +25,8 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
     @include gradient-radial(#0D1417, #111822);
 
     .glide__wrapper{
+      width: 100%;
+      position: absolute;
 
       .glide__track{
         padding: 0;
@@ -264,6 +266,30 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
             td.button {
               padding-right: 40px;
+            }
+
+            td.content {
+
+              h3 {
+                margin: 5px 0;
+              }
+
+              .date, .category, .comments {
+                display: inline-block;
+              }
+
+              .category {
+                margin-left: 20px;
+              }
+
+              .comments {
+                color: #337ab7;
+                margin-left: 20px;
+              }
+
+              .sum_up {
+                margin-top: 8px;
+              }
             }
           }
         }

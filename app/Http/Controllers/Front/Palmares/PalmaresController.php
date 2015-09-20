@@ -19,6 +19,7 @@ class PalmaresController extends Controller
     public function __construct(PalmaresEventRepositoryInterface $event)
     {
         $this->event = $event;
+        $this->loadBaseJs();
     }
 
     /**

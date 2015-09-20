@@ -19,12 +19,35 @@ Event::listen('illuminate.query', function ($sql, $bindings) {
     Log::info($sql);
 });
 
+/***********************************************************************************************************************
+ * BACKEND ROUTES
+ **********************************************************************************************************************/
+
+//Route::controller('password', 'Auth\PasswordController');
+
+Route::resource('auth', 'Back\Auth\AuthController', [
+    'names' => [
+        'show' => 'auth.login'
+    ]
+]);
+
+// Routes with auth needed
+Route::group([
+    'middleware' => 'auth'
+], function () {
+
+// account
+    Route::resource('account', 'Back\Account\AccountController', [
+        'names' => [
+            'index' => 'back.account'
+        ]
+    ]);
+
+});
 
 /***********************************************************************************************************************
  * FRONTEND ROUTES
  **********************************************************************************************************************/
-
-
 
 // home
 Route::resource('/', 'Front\Home\HomeController', [
@@ -48,45 +71,16 @@ Route::resource('/palmares', 'Front\Palmares\PalmaresController', [
     ]
 ]);
 
+// sitemap
+Route::get('sitemap.xml', 'Front\Sitemap\SitemapController@index');
+
+// rss
+Route::get('rss', 'Front\Rss\RssController@index');
+
 // at last, pages
 Route::resource('/{page_key}', 'Front\Pages\PageController', [
     'names' => [
         'index' => 'front.page'
     ]
 ]);
-
-// Verify csrf for Ajax request
-//Route::filter('csrf', function(){
-//    $token = Request::ajax() ? Request::header('X-CSRF-Token') : Input::get('_token');
-//    if (Session::token() != $token)
-//        throw new Illuminate\Session\TokenMismatchException;
-//});
-
-
-// Routes with no auth needed
-// Route::controller('verifier', 'Verifier\ValidityController');
-
-
-/***********************************************************************************************************************
- * BACKEND ROUTES
- **********************************************************************************************************************/
-
-//Route::controller('password', 'Auth\PasswordController');
-
-Route::resource('auth', 'Back\Auth\AuthController', [
-    'names' => [
-        'show' => 'auth.login'
-    ]
-]);
-
-// Routes with auth needed
-Route::group([
-    'middleware' => 'auth'
-], function () {
-//    Route::resource('account', 'AccountController', [
-//        'names' => [
-//            'index' => 'account.index'
-//        ]
-//    ]);
-});
 

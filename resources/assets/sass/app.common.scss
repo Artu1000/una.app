@@ -134,11 +134,23 @@ html {
         margin: 10px 0;
         @include lato-font('thin');
         color: #5a5a5a;
+        text-align: left;
+      }
+
+      h2{
+
+        &:first-of-type {
+          margin-top: 0;
+        }
       }
 
       p {
         font-size: 16px;
         @include lato-font('light');
+      }
+
+      p, ul, ol {
+        margin: 15px 0;
       }
 
       p.quote {
@@ -161,6 +173,10 @@ html {
           text-decoration: none;
           @include transition(0.2s ease);
         }
+
+        &:focus {
+          text-decoration: none;
+        }
       }
 
       img {
@@ -177,20 +193,14 @@ html {
       #content {
 
         ol, ul {
-          margin: 0;
           padding: 0;
 
           p {
-            margin: 0 0 10px 0;
-
-            i.fa {
-              font-size: inherit;
-              color: inherit;
-            }
+            margin: 0;
           }
 
           li {
-            margin: 0 0 5px 25px;
+            margin: 0 0 0 25px;
             padding: 0;
           }
         }
@@ -225,7 +235,8 @@ html {
       }
 
       i.fa {
-        font-size: 13px;
+        font-size: inherit;
+        color: inherit;
       }
 
       .box_shadow {
@@ -234,6 +245,35 @@ html {
 
       .box_shadow_inset {
         @include box-shadow(inset 0px 0px 7px 0px rgba(0, 0, 0, .7));
+      }
+
+      .return {
+        padding: 45px 0 0;
+
+        a {
+          padding: 20px 0;
+
+          button {
+            @include border-radius(50%);
+            width: 35px;
+            height: 35px;
+            background-color: #fff;
+            padding: 0;
+
+            i.fa {
+              font-size: 25px;
+              color: #337ab7;
+            }
+          }
+
+          span {
+            text-transform: uppercase;
+          }
+
+          &:hover {
+            opacity: 0.7;
+          }
+        }
       }
     }
   }
@@ -252,6 +292,10 @@ html {
 
     .title {
       margin: 40px 0 0;
+
+      h1, h2 {
+        text-align: center;
+      }
     }
 
     .details {
@@ -279,25 +323,27 @@ html {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (min-width: 1921px){
 
-  body {
+  html {
 
-    h2 {
-      margin: 100px 0 50px;
-      font-size: 45px;
-    }
+    body {
 
-    h3 {
-      font-size: 30px;
-      margin: 75px 0 30px;
-    }
+      #layout {
 
-    h4 {
-      font-size: 22px;
-      margin: 50px 0 15px;
-    }
+        h2 {
+          margin: 100px 0 65px;
+          font-size: 45px;
+        }
 
-    p, ul, ol {
-      margin: 15px 0;
+        h3 {
+          font-size: 30px;
+          margin: 65px 0 30px;
+        }
+
+        h4 {
+          font-size: 22px;
+          margin: 50px 0 15px;
+        }
+      }
     }
   }
 }
@@ -311,19 +357,27 @@ html {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 1920px) and (min-width: 1200px){
 
-  body {
+  html {
 
-    h2 {
-      margin-bottom: 50px;
-      font-size: 45px;
-    }
+    body {
 
-    h3 {
-      font-size: 30px;
-    }
+      #layout {
 
-    p {
-      margin: 0 0 30px;
+        h2 {
+          margin: 100px 0 65px;
+          font-size: 45px;
+        }
+
+        h3 {
+          font-size: 30px;
+          margin: 65px 0 30px;
+        }
+
+        h4 {
+          font-size: 22px;
+          margin: 50px 0 15px;
+        }
+      }
     }
   }
 }
@@ -337,19 +391,27 @@ html {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 1199px) and (min-width: 992px){
 
-  body {
+  html {
 
-    h2 {
-      margin-bottom: 30px;
-      font-size: 30px;
-    }
+    body {
 
-    h3 {
-      font-size: 22px;
-    }
+      #layout {
 
-    p {
-      margin: 0 0 30px;
+        h2 {
+          margin: 75px 0 50px;
+          font-size: 30px;
+        }
+
+        h3 {
+          font-size: 22px;
+          margin: 50px 0 22px;
+        }
+
+        h4 {
+          font-size: 18px;
+          margin: 35px 0 12px;
+        }
+      }
     }
   }
 }
@@ -363,41 +425,26 @@ html {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 767px){
 
-  body {
+  html {
 
-    h2 {
-      margin-bottom: 30px;
-      font-size: 30px;
-    }
+    body {
 
-    h3 {
-      font-size: 22px;
-    }
+      #layout {
 
-    h4 {
-
-    }
-
-    p {
-      margin: 0 0 30px;
-    }
-
-    ol, ul {
-      margin: 0;
-      padding: 0;
-
-      p {
-        margin: 0 0 5px 0;
-
-        i.fa {
-          font-size: inherit;
-          color: inherit;
+        h2 {
+          margin: 75px 0 50px;
+          font-size: 30px;
         }
-      }
 
-      li {
-        margin: 0 0 5px 25px;
-        padding: 0;
+        h3 {
+          font-size: 22px;
+          margin: 50px 0 22px;
+        }
+
+        h4 {
+          font-size: 18px;
+          margin: 35px 0 12px;
+        }
       }
     }
   }
