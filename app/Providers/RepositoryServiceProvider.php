@@ -9,6 +9,7 @@ use App\Repositories\Palmares\PalmaresResultRepository;
 use App\Repositories\Partner\PartnerRepository;
 use App\Repositories\Rss\RssRepository;
 use App\Repositories\Sitemap\SitemapRepository;
+use App\Repositories\User\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -38,6 +39,11 @@ class RepositoryServiceProvider extends ServiceProvider
         // partners
         $this->app->bind('App\Repositories\Partner\PartnerRepositoryInterface', function(){
             return new PartnerRepository();
+        });
+
+        // users
+        $this->app->bind('App\Repositories\User\UserRepositoryInterface', function(){
+            return new UserRepository();
         });
 
         // palmares

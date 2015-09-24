@@ -23,10 +23,10 @@
                             @if($current_category == $id)
                                 selected
                             @endif"
-                           href="{{ route('front.news.list', ['category' => $id]) }}"
+                           href="{{ route('front.news', ['category' => $id]) }}"
                            title="{{ $cat['title'] }}">{{ $cat['title'] }}</a>
                     @endforeach
-                    @if($current_category)<a href="{{ route('front.news.list') }}" title="Tout afficher">Tout afficher</a>
+                    @if($current_category)<a href="{{ route('front.news') }}" title="Tout afficher">Tout afficher</a>
                     @endif
                 </div>
                 <table class="table table-striped table-hover">

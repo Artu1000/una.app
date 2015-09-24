@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Front\Palmares;
+namespace App\Http\Controllers\Palmares;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Palmares\PalmaresEventRepositoryInterface;

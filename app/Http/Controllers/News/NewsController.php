@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Front\News;
+namespace App\Http\Controllers\News;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\News\NewsRepositoryInterface;

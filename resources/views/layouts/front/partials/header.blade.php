@@ -14,7 +14,7 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <a class="navbar-brand" title="Retour à l'accueil" href="{{ route('front.home') }}">
+                <a class="navbar-brand" title="Retour à l'accueil" href="{{ route('home') }}">
                     <span class="logo">
                         <img width="70" height="66" src="{{ url('/') }}/img/logo-una-small.png" alt="Logo Club Université Nantes Aviron (UNA)">
                     </span>
@@ -30,7 +30,7 @@
 
                 <ul class="nav navbar-nav">
                     <li class="menu_tab">
-                        <a href="{{ URL::route('front.news.list') }}" title="Actualités">
+                        <a href="{{ URL::route('front.news') }}" title="Actualités">
                             <i class="fa fa-paper-plane"></i> Actus
                         </a>
                     </li>
@@ -51,13 +51,13 @@
                                 </a>
                             </li>
                             <li class="menu_tab">
-                                <a href="{{ route('front.palmares.list') }}" title="Palmarès">
+                                <a href="{{ route('front.palmares') }}" title="Palmarès">
                                     <i class="fa fa-trophy"></i> Palmarès
                                 </a>
                             </li>
                             <li class="divider"></li>
                             <li class="menu_tab">
-                                <a href="{{ route('front.page', 'equipe-dirigeante') }}" title="Equipe dirigeante">
+                                <a href="{{ route('front.leading_team') }}" title="Equipe dirigeante">
                                     <i class="fa fa-cogs"></i> Equipe dirigeante
                                 </a>
                             </li>

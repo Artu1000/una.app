@@ -14,11 +14,13 @@ class CreatePartnersTable extends Migration
     {
         Schema::create('partners', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('logo');
-            $table->string('url');
-            $table->integer('position');
+            $table->string('name')->nullable();
+            $table->string('logo')->nullable();
+            $table->string('url')->nullable();
+            $table->integer('position')->nullable();
             $table->timestamps();
+
+            $table->engine = 'InnoDB';
         });
     }
 

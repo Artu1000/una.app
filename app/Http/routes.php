@@ -25,62 +25,82 @@ Event::listen('illuminate.query', function ($sql, $bindings) {
 
 //Route::controller('password', 'Auth\PasswordController');
 
-Route::resource('auth', 'Back\Auth\AuthController', [
+//Route::resource('auth', 'Auth\AuthController', [
+//    'names' => [
+//        'show' => 'auth.login'
+//    ]
+//]);
+
+// account
+Route::resource('account', 'Account\AccountController', [
     'names' => [
-        'show' => 'auth.login'
+        'index' => 'back.account'
     ]
 ]);
 
-// Routes with auth needed
-Route::group([
-    'middleware' => 'auth'
-], function () {
-
-// account
-    Route::resource('account', 'Back\Account\AccountController', [
-        'names' => [
-            'index' => 'back.account'
-        ]
-    ]);
-
-});
 
 /***********************************************************************************************************************
  * FRONTEND ROUTES
  **********************************************************************************************************************/
 
 // home
-Route::resource('/', 'Front\Home\HomeController', [
+Route::resource('/', 'Home\HomeController', [
     'names' => [
-        'index' => 'front.home',
+        'index' => 'home',
     ]
 ]);
 
 // news
-Route::resource('/news', 'Front\News\NewsController', [
+Route::resource('/news', 'News\NewsController', [
     'names' => [
-        'index' => 'front.news.list',
+        'index' => 'front.news',
         'show' => 'front.news.detail'
     ]
 ]);
 
-// palmares
-Route::resource('/palmares', 'Front\Palmares\PalmaresController', [
+// leading team
+Route::resource('/equipe-dirigeante', 'LeadingTeam\LeadingTeamController', [
     'names' => [
-        'index' => 'front.palmares.list'
+        'index' => 'front.leading_team'
+    ]
+]);
+
+// palmares
+Route::resource('/palmares', 'Palmares\PalmaresController', [
+    'names' => [
+        'index' => 'front.palmares'
+    ]
+]);
+
+// registration
+Route::resource('/inscription', 'Palmares\RegistrationController', [
+    'names' => [
+        'index' => 'front.registration'
     ]
 ]);
 
 // sitemap
-Route::get('sitemap.xml', 'Front\Sitemap\SitemapController@index');
+Route::get('sitemap.xml', 'Sitemap\SitemapController@index');
 
 // rss
-Route::get('rss', 'Front\Rss\RssController@index');
+Route::get('rss', 'Rss\RssController@index');
+
+//$except = [
+//    '/login',
+//    '/forgot',
+//    '/register',
+//    '/users',
+//    '/groups'
+//];
 
 // at last, pages
-Route::resource('/{page_key}', 'Front\Pages\PageController', [
-    'names' => [
-        'index' => 'front.page'
-    ]
-]);
+//if(!in_array($uri, $except)) {
+
+    Route::resource('/{page_key}', 'Pages\PageController', [
+        'names' => [
+            'index' => 'front.page'
+        ]
+    ]);
+
+//}
 

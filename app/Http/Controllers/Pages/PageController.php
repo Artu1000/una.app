@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Front\Pages;
+namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Page\PageRepositoryInterface;

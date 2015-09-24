@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Front\Rss;
+namespace App\Http\Controllers\Rss;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Rss\RssRepositoryInterface;

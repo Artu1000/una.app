@@ -14,12 +14,14 @@ class CreatePalmaresResultsTable extends Migration
     {
         Schema::create('palmares_results', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('palmares_event_id')->unsigned();
+            $table->integer('palmares_event_id')->unsigned()->index();
             $table->foreign('palmares_event_id')->references('id')->on('palmares_events')->onDelete('cascade');
-            $table->string('boat');
-            $table->integer('position');
-            $table->string('crew');
+            $table->string('boat')->nullable();
+            $table->integer('position')->nullable();
+            $table->string('crew')->nullable();
             $table->timestamps();
+
+            $table->engine = 'InnoDB';
         });
     }
 

@@ -3,13 +3,11 @@
 $categories = [
     1 => [
         'key' => 'club',
-        'title' => 'Club',
-        'color' => ''
+        'title' => 'Club'
     ],
     2 => [
         'key' => 'sport',
-        'title' => 'Sport',
-        'color' => ''
+        'title' => 'Sport'
     ]
 ];
 

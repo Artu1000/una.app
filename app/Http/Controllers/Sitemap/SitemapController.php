@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Front\Sitemap;
+namespace App\Http\Controllers\Sitemap;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Sitemap\SitemapRepositoryInterface;

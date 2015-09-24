@@ -14,10 +14,12 @@ class CreatePalmaresEventsTable extends Migration
     {
         Schema::create('palmares_events', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('category_id');
-            $table->string('location');
-            $table->date('date');
+            $table->integer('category_id')-> index();
+            $table->string('location')->nullable();
+            $table->date('date')->nullable();
             $table->timestamps();
+
+            $table->engine = 'InnoDB';
         });
     }
 

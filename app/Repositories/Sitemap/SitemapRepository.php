@@ -58,7 +58,7 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
 
         // news
         $site_pages[] = [
-            'url' => route('front.news.list'),
+            'url' => route('front.news'),
             'last_mod' => \App::make('App\Repositories\News\NewsRepositoryInterface')
                 ->orderBy('updated_at', 'desc')->first()->updated_at
         ];
@@ -81,7 +81,7 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
 
         // palmares
         $site_pages[] = [
-            'url' => route('front.palmares.list'),
+            'url' => route('front.palmares'),
             'last_mod' => \App::make('App\Repositories\Palmares\PalmaresEventRepositoryInterface')
                 ->orderBy('updated_at', 'desc')->first()->updated_at
         ];

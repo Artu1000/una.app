@@ -14,14 +14,16 @@ class CreatePagesTable extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('key')->unique();
-            $table->string('title');
-            $table->string('image');
-            $table->text('content');
-            $table->text('meta_title');
-            $table->text('meta_description');
-            $table->text('meta_keywords');
+            $table->string('key')->unique()->index();
+            $table->string('title')->nullable();
+            $table->string('image')->nullable();
+            $table->text('content')->nullable();
+            $table->text('meta_title')->nullable();
+            $table->text('meta_description')->nullable();
+            $table->text('meta_keywords')->nullable();
             $table->timestamps();
+
+            $table->engine = 'InnoDB';
         });
     }
 

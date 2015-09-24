@@ -14,16 +14,18 @@ class CreateNewsTable extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('category_id');
-            $table->string('key')->unique();
-            $table->string('title');
-            $table->text('meta_title');
-            $table->text('meta_description');
-            $table->text('meta_keywords');
-            $table->datetime('released_at');
-            $table->string('image');
-            $table->text('content');
+            $table->integer('category_id')->index();
+            $table->string('key')->unique()->index();
+            $table->string('title')->nullable();
+            $table->text('meta_title')->nullable();
+            $table->text('meta_description')->nullable();
+            $table->text('meta_keywords')->nullable();
+            $table->datetime('released_at')->nullable();
+            $table->string('image')->nullable();
+            $table->text('content')->nullable();
             $table->timestamps();
+
+            $table->engine = 'InnoDB';
         });
     }
 
