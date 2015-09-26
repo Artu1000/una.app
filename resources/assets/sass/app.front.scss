@@ -291,29 +291,47 @@ html {
 /***********************************************************************************************************************
  * COOKIE BAR
  **********************************************************************************************************************/
-#cookie_bar {
-  text-transform: none;
-  padding: 10px 0;
-  text-align: center;
-  background-color: #fff;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  z-index: 5000;
-  @include box-shadow(0 0 10px 0 #000);
 
-  p {
-    padding-top: 3px;
-    color: #000;
-  }
+html {
 
-  button, p {
-    display: inline-block;
-    margin: 0 5px;
-    position: relative;
-    z-index: 5500;
+  body {
+
+    #layout {
+
+      #cookie_bar {
+        text-transform: none;
+        text-align: center;
+        background-color: #F7F7F7;
+        position: fixed;
+        bottom: 0;
+        z-index: 5000;
+        @include box-shadow(0 0 10px 0 #000);
+        width: 100%;
+        color: #000;
+
+        .container {
+
+          div {
+
+            div {
+              padding: 15px 0;
+
+              i.fa.text-info {
+                color: #337ab7;
+              }
+            }
+          }
+
+          #cookie_acceptation {
+            margin-left: 30px;
+          }
+        }
+      }
+    }
   }
 }
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************

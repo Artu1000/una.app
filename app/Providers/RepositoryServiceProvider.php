@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\RegistrationPrice;
 use App\Repositories\News\NewsRepository;
 use App\Repositories\Page\PageRepository;
 use App\Repositories\Palmares\PalmaresEventRepository;
 use App\Repositories\Palmares\PalmaresResultRepository;
 use App\Repositories\Partner\PartnerRepository;
+use App\Repositories\RegistrationPrice\RegistrationPriceRepository;
 use App\Repositories\Rss\RssRepository;
 use App\Repositories\Sitemap\SitemapRepository;
 use App\Repositories\User\UserRepository;
@@ -57,6 +59,11 @@ class RepositoryServiceProvider extends ServiceProvider
         // news
         $this->app->bind('App\Repositories\News\NewsRepositoryInterface', function(){
             return new NewsRepository();
+        });
+
+        // registration prices
+        $this->app->bind('App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface', function(){
+            return new RegistrationPriceRepository();
         });
 
         // sitemap

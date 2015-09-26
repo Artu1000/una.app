@@ -27,10 +27,16 @@ var cookie = {
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     },
     showCookieBar: function () {
-        var cookieBar = '<div id="cookie_bar" class="container">' +
-            '<p>Le site <b>' + app.site_name + '</b> utilise des cookies afin d\'améliorer votre expérience utilisateur.</p>' +
-            '<button id="cookie_acceptation" class="btn btn-success"><i class="fa fa-check-circle"></i> Je comprends</button>' +
-            '<button id="cookie_information" class="btn btn-primary"><i class="fa fa-question-circle"></i> En savoir plus</button>' +
+        var cookieBar =
+            '<div id="cookie_bar" class="container-fluid">' +
+                '<div class="container">' +
+                    '<div class="display-table">' +
+                        '<div class="table-cell text-center">' +
+                        '   <span>Je comprends que le site du <b>' + app.site_name + '</b> utilise des cookies afin d\'améliorer mon expérience utilisateur.</span>' +
+                        '   <button id="cookie_acceptation" class="btn btn-success"><i class="fa fa-check-circle"></i> Fermer</button>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
             '</div>';
         $('#footer_color_fill').append(cookieBar);
         $('#cookie_bar').hide();

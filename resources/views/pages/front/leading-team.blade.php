@@ -13,11 +13,16 @@
 
         <div class="text-content">
             <div class="container">
-                <h2>L'équipe dirigeante du club Université Nantes Aviron (UNA)</h2>
+                <h2><i class="fa fa-cogs"></i> L'équipe dirigeante du club Université Nantes Aviron (UNA)</h2>
                 <hr>
                 <div class="team text-left">
                     <div class="title display-table">
-                        <div class="picto table-cell"><i class="fa fa-cog leading"></i></div> <h3 class="table-cell">Bureau</h3>
+                        <div class="picto table-cell">
+                            <div class="table-cell">
+                                <i class="fa fa-cog leading text-info"></i>
+                            </div>
+                        </div>
+                        <h3 class="table-cell">Bureau</h3>
                     </div>
                     @foreach($team as $member)
                         @if($member->board === config('user.board_key.leading-board'))
@@ -44,7 +49,12 @@
 
                 <div class="team">
                     <div class="title display-table">
-                        <div class="picto table-cell"><i class="fa fa-cog executive"></i></div> <h3 class="table-cell">Comité Directeur (+ membres du Bureau)</h3>
+                        <div class="picto table-cell">
+                            <div class="table-cell">
+                                <i class="fa fa-cog executive"></i>
+                            </div>
+                        </div>
+                        <h3 class="table-cell">Comité Directeur (+ membres du Bureau)</h3>
                     </div>
                     @foreach($team as $member)
                         @if($member->board === config('user.board_key.executive-committee'))
@@ -71,7 +81,12 @@
 
                 <div class="team">
                     <div class="title display-table">
-                        <div class="picto table-cell"><i class="fa fa-cog employee"></i></div> <h3 class="table-cell">Salariés</h3>
+                        <div class="picto table-cell">
+                            <div class="table-cell">
+                                <i class="fa fa-cog employee"></i>
+                            </div>
+                        </div>
+                        <h3 class="table-cell">Salariés</h3>
                     </div>
                     @foreach($team as $member)
                         @if($member->board === config('user.board_key.employee'))

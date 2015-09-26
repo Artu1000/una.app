@@ -73,7 +73,7 @@ Route::resource('/palmares', 'Palmares\PalmaresController', [
 ]);
 
 // registration
-Route::resource('/inscription', 'Palmares\RegistrationController', [
+Route::resource('/inscription', 'Registration\RegistrationController', [
     'names' => [
         'index' => 'front.registration'
     ]
