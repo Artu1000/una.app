@@ -9,125 +9,87 @@
  **********************************************************************************************************************/
 @import 'app.front';
 
-#content.news-list {
 
-  .text-content{
+html {
 
-    .categories {
+  body {
 
-      a {
+    #layout {
 
-        &:after {
-          content: " - ";
-          color: #000;
-        }
+      #content.schedule {
 
-        &:last-of-type {
+        .schedules {
 
-          &:after {
-            content: "";
+          .slot {
+            width: 35px;
+            height: 35px;
+            border-top: solid 2px transparent;
+            border-bottom: solid 2px transparent;
+
+            &.start {
+              border-top: 2px solid #F9F9F9;
+            }
+            &.stop {
+              border-bottom: 2px solid #F9F9F9;
+            }
+            &.suaps {
+              background-color: #1abc9c;
+            }
+            &.rowing-school {
+              background-color: #339dff;
+            }
+            &.competition {
+              background-color: #ea6153;
+            }
+            &.all-publics{
+              background-color: #a66bbe;
+            }
           }
-        }
 
-        &.selected {
-          @include lato-font('medium');
-        }
-      }
-    }
+          .legend {
+            margin: 20px 0;
 
-    .table {
+            .title {
+              padding: 0 15px 0 0;
+            }
 
-      tbody {
+            table {
+              margin: 0 15px;
 
-        tr.news {
+              tr {
 
-          td {
-            text-align: justify;
-            border: 0;
-          }
-
-          .img, .content, .button {
-            vertical-align: middle;
-
-            a {
-              padding: 0;
-              @include border-radius(50%);
-              background-color: transparent;
-
-              &:hover {
-                opacity: 0.7;
-                @include transition(opacity 0.2s ease);
+                .name {
+                  padding: 0 10px;
+                }
               }
             }
           }
 
-          .img {
+          .day {
+            border: solid #fff 1px;
 
-            img {
-              @include border-radius(50%);
-              border: dashed 1px;
-              padding: 10px;
+            &:first-of-type {
+              border-left: 0;
+            }
+
+            &:last-of-type {
+              border-right: 0;
+            }
+
+            table{
+              width: 100%;
+              margin: 0;
             }
           }
 
-          .content {
-
-            h3 {
-              margin: 5px 0;
-            }
-
-            .date, .category, .comments {
-              display: inline-block;
-            }
-
-            .category {
-                margin-left: 20px;
-            }
-
-            .comments {
-              color: #337ab7;
-              margin-left: 20px;
-            }
-
-            .sum_up {
-              margin-top: 8px;
-            }
-          }
-
-          .button {
-
-            button {
-              @include border-radius(50%);
-              width: 60px;
-              height: 60px;
-              background-color: #fff;
-
-              i.fa {
-                font-size: 40px;
-                color: #337ab7;
-              }
-            }
-          }
-        }
-      }
-
-      tfoot {
-
-        tr.pagination-container {
-
-          td {
-            padding: 0;
-            border-top: 0;
+          .informations {
+            margin-top: 60px;
           }
         }
       }
     }
   }
 }
-
-
-
-
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -135,55 +97,11 @@
  * EXTRA LARGE DEVICES DESKTOPS : 1921 & MORE
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 @media screen and (min-width: 1921px){
 
-  #content.news-list {
-
-    .text-content{
-
-      .categories {
-        margin: - 30px 0 45px;
-      }
-
-      .table {
-
-        tr.news {
-
-          td {
-            height: 220px;
-          }
-
-          td.img {
-            padding-left: 40px;
-          }
-
-          td.button {
-            padding-right: 40px;
-          }
-        }
-      }
-    }
-  }
-
-  #content.news-detail {
-
-    .text-content {
-
-      .container {
-
-        h2 {
-          margin-bottom: 10px;
-        }
-
-        .date {
-          margin-bottom: 45px;
-        }
-
-      }
-
-    }
-  }
 }
+
 
 
 
@@ -197,7 +115,6 @@
 @media screen and (max-width: 1920px) and (min-width: 1200px){
 
 }
-
 
 
 
@@ -234,33 +151,4 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 767px){
 
-  #content.news-list {
-
-    .text-content {
-
-      .table {
-
-        tr.news {
-
-          td.content {
-            padding: 30px 20px;
-
-            .button.mobile {
-              padding: 10px 0 0;
-
-              button {
-                @include border-radius(6px);
-                width: 100%;
-                height: auto;
-
-                & > i.fa {
-                  font-size: 16px;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
 }

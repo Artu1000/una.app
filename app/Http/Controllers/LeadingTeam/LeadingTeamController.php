@@ -9,8 +9,6 @@ use Cartalyst\Sentinel\Users\EloquentUser;
 class LeadingTeamController extends Controller
 {
 
-    private $user;
-
     /**
      * Create a new home controller instance.
      *
@@ -18,7 +16,7 @@ class LeadingTeamController extends Controller
      */
     public function __construct(UserRepositoryInterface $user)
     {
-        $this->user = $user;
+        $this->repository = $user;
         $this->loadBaseJs();
     }
 
@@ -34,7 +32,7 @@ class LeadingTeamController extends Controller
 
 
         // we get the two last news
-        $team = $this->user->orderBy('status', 'asc')->get();
+        $team = $this->repository->orderBy('status', 'asc')->get();
 
         // prepare data for the view
         $data = [

@@ -8,9 +8,6 @@ use App\Repositories\Page\PageRepositoryInterface;
 
 class PageController extends Controller
 {
-
-    private $page;
-
     /**
      * Create a new home controller instance.
      *
@@ -18,7 +15,7 @@ class PageController extends Controller
      */
     public function __construct(PageRepositoryInterface $page)
     {
-        $this->page = $page;
+        $this->repository = $page;
         $this->loadBaseJs();
     }
 
@@ -29,7 +26,7 @@ class PageController extends Controller
     {
 
         // we get the page from its page key
-        $page = $this->page->findBy('key', $page_key);
+        $page = $this->repository->findBy('key', $page_key);
 
         // if no page is found, we return a 404 error
         if (!$page) {

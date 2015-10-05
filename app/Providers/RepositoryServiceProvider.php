@@ -10,6 +10,7 @@ use App\Repositories\Palmares\PalmaresResultRepository;
 use App\Repositories\Partner\PartnerRepository;
 use App\Repositories\RegistrationPrice\RegistrationPriceRepository;
 use App\Repositories\Rss\RssRepository;
+use App\Repositories\Schedule\ScheduleRepository;
 use App\Repositories\Sitemap\SitemapRepository;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -64,6 +65,11 @@ class RepositoryServiceProvider extends ServiceProvider
         // registration prices
         $this->app->bind('App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface', function(){
             return new RegistrationPriceRepository();
+        });
+
+        // schedule
+        $this->app->bind('App\Repositories\Schedule\ScheduleRepositoryInterface', function(){
+            return new ScheduleRepository();
         });
 
         // sitemap

@@ -9,8 +9,6 @@ use App\Repositories\Palmares\PalmaresEventRepositoryInterface;
 class PalmaresController extends Controller
 {
 
-    private $event;
-
     /**
      * Create a new home controller instance.
      *
@@ -18,7 +16,7 @@ class PalmaresController extends Controller
      */
     public function __construct(PalmaresEventRepositoryInterface $event)
     {
-        $this->event = $event;
+        $this->repository = $event;
         $this->loadBaseJs();
     }
 
@@ -28,7 +26,7 @@ class PalmaresController extends Controller
     public function index()
     {
         // we get the palmares list
-        $palmares = $this->event->eventsWithResultsSortedByCategory();
+        $palmares = $this->repository->eventsWithResultsSortedByCategory();
 
         // SEO Meta settings
         $this->seoMeta['page_title'] = 'Palmares';

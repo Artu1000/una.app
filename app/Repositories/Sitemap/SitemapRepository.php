@@ -60,7 +60,9 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
         $site_pages[] = [
             'url' => route('front.news'),
             'last_mod' => \App::make('App\Repositories\News\NewsRepositoryInterface')
-                ->orderBy('updated_at', 'desc')->first()->updated_at
+                ->orderBy('updated_at', 'desc')
+                ->first()
+                ->updated_at
         ];
         $news_list = \App::make('App\Repositories\News\NewsRepositoryInterface')->orderBy('updated_at', 'desc')->all();
         foreach($news_list as $news){
@@ -83,7 +85,37 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
         $site_pages[] = [
             'url' => route('front.palmares'),
             'last_mod' => \App::make('App\Repositories\Palmares\PalmaresEventRepositoryInterface')
-                ->orderBy('updated_at', 'desc')->first()->updated_at
+                ->orderBy('updated_at', 'desc')
+                ->first()
+                ->updated_at
+        ];
+
+        // leading team
+        $site_pages[] = [
+            'url' => route('front.leading_team'),
+            'last_mod' => \App::make('App\Repositories\User\UserRepositoryInterface')
+                ->orderBy('updated_at', 'desc')
+                ->where('status', '<', config('user.status_key.association-member'))
+                ->first()
+                ->updated_at
+        ];
+
+        // registration
+        $site_pages[] = [
+            'url' => route('front.registration'),
+            'last_mod' => \App::make('App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface')
+                ->orderBy('updated_at', 'desc')
+                ->first()
+                ->updated_at
+        ];
+
+        // schedule
+        $site_pages[] = [
+            'url' => route('front.schedule'),
+            'last_mod' => \App::make('App\Repositories\Schedule\ScheduleRepositoryInterface')
+                ->orderBy('updated_at', 'desc')
+                ->first()
+                ->updated_at
         ];
 
         return $site_pages;

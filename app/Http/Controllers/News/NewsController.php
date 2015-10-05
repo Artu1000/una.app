@@ -17,7 +17,7 @@ class NewsController extends Controller
      */
     public function __construct(NewsRepositoryInterface $news)
     {
-        $this->news = $news;
+        $this->repository = $news;
         $this->loadBaseJs();
     }
 
@@ -37,7 +37,7 @@ class NewsController extends Controller
         $category = Input::get('category', null);
 
         // sort results by date
-        $query = $this->news->orderBy('released_at', 'desc');
+        $query = $this->repository->orderBy('released_at', 'desc');
 
         // if a category is given, we filter the list
         if($category){
@@ -63,7 +63,7 @@ class NewsController extends Controller
     public function show($news_key)
     {
         // we get the news from its unique key
-        $news = $this->news->findBy('key', $news_key);
+        $news = $this->repository->findBy('key', $news_key);
 
         if(!$news){
             abort(404);
@@ -85,33 +85,4 @@ class NewsController extends Controller
         // return the view with data
         return view('pages.front.news-detail')->with($data);
     }
-
-//    public function category($id)
-//    {
-//
-//        // we verify that the given category id exist
-//        if(in_array($id, config('news.categories_keys'))){
-//
-//
-//
-//            $news_list = $this->news
-//                ->where('category_id', $id)
-//                ->orderBy('released_at', 'desc')
-////                ->paginate(10);
-////            ->get();
-//                ->take(10);
-//                ->skip($page * 10)
-//
-//            $request = $request->take($limit);
-//            $request = $request->skip(($page - 1) * $limit);
-//
-//            return response()->json([
-//                'current_cat_key' => \config('news.categories.' . $id . '.key'),
-//                'news_list' => $news_list
-//            ], 200);
-//
-//        }
-//
-//        return response()->json([], 400);
-//    }
 }

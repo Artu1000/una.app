@@ -10,6 +10,8 @@ abstract class Controller extends BaseController
 {
     use DispatchesJobs, ValidatesRequests;
 
+    protected $repository;
+
     protected $seoMeta = [
         'page_title',
         'meta_desc',

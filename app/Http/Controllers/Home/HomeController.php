@@ -8,8 +8,6 @@ use App\Repositories\News\NewsRepositoryInterface;
 class HomeController extends Controller
 {
 
-    private $news;
-
     /**
      * Create a new home controller instance.
      *
@@ -17,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct(NewsRepositoryInterface $news)
     {
-        $this->news = $news;
+        $this->repository = $news;
         $this->loadBaseJs();
     }
 
@@ -90,7 +88,7 @@ class HomeController extends Controller
         ];
 
         // we get the two last news
-        $last_news = $this->news->orderBy('released_at', 'desc')->take(2)->get();
+        $last_news = $this->repository->orderBy('released_at', 'desc')->take(2)->get();
 
         // js data insertion
         \JavaScript::put([

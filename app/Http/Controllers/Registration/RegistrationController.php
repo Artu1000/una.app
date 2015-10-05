@@ -17,7 +17,7 @@ class RegistrationController extends Controller
      */
     public function __construct(RegistrationPriceRepositoryInterface $price)
     {
-        $this->model = $price;
+        $this->repository = $price;
         $this->loadBaseJs();
     }
 
@@ -32,7 +32,7 @@ class RegistrationController extends Controller
         afin de procéder à votre inscription au club Université Nantes Aviron (UNA)';
         $this->seoMeta['meta_keywords'] = 'club, université, nantes, aviron, inscription, tarif, categorie, rameur';
 
-        $prices = $this->model->orderBy('price', 'asc')->get();
+        $prices = $this->repository->orderBy('price', 'asc')->get();
 
         // prepare data for the view
         $data = [

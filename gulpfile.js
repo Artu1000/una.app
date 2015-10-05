@@ -40,6 +40,8 @@ elixir(function (mix) {
         .sass("app.news.scss", 'public/css/app.news.css', {})
         // compile leading team css
         .sass("app.leading-team.scss", 'public/css/app.leading-team.css', {})
+        // compile schedule css
+        .sass("app.schedule.scss", 'public/css/app.schedule.css', {})
         //compile back css
         //.sass("app.back.scss", 'public/css/app.back.css', {})
 
@@ -132,6 +134,7 @@ elixir(function (mix) {
             'public/css/app.palmares.css',
             'public/css/app.news.css',
             'public/css/app.leading-team.css',
+            'public/css/app.schedule.css',
             //'public/css/app.back.css',
 
             'public/js/app.front.js',

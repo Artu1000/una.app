@@ -38,9 +38,9 @@
                         @endforeach
                     </table>
                     <ul>
-                        <p><i class="fa fa-info-circle"></i> A noter :</p>
-                        <li>Pour la catégorie "Tous publics" uniquement, une licence mi-saison est possible, valable de mai à septembre.</li>
-                        <li>Pour les autres catégories, l'inscription en cours d'année ne donne droit à aucune réduction tarifaire.</li>
+                        <p class="text-info"><i class="fa fa-info-circle"></i> A noter :</p>
+                        <li>Pour la <b>catégorie "Tous publics" uniquement</b>, une licence mi-saison est possible, valable de mai à septembre.</li>
+                        <li>Pour les autres catégories, l'inscription en cours d'année ne donne droit à <b>aucune réduction tarifaire</b>.</li>
                     </ul>
                 </div>
 
@@ -72,7 +72,7 @@
                     <h3>Autres informations</h3>
                     <ul>
                         <li>Il vous est possible de vous inscrire tout au long de l'année à partir du formulaire d'inscription en ligne ou directement au club.</li>
-                        <li>Tout dépot de dossier d'inscription doit être effectué au début d'un créneau d'encadrement, auprès de l'équipe d'encadrement.</li>
+                        <li>Tout dépot de dossier d'inscription doit être effectué <b>au début d'un créneau d'encadrement</b>, auprès de l'équipe d'encadrement.</li>
                         <li>Vous pouvez démarrer vos entraînements dès que votre dossier d'inscription est complet et déposé.</li>
                     </ul>
                 </div>

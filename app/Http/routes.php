@@ -79,6 +79,13 @@ Route::resource('/inscription', 'Registration\RegistrationController', [
     ]
 ]);
 
+// schedule
+Route::resource('/horaires', 'Schedule\ScheduleController', [
+    'names' => [
+        'index' => 'front.schedule'
+    ]
+]);
+
 // sitemap
 Route::get('sitemap.xml', 'Sitemap\SitemapController@index');
 

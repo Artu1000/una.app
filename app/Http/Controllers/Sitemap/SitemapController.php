@@ -10,8 +10,6 @@ class SitemapController extends Controller
 
 {
 
-    private $sitemap;
-
     /**
      * Create a new home controller instance.
      *
@@ -20,14 +18,14 @@ class SitemapController extends Controller
     public function __construct(SitemapRepositoryInterface $sitemap)
     {
         $this->loadBaseJs();
-        $this->sitemap = $sitemap;
+        $this->repository = $sitemap;
     }
 
     /**
      * @return $this
      */
     public function index(){
-        $site_map = $this->sitemap->buildSiteMap();
+        $site_map = $this->repository->buildSiteMap();
         return response($site_map)->header('Content-type', 'text/xml');
     }
 
