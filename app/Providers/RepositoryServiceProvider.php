@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\RegistrationPrice;
+use App\Repositories\EShop\EShopArticleRepository;
 use App\Repositories\News\NewsRepository;
 use App\Repositories\Page\PageRepository;
 use App\Repositories\Palmares\PalmaresEventRepository;
@@ -70,6 +70,11 @@ class RepositoryServiceProvider extends ServiceProvider
         // schedule
         $this->app->bind('App\Repositories\Schedule\ScheduleRepositoryInterface', function(){
             return new ScheduleRepository();
+        });
+
+        // e-shop
+        $this->app->bind('App\Repositories\EShop\EShopArticleRepositoryInterface', function(){
+            return new EShopArticleRepository();
         });
 
         // sitemap

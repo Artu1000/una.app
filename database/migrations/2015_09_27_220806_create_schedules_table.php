@@ -14,11 +14,13 @@ class CreateSchedulesTable extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('day_id');
-            $table->string('start');
-            $table->string('stop');
-            $table->integer('public_category');
+            $table->integer('day_id')->nullable();
+            $table->string('start')->nullable();
+            $table->string('stop')->nullable();
+            $table->integer('public_category')->nullable();
             $table->timestamps();
+
+            $table->engine = 'InnoDB';
         });
     }
 

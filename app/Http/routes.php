@@ -86,6 +86,13 @@ Route::resource('/horaires', 'Schedule\ScheduleController', [
     ]
 ]);
 
+// shop
+Route::resource('/boutique-en-ligne', 'EShop\EShopController', [
+    'names' => [
+        'index' => 'front.e-shop'
+    ]
+]);
+
 // sitemap
 Route::get('sitemap.xml', 'Sitemap\SitemapController@index');
 

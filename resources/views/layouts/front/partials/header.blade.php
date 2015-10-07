@@ -96,7 +96,7 @@
                                 </a>
                             </li>
                             <li class="menu_tab">
-                                <a href="{{ route('front.page', 'textile') }}" title="Textile">
+                                <a href="{{ route('front.e-shop') }}" title="Boutique">
                                     <i class="fa fa-shopping-cart"></i> Textile
                                 </a>
                             </li>

@@ -14,8 +14,8 @@ class CreateRegistrationPricesTable extends Migration
     {
         Schema::create('registration_prices', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('label');
-            $table->integer('price');
+            $table->string('label')->nullable();
+            $table->integer('price')->nullable();
             $table->timestamps();
 
             $table->engine = 'InnoDB';
