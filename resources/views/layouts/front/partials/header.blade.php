@@ -76,7 +76,7 @@
 
                     <li class="dropdown">
                         <a title="Infos" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            <i class="fa fa-info-circle"></i> Infos<span class="caret"></span>
+                            <i class="fa fa-info-circle"></i> Aviron<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="menu_tab">
@@ -97,7 +97,7 @@
                             </li>
                             <li class="menu_tab">
                                 <a href="{{ route('front.e-shop') }}" title="Boutique">
-                                    <i class="fa fa-shopping-cart"></i> Textile
+                                    <i class="fa fa-shopping-cart"></i> Boutique
                                 </a>
                             </li>
                         </ul>
