@@ -73,11 +73,11 @@
                         @endforeach
                     </tbody>
                     <tfoot>
-                    <tr class="pagination-container">
-                        <td colspan="3" class="text-right">
-                            {!! $news_list->render() !!}
-                        </td>
-                    </tr>
+                        <tr class="pagination-container">
+                            <td colspan="3" class="text-right">
+                                {!! $news_list->render() !!}
+                            </td>
+                        </tr>
                     </tfoot>
                 </table>
             </div>

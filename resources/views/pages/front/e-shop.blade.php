@@ -38,6 +38,13 @@
                             </td>
                         </tr>
                     @endforeach
+                    {{--<tfoot>--}}
+                    {{--<tr class="pagination-container">--}}
+                        {{--<td colspan="4" class="text-right">--}}
+                            {{--{!! $articles->render() !!}--}}
+                        {{--</td>--}}
+                    {{--</tr>--}}
+                    {{--</tfoot>--}}
                 </table>
             </div>
         </div>

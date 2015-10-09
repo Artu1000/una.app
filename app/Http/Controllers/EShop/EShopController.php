@@ -36,12 +36,13 @@ class EShopController extends Controller
             ->orderBy('category_id', 'asc')
             ->orderBy('price', 'asc')
             ->get();
+//            ->paginate(10);
 
         // prepare data for the view
         $data = [
             'seoMeta' => $this->seoMeta,
-            'articles' => $articles
-//            'css' => elixir('css/app.home.css'),
+            'articles' => $articles,
+            'css' => elixir('css/app.e-shop.css')
 //            'js' => elixir('js/app.home.js')
         ];
 
