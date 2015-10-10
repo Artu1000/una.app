@@ -30,6 +30,11 @@ class EShopArticle extends Model
     protected $fillable = [
         'category_id',
         'order_type_id',
+        'size_s',
+        'size_m',
+        'size_l',
+        'size_xl',
+        'size_xxl',
         'title',
         'description',
         'available_sizes',

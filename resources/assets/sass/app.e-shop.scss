@@ -3,7 +3,6 @@
  * COMMON TO ALL SIZES OF DEVICES
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 /***********************************************************************************************************************
  * IMPORTS & VARIABLES
  **********************************************************************************************************************/
@@ -17,7 +16,146 @@ html {
 
       #content.e-shop {
 
+        .text-content {
 
+          .categories {
+            margin: - 30px 0 45px;
+
+            a {
+
+              &:after {
+                content: " - ";
+                color: #000;
+              }
+
+              &:last-of-type {
+
+                &:after {
+                  content: "";
+                }
+              }
+
+              &.selected {
+                @include lato-font('medium');
+              }
+            }
+          }
+
+          tr.article {
+
+            h3 {
+              margin: 5px 0;
+            }
+
+            td {
+              vertical-align: middle;
+              border: 0;
+              height: 220px;
+
+              &.image {
+                padding-left: 40px;
+
+                a {
+                  @include border-radius(50%);
+                  padding: 0;
+                  background-color: transparent;
+
+                  &:hover {
+                    opacity: 0.7;
+                  }
+
+                  img {
+                    padding: 10px;
+                    @include border-radius(50%);
+                    border: #5a5a5a dashed 1px;
+                  }
+                }
+
+              }
+
+              .availability {
+
+                &.in-stock {
+                  color: #5CB85C;
+                }
+                &.on-order {
+                  color: #F0AD4E;
+                }
+                &.depleted {
+                  color: #D9534F;
+                }
+              }
+
+              .category {
+                margin-left: 15px;
+              }
+
+              .price {
+                @include lato-font('medium');
+                font-size: 20px;
+                margin-left: 15px;
+              }
+
+              &.size-container {
+                min-width: 80px;
+              }
+
+              .size {
+                @include border-radius(50%);
+                width: 28px;
+                height: 28px;
+                @include lato-font('medium');
+                line-height: 28px;
+                font-size: 10px;
+                display: inline-block;
+                margin: 3px 0;
+
+                &.s {
+                  background-color: #47CEC0;
+                }
+                &.m {
+                  background-color: #4EC2E7;
+                }
+                &.l {
+                  background-color: #5C9DED;
+                }
+                &.xl {
+                  background-color: #9398EC;
+                }
+                &.xxl {
+                  background-color: #CB93EE;
+                }
+              }
+
+              &.action {
+                padding-right: 40px;
+
+                a {
+                  @include border-radius(50%);
+                  border: solid 1px #ccc;
+                  padding: 10px;
+                  display: block;
+
+                  .add-to-command {
+                    @include border-radius(50%);
+                    border: 0;
+                    width: 40px;
+                    height: 40px;
+                    font-size: 25px;
+                    line-height: 40px;
+                    padding: 0;
+                    @include rotate(-7deg);
+
+                    &:hover {
+                      opacity: 0.7;
+                      @include transition(opacity 0.2s ease);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -36,8 +174,14 @@ html {
 
       #layout {
 
-        #content {
+        #content.e-shop {
 
+          .text-content {
+
+            .categories {
+
+            }
+          }
         }
       }
     }
@@ -57,7 +201,7 @@ html {
 
       #layout {
 
-        #content {
+        #content.e-shop {
 
         }
       }
@@ -78,7 +222,7 @@ html {
 
       #layout {
 
-        #content {
+        #content.e-shop {
 
         }
       }
@@ -99,7 +243,7 @@ html {
 
       #layout {
 
-        #content {
+        #content.e-shop {
 
         }
       }
@@ -120,8 +264,63 @@ html {
 
       #layout {
 
-        #content {
+        #content.e-shop {
 
+          .table {
+
+            tr.article {
+
+              td {
+                padding: 30px 10px;
+
+                &.image {
+                  padding: 0 0 0 5px;
+                  width: 120px;
+
+                  a {
+                    display: block;
+
+                    img {
+                      width: 130px;
+                      height: 130px;
+                    }
+                  }
+
+                  .price {
+                    display: block;
+                    margin: 5px 0 0;
+                  }
+                }
+
+                &.details {
+
+                  h3 {
+                    margin-bottom: 10px;
+                  }
+
+                  &:last-of-type.action {
+                    padding-right: 0;
+                    margin-top: 5px;
+                  }
+
+                  .size-container, .action {
+                    margin-top: 10px;
+
+                    .size {
+                      width: 20px;
+                      height: 20px;
+                      line-height: 20px;
+                      font-size: 8px;
+                    }
+                  }
+
+                  .availability {
+                    //display: inline-block;
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

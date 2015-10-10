@@ -18,7 +18,7 @@ foreach ($article_categories as $id => $category) {
 }
 
 // order types
-$order_types = [
+$availability_types = [
     1 => [
         'key' => 'in-stock',
         'title' => 'En stock'
@@ -26,17 +26,21 @@ $order_types = [
     2 => [
         'key' => 'on-order',
         'title' => 'Sur commande'
+    ],
+    3 => [
+        'key' => 'depleted',
+        'title' => 'Épuisé'
     ]
 ];
 // keys
-$order_types_keys = [];
-foreach ($order_types as $id => $type) {
-    $order_types_keys[$type['key']] = $id;
+$availability_types_keys = [];
+foreach ($availability_types as $id => $type) {
+    $availability_types_keys[$type['key']] = $id;
 }
 
 return [
     'article_category' => $article_categories,
     'article_category_key' => $article_categories_keys,
-    'order_type' => $order_types,
-    'order_type_key' => $order_types_keys
+    'availability_type' => $availability_types,
+    'availability_type_key' => $availability_types_keys
 ];

@@ -28,23 +28,27 @@ elixir(function (mix) {
         /***************************************************************************************************************
         * SASS
         ***************************************************************************************************************/
-        // compile front css
+        // compile front sass
         .sass("app.front.scss", 'public/css/app.front.css', {})
-        // compile home css
+        // compile home sass
         .sass("app.home.scss", './resources/assets/compiled_sass_to_merge/app.home.css', {})
-        // compile page css
+        // compile page sass
         .sass("app.page.scss", 'public/css/app.page.css', {})
-        // compile palmares css
+        // compile palmares sass
         .sass("app.palmares.scss", 'public/css/app.palmares.css', {})
-        // compile news css
+        // compile news sass
         .sass("app.news.scss", 'public/css/app.news.css', {})
-        // compile leading team css
+        // compile leading team sass
         .sass("app.leading-team.scss", 'public/css/app.leading-team.css', {})
-        // compile schedule css
+        // compile registration sass
+        .sass("app.registration.scss", 'public/css/app.registration.css', {})
+        // compile schedule sass
         .sass("app.schedule.scss", 'public/css/app.schedule.css', {})
-        // compile e-shop css
+        // compile calendar sass
+        .sass("app.calendar.scss", 'public/css/app.calendar.css', {})
+        // compile e-shop sass
         .sass("app.e-shop.scss", 'public/css/app.e-shop.css', {})
-        //compile back css
+        //compile back sass
         //.sass("app.back.scss", 'public/css/app.back.css', {})
 
         /***************************************************************************************************************
@@ -136,7 +140,9 @@ elixir(function (mix) {
             'public/css/app.palmares.css',
             'public/css/app.news.css',
             'public/css/app.leading-team.css',
+            'public/css/app.registration.css',
             'public/css/app.schedule.css',
+            'public/css/app.calendar.css',
             'public/css/app.e-shop.css',
             //'public/css/app.back.css',
 

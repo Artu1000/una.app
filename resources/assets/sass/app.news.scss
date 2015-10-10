@@ -14,6 +14,7 @@
   .text-content{
 
     .categories {
+      margin: - 30px 0 45px;
 
       a {
 
@@ -51,7 +52,6 @@
 
             a {
               padding: 0;
-              @include border-radius(50%);
               background-color: transparent;
 
               &:hover {
@@ -140,10 +140,6 @@
   #content.news-list {
 
     .text-content{
-
-      .categories {
-        margin: - 30px 0 45px;
-      }
 
       .table {
 
@@ -244,6 +240,11 @@
 
           td.content {
             padding: 30px 20px;
+
+            div.date, div.category, div.comments {
+              display: block;
+              margin: 0;
+            }
 
             .button.mobile {
               padding: 10px 0 0;

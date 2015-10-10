@@ -4,6 +4,7 @@ namespace App\Http\Controllers\EShop;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\EShop\EShopArticleRepositoryInterface;
+use Illuminate\Support\Facades\Input;
 
 class EShopController extends Controller
 {
@@ -31,19 +32,27 @@ class EShopController extends Controller
         $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, sport, universitaire, etudiant,
         boutique, ligne, shopping';
 
+        // we get the category id
+        $category = Input::get('category', null);
+
         // we get the two last news
-        $articles = $this->repository
+        $query = $this->repository
             ->orderBy('category_id', 'asc')
-            ->orderBy('price', 'asc')
-            ->get();
-//            ->paginate(10);
+            ->orderBy('price', 'asc');
+
+        // if a category is given, we filter the list
+        if($category){
+            $query->where('category_id', $category);
+        }
+
+        $articles = $query->get();
 
         // prepare data for the view
         $data = [
             'seoMeta' => $this->seoMeta,
             'articles' => $articles,
+            'current_category' => $category,
             'css' => elixir('css/app.e-shop.css')
-//            'js' => elixir('js/app.home.js')
         ];
 
         // return the view with data

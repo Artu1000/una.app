@@ -79,6 +79,13 @@ Route::resource('/inscription', 'Registration\RegistrationController', [
     ]
 ]);
 
+// registration
+Route::resource('/calendrier', 'Calendar\CalendarController', [
+    'names' => [
+        'index' => 'front.calendar'
+    ]
+]);
+
 // schedule
 Route::resource('/horaires', 'Schedule\ScheduleController', [
     'names' => [

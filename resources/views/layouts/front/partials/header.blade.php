@@ -91,7 +91,7 @@
                             </li>
                             <li class="divider"></li>
                             <li class="menu_tab">
-                                <a href="{{ route('front.page', 'calendrier') }}" title="Calendrier">
+                                <a href="{{ route('front.calendar') }}" title="Calendrier">
                                     <i class="fa fa-calendar"></i> Calendrier
                                 </a>
                             </li>

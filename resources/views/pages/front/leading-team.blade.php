@@ -15,7 +15,7 @@
             <div class="container">
                 <h2><i class="fa fa-cogs"></i> L'équipe dirigeante du club Université Nantes Aviron (UNA)</h2>
                 <hr>
-                <div class="team text-left">
+                <div class="team">
                     <div class="title display-table">
                         <div class="picto table-cell">
                             <div class="table-cell">

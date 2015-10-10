@@ -14,17 +14,19 @@ class CreateEShopArticlesTable extends Migration
     {
         Schema::create('e_shop_articles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title')->nullable();
             $table->integer('category_id')->index();
-            $table->integer('order_type_id')->index();
-            $table->string('available_sizes')->nullable();
+            $table->integer('availability_type_id')->index();
+            $table->string('title')->nullable();
+            $table->string('description')->nullable();
+            $table->boolean('size_s')->default(false);
+            $table->boolean('size_m')->default(false);
+            $table->boolean('size_l')->default(false);
+            $table->boolean('size_xl')->default(false);
+            $table->boolean('size_xxl')->default(false);
             $table->double('price')->nullable();
-            $table->string('photo_1')->nullable();
-            $table->string('photo_2')->nullable();
-            $table->string('photo_3')->nullable();
+            $table->string('photo')->nullable();
             $table->timestamps();
 
-            $table->string('description')->nullable();
             $table->engine = 'InnoDB';
         });
     }

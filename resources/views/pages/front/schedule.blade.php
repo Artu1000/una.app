@@ -15,21 +15,17 @@
                 <hr>
                 <div class="schedules">
 
-                    <table class="legend">
-                        <tr>
-                            <td class="title">Légende : </td>
+                    <div class="legend">
+                            <div class="line">Légende&nbsp;: </div>
                             @foreach(config('schedule.public_category') as $id => $category)
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td class="slot {{ $category['key'] }}"></td>
-                                            <td class="name">{{ $category['title'] }}</td>
-                                        </tr>
-                                    </table>
-                                </td>
+                                <div class="line">
+                                    <div class="display-table">
+                                        <div class="table-cell slot {{ $category['key'] }}"></div>
+                                        <div class="table-cell name">{{ $category['title'] }}</div>
+                                    </div>
+                                </div>
                             @endforeach
-                        </tr>
-                    </table>
+                    </div>
 
                     <div class="schedule-grid display-table">
                             <div class="table-cell day">
@@ -39,7 +35,7 @@
                                     </tr>
                                     @foreach($hours as $hour)
                                         <tr>
-                                            <td class="slot">
+                                            <td class="slot hour">
                                                 {{ $hour }}
                                             </td>
                                         </tr>
@@ -50,7 +46,9 @@
                             <div class="table-cell day">
                                 <table class="table table-condensed table-striped text-center">
                                     <tr>
-                                        <td colspan="{{ empty($columns[$day['title']]) ? 1 : sizeof($columns[$day['title']]) }}" class="slot">{{ $day['title'] }}</td>
+                                        <td colspan="{{ empty($columns[$day['title']]) ? 1 : sizeof($columns[$day['title']]) }}" class="slot">
+                                            <span class="day">{{ $day['title'] }}</span>
+                                        </td>
                                     </tr>
                                     @foreach($hours as $hour)
                                         <tr>

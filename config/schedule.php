@@ -54,7 +54,7 @@ $public_categories = [
     ],
     4 => [
         'key' => 'competition',
-        'title' => 'Compétition (4 séances / semaine ou +)'
+        'title' => 'Compétition'
     ]
 ];
 // keys

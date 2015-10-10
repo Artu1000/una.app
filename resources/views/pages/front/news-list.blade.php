@@ -29,6 +29,7 @@
                     @if($current_category)<a href="{{ route('front.news') }}" title="Tout afficher">Tout afficher</a>
                     @endif
                 </div>
+
                 <table class="table table-striped table-hover">
                     <tbody>
                         @foreach($news_list as $news)

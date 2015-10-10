@@ -45,7 +45,7 @@ class NewsController extends Controller
         }
 
         // paginate the results
-        $news_list = $query->orderBy('released_at', 'desc')->paginate(10);
+        $news_list = $query->paginate(10);
 
         // prepare data for the view
         $data = [

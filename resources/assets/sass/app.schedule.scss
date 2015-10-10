@@ -48,19 +48,15 @@ html {
 
           .legend {
             margin: 20px 0;
+            display: table;
 
-            .title {
-              padding: 0 15px 0 0;
-            }
+            .line {
+              display: table-cell;
+              vertical-align: middle;
+              padding-right: 30px;
 
-            table {
-              margin: 0 15px;
-
-              tr {
-
-                .name {
-                  padding: 0 10px;
-                }
+              .name {
+                padding-left: 5px;
               }
             }
           }
@@ -138,6 +134,34 @@ html {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 991px) and (min-width: 768px){
 
+  html {
+
+    body {
+
+      #layout {
+
+        #content.schedule {
+
+          .schedules {
+
+            .legend {
+
+              .line {
+                padding-right: 0;
+                display: block;
+                margin-bottom: 5px;
+
+                .slot {
+                  width: 25px;
+                  height: 25px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 
@@ -150,5 +174,54 @@ html {
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 767px){
+  html {
 
+    body {
+
+      #layout {
+
+        #content.schedule {
+
+          .schedules {
+
+            .slot {
+              width: 5px;
+              height: 18px;
+
+              &.hour {
+                font-size: 10px;
+                width: 25px;
+                padding: 0;
+              }
+
+              .day {
+                display: block;
+                visibility: hidden;
+                width: 10px;
+                margin: 0 auto;
+              }
+
+              span.day:first-letter {
+                visibility: visible;
+              }
+            }
+
+            .legend {
+
+              .line {
+                padding-right: 0;
+                display: block;
+                margin-bottom: 5px;
+
+                .slot {
+                  width: 20px;
+                  height: 20px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

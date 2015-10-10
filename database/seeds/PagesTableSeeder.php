@@ -223,17 +223,6 @@ class PagesTableSeeder extends Seeder
                 'meta_title' => 'Règlement intérieur',
                 'meta_description' => '',
                 'meta_keywords' => 'club, université, nantes, aviron, reglement, interieur'
-            ],
-            [
-                'key' => 'calendrier',
-                'title' => '<i class="fa fa-calendar"></i> Le calendrier du club Université Nantes Aviron (UNA)',
-                'image' => '',
-                'content' => '<div class="embed-responsive embed-responsive-4by3">
-                                <iframe src="https://www.google.com/calendar/embed?src=communication%40una-club.fr&ctz=Europe/Paris" frameborder="0" scrolling="no"></iframe>
-                              </div>',
-                'meta_title' => 'Calendrier',
-                'meta_description' => '',
-                'meta_keywords' => 'club, université, nantes, aviron, calendrier, agenda'
             ]
         ]);
     }
