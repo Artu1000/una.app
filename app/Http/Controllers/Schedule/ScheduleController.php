@@ -18,7 +18,7 @@ class ScheduleController extends Controller
      */
     public function __construct(ScheduleRepositoryInterface $schedule)
     {
-        $this->loadBaseJs();
+        parent::__construct();
         $this->repository = $schedule;
     }
 

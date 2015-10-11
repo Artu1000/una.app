@@ -202,7 +202,8 @@ return [
         'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
         'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
 
-        'String'        => App\Facades\StringHelperFacade::class
+        'String'        => App\Facades\StringHelperFacade::class,
+        'Modal'        => App\Facades\ModalFacade::class
     ],
 
 ];

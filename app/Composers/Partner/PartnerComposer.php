@@ -1,4 +1,6 @@
-<?php namespace App\Composers\Partner;
+<?php
+
+namespace App\Composers\Partner;
 
 use App\Repositories\Partner\PartnerRepositoryInterface;
 

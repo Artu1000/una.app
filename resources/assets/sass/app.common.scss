@@ -284,13 +284,43 @@ html {
       .btn {
 
         &.btn-default {
-          //background-color: #eee;
+          color: #fff;
+          background-color: #aeb6cb;
+          border-color: #aeb6cb;
+
+          &:hover {
+            background-color: #95a0bb;
+            border-color: $gray-lighter;
+          }
         }
       }
     }
   }
 }
 
+
+
+
+
+/***********************************************************************************************************************
+ * ERROR PAGES
+ **********************************************************************************************************************/
+html {
+
+  body {
+
+    #layout {
+
+      .modal {
+
+        h3, h4 {
+          margin: 0;
+          color: inherit;
+        }
+      }
+    }
+  }
+}
 
 
 

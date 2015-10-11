@@ -18,11 +18,19 @@ abstract class Controller extends BaseController
         'meta_keywords'
     ];
 
-    protected function loadBaseJs()
+    public function __construct()
     {
+        // load base JS
         \JavaScript::put([
             'base_url' => url('/'),
             'site_name' => env('SITE_NAME')
         ]);
+
+        // load modal if an alert is waiting
+        if(\Session::get('alert')){
+            \Javascript::put([
+                'modal_alert' => true
+            ]);
+        }
     }
 }

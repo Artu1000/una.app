@@ -15,7 +15,7 @@ class CalendarController extends Controller
      */
     public function __construct()
     {
-        $this->loadBaseJs();
+        parent::__construct();
     }
 
     /**

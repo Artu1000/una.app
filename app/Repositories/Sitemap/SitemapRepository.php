@@ -3,6 +3,7 @@
 namespace App\Repositories\Sitemap;
 
 use App\Repositories\BaseRepository;
+use Carbon\Carbon;
 
 class SitemapRepository extends BaseRepository implements SitemapRepositoryInterface
 {
@@ -67,7 +68,7 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
         $news_list = \App::make('App\Repositories\News\NewsRepositoryInterface')->orderBy('updated_at', 'desc')->all();
         foreach($news_list as $news){
             $site_pages[] = [
-                'url' => route('front.news.detail', $news->key),
+                'url' => route('front.news.show', $news->key),
                 'last_mod' => $news->updated_at
             ];
         }
@@ -113,6 +114,21 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
         $site_pages[] = [
             'url' => route('front.schedule'),
             'last_mod' => \App::make('App\Repositories\Schedule\ScheduleRepositoryInterface')
+                ->orderBy('updated_at', 'desc')
+                ->first()
+                ->updated_at
+        ];
+
+        // calendar
+        $site_pages[] = [
+            'url' => route('front.calendar'),
+            'last_mod' => Carbon::now()->subDays(5)
+        ];
+
+        // e-shop
+        $site_pages[] = [
+            'url' => route('front.e-shop'),
+            'last_mod' => \App::make('App\Repositories\EShop\EShopArticleRepositoryInterface')
                 ->orderBy('updated_at', 'desc')
                 ->first()
                 ->updated_at

@@ -25,14 +25,14 @@ Event::listen('illuminate.query', function ($sql, $bindings) {
 
 //Route::controller('password', 'Auth\PasswordController');
 
-//Route::resource('auth', 'Auth\AuthController', [
-//    'names' => [
-//        'show' => 'auth.login'
-//    ]
-//]);
+Route::resource('auth', 'Auth\AuthController', [
+    'names' => [
+        'show' => 'auth.login'
+    ]
+]);
 
 // account
-Route::resource('account', 'Account\AccountController', [
+Route::resource('espace-membre', 'Account\AccountController', [
     'names' => [
         'index' => 'back.account'
     ]
@@ -54,7 +54,7 @@ Route::resource('/', 'Home\HomeController', [
 Route::resource('/news', 'News\NewsController', [
     'names' => [
         'index' => 'front.news',
-        'show' => 'front.news.detail'
+        'show' => 'front.news.show'
     ]
 ]);
 
@@ -96,7 +96,8 @@ Route::resource('/horaires', 'Schedule\ScheduleController', [
 // shop
 Route::resource('/boutique-en-ligne', 'EShop\EShopController', [
     'names' => [
-        'index' => 'front.e-shop'
+        'index' => 'front.e-shop',
+        'show' => 'front.e-shop.add-to-cart'
     ]
 ]);
 
@@ -106,22 +107,9 @@ Route::get('sitemap.xml', 'Sitemap\SitemapController@index');
 // rss
 Route::get('rss', 'Rss\RssController@index');
 
-//$except = [
-//    '/login',
-//    '/forgot',
-//    '/register',
-//    '/users',
-//    '/groups'
-//];
-
-// at last, pages
-//if(!in_array($uri, $except)) {
-
-    Route::resource('/{page_key}', 'Pages\PageController', [
-        'names' => [
-            'index' => 'front.page'
-        ]
-    ]);
-
-//}
-
+// pages
+Route::resource('page', 'Pages\PageController', [
+    'names' => [
+        'show' => 'front.page'
+    ]
+]);

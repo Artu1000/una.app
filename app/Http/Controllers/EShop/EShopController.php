@@ -5,6 +5,7 @@ namespace App\Http\Controllers\EShop;
 use App\Http\Controllers\Controller;
 use App\Repositories\EShop\EShopArticleRepositoryInterface;
 use Illuminate\Support\Facades\Input;
+use Modal;
 
 class EShopController extends Controller
 {
@@ -16,15 +17,15 @@ class EShopController extends Controller
      */
     public function __construct(EShopArticleRepositoryInterface $e_shop_article)
     {
+        parent::__construct();
         $this->repository = $e_shop_article;
-        $this->loadBaseJs();
     }
 
     /**
      * @return $this
      */
-    public function index(){
-
+    public function index()
+    {
         // SEO Meta settings
         $this->seoMeta['page_title'] = 'Boutique en ligne';
         $this->seoMeta['meta_desc'] = 'Découvrez tous les articles du club Université Nantes Aviron (UNA)
@@ -39,12 +40,10 @@ class EShopController extends Controller
         $query = $this->repository
             ->orderBy('category_id', 'asc')
             ->orderBy('price', 'asc');
-
         // if a category is given, we filter the list
-        if($category){
+        if ($category) {
             $query->where('category_id', $category);
         }
-
         $articles = $query->get();
 
         // prepare data for the view
@@ -59,4 +58,12 @@ class EShopController extends Controller
         return view('pages.front.e-shop')->with($data);
     }
 
+    public function show()
+    {
+        Modal::alert([
+            "La fonctionnalité d'ajout au panier n'est pas disponible pour le moment. Merci de revenir ulterieurement."
+        ],'info');
+
+        return Redirect()->back();
+    }
 }

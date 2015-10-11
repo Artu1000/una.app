@@ -15,14 +15,14 @@ class PageController extends Controller
      */
     public function __construct(PageRepositoryInterface $page)
     {
+        parent::__construct();
         $this->repository = $page;
-        $this->loadBaseJs();
     }
 
     /**
      * @return $this
      */
-    public function index($page_key)
+    public function show($page_key)
     {
 
         // we get the page from its page key

@@ -36,7 +36,7 @@
                                 <a href="" title="{{ $article->title }}">
                                     <img width="150" height="150" src="http://dummyimage.com/150x150/000/fff" alt="{{ $article->title }}">
                                 </a>
-                                <span class="price">{{ $article->price }}€</span>
+                                <span class="price visible-xs">{{ $article->price }}€</span>
                             </td>
                             <td class="details">
                                 <h3>{{ $article->title }}</h3>
@@ -71,7 +71,7 @@
                                     @endif
                                 </div>
                                 <div class="visible-xs action">
-                                    <a class="" href="" title="Ajouter au panier">
+                                    <a href="{{ route('front.e-shop.add-to-cart', $article->id) }}" title="Ajouter au panier">
                                         <button class="btn btn-info" role="button">
                                             <i class="fa fa-cart-plus"></i> Ajout au panier
                                         </button>
@@ -96,7 +96,7 @@
                                 @endif
                             </td>
                             <td class="action hidden-xs">
-                                <a class="" href="" title="Ajouter au panier">
+                                <a href="{{ route('front.e-shop.add-to-cart', $article->id) }}" title="Ajouter au panier">
                                     <button class="btn btn-info add-to-command text-center" role="button">
                                         <i class="fa fa-cart-plus"></i>
                                     </button>

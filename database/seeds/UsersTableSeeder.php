@@ -11,10 +11,10 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'LORENT',
             'first_name' => 'Arthur',
             'photo' => '',
-            'email' => 'arthur.lorent@gmail.com',
+            'email' => 'admin@admin.fr',
             'status' => config('user.status_key.communication-commission'),
             'board' => config('user.board_key.leading-board'),
-            'password' => 'unanantes1.0',
+            'password' => 'admin',
             'permissions' => [
                 'admin' => true
             ]
@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'GIRARD',
             'first_name' => 'Lionel',
             'photo' => '',
-            'email' => 'lionel.girard@univ-nantes.fr',
+            'email' => '',
             'status' => config('user.status_key.president'),
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
@@ -34,7 +34,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'VARAINE',
             'first_name' => 'David',
             'photo' => '',
-            'email' => 'davidvaraine@gmail.com',
+            'email' => '',
             'status' => config('user.status_key.vice-president'),
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
@@ -54,7 +54,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'DISCAZEAU',
             'first_name' => 'Gérard',
             'photo' => '',
-            'email' => 'discazeaux.gerardetdany@neuf.fr',
+            'email' => '',
             'status' => config('user.status_key.treasurer'),
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
@@ -64,7 +64,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'PLANTIER',
             'first_name' => 'Christophe',
             'photo' => '',
-            'email' => 'christophe.pl@orange.fr',
+            'email' => '',
             'status' => config('user.status_key.secretary-general'),
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
@@ -74,7 +74,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'PROTT',
             'first_name' => 'Thierry',
             'photo' => '',
-            'email' => 'thprott@free.fr',
+            'email' => '',
             'status' => config('user.status_key.sportive-commission'),
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
@@ -84,7 +84,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'ABRAHAMSON',
             'first_name' => 'Jeff',
             'photo' => '',
-            'email' => 'Jeff@purple.com',
+            'email' => '',
             'status' => config('user.status_key.leisure-commission'),
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
@@ -94,7 +94,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'LECIEUX',
             'first_name' => 'Yann',
             'photo' => '',
-            'email' => 'yann.lecieux@univ-nantes.fr',
+            'email' => '',
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
         ]);
@@ -103,7 +103,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'BOUZIDI',
             'first_name' => 'Rabah',
             'photo' => '',
-            'email' => 'rabah.bouzidi@univ-nantes.fr',
+            'email' => '',
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
         ]);
@@ -112,7 +112,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'CORNUEL',
             'first_name' => 'Benjamin',
             'photo' => '',
-            'email' => 'benjamin.cornuel@gmail.com',
+            'email' => '',
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
         ]);
@@ -121,7 +121,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'MARINGER',
             'first_name' => 'Françoise',
             'photo' => '',
-            'email' => 'fmaringer@orange.fr',
+            'email' => '',
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
         ]);
@@ -130,7 +130,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'MOUGEL',
             'first_name' => 'Jean-Bruno',
             'photo' => '',
-            'email' => 'jean-bruno.mougel@cnrs-imn.fr',
+            'email' => '',
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
         ]);
@@ -139,7 +139,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'TARDY',
             'first_name' => 'Mickaël',
             'photo' => '',
-            'email' => 'mishgunn@gmail.com',
+            'email' => '',
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
         ]);
@@ -148,7 +148,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'VESPERINI',
             'first_name' => 'Laurent',
             'photo' => '',
-            'email' => 'laurentvesperini@yahoo.fr',
+            'email' => '',
             'status' => config('user.status_key.employee'),
             'password' => 'una'
         ]);

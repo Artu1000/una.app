@@ -41,9 +41,9 @@ class RssRepository extends BaseRepository implements RssRepositoryInterface
             $item = new Item();
             $item->title($news->title)
                 ->description(str_limit(strip_tags($news->content), 250))
-                ->url(route('front.news.detail', $news->key))
+                ->url(route('front.news.show', $news->key))
                 ->pubDate(Carbon::createFromFormat('Y-m-d H:i:s', $news->released_at)->timestamp)
-                ->guid(route('front.news.detail', $news->key), true)
+                ->guid(route('front.news.show', $news->key), true)
                 ->appendTo($channel);
         }
 

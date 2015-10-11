@@ -17,8 +17,8 @@ class NewsController extends Controller
      */
     public function __construct(NewsRepositoryInterface $news)
     {
+        parent::__construct();
         $this->repository = $news;
-        $this->loadBaseJs();
     }
 
     /**

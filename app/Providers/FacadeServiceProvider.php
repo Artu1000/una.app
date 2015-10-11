@@ -2,8 +2,7 @@
 
 namespace App\Providers;
 
-use App\Facades\JavascriptComposerFacade;
-use App\Helpers\JavascriptHelper;
+use App\Helpers\ModalHelper;
 use App\Helpers\StringHelper;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
@@ -30,6 +29,11 @@ class FacadeServiceProvider extends ServiceProvider
         // string helper
         App::bind('String', function(){
             return new StringHelper();
+        });
+
+        // modal
+        App::bind('Modal', function(){
+            return new ModalHelper();
         });
     }
 }

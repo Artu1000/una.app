@@ -17,7 +17,7 @@ class SitemapController extends Controller
      */
     public function __construct(SitemapRepositoryInterface $sitemap)
     {
-        $this->loadBaseJs();
+        parent::__construct();
         $this->repository = $sitemap;
     }
 

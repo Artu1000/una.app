@@ -16,8 +16,8 @@ class LeadingTeamController extends Controller
      */
     public function __construct(UserRepositoryInterface $user)
     {
+        parent::__construct();
         $this->repository = $user;
-        $this->loadBaseJs();
     }
 
     /**

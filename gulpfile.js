@@ -91,43 +91,20 @@ elixir(function (mix) {
         ], 'public/js/app.front.js', './')
         // mix home js files
         .scripts([
-            paths.jquery + "dist/jquery.js",
-            paths.jquery_easing + "js/jquery.easing.js",
-            paths.bootstrap + "javascripts/bootstrap.js",
-            paths.js + 'ie10-viewport-bug-workaround.js',
-            paths.js + 'app.common.js',
-            paths.js + 'app.front.js',
+            'public/js/app.front.js',
             paths.glide + 'dist/glide.js',
             paths.js + 'app.home.js'
         ], 'public/js/app.home.js', './')
         // mix news list js files
         .scripts([
-            paths.jquery + "dist/jquery.js",
-            paths.jquery_easing + "js/jquery.easing.js",
-            paths.bootstrap + "javascripts/bootstrap.js",
-            paths.js + 'ie10-viewport-bug-workaround.js',
-            paths.js + 'app.common.js',
-            paths.js + 'app.front.js',
+            'public/js/app.front.js',
             paths.js + 'app.news-list.js'
         ], 'public/js/app.news-list.js', './')
         // mix news detail js files
         .scripts([
-            paths.jquery + "dist/jquery.js",
-            paths.jquery_easing + "js/jquery.easing.js",
-            paths.bootstrap + "javascripts/bootstrap.js",
-            paths.js + 'ie10-viewport-bug-workaround.js',
-            paths.js + 'app.common.js',
-            paths.js + 'app.front.js',
+            'public/js/app.front.js',
             paths.js + 'app.news-detail.js'
         ], 'public/js/app.news-detail.js', './')
-        // mix back js files
-        //.scripts([
-        //    paths.jquery + "dist/jquery.js",
-        //    paths.bootstrap + "javascripts/bootstrap.js",
-        //    paths.js + 'ie10-viewport-bug-workaround.js',
-        //    paths.js + 'app.common.js',
-        //    paths.js + 'app.back.js'
-        //], 'public/js/app.back.js', './')
 
         /***************************************************************************************************************
          * VERSIONS
@@ -144,12 +121,10 @@ elixir(function (mix) {
             'public/css/app.schedule.css',
             'public/css/app.calendar.css',
             'public/css/app.e-shop.css',
-            //'public/css/app.back.css',
 
             'public/js/app.front.js',
             'public/js/app.home.js',
             'public/js/app.news-list.js',
             'public/js/app.news-detail.js'
-            //'public/js/app.back.js',
         ]);
 });

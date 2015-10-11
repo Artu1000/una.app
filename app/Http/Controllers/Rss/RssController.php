@@ -18,8 +18,8 @@ class RssController extends Controller
      */
     public function __construct(RssRepositoryInterface $rss)
     {
+        parent::__construct();
         $this->rss = $rss;
-        $this->loadBaseJs();
     }
 
     /**

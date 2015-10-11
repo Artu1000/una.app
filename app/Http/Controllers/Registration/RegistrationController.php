@@ -17,8 +17,8 @@ class RegistrationController extends Controller
      */
     public function __construct(RegistrationPriceRepositoryInterface $price)
     {
+        parent::__construct();
         $this->repository = $price;
-        $this->loadBaseJs();
     }
 
     /**

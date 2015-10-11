@@ -52,13 +52,13 @@
                         @foreach($last_news as $key => $news)
                             <tr class="news">
                                 <td class="img hidden-xs">
-                                    <a class="btn btn-default" href="{{ route('front.news.detail', $news->key) }}" role="button" title="{{ $news->title }}">
+                                    <a class="btn btn-default" href="{{ route('front.news.show', $news->key) }}" role="button" title="{{ $news->title }}">
                                         <img width="150" height="150" src="{{ url('/') . '/' . $news->image }}" alt="{{ $news->title }}">
                                     </a>
                                 </td>
                                 <td class="content">
                                     <h3>
-                                        <a href="{{ route('front.news.detail', $news->key) }}" title="{{ $news->title }}"><i class="fa fa-newspaper-o"></i> {{ $news->title }}</a>
+                                        <a href="{{ route('front.news.show', $news->key) }}" title="{{ $news->title }}"><i class="fa fa-newspaper-o"></i> {{ $news->title }}</a>
                                     </h3>
                                     <div class="date">
                                         <i class="fa fa-clock-o"></i> {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $news->released_at)->format('d/m/Y H:i') }}
@@ -67,14 +67,14 @@
                                         <i class="fa fa-cube"></i> {{ \config('news.categories.' . $news->category_id . '.title') }}
                                     </div>
                                     <div class="comments">
-                                        <i class="fa fa-comments"></i> <a href="{{ route('front.news.detail', $news->key) }}#disqus_thread" title="Commentaires"></a>
+                                        <i class="fa fa-comments"></i> <a href="{{ route('front.news.show', $news->key) }}#disqus_thread" title="Commentaires"></a>
                                     </div>
                                     <div class="sum_up">
                                         {{ str_limit(strip_tags($news->content), 250) }}
                                     </div>
                                 </td>
                                 <td class="button hidden-xs">
-                                    <a href="{{ route('front.news.detail', $news->key) }}" title="{{ $news->title }}">
+                                    <a href="{{ route('front.news.show', $news->key) }}" title="{{ $news->title }}">
                                         <button class="btn btn-default" role="button">
                                             <i class="fa fa-chevron-circle-right"></i>
                                         </button>
@@ -83,7 +83,7 @@
                             </tr>
                             <tr class="news visible-xs">
                                 <td class="button mobile">
-                                    <a href="{{ route('front.news.detail', $news->key) }}" title="{{ $news->title }}">
+                                    <a href="{{ route('front.news.show', $news->key) }}" title="{{ $news->title }}">
                                         <button class="btn btn-lg btn-default btn-block" role="button">
                                             <i class="fa fa-chevron-circle-right"></i> Lire plus
                                         </button>

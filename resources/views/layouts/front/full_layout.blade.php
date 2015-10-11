@@ -38,12 +38,8 @@
             @include('layouts.front.partials.footer')
 
             {{-- alerts management --}}
-            @if(Session::get('alert'))
-                @include('composers.modalAlert')
-            @endif
-
-            @if(Session::get('confirm'))
-                @include('composers.modalConfirm')
+            @if(\Session::get('alert'))
+                @include('layouts.common.modal-alert')
             @endif
 
         </div>

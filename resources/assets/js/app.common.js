@@ -6,19 +6,17 @@ $(function() {
     });
 
     // setup alert modal
-    if(alert === true){
-        $('#modalAlert').modal();
+    if(app.modal_alert === true){
+        console.log(app.show_modal);
+        $('#alert').modal({
+            backdrop: 'static'
+        });
     }
 
     // setup ajax request
-    $.ajaxSetup({
-        headers: {'X-CSRF-Token': $('meta[name=csrf-token]').attr('content')}
-    });
-
-    // reset message on confirm modal cancel
-    $('#modalConfirm').on('hidden.bs.modal', function () {
-        $('#message').empty();
-    });
+    //$.ajaxSetup({
+    //    headers: {'X-CSRF-Token': $('meta[name=csrf-token]').attr('content')}
+    //});
 
     // click on bootstrap input groups focus on the input targeted
     $('.input-group-addon').click(function(){

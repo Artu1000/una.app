@@ -45,6 +45,7 @@
           td {
             text-align: justify;
             border: 0;
+            height: 220px;
           }
 
           .img, .content, .button {
@@ -53,6 +54,7 @@
             a {
               padding: 0;
               background-color: transparent;
+              border: 0;
 
               &:hover {
                 opacity: 0.7;
@@ -62,6 +64,7 @@
           }
 
           .img {
+            padding-left: 40px;
 
             img {
               @include border-radius(50%);
@@ -95,12 +98,14 @@
           }
 
           .button {
+            padding-right: 40px;
 
             button {
               @include border-radius(50%);
               width: 60px;
               height: 60px;
-              background-color: #fff;
+              background-color: transparent;
+              border: solid 1px #ccc;
 
               i.fa {
                 font-size: 40px;
@@ -125,7 +130,30 @@
   }
 }
 
+#content.news-detail {
 
+  .text-content {
+
+    .container {
+
+      h2 {
+        margin-bottom: 10px;
+      }
+
+      .date {
+        margin-bottom: 45px;
+      }
+
+      .return {
+
+        button {
+          background-color: transparent;
+          border: solid 1px #ccc;
+        }
+      }
+    }
+  }
+}
 
 
 
@@ -137,48 +165,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (min-width: 1921px){
 
-  #content.news-list {
-
-    .text-content{
-
-      .table {
-
-        tr.news {
-
-          td {
-            height: 220px;
-          }
-
-          td.img {
-            padding-left: 40px;
-          }
-
-          td.button {
-            padding-right: 40px;
-          }
-        }
-      }
-    }
-  }
-
-  #content.news-detail {
-
-    .text-content {
-
-      .container {
-
-        h2 {
-          margin-bottom: 10px;
-        }
-
-        .date {
-          margin-bottom: 45px;
-        }
-
-      }
-
-    }
-  }
 }
 
 
@@ -251,7 +237,7 @@
 
               button {
                 @include border-radius(6px);
-                width: 100%;
+                width: auto;
                 height: auto;
 
                 & > i.fa {

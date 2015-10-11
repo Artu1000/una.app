@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Back\Account;
+namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 
@@ -14,7 +14,8 @@ class AccountController extends Controller
      */
     public function __construct()
     {
-        $this->loadBaseJs();
+        parent::__construct();
+        $this->middleware('auth');
     }
 
     /**
