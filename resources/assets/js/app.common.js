@@ -7,7 +7,6 @@ $(function() {
 
     // setup alert modal
     if(app.modal_alert === true){
-        console.log(app.show_modal);
         $('#alert').modal({
             backdrop: 'static'
         });

@@ -641,8 +641,9 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
               button {
                 @include border-radius(6px);
-                width: 100%;
                 height: auto;
+                width: 100%;
+                border-color: #aeb6cb;
 
                 & > i.fa {
                   font-size: 16px;

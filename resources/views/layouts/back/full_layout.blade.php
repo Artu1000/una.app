@@ -8,7 +8,7 @@
     @include('layouts.common.partials.javascript')
 
     {{-- body inclusion--}}
-    <body>
+    <body id="top">
 
         <div id="layout" class="container-fluid">
 
@@ -27,15 +27,21 @@
                 </div>
             </noscript>
 
+            {{-- header inclusion --}}
+            @include('layouts.back.partials.header')
+
+            {{-- nav inclusion --}}
+            @include('layouts.back.partials.nav')
+
             {{-- content inclusion --}}
             @yield('content')
 
+            {{-- footer inclusion --}}
+            @include('layouts.back.partials.footer')
+
             {{-- alerts management --}}
-            @if(Session::get('alert'))
-                @include('composers.modalAlert')
-            @endif
-            @if(Session::get('confirm'))
-                @include('composers.modalConfirm')
+            @if(\Session::get('alert'))
+                @include('layouts.common.modal.alert')
             @endif
 
         </div>

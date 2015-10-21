@@ -14,7 +14,7 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('layouts.front.partials.partners', 'App\Composers\Partner\PartnerComposer');
-        view()->composer('layouts.common.modal-alert', 'App\Composers\Modal\ModalComposer');
+        view()->composer('layouts.common.modals.alert', 'App\Composers\Modal\ModalComposer');
     }
 
     /**

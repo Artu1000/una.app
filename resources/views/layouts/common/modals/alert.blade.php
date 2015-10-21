@@ -7,7 +7,7 @@
                 <h3 class="modal-title" id="myModalLabel">{!! $alert['title'] !!}</h3>
             </div>
             <div class="modal-body">
-                {!! $alert['message' ]!!}
+                {!! $alert['message']!!}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default btn-lg" data-dismiss="modal"><i class="fa fa-ban"></i> Fermer</button>

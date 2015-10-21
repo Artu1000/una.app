@@ -24,10 +24,12 @@ Event::listen('illuminate.query', function ($sql, $bindings) {
  **********************************************************************************************************************/
 
 //Route::controller('password', 'Auth\PasswordController');
-
-Route::resource('auth', 'Auth\AuthController', [
+Route::get('mot-de-passe-oublie', [
+    'as' => 'auth.forgotten_password', 'uses' => 'Auth\AuthController@forgottenPassword'
+]);
+Route::resource('espace-connexion', 'Auth\AuthController', [
     'names' => [
-        'show' => 'auth.login'
+        'index' => 'auth.login'
     ]
 ]);
 

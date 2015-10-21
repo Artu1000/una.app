@@ -80,12 +80,12 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="menu_tab">
-                                <a href="{{ route('front.page', 'inscription') }}" title="Inscription">
+                                <a href="{{ route('front.registration') }}" title="Inscription">
                                     <i class="fa fa-sign-in"></i> Inscription
                                 </a>
                             </li>
                             <li class="menu_tab">
-                                <a href="{{ route('front.page', 'horaires') }}" title="Horaires">
+                                <a href="{{ route('front.schedule') }}" title="Horaires">
                                     <i class="fa fa-clock-o"></i> Horaires
                                 </a>
                             </li>
@@ -107,7 +107,11 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="menu_tab">
                         <a title="Espace membre" href="{{ route('back.account') }}">
-                            <i class="fa fa-user"></i> Espace membre
+                            @if($user = Sentinel::check())
+                                <span class="text-success"><i class="fa fa-user text-success"></i></span> Mon compte
+                            @else
+                                <span class="text-danger"><i class="fa fa-user"></i></span> Espace membre
+                            @endif
                         </a>
                     </li>
                     <li class="menu_tab">

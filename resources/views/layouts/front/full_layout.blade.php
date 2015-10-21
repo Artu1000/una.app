@@ -5,6 +5,8 @@
         @include('layouts.front.partials.head')
     </head>
 
+    @include('layouts.common.partials.javascript')
+
     {{-- body inclusion--}}
     <body id="top">
 
@@ -39,7 +41,7 @@
 
             {{-- alerts management --}}
             @if(\Session::get('alert'))
-                @include('layouts.common.modal-alert')
+                @include('layouts.common.modals.alert')
             @endif
 
         </div>

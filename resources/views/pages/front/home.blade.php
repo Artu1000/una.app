@@ -84,7 +84,7 @@
                             <tr class="news visible-xs">
                                 <td class="button mobile">
                                     <a href="{{ route('front.news.show', $news->key) }}" title="{{ $news->title }}">
-                                        <button class="btn btn-lg btn-default btn-block" role="button">
+                                        <button class="btn btn-lg" role="button">
                                             <i class="fa fa-chevron-circle-right"></i> Lire plus
                                         </button>
                                     </a>

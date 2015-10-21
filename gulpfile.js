@@ -28,28 +28,25 @@ elixir(function (mix) {
         /***************************************************************************************************************
         * SASS
         ***************************************************************************************************************/
-        // compile front sass
+
+        // FRONT
         .sass("app.front.scss", 'public/css/app.front.css', {})
-        // compile home sass
         .sass("app.home.scss", './resources/assets/compiled_sass_to_merge/app.home.css', {})
-        // compile page sass
         .sass("app.page.scss", 'public/css/app.page.css', {})
-        // compile palmares sass
         .sass("app.palmares.scss", 'public/css/app.palmares.css', {})
-        // compile news sass
         .sass("app.news.scss", 'public/css/app.news.css', {})
-        // compile leading team sass
         .sass("app.leading-team.scss", 'public/css/app.leading-team.css', {})
-        // compile registration sass
         .sass("app.registration.scss", 'public/css/app.registration.css', {})
-        // compile schedule sass
         .sass("app.schedule.scss", 'public/css/app.schedule.css', {})
-        // compile calendar sass
         .sass("app.calendar.scss", 'public/css/app.calendar.css', {})
-        // compile e-shop sass
         .sass("app.e-shop.scss", 'public/css/app.e-shop.css', {})
-        //compile back sass
-        //.sass("app.back.scss", 'public/css/app.back.css', {})
+        .sass("app.login.scss", 'public/css/app.login.css', {})
+
+        // COMMON
+        .sass("app.error.scss", 'public/css/app.error.css', {})
+
+        // BACK
+        .sass("app.back.scss", 'public/css/app.back.css', {})
 
         /***************************************************************************************************************
          * CSS
@@ -80,7 +77,7 @@ elixir(function (mix) {
         /***************************************************************************************************************
          * JS
          ***************************************************************************************************************/
-        // mix front js files
+        // FRONT
         .scripts([
             paths.jquery + "dist/jquery.js",
             paths.jquery_easing + "js/jquery.easing.js",
@@ -106,11 +103,22 @@ elixir(function (mix) {
             paths.js + 'app.news-detail.js'
         ], 'public/js/app.news-detail.js', './')
 
+        // BACK
+        .scripts([
+            paths.jquery + "dist/jquery.js",
+            //paths.jquery_easing + "js/jquery.easing.js",
+            paths.bootstrap + "javascripts/bootstrap.js",
+            paths.js + 'ie10-viewport-bug-workaround.js',
+            paths.js + 'app.common.js',
+            paths.js + 'app.back.js'
+        ], 'public/js/app.back.js', './')
+
         /***************************************************************************************************************
          * VERSIONS
          ***************************************************************************************************************/
         // version all files
         .version([
+            // css
             'public/css/app.front.css',
             'public/css/app.home.css',
             'public/css/app.page.css',
@@ -121,10 +129,14 @@ elixir(function (mix) {
             'public/css/app.schedule.css',
             'public/css/app.calendar.css',
             'public/css/app.e-shop.css',
-
+            'public/css/app.login.css',
+            'public/css/app.error.css',
+            'public/css/app.back.css',
+            // js
             'public/js/app.front.js',
             'public/js/app.home.js',
             'public/js/app.news-list.js',
-            'public/js/app.news-detail.js'
+            'public/js/app.news-detail.js',
+            'public/js/app.back.js'
         ]);
 });

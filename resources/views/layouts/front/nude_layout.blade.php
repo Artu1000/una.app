@@ -5,6 +5,8 @@
         @include('layouts.front.partials.head')
     </head>
 
+    @include('layouts.common.partials.javascript')
+
     {{-- body inclusion--}}
     <body>
 
@@ -29,11 +31,8 @@
             @yield('content')
 
             {{-- alerts management --}}
-            @if(Session::get('alert'))
-                @include('composers.modalAlert')
-            @endif
-            @if(Session::get('confirm'))
-                @include('composers.modalConfirm')
+            @if(\Session::get('alert'))
+                @include('layouts.common.modal.alert')
             @endif
 
         </div>

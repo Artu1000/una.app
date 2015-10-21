@@ -7,7 +7,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
 
-        Sentinel::register([
+        $user = Sentinel::register([
             'last_name' => 'LORENT',
             'first_name' => 'Arthur',
             'photo' => '',
@@ -19,12 +19,14 @@ class UsersTableSeeder extends Seeder
                 'admin' => true
             ]
         ]);
+        $activation = Activation::create($user);
+        Activation::complete($user, $activation->code);
 
         Sentinel::register([
             'last_name' => 'GIRARD',
             'first_name' => 'Lionel',
-            'photo' => '',
-            'email' => '',
+//            'photo' => '',
+            'email' => 'a',
             'status' => config('user.status_key.president'),
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
@@ -33,8 +35,8 @@ class UsersTableSeeder extends Seeder
         Sentinel::register([
             'last_name' => 'VARAINE',
             'first_name' => 'David',
-            'photo' => '',
-            'email' => '',
+//            'photo' => '',
+            'email' => 'b',
             'status' => config('user.status_key.vice-president'),
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
@@ -43,8 +45,8 @@ class UsersTableSeeder extends Seeder
         Sentinel::register([
             'last_name' => 'PLANCHENAULT',
             'first_name' => 'Thomas',
-            'photo' => '',
-            'email' => '',
+//            'photo' => '',
+            'email' => 'c',
             'status' => config('user.status_key.student-vice-president'),
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
@@ -53,8 +55,8 @@ class UsersTableSeeder extends Seeder
         Sentinel::register([
             'last_name' => 'DISCAZEAU',
             'first_name' => 'Gérard',
-            'photo' => '',
-            'email' => '',
+//            'photo' => '',
+            'email' => 'd',
             'status' => config('user.status_key.treasurer'),
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
@@ -63,8 +65,8 @@ class UsersTableSeeder extends Seeder
         Sentinel::register([
             'last_name' => 'PLANTIER',
             'first_name' => 'Christophe',
-            'photo' => '',
-            'email' => '',
+//            'photo' => '',
+            'email' => 'e',
             'status' => config('user.status_key.secretary-general'),
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
@@ -73,8 +75,8 @@ class UsersTableSeeder extends Seeder
         Sentinel::register([
             'last_name' => 'PROTT',
             'first_name' => 'Thierry',
-            'photo' => '',
-            'email' => '',
+//            'photo' => '',
+            'email' => 'f',
             'status' => config('user.status_key.sportive-commission'),
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
@@ -83,8 +85,8 @@ class UsersTableSeeder extends Seeder
         Sentinel::register([
             'last_name' => 'ABRAHAMSON',
             'first_name' => 'Jeff',
-            'photo' => '',
-            'email' => '',
+//            'photo' => '',
+            'email' => 'g',
             'status' => config('user.status_key.leisure-commission'),
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
@@ -93,8 +95,8 @@ class UsersTableSeeder extends Seeder
         Sentinel::register([
             'last_name' => 'LECIEUX',
             'first_name' => 'Yann',
-            'photo' => '',
-            'email' => '',
+//            'photo' => '',
+            'email' => 'h',
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
         ]);
@@ -102,8 +104,8 @@ class UsersTableSeeder extends Seeder
         Sentinel::register([
             'last_name' => 'BOUZIDI',
             'first_name' => 'Rabah',
-            'photo' => '',
-            'email' => '',
+//            'photo' => '',
+            'email' => 'i',
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
         ]);
@@ -111,8 +113,8 @@ class UsersTableSeeder extends Seeder
         Sentinel::register([
             'last_name' => 'CORNUEL',
             'first_name' => 'Benjamin',
-            'photo' => '',
-            'email' => '',
+//            'photo' => '',
+            'email' => 'j',
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
         ]);
@@ -120,8 +122,8 @@ class UsersTableSeeder extends Seeder
         Sentinel::register([
             'last_name' => 'MARINGER',
             'first_name' => 'Françoise',
-            'photo' => '',
-            'email' => '',
+//            'photo' => '',
+            'email' => 'k',
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
         ]);
@@ -129,8 +131,8 @@ class UsersTableSeeder extends Seeder
         Sentinel::register([
             'last_name' => 'MOUGEL',
             'first_name' => 'Jean-Bruno',
-            'photo' => '',
-            'email' => '',
+//            'photo' => '',
+            'email' => 'l',
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
         ]);
@@ -138,8 +140,8 @@ class UsersTableSeeder extends Seeder
         Sentinel::register([
             'last_name' => 'TARDY',
             'first_name' => 'Mickaël',
-            'photo' => '',
-            'email' => '',
+//            'photo' => '',
+            'email' => 'm',
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
         ]);
@@ -147,8 +149,8 @@ class UsersTableSeeder extends Seeder
         Sentinel::register([
             'last_name' => 'VESPERINI',
             'first_name' => 'Laurent',
-            'photo' => '',
-            'email' => '',
+//            'photo' => '',
+            'email' => 'n',
             'status' => config('user.status_key.employee'),
             'password' => 'una'
         ]);

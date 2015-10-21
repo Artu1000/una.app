@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Sentinel;
 
 class Authenticate
 {
@@ -34,15 +35,18 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-
-        if ($this->auth->guest()) {
+        // if the user is not logged
+        if (!Sentinel::check()) {
+            // if the request is not ajax
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('auth/login');
+                // we store the requested url into the session
+                \Session::set('previous_url', $request->url());
+                // we redirect toward the login form
+                return redirect(route('auth.login'));
             }
         }
-
         return $next($request);
     }
 }
