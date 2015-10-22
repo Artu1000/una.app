@@ -3,30 +3,47 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
+use Modal;
+use Sentinel;
+use Validator;
 
 class PasswordController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password reset requests
-    | and uses a simple trait to include this behavior. You're free to
-    | explore this trait and override any methods you wish to tweak.
-    |
-    */
-
-    use ResetsPasswords;
-
-    /**
-     * Create a new password controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        $this->middleware('guest');
+        parent::__construct();
+    }
+
+    protected function index(){
+        // SEO settings
+        $this->seoMeta['page_title'] = 'Mot de passe oublié';
+        $this->seoMeta['meta_desc'] = 'Suivez les instructions afin de réinitialiser votre mot de passe.';
+        $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, espace, mot, de, passe, oublie';
+
+        // data send to the view
+        $data = [
+            'seoMeta' => $this->seoMeta,
+            'css' => elixir('css/app.login.css')
+        ];
+        return view('pages.front.forgotten-password')->with($data);
+    }
+
+    protected function store(Request $request)
+    {
+        // we flash inputs
+        $request->flashOnly('email');
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email'
+        ]);
+        foreach ($validator->errors()->all() as $error) {
+            $errors[] = $error;
+        }
+        // if errors are found
+        if (count($errors)) {
+            Modal::alert($errors, 'error');
+            return Redirect()->back();
+        }
     }
 }

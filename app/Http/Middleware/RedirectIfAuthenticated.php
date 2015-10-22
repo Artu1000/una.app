@@ -34,8 +34,8 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->check()) {
-            return redirect('/home');
+        if (\Sentinel::check()) {
+            return redirect(route('home'));
         }
 
         return $next($request);

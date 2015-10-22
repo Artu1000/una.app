@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Modal;
 use Sentinel;
 use Validator;
@@ -14,7 +12,6 @@ class AuthController extends Controller
 {
 
     protected $redirectPath;
-//    use AuthenticatesAndRegistersUsers;
 
     /**
      * Create a new authentication controller instance.
@@ -24,8 +21,7 @@ class AuthController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->redirectPath = url('/');
-        $this->middleware('guest', ['except' => 'getLogout']);
+        $this->redirectPath = url('home');
     }
 
     /**
@@ -35,7 +31,6 @@ class AuthController extends Controller
      */
     protected function index()
     {
-
         // SEO settings
         $this->seoMeta['page_title'] = 'Espace connexion';
         $this->seoMeta['meta_desc'] = 'Connectez-vous à votre espace personnel afin de profiter des différentes
@@ -55,12 +50,11 @@ class AuthController extends Controller
         // we flash inputs
         $request->flashOnly('email', 'password', 'remember');
 
+        // we analyse the given inputs
         // we replace the "on" or "off" value from the checkbox by a boolean
         $request->merge([
-            'remember' => filter_var($request, FILTER_VALIDATE_BOOLEAN)
+            'remember' => filter_var($request->get('remember'), FILTER_VALIDATE_BOOLEAN)
         ]);
-
-        // we analyse the given inputs
         $errors = [];
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
@@ -78,13 +72,23 @@ class AuthController extends Controller
 
         // we try to authenticate the user
         try {
-            $status = Sentinel::authenticate($request->all());
+            $user = Sentinel::authenticate($request->except('remember'), $request->get('remember'));
+
+            if(!$user){
+                Modal::alert([
+                    "L'e-mail ou le mot de passe est erroné. Veuillez rééssayer."
+                ], 'error');
+            }
+
+            // redirect to the url stored in the session
             if($url = \Session::get('previous_url')){
                 return redirect($url);
             } else {
-                return redirect('home');
+                // or redirect to home
+                return redirect(route('home'));
             }
         } catch (\Exception $e) {
+            \Log::error($e->getMessage());
             Modal::alert([
                 $e->getMessage()
             ], 'error');

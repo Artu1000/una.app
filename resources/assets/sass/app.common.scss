@@ -298,6 +298,14 @@ html {
           @include transition(0.2s ease);
         }
       }
+
+      .modal {
+
+        h3 {
+          color: inherit;
+          margin: 5px 0;
+        }
+      }
     }
   }
 }

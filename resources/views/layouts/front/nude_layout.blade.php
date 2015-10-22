@@ -32,7 +32,7 @@
 
             {{-- alerts management --}}
             @if(\Session::get('alert'))
-                @include('layouts.common.modal.alert')
+                @include('layouts.common.modals.alert')
             @endif
 
         </div>

@@ -106,12 +106,13 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="menu_tab">
-                        <a title="Espace membre" href="{{ route('back.account') }}">
+                        <a title="Mon compte" href="{{ route('back.account') }}">
                             @if($user = Sentinel::check())
-                                <span class="text-success"><i class="fa fa-user text-success"></i></span> Mon compte
+                                <span class="text-success"><i class="fa fa-user text-success"></i></span>
                             @else
-                                <span class="text-danger"><i class="fa fa-user"></i></span> Espace membre
+                                <span class="text-danger"><i class="fa fa-user"></i></span>
                             @endif
+                            Mon compte
                         </a>
                     </li>
                     <li class="menu_tab">

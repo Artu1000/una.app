@@ -24,21 +24,42 @@ Event::listen('illuminate.query', function ($sql, $bindings) {
  **********************************************************************************************************************/
 
 //Route::controller('password', 'Auth\PasswordController');
-Route::get('mot-de-passe-oublie', [
-    'as' => 'auth.forgotten_password', 'uses' => 'Auth\AuthController@forgottenPassword'
-]);
-Route::resource('espace-connexion', 'Auth\AuthController', [
-    'names' => [
-        'index' => 'auth.login'
-    ]
-]);
 
-// account
-Route::resource('espace-membre', 'Account\AccountController', [
-    'names' => [
-        'index' => 'back.account'
-    ]
-]);
+Route::group([
+    'middleware' => 'guest'
+], function () {
+
+    Route::resource('espace-connexion', 'Auth\AuthController', [
+        'names' => [
+            'index' => 'login',
+        ]
+    ]);
+
+    Route::resource('mot-de-passe-oublie', 'Auth\PasswordController', [
+        'names' => [
+            'index' => 'forgotten_password',
+        ]
+    ]);
+});
+
+
+Route::group([
+    'middleware' => 'auth'
+], function () {
+
+    // account
+    Route::resource('espace-membre', 'Account\AccountController', [
+        'names' => [
+            'index' => 'back.account'
+        ]
+    ]);
+
+    Route::resource('deconnexion', 'Auth\LogoutController', [
+        'names' => [
+            'index' => 'logout'
+        ]
+    ]);
+});
 
 
 /***********************************************************************************************************************
