@@ -41,7 +41,7 @@
 
             {{-- alerts management --}}
             @if(\Session::get('alert'))
-                @include('templates.common.modal.alert')
+                @include('templates.common.modals.alert')
             @endif
 
         </div>

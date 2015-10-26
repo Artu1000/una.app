@@ -13,9 +13,9 @@ abstract class Controller extends BaseController
     protected $repository;
 
     protected $seoMeta = [
-        'page_title',
-        'meta_desc',
-        'meta_keywords'
+        'page_title' => '',
+        'meta_desc' => '',
+        'meta_keywords' => ''
     ];
 
     public function __construct()

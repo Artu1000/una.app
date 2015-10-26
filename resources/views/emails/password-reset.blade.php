@@ -9,7 +9,10 @@
     </p>
 
     <p>
-        <a href="{{ url('password/reset/'.$user->getAttribute('email').'/'.$token) }}">
+        <a href="{{ route('password_recovery', [
+            'email' => $user->email,
+            'token' => $token
+        ]) }}">
             <button class="btn">
                 Réinitialiser mon mot de passe
             </button>

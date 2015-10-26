@@ -38,6 +38,8 @@ Route::group([
     Route::resource('mot-de-passe-oublie', 'Auth\PasswordController', [
         'names' => [
             'index' => 'forgotten_password',
+            'show' => 'password_recovery',
+            'update' => 'password_reset'
         ]
     ]);
 });

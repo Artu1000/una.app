@@ -57,7 +57,7 @@ class AuthController extends Controller
         ]);
         $errors = [];
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|exists:users,email',
+            'email' => 'required|email',
             'password' => 'required',
             'remember' => 'boolean',
         ]);
@@ -72,13 +72,16 @@ class AuthController extends Controller
 
         // we try to authenticate the user
         try {
-            $user = Sentinel::authenticate($request->except('remember'), $request->get('remember'));
-
-            if(!$user){
+            if(!$user = Sentinel::authenticate($request->except('remember'), $request->get('remember'))){
                 Modal::alert([
-                    "L'e-mail ou le mot de passe est erroné. Veuillez rééssayer."
+                    "E-mail ou mot de passe erroné. Veuillez rééssayer."
                 ], 'error');
+                return Redirect()->back();
             }
+
+            Modal::alert([
+                "Bienvenue " . $user->first_name . " " . $user->last_name . ", vous êtes maintenant connecté."
+            ], 'success');
 
             // redirect to the url stored in the session
             if($url = \Session::get('previous_url')){
@@ -88,10 +91,20 @@ class AuthController extends Controller
                 return redirect(route('home'));
             }
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
-            Modal::alert([
-                $e->getMessage()
-            ], 'error');
+            \Log::error($e);
+            switch($e->getType()){
+                case 'ip':
+                    Modal::alert([
+                        "En raison d'une activité suspecte depuis votre IP, " .
+                        "l'accès à votre compte a été suspendu pendant " . $e->getDelay() . " secondes."
+                    ], 'error');
+                    break;
+                default:
+                    Modal::alert([
+                        $e->getMessage()
+                    ], 'error');
+                    break;
+            }
             return Redirect()->back();
         }
     }

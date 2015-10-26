@@ -112,8 +112,8 @@
                 -ms-user-select: none;
                 user-select: none;
                 color: #fff;
-                background-color: #C7702E;
-                border-color: #c75d13;
+                background-color: #337ab7;
+                border-color: #2e6da4;
             }
         </style>
 
