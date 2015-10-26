@@ -9,7 +9,7 @@
             </button>
             <a class="navbar-brand" href="/">
                 <h1>
-                    {{ env('SITE_NAME') }}
+                    {{ config('app.name') }}
                 </h1>
             </a>
         </div>

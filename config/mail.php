@@ -54,7 +54,14 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => [
+        'address' => 'no-reply@una-club.fr',
+        'name' => config('app.name')
+    ],
+
+    'subject' => [
+        'prefix' => '[UNA]'
+    ],
 
     /*
     |--------------------------------------------------------------------------

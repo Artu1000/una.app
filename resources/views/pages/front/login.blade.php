@@ -1,4 +1,4 @@
-@extends('layouts.front.nude_layout')
+@extends('templates.front.nude_layout')
 
 @section('content')
 
@@ -18,8 +18,8 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                             {{-- logo / icon --}}
-                            <a class="logo text-center" href="" title="{{ env('SITE_NAME') }}">
-                                <img width="300" height="280" src="{{ env('SITE_LOGO_WHITE') }}" alt="{{ env('SITE_NAME') }}">
+                            <a class="logo text-center" href="" title="{{ config('app.name') }}">
+                                <img width="300" height="280" src="{{ config('app.logo.light') }}" alt="{{ config('app.name') }}">
                             </a>
 
                             {{-- Title--}}

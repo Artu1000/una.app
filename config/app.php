@@ -4,6 +4,39 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application data
+    |--------------------------------------------------------------------------
+    */
+
+    'name' => 'Club Université Nantes Aviron (UNA)',
+    'logo' => [
+        'light' => url('/img/logo-una-white.png'),
+        'dark' => url('/img/logo-una.png'),
+        'small' => [
+            'light' => url('/img/logo-una-small.png')
+        ]
+    ],
+    'phone' => '09 54 01 48 10',
+    'email' => [
+        'contact' => 'contact@una-club.fr',
+        'support' => 'support@una-club.fr'
+    ],
+    'address' => [
+        'number' => 2,
+        'street' => 'rue de la Houssinière',
+        'postal_code' => '44300',
+        'city' => 'Nantes',
+        'Country' => 'France'
+    ],
+    'social' => [
+        'facebook' => 'https://www.facebook.com/UniversiteNantesAviron',
+        'twitter' => 'https://twitter.com/UNAClub',
+        'google+' => 'https://plus.google.com/+Univ-nantes-avironFr/videos',
+        'youtube' => 'https://www.youtube.com/channel/UCOeYQGBxGMGqW-DyfK2fVCQ'
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Debug Mode
     |--------------------------------------------------------------------------
     |

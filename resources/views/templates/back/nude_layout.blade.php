@@ -2,10 +2,10 @@
 
     {{-- head inclusion--}}
     <head>
-        @include('layouts.back.partials.head')
+        @include('templates.back.partials.head')
     </head>
 
-    @include('layouts.common.partials.javascript')
+    @include('templates.common.partials.javascript')
 
     {{-- body inclusion--}}
     <body>
@@ -43,6 +43,6 @@
     </body>
 
     {{-- end file inclusion --}}
-    @include('layouts.back.partials.end')
+    @include('templates.back.partials.end')
 
 </html>

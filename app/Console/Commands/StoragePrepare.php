@@ -18,7 +18,7 @@ class StoragePrepare extends Command
      *
      * @var string
      */
-    protected $description = 'Command description.';
+    protected $description = 'Prepare the storage folder to avoid errors on installation';
 
     /**
      * Create a new command instance.

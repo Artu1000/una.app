@@ -16,7 +16,7 @@
 
                 <a class="navbar-brand" title="Retour à l'accueil" href="{{ route('home') }}">
                     <span class="logo">
-                        <img width="70" height="66" src="{{ url('/') }}/img/logo-una-small.png" alt="Logo Club Université Nantes Aviron (UNA)">
+                        <img width="70" height="66" src="{{ config('app.logo.small.light') }}" alt="Logo Club Université Nantes Aviron (UNA)">
                     </span>
                     <h1>
                         <span>Université</span>

@@ -2,10 +2,10 @@
 
     {{-- head inclusion--}}
     <head>
-        @include('layouts.front.partials.head')
+        @include('templates.front.partials.head')
     </head>
 
-    @include('layouts.common.partials.javascript')
+    @include('templates.common.partials.javascript')
 
     {{-- body inclusion--}}
     <body id="top">
@@ -28,20 +28,20 @@
             </noscript>
 
             {{-- header inclusion --}}
-            @include('layouts.front.partials.header')
+            @include('templates.front.partials.header')
 
             {{-- content inclusion --}}
             @yield('content')
 
             {{-- partners inclusion --}}
-            @include('layouts.front.partials.partners')
+            @include('templates.front.partials.partners')
 
             {{-- footer inclusion --}}
-            @include('layouts.front.partials.footer')
+            @include('templates.front.partials.footer')
 
             {{-- alerts management --}}
             @if(\Session::get('alert'))
-                @include('layouts.common.modals.alert')
+                @include('templates.common.modals.alert')
             @endif
 
         </div>
@@ -49,6 +49,6 @@
     </body>
 
     {{-- end file inclusion --}}
-    @include('layouts.front.partials.end')
+    @include('templates.front.partials.end')
 
 </html>

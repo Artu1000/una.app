@@ -1,4 +1,4 @@
-@extends('layouts.front.nude_layout')
+@extends('templates.front.nude_layout')
 
 @section('content')
 
@@ -18,8 +18,8 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                             {{-- logo / icon --}}
-                            <a class="logo text-center" href="" title="{{ env('SITE_NAME') }}">
-                                <img width="300" height="280" src="{{ env('SITE_LOGO_WHITE') }}" alt="{{ env('SITE_NAME') }}">
+                            <a class="logo text-center" href="" title="{{ config('app.name') }}">
+                                <img width="300" height="280" src="{{ config('app.logo.light') }}" alt="{{ config('app.name') }}">
                             </a>
 
                             {{-- Title--}}
@@ -36,6 +36,8 @@
                                 </div>
                             </div>
 
+                            <p class="quote">Renseignez votre e-mail pour y recevoir les instructions de réinitialisation de votre mot de passe.</p>
+
                             {{-- submit login --}}
                             <button class="btn btn-lg btn-primary btn-block" type="submit">
                                 <i class="fa fa-wrench"></i> Réinitialiser
@@ -45,7 +47,7 @@
 
                         <a href="{{ route('login') }}" class="pull-right cancel" title="Retour">
                             <button class="btn btn-lg btn-default">
-                                <i class="fa fa-undo"></i> Retour
+                                <i class="fa fa-ban"></i> Annuler
                             </button>
                         </a>
                     </div>

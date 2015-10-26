@@ -23,7 +23,7 @@ abstract class Controller extends BaseController
         // load base JS
         \JavaScript::put([
             'base_url' => url('/'),
-            'site_name' => env('SITE_NAME')
+            'site_name' => config('app.name')
         ]);
 
         // load modal if an alert is waiting

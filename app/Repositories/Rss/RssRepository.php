@@ -23,12 +23,12 @@ class RssRepository extends BaseRepository implements RssRepositoryInterface
         $feed = new Feed();
         $channel = new Channel();
         $channel
-            ->title(env('SITE_NAME'))
+            ->title(config('app.name'))
             ->description("Le club Université Nantes Aviron est LE club d'aviron des étudiants nantais,
             mais demeure ouvert à tous les publics et tous les types de pratiques.")
             ->url(url())
             ->language('fr')
-            ->copyright('Copyright (c) ' . env('SITE_NAME'))
+            ->copyright('Copyright (c) ' . config('app.name'))
             ->lastBuildDate($now->timestamp)
             ->appendTo($feed);
 

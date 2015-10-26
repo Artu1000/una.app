@@ -1,4 +1,4 @@
-@extends('layouts.front.full_layout')
+@extends('templates.front.full_layout')
 
 @section('content')
 

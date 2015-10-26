@@ -54,12 +54,12 @@ class Handler extends ExceptionHandler
      */
     protected function renderHttpException(HttpException $e)
     {
-        if (view()->exists('layouts.common.errors.' . $e->getStatusCode())) {
+        if (view()->exists('templates.common.errors.' . $e->getStatusCode())) {
 
             // load base JS
             \JavaScript::put([
                 'base_url' => url('/'),
-                'site_name' => env('SITE_NAME')
+                'site_name' => config('app.name')
             ]);
 
             $seoMeta = [
@@ -72,7 +72,7 @@ class Handler extends ExceptionHandler
                 'css' => elixir('css/app.error.css')
             ];
 
-            return response()->view('layouts.common.errors.' . $e->getStatusCode(), $data, $e->getStatusCode());
+            return response()->view('templates.common.errors.' . $e->getStatusCode(), $data, $e->getStatusCode());
         } else {
             return (new SymfonyDisplayer(config('app.debug')))->createResponse($e);
         }

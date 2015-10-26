@@ -2,13 +2,13 @@
 
     {{-- head inclusion--}}
     <head>
-        @include('layouts.front.partials.head')
+        @include('templates.back.partials.head')
     </head>
 
-    @include('layouts.common.partials.javascript')
+    @include('templates.common.partials.javascript')
 
     {{-- body inclusion--}}
-    <body>
+    <body id="top">
 
         <div id="layout" class="container-fluid">
 
@@ -27,12 +27,21 @@
                 </div>
             </noscript>
 
+            {{-- header inclusion --}}
+            @include('templates.back.partials.header')
+
+            {{-- nav inclusion --}}
+            @include('templates.back.partials.nav')
+
             {{-- content inclusion --}}
             @yield('content')
 
+            {{-- footer inclusion --}}
+            @include('templates.back.partials.footer')
+
             {{-- alerts management --}}
             @if(\Session::get('alert'))
-                @include('layouts.common.modals.alert')
+                @include('templates.common.modal.alert')
             @endif
 
         </div>
@@ -40,6 +49,6 @@
     </body>
 
     {{-- end file inclusion --}}
-    @include('layouts.front.partials.end')
+    @include('templates.back.partials.end')
 
 </html>
