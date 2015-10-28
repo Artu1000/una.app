@@ -26,13 +26,11 @@
                             <h1><i class="fa fa-unlock-alt"></i> Mot de passe oublié</h1>
 
                             {{-- email input --}}
-                            <label class="sr-only" for="inputEmail">Adresse email</label>
-                            <div id="emailFormGroup" class="form-group">
+                            <label class="sr-only" for="input_email">Adresse e-mail</label>
+                            <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input-email"><i class="fa fa-at"></i></span>
-                                    <input id="input-email" class="form-control" type="email" name="email"
-                                           aria-describedby="inputEmailStatus" value="{{ old('email') }}"
-                                           placeholder="Adresse email" autofocus>
+                                    <span class="input-group-addon" for="input_email"><i class="fa fa-at"></i></span>
+                                    <input id="input_email" class="form-control" type="email" name="email" value="{{ old('email') }}" placeholder="Adresse e-mail" autofocus>
                                 </div>
                             </div>
 

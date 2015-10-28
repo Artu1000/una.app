@@ -29,6 +29,12 @@ Route::group([
     'middleware' => 'guest'
 ], function () {
 
+    Route::resource('creer-un-compte', 'Auth\AccountController', [
+        'names' => [
+            'index' => 'create_account',
+        ]
+    ]);
+
     Route::resource('espace-connexion', 'Auth\AuthController', [
         'names' => [
             'index' => 'login',
@@ -50,9 +56,9 @@ Route::group([
 ], function () {
 
     // account
-    Route::resource('espace-membre', 'Account\AccountController', [
+    Route::resource('espace-membre', 'Dashboard\DashboardController', [
         'names' => [
-            'index' => 'back.account'
+            'index' => 'back.dashboard'
         ]
     ]);
 

@@ -23,7 +23,34 @@
                             </a>
 
                             {{-- Title--}}
-                            <h1><i class="fa fa-sign-in"></i> Espace connexion</h1>
+                            <h1><i class="fa fa-user"></i> Créer un compte</h1>
+
+                            {{-- lastname input --}}
+                            <label class="sr-only" for="input_lastname">NOM</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" for="input_lastname"><i class="fa fa-at"></i></span>
+                                    <input id="input_lastname" class="form-control" type="text" name="last_name" value="{{ old('last_name') }}" placeholder="NOM" autofocus>
+                                </div>
+                            </div>
+
+                            {{-- firstname input --}}
+                            <label class="sr-only" for="input_firstname">Prénom</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" for="input_firstname"><i class="fa fa-at"></i></span>
+                                    <input id="input_firstname" class="form-control" type="text" name="first_name" value="{{ old('first_name') }}" placeholder="Prénom">
+                                </div>
+                            </div>
+
+                            {{-- firstname input --}}
+                            <label class="sr-only" for="input_phone_number">Téléphone</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" for="input_phone_number"><i class="fa fa-phone"></i></span>
+                                    <input id="input_phone_number" class="form-control" type="text" name="phone_number" value="{{ old('phone_number') }}" placeholder="Téléphone">
+                                </div>
+                            </div>
 
                             {{-- email input --}}
                             <label class="sr-only" for="input_email">Adresse e-mail</label>
@@ -41,32 +68,19 @@
                                     <span class="input-group-addon" for="input_password">
                                         <i class="fa fa-unlock-alt"></i>
                                     </span>
-                                    <input type="password" id="input_password" class="form-control" name="password" value="{{ old('password') }}" placeholder="Mot de passe">
+                                    <input type="password" id="input_password" class="form-control" name="password" value="{{ old('password') }}" placeholder="Mot de passe" title="Mot de passe">
                                 </div>
-                            </div>
-
-                            {{-- remember me checkbox --}}
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Se souvenir de moi
-                                </label>
                             </div>
 
                             {{-- submit login --}}
                             <button class="btn btn-lg btn-primary btn-block" type="submit">
-                                <i class="fa fa-thumbs-up"></i> Me connecter
+                                <i class="fa fa-thumbs-up"></i> Créer mon compte
                             </button>
-
-                            {{-- forgotten password / create account --}}
-                            <div class="form-group others_actions">
-                                <a href="{{ route('forgotten_password') }}"> Mot de passe oublié</a>
-                                <a href="{{ route('create_account') }}" class="pull-right"> Créer un compte</a>
-                            </div>
                         </form>
 
-                        <a href="{{ route('home') }}" class="pull-right cancel" title="Retour au site">
+                        <a href="{{ route('login') }}" class="pull-right cancel" title="Retour au site">
                             <button class="btn btn-lg btn-default">
-                                <i class="fa fa-undo"></i> Retour au site
+                                <i class="fa fa-ban"></i> Annuler
                             </button>
                         </a>
                     </div>

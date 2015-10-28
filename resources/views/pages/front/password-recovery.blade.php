@@ -29,20 +29,20 @@
                             <h1><i class="fa fa-refresh"></i> Réinitialisation</h1>
 
                             {{-- password input --}}
-                            <label class="sr-only" for="inputPassword">Mot de passe</label>
+                            <label class="sr-only" for="input_password">Mot de passe</label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input-password"><i class="fa fa-unlock-alt"></i></span>
-                                    <input id="input-password" class="form-control" type="password" name="password" placeholder="Mot de passe" autofocus>
+                                    <span class="input-group-addon" for="input_password"><i class="fa fa-unlock-alt"></i></span>
+                                    <input id="input_password" class="form-control" type="password" name="password" placeholder="Mot de passe" autofocus>
                                 </div>
                             </div>
 
                             {{-- password confirmation input --}}
-                            <label class="sr-only" for="inputPassword">Confirmation du mot de passe</label>
+                            <label class="sr-only" for="input_password_confirmation">Confirmation du mot de passe</label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input-password-confirmation"><i class="fa fa-unlock-alt"></i></span>
-                                    <input id="input-password-confirmation" class="form-control" type="password" name="password_confirmation" placeholder="Confirmation du mot de passe" autofocus>
+                                    <span class="input-group-addon" for="input_password_confirmation"><i class="fa fa-unlock-alt"></i></span>
+                                    <input id="input_password_confirmation" class="form-control" type="password" name="password_confirmation" placeholder="Confirmation du mot de passe">
                                 </div>
                             </div>
 

@@ -106,7 +106,7 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="menu_tab">
-                        <a title="Mon compte" href="{{ route('back.account') }}">
+                        <a title="Mon compte" href="{{ route('back.dashboard') }}">
                             @if($user = Sentinel::check())
                                 <span class="text-success"><i class="fa fa-user text-success"></i></span>
                             @else
