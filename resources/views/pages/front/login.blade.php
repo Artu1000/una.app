@@ -41,7 +41,7 @@
                                     <span class="input-group-addon" for="input_password">
                                         <i class="fa fa-unlock-alt"></i>
                                     </span>
-                                    <input type="password" id="input_password" class="form-control" name="password" value="{{ old('password') }}" placeholder="Mot de passe">
+                                    <input type="password" id="input_password" class="form-control" name="password" placeholder="Mot de passe">
                                 </div>
                             </div>
 
@@ -60,7 +60,7 @@
                             {{-- forgotten password / create account --}}
                             <div class="form-group others_actions">
                                 <a href="{{ route('forgotten_password') }}"> Mot de passe oublié</a>
-                                <a href="{{ route('create_account') }}" class="pull-right"> Créer un compte</a>
+                                <a href="{{ route('account') }}" class="pull-right"> Créer un compte</a>
                             </div>
                         </form>
 

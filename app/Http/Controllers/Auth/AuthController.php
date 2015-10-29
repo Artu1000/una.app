@@ -48,7 +48,7 @@ class AuthController extends Controller
     protected function store(Request $request)
     {
         // we flash inputs
-        $request->flashOnly('email', 'password', 'remember');
+        $request->flashOnly('email', 'remember');
 
         // we analyse the given inputs
         // we replace the "on" or "off" value from the checkbox by a boolean
@@ -72,7 +72,7 @@ class AuthController extends Controller
 
         // we try to authenticate the user
         try {
-            if(!$user = Sentinel::authenticate($request->except('remember'), $request->get('remember'))){
+            if (!$user = Sentinel::authenticate($request->except('remember'), $request->get('remember'))) {
                 Modal::alert([
                     "E-mail ou mot de passe erroné. Veuillez rééssayer."
                 ], 'error');
@@ -84,19 +84,28 @@ class AuthController extends Controller
             ], 'success');
 
             // redirect to the url stored in the session
-            if($url = \Session::get('previous_url')){
+            if ($url = \Session::get('previous_url')) {
                 return redirect($url);
             } else {
                 // or redirect to home
                 return redirect(route('home'));
             }
-        } catch (\Exception $e) {
+        } catch (\Cartalyst\Sentinel\Checkpoints\NotActivatedException $e) {
             \Log::error($e);
-            switch($e->getType()){
+            Modal::alert([
+                "Votre compte n'est pas activé. " .
+                "Activez-le à partir du lien qui vous a été transmis par e-mail lors de votre inscription. ",
+                "Pour recevoir à nouveau votre e-mail d'activation, <a href='" . route('send_activation_mail', [
+                    'email' => $request->get('email')
+                ]) . "' title=\"Me renvoyer l'email d'activation\"><u>cliquez ici</u></a>."
+            ], 'error');
+            return Redirect()->back();
+        } catch (\Cartalyst\Sentinel\Checkpoints\ThrottlingException $e) {
+            switch ($e->getType()) {
                 case 'ip':
                     Modal::alert([
-                        "En raison d'une activité suspecte depuis votre IP, " .
-                        "l'accès à votre compte a été suspendu pendant " . $e->getDelay() . " secondes."
+                        "En raison d'erreurs répétées, l'accès à l'application depuis votre IP est suspendu pendant " .
+                        $e->getDelay() . " secondes."
                     ], 'error');
                     break;
                 default:

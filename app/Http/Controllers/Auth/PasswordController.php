@@ -61,7 +61,7 @@ class PasswordController extends Controller
 
             try {
                 // we send the email with the reminder token
-                $sent = \Mail::send('emails.password-reset', [
+                \Mail::send('emails.password-reset', [
                     'user' => $user,
                     'token' => $reminder->code
                 ], function ($email) use ($user) {
@@ -81,8 +81,9 @@ class PasswordController extends Controller
                 \Log::error($e);
                 // notify the user & redirect
                 Modal::alert([
-                    "Une erreur est survenue lors de l'envoi de l'e-mail. Veuillez contacter le support :" .
-                    "<a href='mailto:" . config('app.email.support') . "' >" . config('app.email.support') . "</a>"
+                    "Une erreur est survenue lors de l'envoi de votre e-mail de réinitialisation. " .
+                    "Veuillez contacter le support :" . "<a href='mailto:" . config('app.email.support') . "' >" .
+                    config('app.email.support') . "</a>"
                 ], 'error');
                 return Redirect()->back();
             }

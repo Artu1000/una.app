@@ -29,9 +29,14 @@ Route::group([
     'middleware' => 'guest'
 ], function () {
 
+    Route::get('renvoyer-email-activation', [
+        'uses' => 'Auth\AccountController@sendActivationMail',
+        'as' => 'send_activation_mail'
+    ]);
     Route::resource('creer-un-compte', 'Auth\AccountController', [
         'names' => [
-            'index' => 'create_account',
+            'index' => 'account',
+            'show' => 'activate_account'
         ]
     ]);
 

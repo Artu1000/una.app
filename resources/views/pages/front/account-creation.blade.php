@@ -12,7 +12,7 @@
 
                     <div class="form_capsule col-sm-offset-4 col-sm-4">
 
-                        <form class="form-signin" role="form" method="POST" action="{{ route('login') }}">
+                        <form class="form-signin" role="form" method="POST" action="{{ route('account') }}">
 
                             {{-- crsf token --}}
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -23,14 +23,14 @@
                             </a>
 
                             {{-- Title--}}
-                            <h1><i class="fa fa-user"></i> Créer un compte</h1>
+                            <h1><i class="fa fa-user-plus"></i> Créer un compte</h1>
 
                             {{-- lastname input --}}
                             <label class="sr-only" for="input_lastname">NOM</label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_lastname"><i class="fa fa-at"></i></span>
-                                    <input id="input_lastname" class="form-control" type="text" name="last_name" value="{{ old('last_name') }}" placeholder="NOM" autofocus>
+                                    <span class="input-group-addon" for="input_lastname"><i class="fa fa-user"></i></span>
+                                    <input id="input_lastname" class="form-control capitalize" type="text" name="last_name" value="{{ old('last_name') }}" placeholder="NOM" autofocus>
                                 </div>
                             </div>
 
@@ -38,17 +38,8 @@
                             <label class="sr-only" for="input_firstname">Prénom</label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_firstname"><i class="fa fa-at"></i></span>
-                                    <input id="input_firstname" class="form-control" type="text" name="first_name" value="{{ old('first_name') }}" placeholder="Prénom">
-                                </div>
-                            </div>
-
-                            {{-- firstname input --}}
-                            <label class="sr-only" for="input_phone_number">Téléphone</label>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon" for="input_phone_number"><i class="fa fa-phone"></i></span>
-                                    <input id="input_phone_number" class="form-control" type="text" name="phone_number" value="{{ old('phone_number') }}" placeholder="Téléphone">
+                                    <span class="input-group-addon" for="input_firstname"><i class="fa fa-user"></i></span>
+                                    <input id="input_firstname" class="form-control capitalize-first-letter" type="text" name="first_name" value="{{ old('first_name') }}" placeholder="Prénom">
                                 </div>
                             </div>
 
@@ -68,7 +59,16 @@
                                     <span class="input-group-addon" for="input_password">
                                         <i class="fa fa-unlock-alt"></i>
                                     </span>
-                                    <input type="password" id="input_password" class="form-control" name="password" value="{{ old('password') }}" placeholder="Mot de passe" title="Mot de passe">
+                                    <input type="password" id="input_password" class="form-control" name="password" placeholder="Mot de passe" title="Mot de passe">
+                                </div>
+                            </div>
+
+                            {{-- password confirmation input --}}
+                            <label class="sr-only" for="input_password_confirmation">Confirmation du mot de passe</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" for="input_password_confirmation"><i class="fa fa-unlock-alt"></i></span>
+                                    <input id="input_password_confirmation" class="form-control" type="password" name="password_confirmation" placeholder="Confirmation du mot de passe">
                                 </div>
                             </div>
 

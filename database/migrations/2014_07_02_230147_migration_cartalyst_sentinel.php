@@ -100,6 +100,7 @@ class MigrationCartalystSentinel extends Migration
             $table->date('birth_date')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('email')->nullable();
+            $table->string('password');
             $table->string('address')->nullable();
             $table->string('zip_code')->nullable();
             $table->string('city')->nullable();
@@ -107,7 +108,6 @@ class MigrationCartalystSentinel extends Migration
             $table->string('nationality')->nullable();
             $table->integer('status')->default(config('user.status_key.association-member'));
             $table->integer('board')->nullable();
-            $table->string('password');
             $table->text('permissions')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->timestamps();
