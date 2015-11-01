@@ -29,23 +29,28 @@ Route::group([
     'middleware' => 'guest'
 ], function () {
 
-    Route::get('renvoyer-email-activation', [
+    // account
+    Route::get('mon-compte/creer', [
+        'uses' => 'Auth\AccountController@createAccount',
+        'as' => 'create_account'
+    ]);
+    Route::get('mon-compte/renvoi-email-activation', [
         'uses' => 'Auth\AccountController@sendActivationMail',
         'as' => 'send_activation_mail'
     ]);
-    Route::resource('creer-un-compte', 'Auth\AccountController', [
-        'names' => [
-            'index' => 'account',
-            'show' => 'activate_account'
-        ]
+    Route::get('mon-compte/activation', [
+        'uses' => 'Auth\AccountController@activateAccount',
+        'as' => 'activate_account'
     ]);
 
+    // connection
     Route::resource('espace-connexion', 'Auth\AuthController', [
         'names' => [
             'index' => 'login',
         ]
     ]);
 
+    // password recovery
     Route::resource('mot-de-passe-oublie', 'Auth\PasswordController', [
         'names' => [
             'index' => 'forgotten_password',
@@ -61,6 +66,13 @@ Route::group([
 ], function () {
 
     // account
+    Route::resource('mon-profil', 'Auth\AccountController', [
+        'names' => [
+            'index' => 'account'
+        ]
+    ]);
+
+    // dashboard
     Route::resource('espace-membre', 'Dashboard\DashboardController', [
         'names' => [
             'index' => 'back.dashboard'

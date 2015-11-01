@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div id="content" class="dashboard row">
+    <div id="content" class="dashboard">
 
         dashboard
 

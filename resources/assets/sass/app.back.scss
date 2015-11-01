@@ -17,11 +17,19 @@ html {
 
     #layout {
 
+      h2 {
+        margin: 40px 0 20px;
+        font-size: 36px;
+
+        &:first-of-type {
+          margin: 40px 0 20px;
+        }
+      }
+
       header {
 
         .navbar {
           margin-bottom: 0;
-          background-color: #333333;
 
           .navbar-header {
 
@@ -38,22 +46,18 @@ html {
 
 
               &:hover {
-                background-color: #222222;
+                background-color: #090909;
                 color: #fff;
               }
             }
           }
 
-          .nav {
-            padding-left: 0;
-            margin-bottom: 0;
-            list-style: none;
+          .nav.navbar-right {
 
-            &.navbar-top-links {
+            &.top-nav {
               margin: 0;
 
               li {
-                display: inline-block;
 
                 a {
                   padding: 15px;
@@ -61,7 +65,7 @@ html {
                   color: #dedede;
 
                   &:hover {
-                    background-color: #222222;
+                    background-color: #090909;
                     color: #fff;
                   }
                 }
@@ -69,16 +73,16 @@ html {
                 &.open {
 
                   a {
-                    background-color: #222222;
+                    background-color: #090909;
                     color: #fff;
                   }
 
                   ul {
                     margin: 0;
+                    padding: 0;
 
                     li {
                       width: 100%;
-
 
                       a {
                         background-color: #fff;
@@ -93,7 +97,7 @@ html {
 
                       &.divider {
                         height: 1px;
-                        margin: 9px 0;
+                        margin: 0;
                         overflow: hidden;
                         background-color: #e5e5e5;
                       }
@@ -103,6 +107,78 @@ html {
               }
             }
           }
+
+          .navbar-collapse {
+            max-height: 340px;
+            margin: 0;
+
+            .side-nav {
+              border-top: solid 1px #090909;
+              margin: 0;
+              display: block;
+              height: auto;
+              position: fixed;
+              top: 51px;
+              left: 225px;
+              bottom: 0;
+              width: 225px;
+              margin-left: -225px;
+              background-color: #222;
+              padding-bottom: 40px;
+              overflow-y: auto;
+              overflow-x: hidden;
+
+              & li {
+                width: 100%;
+
+                a{
+
+                  &:hover {
+                    background-color: #090909;
+                    color: #fff;
+                  }
+                }
+
+                ul {
+                  list-style-type: none;
+                  padding: 0;
+                  margin: 0;
+                  border-right: solid 1px #EEEEEE;
+                  font-size: 14px;
+
+                  &:not('.collapsed'){
+
+                  }
+
+                  li {
+                    height: auto;
+                    display: block;
+
+                    a {
+                      display: block;
+                      color: #333;
+                      padding: 10px 0 10px 40px;
+                      background-color: #fff;
+
+                      &:hover {
+                        background-color: #EEEEEE;
+                        color: #333;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      #wrapper {
+        padding-left: 225px;
+        margin-top: 50px;
+
+        #content {
+          padding: 15px 30px;
         }
       }
     }

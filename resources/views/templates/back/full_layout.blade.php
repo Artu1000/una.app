@@ -30,11 +30,10 @@
             {{-- header inclusion --}}
             @include('templates.back.partials.header')
 
-            {{-- nav inclusion --}}
-            @include('templates.back.partials.nav')
-
             {{-- content inclusion --}}
-            @yield('content')
+            <div id="wrapper" class="row">
+                @yield('content')
+            </div>
 
             {{-- footer inclusion --}}
             @include('templates.back.partials.footer')

@@ -23,20 +23,18 @@ class AccountController extends Controller
      */
     public function index()
     {
-
         // SEO Meta settings
-        $this->seoMeta['page_title'] = 'Créer un compte';
-        $this->seoMeta['meta_desc'] = 'Créez votre compte UNA et accédez à nos services en ligne.';
-        $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, creer, creation, compte';
+        $this->seoMeta['page_title'] = 'Mon compte';
+        $this->seoMeta['meta_desc'] = 'Bienvenue sur votre compte personnel UNA.';
 
         // prepare data for the view
         $data = [
             'seoMeta' => $this->seoMeta,
-            'css' => elixir('css/app.login.css')
+            'user' => \Sentinel::getUser()
         ];
 
         // return the view with data
-        return view('pages.front.account-creation')->with($data);
+        return view('pages.back.account-edit')->with($data);
     }
 
     public function store(Request $request)
@@ -99,34 +97,36 @@ class AccountController extends Controller
         }
     }
 
-    public function show($email, Request $request)
+    public function show()
     {
-        // we try to find the user from its email
-        if ($user = \Sentinel::findByCredentials(['email' => $email])) {
-            // we verify if the reminder token is valid
-            if (\Activation::complete($user, $request->only('token'))) {
-                \Modal::alert([
-                    "Félicitations " . $user->first_name . " " . $user->last_name .
-                    ", votre compte est maintenant activé."
-                ], 'success');
-                return Redirect(route('login'))->withInput(['email' => $email]);
-            } else {
-                \Modal::alert([
-                    "La clé d'activation de votre compte est incorrecte ou a expirée. ",
-                    "Pour recevoir une nouvelle clé d'activation, <a href='" . route('send_activation_mail', [
-                        'email' => $email
-                    ]) . "' title=\"Me renvoyer l'email d'activation\"><u>cliquez ici</u></a>."
-                ], 'error');
-                return Redirect(route('login'))->withInput(['email' => $email]);
-            }
-        } else {
-            // notify the user & redirect
-            \Modal::alert([
-                "Aucun utilisateur correspondant à l'adresse e-mail <b>" . $request->get('email') .
-                "</b> n'a été trouvé."
-            ], 'error');
-            return Redirect(route('login'))->withInput(['email' => $email]);
-        }
+        dd('show');
+    }
+
+    public function update()
+    {
+        dd('update');
+    }
+
+    public function destroy()
+    {
+        dd('destroy');
+    }
+
+    public function createAccount()
+    {
+        // SEO Meta settings
+        $this->seoMeta['page_title'] = 'Créer un compte';
+        $this->seoMeta['meta_desc'] = 'Créez votre compte UNA et accédez à nos services en ligne.';
+        $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, creer, creation, compte';
+
+        // prepare data for the view
+        $data = [
+            'seoMeta' => $this->seoMeta,
+            'css' => elixir('css/app.login.css')
+        ];
+
+        // return the view with data
+        return view('pages.front.account-creation')->with($data);
     }
 
     public function sendActivationMail(Request $request)
@@ -134,9 +134,7 @@ class AccountController extends Controller
         // we flash the email
         $request->flashOnly('email');
 
-        if ($user = \Sentinel::findUserByCredentials([
-            'email' => $request->get('email')
-        ])
+        if ($user = \Sentinel::findUserByCredentials($request->only('email'))
         ) {
 
             if (!$activation = \Activation::exists($user)) {
@@ -178,6 +176,37 @@ class AccountController extends Controller
                 "</b> n'a été trouvé."
             ], 'error');
             return Redirect()->back();
+        }
+    }
+
+    public function activateAccount(Request $request)
+    {
+        // we try to find the user from its email
+        if ($user = \Sentinel::findByCredentials($request->only('email'))) {
+
+            // we verify if the reminder token is valid
+            if (\Activation::complete($user, $request->get('token'))) {
+                \Modal::alert([
+                    "Félicitations " . $user->first_name . " " . $user->last_name .
+                    ", votre compte est maintenant activé. Vous pouvez maintenant vous y connecter."
+                ], 'success');
+                return Redirect(route('login'))->withInput($request->only('email'));
+            } else {
+                \Modal::alert([
+                    "La clé d'activation de votre compte est incorrecte ou a expirée. ",
+                    "Pour recevoir une nouvelle clé d'activation, <a href='" . route('send_activation_mail', [
+                        'email' => $request->get('email')
+                    ]) . "' title=\"Me renvoyer l'email d'activation\"><u>cliquez ici</u></a>."
+                ], 'error');
+                return Redirect(route('login'))->withInput($request->only('email'));
+            }
+        } else {
+            // notify the user & redirect
+            \Modal::alert([
+                "Aucun utilisateur correspondant à l'adresse e-mail <b>" . $request->get('email') .
+                "</b> n'a été trouvé."
+            ], 'error');
+            return Redirect(route('login'))->withInput($request->only('email'));
         }
     }
 

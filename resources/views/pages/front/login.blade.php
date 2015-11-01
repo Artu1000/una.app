@@ -60,7 +60,7 @@
                             {{-- forgotten password / create account --}}
                             <div class="form-group others_actions">
                                 <a href="{{ route('forgotten_password') }}"> Mot de passe oublié</a>
-                                <a href="{{ route('account') }}" class="pull-right"> Créer un compte</a>
+                                <a href="{{ route('create_account') }}" class="pull-right"> Créer un compte</a>
                             </div>
                         </form>
 
