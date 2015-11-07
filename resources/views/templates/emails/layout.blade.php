@@ -19,24 +19,17 @@
                 width: 100%;
             }
             .row .header, .row .footer, .row .header td, .row .footer td {
-                background-color: #444444;
+                background-color: #000;
                 color: #bbbbbb;
             }
             .row .header, .row .content, .row .footer {
                 padding: 30px 0;
-            }
-            .row .header h1, .row .header p {
-                margin: 0;
-                font-weight: normal;
             }
             .row .header .logo {
                 width: 70px;
             }
             .row .header .title {
                 padding-left: 5px;
-            }
-            .row .header p {
-                font-size: 16px;
             }
             .row .info {
                 background-color: #EDEDED;
@@ -46,14 +39,25 @@
                 font-size: 12px;
                 color: #555555;
             }
+            h1, h2, h3 {
+                font-weight: normal;
+            }
             h1 {
-                font-size: 26px;
+                margin: 0;
+                font-size: 22px;
+                text-transform: uppercase;
+                color: #fff;
             }
             h2 {
                 font-size: 22px;;
             }
             h3 {
                 font-size: 18px;
+            }
+            .title p {
+                text-transform: uppercase;
+                margin: 0;
+                font-size: 14px;
             }
             .halign-center {
                 margin: 0 auto;
@@ -74,22 +78,40 @@
                 font-size: 14px;
                 color: #aaaaaa;
             }
-            .social, .contact {
+            .contact {
                 padding: 10px 0;
-            }
-            .social a {
-                margin: 0 5px;
-            }
-            .contact .logo {
-                padding-right: 10px;
-                border-right: solid 1px #bbbbbb;
-            }
-            .contact .address {
-                padding-left: 10px;
             }
             .contact p {
                 color: inherit;
-                line-height: 4px;
+                margin: 0;
+                line-height: 18px;
+                text-transform: uppercase;
+            }
+            .contact .address {
+                padding-right: 10px;
+            }
+            .contact .address p {
+                text-align: right;
+            }
+            .contact .logo {
+                padding: 0 10px;
+            }
+            .contact .social {
+                padding-left: 10px;
+            }
+            .contact .social p {
+                margin-bottom: 5px;
+            }
+            .contact .social a {
+                margin: 0 10px 0 0;
+            }
+            .contact .delimiter {
+                vertical-align: middle;
+            }
+            .contact .delimiter div {
+                height: 50px;
+                width: 1px;
+                border-right: dashed 1px #bbbbbb;
             }
             .btn {
                 display: inline-block;
@@ -123,7 +145,7 @@
                     <table class="halign-center w600">
                         <tr>
                             <td class="logo">
-                                <img width="70" height="66" src="{{ config('app.logo.small.light') }}" alt="{{ config('app.name') }}">
+                                <img width="70" height="66" src="{{ url(config('app.logo.small.light')) }}" alt="{{ config('app.name') }}">
                             </td>
                             <td class="title">
                                 <h1>{{ config('app.name') }}</h1>
@@ -165,33 +187,10 @@
                 <td class="footer">
                     <table class="halign-center w600">
                         <tr>
-                            <td class="social text-center">
-                                <a href="{{ config('app.social.facebook') }}" title="Facebook {{ config('app.name') }}">
-                                    <img src="{{ url('/img/mail/facebook.png') }}" alt="Facebook {{ config('app.name') }}">
-                                </a>
-                                <a href="{{ config('app.social.twitter') }}" title="Twitter {{ config('app.name') }}">
-                                    <img src="{{ url('/img/mail/twitter.png') }}" alt="Twitter {{ config('app.name') }}">
-                                </a>
-                                <a href="{{ config('app.social.google+') }}" title="Google+ {{ config('app.name') }}">
-                                    <img src="{{ url('/img/mail/googleplus.png') }}" alt="Google+ {{ config('app.name') }}">
-                                </a>
-                                <a href="{{ config('app.social.youtube') }}" title="Chaîne Youtube {{ config('app.name') }}">
-                                    <img src="{{ url('/img/mail/youtube.png') }}" alt="Chaîne Youtube {{ config('app.name') }}">
-                                </a>
-                                <a href="mailto:{{ config('app.email.contact') }}" title="Contacter le {{ config('app.name') }}">
-                                    <img src="{{ url('/img/mail/mail.png') }}" alt="Contacter le {{ config('app.name') }}">
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
                             <td class="contact">
-                                <table class="halign-center">
+                                <table>
                                     <tr>
-                                        <td class="logo">
-                                            <img width="70" height="66" src="{{ config('app.logo.small.light') }}" alt="{{ config('app.name') }}">
-                                        </td>
                                         <td class="address">
-                                            <p>{{ config('app.name') }}</p>
                                             <p>{{ config('app.phone') }}</p>
                                             <p>
                                                 <a href="mailto:{{ config('app.email.contact') }}" title="{{ config('app.name') }}">
@@ -199,6 +198,33 @@
                                                 </a>
                                             <p>
                                             <p>{{ config('app.address.number') }} {{ config('app.address.street') }} {{ config('app.address.postal_code') }} {{ config('app.address.city') }}</p>
+                                        </td>
+                                        <td class="delimiter">
+                                            <div></div>
+                                        </td>
+                                        <td class="logo text-center">
+                                            <img width="70" height="66" src="{{ url(config('app.logo.small.light')) }}" alt="{{ config('app.name') }}">
+                                        </td>
+                                        <td class="delimiter">
+                                            <div></div>
+                                        </td>
+                                        <td class="social">
+                                            <p>Nous suivre :</p>
+                                            <a href="{{ config('app.social.facebook') }}" title="Facebook {{ config('app.name') }}">
+                                                <img src="{{ url('/img/mail/facebook.png') }}" alt="Facebook {{ config('app.name') }}">
+                                            </a>
+                                            <a href="{{ config('app.social.twitter') }}" title="Twitter {{ config('app.name') }}">
+                                                <img src="{{ url('/img/mail/twitter.png') }}" alt="Twitter {{ config('app.name') }}">
+                                            </a>
+                                            <a href="{{ config('app.social.google+') }}" title="Google+ {{ config('app.name') }}">
+                                                <img src="{{ url('/img/mail/googleplus.png') }}" alt="Google+ {{ config('app.name') }}">
+                                            </a>
+                                            <a href="{{ config('app.social.youtube') }}" title="Chaîne Youtube {{ config('app.name') }}">
+                                                <img src="{{ url('/img/mail/youtube.png') }}" alt="Chaîne Youtube {{ config('app.name') }}">
+                                            </a>
+                                            <a href="mailto:{{ config('app.email.contact') }}" title="Contacter le {{ config('app.name') }}">
+                                                <img src="{{ url('/img/mail/mail.png') }}" alt="Contacter le {{ config('app.name') }}">
+                                            </a>
                                         </td>
                                     </tr>
                                 </table>

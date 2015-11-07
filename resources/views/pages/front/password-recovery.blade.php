@@ -46,7 +46,7 @@
                                 </div>
                             </div>
 
-                            <p class="quote">Saisissez votre nouveau mot de passe et sa confirmation.</p>
+                            <p class="quote">Saisissez votre nouveau mot de passe.</p>
 
                             {{-- submit login --}}
                             <button class="btn btn-lg btn-primary btn-block" type="submit">

@@ -10,10 +10,10 @@ return [
 
     'name' => 'Club Université Nantes Aviron (UNA)',
     'logo' => [
-        'light' => url('/img/logo-una-white.png'),
-        'dark' => url('/img/logo-una.png'),
+        'light' => '/img/logo-una-white.png',
+        'dark' => '/img/logo-una.png',
         'small' => [
-            'light' => url('/img/logo-una-small.png')
+            'light' => '/img/logo-una-small.png'
         ]
     ],
     'phone' => '09 54 01 48 10',
@@ -172,7 +172,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -182,8 +181,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
-        App\Providers\FacadeServiceProvider::class,
-
+        App\Providers\FacadeServiceProvider::class
     ],
 
     /*
@@ -231,12 +229,15 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
-        'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
-        'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
-        'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
-
+        // imported
+        'Activation'    => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
+        'Reminder'      => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
+        'Sentinel'      => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
+        'Image'         => Intervention\Image\Facades\Image::class,
+        // created
         'String'        => App\Facades\StringHelperFacade::class,
-        'Modal'        => App\Facades\ModalFacade::class
+        'Modal'         => App\Facades\ModalHelperFacade::class,
+        'ImageManager'  => App\Facades\ImageHelperFacade::class
     ],
 
 ];

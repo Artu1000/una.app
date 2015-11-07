@@ -14,7 +14,9 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\Inspire::class,
-        \App\Console\Commands\StoragePrepare::class,
+        \App\Console\Commands\Install\StoragePrepare::class,
+        \App\Console\Commands\Install\MailcatcherInstall::class,
+        \App\Console\Commands\Install\ProjectInstall::class,
     ];
 
     /**

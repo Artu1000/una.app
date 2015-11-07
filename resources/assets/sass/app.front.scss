@@ -67,6 +67,10 @@ html {
                   color: #eee;
                   @include transition(color 0.2s ease);
                 }
+
+                &.active {
+                  color: #eee;
+                }
               }
             }
           }
@@ -83,6 +87,10 @@ html {
                     margin-top: 15px;
 
                     li {
+
+                      &.active {
+                        background-color: #07141B;
+                      }
 
                       a {
                         padding: 10px 15px;

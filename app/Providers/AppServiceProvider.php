@@ -29,6 +29,19 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // laracast javascript service
+        // https://github.com/laracasts/PHP-Vars-To-Js-Transformer
         $this->app->register('Laracasts\Utilities\JavaScript\JavascriptServiceProvider');
+
+        // image optimizer
+        // https://github.com/approached/laravel-image-optimizer
+        $this->app->register('Approached\LaravelImageOptimizer\ServiceProvider');
+
+        // sentinel
+        // https://cartalyst.com/manual/sentinel/2.0
+        $this->app->register('Cartalyst\Sentinel\Laravel\SentinelServiceProvider');
+
+        // intervention image management library
+        // http://image.intervention.io/getting_started/installation#laravel
+        $this->app->register('Intervention\Image\ImageServiceProvider');
     }
 }

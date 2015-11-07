@@ -16,6 +16,9 @@ var paths = {
     'jquery': './resources/assets/vendor/jquery/',
     'jquery_easing': './resources/assets/vendor/jquery.easing/',
     'glide': './resources/assets/vendor/glidejs/',
+    'moment': '/resources/assets/vendor/moment/',
+    'timezone': '/resources/assets/vendor/moment-timezone/',
+    'datetime': '/resources/assets/vendor/eonasdan-bootstrap-datetimepicker/',
     'bootstrap': './resources/assets/vendor/bootstrap-sass-official/assets/',
     'fontawesome': './resources/assets/vendor/fontawesome/',
     'lato': './resources/assets/vendor/lato-font/',
@@ -106,8 +109,12 @@ elixir(function (mix) {
         // BACK
         .scripts([
             paths.jquery + "dist/jquery.js",
-            //paths.jquery_easing + "js/jquery.easing.js",
+            paths.jquery_easing + "js/jquery.easing.js",
+            paths.moment + 'moment.js',
+            paths.moment + 'locale/fr.js',
+            //paths.timezone + 'builds/moment-timezone-with-data.js',
             paths.bootstrap + "javascripts/bootstrap.js",
+            paths.datetime + 'build/js/bootstrap-datetimepicker.min.js',
             paths.js + 'ie10-viewport-bug-workaround.js',
             paths.js + 'app.common.js',
             paths.js + 'app.back.js'

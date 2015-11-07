@@ -17,7 +17,7 @@
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-user fa-fw"></i>
-                    {{ \Sentinel::getUser()->first_name }} {{ \Sentinel::getUser()->last_name }}
+                    <span class="hidden-xs">{{ \Sentinel::getUser()->first_name }} {{ \Sentinel::getUser()->last_name }}</span>
                     <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
@@ -78,8 +78,9 @@
                 <li>
                     <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
                 </li>
+                <li class="divider"></li>
                 <li>
-                    <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
+                    <a href="{{ route('home') }}"><i class="fa fa-home"></i> Retour au site</a>
                 </li>
             </ul>
         </div>

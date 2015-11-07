@@ -7,6 +7,7 @@
  * IMPORTS & VARIABLES
  **********************************************************************************************************************/
 @import 'app.common';
+@import '../vendor/eonasdan-bootstrap-datetimepicker/src/sass/bootstrap-datetimepicker-build';
 
 $logo_header_footer: '../../img/logo-una-header-large-white.png';
 
@@ -113,20 +114,6 @@ html {
             margin: 0;
 
             .side-nav {
-              border-top: solid 1px #090909;
-              margin: 0;
-              display: block;
-              height: auto;
-              position: fixed;
-              top: 51px;
-              left: 225px;
-              bottom: 0;
-              width: 225px;
-              margin-left: -225px;
-              background-color: #222;
-              padding-bottom: 40px;
-              overflow-y: auto;
-              overflow-x: hidden;
 
               & li {
                 width: 100%;
@@ -145,10 +132,6 @@ html {
                   margin: 0;
                   border-right: solid 1px #EEEEEE;
                   font-size: 14px;
-
-                  &:not('.collapsed'){
-
-                  }
 
                   li {
                     height: auto;
@@ -174,11 +157,34 @@ html {
       }
 
       #wrapper {
-        padding-left: 225px;
-        margin-top: 50px;
 
         #content {
           padding: 15px 30px;
+        }
+      }
+
+      .panel {
+
+        .panel-heading {
+
+          h3 {
+            margin: 0;
+          }
+        }
+
+        .panel-body {
+
+          p {
+            margin-top: 0;
+          }
+
+          .form-group {
+            width: 400px;
+
+            &:last-of-type {
+              margin: 0;
+            }
+          }
         }
       }
     }
@@ -197,6 +203,41 @@ html {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (min-width: 1921px) {
 
+  html {
+
+    body {
+
+      #layout {
+
+        .navbar-collapse {
+          max-height: 340px;
+          margin: 0;
+
+          .side-nav {
+            border-top: solid 1px #090909;
+            margin: 0;
+            display: block;
+            height: auto;
+            position: fixed;
+            top: 51px;
+            left: 225px;
+            bottom: 0;
+            width: 225px;
+            margin-left: -225px;
+            background-color: #222;
+            padding-bottom: 40px;
+            overflow-y: auto;
+            overflow-x: hidden;
+          }
+        }
+
+        #wrapper {
+          padding-left: 225px;
+          margin-top: 50px;
+        }
+      }
+    }
+  }
 }
 
 
@@ -210,6 +251,41 @@ html {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 1920px) and (min-width: 1200px) {
 
+  html {
+
+    body {
+
+      #layout {
+
+        .navbar-collapse {
+          max-height: 340px;
+          margin: 0;
+
+          .side-nav {
+            border-top: solid 1px #090909;
+            margin: 0;
+            display: block;
+            height: auto;
+            position: fixed;
+            top: 51px;
+            left: 225px;
+            bottom: 0;
+            width: 225px;
+            margin-left: -225px;
+            background-color: #222;
+            padding-bottom: 40px;
+            overflow-y: auto;
+            overflow-x: hidden;
+          }
+        }
+
+        #wrapper {
+          padding-left: 225px;
+          margin-top: 50px;
+        }
+      }
+    }
+  }
 }
 
 
@@ -223,6 +299,41 @@ html {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 1199px) and (min-width: 992px) {
 
+  html {
+
+    body {
+
+      #layout {
+
+        .navbar-collapse {
+          max-height: 340px;
+          margin: 0;
+
+          .side-nav {
+            border-top: solid 1px #090909;
+            margin: 0;
+            display: block;
+            height: auto;
+            position: fixed;
+            top: 51px;
+            left: 225px;
+            bottom: 0;
+            width: 225px;
+            margin-left: -225px;
+            background-color: #222;
+            padding-bottom: 40px;
+            overflow-y: auto;
+            overflow-x: hidden;
+          }
+        }
+
+        #wrapper {
+          padding-left: 225px;
+          margin-top: 50px;
+        }
+      }
+    }
+  }
 }
 
 
@@ -235,6 +346,41 @@ html {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 991px) and (min-width: 768px) {
 
+  html {
+
+    body {
+
+      #layout {
+
+        .navbar-collapse {
+          max-height: 340px;
+          margin: 0;
+
+          .side-nav {
+            border-top: solid 1px #090909;
+            margin: 0;
+            display: block;
+            height: auto;
+            position: fixed;
+            top: 51px;
+            left: 225px;
+            bottom: 0;
+            width: 225px;
+            margin-left: -225px;
+            background-color: #222;
+            padding-bottom: 40px;
+            overflow-y: auto;
+            overflow-x: hidden;
+          }
+        }
+
+        #wrapper {
+          padding-left: 225px;
+          margin-top: 50px;
+        }
+      }
+    }
+  }
 }
 
 
@@ -248,4 +394,39 @@ html {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 767px) {
 
+  html {
+
+    body {
+
+      #layout {
+
+        header {
+
+          nav {
+
+            .navbar-header {
+
+              .navbar-toggle {
+                margin-top: 15px;
+              }
+
+              a {
+                max-width: 250px;
+
+                h1 {
+
+                }
+              }
+            }
+
+            .navbar-collapse {
+
+              .side-nav {
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

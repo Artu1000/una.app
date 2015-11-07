@@ -30,7 +30,7 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_email"><i class="fa fa-at"></i></span>
-                                    <input id="input_email" class="form-control" type="email" name="email" value="{{ old('email') }}" placeholder="Adresse e-mail" autofocus>
+                                    <input id="input_email" class="form-control" type="email" name="email" value="{{ $email or old('email') }}" placeholder="Adresse e-mail" autofocus>
                                 </div>
                             </div>
 
@@ -38,7 +38,7 @@
 
                             {{-- submit login --}}
                             <button class="btn btn-lg btn-primary btn-block" type="submit">
-                                <i class="fa fa-wrench"></i> Réinitialiser
+                                <i class="fa fa-paper-plane"></i> Envoyer l'e-mail
                             </button>
 
                         </form>

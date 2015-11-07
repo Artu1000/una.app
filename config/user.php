@@ -1,5 +1,6 @@
 <?php
 
+// boards
 $boards = [
     1 => [
         'key' => 'leading-board',
@@ -16,6 +17,7 @@ foreach ($boards as $id => $board) {
     $boards_keys[$board['key']] = $id;
 }
 
+// statuses
 $statuses = [
     1 => [
         'key' => 'president',
@@ -62,15 +64,35 @@ $statuses = [
         'title' => 'Sociétaire'
     ]
 ];
-
 $statuses_keys = [];
 foreach ($statuses as $id => $status) {
     $statuses_keys[$status['key']] = $id;
+}
+
+// gender
+$genders = [
+    1 => [
+        'key' => 'male',
+        'title' => 'Homme'
+    ],
+    2 => [
+        'key' => 'female',
+        'title' => 'Femme'
+    ]
+];
+$genders_keys = [];
+foreach ($genders as $id => $gender) {
+    $genders_keys[$gender['key']] = [
+        'id' => $id,
+        'title' => $gender['title']
+    ];
 }
 
 return [
     'status' => $statuses,
     'status_key' => $statuses_keys,
     'board' => $boards,
-    'board_key' => $boards_keys
+    'board_key' => $boards_keys,
+    'gender' => $genders,
+    'gender_key' => $genders_keys
 ];

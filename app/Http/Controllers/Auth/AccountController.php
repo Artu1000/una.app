@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -37,6 +38,10 @@ class AccountController extends Controller
         return view('pages.back.account-edit')->with($data);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function store(Request $request)
     {
         // we flash the non sensitive data
@@ -102,9 +107,92 @@ class AccountController extends Controller
         dd('show');
     }
 
-    public function update()
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request)
     {
-        dd('update');
+
+        // we flash the non sensitive data
+        $request->flashOnly(
+            'gender',
+            'last_name',
+            'first_name',
+            'birth_date',
+            'phone_number',
+            'email',
+            'address',
+            'zip_code',
+            'city',
+            'country'
+        );
+
+        $inputs = $request->all();
+
+        // we convert the french formatted date to its english format
+        $inputs['birth_date'] = null;
+        if (!empty($birth_date = $request->get('birth_date'))) {
+            $inputs['birth_date'] = Carbon::createFromFormat('d/m/Y', $birth_date)->format('Y-m-d');
+        }
+
+        // we check the inputs
+        $errors = [];
+        $validator = \Validator::make($inputs, [
+            'photo' => 'mimes:jpg,jpeg,png',
+            'gender' => 'in:' . implode(',', array_keys(config('user.gender'))),
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'birth_date' => 'date_format:Y-m-d',
+            'phone_number' => 'digits:10',
+            'email' => 'required|email|unique:users,email,' . $request->get('_id'),
+//            'address' => 'required',
+            'zip_code' => 'digits:5',
+//            'country' => 'required',
+            'password' => 'min:6|confirmed',
+        ]);
+        foreach ($validator->errors()->all() as $error) {
+            $errors[] = $error;
+        }
+        // if errors are found
+        if (count($errors)) {
+            \Modal::alert($errors, 'error');
+            return Redirect()->back();
+        }
+
+        // we store the photo
+        if ($photo = $request->file('photo')) {
+            try {
+                // we resize, optimize and save the image
+                $file_name =\ImageManager::resize(
+                    $photo,
+                    \Sentinel::getUser()->id . '_photo', 'user',
+                    \Sentinel::getUser()->image_sizes
+                );
+                // we add the image name to the inputs for saving
+                $inputs['photo'] = $file_name;
+            } catch (\Exception $e) {
+                \Modal::alert([
+                    "Une erreur est survenue lors de l'enregistrement de la photo" .
+                    "Veuillez contacter le support :" . "<a href='mailto:" . config('app.email.support') . "' >" .
+                    config('app.email.support') . "</a>"
+                ], 'error');
+                return Redirect()->back();
+            }
+        }
+
+        // we update the user
+        if (\Sentinel::update(\Sentinel::getUser(), $inputs)) {
+            \Modal::alert([
+                "Vos données personnelles ont bien été mises à jour."
+            ], 'success');
+            return Redirect()->back();
+        }
+
+        \Modal::alert([
+            "Une erreur s'est déroulée lors de la mise à jour de vos données personnelles."
+        ], 'error');
+        return Redirect()->back();
     }
 
     public function destroy()
@@ -112,6 +200,9 @@ class AccountController extends Controller
         dd('destroy');
     }
 
+    /**
+     * @return $this
+     */
     public function createAccount()
     {
         // SEO Meta settings
@@ -129,6 +220,10 @@ class AccountController extends Controller
         return view('pages.front.account-creation')->with($data);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function sendActivationMail(Request $request)
     {
         // we flash the email
@@ -179,6 +274,10 @@ class AccountController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return $this
+     */
     public function activateAccount(Request $request)
     {
         // we try to find the user from its email

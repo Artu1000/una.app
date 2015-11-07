@@ -27,7 +27,7 @@
                     @foreach($team as $member)
                         @if($member->board === config('user.board_key.leading-board'))
                             <div class="member">
-                                <img width="145" height="160" src="{{ $member->photo }}" alt="{{ $member->last_name }} {{ $member->first_name }}">
+                                <img width="145" height="160" src="{{ route('image', ['filename' => $member->photo, 'folder' => 'user']) }}" alt="{{ $member->last_name }} {{ $member->first_name }}">
                                 <h4 class="display-table">
                                     <span class="table-cell">
                                         {{ $member->last_name }}<br>{{ $member->first_name }}

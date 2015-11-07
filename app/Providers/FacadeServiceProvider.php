@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helpers\ImageHelper;
 use App\Helpers\ModalHelper;
 use App\Helpers\StringHelper;
 use Illuminate\Support\Facades\App;
@@ -31,9 +32,14 @@ class FacadeServiceProvider extends ServiceProvider
             return new StringHelper();
         });
 
-        // modal
+        // modal helper
         App::bind('Modal', function(){
             return new ModalHelper();
+        });
+
+        // image optimizer helper
+        App::bind('ImageManager', function(){
+            return new ImageHelper();
         });
     }
 }

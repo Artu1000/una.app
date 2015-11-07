@@ -9,7 +9,9 @@
         "laravel/framework": "5.1.*",
         "laracasts/utilities": "dev-master",
         "suin/php-rss-writer": "dev-master",
-        "cartalyst/sentinel": "2.0.*"
+        "cartalyst/sentinel": "2.0.*",
+        "approached/laravel-image-optimizer": "dev-master",
+        "intervention/image": "^2.3@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

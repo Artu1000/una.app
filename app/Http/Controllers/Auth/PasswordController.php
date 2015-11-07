@@ -17,7 +17,7 @@ class PasswordController extends Controller
         $this->repository = $user;
     }
 
-    protected function index()
+    protected function index(Request $request)
     {
         // SEO settings
         $this->seoMeta['page_title'] = 'Mot de passe oublié';
@@ -27,6 +27,7 @@ class PasswordController extends Controller
         // data send to the view
         $data = [
             'seoMeta' => $this->seoMeta,
+            'email' => $request->get('email'),
             'css' => elixir('css/app.login.css')
         ];
         return view('pages.front.forgotten-password')->with($data);

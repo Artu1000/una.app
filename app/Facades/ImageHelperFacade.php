@@ -4,10 +4,10 @@ namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class ModalFacade extends Facade
+class ImageHelperFacade extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'Modal';
+        return 'ImageManager';
     }
 }

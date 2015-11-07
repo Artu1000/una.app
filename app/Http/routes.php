@@ -16,14 +16,17 @@ Event::listen('illuminate.query', function ($sql, $bindings) {
     foreach ($bindings as $val) {
         $sql = preg_replace('/\?/', "'{$val}'", $sql, 1);
     }
-    Log::info($sql);
+    \Log::info($sql);
 });
+
+Route::get('file', [
+    'uses' => 'File\FileController@image',
+    'as' => 'image'
+]);
 
 /***********************************************************************************************************************
  * BACKEND ROUTES
  **********************************************************************************************************************/
-
-//Route::controller('password', 'Auth\PasswordController');
 
 Route::group([
     'middleware' => 'guest'
@@ -68,7 +71,8 @@ Route::group([
     // account
     Route::resource('mon-profil', 'Auth\AccountController', [
         'names' => [
-            'index' => 'account'
+            'index' => 'account',
+            'update' => 'update_account'
         ]
     ]);
 
