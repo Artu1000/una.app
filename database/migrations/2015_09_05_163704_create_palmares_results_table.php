@@ -19,8 +19,8 @@ class CreatePalmaresResultsTable extends Migration
             $table->string('boat')->nullable();
             $table->integer('position')->nullable();
             $table->string('crew')->nullable();
-            $table->timestamps();
 
+            $table->timestamps();
             $table->engine = 'InnoDB';
         });
     }

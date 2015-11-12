@@ -16,7 +16,7 @@
 
                 <a class="navbar-brand" title="Retour à l'accueil" href="{{ route('home') }}">
                     <span class="logo">
-                        <img width="70" height="66" src="{{ config('app.logo.small.light') }}" alt="Logo Club Université Nantes Aviron (UNA)">
+                        <img width="70" height="66" src="{{ url(env('LOGO_SMALL_LIGHT')) }}" alt="Logo Club Université Nantes Aviron (UNA)">
                     </span>
                     <h1 @if(\Route::current()->getName() === 'home') class="active" @endif>
                         <span>Université</span>

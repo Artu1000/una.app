@@ -83,6 +83,14 @@ Route::group([
         ]
     ]);
 
+    // configuration
+    Route::resource('configuration', 'Settings\SettingsController', [
+        'names' => [
+            'index' => 'back.settings'
+        ]
+    ]);
+
+    // logout
     Route::resource('deconnexion', 'Auth\LogoutController', [
         'names' => [
             'index' => 'logout'

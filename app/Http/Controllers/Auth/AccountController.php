@@ -94,8 +94,8 @@ class AccountController extends Controller
                 // notify the user & redirect
                 \Modal::alert([
                     "Une erreur est survenue lors de l'envoi de votre e-mail d'activation. " .
-                    "Veuillez contacter le support :" . "<a href='mailto:" . config('app.email.support') . "' >" .
-                    config('app.email.support') . "</a>"
+                    "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
+                    config('settings.support_email') . "</a>"
                 ], 'error');
                 return Redirect()->back();
             }
@@ -113,7 +113,6 @@ class AccountController extends Controller
      */
     public function update(Request $request)
     {
-
         // we flash the non sensitive data
         $request->flashOnly(
             'gender',
@@ -144,11 +143,9 @@ class AccountController extends Controller
             'last_name' => 'required',
             'first_name' => 'required',
             'birth_date' => 'date_format:Y-m-d',
-            'phone_number' => 'digits:10',
+            'phone_number' => 'phone:FR',
             'email' => 'required|email|unique:users,email,' . $request->get('_id'),
-//            'address' => 'required',
             'zip_code' => 'digits:5',
-//            'country' => 'required',
             'password' => 'min:6|confirmed',
         ]);
         foreach ($validator->errors()->all() as $error) {
@@ -159,6 +156,13 @@ class AccountController extends Controller
             \Modal::alert($errors, 'error');
             return Redirect()->back();
         }
+
+        // we format the number into its international equivalent
+        $inputs['phone_number'] = $formatted_phone_number = phone_format(
+            $inputs['phone_number'],
+            'FR',
+            \libphonenumber\PhoneNumberFormat::INTERNATIONAL
+        );
 
         // we store the photo
         if ($photo = $request->file('photo')) {
@@ -174,8 +178,8 @@ class AccountController extends Controller
             } catch (\Exception $e) {
                 \Modal::alert([
                     "Une erreur est survenue lors de l'enregistrement de la photo" .
-                    "Veuillez contacter le support :" . "<a href='mailto:" . config('app.email.support') . "' >" .
-                    config('app.email.support') . "</a>"
+                    "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
+                    config('settings.support_email') . "</a>"
                 ], 'error');
                 return Redirect()->back();
             }
@@ -183,6 +187,7 @@ class AccountController extends Controller
 
         // we update the user
         if (\Sentinel::update(\Sentinel::getUser(), $inputs)) {
+
             \Modal::alert([
                 "Vos données personnelles ont bien été mises à jour."
             ], 'success');
@@ -259,8 +264,8 @@ class AccountController extends Controller
                 // notify the user & redirect
                 \Modal::alert([
                     "Une erreur est survenue lors de l'envoi de votre e-mail d'activation. " .
-                    "Veuillez contacter le support :" . "<a href='mailto:" . config('app.email.support') . "' >" .
-                    config('app.email.support') . "</a>"
+                    "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
+                    config('settings.support_email') . "</a>"
                 ], 'error');
                 return Redirect()->back();
             }

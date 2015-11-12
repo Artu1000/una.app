@@ -36,8 +36,8 @@ class MigrationCartalystSentinel extends Migration
             $table->string('code');
             $table->boolean('completed')->default(0);
             $table->timestamp('completed_at')->nullable();
-            $table->timestamps();
 
+            $table->timestamps();
             $table->engine = 'InnoDB';
         });
 
@@ -45,8 +45,8 @@ class MigrationCartalystSentinel extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('code');
-            $table->timestamps();
 
+            $table->timestamps();
             $table->engine = 'InnoDB';
             $table->unique('code');
         });
@@ -57,6 +57,7 @@ class MigrationCartalystSentinel extends Migration
             $table->string('code');
             $table->boolean('completed')->default(0);
             $table->timestamp('completed_at')->nullable();
+
             $table->timestamps();
         });
 
@@ -65,8 +66,8 @@ class MigrationCartalystSentinel extends Migration
             $table->string('slug');
             $table->string('name');
             $table->text('permissions')->nullable();
-            $table->timestamps();
 
+            $table->timestamps();
             $table->engine = 'InnoDB';
             $table->unique('slug');
         });
@@ -74,8 +75,8 @@ class MigrationCartalystSentinel extends Migration
         Schema::create('role_users', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
             $table->integer('role_id')->unsigned();
-            $table->nullableTimestamps();
 
+            $table->nullableTimestamps();
             $table->engine = 'InnoDB';
             $table->primary(['user_id', 'role_id']);
         });
@@ -85,8 +86,8 @@ class MigrationCartalystSentinel extends Migration
             $table->integer('user_id')->unsigned()->nullable();
             $table->string('type');
             $table->string('ip')->nullable();
-            $table->timestamps();
 
+            $table->timestamps();
             $table->engine = 'InnoDB';
             $table->index('user_id');
         });
@@ -108,9 +109,9 @@ class MigrationCartalystSentinel extends Migration
             $table->integer('status')->default(config('user.status_key.association-member'));
             $table->integer('board')->nullable();
             $table->text('permissions')->nullable();
+
             $table->timestamp('last_login')->nullable();
             $table->timestamps();
-
             $table->engine = 'InnoDB';
         });
     }

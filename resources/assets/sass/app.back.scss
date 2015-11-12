@@ -160,6 +160,17 @@ html {
 
         #content {
           padding: 15px 30px;
+
+          .bootstrap-datetimepicker-widget {
+
+            ul {
+
+              li {
+                margin: 0;
+                padding: 0 15px;
+              }
+            }
+          }
         }
       }
 

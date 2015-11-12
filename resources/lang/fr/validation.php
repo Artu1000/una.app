@@ -57,6 +57,7 @@ return [
     ],
     "not_in"               => "Le champ :attribute sélectionné n'est pas valide.",
     "numeric"              => "Le champ :attribute doit contenir un nombre.",
+    "phone"                => "Le champ :attribute n'est pas valide.",
     "regex"                => "Le format du champ :attribute est invalide.",
     "required"             => "Le champ :attribute est obligatoire.",
     "required_if"          => "Le champ :attribute est obligatoire quand la valeur de :other est :value.",

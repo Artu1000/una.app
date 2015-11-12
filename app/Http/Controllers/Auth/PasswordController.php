@@ -83,8 +83,8 @@ class PasswordController extends Controller
                 // notify the user & redirect
                 Modal::alert([
                     "Une erreur est survenue lors de l'envoi de votre e-mail de réinitialisation. " .
-                    "Veuillez contacter le support :" . "<a href='mailto:" . config('app.email.support') . "' >" .
-                    config('app.email.support') . "</a>"
+                    "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
+                    config('settings.support_email') . "</a>"
                 ], 'error');
                 return Redirect()->back();
             }

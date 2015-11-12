@@ -12,20 +12,20 @@
             <div class="left_part">
                 <div class="contact">
                     <p>
-                        <i class="fa fa-phone-square"></i> {{ config('app.phone') }}
+                        <i class="fa fa-phone-square"></i> {{ config('settings.phone_number') }}
                     </p>
                     <p>
-                        <a href="mailto:{{ config('app.email.contact') }}">
-                            <i class="fa fa-envelope"></i> {!! str_replace('@', '<i class="fa fa-at"></i>', config('app.email.contact')) !!}
+                        <a href="mailto:{{ config('settings.contact_email') }}">
+                            <i class="fa fa-envelope"></i> {!! str_replace('@', '<i class="fa fa-at"></i>', config('settings.contact_email')) !!}
                         </a>
                     </p>
                     <p>
-                        <i class="fa fa-bus"></i> {{ config('app.address.number') }} {{ config('app.address.street') }} <span class="hidden-sm hidden-xs"> {{ config('app.address.postal_code') }} {{ config('app.address.city') }}</span>
+                        <i class="fa fa-bus"></i> {{ config('settings.address') }} <span class="hidden-sm hidden-xs"> {{ config('settings.zip_code') }} {{ config('settings.city') }}</span>
                     </p>
                 </div>
                 <div class="logo hidden-xs">
                     <a href="{{ url('/') }}#top" title="Revenir en haut de la page">
-                        <img width="70" height="66" src="{{ config('app.logo.small.light') }}" alt="Logo {{ config('app.name') }}">
+                        <img width="70" height="66" src="{{ url(env('LOGO_SMALL_LIGHT')) }}" alt="Logo {{ config('settings.app_name') }}">
                     </a>
                 </div>
             </div>
@@ -34,20 +34,34 @@
             </div>
             <div class="right_part">
                 <div class="social">
-                    <a class="new_window" href="https://fr-fr.facebook.com/UniversiteNantesAviron" title="Facebook {{ config('app.name') }}">
-                        <i class="fa fa-facebook-square fa-3"></i></a>
-                    <a class="new_window" href="https://twitter.com/UNAClub" title="Twitter du {{ config('app.name') }}">
-                        <i class="fa fa-twitter-square fa-3"></i>
-                    </a>
-                    <a class="new_window" rel=publisher" href="https://plus.google.com/+Univ-nantes-avironFr" title="Google+ {{ config('app.name') }}">
-                        <i class="fa fa-google-plus-square fa-3"></i>
-                    </a>
-                    <a class="new_window" href="{{ url('rss') }}" title="Flux RSS des actualités - {{ config('app.name') }}">
-                        <i class="fa fa-rss-square fa-3"></i>
-                    </a>
+                    @if(config('settings.facebook'))
+                        <a class="new_window" href="{{ config('settings.facebook') }}" title="Facebook {{ config('settings.app_name') }}">
+                            <i class="fa fa-facebook-square fa-3"></i>
+                        </a>
+                    @endif
+                    @if(config('settings.twitter'))
+                        <a class="new_window" href="{{ config('settings.twitter') }}" title="Twitter du {{ config('settings.app_name') }}">
+                            <i class="fa fa-twitter-square fa-3"></i>
+                        </a>
+                        @endif
+                    @if(config('settings.google_plus'))
+                        <a class="new_window" rel=publisher" href="{{ config('settings.google_plus') }}" title="Google+ {{ config('settings.app_name') }}">
+                            <i class="fa fa-google-plus-square fa-3"></i>
+                        </a>
+                            @endif
+                    @if(config('settings.youtube'))
+                        <a class="new_window" href="{{ config('settings.youtube') }}" title="Youtube {{ config('settings.app_name') }}">
+                            <i class="fa fa-youtube-square fa-3"></i>
+                        </a>
+                                @endif
+                    @if(config('settings.rss'))
+                        <a class="new_window" href="{{ url('rss') }}" title="Flux RSS des actualités - {{ config('settings.app_name') }}">
+                            <i class="fa fa-rss-square fa-3"></i>
+                        </a>
+                    @endif
                 </div>
                 <div class="copyright hidden-xs">
-                    <p><i class="fa fa-copyright"></i> 2014  - <span class="hidden-sm">Club</span> Université Nantes Aviron<span class="hidden-sm"> (UNA)</span></p>
+                    <p><i class="fa fa-copyright"></i> 2015  - <span class="hidden-sm">Club</span> Université Nantes Aviron<span class="hidden-sm"> (UNA)</span></p>
                 </div>
             </div>
         </div>

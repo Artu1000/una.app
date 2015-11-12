@@ -7,9 +7,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand new_window" href="{{ route('home') }}">
                 <h1>
-                    {{ config('app.name') }}
+                    {{ config('settings.app_name') }}
                 </h1>
             </a>
         </div>
@@ -24,11 +24,6 @@
                     <li>
                         <a href="{{ route('account') }}"><i class="fa fa-user fa-fw"></i>
                             Mon profil
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-gear fa-fw"></i>
-                            Préférences
                         </a>
                     </li>
                     <li class="divider"></li>
@@ -47,19 +42,7 @@
                     <a href="{{ route('back.dashboard') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                 </li>
                 <li>
-                    <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
-                </li>
-                <li>
-                    <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
-                </li>
-                <li>
-                    <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
-                </li>
-                <li>
-                    <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
-                </li>
-                <li>
-                    <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
+                    <a href="{{ route('back.settings') }}"><i class="fa fa-cogs"></i> Configuration du site</a>
                 </li>
                 <li>
                     <a href="#" data-toggle="collapse" data-target="#demo">
@@ -80,7 +63,7 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="{{ route('home') }}"><i class="fa fa-home"></i> Retour au site</a>
+                    <a class="new_window" href="{{ route('home') }}"><i class="fa fa-home"></i> Retour au site</a>
                 </li>
             </ul>
         </div>

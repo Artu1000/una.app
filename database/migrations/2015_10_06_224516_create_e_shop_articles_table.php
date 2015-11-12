@@ -25,8 +25,8 @@ class CreateEShopArticlesTable extends Migration
             $table->boolean('size_xxl')->default(false);
             $table->double('price')->nullable();
             $table->string('photo')->nullable();
-            $table->timestamps();
 
+            $table->timestamps();
             $table->engine = 'InnoDB';
         });
     }

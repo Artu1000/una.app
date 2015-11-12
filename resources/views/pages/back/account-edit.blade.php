@@ -33,23 +33,23 @@
                             </div>
 
                             <div class="form-group">
-                                <p class="quote text-info"><i class="fa fa-info-circle"></i> Taille : 145 x 160 (px) - Formats acceptés : jpg, jpeg, png</p>
                                 <div class="">
-                                    <div class="input-group inline-block">
+                                    <div class="input-group">
                                         <span class="input-group-btn">
                                             <span class="btn btn-primary btn-file">
-                                                Parcourir <input type="file" name="photo">
+                                                <i class="fa fa-picture-o"></i> Parcourir <input type="file" name="photo">
                                             </span>
                                         </span>
                                         <input type="text" class="form-control" readonly="">
                                     </div>
                                 </div>
+                                <p class="help-block quote"><i class="fa fa-info-circle"></i> Formats acceptés : jpg, jpeg, png.</p>
                             </div>
 
                             {{-- gender --}}
                             <div class="form-group">
                                 <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary
+                                    <label class="btn toggle
                                     @if(old('gender') == config('user.gender_key.female.id')) active
                                     @elseif($user->gender == config('user.gender_key.female.id')) active
                                     @endif">
@@ -60,7 +60,7 @@
                                         <i class="fa fa-female"></i>
                                         {{ config('user.gender_key.female.title') }}
                                     </label>
-                                    <label class="btn btn-primary
+                                    <label class="btn toggle
                                     @if(old('gender') == config('user.gender_key.male.id')) active
                                     @elseif($user->gender == config('user.gender_key.male.id')) active
                                     @endif">
@@ -114,6 +114,7 @@
                                     <span class="input-group-addon" for="input_phone_number"><i class="fa fa-phone"></i></span>
                                     <input id="input_phone_number" class="form-control" type="tel" name="phone_number" value="{{ old('phone_number') ? old('phone_number') : $user->phone_number }}" placeholder="Numéro de téléphone">
                                 </div>
+                                <p class="help-block quote"><i class="fa fa-info-circle"></i> Téléphone français uniquement.</p>
                             </div>
 
                             {{-- email --}}
@@ -166,7 +167,7 @@
                         </div>
                         <div class="panel-body">
 
-                            <p class="quote text-info"><i class="fa fa-info-circle"></i> Ne remplir que si vous souhaitez modifier votre mot de passe actuel.</p>
+                            <p class="quote text-warning"><i class="fa fa-exclamation-triangle"></i> Ne remplir que si vous souhaitez modifier votre mot de passe actuel.</p>
 
                             {{-- password input--}}
                             <div class="form-group">

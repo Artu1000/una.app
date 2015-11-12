@@ -28,7 +28,7 @@
     <p>&nbsp;</p>
 
     <p>
-        En cas de problème, contactez le service support de l'application à l'adresse&nbsp;: <a href="mailto:{{ config('app.email.support') }}">{{ config('app.email.support') }}</a>
+        En cas de problème, contactez le service support de l'application à l'adresse&nbsp;: <a href="mailto:{{ config('settings.support_email') }}">{{ config('settings.support_email') }}</a>
     </p>
 
 @endsection

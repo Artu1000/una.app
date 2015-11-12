@@ -11,7 +11,8 @@
         "suin/php-rss-writer": "dev-master",
         "cartalyst/sentinel": "2.0.*",
         "approached/laravel-image-optimizer": "dev-master",
-        "intervention/image": "^2.3@dev"
+        "intervention/image": "^2.3@dev",
+        "propaganistas/laravel-phone": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

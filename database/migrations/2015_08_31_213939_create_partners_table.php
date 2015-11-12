@@ -18,8 +18,8 @@ class CreatePartnersTable extends Migration
             $table->string('logo')->nullable();
             $table->string('url')->nullable();
             $table->integer('position')->nullable();
-            $table->timestamps();
 
+            $table->timestamps();-
             $table->engine = 'InnoDB';
         });
     }

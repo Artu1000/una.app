@@ -21,8 +21,8 @@ class CreatePagesTable extends Migration
             $table->text('meta_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->text('meta_keywords')->nullable();
-            $table->timestamps();
 
+            $table->timestamps();
             $table->engine = 'InnoDB';
         });
     }

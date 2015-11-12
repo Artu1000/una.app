@@ -1,8 +1,8 @@
 {{-- page title --}}
-<title>{{$seoMeta['page_title']}} - {{ config('app.name') }}</title>
+<title>{{ $seoMeta['page_title'] }} - {{ config('settings.app_name') }}</title>
 
 {{-- favicon --}}
-<link rel="icon" href="{{ url('/') }}/favicon.ico">
+<link rel="icon" href="{{ url('favicon.ico') }}">
 
 {{-- meta --}}
 <meta charset="utf-8">
@@ -11,7 +11,9 @@
 <meta name="description" content='{{ $seoMeta['meta_desc'] }}'>
 <meta name="keywords" content="{{ $seoMeta['meta_keywords'] }}">
 <meta name="author" content='Arthur LORENT'>
-<link rel="alternate" type="application/rss+xml" href="{{ url('rss') }}" title="Flux RSS des actualités du {{ config('app.name') }}">
+@if(config('settings.rss'))
+    <link rel="alternate" type="application/rss+xml" href="{{ url('rss') }}" title="Flux RSS des actualités du {{ config('settings.app_name') }}">
+@endif
 
 {{-- csrf token --}}
 <meta content="{{ csrf_token() }}" name="csrf-token" />

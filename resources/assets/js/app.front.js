@@ -32,7 +32,7 @@ var cookie = {
                 '<div class="container">' +
                     '<div class="display-table">' +
                         '<div class="table-cell text-center">' +
-                        '   <span>Je comprends que le site du <b>' + app.site_name + '</b> utilise des cookies afin d\'améliorer mon expérience utilisateur.</span>' +
+                        '   <span>Je comprends que le site du <b>' + app.app_name + '</b> utilise des cookies afin d\'améliorer mon expérience utilisateur.</span>' +
                         '   <button id="cookie_acceptation" class="btn btn-success"><i class="fa fa-check-circle"></i> Fermer</button>' +
                         '</div>' +
                     '</div>' +
@@ -106,7 +106,7 @@ var gmap = {
             draggable: false,
             position: latlng,
             map: map,
-            title: app.site_name
+            title: app.app_name
         });
 
     },
@@ -245,12 +245,6 @@ $(function () {
         if ($('.collapse').hasClass('in')) {
             $('.collapse').collapse('hide');
         }
-    });
-
-    // open new window when clicking on the link
-    $(".new_window").on("click", function (event) {
-        event.preventDefault();
-        window.open(this.href);
     });
 
     // Cookie acceptation verification

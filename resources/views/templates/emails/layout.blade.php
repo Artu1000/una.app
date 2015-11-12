@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width">
         <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
-        <title>Email du {{ config('app.name') }}</title>
+        <title>Email du {{ config('settings.app_name') }}</title>
     </head>
     <body style="width: 100% !important;min-width: 100%;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100% !important;margin: 0;padding: 0;background-color: #FFFFFF">
 
@@ -145,10 +145,10 @@
                     <table class="halign-center w600">
                         <tr>
                             <td class="logo">
-                                <img width="70" height="66" src="{{ url(config('app.logo.small.light')) }}" alt="{{ config('app.name') }}">
+                                <img width="70" height="66" src="{{ url(env('LOGO_SMALL_LIGHT')) }}" alt="{{ config('settings.app_name') }}">
                             </td>
                             <td class="title">
-                                <h1>{{ config('app.name') }}</h1>
+                                <h1>{{ config('settings.app_name') }}</h1>
                                 <p>Le plus grand club d'aviron universitaire de France</p>
                             </td>
                         </tr>
@@ -191,39 +191,39 @@
                                 <table>
                                     <tr>
                                         <td class="address">
-                                            <p>{{ config('app.phone') }}</p>
+                                            <p>{{ config('settings.phone_number') }}</p>
                                             <p>
-                                                <a href="mailto:{{ config('app.email.contact') }}" title="{{ config('app.name') }}">
-                                                    {{ config('app.email.contact') }}
+                                                <a href="mailto:{{ config('settings.contact_email') }}" title="{{ config('settings.app_name') }}">
+                                                    {{ config('settings.contact_email') }}
                                                 </a>
                                             <p>
-                                            <p>{{ config('app.address.number') }} {{ config('app.address.street') }} {{ config('app.address.postal_code') }} {{ config('app.address.city') }}</p>
+                                            <p>{{ config('settings.address') }} {{ config('settings.zip_code') }} {{ config('settings.city') }}</p>
                                         </td>
                                         <td class="delimiter">
                                             <div></div>
                                         </td>
                                         <td class="logo text-center">
-                                            <img width="70" height="66" src="{{ url(config('app.logo.small.light')) }}" alt="{{ config('app.name') }}">
+                                            <img width="70" height="66" src="{{ url(env('LOGO_SMALL_LIGHT')) }}" alt="{{ config('settings.app_name') }}">
                                         </td>
                                         <td class="delimiter">
                                             <div></div>
                                         </td>
                                         <td class="social">
                                             <p>Nous suivre :</p>
-                                            <a href="{{ config('app.social.facebook') }}" title="Facebook {{ config('app.name') }}">
-                                                <img src="{{ url('/img/mail/facebook.png') }}" alt="Facebook {{ config('app.name') }}">
+                                            <a href="{{ config('settings.facebook') }}" title="Facebook {{ config('settings.app_name') }}">
+                                                <img src="{{ url('/img/mail/facebook.png') }}" alt="Facebook {{ config('settings.app_name') }}">
                                             </a>
-                                            <a href="{{ config('app.social.twitter') }}" title="Twitter {{ config('app.name') }}">
-                                                <img src="{{ url('/img/mail/twitter.png') }}" alt="Twitter {{ config('app.name') }}">
+                                            <a href="{{ config('settings.twitter') }}" title="Twitter {{ config('settings.app_name') }}">
+                                                <img src="{{ url('/img/mail/twitter.png') }}" alt="Twitter {{ config('settings.app_name') }}">
                                             </a>
-                                            <a href="{{ config('app.social.google+') }}" title="Google+ {{ config('app.name') }}">
-                                                <img src="{{ url('/img/mail/googleplus.png') }}" alt="Google+ {{ config('app.name') }}">
+                                            <a href="{{ config('settings.google_plus') }}" title="Google+ {{ config('settings.app_name') }}">
+                                                <img src="{{ url('/img/mail/googleplus.png') }}" alt="Google+ {{ config('settings.app_name') }}">
                                             </a>
-                                            <a href="{{ config('app.social.youtube') }}" title="Chaîne Youtube {{ config('app.name') }}">
-                                                <img src="{{ url('/img/mail/youtube.png') }}" alt="Chaîne Youtube {{ config('app.name') }}">
+                                            <a href="{{ config('settings.youtube') }}" title="Chaîne Youtube {{ config('settings.app_name') }}">
+                                                <img src="{{ url('/img/mail/youtube.png') }}" alt="Chaîne Youtube {{ config('settings.app_name') }}">
                                             </a>
-                                            <a href="mailto:{{ config('app.email.contact') }}" title="Contacter le {{ config('app.name') }}">
-                                                <img src="{{ url('/img/mail/mail.png') }}" alt="Contacter le {{ config('app.name') }}">
+                                            <a href="mailto:{{ config('settings.contact_email') }}" title="Contacter le {{ config('settings.app_name') }}">
+                                                <img src="{{ url('/img/mail/mail.png') }}" alt="Contacter le {{ config('settings.app_name') }}">
                                             </a>
                                         </td>
                                     </tr>

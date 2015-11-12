@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repositories\Configuration\ConfigurationRepository;
 use App\Repositories\EShop\EShopArticleRepository;
 use App\Repositories\News\NewsRepository;
 use App\Repositories\Page\PageRepository;
@@ -85,6 +86,11 @@ class RepositoryServiceProvider extends ServiceProvider
         // rss
         $this->app->bind('App\Repositories\Rss\RssRepositoryInterface', function(){
             return new RssRepository();
+        });
+
+        // configuration
+        $this->app->bind('App\Repositories\Configuration\ConfigurationRepositoryInterface', function(){
+            return new ConfigurationRepository();
         });
     }
 }

@@ -12,11 +12,6 @@ $(function() {
         });
     }
 
-    // setup ajax request
-    //$.ajaxSetup({
-    //    headers: {'X-CSRF-Token': $('meta[name=csrf-token]').attr('content')}
-    //});
-
     // click on bootstrap input groups focus on the input targeted
     $('.input-group-addon').click(function(){
         if($(this).attr('for')){
@@ -38,5 +33,11 @@ $(function() {
     $('input').click(function(){
         //this.setSelectionRange(0, this.value.length);
         this.select();
+    });
+
+    // open new window when clicking on the link
+    $(".new_window").on("click", function (event) {
+        event.preventDefault();
+        window.open(this.href);
     });
 });

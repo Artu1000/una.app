@@ -17,8 +17,8 @@ class CreatePalmaresEventsTable extends Migration
             $table->integer('category_id')-> index();
             $table->string('location')->nullable();
             $table->date('date')->nullable();
-            $table->timestamps();
 
+            $table->timestamps();
             $table->engine = 'InnoDB';
         });
     }

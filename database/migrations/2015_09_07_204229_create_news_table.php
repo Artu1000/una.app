@@ -23,8 +23,8 @@ class CreateNewsTable extends Migration
             $table->datetime('released_at')->nullable();
             $table->string('image')->nullable();
             $table->text('content')->nullable();
-            $table->timestamps();
 
+            $table->timestamps();
             $table->engine = 'InnoDB';
         });
     }

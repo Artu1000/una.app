@@ -18,8 +18,8 @@ class CreateSchedulesTable extends Migration
             $table->string('start')->nullable();
             $table->string('stop')->nullable();
             $table->integer('public_category')->nullable();
-            $table->timestamps();
 
+            $table->timestamps();
             $table->engine = 'InnoDB';
         });
     }

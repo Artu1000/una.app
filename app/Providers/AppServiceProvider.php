@@ -43,5 +43,9 @@ class AppServiceProvider extends ServiceProvider
         // intervention image management library
         // http://image.intervention.io/getting_started/installation#laravel
         $this->app->register('Intervention\Image\ImageServiceProvider');
+
+        // laravel phone validator
+        // https://github.com/Propaganistas/Laravel-Phone
+        $this->app->register('Propaganistas\LaravelPhone\LaravelPhoneServiceProvider');
     }
 }

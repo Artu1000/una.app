@@ -18,8 +18,8 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                             {{-- logo / icon --}}
-                            <a class="logo text-center" href="" title="{{ config('app.name') }}">
-                                <img width="300" height="280" src="{{ config('app.logo.light') }}" alt="{{ config('app.name') }}">
+                            <a class="logo text-center" href="" title="{{ config('settings.app_name') }}">
+                                <img width="300" height="280" src="{{ url(env('LOGO_LIGHT')) }}" alt="{{ config('settings.app_name') }}">
                             </a>
 
                             {{-- Title--}}

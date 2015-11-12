@@ -1,4 +1,12 @@
 /***********************************************************************************************************************
+ * VARIABLES OVERRIDES
+ **********************************************************************************************************************/
+$btn-default-border : #aeb6cb;
+$btn-default-color: #fff;
+$btn-default-bg: #aeb6cb;
+
+
+/***********************************************************************************************************************
  * PATH MODIFICATION
  **********************************************************************************************************************/
 $icon-font-path: "../../fonts/bootstrap/";
@@ -23,8 +31,6 @@ $lato-font-path: '/fonts/lato';
 @include lato-include-font('medium');
 @include lato-include-font('light');
 @include lato-include-font('thin');
-
-
 
 /***********************************************************************************************************************
  * MIXINS
@@ -161,6 +167,10 @@ html {
         @include lato-font('light', italic);
       }
 
+      .help-block {
+        font-size: 14px;
+      }
+
       a.btn {
         @include lato-font('light');
       }
@@ -288,17 +298,6 @@ html {
 
       .btn {
 
-        &.btn-default {
-          color: #fff;
-          background-color: #aeb6cb;
-          border-color: #aeb6cb;
-
-          &:hover {
-            background-color: #95a0bb;
-            border-color: $gray-lighter;
-          }
-        }
-
         &:hover {
           @include transition(0.2s ease);
         }
@@ -315,21 +314,101 @@ html {
       .btn-file {
         position: relative;
         overflow: hidden;
+
+        input[type=file] {
+          position: absolute;
+          top: 0;
+          right: 0;
+          min-width: 100%;
+          min-height: 100%;
+          font-size: 100px;
+          text-align: right;
+          filter: alpha(opacity=0);
+          opacity: 0;
+          outline: none;
+          background: white;
+          cursor: inherit;
+          display: block;
+        }
       }
-      .btn-file input[type=file] {
-        position: absolute;
-        top: 0;
-        right: 0;
-        min-width: 100%;
-        min-height: 100%;
-        font-size: 100px;
-        text-align: right;
-        filter: alpha(opacity=0);
-        opacity: 0;
-        outline: none;
-        background: white;
-        cursor: inherit;
-        display: block;
+
+      .btn-group {
+
+        .btn {
+
+          &.toggle {
+            @extend .btn-default;
+
+            &.active {
+              @extend .btn-primary;
+
+              &.active{
+                background-color: $btn-primary-bg;
+                border-color: $btn-primary-border;
+              }
+            }
+          }
+        }
+      }
+
+      .swipe-group {
+
+        .swipe-label {
+          width: auto;
+          @include border-radius(0 $input-border-radius $input-border-radius 0);
+          margin-right: 10px;
+        }
+
+        label.swipe-btn {
+          margin-top: 1px;
+        }
+      }
+
+      .swipe {
+        display: none;
+
+        +.swipe-btn {
+          margin: 0;
+          outline: 0;
+          width: 4em;
+          height: 2em;
+          position: relative;
+          cursor: pointer;
+          user-select: none;
+          background: #f0f0f0;
+          border-radius: 2em;
+          padding: 2px;
+          @include transition(0.4s ease);
+
+          &:after, &:before {
+            position: relative;
+            display: block;
+            content: "";
+            width: 50%;
+            height: 100%;
+          }
+
+          &:after {
+            left: 0;
+            border-radius: 50%;
+            background: #fff;
+            @include transition(0.2s ease);
+          }
+
+          &:before {
+            display: none;
+          }
+        }
+        &:checked {
+
+          + .swipe-btn {
+            background: $btn-primary-bg;
+
+            &:after {
+              left: 50%;
+            }
+          }
+        }
       }
     }
   }
