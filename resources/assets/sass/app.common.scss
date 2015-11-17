@@ -218,13 +218,16 @@ html {
             padding: 0;
           }
         }
-      }
 
-      ul.pagination {
-        margin: 30px 0 20px;
+        ul {
 
-        li {
-          margin: inherit;
+          &.pagination {
+            margin: 30px 0 20px;
+
+            li {
+              margin: inherit;
+            }
+          }
         }
       }
 

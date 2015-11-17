@@ -49,7 +49,9 @@ class SettingsController extends Controller
             'twitter',
             'google_plus',
             'youtube',
-            'rss'
+            'rss',
+            'loading_spinner',
+            'google_analytics'
         );
 
         // we analyse the given inputs

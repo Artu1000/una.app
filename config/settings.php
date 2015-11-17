@@ -15,5 +15,7 @@ return [
     'twitter' => isset($settings->twitter) ? $settings->twitter : null,
     'google_plus' => isset($settings->google_plus) ? $settings->google_plus : null,
     'youtube' => isset($settings->youtube) ? $settings->youtube : null,
-    'rss' => isset($settings->rss) ? $settings->rss : null
+    'rss' => isset($settings->rss) ? $settings->rss : null,
+    'loading_spinner' => isset($settings->loading_spinner) ? $settings->loading_spinner : null,
+    'google_analytics' => isset($settings->google_analytics) ? $settings->google_analytics : null,
 ];

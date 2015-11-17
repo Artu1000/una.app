@@ -45,6 +45,9 @@
                     <a href="{{ route('back.settings') }}"><i class="fa fa-cogs"></i> Configuration du site</a>
                 </li>
                 <li>
+                    <a href="{{ route('permissions') }}"><i class="fa fa-gavel"></i> Permissions utilisateur</a>
+                </li>
+                <li>
                     <a href="#" data-toggle="collapse" data-target="#demo">
                         <i class="fa fa-fw fa-arrows-v"></i>
                         Dropdown
@@ -57,9 +60,6 @@
                             <a href="#">Dropdown Item</a>
                         </li>
                     </ul>
-                </li>
-                <li>
-                    <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
                 </li>
                 <li class="divider"></li>
                 <li>

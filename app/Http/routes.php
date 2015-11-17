@@ -90,6 +90,16 @@ Route::group([
         ]
     ]);
 
+    // configuration
+    Route::resource('permissions', 'User\PermissionsController', [
+        'names' => [
+            'index' => 'permissions',
+//            'create' => 'permissions.create',
+//            'edit' => 'permissions.edit',
+//            'destroy' => 'permission.'
+        ]
+    ]);
+
     // logout
     Route::resource('deconnexion', 'Auth\LogoutController', [
         'names' => [

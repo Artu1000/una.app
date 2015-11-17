@@ -5,10 +5,13 @@ namespace App\Helpers;
 class ModalHelper
 {
 
-    public function alert(array $message, $type = null)
+    public function alert(array $message, $type = null, $without_reloading = false)
     {
         $message = $this->formatMessage($message, $type);
-        \Session::set("alert", $message);
+        \Session::set("alert", [
+            "message" => $message,
+            "without_reloading" => $without_reloading
+        ]);
     }
 
     public function formatMessage(array $message, $type = null)
@@ -43,7 +46,7 @@ class ModalHelper
         return [
             'class' => $class,
             'title' => $title,
-            'message' => $formattedMessage
+            'content' => $formattedMessage
         ];
     }
 }

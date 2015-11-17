@@ -33,15 +33,13 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="">
-                                    <div class="input-group">
-                                        <span class="input-group-btn">
-                                            <span class="btn btn-primary btn-file">
-                                                <i class="fa fa-picture-o"></i> Parcourir <input type="file" name="photo">
-                                            </span>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <span class="btn btn-primary btn-file">
+                                            <i class="fa fa-picture-o"></i> Parcourir <input type="file" name="photo">
                                         </span>
-                                        <input type="text" class="form-control" readonly="">
-                                    </div>
+                                    </span>
+                                    <input type="text" class="form-control" readonly="">
                                 </div>
                                 <p class="help-block quote"><i class="fa fa-info-circle"></i> Formats acceptés : jpg, jpeg, png.</p>
                             </div>

@@ -11,7 +11,6 @@
 
 $logo_header_footer: '../../img/logo-una-header-large-white.png';
 
-
 html {
 
   body {
@@ -171,6 +170,36 @@ html {
               }
             }
           }
+
+          .table-list {
+
+            .table-commands, .table-nav-infos, .pagination {
+              margin: 15px 0;
+            }
+
+            .table-nav-infos {
+              line-height: 33px;
+            }
+
+            .search {
+              width: 250px;
+              display: inline-table;
+            }
+
+            .lines {
+              margin-left: 15px;
+              width: 100px;
+              display: inline-table;
+            }
+          }
+        }
+      }
+
+      .table-list {
+
+        .form-inline {
+            width: auto;
+            display: inline-block;
         }
       }
 

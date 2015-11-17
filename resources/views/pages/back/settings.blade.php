@@ -151,7 +151,41 @@
                                 </div>
                             </div>
 
+                        </div>
+                    </div>
 
+                    {{-- appearance data --}}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Apparence</h3>
+                        </div>
+                        <div class="panel-body">
+
+                            {{-- loading spinner --}}
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" for="input_loading_spinner"><i class="fa fa-spinner"></i></span>
+                                    <input id="input_loading_spinner" class="form-control" type="loading_spinner" name="loading_spinner" placeholder="Icone de chargement" value="{{ old('loading_spinner') ? old('loading_spinner') : config('settings.loading_spinner') }}">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {{-- SEO data --}}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Google analytics</h3>
+                        </div>
+                        <div class="panel-body">
+
+                            {{-- google analytics code --}}
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" for="input_google_analytics"><i class="fa fa-code"></i></span>
+                                    <textarea id="input_google_analytics" class="form-control" type="google_analytics" name="google_analytics" placeholder="Code Google Analytics">{{ old('google_analytics') ? old('google_analytics') : config('settings.google_analytics') }}</textarea>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
