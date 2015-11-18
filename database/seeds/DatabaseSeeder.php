@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
          $this->call('RegistrationPricesTableSeeder');
          $this->call('SchedulesTableSeeder');
          $this->call('EShopArticlesTableSeeder');
+         $this->call('SettingsTableSeeder');
 
         Model::reguard();
 

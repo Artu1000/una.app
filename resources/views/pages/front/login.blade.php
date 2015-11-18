@@ -53,7 +53,7 @@
                             </div>
 
                             {{-- submit login --}}
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">
+                            <button class="btn btn-lg btn-primary btn-block spin-on-click" type="submit">
                                 <i class="fa fa-thumbs-up"></i> Me connecter
                             </button>
 

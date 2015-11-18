@@ -52,8 +52,8 @@ class NewsController extends Controller
             'seoMeta' => $this->seoMeta,
             'news_list' => $news_list,
             'current_category' => $category,
-            'css' => elixir('css/app.news.css'),
-            'js' => elixir('js/app.news-list.js')
+            'css' => url(elixir('css/app.news.css')),
+            'js' => url(elixir('js/app.news-list.js'))
         ];
 
         // return the view with data
@@ -78,8 +78,8 @@ class NewsController extends Controller
         $data = [
             'seoMeta' => $this->seoMeta,
             'news' => $news,
-            'css' => elixir('css/app.news.css'),
-            'js' => elixir('js/app.news-detail.js')
+            'css' => url(elixir('css/app.news.css')),
+            'js' => url(elixir('js/app.news-detail.js'))
         ];
 
         // return the view with data

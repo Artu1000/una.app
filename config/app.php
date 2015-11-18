@@ -205,7 +205,7 @@ return [
         // created
         'String'        => App\Facades\StringHelperFacade::class,
         'Modal'         => App\Facades\ModalHelperFacade::class,
-        'ImageManager'  => App\Facades\ImageHelperFacade::class
+        'ImageManager'  => App\Facades\ImageManagerHelperFacade::class
     ],
 
 ];

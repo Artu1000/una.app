@@ -229,9 +229,16 @@ html {
           .checkbox {
             margin: 0 0 0 15px;
 
+            label {
+              @include lato-font('light');
+            }
+
             &.parent {
-              margin: 30px 0 0 0;
-              @include lato-font('medium')
+              margin: 15px 0 0 0;
+
+              label {
+                @include lato-font('medium');
+              }
             }
 
             &:first-of-type {

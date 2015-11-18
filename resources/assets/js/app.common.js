@@ -14,8 +14,10 @@ $(function() {
 
     // click on bootstrap input groups focus on the input targeted
     $('.input-group-addon').click(function(){
-        if($(this).attr('for')){
-            $('#'+$(this).attr('for')).focus();
+        var target = $(this).attr('for');
+        if(target){
+            console.log(target);
+            $('#' + target).focus().trigger('click');
         }
     });
 
@@ -44,16 +46,13 @@ $(function() {
     // replace button fontawesome icon by loading spinner on click
     // show spinner even if no font awesome icon is found
     $('.spin-on-click').click(function(e){
-
         // we get the html contained into the button
         var html = $(this).html();
-
         // we remove the fontawesome icon
         var begin = html.indexOf('<i');
         var end = html.indexOf('i>');
         var to_remove = html.substring(begin, end + 2);
         var cleaned_html = html.replace(to_remove, '');
-
         // we put the loading spinner
         $(this).html(app.loading_spinner + ' ' + cleaned_html);
     });

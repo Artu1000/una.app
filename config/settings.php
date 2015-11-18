@@ -1,9 +1,10 @@
 <?php
 
-$settings = json_decode(file_get_contents(storage_path('config/settings.json')));
+if(is_file(storage_path('app/config/settings.json'))){
+    $settings = json_decode(file_get_contents(storage_path('app/config/settings.json')));
+}
 
 return [
-
     'app_name' => isset($settings->app_name) ? $settings->app_name : null,
     'phone_number' => isset($settings->phone_number) ? $settings->phone_number : null,
     'contact_email' => isset($settings->contact_email) ? $settings->contact_email : null,

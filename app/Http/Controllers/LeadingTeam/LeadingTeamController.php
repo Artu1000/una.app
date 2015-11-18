@@ -38,7 +38,7 @@ class LeadingTeamController extends Controller
         $data = [
             'seoMeta' => $this->seoMeta,
             'team' => $team,
-            'css' => elixir('css/app.leading-team.css')
+            'css' => url(elixir('css/app.leading-team.css'))
         ];
 
         // return the view with data

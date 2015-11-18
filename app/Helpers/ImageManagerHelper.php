@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use Approached\LaravelImageOptimizer\ImageOptimizer;
 
-class ImageHelper
+class ImageManagerHelper
 {
     public function resize($image, $file_name, $storage_folder, Array $sizes)
     {
@@ -47,8 +47,12 @@ class ImageHelper
 
         // we save the optimized image
         $optimized_image = \Image::make($original_path);
-        $storage_path = storage_path('app/' . $storage_folder . '/' . $file_name . '.' . $extension);
-        $optimized_image->save($storage_path);
+
+        $folder_path = storage_path('app/' . $storage_folder);
+        if(!is_dir($folder_path)){
+            mkdir($folder_path);
+        }
+        $optimized_image->save($folder_path . '/' . $file_name . '.' . $extension);
 
         // we delete the original image we were working on
         if (!unlink($original_path)) {

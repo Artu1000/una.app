@@ -42,7 +42,7 @@ class PageController extends Controller
         $data = [
             'seoMeta' => $this->seoMeta,
             'page' => $page,
-            'css' => elixir('css/app.page.css')
+            'css' => url(elixir('css/app.page.css'))
         ];
 
         // return the view with data

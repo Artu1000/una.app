@@ -28,23 +28,26 @@
                         <div class="panel-body">
 
                             {{-- photo --}}
+                            <label for="input_photo">Photo</label>
                             <div class="form-group">
-                                <img width="145" height="160" src="{{ route('image', ['filename' => $user->photo, 'folder' => 'user', 'size' => $user->size('picture')]) }}" alt="{{ $user->first_name }} {{ $user->last_name }}">
-                            </div>
-
-                            <div class="form-group">
+                                @if($user->photo)
+                                    <div class="form-group">
+                                        <img width="145" height="160" src="{{ route('image', ['filename' => $user->photo, 'folder' => 'user', 'size' => $user->size('picture')]) }}" alt="{{ $user->first_name }} {{ $user->last_name }}">
+                                    </div>
+                                @endif
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <span class="btn btn-primary btn-file">
                                             <i class="fa fa-picture-o"></i> Parcourir <input type="file" name="photo">
                                         </span>
                                     </span>
-                                    <input type="text" class="form-control" readonly="">
+                                    <input id="input_photo" type="text" class="form-control" readonly="">
                                 </div>
                                 <p class="help-block quote"><i class="fa fa-info-circle"></i> Formats acceptés : jpg, jpeg, png.</p>
                             </div>
 
                             {{-- gender --}}
+                            <label>Genre</label>
                             <div class="form-group">
                                 <div class="btn-group" data-toggle="buttons">
                                     <label class="btn toggle
@@ -73,6 +76,7 @@
                             </div>
 
                             {{-- lastname --}}
+                            <label for="input_lastname">NOM</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_lastname"><i class="fa fa-user"></i></span>
@@ -81,6 +85,7 @@
                             </div>
 
                             {{-- firstname --}}
+                            <label for="input_firstname">Prénom</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_firstname"><i class="fa fa-user"></i></span>
@@ -89,6 +94,7 @@
                             </div>
 
                             {{-- birth date --}}
+                            <label for="input_birth_date">Date de naissance</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_birth_date"><i class="fa fa-birthday-cake"></i></span>
@@ -107,15 +113,17 @@
                         <div class="panel-body">
 
                             {{-- phone number --}}
+                            <label for="input_phone_number">Numéro de téléphone</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_phone_number"><i class="fa fa-phone"></i></span>
                                     <input id="input_phone_number" class="form-control" type="tel" name="phone_number" value="{{ old('phone_number') ? old('phone_number') : $user->phone_number }}" placeholder="Numéro de téléphone">
                                 </div>
-                                <p class="help-block quote"><i class="fa fa-info-circle"></i> Téléphone français uniquement.</p>
+                                <p class="help-block quote"><i class="fa fa-info-circle"></i> Numéro français uniquement.</p>
                             </div>
 
                             {{-- email --}}
+                            <label for="input_email">Adresse e-mail</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_email"><i class="fa fa-at"></i></span>
@@ -124,6 +132,7 @@
                             </div>
 
                             {{-- address --}}
+                            <label for="input_address">Adresse postale</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_address"><i class="fa fa-envelope"></i></span>
@@ -132,6 +141,7 @@
                             </div>
 
                             {{-- zip code --}}
+                            <label for="input_zip_code">Code postal</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_zip_code"><i class="fa fa-paper-plane"></i></span>
@@ -140,6 +150,7 @@
                             </div>
 
                             {{-- city --}}
+                            <label for="input_city">Ville</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_city"><i class="fa fa-map-marker"></i></span>
@@ -148,6 +159,7 @@
                             </div>
 
                             {{-- country --}}
+                            <label for="input_country">Pays</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_country"><i class="fa fa-globe"></i></span>
@@ -165,23 +177,25 @@
                         </div>
                         <div class="panel-body">
 
-                            <p class="quote text-warning"><i class="fa fa-exclamation-triangle"></i> Ne remplir que si vous souhaitez modifier votre mot de passe actuel.</p>
+                            <p class="text-danger"><i class="fa fa-exclamation-triangle"></i> Ne remplir que si vous souhaitez modifier votre mot de passe actuel.</p>
 
                             {{-- password input--}}
+                            <label for="input_password">Nouveau mot de passe</label>
                             <div class="form-group">
                                 <div class="input-group">
                                         <span class="input-group-addon" for="input_password">
                                             <i class="fa fa-unlock-alt"></i>
                                         </span>
-                                    <input type="password" id="input_password" class="form-control" name="password" placeholder="Mot de passe" title="Mot de passe">
+                                    <input type="password" id="input_password" class="form-control" name="password" placeholder="Mot de passe" title="Nouveau mot de passe">
                                 </div>
                             </div>
 
                             {{-- password confirmation input --}}
+                            <label for="input_password_confirmation">Confirmation du nouveau mot de passe</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_password_confirmation"><i class="fa fa-unlock-alt"></i></span>
-                                    <input id="input_password_confirmation" class="form-control" type="password" name="password_confirmation" placeholder="Confirmation du mot de passe">
+                                    <input id="input_password_confirmation" class="form-control" type="password" name="password_confirmation" placeholder="Confirmation du nouveau mot de passe">
                                 </div>
                             </div>
 
@@ -189,7 +203,7 @@
                     </div>
 
                     {{-- submit login --}}
-                    <button class="btn btn-lg btn-primary spin-on-click" type="submit">
+                    <button class="btn btn-primary spin-on-click" type="submit">
                         <i class="fa fa-floppy-o"></i> Enregistrer les modifications
                     </button>
                 </form>

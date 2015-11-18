@@ -16,4 +16,4 @@
 <meta content="{{ csrf_token() }}" name="csrf-token" />
 
 {{-- minified versionned css --}}
-<link href="{{ $css or elixir('css/app.back.css') }}" rel="stylesheet">
+<link href="{{ $css or url(elixir('css/app.back.css')) }}" rel="stylesheet">

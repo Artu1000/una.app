@@ -49,7 +49,7 @@
                             <p class="quote">Saisissez votre nouveau mot de passe.</p>
 
                             {{-- submit login --}}
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">
+                            <button class="btn btn-lg btn-primary btn-block spin-on-click" type="submit">
                                 <i class="fa fa-magic"></i> Enregistrer
                             </button>
 

@@ -40,7 +40,7 @@ class AuthController extends Controller
         // data send to the view
         $data = [
             'seoMeta' => $this->seoMeta,
-            'css' => elixir('css/app.login.css')
+            'css' => url(elixir('css/app.login.css'))
         ];
         return view('pages.front.login')->with($data);
     }

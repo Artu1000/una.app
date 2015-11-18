@@ -38,7 +38,7 @@ class RegistrationController extends Controller
         $data = [
             'seoMeta' => $this->seoMeta,
             'prices' => $prices,
-            'css' => elixir('css/app.registration.css')
+            'css' => url(elixir('css/app.registration.css'))
         ];
 
         // return the view with data

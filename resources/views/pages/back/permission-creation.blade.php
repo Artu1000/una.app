@@ -27,6 +27,7 @@
                         <div class="panel-body">
 
                             {{-- name --}}
+                            <label for="input_name">Nom du rôle</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_name"><i class="fa fa-font"></i></span>
@@ -46,7 +47,7 @@
 
                             @foreach(array_dot(config('permissions')) as $permission => $value)
                                 <div class="checkbox permission @if(!strpos($permission, '.'))parent @endif">
-                                    <label for="{{ $permission }}"><input id="{{ $permission }}" type="checkbox" @if(strpos($permission, '.'))name="{{ $permission }}"@endif @if(old($permission)) "checked"@endif>{!!\Lang::get('permissions.' . $permission)!!}</label>
+                                    <label for="{{ $permission }}"><input id="{{ $permission }}" type="checkbox" name="{{ $permission }}" @if(old($permission)) checked @endif>{!! \Lang::get('permissions.' . $permission) !!}</label>
                                 </div>
                             @endforeach
 

@@ -26,6 +26,7 @@
                         <div class="panel-body">
 
                             {{-- site name --}}
+                            <label for="input_app_name">Nom du site</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_app_name"><i class="fa fa-sitemap"></i></span>
@@ -44,6 +45,7 @@
                         <div class="panel-body">
 
                             {{-- phone number --}}
+                            <label for="input_phone_number">Numéro de téléphone</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_phone_number"><i class="fa fa-phone"></i></span>
@@ -52,6 +54,7 @@
                             </div>
 
                             {{-- contact email --}}
+                            <label for="input_contact_email">Adresse e-mail de contact</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_contact_email"><i class="fa fa-at"></i></span>
@@ -60,6 +63,7 @@
                             </div>
 
                             {{-- sspport email --}}
+                            <label for="input_support_email">Adresse e-mail de support</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_support_email"><i class="fa fa-at"></i></span>
@@ -68,6 +72,7 @@
                             </div>
 
                             {{-- address --}}
+                            <label for="input_address">Adresse postale</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_address"><i class="fa fa-envelope"></i></span>
@@ -76,6 +81,7 @@
                             </div>
 
                             {{-- zip code --}}
+                            <label for="input_zip_code">Code postal</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_zip_code"><i class="fa fa-paper-plane"></i></span>
@@ -84,6 +90,7 @@
                             </div>
 
                             {{-- city --}}
+                            <label for="input_city">Ville</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_city"><i class="fa fa-map-marker"></i></span>
@@ -102,6 +109,7 @@
                         <div class="panel-body">
 
                             {{-- facebook --}}
+                            <label for="input_facebook">Page Facebook</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_facebook"><i class="fa fa-facebook"></i></span>
@@ -110,6 +118,7 @@
                             </div>
 
                             {{-- twitter --}}
+                            <label for="input_twitter">Page Twitter</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_twitter"><i class="fa fa-twitter"></i></span>
@@ -118,6 +127,7 @@
                             </div>
 
                             {{-- google+ --}}
+                            <label for="input_google_plus">Page Google+</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_google_plus"><i class="fa fa-google-plus"></i></span>
@@ -126,6 +136,7 @@
                             </div>
 
                             {{-- youtube --}}
+                            <label for="input_youtube">Chaîne Youtube</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_youtube"><i class="fa fa-youtube"></i></span>
@@ -134,20 +145,18 @@
                             </div>
 
                             {{-- rss --}}
+                            <label for="swipe_rss">Flux RSS</label>
                             <div class="form-group">
                                 <div class="input-group swipe-group">
-                                    <span class="input-group-addon"><i class="fa fa-rss"></i></span>
-                                    {{--<input class="form-control" type="text" value="Flux RSS" readonly>--}}
+                                    <span class="input-group-addon" for="swipe_rss"><i class="fa fa-rss"></i></span>
                                     <span class="form-control swipe-label" readonly="">
-                                        Flux RSS
+                                        Activation
                                     </span>
-                                    <span>
-                                        <input class="swipe" id="swipe_rss" type="checkbox" name="rss"
-                                               @if(old('rss')) checked
-                                               @elseif(config('settings.youtube')) checked
-                                                @endif>
-                                        <label class="swipe-btn" for="swipe_rss"></label>
-                                    </span>
+                                    <input class="swipe" id="swipe_rss" type="checkbox" name="rss"
+                                           @if(old('rss')) checked
+                                           @elseif(config('settings.youtube')) checked
+                                           @endif>
+                                    <label class="swipe-btn" for="swipe_rss"></label>
                                 </div>
                             </div>
 
@@ -162,10 +171,11 @@
                         <div class="panel-body">
 
                             {{-- loading spinner --}}
+                            <label for="input_loading_spinner">Icône de chargement</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_loading_spinner"><i class="fa fa-spinner"></i></span>
-                                    <input id="input_loading_spinner" class="form-control" type="loading_spinner" name="loading_spinner" placeholder="Icone de chargement" value="{{ old('loading_spinner') ? old('loading_spinner') : config('settings.loading_spinner') }}">
+                                    <input id="input_loading_spinner" class="form-control" type="loading_spinner" name="loading_spinner" placeholder="Icône de chargement" value="{{ old('loading_spinner') ? old('loading_spinner') : config('settings.loading_spinner') }}">
                                 </div>
                             </div>
 
@@ -175,11 +185,12 @@
                     {{-- SEO data --}}
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Google analytics</h3>
+                            <h3 class="panel-title">Référencement</h3>
                         </div>
                         <div class="panel-body">
 
                             {{-- google analytics code --}}
+                            <label for="input_google_analytics">Code Google Analytics</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_google_analytics"><i class="fa fa-code"></i></span>

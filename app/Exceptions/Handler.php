@@ -69,7 +69,7 @@ class Handler extends ExceptionHandler
             ];
             $data = [
                 'seoMeta' => $seoMeta,
-                'css' => elixir('css/app.error.css')
+                'css' => url(elixir('css/app.error.css'))
             ];
 
             return response()->view('templates.common.errors.' . $e->getStatusCode(), $data, $e->getStatusCode());

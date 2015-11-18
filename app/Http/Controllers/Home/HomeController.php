@@ -100,8 +100,8 @@ class HomeController extends Controller
             'seoMeta' => $this->seoMeta,
             'slides' => $slides,
             'last_news' => $last_news,
-            'css' => elixir('css/app.home.css'),
-            'js' => elixir('js/app.home.js')
+            'css' => url(elixir('css/app.home.css')),
+            'js' => url(elixir('js/app.home.js'))
         ];
 
         // return the view with data

@@ -38,7 +38,7 @@ class PalmaresController extends Controller
         $data = [
             'seoMeta' => $this->seoMeta,
             'palmares' => $palmares,
-            'css' => elixir('css/app.palmares.css')
+            'css' => url(elixir('css/app.palmares.css'))
         ];
 
         // return the view with data

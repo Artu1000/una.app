@@ -79,13 +79,32 @@ class PermissionsController extends Controller
 
     public function store(Request $request)
     {
-        $request->flash();
-
+        // we get the original request content
         $inputs = $request->all();
+        // we replace the wrong keys (php forbid dots and replace them by underscores)
+        foreach(array_dot(config('permissions')) as $permission => $value){
+            // we exclude the permission parents
+            if(strpos($permission, '.')){
+                // we translate the permission slug to the wrong key given by php
+                $wrong_key = str_replace('.', '_', $permission);
+                // we get the value and store it into the correct key
+                if(isset($inputs[$wrong_key])){
+                    $inputs[$permission] = $inputs[$wrong_key];
+                    // we delete the wrong key
+                    unset ($inputs[$wrong_key]);
+                }
+            }
+        }
+
+        // we replace the request by the cleaned one
+        $request->replace($inputs);
+
+        // we flash the request
+        $request->flash();
 
         // we check the inputs
         $errors = [];
-        $validator = \Validator::make($inputs, [
+        $validator = \Validator::make($request->all(), [
             'name' => 'required'
         ]);
         foreach ($validator->errors()->all() as $error) {
@@ -97,23 +116,26 @@ class PermissionsController extends Controller
             return Redirect()->back();
         }
 
-        // we slugify the name
-        $inputs['slug'] = str_slug($inputs['name']);
-
-        if($role = \Sentinel::getRoleRepository()->createModel()->create($inputs)){
-
+        try{
+            // we create the role
+            $role = \Sentinel::getRoleRepository()->createModel()->create([
+                'slug' => str_slug($request->get('name')),
+                'name' => $request->get('name'),
+                'permissions' => $request->except('_token', 'name')
+            ]);
             \Modal::alert([
                 'Le rôle <b>' . $role->name . '</b> a bien été créé.'
             ], 'success');
             return Redirect(route('permissions'));
+        } catch(\Exception $e){
+            \Log::error($e);
+            \Modal::alert([
+                "Une erreur est survenue lors de la création du rôle \"" . $request->get('name') . "\"." .
+                "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
+                config('settings.support_email') . "</a>."
+            ], 'error');
+            return Redirect()->back();
         }
-
-        \Modal::alert([
-            "Une erreur est survenue lors de la création du rôle utilisateur." .
-            "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
-            config('settings.support_email') . "</a>."
-        ], 'error');
-        return Redirect()->back();
     }
 
     public function edit()

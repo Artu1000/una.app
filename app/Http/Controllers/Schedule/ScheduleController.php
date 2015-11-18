@@ -101,7 +101,7 @@ class ScheduleController extends Controller
             'hours' => $hours,
             'schedules' => $formated_schedules,
             'columns' => $columns,
-            'css' => elixir('css/app.schedule.css')
+            'css' => url(elixir('css/app.schedule.css'))
         ];
 
         // return the view with data

@@ -158,11 +158,22 @@ class AccountController extends Controller
         }
 
         // we format the number into its international equivalent
-        $inputs['phone_number'] = $formatted_phone_number = phone_format(
-            $inputs['phone_number'],
-            'FR',
-            \libphonenumber\PhoneNumberFormat::INTERNATIONAL
-        );
+        if(!empty($inputs['phone_number'])){
+            try{
+                $inputs['phone_number'] = $formatted_phone_number = phone_format(
+                    $inputs['phone_number'],
+                    'FR',
+                    \libphonenumber\PhoneNumberFormat::INTERNATIONAL
+                );
+            } catch(\Exception $e){
+                \Modal::alert([
+                    "Une erreur est survenue lors du traitement du numéro de téléphone." .
+                    "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
+                    config('settings.support_email') . "</a>"
+                ], 'error');
+                return Redirect()->back();
+            }
+        }
 
         // we store the photo
         if ($photo = $request->file('photo')) {
@@ -177,7 +188,7 @@ class AccountController extends Controller
                 $inputs['photo'] = $file_name;
             } catch (\Exception $e) {
                 \Modal::alert([
-                    "Une erreur est survenue lors de l'enregistrement de la photo" .
+                    "Une erreur est survenue lors de l'enregistrement de la photo. " .
                     "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
                     config('settings.support_email') . "</a>"
                 ], 'error');
@@ -218,7 +229,7 @@ class AccountController extends Controller
         // prepare data for the view
         $data = [
             'seoMeta' => $this->seoMeta,
-            'css' => elixir('css/app.login.css')
+            'css' => url(elixir('css/app.login.css'))
         ];
 
         // return the view with data

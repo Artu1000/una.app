@@ -32,7 +32,7 @@ class CalendarController extends Controller
         // prepare data for the view
         $data = [
             'seoMeta' => $this->seoMeta,
-            'css' => elixir('css/app.calendar.css')
+            'css' => url(elixir('css/app.calendar.css'))
         ];
 
         // return the view with data

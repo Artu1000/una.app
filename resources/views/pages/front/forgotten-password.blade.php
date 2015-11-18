@@ -37,7 +37,7 @@
                             <p class="quote">Renseignez votre e-mail pour y recevoir les instructions de réinitialisation de votre mot de passe.</p>
 
                             {{-- submit login --}}
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">
+                            <button class="btn btn-lg btn-primary btn-block spin-on-click" type="submit">
                                 <i class="fa fa-paper-plane"></i> Envoyer l'e-mail
                             </button>
 

@@ -28,7 +28,7 @@ class PasswordController extends Controller
         $data = [
             'seoMeta' => $this->seoMeta,
             'email' => $request->get('email'),
-            'css' => elixir('css/app.login.css')
+            'css' => url(elixir('css/app.login.css'))
         ];
         return view('pages.front.forgotten-password')->with($data);
     }
@@ -113,7 +113,7 @@ class PasswordController extends Controller
                     'email' => $email,
                     'reminder' => $request->get('token'),
                     'seoMeta' => $this->seoMeta,
-                    'css' => elixir('css/app.login.css')
+                    'css' => url(elixir('css/app.login.css'))
                 ];
                 return view('pages.front.password-recovery')->with($data);
             } else {
