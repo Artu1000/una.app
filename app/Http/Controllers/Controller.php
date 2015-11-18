@@ -39,7 +39,10 @@ abstract class Controller extends BaseController
     {
         // we set the default data
         $default_lines = 20;
-        $default_sort_by = $columns[0]['sort_by'];
+        $default_sort_by = array_first($columns, function($key, $column){
+            return isset($column['sort_by']);
+        })['sort_by'];
+        $default_sort_by = isset($default_sort_by) ? $default_sort_by : '';
         $default_search = '';
 
         // we set the nav data accordingly to the inputs
@@ -48,19 +51,12 @@ abstract class Controller extends BaseController
         $tableListData['search'] = $request->get('search', $default_search);
 
         // we check the inputs
-        $errors = [];
         $validator = \Validator::make($tableListData, [
             'lines' => 'required|numeric',
             'search' => 'alpha_dash'
         ]);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-
         // if errors are found
-        if (count($errors)) {
-            // we put the errors into the data
-            $tableListData['errors'] = $errors;
+        if ($validator->fails()) {
             // we use the default values
             $tableListData['lines'] = $default_lines;
             $tableListData['sort_by'] = $default_sort_by;

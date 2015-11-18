@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div id="content" class="config row">
+    <div id="content" class="permissions creation row">
 
         <div class="text-content">
 
@@ -18,7 +18,7 @@
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                    <div class="panel panel-default panel-responsive">
+                    <div class="panel panel-default">
 
                         <div class="panel-heading">
                             <h3 class="panel-title">Informations du rôle</h3>
@@ -36,14 +36,29 @@
                         </div>
                     </div>
 
+                    <div class="panel panel-default">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Permissions du rôle</h3>
+                        </div>
+
+                        <div class="panel-body">
+
+                            @foreach(array_dot(config('permissions')) as $permission => $value)
+                                <div class="checkbox permission @if(!strpos($permission, '.'))parent @endif">
+                                    <label for="{{ $permission }}"><input id="{{ $permission }}" type="checkbox" @if(strpos($permission, '.'))name="{{ $permission }}"@endif @if(old($permission)) "checked"@endif>{!!\Lang::get('permissions.' . $permission)!!}</label>
+                                </div>
+                            @endforeach
+
+                        </div>
+                    </div>
+
                     {{-- submit login --}}
-                    <button class="btn btn-primary spin-on-click" type="submit">
-                        <i class="fa fa-floppy-o"></i> Créer le rôle
+                    <button class="btn btn-success spin-on-click" type="submit">
+                        <i class="fa fa-plus-circle"></i> Créer le rôle
                     </button>
-                    <a href="{{ route('permissions') }}" class="pull-left" title="Retour">
-                        <button class="btn btn-default">
-                            <i class="fa fa-ban"></i> Annuler
-                        </button>
+                    <a href="{{ route('permissions') }}" class="btn btn-default" title="Retour">
+                        <i class="fa fa-ban"></i> Annuler
                     </a>
                 </form>
 

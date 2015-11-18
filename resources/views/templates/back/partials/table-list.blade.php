@@ -40,13 +40,17 @@
 
             @foreach($tableListData['columns'] as $column)
                 <th>
-                    <a href="{{ route($tableListData['route'], ['search' => $tableListData['search'], 'lines' => $tableListData['lines'], 'sort-by' => $column['sort_by'], 'sort-dir' => !$tableListData['sort_dir']]) }}">
+                    @if(isset($column['sort_by']))
+                        <a href="{{ route($tableListData['route'], ['search' => $tableListData['search'], 'lines' => $tableListData['lines'], 'sort-by' => $column['sort_by'], 'sort-dir' => !$tableListData['sort_dir']]) }}">
+                            {{ $column['title'] }}
+                            @if($tableListData['sort_by'] === $column['sort_by'] && $tableListData['sort_dir']) <i class="fa fa-sort-asc"></i>
+                            @elseif($tableListData['sort_by'] === $column['sort_by'] && !$tableListData['sort_dir']) <i class="fa fa-sort-desc"></i>
+                            @else <i class="fa fa-sort"></i>
+                            @endif
+                        </a>
+                    @else
                         {{ $column['title'] }}
-                        @if($tableListData['sort_by'] === $column['sort_by'] && $tableListData['sort_dir']) <i class="fa fa-sort-asc"></i>
-                        @elseif($tableListData['sort_by'] === $column['sort_by'] && !$tableListData['sort_dir']) <i class="fa fa-sort-desc"></i>
-                        @else <i class="fa fa-sort"></i>
-                        @endif
-                    </a>
+                    @endif
                 </th>
             @endforeach
 

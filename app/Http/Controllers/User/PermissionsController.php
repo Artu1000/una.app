@@ -79,6 +79,8 @@ class PermissionsController extends Controller
 
     public function store(Request $request)
     {
+        $request->flash();
+
         $inputs = $request->all();
 
         // we check the inputs
@@ -99,6 +101,7 @@ class PermissionsController extends Controller
         $inputs['slug'] = str_slug($inputs['name']);
 
         if($role = \Sentinel::getRoleRepository()->createModel()->create($inputs)){
+
             \Modal::alert([
                 'Le rôle <b>' . $role->name . '</b> a bien été créé.'
             ], 'success');

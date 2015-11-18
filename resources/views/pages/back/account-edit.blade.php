@@ -100,7 +100,7 @@
                     </div>
 
                     {{-- contact data --}}
-                    <div class="panel panel-default panel-responsive">
+                    <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Contact</h3>
                         </div>
@@ -159,7 +159,7 @@
                     </div>
 
                     {{-- security data --}}
-                    <div class="panel panel-default panel-responsive">
+                    <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Sécurité</h3>
                         </div>

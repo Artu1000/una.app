@@ -13,7 +13,7 @@
 
                 <hr>
 
-                <div class="panel panel-default panel-responsive">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Liste des rôles</h3>
                     </div>

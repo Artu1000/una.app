@@ -225,6 +225,19 @@ html {
               margin: 0;
             }
           }
+
+          .checkbox {
+            margin: 0 0 0 15px;
+
+            &.parent {
+              margin: 30px 0 0 0;
+              @include lato-font('medium')
+            }
+
+            &:first-of-type {
+              margin: 0;
+            }
+          }
         }
       }
     }
