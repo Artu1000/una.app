@@ -173,8 +173,18 @@ html {
 
           .table-list {
 
-            .table-commands, .table-nav-infos, .pagination {
-              margin: 15px 0;
+            thead {
+
+              .table-commands, .table-nav-infos {
+                margin: 10px 0 25px;
+              }
+            }
+
+            tfoot {
+
+              .table-commands, .table-nav-infos, .pagination {
+                margin: 25px 0 10px;
+              }
             }
 
             .table-nav-infos {
@@ -187,7 +197,6 @@ html {
             }
 
             .lines {
-              margin-left: 15px;
               width: 100px;
               display: inline-table;
             }

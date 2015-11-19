@@ -16,8 +16,8 @@
                 <form role="form" method="POST" action="{{ route('update_account') }}" enctype="multipart/form-data">
 
                     {{-- crsf token --}}
-                    <input type="hidden" name="_method" value="PUT">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="_method" value="PUT">
                     <input type="hidden" name="_id" value="{{ $user->id }}">
 
                     {{-- personal data --}}

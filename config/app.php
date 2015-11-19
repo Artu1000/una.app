@@ -203,7 +203,6 @@ return [
         'Sentinel'      => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
         'Image'         => Intervention\Image\Facades\Image::class,
         // created
-        'String'        => App\Facades\StringHelperFacade::class,
         'Modal'         => App\Facades\ModalHelperFacade::class,
         'ImageManager'  => App\Facades\ImageManagerHelperFacade::class
     ],

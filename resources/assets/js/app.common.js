@@ -5,12 +5,26 @@ $(function() {
         e.preventDefault();
     });
 
-    // setup alert modal
+    // manage alert modal
     if(app.modal_alert === true){
+        // we show the alert modal
         $('#alert').modal({
             backdrop: 'static'
-        });
+        })
     }
+
+    // manage confirm modal
+    var confirm = false;
+    $('.confirm').on('click', function(e){
+        e.preventDefault();
+        // we get the form
+        var $form = $(this).closest('form');
+        // we show the modal
+        $('#confirm').modal({ backdrop: 'static', keyboard: false }).one('click', '#modal-confirm-button', function() {
+            // we submit the form on confirm
+            $form.trigger('submit');
+        });
+    });
 
     // click on bootstrap input groups focus on the input targeted
     $('.input-group-addon').click(function(){

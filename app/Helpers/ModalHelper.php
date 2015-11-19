@@ -5,16 +5,35 @@ namespace App\Helpers;
 class ModalHelper
 {
 
-    public function alert(array $message, $type = null, $without_reloading = false)
+    /**
+     * @param array $messages
+     * @param null $type
+     * @param bool|true $before_reload
+     */
+    public function alert(array $messages, $type = null, $before_reload = true)
     {
-        $message = $this->formatMessage($message, $type);
         \Session::set("alert", [
-            "message" => $message,
-            "without_reloading" => $without_reloading
+            "message" => $this->formatAlertMessage($messages, $type),
+            "before_reload" => $before_reload
         ]);
     }
 
-    public function formatMessage(array $message, $type = null)
+    /**
+     * @param array $messages
+     */
+    public function confirm(array $messages)
+    {
+        \Session::set("confirm", [
+            "message" => $this->formatConfirmMessage($messages)
+        ]);
+    }
+
+    /**
+     * @param array $messages
+     * @param null $type
+     * @return array
+     */
+    public function formatAlertMessage(array $messages, $type)
     {
         // we give style to the message
         switch ($type) {
@@ -38,8 +57,8 @@ class ModalHelper
 
         // we format the message in html list
         $formattedMessage = '<ul class="list-unstyled">';
-        foreach ($message as $key => $message) {
-            $formattedMessage .= '<li>' . $icon . ' ' . $message . '</li>';
+        foreach ($messages as $key => $message) {
+            $formattedMessage .= '<li>' . $icon . '&nbsp;' . $message . '</li>';
         }
         $formattedMessage .= '</ul>';
 
@@ -48,5 +67,21 @@ class ModalHelper
             'title' => $title,
             'content' => $formattedMessage
         ];
+    }
+
+    /**
+     * @param array $messages
+     * @return array
+     */
+    public function formatConfirmMessage(array $messages)
+    {
+        // we format the message in html list
+        $formattedMessage = '<ul class="list-unstyled">';
+        foreach ($messages as $key => $message) {
+            $formattedMessage .= '<li>' . $message . '</li>';
+        }
+        $formattedMessage .= '</ul>';
+
+        return $formattedMessage;
     }
 }

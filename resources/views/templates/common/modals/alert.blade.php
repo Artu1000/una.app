@@ -10,13 +10,13 @@
                 {!! $alert['message']['content'] !!}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-lg" data-dismiss="modal"><i class="fa fa-ban"></i> Fermer</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Fermer</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- We manage the modal show with no page reload -->
-@if($alert['without_reloading'])
+@if($alert['before_reload'])
     <script type="text/javascript">app.modal_alert = true;</script>
 @endif

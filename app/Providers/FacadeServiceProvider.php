@@ -27,11 +27,6 @@ class FacadeServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // string helper
-        App::bind('String', function(){
-            return new StringHelper();
-        });
-
         // modal helper
         App::bind('Modal', function(){
             return new ModalHelper();

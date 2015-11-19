@@ -39,8 +39,11 @@
             @include('templates.back.partials.footer')
 
             {{-- alerts management --}}
-            @if(\Session::get('alert'))
+            @if(isset($alert) && !empty($alert))
                 @include('templates.common.modals.alert')
+            @endif
+            @if(isset($confirm) && !empty($confirm))
+                @include('templates.common.modals.confirm')
             @endif
 
         </div>

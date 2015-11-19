@@ -40,13 +40,13 @@ class PermissionsController extends Controller
             'slug' => 'updated_at',
             'sort_by' => 'roles.updated_at'
         ]];
-
+        // we format the data for the needs of the view
         $tableListData = $this->prepareTableListData($request, $columns, 'permissions');
 
-        if (isset($tableListData['errors']) && !empty($errors = $tableListData['errors'])) {
-            // trigger the alert on this load
-            \Modal::alert($errors, 'error', true);
-        }
+        // we activate the modal confirm for the page
+        \Modal::confirm([
+            'Êtes-vous certains de vouloir supprimer le rôle <b>[name]</b> ?'
+        ]);
 
         // prepare data for the view
         $data = [
@@ -58,9 +58,32 @@ class PermissionsController extends Controller
         return view('pages.back.permissions-list')->with($data);
     }
 
-    public function show()
+    public function show($id)
     {
-        dd('show');
+        // SEO Meta settings
+        $this->seoMeta['page_title'] = "Edition d'un rôle";
+
+        // we get the role
+        $role = \Sentinel::findRoleById($id);
+
+        // we check if the role exists
+        if (!$role) {
+            \Modal::alert([
+                "Le rôle que vous avez sélectionné n'existe pas." .
+                "Veuillez contacter le support si l'erreur persiste :" . "<a href='mailto:" .
+                config('settings.support_email') . "' >" . config('settings.support_email') . "</a>."
+            ], 'error');
+            return Redirect()->back();
+        }
+
+        // prepare data for the view
+        $data = [
+            'role' => $role,
+            'seoMeta' => $this->seoMeta
+        ];
+
+        // return the view with data
+        return view('pages.back.permission-edit')->with($data);
     }
 
     public function create()
@@ -74,7 +97,7 @@ class PermissionsController extends Controller
         ];
 
         // return the view with data
-        return view('pages.back.permission-creation')->with($data);
+        return view('pages.back.permission-edit')->with($data);
     }
 
     public function store(Request $request)
@@ -82,13 +105,13 @@ class PermissionsController extends Controller
         // we get the original request content
         $inputs = $request->all();
         // we replace the wrong keys (php forbid dots and replace them by underscores)
-        foreach(array_dot(config('permissions')) as $permission => $value){
-            // we exclude the permission parents
-            if(strpos($permission, '.')){
+        foreach (array_dot(config('permissions')) as $permission => $value) {
+            // we only take care about the children permissions
+            if (strpos($permission, '.')) {
                 // we translate the permission slug to the wrong key given by php
                 $wrong_key = str_replace('.', '_', $permission);
                 // we get the value and store it into the correct key
-                if(isset($inputs[$wrong_key])){
+                if (isset($inputs[$wrong_key])) {
                     $inputs[$permission] = $inputs[$wrong_key];
                     // we delete the wrong key
                     unset ($inputs[$wrong_key]);
@@ -105,7 +128,7 @@ class PermissionsController extends Controller
         // we check the inputs
         $errors = [];
         $validator = \Validator::make($request->all(), [
-            'name' => 'required'
+            'name' => 'required|unique:roles,name'
         ]);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
@@ -116,7 +139,7 @@ class PermissionsController extends Controller
             return Redirect()->back();
         }
 
-        try{
+        try {
             // we create the role
             $role = \Sentinel::getRoleRepository()->createModel()->create([
                 'slug' => str_slug($request->get('name')),
@@ -127,10 +150,10 @@ class PermissionsController extends Controller
                 'Le rôle <b>' . $role->name . '</b> a bien été créé.'
             ], 'success');
             return Redirect(route('permissions'));
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             \Log::error($e);
             \Modal::alert([
-                "Une erreur est survenue lors de la création du rôle \"" . $request->get('name') . "\"." .
+                "Une erreur est survenue lors de la création du rôle <b>" . $request->get('name') . "</b>.",
                 "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
                 config('settings.support_email') . "</a>."
             ], 'error');
@@ -138,13 +161,69 @@ class PermissionsController extends Controller
         }
     }
 
-    public function edit()
+    public function update(Request $request)
     {
-        dd('edit');
+        // we get the original request content
+        $inputs = $request->all();
+        // we replace the wrong keys (php forbid dots and replace them by underscores)
+        foreach (array_dot(config('permissions')) as $permission => $value) {
+            // we only take care about the children permissions
+            if (strpos($permission, '.')) {
+                // we translate the permission slug to the wrong key given by php
+                $wrong_key = str_replace('.', '_', $permission);
+                // we get the value and store it into the correct key
+                if (isset($inputs[$wrong_key])) {
+                    $inputs[$permission] = $inputs[$wrong_key];
+                    // we delete the wrong key
+                    unset ($inputs[$wrong_key]);
+                }
+            }
+        }
+
+        // we replace the request by the cleaned one
+        $request->replace($inputs);
+
+        // we flash the request
+        $request->flash();
+
+        // we check the inputs
+        $errors = [];
+        $validator = \Validator::make($request->all(), [
+            '_id' => 'required|exists:roles,id',
+            'name' => 'required|unique:roles,name,' . $request->get('_id')
+        ]);
+        foreach ($validator->errors()->all() as $error) {
+            $errors[] = $error;
+        }
+        // if errors are found
+        if (count($errors)) {
+            \Modal::alert($errors, 'error');
+            return Redirect()->back();
+        }
+
+        try {
+            // we update the role
+            $role = \Sentinel::findById($request->get('_id'));
+            $role->name = $request->get('name');
+            $role->slug = str_slug($request->get('name'));
+            $role->permissions = $request->except('_token', 'name');
+            \Modal::alert([
+                'Le rôle <b>' . $role->name . '</b> a bien été mis à jour.'
+            ], 'success');
+            return Redirect(route('permissions'));
+        } catch (\Exception $e) {
+            \Log::error($e);
+            \Modal::alert([
+                "Une erreur est survenue lors de la mise à jour du rôle <b>" . $request->get('name') . "</b>.",
+                "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
+                config('settings.support_email') . "</a>."
+            ], 'error');
+            return Redirect()->back();
+        }
     }
 
     public function destroy()
     {
-
+        dd('destroy');
     }
 }
