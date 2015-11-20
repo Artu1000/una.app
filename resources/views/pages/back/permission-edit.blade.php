@@ -12,11 +12,10 @@
                 <h2>
                     <i class="fa fa-gavel"></i>
                     @if(isset($role))
-                        Édition
+                        Édition d'un rôle utilisateur
                     @else
-                        Création
+                        Création d'un rôle utilisateur
                     @endif
-                    d'un rôle utilisateur
                 </h2>
 
                 <hr>
@@ -76,16 +75,19 @@
                     {{-- submit login --}}
                     @if(isset($role))
                         <button class="btn btn-primary spin-on-click" type="submit">
-                            <i class="fa fa-pencil-square"></i> Éditer
+                            <i class="fa fa-pencil-square"></i> Éditer le rôle
+                        </button>
+                        <a href="{{ route('permissions') }}" class="btn btn-default spin-on-click" title="Retour">
+                            <i class="fa fa-undo"></i> Retour
+                        </a>
                     @else
                         <button class="btn btn-success spin-on-click" type="submit">
-                            <i class="fa fa-plus-circle"></i> Créer
+                            <i class="fa fa-plus-circle"></i> Créer le rôle
+                        </button>
+                        <a href="{{ route('permissions') }}" class="btn btn-default spin-on-click" title="Retour">
+                            <i class="fa fa-ban"></i> Annuler
+                        </a>
                     @endif
-                    le rôle
-                    </button>
-                    <a href="{{ route('permissions') }}" class="btn btn-default spin-on-click" title="Retour">
-                        <i class="fa fa-ban"></i> Annuler
-                    </a>
                 </form>
 
             </div>

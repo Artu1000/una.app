@@ -78,7 +78,7 @@
                             </button>
                         </form>
 
-                        <a href="{{ route('login') }}" class="pull-right cancel" title="Retour au site">
+                        <a href="{{ route('login') }}" class="pull-right cancel spin-on-click" title="Annuler">
                             <button class="btn btn-lg btn-default">
                                 <i class="fa fa-ban"></i> Annuler
                             </button>

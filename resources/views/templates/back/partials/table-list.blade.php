@@ -55,7 +55,7 @@
                 </th>
             @endforeach
 
-            <th class="text-right"><a href="#">Actions</a></th>
+            <th class="text-right">Actions</th>
         </tr>
     </thead>
 

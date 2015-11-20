@@ -23,6 +23,14 @@ class PermissionsController extends Controller
      */
     public function index(Request $request)
     {
+        // we check the current user permission
+        if (!\Sentinel::getUser()->hasAccess(['permission.list'])) {
+            \Modal::alert([
+                "Vous n'avez pas l'autorisation de consulter la liste des rôles utilisateur."
+            ], 'error');
+            return Redirect()->back();
+        }
+
         // SEO Meta settings
         $this->seoMeta['page_title'] = 'Gestion des permissions';
 
@@ -60,6 +68,14 @@ class PermissionsController extends Controller
 
     public function show($id)
     {
+        // we check the current user permission
+        if (!\Sentinel::getUser()->hasAccess('permission.view')) {
+            \Modal::alert([
+                "Vous n'avez pas l'autorisation de consulter le détail d'un rôle utilisateur."
+            ], 'error');
+            return Redirect()->back();
+        }
+
         // SEO Meta settings
         $this->seoMeta['page_title'] = "Edition d'un rôle";
 
@@ -102,6 +118,14 @@ class PermissionsController extends Controller
 
     public function store(Request $request)
     {
+        // we check the current user permission
+        if (!\Sentinel::getUser()->hasAccess('permission.create')) {
+            \Modal::alert([
+                "Vous n'avez pas l'autorisation de créer un rôle utilisateur."
+            ], 'error');
+            return Redirect()->back();
+        }
+
         // we get the original request content
         $inputs = $request->all();
         // we replace the wrong keys (php forbid dots and replace them by underscores)
@@ -163,17 +187,25 @@ class PermissionsController extends Controller
 
     public function update(Request $request)
     {
+        // we check the current user permission
+        if (!\Sentinel::getUser()->hasAccess('permission.update')) {
+            \Modal::alert([
+                "Vous n'avez pas l'autorisation de mettre à jour un rôle utilisateur."
+            ], 'error');
+            return Redirect()->back();
+        }
+
         // we get the original request content
         $inputs = $request->all();
         // we replace the wrong keys (php forbid dots and replace them by underscores)
         foreach (array_dot(config('permissions')) as $permission => $value) {
-            // we only take care about the children permissions
-            if (strpos($permission, '.')) {
-                // we translate the permission slug to the wrong key given by php
-                $wrong_key = str_replace('.', '_', $permission);
-                // we get the value and store it into the correct key
-                if (isset($inputs[$wrong_key])) {
-                    $inputs[$permission] = $inputs[$wrong_key];
+            // we translate the permission slug to the wrong key given by php
+            $wrong_key = str_replace('.', '_', $permission);
+            // we translate "on" value in boolean value
+            if (isset($inputs[$wrong_key])) {
+                $inputs[$permission] = filter_var($inputs[$wrong_key], FILTER_VALIDATE_BOOLEAN);
+                // we delete the wrong key if a dot is found (it is the case for children permissions
+                if (strpos($permission, '.')) {
                     // we delete the wrong key
                     unset ($inputs[$wrong_key]);
                 }
@@ -203,14 +235,16 @@ class PermissionsController extends Controller
 
         try {
             // we update the role
-            $role = \Sentinel::findById($request->get('_id'));
+            $role = \Sentinel::findRoleById($request->get('_id'));
             $role->name = $request->get('name');
             $role->slug = str_slug($request->get('name'));
-            $role->permissions = $request->except('_token', 'name');
+            $role->permissions = $request->except('_method', '_id', '_token', 'name');
+            $role->save();
+
             \Modal::alert([
                 'Le rôle <b>' . $role->name . '</b> a bien été mis à jour.'
             ], 'success');
-            return Redirect(route('permissions'));
+            return Redirect()->back();
         } catch (\Exception $e) {
             \Log::error($e);
             \Modal::alert([
@@ -222,8 +256,39 @@ class PermissionsController extends Controller
         }
     }
 
-    public function destroy()
+    public function destroy(Request $request)
     {
-        dd('destroy');
+        // we check the current user permission
+        if (!\Sentinel::getUser()->hasAccess('permission.delete')) {
+            \Modal::alert([
+                "Vous n'avez pas l'autorisation de supprimer un rôle utilisateur."
+            ], 'error');
+            return Redirect()->back();
+        }
+
+        // we get the role
+        if (!$role = \Sentinel::findRoleById($request->get('_id'))) {
+            \Modal::alert([
+                "Le rôle séléctionné n'existe pas."
+            ], 'error');
+            return Redirect()->back();
+        }
+
+        // we delete the role
+        try {
+            \Modal::alert([
+                "Le rôle <b>" . $role->name . "</b> a bien été supprimé."
+            ], 'success');
+            $role->delete();
+            return Redirect()->back();
+        } catch (\Exception $e) {
+            \Log::error($e);
+            \Modal::alert([
+                "Une erreur est survenue lors de la mise à jour du rôle <b>" . $request->get('name') . "</b>.",
+                "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
+                config('settings.support_email') . "</a>."
+            ], 'error');
+            return Redirect()->back();
+        }
     }
 }
