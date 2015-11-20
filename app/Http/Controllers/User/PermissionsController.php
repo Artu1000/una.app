@@ -19,14 +19,16 @@ class PermissionsController extends Controller
     }
 
     /**
-     * @return $this
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse
      */
     public function index(Request $request)
     {
         // we check the current user permission
-        if (!\Sentinel::getUser()->hasAccess(['permission.list'])) {
+        $required = 'permissions.list';
+        if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation de consulter la liste des rôles utilisateur."
+                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
             ], 'error');
             return Redirect()->back();
         }
@@ -69,9 +71,10 @@ class PermissionsController extends Controller
     public function show($id)
     {
         // we check the current user permission
-        if (!\Sentinel::getUser()->hasAccess('permission.view')) {
+        $required = 'permissions.view';
+        if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation de consulter le détail d'un rôle utilisateur."
+                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
             ], 'error');
             return Redirect()->back();
         }
@@ -119,9 +122,10 @@ class PermissionsController extends Controller
     public function store(Request $request)
     {
         // we check the current user permission
-        if (!\Sentinel::getUser()->hasAccess('permission.create')) {
+        $required = 'permissions.create';
+        if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation de créer un rôle utilisateur."
+                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
             ], 'error');
             return Redirect()->back();
         }
@@ -188,9 +192,10 @@ class PermissionsController extends Controller
     public function update(Request $request)
     {
         // we check the current user permission
-        if (!\Sentinel::getUser()->hasAccess('permission.update')) {
+        $required = 'permissions.update';
+        if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation de mettre à jour un rôle utilisateur."
+                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
             ], 'error');
             return Redirect()->back();
         }
@@ -259,9 +264,10 @@ class PermissionsController extends Controller
     public function destroy(Request $request)
     {
         // we check the current user permission
-        if (!\Sentinel::getUser()->hasAccess('permission.delete')) {
+        $required = 'permissions.delete';
+        if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation de supprimer un rôle utilisateur."
+                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
             ], 'error');
             return Redirect()->back();
         }

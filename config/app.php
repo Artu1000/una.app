@@ -55,7 +55,6 @@ return [
     */
 
     'locale' => 'fr',
-//    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -68,7 +67,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'fr',
 
     /*
     |--------------------------------------------------------------------------
@@ -202,6 +201,7 @@ return [
         'Reminder'      => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
         'Sentinel'      => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
         'Image'         => Intervention\Image\Facades\Image::class,
+        'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
         // created
         'Modal'         => App\Facades\ModalHelperFacade::class,
         'ImageManager'  => App\Facades\ImageManagerHelperFacade::class

@@ -47,5 +47,9 @@ class AppServiceProvider extends ServiceProvider
         // laravel phone validator
         // https://github.com/Propaganistas/Laravel-Phone
         $this->app->register('Propaganistas\LaravelPhone\LaravelPhoneServiceProvider');
+
+        // laravel multilingual package
+        // https://github.com/mcamara/laravel-localization
+        $this->app->register('Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider');
     }
 }

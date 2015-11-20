@@ -38,15 +38,22 @@
         </ul>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav side-nav">
-                <li class="active">
-                    <a href="{{ route('back.dashboard') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                <li @if(\Route::current()->getName() === 'dashboard') class="active" @endif>
+                    <a href="{{ route('dashboard') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                 </li>
-                <li>
-                    <a href="{{ route('back.settings') }}"><i class="fa fa-cogs"></i> Configuration du site</a>
-                </li>
-                <li>
-                    <a href="{{ route('permissions') }}"><i class="fa fa-gavel"></i> Permissions utilisateur</a>
-                </li>
+                @if(\Sentinel::getUser()->hasAccess('settings.view'))
+                    <li @if(\Route::current()->getName() === 'settings') class="active" @endif>
+                        <a href="{{ route('settings') }}"><i class="fa fa-cogs"></i> Configuration du site</a>
+                    </li>
+                @endif
+                @if(\Sentinel::getUser()->hasAccess('permissions.list'))
+                    <li @if(\Route::current()->getName() === 'permissions') class="active"
+                        @elseif(\Route::current()->getName() === 'permissions.create')) class="active"
+                        @elseif(\Route::current()->getName() === 'permissions.show')) class="active"
+                        @endif>
+                        <a href="{{ route('permissions.index') }}"><i class="fa fa-gavel"></i> Permissions utilisateur</a>
+                    </li>
+                @endif
                 <li>
                     <a href="#" data-toggle="collapse" data-target="#demo">
                         <i class="fa fa-fw fa-arrows-v"></i>

@@ -81,20 +81,20 @@ elixir(function (mix) {
          * JS
          ***************************************************************************************************************/
         // FRONT
-        //.scripts([
-        //    paths.jquery + "dist/jquery.js",
-        //    paths.jquery_easing + "js/jquery.easing.js",
-        //    paths.bootstrap + "javascripts/bootstrap.js",
-        //    paths.js + 'ie10-viewport-bug-workaround.js',
-        //    paths.js + 'app.common.js',
-        //    paths.js + 'app.front.js'
-        //], 'public/js/app.front.js', './')
-        //// mix home js files
-        //.scripts([
-        //    'public/js/app.front.js',
-        //    paths.glide + 'dist/glide.js',
-        //    paths.js + 'app.home.js'
-        //], 'public/js/app.home.js', './')
+        .scripts([
+            paths.jquery + "dist/jquery.js",
+            paths.jquery_easing + "js/jquery.easing.js",
+            paths.bootstrap + "javascripts/bootstrap.js",
+            paths.js + 'ie10-viewport-bug-workaround.js',
+            paths.js + 'app.common.js',
+            paths.js + 'app.front.js'
+        ], 'public/js/app.front.js', './')
+        // mix home js files
+        .scripts([
+            'public/js/app.front.js',
+            paths.glide + 'dist/glide.js',
+            paths.js + 'app.home.js'
+        ], 'public/js/app.home.js', './')
         //// mix news list js files
         //.scripts([
         //    'public/js/app.front.js',
@@ -126,8 +126,8 @@ elixir(function (mix) {
         // version all files
         .version([
             // css front
-            //'public/css/app.front.css',
-            //'public/css/app.home.css',
+            'public/css/app.front.css',
+            'public/css/app.home.css',
             //'public/css/app.page.css',
             //'public/css/app.palmares.css',
             //'public/css/app.news.css',
@@ -136,13 +136,13 @@ elixir(function (mix) {
             //'public/css/app.schedule.css',
             //'public/css/app.calendar.css',
             //'public/css/app.e-shop.css',
-            //'public/css/app.login.css',
-            //'public/css/app.error.css',
+            'public/css/app.login.css',
+            'public/css/app.error.css',
             // css back
             'public/css/app.back.css',
             // js front
-            //'public/js/app.front.js',
-            //'public/js/app.home.js',
+            'public/js/app.front.js',
+            'public/js/app.home.js',
             //'public/js/app.news-list.js',
             //'public/js/app.news-detail.js',
             // js front

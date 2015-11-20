@@ -13,7 +13,7 @@
 
                 <hr>
 
-                <form role="form" method="POST" action="{{ route('update_account') }}" enctype="multipart/form-data">
+                <form role="form" method="POST" action="{{ route('account.update') }}" enctype="multipart/form-data">
 
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">

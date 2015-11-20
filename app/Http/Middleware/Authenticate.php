@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
-use Sentinel;
 
 class Authenticate
 {
@@ -36,7 +35,7 @@ class Authenticate
     public function handle($request, Closure $next)
     {
         // if the user is not logged
-        if (!Sentinel::check()) {
+        if (!\Sentinel::check()) {
             // if the request is not ajax
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);

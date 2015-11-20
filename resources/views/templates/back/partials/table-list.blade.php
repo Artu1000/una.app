@@ -8,7 +8,7 @@
 
                 <div class="row">
 
-                    <form role="form" method="GET" action="{{ route($tableListData['route']) }}">
+                    <form role="form" method="GET" action="{{ route($tableListData['route'] . '.index') }}">
 
                         <div class="col-sm-6 table-commands">
 
@@ -26,7 +26,7 @@
                                     <span class="input-group-addon" for="input_search"><i class="fa fa-search"></i></span>
                                     <input id="input_search" class="form-control" type="text" name="search" value="{{ $tableListData['search'] }}" placeholder="Rechercher">
                                 @if($tableListData['search'])
-                                    <span class="input-group-addon"><a href="{{ route('permissions', ['search' => null, 'lines' => $tableListData['lines']]) }}"><i class="fa fa-times"></i></a></span>
+                                    <span class="input-group-addon"><a href="{{ route($tableListData['route'] . '.index', ['search' => null, 'lines' => $tableListData['lines']]) }}"><i class="fa fa-times"></i></a></span>
                                 @endif
                             </span>
                         </div>
@@ -42,7 +42,7 @@
             @foreach($tableListData['columns'] as $column)
                 <th>
                     @if(isset($column['sort_by']))
-                        <a href="{{ route($tableListData['route'], ['search' => $tableListData['search'], 'lines' => $tableListData['lines'], 'sort-by' => $column['sort_by'], 'sort-dir' => !$tableListData['sort_dir']]) }}">
+                        <a href="{{ route($tableListData['route'] . '.index', ['search' => $tableListData['search'], 'lines' => $tableListData['lines'], 'sort-by' => $column['sort_by'], 'sort-dir' => !$tableListData['sort_dir']]) }}">
                             {{ $column['title'] }}
                             @if($tableListData['sort_by'] === $column['sort_by'] && $tableListData['sort_dir']) <i class="fa fa-sort-asc"></i>
                             @elseif($tableListData['sort_by'] === $column['sort_by'] && !$tableListData['sort_dir']) <i class="fa fa-sort-desc"></i>

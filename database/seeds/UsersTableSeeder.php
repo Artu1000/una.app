@@ -6,7 +6,7 @@ class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-
+        // we create a user
         $user = Sentinel::register([
             'last_name' => 'LORENT',
             'first_name' => 'Arthur',
@@ -14,13 +14,29 @@ class UsersTableSeeder extends Seeder
             'email' => 'admin@admin.fr',
             'status' => config('user.status_key.communication-commission'),
             'board' => config('user.board_key.leading-board'),
-            'password' => 'admin',
-            'permissions' => [
-                'admin' => true
-            ]
+            'password' => 'admin'
         ]);
+
+        // we activate the user
         $activation = Activation::create($user);
         Activation::complete($user, $activation->code);
+
+        // we create the admin role
+        $role = \Sentinel::getRoleRepository()->createModel()->create([
+            'name' => 'Admin',
+            'slug' => 'admin'
+        ]);
+
+        // we give all permissions to the admin role
+        $permissions = [];
+        foreach(array_dot(config('permissions')) as $permission => $value){
+            $permissions[$permission] = true;
+        }
+        $role->permissions = $permissions;
+        $role->save();
+
+        // we attach the user to the admin role
+        $role->users()->attach($user);
 
         Sentinel::register([
             'last_name' => 'GIRARD',

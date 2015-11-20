@@ -13,10 +13,11 @@
 
                 <hr>
 
-                <form role="form" method="POST" action="{{ route('back.settings') }}" enctype="multipart/form-data">
+                <form role="form" method="POST" action="{{ route('settings.update') }}">
 
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="_method" value="PUT">
 
                     {{-- app data --}}
                     <div class="panel panel-default">
@@ -31,6 +32,22 @@
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_app_name"><i class="fa fa-sitemap"></i></span>
                                     <input id="input_app_name" class="form-control" type="text" name="app_name" value="{{ old('app_name') ? old('app_name') : config('settings.app_name') }}" placeholder="Nom du site">
+                                </div>
+                            </div>
+
+                            {{-- multilingual --}}
+                            <label for="input_multilingual">Gestion multilingue</label>
+                            <div class="form-group">
+                                <div class="input-group swipe-group">
+                                    <span class="input-group-addon" for="input_multilingual"><i class="fa fa-globe"></i></span>
+                                    <span class="form-control swipe-label" readonly="">
+                                        Activation
+                                    </span>
+                                    <input class="swipe" id="input_multilingual" type="checkbox" name="multilingual"
+                                           @if(old('multilingual')) checked
+                                           @elseif(config('settings.multilingual')) checked
+                                            @endif>
+                                    <label class="swipe-btn" for="input_multilingual"></label>
                                 </div>
                             </div>
 
@@ -150,7 +167,7 @@
                                 <div class="input-group swipe-group">
                                     <span class="input-group-addon" for="swipe_rss"><i class="fa fa-rss"></i></span>
                                     <span class="form-control swipe-label" readonly="">
-                                        Activation
+                                        News
                                     </span>
                                     <input class="swipe" id="swipe_rss" type="checkbox" name="rss"
                                            @if(old('rss')) checked
@@ -202,7 +219,7 @@
                     </div>
 
                     {{-- submit login --}}
-                    <button class="btn btn-lg btn-primary spin-on-click" type="submit">
+                    <button class="btn btn-primary spin-on-click" type="submit">
                         <i class="fa fa-floppy-o"></i> Enregistrer les modifications
                     </button>
                 </form>

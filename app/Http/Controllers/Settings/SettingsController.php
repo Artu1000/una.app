@@ -23,6 +23,15 @@ class SettingsController extends Controller
      */
     public function index()
     {
+        // we check the current user permission
+        $required = 'settings.view';
+        if (!\Sentinel::getUser()->hasAccess([$required])) {
+            \Modal::alert([
+                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
+            ], 'error');
+            return Redirect()->back();
+        }
+
         // SEO Meta settings
         $this->seoMeta['page_title'] = 'Configuration du site';
 
@@ -32,36 +41,32 @@ class SettingsController extends Controller
         ];
 
         // return the view with data
-        return view('pages.back.settings')->with($data);
+        return view('pages.back.settings-edit')->with($data);
     }
 
-    public function store(Request $request)
+    public function update(Request $request)
     {
-        // we flash the non sensitive data
-        $request->flashOnly(
-            'app_name',
-            'phone_number',
-            'email',
-            'address',
-            'zip_code',
-            'city',
-            'facebook',
-            'twitter',
-            'google_plus',
-            'youtube',
-            'rss',
-            'loading_spinner',
-            'google_analytics'
-        );
+        // we check the current user permission
+        $required = 'settings.update';
+        if (!\Sentinel::getUser()->hasAccess([$required])) {
+            \Modal::alert([
+                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
+            ], 'error');
+            return Redirect()->back();
+        }
+
+        // we flash the data
+        $request->flash();
 
         // we analyse the given inputs
         // we replace the "on" or "off" value from the checkbox by a boolean
         $request->merge([
+            'multilingual' => filter_var($request->get('multilingual'), FILTER_VALIDATE_BOOLEAN),
             'rss' => filter_var($request->get('rss'), FILTER_VALIDATE_BOOLEAN)
         ]);
 
         // we get the inputs
-        $inputs = $request->except('_token');
+        $inputs = $request->except('_token', '_method');
 
         // we check the inputs
         $errors = [];
@@ -93,7 +98,7 @@ class SettingsController extends Controller
         );
 
         // we store the data into json file
-        if(file_put_contents(storage_path('config/settings.json'), json_encode($inputs))){
+        if (file_put_contents(storage_path('app/config/settings.json'), json_encode($inputs))) {
             \Modal::alert([
                 "La configuration a bien été mise à jour."
             ], 'success');

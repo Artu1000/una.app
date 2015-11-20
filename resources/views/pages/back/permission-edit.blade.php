@@ -24,7 +24,7 @@
                       @if(isset($role))
                         {{ route('permissions.update') }}
                       @else
-                        {{ route('permissions') }}
+                        {{ route('permissions.index') }}
                       @endif ">
 
                     {{-- crsf token --}}
@@ -65,7 +65,7 @@
 
                             @foreach(array_dot(config('permissions')) as $permission => $value)
                                 <div class="checkbox permission @if(!strpos($permission, '.'))parent @endif">
-                                    <label for="{{ $permission }}"><input id="{{ $permission }}" type="checkbox" name="{{ $permission }}" @if(old($permission, (isset($role->permissions[$permission]) ? $role->permissions[$permission] : ''))) checked @endif>{!! \Lang::get('permissions.' . $permission) !!}</label>
+                                    <label for="{{ $permission }}"><input id="{{ $permission }}" type="checkbox" name="{{ $permission }}" @if(old($permission, (isset($role->permissions[$permission]) ? $role->permissions[$permission] : ''))) checked @endif>{!! trans('permissions.' . $permission) !!}</label>
                                 </div>
                             @endforeach
 
@@ -77,14 +77,14 @@
                         <button class="btn btn-primary spin-on-click" type="submit">
                             <i class="fa fa-pencil-square"></i> Éditer le rôle
                         </button>
-                        <a href="{{ route('permissions') }}" class="btn btn-default spin-on-click" title="Retour">
+                        <a href="{{ route('permissions.index') }}" class="btn btn-default spin-on-click" title="Retour">
                             <i class="fa fa-undo"></i> Retour
                         </a>
                     @else
                         <button class="btn btn-success spin-on-click" type="submit">
                             <i class="fa fa-plus-circle"></i> Créer le rôle
                         </button>
-                        <a href="{{ route('permissions') }}" class="btn btn-default spin-on-click" title="Retour">
+                        <a href="{{ route('permissions.index') }}" class="btn btn-default spin-on-click" title="Retour">
                             <i class="fa fa-ban"></i> Annuler
                         </a>
                     @endif

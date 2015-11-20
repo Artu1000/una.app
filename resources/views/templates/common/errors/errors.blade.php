@@ -17,7 +17,7 @@
                         </a>
 
                         <h1><i class="fa fa-bullhorn"></i> Oups !!!</h1>
-                        <h2>Erreur 404<br/>Page introuvable</h2>
+                        <h2>Erreur {{ $code }}<br/> {{ trans('errors.messages.'.$code) }}</h2>
 
                         <a href="{{ route('home') }}" title="Revenir à l'accueil de {{ config('settings.app_name') }}" class="btn btn-primary btn-lg">
                             <i class="fa fa-home"></i> Revenir à l'accueil

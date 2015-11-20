@@ -2,21 +2,25 @@
 
 return [
 
-    // permissions
-    'permission' => 'Permissions utilisateur',
-    'permission.list' => 'Consulter la liste des permissions utilisateur',
-    'permission.view' => "Consulter le détail d'une permission utilisateur",
-    'permission.create' => "Créer une permission utilisateur",
-    'permission.update' => "Modifier une permission utilisateur",
-    'permission.delete' => "Supprimer une permission utilisateur",
+    // settings
+    'settings' => 'Configuration',
+    'settings.view' => 'Consulter la configuration',
+    'settings.update' => 'Modifier la configuration',
 
+    // permissions
+    'permissions' => 'Permissions utilisateur',
+    'permissions.list' => 'Consulter la liste des permissions utilisateur',
+    'permissions.view' => "Consulter le détail d'une permission utilisateur",
+    'permissions.create' => "Créer une permission utilisateur",
+    'permissions.update' => "Modifier une permission utilisateur",
+    'permissions.delete' => "Supprimer une permission utilisateur",
 
     // user
-    'user' => "Utilisateurs",
-    'user.list' => "Consulter la liste des utilisateurs",
-    'user.create' => "Créer un utilisateur",
-    'user.view' => "Consulter le détail d'un utilisateur",
-    'user.update' => "Modifier un utilisateur",
-    'user.delete' => "Supprimer un utlisateur",
+    'users' => "Utilisateurs",
+    'users.list' => "Consulter la liste des utilisateurs",
+    'users.create' => "Créer un utilisateur",
+    'users.view' => "Consulter le détail d'un utilisateur",
+    'users.update' => "Modifier un utilisateur",
+    'users.delete' => "Supprimer un utlisateur",
 
 ];

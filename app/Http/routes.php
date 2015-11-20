@@ -3,14 +3,12 @@
 /***********************************************************************************************************************
  * LOGS
  **********************************************************************************************************************/
-
 // log each http request
 if (!empty($_SERVER['REQUEST_URI'])) {
     $method = !empty($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '';
     $uri = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
     \Log::info(implode(' - ', array($method, $uri)));
 }
-
 // log each database query
 Event::listen('illuminate.query', function ($sql, $bindings) {
     foreach ($bindings as $val) {
@@ -19,6 +17,9 @@ Event::listen('illuminate.query', function ($sql, $bindings) {
     \Log::info($sql);
 });
 
+/***********************************************************************************************************************
+ * IMAGES
+ **********************************************************************************************************************/
 Route::get('file', [
     'uses' => 'File\FileController@image',
     'as' => 'image'
@@ -28,10 +29,133 @@ Route::get('file', [
  * BACKEND ROUTES
  **********************************************************************************************************************/
 
+$group = config('settings.multilingual') ? ['prefix' => LaravelLocalization::setLocale(), 'middleware' => [
+    'auth',
+    'localeSessionRedirect',
+    'localizationRedirect'
+]] : ['middleware' => ['auth']];
+
+// logged routes
+$route = Route::group($group, function () {
+    // dashboard
+    Route::resource(LaravelLocalization::transRoute('routes.dashboard'), 'Dashboard\DashboardController', [
+        'names' => [
+            'index' => 'dashboard'
+        ]
+    ]);
+    // account
+    Route::resource(LaravelLocalization::transRoute('routes.my-account'), 'Auth\AccountController', [
+        'names' => [
+            'index' => 'account',
+            'update' => 'account.update'
+        ]
+    ]);
+    // configuration
+    Route::resource(LaravelLocalization::transRoute('routes.configuration'), 'Settings\SettingsController', [
+        'names' => [
+            'index' => 'settings',
+            'update' => 'settings.update'
+        ], 'except' => [
+            'show'
+        ]
+    ]);
+
+    // permissions
+    Route::resource(LaravelLocalization::transRoute('routes.permissions'), 'User\PermissionsController', [
+        'names' => [
+            'index' => 'permissions.index',
+            'create' => 'permissions.create',
+            'show' => 'permissions.show',
+            'update' => 'permissions.update',
+            'destroy' => 'permissions.destroy'
+        ]
+    ]);
+
+//    Route::get(LaravelLocalization::transRoute('routes.permissions'), [
+//        'as' => 'permissions',
+//        'uses' => 'User\PermissionsController@index'
+//    ]);
+
+//    Route::get(LaravelLocalization::transRoute('routes.permissions'), [
+//        'as' => 'permissions', 'uses' => 'User\PermissionsController@index'
+//    ]);
+
+    // logout
+    Route::resource('deconnexion', 'Auth\LogoutController', [
+        'names' => [
+            'index' => 'logout'
+        ]
+    ]);
+});
+
+/***********************************************************************************************************************
+ * FRONTEND ROUTES
+ **********************************************************************************************************************/
+// home
+Route::resource('/', 'Home\HomeController', [
+    'names' => [
+        'index' => 'home',
+    ]
+]);
+// news
+Route::resource('/news', 'News\NewsController', [
+    'names' => [
+        'index' => 'front.news',
+        'show' => 'front.news.show'
+    ]
+]);
+// leading team
+Route::resource('/equipe-dirigeante', 'LeadingTeam\LeadingTeamController', [
+    'names' => [
+        'index' => 'front.leading_team'
+    ]
+]);
+// palmares
+Route::resource('/palmares', 'Palmares\PalmaresController', [
+    'names' => [
+        'index' => 'front.palmares'
+    ]
+]);
+// registration
+Route::resource('/inscription', 'Registration\RegistrationController', [
+    'names' => [
+        'index' => 'front.registration'
+    ]
+]);
+// registration
+Route::resource('/calendrier', 'Calendar\CalendarController', [
+    'names' => [
+        'index' => 'front.calendar'
+    ]
+]);
+// schedule
+Route::resource('/horaires', 'Schedule\ScheduleController', [
+    'names' => [
+        'index' => 'front.schedule'
+    ]
+]);
+// shop
+Route::resource('/boutique-en-ligne', 'EShop\EShopController', [
+    'names' => [
+        'index' => 'front.e-shop',
+        'show' => 'front.e-shop.add-to-cart'
+    ]
+]);
+// sitemap
+Route::get('sitemap.xml', 'Sitemap\SitemapController@index');
+// rss
+Route::get('rss', 'Rss\RssController@index');
+// pages
+Route::resource('page', 'Pages\PageController', [
+    'names' => [
+        'show' => 'front.page'
+    ]
+]);
+
+// guest routes
 Route::group([
     'middleware' => 'guest'
 ], function () {
-
     // account
     Route::get('mon-compte/creer', [
         'uses' => 'Auth\AccountController@createAccount',
@@ -45,14 +169,12 @@ Route::group([
         'uses' => 'Auth\AccountController@activateAccount',
         'as' => 'activate_account'
     ]);
-
     // connection
     Route::resource('espace-connexion', 'Auth\AuthController', [
         'names' => [
             'index' => 'login',
         ]
     ]);
-
     // password recovery
     Route::resource('mot-de-passe-oublie', 'Auth\PasswordController', [
         'names' => [
@@ -62,121 +184,3 @@ Route::group([
         ]
     ]);
 });
-
-
-Route::group([
-    'middleware' => 'auth'
-], function () {
-
-    // account
-    Route::resource('mon-profil', 'Auth\AccountController', [
-        'names' => [
-            'index' => 'account',
-            'update' => 'update_account'
-        ]
-    ]);
-
-    // dashboard
-    Route::resource('espace-membre', 'Dashboard\DashboardController', [
-        'names' => [
-            'index' => 'back.dashboard'
-        ]
-    ]);
-
-    // configuration
-    Route::resource('configuration', 'Settings\SettingsController', [
-        'names' => [
-            'index' => 'back.settings'
-        ]
-    ]);
-
-    // configuration
-    Route::resource('permissions', 'User\PermissionsController', [
-        'names' => [
-            'index' => 'permissions'
-        ]
-    ]);
-
-    // logout
-    Route::resource('deconnexion', 'Auth\LogoutController', [
-        'names' => [
-            'index' => 'logout'
-        ]
-    ]);
-});
-
-
-/***********************************************************************************************************************
- * FRONTEND ROUTES
- **********************************************************************************************************************/
-
-// home
-Route::resource('/', 'Home\HomeController', [
-    'names' => [
-        'index' => 'home',
-    ]
-]);
-
-// news
-Route::resource('/news', 'News\NewsController', [
-    'names' => [
-        'index' => 'front.news',
-        'show' => 'front.news.show'
-    ]
-]);
-
-// leading team
-Route::resource('/equipe-dirigeante', 'LeadingTeam\LeadingTeamController', [
-    'names' => [
-        'index' => 'front.leading_team'
-    ]
-]);
-
-// palmares
-Route::resource('/palmares', 'Palmares\PalmaresController', [
-    'names' => [
-        'index' => 'front.palmares'
-    ]
-]);
-
-// registration
-Route::resource('/inscription', 'Registration\RegistrationController', [
-    'names' => [
-        'index' => 'front.registration'
-    ]
-]);
-
-// registration
-Route::resource('/calendrier', 'Calendar\CalendarController', [
-    'names' => [
-        'index' => 'front.calendar'
-    ]
-]);
-
-// schedule
-Route::resource('/horaires', 'Schedule\ScheduleController', [
-    'names' => [
-        'index' => 'front.schedule'
-    ]
-]);
-
-// shop
-Route::resource('/boutique-en-ligne', 'EShop\EShopController', [
-    'names' => [
-        'index' => 'front.e-shop',
-        'show' => 'front.e-shop.add-to-cart'
-    ]
-]);
-
-// sitemap
-Route::get('sitemap.xml', 'Sitemap\SitemapController@index');
-
-// rss
-Route::get('rss', 'Rss\RssController@index');
-
-// pages
-Route::resource('page', 'Pages\PageController', [
-    'names' => [
-        'show' => 'front.page'
-    ]
-]);

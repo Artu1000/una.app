@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\Debug\ExceptionHandler as SymfonyDisplayer;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
@@ -54,28 +55,24 @@ class Handler extends ExceptionHandler
      */
     protected function renderHttpException(HttpException $e)
     {
-        if (view()->exists('templates.common.errors.' . $e->getStatusCode())) {
+        // load base JS
+        \JavaScript::put([
+            'base_url' => url('/'),
+            'site_name' => config('settings.app_name')
+        ]);
 
-            // load base JS
-            \JavaScript::put([
-                'base_url' => url('/'),
-                'site_name' => config('settings.app_name')
-            ]);
+        $seoMeta = [
+            'page_title' => 'Erreur '.$e->getStatusCode(),
+            'meta_desc' => $e->getMessage(),
+            'meta_keywords' => ''
+        ];
+        $data = [
+            'code' => $e->getStatusCode(),
+            'seoMeta' => $seoMeta,
+            'css' => url(elixir('css/app.error.css'))
+        ];
 
-            $seoMeta = [
-                'page_title' => 'Erreur '.$e->getStatusCode(),
-                'meta_desc' => 'La page demandée n\'existe pas.',
-                'meta_keywords' => ''
-            ];
-            $data = [
-                'seoMeta' => $seoMeta,
-                'css' => url(elixir('css/app.error.css'))
-            ];
-
-            return response()->view('templates.common.errors.' . $e->getStatusCode(), $data, $e->getStatusCode());
-        } else {
-            return (new SymfonyDisplayer(config('app.debug')))->createResponse($e);
-        }
+        return response()->view('templates.common.errors.errors', $data);
     }
 
 }

@@ -12,7 +12,8 @@
         "cartalyst/sentinel": "2.0.*",
         "approached/laravel-image-optimizer": "dev-master",
         "intervention/image": "^2.3@dev",
-        "propaganistas/laravel-phone": "dev-master"
+        "propaganistas/laravel-phone": "dev-master",
+        "mcamara/laravel-localization": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
