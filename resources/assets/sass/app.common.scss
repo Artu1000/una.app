@@ -379,6 +379,7 @@ html {
       }
 
       .swipe-group {
+        position: relative;
 
         .swipe-label {
           width: auto;
@@ -388,6 +389,12 @@ html {
 
         label.swipe-btn {
           margin-top: 1px;
+        }
+
+        .swipe-action-icon {
+          position: absolute;
+          top: 0.5em;
+          left: 4.3em;
         }
       }
 

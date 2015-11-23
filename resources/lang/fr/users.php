@@ -3,7 +3,8 @@
 return [
     "last_name" => "NOM",
     "first_name" => "Prénom",
-    "board" => "Instance",
     "status" => "Statut",
-    "role" => "Rôle",
+    "board" => "Organe",
+    "role" => "Permissions",
+    "activation" => "Activation"
 ];

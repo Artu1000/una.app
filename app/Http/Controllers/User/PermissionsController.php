@@ -54,11 +54,17 @@ class PermissionsController extends Controller
         // we instantiate the query
         $query = \Sentinel::getRoleRepository()->query();
 
-        // we format the data for the needs of the view
-        $tableListData = $this->prepareTableListData($query, $request, $columns, 'permissions', [
+        $confirm_config = [
             'action' => 'Supression du rôle',
             'attribute' => 'name',
-        ]);
+        ];
+
+        $search_config = [
+            'name'
+        ];
+
+        // we format the data for the needs of the view
+        $tableListData = $this->prepareTableListData($query, $request, $columns, 'permissions', $confirm_config, $search_config);
 
         // prepare data for the view
         $data = [

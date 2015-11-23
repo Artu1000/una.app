@@ -22,7 +22,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li>
-                        <a href="{{ route('account') }}"><i class="fa fa-user fa-fw"></i>
+                        <a href="{{ route('account.index') }}"><i class="fa fa-user fa-fw"></i>
                             Mon profil
                         </a>
                     </li>
@@ -38,12 +38,12 @@
         </ul>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav side-nav">
-                <li @if(\Route::current()->getName() === 'dashboard') class="active" @endif>
-                    <a href="{{ route('dashboard') }}"><i class="fa fa-fw fa-dashboard"></i> {{ trans('template.back.header.dashboard') }}</a>
+                <li @if(\Route::current()->getName() === 'dashboard.index') class="active" @endif>
+                    <a href="{{ route('dashboard.index') }}"><i class="fa fa-fw fa-dashboard"></i> {{ trans('template.back.header.dashboard') }}</a>
                 </li>
                 @if(\Sentinel::getUser()->hasAccess('settings.view'))
                     <li @if(\Route::current()->getName() === 'settings') class="active" @endif>
-                        <a href="{{ route('settings') }}"><i class="fa fa-cogs"></i> {{ trans('template.back.header.settings') }}</a>
+                        <a href="{{ route('settings.index') }}"><i class="fa fa-cogs"></i> {{ trans('template.back.header.settings') }}</a>
                     </li>
                 @endif
                 @if(\Sentinel::getUser()->hasAccess('permissions.list'))

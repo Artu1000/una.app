@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\Install\StoragePrepare::class,
         \App\Console\Commands\Install\MailcatcherInstall::class,
         \App\Console\Commands\Install\ProjectInstall::class,
+        \App\Console\Commands\Database\UsersAndRelatedTablesClean::class,
     ];
 
     /**
@@ -27,7 +28,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-            ->hourly();
+        // we schedule the users related tables from expired lines
+        $schedule->command('users:tables:clean')->dailyAt('23:00')->sundays();
     }
 }

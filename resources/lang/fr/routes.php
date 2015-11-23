@@ -2,10 +2,21 @@
 
 return [
 
-    'dashboard' => 'tableau-de-bord',
-    'my-account' => 'mon-profil',
-    'settings' => 'configuration',
-    'permissions' => 'permissions',
-    'users' => 'utilisateurs',
+    'dashboard' => [
+        'resource' => 'tableau-de-bord'
+    ],
+    'my-account' => [
+        'resource' => 'mon-profil'
+    ],
+    'settings' => [
+        'resource' => 'configuration'
+    ],
+    'permissions' => [
+        'resource' => 'permissions'
+    ],
+    'users' => [
+        'activate' => 'utilisateurs/activer',
+        'resource' => 'utilisateurs'
+    ],
 
 ];

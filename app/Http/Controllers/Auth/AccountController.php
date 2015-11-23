@@ -102,11 +102,6 @@ class AccountController extends Controller
         }
     }
 
-    public function show()
-    {
-        dd('show');
-    }
-
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse

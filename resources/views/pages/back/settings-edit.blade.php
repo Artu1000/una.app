@@ -176,7 +176,6 @@
                                     <label class="swipe-btn" for="swipe_rss"></label>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 

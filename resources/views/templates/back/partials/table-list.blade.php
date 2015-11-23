@@ -22,13 +22,15 @@
                         </div>
 
                         <div class="col-sm-6 table-commands text-right">
-                            <span class="input-group search">
-                                    <span class="input-group-addon" for="input_search"><i class="fa fa-search"></i></span>
-                                    <input id="input_search" class="form-control" type="text" name="search" value="{{ $tableListData['search'] }}" placeholder="Rechercher">
-                                @if($tableListData['search'])
-                                    <span class="input-group-addon"><a href="{{ route($tableListData['route'] . '.index', ['search' => null, 'lines' => $tableListData['lines']]) }}"><i class="fa fa-times"></i></a></span>
-                                @endif
-                            </span>
+                            @if(!empty($tableListData['search_config']))
+                                <span class="input-group search">
+                                        <span class="input-group-addon" for="input_search"><i class="fa fa-search"></i></span>
+                                        <input id="input_search" class="form-control" type="text" name="search" value="{{ $tableListData['search'] }}" placeholder="Rechercher">
+                                    @if($tableListData['search'])
+                                        <span class="input-group-addon"><a href="{{ route($tableListData['route'] . '.index', ['search' => null, 'lines' => $tableListData['lines']]) }}"><i class="fa fa-times"></i></a></span>
+                                    @endif
+                                </span>
+                            @endif
                         </div>
                     </form>
                 </div>
@@ -40,12 +42,12 @@
             @foreach($tableListData['columns'] as $column)
                 <th>
                     @if(isset($column['sort_by']))
-                        <a href="{{ route($tableListData['route'] . '.index', ['search' => $tableListData['search'], 'lines' => $tableListData['lines'], 'sort-by' => $column['sort_by'], 'sort-dir' => !$tableListData['sort_dir']]) }}">
-                            {{ $column['title'] }}
+                        <a href="{{ route($tableListData['route'] . '.index', ['search' => $tableListData['search'], 'lines' => $tableListData['lines'], 'sort-by' => $column['sort_by'], 'sort-dir' => !$tableListData['sort_dir']]) }}" class="spin-on-click">
                             @if($tableListData['sort_by'] === $column['sort_by'] && $tableListData['sort_dir']) <i class="fa fa-sort-asc"></i>
                             @elseif($tableListData['sort_by'] === $column['sort_by'] && !$tableListData['sort_dir']) <i class="fa fa-sort-desc"></i>
                             @else <i class="fa fa-sort"></i>
                             @endif
+                            {{ $column['title'] }}
                         </a>
                     @else
                         {{ $column['title'] }}
@@ -59,7 +61,7 @@
 
     <tbody>
 
-        @foreach($tableListData['pagination'] as $entity)
+        @foreach($tableListData['pagination']->items() as $entity)
 
             <tr>
 
@@ -70,21 +72,32 @@
                                 <button class="btn {{ config($column['config'] . '.' . $entity->getAttribute($column['key']) . '.' . 'key') }}">
                             @endif
                             {{ config($column['config'] . '.' . $entity->getAttribute($column['key']) . '.' . 'title') }}
+                            @if(isset($column['button']) && $column['button'] === true)
+                                </button>
+                            @endif
                         @elseif(is_a($entity->getAttribute($column['key']), '\Illuminate\Database\Eloquent\Collection') && isset($column['collection']) && !empty($column['collection']))
                             @foreach($entity->getAttribute($column['key']) as $object)
                                 @if(isset($column['button']['attribute']) && !empty($column['button']['attribute']))
                                     <button class="btn {{ $object->getAttribute($column['button']['attribute']) }}">
                                 @endif
                                 {{ $object->getAttribute($column['collection']) }}
+                                @if(isset($column['button']['attribute']) && !empty($column['button']['attribute']))
+                                    </button>
+                                @endif
                             @endforeach
+                        @elseif(isset($column['activate']) && !empty($column['activate']))
+                            <div class="swipe-group">
+                                <input class="swipe" id="activate_{{ $entity->id }}" type="checkbox" name="{{ $entity->id }}" @if($entity->getAttribute($column['key'])) checked @endif>
+                                <label class="swipe-btn activate" data-url="{{ route($column['activate']) }}" data-id="{{ $entity->id }}" for="activate_{{ $entity->id }}"></label>
+                            </div>
                         @else
-                            @if(isset($column['button']) && $column['button'] === true)
+                            @if(isset($column['button']) && $column['button'] === true && !empty($entity->getAttribute($column['key'])))
                                 <button class="btn {{ $column['key'] }}">
                             @endif
                             {{ $entity->getAttribute($column['key']) }}
-                        @endif
-                        @if(isset($column['button']['attribute']) && !empty($column['button']['attribute']))
-                            </button>
+                            @if(isset($column['button']) && $column['button'] === true && !empty($entity->getAttribute($column['key'])))
+                                </button>
+                            @endif
                         @endif
                     </td>
                 @endforeach
@@ -105,6 +118,13 @@
                 </td>
             </tr>
         @endforeach
+        @if(empty($tableListData['pagination']->items()))
+            <tr>
+                <td colspan="{{ sizeof($tableListData['columns']) + 1 }}" class="text-center">
+                    <span class="text-info"><i class="fa fa-info-circle"></i></span> Aucun résultat trouvé
+                </td>
+            </tr>
+        @endif
     </tbody>
 
     <tfoot>
@@ -122,7 +142,9 @@
                     </div>
 
                     <div class="col-sm-4 table-nav-infos text-center">
-                        <b>{{ $tableListData['nav_infos'] }}</b>
+                        @if(!empty($tableListData['pagination']->items()))
+                            <b>{{ $tableListData['nav_infos'] }}</b>
+                        @endif
                     </div>
 
                     <div class="col-sm-4 text-right">

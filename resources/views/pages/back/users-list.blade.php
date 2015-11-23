@@ -9,7 +9,7 @@
             <div class="col-sm-12">
 
                 {{-- Title--}}
-                <h2><i class="fa fa-gavel"></i> Gestion des utilisateurs</h2>
+                <h2><i class="fa fa-users"></i> Gestion des utilisateurs</h2>
 
                 <hr>
 

@@ -22,6 +22,7 @@ abstract class Controller extends BaseController
     {
         // load base JS
         \JavaScript::put([
+            'csrf_token' => csrf_token(),
             'base_url' => url('/'),
             'app_name' => config('settings.app_name'),
             'loading_spinner' => config('settings.loading_spinner')
@@ -35,7 +36,7 @@ abstract class Controller extends BaseController
         }
     }
 
-    public function prepareTableListData($query, \Illuminate\Http\Request $request, array $columns, $route, array $confirm)
+    public function prepareTableListData($query, \Illuminate\Http\Request $request, array $columns, $route, array $confirm_config, array $search_config = [])
     {
         // we set the default data
         $default_lines = 20;
@@ -70,10 +71,17 @@ abstract class Controller extends BaseController
         $query_sort_dir = $tableListData['sort_dir'] ? 'asc' : 'desc';
         $query->orderBy($tableListData['sort_by'], $query_sort_dir);
 
-        // we filter the request
+        // we search into the request
+        $tableListData['search_config'] = $search_config;
         if ($tableListData['search'] = $request->get('search')) {
-            // we only get the searched results
-            $query->where('name', 'like', '%' . $tableListData['search'] . '%');
+            // we search only the configured field
+            foreach($tableListData['search_config'] as $key => $searched_field){
+                if($key > 0) {
+                    $query->orWhere($searched_field, 'like', '%' . $tableListData['search'] . '%');
+                } else {
+                    $query->where($searched_field, 'like', '%' . $tableListData['search'] . '%');
+                }
+            }
         }
 
         // we paginate the results
@@ -100,7 +108,7 @@ abstract class Controller extends BaseController
         $tableListData['nav_infos'] = $this->tableNavStatus($tableListData['pagination']);
 
         // we activate the confirm modal for the entity removal
-        \Modal::confirm($confirm);
+        \Modal::confirm($confirm_config);
 
         return $tableListData;
     }

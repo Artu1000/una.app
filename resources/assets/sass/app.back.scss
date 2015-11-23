@@ -173,6 +173,11 @@ html {
 
           .table-list {
 
+            .form-inline {
+              width: auto;
+              display: inline-block;
+            }
+
             thead {
 
               .table-commands, .table-nav-infos {
@@ -201,14 +206,6 @@ html {
               display: inline-table;
             }
           }
-        }
-      }
-
-      .table-list {
-
-        .form-inline {
-            width: auto;
-            display: inline-block;
         }
       }
 

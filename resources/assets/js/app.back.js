@@ -55,5 +55,55 @@ $(function() {
     $('.permission input[type=checkbox]').change(function(){
         evalChildrenCheckboxes($(this));
     });
+
+    //
+    $('.swipe-btn.activate').click(function(){
+        // we get the swipe group
+        var swipe_group = $(this).parent('.swipe-group');
+
+        // we add a loading spinner
+        swipe_group.append('<span class="swipe-action-icon">' + app.loading_spinner + '</span>');
+
+        // we get the ajax request data
+        var url = $(this).attr('data-url');
+        var id = $(this).attr('data-id');
+        var activation_order = !swipe_group.find('input.swipe').is(':checked');
+
+        // we do the post request
+        $.ajax({
+            method: 'POST',
+            url: url,
+            data: {
+                _token : app.csrf_token,
+                id: id,
+                activation_order: activation_order
+            }
+        }).done(function() {
+            // we replace the loading spinner by a check icon
+            swipe_group.find('.swipe-action-icon').remove();
+            swipe_group.append('<span class="swipe-action-icon text-success"><i class="fa fa-thumbs-up"></i></span>');
+        }).fail(function() {
+            // we replace the loading spinner by a check icon
+            swipe_group.find('.swipe-action-icon').remove();
+            swipe_group.append('<span class="swipe-action-icon text-danger"><i class="fa fa-thumbs-down"></i></span>');
+
+            // we set the checkbox at its original value
+            window.setTimeout(function(){
+                swipe_group.find('input.swipe').prop('checked', !activation_order);
+            }, 500);
+        }).always(function() {
+            // we fade out the icon
+            swipe_group.find('.swipe-action-icon').css({
+                '-webkit-animation': 'fadeOut 10000ms',
+                '-moz-animation': 'fadeOut 10000ms',
+                '-ms-animation': 'fadeOut 10000ms',
+                '-o-animation': 'fadeOut 10000ms',
+                'animation': 'fadeOut 10000ms'
+            }).promise().done(function(){
+                // keep invisible
+                $(this).css('opacity', 0);
+            });
+        });
+    });
 });
 

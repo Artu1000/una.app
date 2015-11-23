@@ -9,9 +9,7 @@ class UsersController extends Controller
 {
 
     /**
-     * Create a new home controller instance.
-     *
-     * @return void
+     * UsersController constructor.
      */
     public function __construct()
     {
@@ -37,50 +35,72 @@ class UsersController extends Controller
         $this->seoMeta['page_title'] = 'Gestion des utilisateurs';
 
         // we define the table list columns
-        $columns = [[
-            'title' => trans('users.last_name'),
-            'key' => 'last_name',
-            'sort_by' => 'users.last_name'
-        ],[
-            'title' => trans('users.first_name'),
-            'key' => 'first_name',
-            'sort_by' => 'users.first_name'
-        ],[
-            'title' => trans('users.board'),
-            'key' => 'board',
-            'config' => 'user.board',
-            'sort_by' => 'users.first_name',
-            'button' => true
-        ],[
-            'title' => trans('users.role'),
-            'key' => 'roles',
-            'collection' => 'name',
-            'sort_by' => 'users.roles',
-            'button' => [
-                'attribute' => 'slug'
+        $columns = [
+            [
+                'title' => trans('users.last_name'),
+                'key' => 'last_name',
+                'sort_by' => 'users.last_name'
+            ], [
+                'title' => trans('users.first_name'),
+                'key' => 'first_name',
+                'sort_by' => 'users.first_name'
+            ], [
+                'title' => trans('users.status'),
+                'key' => 'status',
+                'config' => 'user.status',
+                'sort_by' => 'users.status',
+                'button' => true
+            ], [
+                'title' => trans('users.board'),
+                'key' => 'board',
+                'config' => 'user.board',
+                'sort_by' => 'users.board',
+                'button' => true
+            ],
+            [
+                'title' => trans('users.role'),
+                'key' => 'roles',
+                'collection' => 'name',
+                'sort_by' => 'roles.name',
+                'button' => [
+                    'attribute' => 'slug'
+                ]
+            ],
+            [
+                'title' => trans('users.activation'),
+                'key' => 'activated',
+                'activate' => 'users.activate'
             ]
-        ]];
+        ];
 
         // we instantiate the query
-        $query = \Sentinel::getUserRepository()->query();
+        $query = \Sentinel::getUserRepository()->where('users.id', '<>', \Sentinel::getUser()->id);
+
+        $query->groupBy('users.id');
+
+        // we select the data we want
+        $query->select('users.*');
+        $query->selectRaw('if(activations.completed_at, true, false) as activated');
 
         // we execute the table joins
-//        $query->with('roles');
-//        $query->select('users.*');
-//        $query->addSelect('roles.name');
-//        $query->leftJoin('role_users', 'role_users.id', '=', 'role_users.user_id');
-//        $query->leftJoin('roles', 'roles.id', '=', 'role_users.role_id');
+        $query->leftJoin('role_users', 'role_users.user_id', '=', 'users.id');
+        $query->leftJoin('roles', 'roles.id', '=', 'role_users.role_id');
+        $query->leftJoin('activations', 'activations.user_id', '=', 'users.id');
 
-        // select `roles`.*, `role_users`.`user_id` as `pivot_user_id`, `role_users`.`role_id` as `pivot_role_id`,
-        // `role_users`.`created_at` as `pivot_created_at`, `role_users`.`updated_at` as `pivot_updated_at` from `
-        //roles` inner join `role_users` on `roles`.`id` = `role_users`.`role_id`
-        // where `role_users`.`user_id` in (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-
-        // we format the data for the needs of the view
-        $tableListData = $this->prepareTableListData($query, $request, $columns, 'users', [
+        // we prepare the confirm config
+        $confirm_config = [
             'action' => 'Supression de l\'utilisateur',
             'attribute' => 'name',
-        ]);
+        ];
+
+        // we prepare the search config
+        $search_config = [
+            'users.first_name',
+            'users.last_name'
+        ];
+
+        // we format the data for the needs of the view
+        $tableListData = $this->prepareTableListData($query, $request, $columns, 'users', $confirm_config, $search_config);
 
         // prepare data for the view
         $data = [
@@ -319,6 +339,60 @@ class UsersController extends Controller
                 config('settings.support_email') . "</a>."
             ], 'error');
             return Redirect()->back();
+        }
+    }
+
+    public function activate(Request $request)
+    {
+        // we check the current user permission
+        $required = 'users.update';
+        if (!\Sentinel::getUser()->hasAccess([$required])) {
+            return response([
+                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
+            ], 401);
+        }
+
+        $request->merge([
+            'activation_order' => filter_var($request->get('activation_order'), FILTER_VALIDATE_BOOLEAN)
+        ]);
+
+        // we check the inputs
+        $errors = [];
+        $validator = \Validator::make($request->all(), [
+            'id' => 'required|exists:users,id',
+            'activation_order' => 'required|boolean'
+        ]);
+        foreach ($validator->errors()->all() as $error) {
+            $errors[] = $error;
+        }
+        // if errors are found
+        if (count($errors)) {
+            return response($errors, 401);
+        }
+
+        // we get the user
+        $user = \Sentinel::findById($request->get('id'));
+
+        try{
+            // if the order is : activation
+            if($request->get('activation_order')){
+                // we activate the user
+                if(!$activation = \Activation::exists($user)){
+                    $activation = \Activation::create($user);
+                }
+                \Activation::complete($user, $activation->code);
+            } else {
+                \Activation::remove($user);
+            }
+
+            return response([
+                "User activation updated"
+            ], 200);
+        } catch (\Exception $e){
+            \Log::error($e);
+            return response([
+                "An error occured during the user activation"
+            ], 401);
         }
     }
 }

@@ -41,47 +41,72 @@ $group = config('settings.multilingual') ? ['prefix' => LaravelLocalization::set
 // logged routes
 $route = Route::group($group, function () {
     // dashboard
-    Route::resource(LaravelLocalization::transRoute('routes.dashboard'), 'Dashboard\DashboardController', [
+    Route::resource(LaravelLocalization::transRoute('routes.dashboard.resource'), 'Dashboard\DashboardController', [
         'names' => [
-            'index' => 'dashboard'
+            'index' => 'dashboard.index'
+        ], 'except' => [
+            'create',
+            'store',
+            'show',
+            'edit',
+            'update',
+            'destroy'
         ]
     ]);
     // account
-    Route::resource(LaravelLocalization::transRoute('routes.my-account'), 'Auth\AccountController', [
+    Route::resource(LaravelLocalization::transRoute('routes.my-account.resource'), 'Auth\AccountController', [
         'names' => [
-            'index' => 'account',
+            'index' => 'account.index',
             'update' => 'account.update'
+        ], 'except' => [
+            'create',
+            'store',
+            'show',
+            'edit',
+            'destroy'
         ]
     ]);
     // configuration
-    Route::resource(LaravelLocalization::transRoute('routes.settings'), 'Settings\SettingsController', [
+    Route::resource(LaravelLocalization::transRoute('routes.settings.resource'), 'Settings\SettingsController', [
         'names' => [
-            'index' => 'settings',
+            'index' => 'settings.index',
             'update' => 'settings.update'
         ], 'except' => [
-            'show'
+            'create',
+            'store',
+            'show',
+            'edit',
+            'destroy'
         ]
     ]);
 
     // permissions
-    Route::resource(LaravelLocalization::transRoute('routes.permissions'), 'User\PermissionsController', [
+    Route::resource(LaravelLocalization::transRoute('routes.permissions.resource'), 'User\PermissionsController', [
         'names' => [
             'index' => 'permissions.index',
             'create' => 'permissions.create',
             'show' => 'permissions.show',
             'update' => 'permissions.update',
             'destroy' => 'permissions.destroy'
+        ], 'except' => [
+            'edit'
         ]
     ]);
 
     // users
-    Route::resource(LaravelLocalization::transRoute('routes.users'), 'User\UsersController', [
+    Route::post(LaravelLocalization::transRoute('routes.users.activate'), [
+        'as' => 'users.activate',
+        'uses' => 'User\UsersController@activate'
+    ]);
+    Route::resource(LaravelLocalization::transRoute('routes.users.resource'), 'User\UsersController', [
         'names' => [
             'index' => 'users.index',
             'create' => 'users.create',
             'show' => 'users.show',
             'update' => 'users.update',
             'destroy' => 'users.destroy'
+        ], 'except' => [
+            'edit'
         ]
     ]);
 
@@ -89,6 +114,13 @@ $route = Route::group($group, function () {
     Route::resource('deconnexion', 'Auth\LogoutController', [
         'names' => [
             'index' => 'logout'
+        ], 'except' => [
+            'create',
+            'store',
+            'show',
+            'edit',
+            'update',
+            'destroy'
         ]
     ]);
 });
