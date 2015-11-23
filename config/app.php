@@ -148,7 +148,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
-        App\Providers\FacadeServiceProvider::class
+        App\Providers\FacadeServiceProvider::class,
     ],
 
     /*

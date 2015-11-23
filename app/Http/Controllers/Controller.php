@@ -35,7 +35,7 @@ abstract class Controller extends BaseController
         }
     }
 
-    public function prepareTableListData(\Illuminate\Http\Request $request, Array $columns, $route)
+    public function prepareTableListData($query, \Illuminate\Http\Request $request, array $columns, $route, array $confirm)
     {
         // we set the default data
         $default_lines = 20;
@@ -63,9 +63,6 @@ abstract class Controller extends BaseController
             $tableListData['search'] = $default_search;
         }
 
-        // we start the query
-        $query = \Sentinel::getRoleRepository()->query();
-
         // we order the request
         $tableListData['sort_dir'] = null === $request->get('sort-dir') ? true : (
         $request->get('sort-dir') ? $request->get('sort-dir') : false
@@ -81,6 +78,11 @@ abstract class Controller extends BaseController
 
         // we paginate the results
         $pagination = $query->paginate($tableListData['lines']);
+//        $query->get();
+//        $queries = \DB::getQueryLog();
+//        $last_query = end($queries);
+//        dd($last_query);
+
         // we add the lines and search inputs to the pagination url
         $pagination->appends([
             'lines' => $tableListData['lines'],
@@ -96,6 +98,9 @@ abstract class Controller extends BaseController
 
         // we generate the table nav infos
         $tableListData['nav_infos'] = $this->tableNavStatus($tableListData['pagination']);
+
+        // we activate the confirm modal for the entity removal
+        \Modal::confirm($confirm);
 
         return $tableListData;
     }

@@ -14,11 +14,7 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('templates.front.partials.partners', 'App\Composers\Partner\PartnerComposer');
-        view()->composer([
-            'templates.front.full_layout',
-            'templates.front.nude_layout',
-            'templates.back.full_layout'
-        ], 'App\Composers\Modal\ModalComposer');
+        view()->composer('*', 'App\Composers\Modal\ModalComposer');
     }
 
     /**

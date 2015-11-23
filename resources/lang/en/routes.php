@@ -4,7 +4,7 @@ return [
 
     'dashboard' => 'dashboard',
     'my-account' => 'my-account',
-    'configuration' => 'configuration',
+    'settings' => 'settings',
     'permissions' => 'permissions'
 
 ];

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class PermissionsController extends Controller
+class UsersController extends Controller
 {
 
     /**
@@ -25,7 +25,7 @@ class PermissionsController extends Controller
     public function index(Request $request)
     {
         // we check the current user permission
-        $required = 'permissions.list';
+        $required = 'users.list';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
                 "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
@@ -34,29 +34,51 @@ class PermissionsController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = 'Gestion des permissions';
+        $this->seoMeta['page_title'] = 'Gestion des utilisateurs';
 
         // we define the table list columns
         $columns = [[
-            'title' => 'Nom',
-            'key' => 'name',
-            'sort_by' => 'roles.name'
-        ], [
-            'title' => 'Date création',
-            'key' => 'created_at',
-            'sort_by' => 'roles.created_at'
-        ], [
-            'title' => 'Date modification',
-            'key' => 'updated_at',
-            'sort_by' => 'roles.updated_at'
+            'title' => trans('users.last_name'),
+            'key' => 'last_name',
+            'sort_by' => 'users.last_name'
+        ],[
+            'title' => trans('users.first_name'),
+            'key' => 'first_name',
+            'sort_by' => 'users.first_name'
+        ],[
+            'title' => trans('users.board'),
+            'key' => 'board',
+            'config' => 'user.board',
+            'sort_by' => 'users.first_name',
+            'button' => true
+        ],[
+            'title' => trans('users.role'),
+            'key' => 'roles',
+            'collection' => 'name',
+            'sort_by' => 'users.roles',
+            'button' => [
+                'attribute' => 'slug'
+            ]
         ]];
 
         // we instantiate the query
-        $query = \Sentinel::getRoleRepository()->query();
+        $query = \Sentinel::getUserRepository()->query();
+
+        // we execute the table joins
+//        $query->with('roles');
+//        $query->select('users.*');
+//        $query->addSelect('roles.name');
+//        $query->leftJoin('role_users', 'role_users.id', '=', 'role_users.user_id');
+//        $query->leftJoin('roles', 'roles.id', '=', 'role_users.role_id');
+
+        // select `roles`.*, `role_users`.`user_id` as `pivot_user_id`, `role_users`.`role_id` as `pivot_role_id`,
+        // `role_users`.`created_at` as `pivot_created_at`, `role_users`.`updated_at` as `pivot_updated_at` from `
+        //roles` inner join `role_users` on `roles`.`id` = `role_users`.`role_id`
+        // where `role_users`.`user_id` in (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 
         // we format the data for the needs of the view
-        $tableListData = $this->prepareTableListData($query, $request, $columns, 'permissions', [
-            'action' => 'Supression du rôle',
+        $tableListData = $this->prepareTableListData($query, $request, $columns, 'users', [
+            'action' => 'Supression de l\'utilisateur',
             'attribute' => 'name',
         ]);
 
@@ -67,7 +89,7 @@ class PermissionsController extends Controller
         ];
 
         // return the view with data
-        return view('pages.back.permissions-list')->with($data);
+        return view('pages.back.users-list')->with($data);
     }
 
     public function show($id)

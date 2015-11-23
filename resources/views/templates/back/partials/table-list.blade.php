@@ -4,7 +4,7 @@
 
         <tr>
 
-            <td colspan="{{ sizeof($tableListData['columns']) + 2 }}" class="no-padding">
+            <td colspan="{{ sizeof($tableListData['columns']) + 1 }}" class="no-padding">
 
                 <div class="row">
 
@@ -37,8 +37,6 @@
 
         <tr>
 
-            <th></th>
-
             @foreach($tableListData['columns'] as $column)
                 <th>
                     @if(isset($column['sort_by']))
@@ -65,10 +63,30 @@
 
             <tr>
 
-                <td><input type="checkbox"></td>
-
                 @foreach($tableListData['columns'] as $column)
-                    <td>{{ $entity->getAttribute($column['slug']) }}</td>
+                    <td>
+                        @if(isset($column['config']) && !empty(config($column['config'] . '.' . $entity->getAttribute($column['key']))))
+                            @if(isset($column['button']) && $column['button'] === true)
+                                <button class="btn {{ config($column['config'] . '.' . $entity->getAttribute($column['key']) . '.' . 'key') }}">
+                            @endif
+                            {{ config($column['config'] . '.' . $entity->getAttribute($column['key']) . '.' . 'title') }}
+                        @elseif(is_a($entity->getAttribute($column['key']), '\Illuminate\Database\Eloquent\Collection') && isset($column['collection']) && !empty($column['collection']))
+                            @foreach($entity->getAttribute($column['key']) as $object)
+                                @if(isset($column['button']['attribute']) && !empty($column['button']['attribute']))
+                                    <button class="btn {{ $object->getAttribute($column['button']['attribute']) }}">
+                                @endif
+                                {{ $object->getAttribute($column['collection']) }}
+                            @endforeach
+                        @else
+                            @if(isset($column['button']) && $column['button'] === true)
+                                <button class="btn {{ $column['key'] }}">
+                            @endif
+                            {{ $entity->getAttribute($column['key']) }}
+                        @endif
+                        @if(isset($column['button']['attribute']) && !empty($column['button']['attribute']))
+                            </button>
+                        @endif
+                    </td>
                 @endforeach
 
                 <td class="actions text-right">
@@ -81,7 +99,8 @@
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="_id" value="{{ $entity->id }}">
-                        <a href="#" class="text-danger confirm"><i class="fa fa-trash" title="Supprimer"></i></a>
+                        <a href="#" class="text-danger confirm" data-confirm="{{ $entity->getAttribute($confirm['attribute']) }}"
+                        ><i class="fa fa-trash" title="Supprimer"></i></a>
                     </form>
                 </td>
             </tr>
@@ -92,15 +111,11 @@
 
         <tr>
 
-            <td colspan="{{ sizeof($tableListData['columns']) + 2 }}" class="no-padding">
+            <td colspan="{{ sizeof($tableListData['columns']) + 1 }}" class="no-padding">
 
                 <div class="row">
 
                     <div class="col-sm-4 table-commands">
-                        <a href="">
-                            <button class="btn btn-danger spin-on-click"><i class="fa fa-trash"></i> Supprimer la sélection</button>
-                        </a>
-
                         <a href="{{ route($tableListData['route'] . '.create') }}">
                             <button class="btn btn-success spin-on-click"><i class="fa fa-plus-circle"></i> Ajouter</button>
                         </a>

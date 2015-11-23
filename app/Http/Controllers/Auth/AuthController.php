@@ -80,7 +80,8 @@ class AuthController extends Controller
             }
 
             Modal::alert([
-                "Bienvenue " . $user->first_name . " " . $user->last_name . ", vous êtes maintenant connecté."
+                "Bienvenue <b>" . $user->first_name . "&nbsp;" . $user->last_name .
+                "</b>, vous êtes maintenant connecté."
             ], 'success');
 
             // redirect to the url stored in the session

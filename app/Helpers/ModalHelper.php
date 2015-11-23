@@ -21,11 +21,15 @@ class ModalHelper
     /**
      * @param array $messages
      */
-    public function confirm(array $messages)
+    public function confirm(array $data)
     {
-        \Session::set("confirm", [
-            "message" => $this->formatConfirmMessage($messages)
-        ]);
+        if(!isset($data['action']) || empty($data['action'])){
+            throw new \Exception('confirm modal data array require an action key.');
+        }
+        if(!isset($data['attribute']) || empty($data['attribute'])){
+            throw new \Exception('confirm modal data array require an attribute key.');
+        }
+        \Session::set("confirm", $data);
     }
 
     /**
@@ -67,21 +71,5 @@ class ModalHelper
             'title' => $title,
             'content' => $formattedMessage
         ];
-    }
-
-    /**
-     * @param array $messages
-     * @return array
-     */
-    public function formatConfirmMessage(array $messages)
-    {
-        // we format the message in html list
-        $formattedMessage = '<ul class="list-unstyled">';
-        foreach ($messages as $key => $message) {
-            $formattedMessage .= '<li>' . $message . '</li>';
-        }
-        $formattedMessage .= '</ul>';
-
-        return $formattedMessage;
     }
 }

@@ -39,19 +39,27 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav side-nav">
                 <li @if(\Route::current()->getName() === 'dashboard') class="active" @endif>
-                    <a href="{{ route('dashboard') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                    <a href="{{ route('dashboard') }}"><i class="fa fa-fw fa-dashboard"></i> {{ trans('template.back.header.dashboard') }}</a>
                 </li>
                 @if(\Sentinel::getUser()->hasAccess('settings.view'))
                     <li @if(\Route::current()->getName() === 'settings') class="active" @endif>
-                        <a href="{{ route('settings') }}"><i class="fa fa-cogs"></i> Configuration du site</a>
+                        <a href="{{ route('settings') }}"><i class="fa fa-cogs"></i> {{ trans('template.back.header.settings') }}</a>
                     </li>
                 @endif
                 @if(\Sentinel::getUser()->hasAccess('permissions.list'))
-                    <li @if(\Route::current()->getName() === 'permissions') class="active"
+                    <li @if(\Route::current()->getName() === 'permissions.index') class="active"
                         @elseif(\Route::current()->getName() === 'permissions.create')) class="active"
                         @elseif(\Route::current()->getName() === 'permissions.show')) class="active"
                         @endif>
-                        <a href="{{ route('permissions.index') }}"><i class="fa fa-gavel"></i> Permissions utilisateur</a>
+                        <a href="{{ route('permissions.index') }}"><i class="fa fa-gavel"></i> {{ trans('template.back.header.permissions') }}</a>
+                    </li>
+                @endif
+                @if(\Sentinel::getUser()->hasAccess('users.list'))
+                    <li @if(\Route::current()->getName() === 'users.index') class="active"
+                        @elseif(\Route::current()->getName() === 'users.create')) class="active"
+                        @elseif(\Route::current()->getName() === 'users.show')) class="active"
+                        @endif>
+                        <a href="{{ route('users.index') }}"><i class="fa fa-users"></i> {{ trans('template.back.header.users') }}</a>
                     </li>
                 @endif
                 <li>

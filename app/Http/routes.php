@@ -3,6 +3,10 @@
 /***********************************************************************************************************************
  * LOGS
  **********************************************************************************************************************/
+
+// we enable the query logs
+\DB::enableQueryLog();
+
 // log each http request
 if (!empty($_SERVER['REQUEST_URI'])) {
     $method = !empty($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '';
@@ -10,12 +14,12 @@ if (!empty($_SERVER['REQUEST_URI'])) {
     \Log::info(implode(' - ', array($method, $uri)));
 }
 // log each database query
-Event::listen('illuminate.query', function ($sql, $bindings) {
-    foreach ($bindings as $val) {
-        $sql = preg_replace('/\?/', "'{$val}'", $sql, 1);
-    }
-    \Log::info($sql);
-});
+//Event::listen('illuminate.query', function ($sql, $bindings) {
+//    foreach ($bindings as $val) {
+//        $sql = preg_replace('/\?/', "'{$val}'", $sql, 1);
+//    }
+//    \Log::info($sql);
+//});
 
 /***********************************************************************************************************************
  * IMAGES
@@ -28,7 +32,6 @@ Route::get('file', [
 /***********************************************************************************************************************
  * BACKEND ROUTES
  **********************************************************************************************************************/
-
 $group = config('settings.multilingual') ? ['prefix' => LaravelLocalization::setLocale(), 'middleware' => [
     'auth',
     'localeSessionRedirect',
@@ -51,7 +54,7 @@ $route = Route::group($group, function () {
         ]
     ]);
     // configuration
-    Route::resource(LaravelLocalization::transRoute('routes.configuration'), 'Settings\SettingsController', [
+    Route::resource(LaravelLocalization::transRoute('routes.settings'), 'Settings\SettingsController', [
         'names' => [
             'index' => 'settings',
             'update' => 'settings.update'
@@ -71,14 +74,16 @@ $route = Route::group($group, function () {
         ]
     ]);
 
-//    Route::get(LaravelLocalization::transRoute('routes.permissions'), [
-//        'as' => 'permissions',
-//        'uses' => 'User\PermissionsController@index'
-//    ]);
-
-//    Route::get(LaravelLocalization::transRoute('routes.permissions'), [
-//        'as' => 'permissions', 'uses' => 'User\PermissionsController@index'
-//    ]);
+    // users
+    Route::resource(LaravelLocalization::transRoute('routes.users'), 'User\UsersController', [
+        'names' => [
+            'index' => 'users.index',
+            'create' => 'users.create',
+            'show' => 'users.show',
+            'update' => 'users.update',
+            'destroy' => 'users.destroy'
+        ]
+    ]);
 
     // logout
     Route::resource('deconnexion', 'Auth\LogoutController', [
@@ -91,71 +96,14 @@ $route = Route::group($group, function () {
 /***********************************************************************************************************************
  * FRONTEND ROUTES
  **********************************************************************************************************************/
-// home
-Route::resource('/', 'Home\HomeController', [
-    'names' => [
-        'index' => 'home',
-    ]
-]);
-// news
-Route::resource('/news', 'News\NewsController', [
-    'names' => [
-        'index' => 'front.news',
-        'show' => 'front.news.show'
-    ]
-]);
-// leading team
-Route::resource('/equipe-dirigeante', 'LeadingTeam\LeadingTeamController', [
-    'names' => [
-        'index' => 'front.leading_team'
-    ]
-]);
-// palmares
-Route::resource('/palmares', 'Palmares\PalmaresController', [
-    'names' => [
-        'index' => 'front.palmares'
-    ]
-]);
-// registration
-Route::resource('/inscription', 'Registration\RegistrationController', [
-    'names' => [
-        'index' => 'front.registration'
-    ]
-]);
-// registration
-Route::resource('/calendrier', 'Calendar\CalendarController', [
-    'names' => [
-        'index' => 'front.calendar'
-    ]
-]);
-// schedule
-Route::resource('/horaires', 'Schedule\ScheduleController', [
-    'names' => [
-        'index' => 'front.schedule'
-    ]
-]);
-// shop
-Route::resource('/boutique-en-ligne', 'EShop\EShopController', [
-    'names' => [
-        'index' => 'front.e-shop',
-        'show' => 'front.e-shop.add-to-cart'
-    ]
-]);
-// sitemap
-Route::get('sitemap.xml', 'Sitemap\SitemapController@index');
-// rss
-Route::get('rss', 'Rss\RssController@index');
-// pages
-Route::resource('page', 'Pages\PageController', [
-    'names' => [
-        'show' => 'front.page'
-    ]
-]);
-
 // guest routes
-Route::group([
-    'middleware' => 'guest'
-], function () {
+// we define the middlewares to apply according to the config
+$group = config('settings.multilingual') ? ['prefix' => LaravelLocalization::setLocale(), 'middleware' => [
+    'guest',
+    'localeSessionRedirect',
+    'localizationRedirect'
+]] : ['middleware' => 'guest'];
+Route::group($group, function () {
     // account
     Route::get('mon-compte/creer', [
         'uses' => 'Auth\AccountController@createAccount',
@@ -181,6 +129,75 @@ Route::group([
             'index' => 'forgotten_password',
             'show' => 'password_recovery',
             'update' => 'password_reset'
+        ]
+    ]);
+});
+
+//public routes
+// we define the middlewares to apply according to the config
+$group = config('settings.multilingual') ? ['prefix' => LaravelLocalization::setLocale(), 'middleware' => [
+    'localeSessionRedirect',
+    'localizationRedirect'
+]] : [];
+Route::group($group, function () {
+    // home
+    Route::resource('/', 'Home\HomeController', [
+        'names' => [
+            'index' => 'home',
+        ]
+    ]);
+    // news
+    Route::resource('/news', 'News\NewsController', [
+        'names' => [
+            'index' => 'front.news',
+            'show' => 'front.news.show'
+        ]
+    ]);
+    // leading team
+    Route::resource('/equipe-dirigeante', 'LeadingTeam\LeadingTeamController', [
+        'names' => [
+            'index' => 'front.leading_team'
+        ]
+    ]);
+    // palmares
+    Route::resource('/palmares', 'Palmares\PalmaresController', [
+        'names' => [
+            'index' => 'front.palmares'
+        ]
+    ]);
+    // registration
+    Route::resource('/inscription', 'Registration\RegistrationController', [
+        'names' => [
+            'index' => 'front.registration'
+        ]
+    ]);
+    // registration
+    Route::resource('/calendrier', 'Calendar\CalendarController', [
+        'names' => [
+            'index' => 'front.calendar'
+        ]
+    ]);
+    // schedule
+    Route::resource('/horaires', 'Schedule\ScheduleController', [
+        'names' => [
+            'index' => 'front.schedule'
+        ]
+    ]);
+    // shop
+    Route::resource('/boutique-en-ligne', 'EShop\EShopController', [
+        'names' => [
+            'index' => 'front.e-shop',
+            'show' => 'front.e-shop.add-to-cart'
+        ]
+    ]);
+    // sitemap
+    Route::get('sitemap.xml', 'Sitemap\SitemapController@index');
+    // rss
+    Route::get('rss', 'Rss\RssController@index');
+    // pages
+    Route::resource('page', 'Pages\PageController', [
+        'names' => [
+            'show' => 'front.page'
         ]
     ]);
 });

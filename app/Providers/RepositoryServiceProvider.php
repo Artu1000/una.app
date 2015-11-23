@@ -88,9 +88,5 @@ class RepositoryServiceProvider extends ServiceProvider
             return new RssRepository();
         });
 
-        // configuration
-        $this->app->bind('App\Repositories\Configuration\ConfigurationRepositoryInterface', function(){
-            return new ConfigurationRepository();
-        });
     }
 }

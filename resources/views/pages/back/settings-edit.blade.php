@@ -191,7 +191,7 @@
                             <label for="input_loading_spinner">Icône de chargement</label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_loading_spinner"><i class="fa fa-spinner"></i></span>
+                                    <span class="input-group-addon" for="input_loading_spinner">{!! config('settings.loading_spinner') ? config('settings.loading_spinner') : '<i class="fa fa-spinner"></i>' !!}</span>
                                     <input id="input_loading_spinner" class="form-control" type="loading_spinner" name="loading_spinner" placeholder="Icône de chargement" value="{{ old('loading_spinner') ? old('loading_spinner') : config('settings.loading_spinner') }}">
                                 </div>
                             </div>

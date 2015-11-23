@@ -77,6 +77,20 @@ class ProjectInstall extends Command
      */
     public function handle()
     {
+        // composer install
+        $this->info('Executing composer install / update ...');
+        $this->execWithOutput('composer install');
+        $this->execWithOutput('composer update');
+
+        $this->info(' ');
+
+        // bower install
+        $this->info('Executing bower install / update ...');
+        $this->execWithOutput('bower install');
+        $this->execWithOutput('bower update');
+
+        $this->info(' ');
+
         // apt-get update
         $this->info('processing apt-get update ...');
         $this->execWithOutput('sudo apt-get update');
@@ -92,20 +106,6 @@ class ProjectInstall extends Command
         // prepare storage folder
         $this->info('Preparing storage folders ...');
         $this->call('storage:prepare');
-
-        $this->info(' ');
-
-        // composer install
-        $this->info('Executing composer install / update ...');
-        $this->execWithOutput('composer install');
-        $this->execWithOutput('composer update');
-
-        $this->info(' ');
-
-        // bower install
-        $this->info('Executing bower install / update ...');
-        $this->execWithOutput('bower install');
-        $this->execWithOutput('bower update');
 
         $this->info(' ');
 

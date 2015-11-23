@@ -17,6 +17,14 @@ $(function() {
     var confirm = false;
     $('.confirm').on('click', function(e){
         e.preventDefault();
+
+        var attribute = $(this).attr('data-confirm');
+        var modal = $('#confirm');
+        var attr = modal.find('.attribute').html(attribute);
+        console.log(attr);
+
+        //console.log(test);
+
         // we get the form
         var $form = $(this).closest('form');
         // we show the modal

@@ -38,7 +38,7 @@
             {{-- footer inclusion --}}
             @include('templates.back.partials.footer')
 
-            {{-- alerts management --}}
+            {{-- alerts and confirm management --}}
             @if(isset($alert) && !empty($alert))
                 @include('templates.common.modals.alert')
             @endif
