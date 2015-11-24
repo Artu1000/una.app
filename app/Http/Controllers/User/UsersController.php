@@ -38,28 +38,28 @@ class UsersController extends Controller
         // we define the table list columns
         $columns = [
             [
-                'title' => trans('users.last_name'),
+                'title' => trans('users.view.label.last_name'),
                 'key' => 'last_name',
                 'sort_by' => 'users.last_name'
             ], [
-                'title' => trans('users.first_name'),
+                'title' => trans('users.view.label.first_name'),
                 'key' => 'first_name',
                 'sort_by' => 'users.first_name'
             ], [
-                'title' => trans('users.status'),
+                'title' => trans('users.view.label.status'),
                 'key' => 'status',
                 'config' => 'user.status',
                 'sort_by' => 'users.status',
                 'button' => true
             ], [
-                'title' => trans('users.board'),
+                'title' => trans('users.view.label.board'),
                 'key' => 'board',
                 'config' => 'user.board',
                 'sort_by' => 'users.board',
                 'button' => true
             ],
             [
-                'title' => trans('users.role'),
+                'title' => trans('users.view.label.role'),
                 'key' => 'roles',
                 'collection' => 'name',
                 'sort_by' => 'roles.name',
@@ -68,7 +68,7 @@ class UsersController extends Controller
                 ]
             ],
             [
-                'title' => trans('users.activation'),
+                'title' => trans('users.view.label.activation'),
                 'key' => 'activated',
                 'activate' => 'users.activate'
             ]
@@ -91,7 +91,7 @@ class UsersController extends Controller
         // we prepare the confirm config
         $confirm_config = [
             'action' => 'Supression de l\'utilisateur',
-            'attribute' => 'name',
+            'attributes' => ['first_name', 'last_name'],
         ];
 
         // we prepare the search config
@@ -148,8 +148,9 @@ class UsersController extends Controller
 
         // prepare data for the view
         $data = [
+            'seoMeta' => $this->seoMeta,
             'user' => $user,
-            'seoMeta' => $this->seoMeta
+            'roles' => \Sentinel::getRoleRepository()->all()
         ];
 
         // return the view with data
@@ -163,6 +164,7 @@ class UsersController extends Controller
 
         // prepare data for the view
         $data = [
+            'roles' => \Sentinel::getRoleRepository()->all(),
             'seoMeta' => $this->seoMeta,
         ];
 
@@ -181,33 +183,56 @@ class UsersController extends Controller
             return Redirect()->back();
         }
 
-        // we flash the request
-        $request->flash();
+        // we get the inputs
+        $inputs = $request->except('_token');
+
+        // we convert the french formatted date to its english format
+        $inputs['birth_date'] = null;
+        if (!empty($birth_date = $request->get('birth_date'))) {
+            $inputs['birth_date'] = Carbon::createFromFormat('d/m/Y', $birth_date)->format('Y-m-d');
+        }
 
         // we check the inputs
         $errors = [];
-        $validator = \Validator::make($request->all(), [
-            //
+        $validator = \Validator::make($inputs, [
+            'photo' => 'mimes:jpg,jpeg,png',
+            'gender' => 'required|in:' . implode(',', array_keys(config('user.gender'))),
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'birth_date' => 'date_format:Y-m-d',
+            'phone_number' => 'required|phone:FR',
+            'email' => 'required|email|unique:users,email',
+            'zip_code' => 'digits:5',
+            'role' => 'required|numeric|exists:roles,id',
+            'password' => 'required|min:6|confirmed',
         ]);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
         }
         // if errors are found
         if (count($errors)) {
+            // we flash the request
+            $request->flashExcept(['password', 'password_confirmation']);
+            // we notify the current user
             \Modal::alert($errors, 'error');
             return Redirect()->back();
         }
 
         try {
-            // we create the role
-            $user = \Sentinel::create([
-                //
-            ]);
+            // we create the user
+            $user = \Sentinel::create($inputs);
+            // we attach the new role
+            $role = \Sentinel::findRoleById($inputs['role']);
+            $role->users()->attach($user);
+            // we notify the current user
             \Modal::alert([
                 trans('users.message.created', ['name' => $user->name])
             ], 'success');
-            return Redirect(route('permissions'));
+            return Redirect(route('users.index'));
         } catch (\Exception $e) {
+            // we flash the request
+            $request->flashExcept(['password', 'password_confirmation']);
+            // we log the error and we notify the current user
             \Log::error($e);
             \Modal::alert([
                 trans('users.message.creation.failure', ['name' => $user->name]),
@@ -228,7 +253,10 @@ class UsersController extends Controller
             return Redirect()->back();
         }
 
-        $request->flashExcept(['password', 'password_confirmation']);
+        // we convert the "on" value to the activation order to a boolean value
+        $request->merge([
+            'activation' => filter_var($request->get('activation'), FILTER_VALIDATE_BOOLEAN)
+        ]);
 
         // we get the inputs
         $inputs = $request->except('_token', '_method');
@@ -251,6 +279,8 @@ class UsersController extends Controller
             'phone_number' => 'phone:FR',
             'email' => 'required|email|unique:users,email,' . $request->get('_id'),
             'zip_code' => 'digits:5',
+            'role' => 'numeric|exists:roles,id',
+            'activation' => 'boolean',
             'password' => 'min:6|confirmed',
         ]);
         foreach ($validator->errors()->all() as $error) {
@@ -258,21 +288,49 @@ class UsersController extends Controller
         }
         // if errors are found
         if (count($errors)) {
+            // we flash the request
+            $request->flashExcept(['password', 'password_confirmation']);
+            // we notify the current user
             \Modal::alert($errors, 'error');
             return Redirect()->back();
         }
 
         try {
-            // we update the role
+            // we get and update the user
             $user = \Sentinel::findById($request->get('_id'));
-            $user->fill($inputs);
-            $user->update([$inputs]);
+            $user->update($inputs);
 
+            // we check is the user is attached to roles
+            $current_roles = $user->roles;
+            // we detach each roles found
+            foreach($current_roles as $role){
+                $role->users()->detach($user);
+            }
+            // we attach the new role
+            $role = \Sentinel::findRoleById($inputs['role']);
+            $role->users()->attach($user);
+
+            // if the order is to activate the user
+            if($inputs['activation']){
+                // we activate the user
+                if(!$activation = \Activation::exists($user)){
+                    $activation = \Activation::create($user);
+                }
+                \Activation::complete($user, $activation->code);
+            } else {
+                // or we deactivate him
+                \Activation::remove($user);
+            }
+
+            // we notify the current user
             \Modal::alert([
                 trans('users.message.update.success', ['name' => $user->name])
             ], 'success');
             return Redirect()->back();
         } catch (\Exception $e) {
+            // we flash the request
+            $request->flashExcept(['password', 'password_confirmation']);
+            // we log the error and we notify the current user
             \Log::error($e);
             \Modal::alert([
                 trans('users.message.update.failure', ['name' => $user->name]),
@@ -329,6 +387,7 @@ class UsersController extends Controller
             return Redirect()->back();
         }
 
+        // we convert the "on" value to the activation order to a boolean value
         $request->merge([
             'activation_order' => filter_var($request->get('activation_order'), FILTER_VALIDATE_BOOLEAN)
         ]);

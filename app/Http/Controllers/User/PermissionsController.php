@@ -185,7 +185,7 @@ class PermissionsController extends Controller
             \Modal::alert([
                 'Le rôle <b>' . $role->name . '</b> a bien été créé.'
             ], 'success');
-            return Redirect(route('permissions'));
+            return Redirect(route('permissions.index'));
         } catch (\Exception $e) {
             \Log::error($e);
             \Modal::alert([

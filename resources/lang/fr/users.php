@@ -1,24 +1,23 @@
 <?php
 
 return [
-    "last_name" => "NOM",
-    "first_name" => "Prénom",
-    "status" => "Statut",
-    "board" => "Organe",
-    "role" => "Permissions",
-    "activation" => "Activation",
 
+    // views
     "view" => [
         "action" => [
             "update" => "Éditer l'utilisateur",
             "create" => "Créer l'utilisateur",
+            "save" => "Enregistrer les modifications"
         ],
         'info' => [
             "photo" => "Formats acceptés : jpg, jpeg, png.",
             "phone_number" => "Numéro français uniquement.",
-            "password" => "Ne remplir que si vous souhaitez modifier le mot de passe actuel de l'utilisateur."
+            "password" => "Ne remplir que si vous souhaitez modifier le mot de passe actuel."
         ],
         "title" => [
+            "profile" => "Mon profil",
+            "edit" => "Édition d'un utilisateur",
+            "create" => "Création d'un utlisateur",
             "personal_data" => "Données personnelles",
             "contact" => "Contact",
             "security" => "Sécurité"
@@ -35,11 +34,15 @@ return [
             "zip_code" => "Code postal",
             "city" => "Ville",
             "country" => "Pays",
+            "role" => "Rôle",
+            "activation" => "Activation",
+            "account" => "Compte",
             "new_password" => "Nouveau mot de passe",
             "password_confirm" => "Confirmation du nouveau mot de passe",
         ],
     ],
 
+    // messages
     "message" => [
         "creation" => [
             "success" => "L'utilisateur <b> :name </b> a bien été créé.",

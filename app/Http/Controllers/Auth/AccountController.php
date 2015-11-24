@@ -26,16 +26,16 @@ class AccountController extends Controller
     {
         // SEO Meta settings
         $this->seoMeta['page_title'] = 'Mon compte';
-        $this->seoMeta['meta_desc'] = 'Bienvenue sur votre compte personnel UNA.';
 
         // prepare data for the view
         $data = [
             'seoMeta' => $this->seoMeta,
-            'user' => \Sentinel::getUser()
+            'user' => \Sentinel::getUser(),
+            'roles' => \Sentinel::getRoleRepository()->all()
         ];
 
         // return the view with data
-        return view('pages.back.account-edit')->with($data);
+        return view('pages.back.user-edit')->with($data);
     }
 
     /**
@@ -204,11 +204,6 @@ class AccountController extends Controller
             "Une erreur s'est déroulée lors de la mise à jour de vos données personnelles."
         ], 'error');
         return Redirect()->back();
-    }
-
-    public function destroy()
-    {
-        dd('destroy');
     }
 
     /**

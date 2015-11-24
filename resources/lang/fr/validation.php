@@ -139,7 +139,7 @@ return [
         "birth_date" => "Date de naissance",
         "phone_number" => "Numéro de téléphone",
         "zip_code" => "Code postal",
-
+        "role" => "Rôle",
     ],
 
 ];

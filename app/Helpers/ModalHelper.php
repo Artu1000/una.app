@@ -26,8 +26,8 @@ class ModalHelper
         if(!isset($data['action']) || empty($data['action'])){
             throw new \Exception('confirm modal data array require an action key.');
         }
-        if(!isset($data['attribute']) || empty($data['attribute'])){
-            throw new \Exception('confirm modal data array require an attribute key.');
+        if(!isset($data['attributes']) || empty($data['attributes'])){
+            throw new \Exception('confirm modal data array require an attributes key.');
         }
         \Session::set("confirm", $data);
     }

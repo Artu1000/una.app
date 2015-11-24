@@ -112,8 +112,7 @@
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="_id" value="{{ $entity->id }}">
-                        <a href="#" class="text-danger confirm" data-confirm="{{ $entity->getAttribute($confirm['attribute']) }}"
-                        ><i class="fa fa-trash" title="Supprimer"></i></a>
+                        <a href="#" class="text-danger confirm" data-confirm="@foreach($confirm['attributes'] as $attribute){{ $entity->getAttribute($attribute) }} @endforeach"><i class="fa fa-trash" title="Supprimer"></i></a>
                     </form>
                 </td>
             </tr>
