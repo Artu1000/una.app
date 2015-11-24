@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'confirm' => "Confirmer",
-    'cancel' => "Annuler",
-    'back' => "Retour",
+    "confirm" => "Confirmer",
+    "cancel" => "Annuler",
+    "back" => "Retour",
+    "browse" => "Parcourir"
 ];

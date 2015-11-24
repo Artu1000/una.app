@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -26,13 +27,13 @@ class UsersController extends Controller
         $required = 'users.list';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>"
             ], 'error');
             return Redirect()->back();
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = 'Gestion des utilisateurs';
+        $this->seoMeta['page_title'] = trans('seo.users.index');
 
         // we define the table list columns
         $columns = [
@@ -100,7 +101,14 @@ class UsersController extends Controller
         ];
 
         // we format the data for the needs of the view
-        $tableListData = $this->prepareTableListData($query, $request, $columns, 'users', $confirm_config, $search_config);
+        $tableListData = $this->prepareTableListData(
+            $query,
+            $request,
+            $columns,
+            'users',
+            $confirm_config,
+            $search_config
+        );
 
         // prepare data for the view
         $data = [
@@ -115,44 +123,43 @@ class UsersController extends Controller
     public function show($id)
     {
         // we check the current user permission
-        $required = 'permissions.view';
+        $required = 'users.view';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>"
             ], 'error');
             return Redirect()->back();
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = "Edition d'un rôle";
+        $this->seoMeta['page_title'] = trans('seo.users.show');
 
         // we get the role
-        $role = \Sentinel::findRoleById($id);
+        $user = \Sentinel::findById($id);
 
         // we check if the role exists
-        if (!$role) {
+        if (!$user) {
             \Modal::alert([
-                "Le rôle que vous avez sélectionné n'existe pas." .
-                "Veuillez contacter le support si l'erreur persiste :" . "<a href='mailto:" .
-                config('settings.support_email') . "' >" . config('settings.support_email') . "</a>."
+                trans('users.message.find.failure'),
+                trans('errors.contact')
             ], 'error');
             return Redirect()->back();
         }
 
         // prepare data for the view
         $data = [
-            'role' => $role,
+            'user' => $user,
             'seoMeta' => $this->seoMeta
         ];
 
         // return the view with data
-        return view('pages.back.permission-edit')->with($data);
+        return view('pages.back.user-edit')->with($data);
     }
 
     public function create()
     {
         // SEO Meta settings
-        $this->seoMeta['page_title'] = "Création d'un rôle";
+        $this->seoMeta['page_title'] = trans('seo.users.create');
 
         // prepare data for the view
         $data = [
@@ -160,39 +167,19 @@ class UsersController extends Controller
         ];
 
         // return the view with data
-        return view('pages.back.permission-edit')->with($data);
+        return view('pages.back.user-edit')->with($data);
     }
 
     public function store(Request $request)
     {
         // we check the current user permission
-        $required = 'permissions.create';
+        $required = 'users.create';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>"
             ], 'error');
             return Redirect()->back();
         }
-
-        // we get the original request content
-        $inputs = $request->all();
-        // we replace the wrong keys (php forbid dots and replace them by underscores)
-        foreach (array_dot(config('permissions')) as $permission => $value) {
-            // we only take care about the children permissions
-            if (strpos($permission, '.')) {
-                // we translate the permission slug to the wrong key given by php
-                $wrong_key = str_replace('.', '_', $permission);
-                // we get the value and store it into the correct key
-                if (isset($inputs[$wrong_key])) {
-                    $inputs[$permission] = $inputs[$wrong_key];
-                    // we delete the wrong key
-                    unset ($inputs[$wrong_key]);
-                }
-            }
-        }
-
-        // we replace the request by the cleaned one
-        $request->replace($inputs);
 
         // we flash the request
         $request->flash();
@@ -200,7 +187,7 @@ class UsersController extends Controller
         // we check the inputs
         $errors = [];
         $validator = \Validator::make($request->all(), [
-            'name' => 'required|unique:roles,name'
+            //
         ]);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
@@ -213,21 +200,18 @@ class UsersController extends Controller
 
         try {
             // we create the role
-            $role = \Sentinel::getRoleRepository()->createModel()->create([
-                'slug' => str_slug($request->get('name')),
-                'name' => $request->get('name'),
-                'permissions' => $request->except('_token', 'name')
+            $user = \Sentinel::create([
+                //
             ]);
             \Modal::alert([
-                'Le rôle <b>' . $role->name . '</b> a bien été créé.'
+                trans('users.message.created', ['name' => $user->name])
             ], 'success');
             return Redirect(route('permissions'));
         } catch (\Exception $e) {
             \Log::error($e);
             \Modal::alert([
-                "Une erreur est survenue lors de la création du rôle <b>" . $request->get('name') . "</b>.",
-                "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
-                config('settings.support_email') . "</a>."
+                trans('users.message.creation.failure', ['name' => $user->name]),
+                trans('errors.contact')
             ], 'error');
             return Redirect()->back();
         }
@@ -236,42 +220,38 @@ class UsersController extends Controller
     public function update(Request $request)
     {
         // we check the current user permission
-        $required = 'permissions.update';
+        $required = 'users.update';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>"
             ], 'error');
             return Redirect()->back();
         }
 
-        // we get the original request content
-        $inputs = $request->all();
-        // we replace the wrong keys (php forbid dots and replace them by underscores)
-        foreach (array_dot(config('permissions')) as $permission => $value) {
-            // we translate the permission slug to the wrong key given by php
-            $wrong_key = str_replace('.', '_', $permission);
-            // we translate "on" value in boolean value
-            if (isset($inputs[$wrong_key])) {
-                $inputs[$permission] = filter_var($inputs[$wrong_key], FILTER_VALIDATE_BOOLEAN);
-                // we delete the wrong key if a dot is found (it is the case for children permissions
-                if (strpos($permission, '.')) {
-                    // we delete the wrong key
-                    unset ($inputs[$wrong_key]);
-                }
-            }
+        $request->flashExcept(['password', 'password_confirmation']);
+
+        // we get the inputs
+        $inputs = $request->except('_token', '_method');
+
+        // we convert the french formatted date to its english format
+        $inputs['birth_date'] = null;
+        if (!empty($birth_date = $request->get('birth_date'))) {
+            $inputs['birth_date'] = Carbon::createFromFormat('d/m/Y', $birth_date)->format('Y-m-d');
         }
-
-        // we replace the request by the cleaned one
-        $request->replace($inputs);
-
-        // we flash the request
-        $request->flash();
 
         // we check the inputs
         $errors = [];
-        $validator = \Validator::make($request->all(), [
-            '_id' => 'required|exists:roles,id',
-            'name' => 'required|unique:roles,name,' . $request->get('_id')
+        $validator = \Validator::make($inputs, [
+            '_id' => 'required|numeric|exists:users,id',
+            'photo' => 'mimes:jpg,jpeg,png',
+            'gender' => 'in:' . implode(',', array_keys(config('user.gender'))),
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'birth_date' => 'date_format:Y-m-d',
+            'phone_number' => 'phone:FR',
+            'email' => 'required|email|unique:users,email,' . $request->get('_id'),
+            'zip_code' => 'digits:5',
+            'password' => 'min:6|confirmed',
         ]);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
@@ -284,22 +264,19 @@ class UsersController extends Controller
 
         try {
             // we update the role
-            $role = \Sentinel::findRoleById($request->get('_id'));
-            $role->name = $request->get('name');
-            $role->slug = str_slug($request->get('name'));
-            $role->permissions = $request->except('_method', '_id', '_token', 'name');
-            $role->save();
+            $user = \Sentinel::findById($request->get('_id'));
+            $user->fill($inputs);
+            $user->update([$inputs]);
 
             \Modal::alert([
-                'Le rôle <b>' . $role->name . '</b> a bien été mis à jour.'
+                trans('users.message.update.success', ['name' => $user->name])
             ], 'success');
             return Redirect()->back();
         } catch (\Exception $e) {
             \Log::error($e);
             \Modal::alert([
-                "Une erreur est survenue lors de la mise à jour du rôle <b>" . $request->get('name') . "</b>.",
-                "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
-                config('settings.support_email') . "</a>."
+                trans('users.message.update.failure', ['name' => $user->name]),
+                trans('errors.contact')
             ], 'error');
             return Redirect()->back();
         }
@@ -308,35 +285,34 @@ class UsersController extends Controller
     public function destroy(Request $request)
     {
         // we check the current user permission
-        $required = 'permissions.delete';
+        $required = 'users.delete';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>"
             ], 'error');
             return Redirect()->back();
         }
 
         // we get the role
-        if (!$role = \Sentinel::findRoleById($request->get('_id'))) {
+        if (!$user = \Sentinel::findById($request->get('_id'))) {
             \Modal::alert([
-                "Le rôle séléctionné n'existe pas."
+                trans('users.message.find.failure')
             ], 'error');
             return Redirect()->back();
         }
 
         // we delete the role
         try {
+            $user->delete();
             \Modal::alert([
-                "Le rôle <b>" . $role->name . "</b> a bien été supprimé."
+                trans('users.message.delete.success', ['name' => $user->name])
             ], 'success');
-            $role->delete();
             return Redirect()->back();
         } catch (\Exception $e) {
             \Log::error($e);
             \Modal::alert([
-                "Une erreur est survenue lors de la mise à jour du rôle <b>" . $request->get('name') . "</b>.",
-                "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
-                config('settings.support_email') . "</a>."
+                trans('users.message.delete.failure', ['name' => $user->name]),
+                trans('errors.contact')
             ], 'error');
             return Redirect()->back();
         }
@@ -347,9 +323,10 @@ class UsersController extends Controller
         // we check the current user permission
         $required = 'users.update';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
-            return response([
-                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
-            ], 401);
+            \Modal::alert([
+                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>"
+            ], 'error');
+            return Redirect()->back();
         }
 
         $request->merge([
@@ -386,12 +363,12 @@ class UsersController extends Controller
             }
 
             return response([
-                "User activation updated"
+                trans('users.message.activation.success')
             ], 200);
         } catch (\Exception $e){
             \Log::error($e);
             return response([
-                "An error occured during the user activation"
+                trans('users.message.activation.failure')
             ], 401);
         }
     }

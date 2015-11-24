@@ -86,10 +86,6 @@ abstract class Controller extends BaseController
 
         // we paginate the results
         $pagination = $query->paginate($tableListData['lines']);
-//        $query->get();
-//        $queries = \DB::getQueryLog();
-//        $last_query = end($queries);
-//        dd($last_query);
 
         // we add the lines and search inputs to the pagination url
         $pagination->appends([
