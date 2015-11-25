@@ -25,7 +25,8 @@ abstract class Controller extends BaseController
             'csrf_token' => csrf_token(),
             'base_url' => url('/'),
             'app_name' => config('settings.app_name'),
-            'loading_spinner' => config('settings.loading_spinner')
+            'loading_spinner' => config('settings.loading_spinner'),
+            'locale' => config('app.locale')
         ]);
 
         // load modal if an alert is waiting

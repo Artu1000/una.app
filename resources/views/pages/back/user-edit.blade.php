@@ -10,7 +10,7 @@
 
                 {{-- Title--}}
                 <h2>
-                    <i class="fa fa-gavel"></i>
+                    <i class="fa fa-user"></i>
                     @if(isset($user) && (\Sentinel::getUser()->id === $user->id))
                         {{ trans('users.view.title.profile') }}
                     @elseif(isset($user) && !(\Sentinel::getUser()->id === $user->id))
@@ -103,6 +103,7 @@
                                     <span class="input-group-addon" for="input_birth_date"><i class="fa fa-birthday-cake"></i></span>
                                     <input id="input_birth_date" type='text' class="form-control datepicker" name="birth_date" value="{{ old('birth_date') ? old('birth_date') : (isset($user) && $user->birth_date ? $user->birth_date : null) }}" placeholder="{{ trans('users.view.label.birth_date') }}">
                                 </div>
+                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('users.view.info.birth_date') }}</p>
                             </div>
 
                         </div>

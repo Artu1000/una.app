@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -30,8 +29,8 @@ class AccountController extends Controller
         // prepare data for the view
         $data = [
             'seoMeta' => $this->seoMeta,
-            'user' => \Sentinel::getUser(),
-            'roles' => \Sentinel::getRoleRepository()->all()
+            'user'    => \Sentinel::getUser(),
+            'roles'   => \Sentinel::getRoleRepository()->all(),
         ];
 
         // return the view with data
@@ -50,10 +49,10 @@ class AccountController extends Controller
         // we check the inputs
         $errors = [];
         $validator = \Validator::make($request->all(), [
-            'last_name' => 'required',
+            'last_name'  => 'required',
             'first_name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed'
+            'email'      => 'required|email|unique:users,email',
+            'password'   => 'required|min:6|confirmed',
         ]);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
@@ -61,6 +60,7 @@ class AccountController extends Controller
         // if errors are found
         if (count($errors)) {
             \Modal::alert($errors, 'error');
+
             return Redirect()->back();
         }
 
@@ -73,8 +73,8 @@ class AccountController extends Controller
             try {
                 // we send the email asking the account activation
                 \Mail::send('emails.account-confirmation', [
-                    'user' => $user,
-                    'token' => $activation->code
+                    'user'  => $user,
+                    'token' => $activation->code,
                 ], function ($email) use ($user) {
                     $email->from(config('mail.from.address'), config('mail.from.name'))
                         ->to($user->email, $user->first_name . ' ' . $user->last_name)
@@ -85,8 +85,9 @@ class AccountController extends Controller
                 \Modal::alert([
                     "Votre compte personnel a été créé. " .
                     "Un e-mail vous permettant d'activer votre compte vous a été envoyé. " .
-                    "Vous le recevrez dans quelques instants."
+                    "Vous le recevrez dans quelques instants.",
                 ], 'success');
+
                 return Redirect(route('login'));
 
             } catch (\Exception $e) {
@@ -95,8 +96,9 @@ class AccountController extends Controller
                 \Modal::alert([
                     "Une erreur est survenue lors de l'envoi de votre e-mail d'activation. " .
                     "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
-                    config('settings.support_email') . "</a>"
+                    config('settings.support_email') . "</a>",
                 ], 'error');
+
                 return Redirect()->back();
             }
         }
@@ -115,7 +117,7 @@ class AccountController extends Controller
         // prepare data for the view
         $data = [
             'seoMeta' => $this->seoMeta,
-            'css' => url(elixir('css/app.login.css'))
+            'css'     => url(elixir('css/app.login.css')),
         ];
 
         // return the view with data
@@ -141,8 +143,8 @@ class AccountController extends Controller
             try {
                 // we send the email asking the account activation
                 \Mail::send('emails.account-confirmation', [
-                    'user' => $user,
-                    'token' => $activation->code
+                    'user'  => $user,
+                    'token' => $activation->code,
                 ], function ($email) use ($user) {
                     $email->from(config('mail.from.address'), config('mail.from.name'))
                         ->to($user->email, $user->first_name . ' ' . $user->last_name)
@@ -152,8 +154,9 @@ class AccountController extends Controller
                 // notify the user & redirect
                 \Modal::alert([
                     "Un e-mail vous permettant d'activer votre compte vous a été renvoyé. " .
-                    "Vous le recevrez dans quelques instants."
+                    "Vous le recevrez dans quelques instants.",
                 ], 'success');
+
                 return Redirect(route('login'));
 
             } catch (\Exception $e) {
@@ -162,16 +165,18 @@ class AccountController extends Controller
                 \Modal::alert([
                     "Une erreur est survenue lors de l'envoi de votre e-mail d'activation. " .
                     "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
-                    config('settings.support_email') . "</a>"
+                    config('settings.support_email') . "</a>",
                 ], 'error');
+
                 return Redirect()->back();
             }
 
         } else {
             \Modal::alert([
                 "Aucun utilisateur correspondant à l'adresse e-mail <b>" . $request->get('email') .
-                "</b> n'a été trouvé."
+                "</b> n'a été trouvé.",
             ], 'error');
+
             return Redirect()->back();
         }
     }
@@ -189,24 +194,27 @@ class AccountController extends Controller
             if (\Activation::complete($user, $request->get('token'))) {
                 \Modal::alert([
                     "Félicitations " . $user->first_name . " " . $user->last_name .
-                    ", votre compte est maintenant activé. Vous pouvez maintenant vous y connecter."
+                    ", votre compte est maintenant activé. Vous pouvez maintenant vous y connecter.",
                 ], 'success');
+
                 return Redirect(route('login'))->withInput($request->only('email'));
             } else {
                 \Modal::alert([
                     "La clé d'activation de votre compte est incorrecte ou a expirée. ",
                     "Pour recevoir une nouvelle clé d'activation, <a href='" . route('send_activation_mail', [
-                        'email' => $request->get('email')
-                    ]) . "' title=\"Me renvoyer l'email d'activation\"><u>cliquez ici</u></a>."
+                        'email' => $request->get('email'),
+                    ]) . "' title=\"Me renvoyer l'email d'activation\"><u>cliquez ici</u></a>.",
                 ], 'error');
+
                 return Redirect(route('login'))->withInput($request->only('email'));
             }
         } else {
             // notify the user & redirect
             \Modal::alert([
                 "Aucun utilisateur correspondant à l'adresse e-mail <b>" . $request->get('email') .
-                "</b> n'a été trouvé."
+                "</b> n'a été trouvé.",
             ], 'error');
+
             return Redirect(route('login'))->withInput($request->only('email'));
         }
     }

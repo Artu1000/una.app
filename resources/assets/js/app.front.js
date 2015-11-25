@@ -64,11 +64,13 @@ var gmap = {
     screenOnMap: false,
     url: 'https://maps.googleapis.com/maps/api/js?v=3.exp&',
     analyseScrollPos: function () {
+        // if map canvas is found
         var scrollPos = $(document).scrollTop().valueOf();
         var pos = $('#map-canvas').offset().top - screen.height;
         if (scrollPos >= pos && gmap.screenOnMap === false || scrollPos < pos && gmap.screenOnMap === true) {
             gmap.screenOnMap = !gmap.screenOnMap;
         }
+
     },
     callScript: function () {
         window.loadGmap = function () {
@@ -116,7 +118,7 @@ var gmap = {
             gmap.active = true;
             gmap.callScript();
         }
-    },
+    }
 };
 
 var responsiveBackgroundImage = {
@@ -234,8 +236,10 @@ $(function () {
     // load image depending on the screen size
     responsiveBackgroundImage.process();
 
-    // load gmap when scroll on it
-    $(window).scroll(gmap.scrollTreatment);
+    // load gmap when scroll on it (if map canvas is found)
+    if($('#map-canvas').length){
+        $(window).scroll(gmap.scrollTreatment);
+    }
 
     // we launch the anchor treatment
     anchor.detect();

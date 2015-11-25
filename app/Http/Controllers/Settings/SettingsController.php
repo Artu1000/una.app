@@ -55,9 +55,6 @@ class SettingsController extends Controller
             return Redirect()->back();
         }
 
-        // we flash the data
-        $request->flash();
-
         // we analyse the given inputs
         // we replace the "on" or "off" value from the checkbox by a boolean
         $request->merge([
@@ -86,28 +83,44 @@ class SettingsController extends Controller
         }
         // if errors are found
         if (count($errors)) {
+            // we flash the data
+            $request->flash();
+
+            // we notify the current user
             \Modal::alert($errors, 'error');
+
             return Redirect()->back();
         }
+        try{
+            // we format the number into its international equivalent
+            $inputs['phone_number'] = $formatted_phone_number = phone_format(
+                $inputs['phone_number'],
+                'FR',
+                \libphonenumber\PhoneNumberFormat::INTERNATIONAL
+            );
 
-        // we format the number into its international equivalent
-        $inputs['phone_number'] = $formatted_phone_number = phone_format(
-            $inputs['phone_number'],
-            'FR',
-            \libphonenumber\PhoneNumberFormat::INTERNATIONAL
-        );
-
-        // we store the data into json file
-        if (file_put_contents(storage_path('app/config/settings.json'), json_encode($inputs))) {
+            // we update the json file
+            file_put_contents(storage_path('app/config/settings.json'), json_encode($inputs));
             \Modal::alert([
-                "La configuration a bien été mise à jour."
+                trans('settings.message.update.success')
             ], 'success');
-        } else {
+
+        }catch(\Exception $e){
+            // we flash the request
+            $request->flash();
+
+            // we log the error and we notify the current user
+            \Log::error($e);
             \Modal::alert([
-                "Une erreur est survenue pendant l'enregistrement de la configuration de l'application."
+                trans('settings.message.update.failure'),
+                trans('errors.contact', [
+                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
+                        config('settings.support_email') . "</a>.",
+                ]),
             ], 'error');
-        };
-        return Redirect()->back();
+
+            return Redirect()->back();
+        }
     }
 
 }

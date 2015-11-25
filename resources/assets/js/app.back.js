@@ -35,9 +35,16 @@ $(function() {
     });
 
     // datetime picker
-    $('.datepicker').datetimepicker({
-        locale: 'fr',
-        format: 'DD/MM/YYYY'
+    //$('.datepicker').datetimepicker({
+    //    locale: app.locale,
+    //    format: 'DD/MM/YYYY HH:ii:SS'
+    //    //defaultDate: date
+    //});
+
+    $('.datepicker').datepicker({
+        //autoclose: true,
+        todayHighlight: true,
+        language: app.locale
     });
 
     // permissions checkboxes
@@ -56,7 +63,7 @@ $(function() {
         evalChildrenCheckboxes($(this));
     });
 
-    //
+    // we manage the activation in list from the swipe button
     $('.swipe-btn.activate').click(function(){
         // we get the swipe group
         var swipe_group = $(this).parent('.swipe-group');

@@ -7,7 +7,6 @@
  * IMPORTS & VARIABLES
  **********************************************************************************************************************/
 @import 'app.common';
-@import '../vendor/eonasdan-bootstrap-datetimepicker/src/sass/bootstrap-datetimepicker-build';
 
 $logo_header_footer: '../../img/logo-una-header-large-white.png';
 
@@ -160,17 +159,6 @@ html {
         #content {
           padding: 15px 30px;
 
-          .bootstrap-datetimepicker-widget {
-
-            ul {
-
-              li {
-                margin: 0;
-                padding: 0 15px;
-              }
-            }
-          }
-
           .table-list {
 
             .form-inline {
@@ -254,6 +242,11 @@ html {
         }
       }
     }
+  }
+
+  .datepicker-dropdown {
+    margin: 0;
+    padding: 15px;
   }
 }
 

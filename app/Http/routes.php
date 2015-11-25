@@ -13,13 +13,6 @@ if (!empty($_SERVER['REQUEST_URI'])) {
     $uri = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
     \Log::info(implode(' - ', array($method, $uri)));
 }
-// log each database query
-//Event::listen('illuminate.query', function ($sql, $bindings) {
-//    foreach ($bindings as $val) {
-//        $sql = preg_replace('/\?/', "'{$val}'", $sql, 1);
-//    }
-//    \Log::info($sql);
-//});
 
 /***********************************************************************************************************************
  * IMAGES

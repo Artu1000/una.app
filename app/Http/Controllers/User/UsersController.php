@@ -27,8 +27,9 @@ class UsersController extends Controller
         $required = 'users.list';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
+
             return Redirect()->back();
         }
 
@@ -38,40 +39,40 @@ class UsersController extends Controller
         // we define the table list columns
         $columns = [
             [
-                'title' => trans('users.view.label.last_name'),
-                'key' => 'last_name',
-                'sort_by' => 'users.last_name'
+                'title'   => trans('users.view.label.last_name'),
+                'key'     => 'last_name',
+                'sort_by' => 'users.last_name',
             ], [
-                'title' => trans('users.view.label.first_name'),
-                'key' => 'first_name',
-                'sort_by' => 'users.first_name'
+                'title'   => trans('users.view.label.first_name'),
+                'key'     => 'first_name',
+                'sort_by' => 'users.first_name',
             ], [
-                'title' => trans('users.view.label.status'),
-                'key' => 'status',
-                'config' => 'user.status',
+                'title'   => trans('users.view.label.status'),
+                'key'     => 'status',
+                'config'  => 'user.status',
                 'sort_by' => 'users.status',
-                'button' => true
+                'button'  => true,
             ], [
-                'title' => trans('users.view.label.board'),
-                'key' => 'board',
-                'config' => 'user.board',
+                'title'   => trans('users.view.label.board'),
+                'key'     => 'board',
+                'config'  => 'user.board',
                 'sort_by' => 'users.board',
-                'button' => true
+                'button'  => true,
             ],
             [
-                'title' => trans('users.view.label.role'),
-                'key' => 'roles',
+                'title'      => trans('users.view.label.role'),
+                'key'        => 'roles',
                 'collection' => 'name',
-                'sort_by' => 'roles.name',
-                'button' => [
-                    'attribute' => 'slug'
-                ]
+                'sort_by'    => 'roles.name',
+                'button'     => [
+                    'attribute' => 'slug',
+                ],
             ],
             [
-                'title' => trans('users.view.label.activation'),
-                'key' => 'activated',
-                'activate' => 'users.activate'
-            ]
+                'title'    => trans('users.view.label.activation'),
+                'key'      => 'activated',
+                'activate' => 'users.activate',
+            ],
         ];
 
         // we instantiate the query
@@ -90,14 +91,14 @@ class UsersController extends Controller
 
         // we prepare the confirm config
         $confirm_config = [
-            'action' => 'Supression de l\'utilisateur',
+            'action'     => 'Supression de l\'utilisateur',
             'attributes' => ['first_name', 'last_name'],
         ];
 
         // we prepare the search config
         $search_config = [
             'users.first_name',
-            'users.last_name'
+            'users.last_name',
         ];
 
         // we format the data for the needs of the view
@@ -113,7 +114,7 @@ class UsersController extends Controller
         // prepare data for the view
         $data = [
             'tableListData' => $tableListData,
-            'seoMeta' => $this->seoMeta,
+            'seoMeta'       => $this->seoMeta,
         ];
 
         // return the view with data
@@ -126,8 +127,9 @@ class UsersController extends Controller
         $required = 'users.view';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
+
             return Redirect()->back();
         }
 
@@ -143,17 +145,23 @@ class UsersController extends Controller
                 trans('users.message.find.failure'),
                 trans('errors.contact', [
                     'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
-                        config('settings.support_email') . "</a>."
-                ])
+                        config('settings.support_email') . "</a>.",
+                ]),
             ], 'error');
+
             return Redirect()->back();
+        }
+
+        // we convert the database date to the fr/en format
+        if ($birth_date = $user->birth_date) {
+            $user->birth_date = Carbon::createFromFormat('Y-m-d', $birth_date)->format('d/m/Y');
         }
 
         // prepare data for the view
         $data = [
             'seoMeta' => $this->seoMeta,
-            'user' => $user,
-            'roles' => \Sentinel::getRoleRepository()->all()
+            'user'    => $user,
+            'roles'   => \Sentinel::getRoleRepository()->all(),
         ];
 
         // return the view with data
@@ -167,7 +175,7 @@ class UsersController extends Controller
 
         // prepare data for the view
         $data = [
-            'roles' => \Sentinel::getRoleRepository()->all(),
+            'roles'   => \Sentinel::getRoleRepository()->all(),
             'seoMeta' => $this->seoMeta,
         ];
 
@@ -181,8 +189,9 @@ class UsersController extends Controller
         $required = 'users.create';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
+
             return Redirect()->back();
         }
 
@@ -198,16 +207,16 @@ class UsersController extends Controller
         // we check the inputs
         $errors = [];
         $validator = \Validator::make($inputs, [
-            'photo' => 'mimes:jpg,jpeg,png',
-            'gender' => 'required|in:' . implode(',', array_keys(config('user.gender'))),
-            'last_name' => 'required',
-            'first_name' => 'required',
-            'birth_date' => 'required|date_format:Y-m-d',
+            'photo'        => 'mimes:jpg,jpeg,png',
+            'gender'       => 'required|in:' . implode(',', array_keys(config('user.gender'))),
+            'last_name'    => 'required',
+            'first_name'   => 'required',
+            'birth_date'   => 'required|date_format:Y-m-d',
             'phone_number' => 'required|phone:FR',
-            'email' => 'required|email|unique:users,email',
-            'zip_code' => 'digits:5',
-            'role' => 'required|numeric|exists:roles,id',
-            'password' => 'required|min:6|confirmed',
+            'email'        => 'required|email|unique:users,email',
+            'zip_code'     => 'digits:5',
+            'role'         => 'required|numeric|exists:roles,id',
+            'password'     => 'required|min:6|confirmed',
         ]);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
@@ -218,6 +227,7 @@ class UsersController extends Controller
             $request->flashExcept(['password', 'password_confirmation']);
             // we notify the current user
             \Modal::alert($errors, 'error');
+
             return Redirect()->back();
         }
 
@@ -229,6 +239,18 @@ class UsersController extends Controller
                 \libphonenumber\PhoneNumberFormat::INTERNATIONAL
             );
 
+            // we store the photo
+            if (!empty($photo = $inputs['photo'])) {
+                // we resize, optimize and save the image
+                $file_name =\ImageManager::resize(
+                    $photo,
+                    \Sentinel::getUser()->id . '_photo', 'user',
+                    \Sentinel::getUser()->image_sizes
+                );
+                // we add the image name to the inputs for saving
+                $inputs['photo'] = $file_name;
+            }
+
             // we create the user
             $user = \Sentinel::create($inputs);
 
@@ -238,8 +260,9 @@ class UsersController extends Controller
 
             // we notify the current user
             \Modal::alert([
-                trans('users.message.created', ['name' => $user->first_name . ' ' . $user->last_name])
+                trans('users.message.created', ['name' => $user->first_name . ' ' . $user->last_name]),
             ], 'success');
+
             return Redirect(route('users.index'));
         } catch (\Exception $e) {
             // we flash the request
@@ -251,9 +274,10 @@ class UsersController extends Controller
                 trans('users.message.creation.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
                 trans('errors.contact', [
                     'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
-                        config('settings.support_email') . "</a>."
-                ])
+                        config('settings.support_email') . "</a>.",
+                ]),
             ], 'error');
+
             return Redirect()->back();
         }
     }
@@ -264,61 +288,63 @@ class UsersController extends Controller
         $required = 'users.update';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
+
             return Redirect()->back();
         }
 
         // we get the user
-        if(!$user = \Sentinel::findById($request->get('_id'))){
+        if (!$user = \Sentinel::findById($request->get('_id'))) {
             \Modal::alert([
                 trans('users.message.find.failure', ['id' => $request->get('_id')]),
             ], 'error');
+
             return Redirect()->back();
         }
 
         // we convert the "on" value to the activation order to a boolean value
         $request->merge([
-            'activation' => filter_var($request->get('activation'), FILTER_VALIDATE_BOOLEAN)
+            'activation' => filter_var($request->get('activation'), FILTER_VALIDATE_BOOLEAN),
         ]);
 
         // we get the inputs, according if we update the current profile account or a user profile
-        if($user->id === \Sentinel::getUser()->id){
+        if ($user->id === \Sentinel::getUser()->id) {
             $rules = [
-                '_id' => 'required|numeric|exists:users,id',
-                'photo' => 'mimes:jpg,jpeg,png',
-                'gender' => 'required|in:' . implode(',', array_keys(config('user.gender'))),
-                'last_name' => 'required',
-                'first_name' => 'required',
-                'birth_date' => 'required|date_format:Y-m-d',
+                '_id'          => 'required|numeric|exists:users,id',
+                'photo'        => 'mimes:jpg,jpeg,png',
+                'gender'       => 'required|in:' . implode(',', array_keys(config('user.gender'))),
+                'last_name'    => 'required',
+                'first_name'   => 'required',
+                'birth_date'   => 'required|date_format:Y-m-d',
                 'phone_number' => 'required|phone:FR',
-                'email' => 'required|email|unique:users,email,' . $request->get('_id'),
-                'zip_code' => 'digits:5',
-                'password' => 'min:6|confirmed',
+                'email'        => 'required|email|unique:users,email,' . $request->get('_id'),
+                'zip_code'     => 'digits:5',
+                'password'     => 'min:6|confirmed',
             ];
             $inputs = $request->except('_token', '_method', 'activation', 'role');
         } else {
             $rules = [
-                '_id' => 'required|numeric|exists:users,id',
-                'photo' => 'mimes:jpg,jpeg,png',
-                'gender' => 'required|in:' . implode(',', array_keys(config('user.gender'))),
-                'last_name' => 'required',
-                'first_name' => 'required',
-                'birth_date' => 'required|date_format:Y-m-d',
+                '_id'          => 'required|numeric|exists:users,id',
+                'photo'        => 'mimes:jpg,jpeg,png',
+                'gender'       => 'required|in:' . implode(',', array_keys(config('user.gender'))),
+                'last_name'    => 'required',
+                'first_name'   => 'required',
+                'birth_date'   => 'required|date_format:Y-m-d',
                 'phone_number' => 'required|phone:FR',
-                'email' => 'required|email|unique:users,email,' . $request->get('_id'),
-                'zip_code' => 'digits:5',
-                'role' => 'required|numeric|exists:roles,id',
-                'activation' => 'required|boolean',
-                'password' => 'min:6|confirmed',
+                'email'        => 'required|email|unique:users,email,' . $request->get('_id'),
+                'zip_code'     => 'digits:5',
+                'role'         => 'required|numeric|exists:roles,id',
+                'activation'   => 'boolean',
+                'password'     => 'min:6|confirmed',
             ];
             $inputs = $request->except('_token', '_method');
         }
 
-        // we convert the french formatted date to its english format
-        if (!empty($birth_date = $request->get('birth_date'))) {
-            $inputs['birth_date'] = Carbon::createFromFormat('d/m/Y', $birth_date)->format('Y-m-d');
-        }
+        // we don't update not filled inputs
+        $inputs = array_filter($inputs, function ($input) {
+            return strlen($input);
+        });
 
         // we check the inputs
         $errors = [];
@@ -332,6 +358,7 @@ class UsersController extends Controller
             $request->flashExcept(['password', 'password_confirmation']);
             // we notify the current user
             \Modal::alert($errors, 'error');
+
             return Redirect()->back();
         }
 
@@ -343,11 +370,23 @@ class UsersController extends Controller
                 \libphonenumber\PhoneNumberFormat::INTERNATIONAL
             );
 
+            // we store the photo
+            if (isset($inputs['photo']) && !empty($photo = $inputs['photo'])) {
+                // we resize, optimize and save the image
+                $file_name =\ImageManager::resize(
+                    $photo,
+                    \Sentinel::getUser()->id . '_photo', 'user',
+                    \Sentinel::getUser()->image_sizes
+                );
+                // we add the image name to the inputs for saving
+                $inputs['photo'] = $file_name;
+            }
+
             // we update the user
-            $user->update($inputs);
+            \Sentinel::update($user, $inputs);
 
             // if we're not updating the current user profile
-            if($user->id !== \Sentinel::getUser()->id){
+            if ($user->id !== \Sentinel::getUser()->id) {
                 // we check is the user is attached to roles
                 $current_roles = $user->roles;
                 // we detach each roles found
@@ -359,7 +398,7 @@ class UsersController extends Controller
                 $role->users()->attach($user);
 
                 // if the order is to activate the user
-                if ($inputs['activation']) {
+                if (isset($inputs['activation']) && $inputs['activation']) {
                     // we activate the user
                     if (!$activation = \Activation::exists($user)) {
                         $activation = \Activation::create($user);
@@ -373,8 +412,9 @@ class UsersController extends Controller
 
             // we notify the current user
             \Modal::alert([
-                trans('users.message.update.success', ['name' => $user->first_name . ' ' . $user->last_name])
+                trans('users.message.account.success'),
             ], 'success');
+
             return Redirect()->back();
         } catch (\Exception $e) {
             // we flash the request
@@ -383,12 +423,13 @@ class UsersController extends Controller
             // we log the error and we notify the current user
             \Log::error($e);
             \Modal::alert([
-                trans('users.message.update.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
+                trans('users.message.account.failure'),
                 trans('errors.contact', [
                     'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
-                        config('settings.support_email') . "</a>."
-                ])
+                        config('settings.support_email') . "</a>.",
+                ]),
             ], 'error');
+
             return Redirect()->back();
         }
     }
@@ -399,16 +440,18 @@ class UsersController extends Controller
         $required = 'users.delete';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
+
             return Redirect()->back();
         }
 
         // we get the user
         if (!$user = \Sentinel::findById($request->get('_id'))) {
             \Modal::alert([
-                trans('users.message.find.failure')
+                trans('users.message.find.failure'),
             ], 'error');
+
             return Redirect()->back();
         }
 
@@ -416,8 +459,9 @@ class UsersController extends Controller
         try {
             $user->delete();
             \Modal::alert([
-                trans('users.message.delete.success', ['name' => $user->first_name . ' ' . $user->last_name])
+                trans('users.message.delete.success', ['name' => $user->first_name . ' ' . $user->last_name]),
             ], 'success');
+
             return Redirect()->back();
         } catch (\Exception $e) {
             \Log::error($e);
@@ -425,9 +469,10 @@ class UsersController extends Controller
                 trans('users.message.delete.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
                 trans('errors.contact', [
                     'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
-                        config('settings.support_email') . "</a>."
-                ])
+                        config('settings.support_email') . "</a>.",
+                ]),
             ], 'error');
+
             return Redirect()->back();
         }
     }
@@ -438,21 +483,22 @@ class UsersController extends Controller
         $required = 'users.update';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
+
             return Redirect()->back();
         }
 
         // we convert the "on" value to the activation order to a boolean value
         $request->merge([
-            'activation_order' => filter_var($request->get('activation_order'), FILTER_VALIDATE_BOOLEAN)
+            'activation_order' => filter_var($request->get('activation_order'), FILTER_VALIDATE_BOOLEAN),
         ]);
 
         // we check the inputs
         $errors = [];
         $validator = \Validator::make($request->all(), [
-            'id' => 'required|exists:users,id',
-            'activation_order' => 'required|boolean'
+            'id'               => 'required|exists:users,id',
+            'activation_order' => 'required|boolean',
         ]);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
@@ -478,12 +524,13 @@ class UsersController extends Controller
             }
 
             return response([
-                trans('users.message.activation.success')
+                trans('users.message.activation.success'),
             ], 200);
         } catch (\Exception $e) {
             \Log::error($e);
+
             return response([
-                trans('users.message.activation.failure')
+                trans('users.message.activation.failure'),
             ], 401);
         }
     }

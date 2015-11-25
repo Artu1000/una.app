@@ -20,10 +20,7 @@ $(function() {
 
         var attribute = $(this).attr('data-confirm');
         var modal = $('#confirm');
-        var attr = modal.find('.attribute').html(attribute);
-        console.log(attr);
-
-        //console.log(test);
+        modal.find('.attribute').html(attribute);
 
         // we get the form
         var $form = $(this).closest('form');
@@ -38,7 +35,6 @@ $(function() {
     $('.input-group-addon').click(function(){
         var target = $(this).attr('for');
         if(target){
-            console.log(target);
             $('#' + target).focus().trigger('click');
         }
     });
