@@ -45,7 +45,7 @@ return [
     // messages
     "message" => [
         "creation" => [
-            "success" => "L'utilisateur <b> :name </b> a bien été créé.",
+            "success" => "L'utilisateur <b>:name</b> a bien été créé.",
             "failure" => "Une erreur est survenue lors de la création de l'utilisateur <b>:name</b>.",
         ],
         "update" => [
@@ -53,10 +53,10 @@ return [
             "failure" => "Une erreur est survenue lors de la mise à jour de l'utilisateur <b>:name</b>."
         ],
         "find" => [
-            "failure" => "L'utilisateur sélectionné n'existe pas."
+            "failure" => "L'utilisateur #:id n'existe pas."
         ],
         "delete" => [
-            "success" => "Le rôle <b>:name</b> a bien été supprimé.",
+            "success" => "L'utilisateur <b>:name</b> a bien été supprimé.",
             "failure" => "Une erreur est survenue lors de la mise à jour de l'utilisateur <b>:name</b>."
         ],
         "activation" => [

@@ -2,7 +2,7 @@
 
 return [
 
-    "denied" => "Vous n'avez pas l'autorisation d'effectuer l'action :",
+    "denied" => "Vous n'avez pas l'autorisation d'effectuer l'action",
 
     // settings
     "settings" => "Configuration",

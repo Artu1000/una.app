@@ -56,7 +56,7 @@ class PermissionsController extends Controller
 
         $confirm_config = [
             'action' => 'Supression du rôle',
-            'attribute' => 'name',
+            'attributes' => ['name'],
         ];
 
         $search_config = [

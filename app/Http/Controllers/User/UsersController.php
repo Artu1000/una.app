@@ -141,7 +141,10 @@ class UsersController extends Controller
         if (!$user) {
             \Modal::alert([
                 trans('users.message.find.failure'),
-                trans('errors.contact')
+                trans('errors.contact', [
+                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
+                        config('settings.support_email') . "</a>."
+                ])
             ], 'error');
             return Redirect()->back();
         }
@@ -199,7 +202,7 @@ class UsersController extends Controller
             'gender' => 'required|in:' . implode(',', array_keys(config('user.gender'))),
             'last_name' => 'required',
             'first_name' => 'required',
-            'birth_date' => 'date_format:Y-m-d',
+            'birth_date' => 'required|date_format:Y-m-d',
             'phone_number' => 'required|phone:FR',
             'email' => 'required|email|unique:users,email',
             'zip_code' => 'digits:5',
@@ -219,24 +222,37 @@ class UsersController extends Controller
         }
 
         try {
+            // we format the number into its international equivalent
+            $inputs['phone_number'] = $formatted_phone_number = phone_format(
+                $inputs['phone_number'],
+                'FR',
+                \libphonenumber\PhoneNumberFormat::INTERNATIONAL
+            );
+
             // we create the user
             $user = \Sentinel::create($inputs);
+
             // we attach the new role
             $role = \Sentinel::findRoleById($inputs['role']);
             $role->users()->attach($user);
+
             // we notify the current user
             \Modal::alert([
-                trans('users.message.created', ['name' => $user->name])
+                trans('users.message.created', ['name' => $user->first_name . ' ' . $user->last_name])
             ], 'success');
             return Redirect(route('users.index'));
         } catch (\Exception $e) {
             // we flash the request
             $request->flashExcept(['password', 'password_confirmation']);
+
             // we log the error and we notify the current user
             \Log::error($e);
             \Modal::alert([
-                trans('users.message.creation.failure', ['name' => $user->name]),
-                trans('errors.contact')
+                trans('users.message.creation.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
+                trans('errors.contact', [
+                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
+                        config('settings.support_email') . "</a>."
+                ])
             ], 'error');
             return Redirect()->back();
         }
@@ -253,36 +269,60 @@ class UsersController extends Controller
             return Redirect()->back();
         }
 
+        // we get the user
+        if(!$user = \Sentinel::findById($request->get('_id'))){
+            \Modal::alert([
+                trans('users.message.find.failure', ['id' => $request->get('_id')]),
+            ], 'error');
+            return Redirect()->back();
+        }
+
         // we convert the "on" value to the activation order to a boolean value
         $request->merge([
             'activation' => filter_var($request->get('activation'), FILTER_VALIDATE_BOOLEAN)
         ]);
 
-        // we get the inputs
-        $inputs = $request->except('_token', '_method');
+        // we get the inputs, according if we update the current profile account or a user profile
+        if($user->id === \Sentinel::getUser()->id){
+            $rules = [
+                '_id' => 'required|numeric|exists:users,id',
+                'photo' => 'mimes:jpg,jpeg,png',
+                'gender' => 'required|in:' . implode(',', array_keys(config('user.gender'))),
+                'last_name' => 'required',
+                'first_name' => 'required',
+                'birth_date' => 'required|date_format:Y-m-d',
+                'phone_number' => 'required|phone:FR',
+                'email' => 'required|email|unique:users,email,' . $request->get('_id'),
+                'zip_code' => 'digits:5',
+                'password' => 'min:6|confirmed',
+            ];
+            $inputs = $request->except('_token', '_method', 'activation', 'role');
+        } else {
+            $rules = [
+                '_id' => 'required|numeric|exists:users,id',
+                'photo' => 'mimes:jpg,jpeg,png',
+                'gender' => 'required|in:' . implode(',', array_keys(config('user.gender'))),
+                'last_name' => 'required',
+                'first_name' => 'required',
+                'birth_date' => 'required|date_format:Y-m-d',
+                'phone_number' => 'required|phone:FR',
+                'email' => 'required|email|unique:users,email,' . $request->get('_id'),
+                'zip_code' => 'digits:5',
+                'role' => 'required|numeric|exists:roles,id',
+                'activation' => 'required|boolean',
+                'password' => 'min:6|confirmed',
+            ];
+            $inputs = $request->except('_token', '_method');
+        }
 
         // we convert the french formatted date to its english format
-        $inputs['birth_date'] = null;
         if (!empty($birth_date = $request->get('birth_date'))) {
             $inputs['birth_date'] = Carbon::createFromFormat('d/m/Y', $birth_date)->format('Y-m-d');
         }
 
         // we check the inputs
         $errors = [];
-        $validator = \Validator::make($inputs, [
-            '_id' => 'required|numeric|exists:users,id',
-            'photo' => 'mimes:jpg,jpeg,png',
-            'gender' => 'in:' . implode(',', array_keys(config('user.gender'))),
-            'last_name' => 'required',
-            'first_name' => 'required',
-            'birth_date' => 'date_format:Y-m-d',
-            'phone_number' => 'phone:FR',
-            'email' => 'required|email|unique:users,email,' . $request->get('_id'),
-            'zip_code' => 'digits:5',
-            'role' => 'numeric|exists:roles,id',
-            'activation' => 'boolean',
-            'password' => 'min:6|confirmed',
-        ]);
+        $validator = \Validator::make($inputs, $rules);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
         }
@@ -296,45 +336,58 @@ class UsersController extends Controller
         }
 
         try {
-            // we get and update the user
-            $user = \Sentinel::findById($request->get('_id'));
+            // we format the number into its international equivalent
+            $inputs['phone_number'] = $formatted_phone_number = phone_format(
+                $inputs['phone_number'],
+                'FR',
+                \libphonenumber\PhoneNumberFormat::INTERNATIONAL
+            );
+
+            // we update the user
             $user->update($inputs);
 
-            // we check is the user is attached to roles
-            $current_roles = $user->roles;
-            // we detach each roles found
-            foreach($current_roles as $role){
-                $role->users()->detach($user);
-            }
-            // we attach the new role
-            $role = \Sentinel::findRoleById($inputs['role']);
-            $role->users()->attach($user);
-
-            // if the order is to activate the user
-            if($inputs['activation']){
-                // we activate the user
-                if(!$activation = \Activation::exists($user)){
-                    $activation = \Activation::create($user);
+            // if we're not updating the current user profile
+            if($user->id !== \Sentinel::getUser()->id){
+                // we check is the user is attached to roles
+                $current_roles = $user->roles;
+                // we detach each roles found
+                foreach ($current_roles as $role) {
+                    $role->users()->detach($user);
                 }
-                \Activation::complete($user, $activation->code);
-            } else {
-                // or we deactivate him
-                \Activation::remove($user);
+                // we attach the new role
+                $role = \Sentinel::findRoleById($inputs['role']);
+                $role->users()->attach($user);
+
+                // if the order is to activate the user
+                if ($inputs['activation']) {
+                    // we activate the user
+                    if (!$activation = \Activation::exists($user)) {
+                        $activation = \Activation::create($user);
+                    }
+                    \Activation::complete($user, $activation->code);
+                } else {
+                    // or we deactivate him
+                    \Activation::remove($user);
+                }
             }
 
             // we notify the current user
             \Modal::alert([
-                trans('users.message.update.success', ['name' => $user->name])
+                trans('users.message.update.success', ['name' => $user->first_name . ' ' . $user->last_name])
             ], 'success');
             return Redirect()->back();
         } catch (\Exception $e) {
             // we flash the request
             $request->flashExcept(['password', 'password_confirmation']);
+
             // we log the error and we notify the current user
             \Log::error($e);
             \Modal::alert([
-                trans('users.message.update.failure', ['name' => $user->name]),
-                trans('errors.contact')
+                trans('users.message.update.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
+                trans('errors.contact', [
+                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
+                        config('settings.support_email') . "</a>."
+                ])
             ], 'error');
             return Redirect()->back();
         }
@@ -351,7 +404,7 @@ class UsersController extends Controller
             return Redirect()->back();
         }
 
-        // we get the role
+        // we get the user
         if (!$user = \Sentinel::findById($request->get('_id'))) {
             \Modal::alert([
                 trans('users.message.find.failure')
@@ -363,14 +416,17 @@ class UsersController extends Controller
         try {
             $user->delete();
             \Modal::alert([
-                trans('users.message.delete.success', ['name' => $user->name])
+                trans('users.message.delete.success', ['name' => $user->first_name . ' ' . $user->last_name])
             ], 'success');
             return Redirect()->back();
         } catch (\Exception $e) {
             \Log::error($e);
             \Modal::alert([
-                trans('users.message.delete.failure', ['name' => $user->name]),
-                trans('errors.contact')
+                trans('users.message.delete.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
+                trans('errors.contact', [
+                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
+                        config('settings.support_email') . "</a>."
+                ])
             ], 'error');
             return Redirect()->back();
         }
@@ -409,11 +465,11 @@ class UsersController extends Controller
         // we get the user
         $user = \Sentinel::findById($request->get('id'));
 
-        try{
+        try {
             // if the order is : activation
-            if($request->get('activation_order')){
+            if ($request->get('activation_order')) {
                 // we activate the user
-                if(!$activation = \Activation::exists($user)){
+                if (!$activation = \Activation::exists($user)) {
                     $activation = \Activation::create($user);
                 }
                 \Activation::complete($user, $activation->code);
@@ -424,7 +480,7 @@ class UsersController extends Controller
             return response([
                 trans('users.message.activation.success')
             ], 200);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             \Log::error($e);
             return response([
                 trans('users.message.activation.failure')

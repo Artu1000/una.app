@@ -22,7 +22,7 @@
 
                 <hr>
 
-                <form role="form" method="POST" action="@if(isset($user)){{ route('users.update') }} @else{{ route('users.index') }} @endif">
+                <form role="form" method="POST" action="@if(isset($user)){{ route('users.update') }} @else{{ route('users.index') }} @endif" enctype="multipart/form-data">
 
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -180,8 +180,8 @@
                         </div>
                         <div class="panel-body">
 
-                            {{-- don't for personnal account edition --}}
-                            @if(!(\Sentinel::getUser()->id === $user->id))
+                            {{-- don't show for personnal account edition --}}
+                            @if(!isset($user) || !(\Sentinel::getUser()->id === $user->id))
                                 {{-- role --}}
                                 <label>{{ trans('users.view.label.role') }}</label>
                                 <div class="form-group">
@@ -204,7 +204,7 @@
                                         {{ trans('users.view.label.account') }}
                                     </span>
                                         <input class="swipe" id="input_activation" type="checkbox" name="activation"
-                                               @if(old('activation'))checked @elseif(!empty($user->activations()->whereNotNull('completed_at')->first()))checked @endif>
+                                               @if(old('activation'))checked @elseif(isset($user) && !empty($user->activations()->whereNotNull('completed_at')->first()))checked @endif>
                                         <label class="swipe-btn" for="input_activation"></label>
                                     </div>
                                 </div>

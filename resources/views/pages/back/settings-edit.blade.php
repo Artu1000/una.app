@@ -13,7 +13,7 @@
 
                 <hr>
 
-                <form role="form" method="POST" action="{{ route('settings.update') }}">
+                <form role="form" method="POST" action="{{ route('settings.update') }}" enctype="multipart/form-data">
 
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -185,6 +185,25 @@
                             <h3 class="panel-title">Apparence</h3>
                         </div>
                         <div class="panel-body">
+
+                            {{-- favicon --}}
+                            <label for="input_favicon">Favicon</label>
+                            <div class="form-group">
+                                @if(config('settings.favicon'))
+                                    <div class="form-group">
+                                        <img width="16" height="16" src="{{ route('image', ['filename' => '', 'folder' => 'user', 'size' => [16, 16]]) }}" alt="Favicon {{ config('settings.app_name') }}">
+                                    </div>
+                                @endif
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <span class="btn btn-primary btn-file">
+                                            <i class="fa fa-picture-o"></i> Parcourir <input type="file" name="favicon">
+                                        </span>
+                                    </span>
+                                    <input id="input_favicon" type="text" class="form-control" readonly="">
+                                </div>
+                                <p class="help-block quote"><i class="fa fa-info-circle"></i> Formats acceptés : jpg, jpeg, png.</p>
+                            </div>
 
                             {{-- loading spinner --}}
                             <label for="input_loading_spinner">Icône de chargement</label>

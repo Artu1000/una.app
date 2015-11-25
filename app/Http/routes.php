@@ -56,13 +56,13 @@ $route = Route::group($group, function () {
     // account
     Route::resource(LaravelLocalization::transRoute('routes.my-account.resource'), 'Auth\AccountController', [
         'names' => [
-            'index' => 'account.index',
-            'update' => 'account.update'
+            'index' => 'account.index'
         ], 'except' => [
             'create',
             'store',
             'show',
             'edit',
+            'update',
             'destroy'
         ]
     ]);
