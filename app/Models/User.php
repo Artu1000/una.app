@@ -27,22 +27,36 @@ class User extends SentinelUser
         'status',
         'board',
         'password',
-        'permissions'
+        'permissions',
     ];
 
-    public $image_sizes = [
-        'picture' => [145, 160]
-    ];
-
-    /**
-     * @param $size
-     * @return mixed
-     */
-    public function size($size)
+    public function availableSizes()
     {
-        if(!empty($this->image_sizes[$size])){
-            return $this->image_sizes[$size];
+        return [
+            'admin'   => [80, 80],
+            'picture' => [145, 160],
+        ];
+    }
+
+    public function size($key)
+    {
+        if (!empty($sizes = $this->availableSizes())) {
+            return $sizes[$key];
         }
+
         return null;
+    }
+
+    public function storagePath()
+    {
+        if(!is_dir($storage_path = storage_path('app/user'))){
+            mkdir($storage_path);
+        }
+        return $storage_path;
+    }
+
+    public function imageName()
+    {
+        return $this->id . '_photo';
     }
 }

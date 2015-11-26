@@ -45,7 +45,7 @@
                             <div class="form-group">
                                 @if(isset($user) && $user->photo)
                                     <div class="form-group">
-                                        <img width="145" height="160" src="{{ route('image', ['filename' => $user->photo, 'folder' => 'user', 'size' => $user->size('picture')]) }}" alt="{{ $user->first_name }} {{ $user->last_name }}">
+                                        <img width="145" height="160" src="{{ route('image', ['filename' => $user->photo, 'storage_path' => $user->storagePath(), 'size' => 'picture']) }}" alt="{{ $user->first_name }} {{ $user->last_name }}">
                                     </div>
                                 @endif
                                 <div class="input-group">
@@ -64,14 +64,23 @@
                             <div class="form-group">
                                 <div class="btn-group" data-toggle="buttons">
                                     <label class="btn toggle
-                                    @if(isset($user) && $user->gender == config('user.gender_key.female.id'))active @endif">
-                                        <input type="radio" name="gender" value="{{ config('user.gender_key.female.id') }}" autocomplete="off" @if(isset($user) && $user->gender == config('user.gender_key.female.id'))checked @endif>
+                                    @if(!isset($user) && old('gender') == config('user.gender_key.female.id'))active
+                                    @elseif(isset($user) && $user->gender == config('user.gender_key.female.id'))active
+                                    @endif">
+                                        <input type="radio" name="gender" value="{{ config('user.gender_key.female.id') }}" autocomplete="off"
+                                                @if(!isset($user) && old('gender') == config('user.gender_key.female.id'))checked
+                                                @elseif(isset($user) && $user->gender == config('user.gender_key.female.id'))checked
+                                                @endif>
                                         <i class="fa fa-female"></i>
                                         {{ config('user.gender_key.female.title') }}
                                     </label>
                                     <label class="btn toggle
-                                    @if(isset($user) && $user->gender == config('user.gender_key.male.id'))active @endif">
-                                        <input type="radio" name="gender" value="{{ config('user.gender_key.male.id') }}" autocomplete="off" @if(isset($user) && $user->gender == config('user.gender_key.male.id'))checked @endif>
+                                    @if(!isset($user) && old('gender') == config('user.gender_key.male.id'))active
+                                    @elseif(isset($user) && $user->gender == config('user.gender_key.male.id'))active @endif">
+                                        <input type="radio" name="gender" value="{{ config('user.gender_key.male.id') }}" autocomplete="off"
+                                                @if(!isset($user) && old('gender') == config('user.gender_key.male.id'))checked
+                                                @elseif(isset($user) && $user->gender == config('user.gender_key.male.id'))checked
+                                                @endif>
                                         <i class="fa fa-male"></i>
                                         {{ config('user.gender_key.male.title') }}
                                     </label>
@@ -188,8 +197,13 @@
                                 <div class="form-group">
                                     <div class="btn-group" data-toggle="buttons">
                                         @foreach($roles as $role)
-                                            <label class="btn toggle @if(isset($user) && isset($user->roles()->first()->id) && $user->roles()->first()->id === $role->id)active @endif">
-                                                <input type="radio" name="role" value="{{ $role->id }}" autocomplete="off" @if(isset($user) && isset($user->roles()->first()->id) && $user->roles()->first()->id === $role->id)checked @endif>
+                                            <label class="btn toggle
+                                            @if(!isset($user) && old('role') == $role->id)active
+                                            @elseif(isset($user) && isset($user->roles()->first()->id) && $user->roles()->first()->id === $role->id)active @endif">
+                                                <input type="radio" name="role" value="{{ $role->id }}" autocomplete="off"
+                                                        @if(!isset($user) && old('role') == $role->id)checked
+                                                        @elseif(isset($user) && isset($user->roles()->first()->id) && $user->roles()->first()->id === $role->id)checked
+                                                        @endif>
                                                 {{ $role->name }}
                                             </label>
                                         @endforeach
@@ -218,7 +232,7 @@
                                         <span class="input-group-addon" for="input_password">
                                             <i class="fa fa-unlock-alt"></i>
                                         </span>
-                                    <input type="password" id="input_password" class="form-control" name="password" placeholder="{{ trans('users.view.label.new_password') }}">
+                                    <input type="password" id="input_password" class="form-control" name="password" value="{{ old('password') }}" placeholder="{{ trans('users.view.label.new_password') }}">
                                 </div>
                                 @if(isset($user))
                                     <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('users.view.info.password') }}</p>
@@ -230,7 +244,7 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_password_confirmation"><i class="fa fa-unlock-alt"></i></span>
-                                    <input id="input_password_confirmation" class="form-control" type="password" name="password_confirmation" placeholder="{{ trans('users.view.label.password_confirm') }}">
+                                    <input id="input_password_confirmation" class="form-control" type="password" name="password_confirmation" value="{{ old('password_confirmation') }}" placeholder="{{ trans('users.view.label.password_confirm') }}">
                                 </div>
                                 @if(isset($user))
                                     <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('users.view.info.password') }}</p>

@@ -39,6 +39,13 @@ class UsersController extends Controller
         // we define the table list columns
         $columns = [
             [
+                'title' => trans('users.view.label.photo'),
+                'key'   => 'photo',
+                'image' => [
+                    'storage_path' => \Sentinel::createModel()->storagePath(),
+                    'size'   => 'admin',
+                ],
+            ], [
                 'title'   => trans('users.view.label.last_name'),
                 'key'     => 'last_name',
                 'sort_by' => 'users.last_name',
@@ -198,10 +205,9 @@ class UsersController extends Controller
         // we get the inputs
         $inputs = $request->except('_token');
 
-        // we convert the french formatted date to its english format
-        $inputs['birth_date'] = null;
-        if (!empty($birth_date = $request->get('birth_date'))) {
-            $inputs['birth_date'] = Carbon::createFromFormat('d/m/Y', $birth_date)->format('Y-m-d');
+        // we convert the en/fr date to the database format
+        if (isset($inputs['birth_date']) && $inputs['birth_date']) {
+            $inputs['birth_date'] = Carbon::createFromFormat('d/m/Y', $inputs['birth_date'])->format('Y-m-d');
         }
 
         // we check the inputs
@@ -224,12 +230,15 @@ class UsersController extends Controller
         // if errors are found
         if (count($errors)) {
             // we flash the request
-            $request->flashExcept(['password', 'password_confirmation']);
+            $request->flash();
             // we notify the current user
             \Modal::alert($errors, 'error');
 
             return Redirect()->back();
         }
+
+        // we create the user
+        $user = \Sentinel::create($inputs);
 
         try {
             // we format the number into its international equivalent
@@ -240,33 +249,44 @@ class UsersController extends Controller
             );
 
             // we store the photo
-            if (!empty($photo = $inputs['photo'])) {
+            if (isset($inputs['photo']) && !empty($photo = $inputs['photo'])) {
                 // we resize, optimize and save the image
-                $file_name =\ImageManager::resize(
+                $file_name = \ImageManager::resize(
                     $photo,
-                    \Sentinel::getUser()->id . '_photo', 'user',
-                    \Sentinel::getUser()->image_sizes
+                    $user->id . '_photo', 'user',
+                    $user->image_sizes
                 );
                 // we add the image name to the inputs for saving
                 $inputs['photo'] = $file_name;
             }
 
-            // we create the user
-            $user = \Sentinel::create($inputs);
-
             // we attach the new role
             $role = \Sentinel::findRoleById($inputs['role']);
             $role->users()->attach($user);
 
+            // if the order is to activate the user
+            if (isset($inputs['activation']) && $inputs['activation']) {
+                // we activate the user
+                if (!$activation = \Activation::exists($user)) {
+                    $activation = \Activation::create($user);
+                }
+                \Activation::complete($user, $activation->code);
+            }
+
             // we notify the current user
             \Modal::alert([
-                trans('users.message.created', ['name' => $user->first_name . ' ' . $user->last_name]),
+                trans('users.message.creation.success', ['name' => $user->first_name . ' ' . $user->last_name]),
             ], 'success');
 
             return Redirect(route('users.index'));
         } catch (\Exception $e) {
             // we flash the request
-            $request->flashExcept(['password', 'password_confirmation']);
+            $request->flash();
+
+            // we delete the user if something went wrong after the user creation
+            if ($user) {
+                $user->delete();
+            }
 
             // we log the error and we notify the current user
             \Log::error($e);
@@ -346,6 +366,11 @@ class UsersController extends Controller
             return strlen($input);
         });
 
+        // we convert the en/fr date to the database format
+        if (isset($inputs['birth_date']) && $inputs['birth_date']) {
+            $inputs['birth_date'] = Carbon::createFromFormat('d/m/Y', $inputs['birth_date'])->format('Y-m-d');
+        }
+
         // we check the inputs
         $errors = [];
         $validator = \Validator::make($inputs, $rules);
@@ -355,14 +380,14 @@ class UsersController extends Controller
         // if errors are found
         if (count($errors)) {
             // we flash the request
-            $request->flashExcept(['password', 'password_confirmation']);
+            $request->flash();
             // we notify the current user
             \Modal::alert($errors, 'error');
 
             return Redirect()->back();
         }
 
-        try {
+//        try {
             // we format the number into its international equivalent
             $inputs['phone_number'] = $formatted_phone_number = phone_format(
                 $inputs['phone_number'],
@@ -373,10 +398,11 @@ class UsersController extends Controller
             // we store the photo
             if (isset($inputs['photo']) && !empty($photo = $inputs['photo'])) {
                 // we resize, optimize and save the image
-                $file_name =\ImageManager::resize(
+                $file_name = \ImageManager::resize(
                     $photo,
-                    \Sentinel::getUser()->id . '_photo', 'user',
-                    \Sentinel::getUser()->image_sizes
+                    $user->imageName(),
+                    $user->storagePath(),
+                    $user->availableSizes()
                 );
                 // we add the image name to the inputs for saving
                 $inputs['photo'] = $file_name;
@@ -416,22 +442,22 @@ class UsersController extends Controller
             ], 'success');
 
             return Redirect()->back();
-        } catch (\Exception $e) {
-            // we flash the request
-            $request->flashExcept(['password', 'password_confirmation']);
-
-            // we log the error and we notify the current user
-            \Log::error($e);
-            \Modal::alert([
-                trans('users.message.account.failure'),
-                trans('errors.contact', [
-                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
-                        config('settings.support_email') . "</a>.",
-                ]),
-            ], 'error');
-
-            return Redirect()->back();
-        }
+//        } catch (\Exception $e) {
+//            // we flash the request
+//            $request->flash();
+//
+//            // we log the error and we notify the current user
+//            \Log::error($e);
+//            \Modal::alert([
+//                trans('users.message.account.failure'),
+//                trans('errors.contact', [
+//                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
+//                        config('settings.support_email') . "</a>.",
+//                ]),
+//            ], 'error');
+//
+//            return Redirect()->back();
+//        }
     }
 
     public function destroy(Request $request)

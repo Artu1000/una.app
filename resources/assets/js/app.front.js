@@ -29,14 +29,14 @@ var cookie = {
     showCookieBar: function () {
         var cookieBar =
             '<div id="cookie_bar" class="container-fluid">' +
-                '<div class="container">' +
-                    '<div class="display-table">' +
-                        '<div class="table-cell text-center">' +
-                        '   <span>Je comprends que le site du <b>' + app.app_name + '</b> utilise des cookies afin d\'améliorer mon expérience utilisateur.</span>' +
-                        '   <button id="cookie_acceptation" class="btn btn-success"><i class="fa fa-check-circle"></i> Fermer</button>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>' +
+            '<div class="container">' +
+            '<div class="display-table">' +
+            '<div class="table-cell text-center">' +
+            '<span>Je comprends que le site <b>' + app.app_name + '</b> utilise des cookies afin d\'améliorer mon expérience utilisateur.</span>' +
+            '<button id="cookie_acceptation" class="btn btn-success"><i class="fa fa-thumbs-up"></i> Fermer</button>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
             '</div>';
         $('#footer_color_fill').append(cookieBar);
         $('#cookie_bar').hide();
@@ -158,25 +158,25 @@ var responsiveBackgroundImage = {
 };
 
 var anchor = {
-    animate : function(target){
+    animate: function (target) {
         $('html,body').animate({
             scrollTop: target.offset().top
         }, 1000);
         return false;
     },
-    analyseCookies: function(){
+    analyseCookies: function () {
 
         // we get the anchor cookie
         var str_anchor = cookie.get('anchor');
 
         // if it exists
-        if(str_anchor){
+        if (str_anchor) {
 
             // we remove it
             cookie.remove('anchor');
 
             // we create a jquery object of the node element
-            str_anchor = $('#'+str_anchor);
+            str_anchor = $('#' + str_anchor);
 
             // if the jquery node exists
             if (str_anchor.length) {
@@ -188,8 +188,8 @@ var anchor = {
             }
         }
     },
-    listen: function(){
-        $('a[href*=#]:not([href=#])').click(function(event){
+    listen: function () {
+        $('a[href*=#]:not([href=#])').click(function (event) {
 
             // we prevent the redirection
             event.preventDefault();
@@ -202,7 +202,7 @@ var anchor = {
             if (splitted_target_url[1]) {
 
                 // if the targetted url is not the current url, we make a redirection
-                if (splitted_target_url[0] && location.href != splitted_target_url[0]+'/') {
+                if (splitted_target_url[0] && location.href != splitted_target_url[0] + '/') {
 
                     // we set a cookie with the anchor
                     cookie.set('anchor', splitted_target_url[1]);
@@ -212,7 +212,7 @@ var anchor = {
                 } else {
 
                     // we trigger the scroll animation
-                    anchor.animate($('#'+splitted_target_url[1]));
+                    anchor.animate($('#' + splitted_target_url[1]));
                 }
             } else {
 
@@ -224,7 +224,7 @@ var anchor = {
             }
         });
     },
-    detect: function(){
+    detect: function () {
         anchor.analyseCookies();
         anchor.listen();
     }
@@ -237,7 +237,7 @@ $(function () {
     responsiveBackgroundImage.process();
 
     // load gmap when scroll on it (if map canvas is found)
-    if($('#map-canvas').length){
+    if ($('#map-canvas').length) {
         $(window).scroll(gmap.scrollTreatment);
     }
 

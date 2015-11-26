@@ -4,7 +4,6 @@ namespace App\Http\Controllers\File;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
 
 class FileController extends Controller
 {
@@ -29,18 +28,19 @@ class FileController extends Controller
 
     public function image(Request $request)
     {
-
-        if(!empty($request->get('size'))){
+        if (!empty($size = $request->get('size'))) {
             list($name, $extension) = explode('.', $request->get('filename'));
-            $filename = $name . '_' . implode('_', $request->get('size')) . '.' . $extension;
+            $filename = $name . '_' . $size . '.' . $extension;
         } else {
             $filename = $request->get('filename');
         }
 
         // we set the image path
-        $path = storage_path('app/' . $request->get('folder')) . '/' . $filename;
+        $path = $request->get('storage_path') . '/' . $filename;
+
         // we get the image content
-        $img =  \Image::make($path);
+        $img = \Image::make($path);
+
         // we return it
         return $img->response();
     }

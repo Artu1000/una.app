@@ -11,7 +11,7 @@ class UsersAndRelatedTablesClean extends Command
      *
      * @var string
      */
-    protected $signature = 'users:tables:clean';
+    protected $signature = 'database:users:clean';
 
     /**
      * The console command description.

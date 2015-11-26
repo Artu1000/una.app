@@ -67,6 +67,7 @@
 
                 @foreach($tableListData['columns'] as $column)
                     <td>
+                        {{-- show value from config --}}
                         @if(isset($column['config']) && !empty(config($column['config'] . '.' . $entity->getAttribute($column['key']))))
                             @if(isset($column['button']) && $column['button'] === true)
                                 <button class="btn {{ config($column['config'] . '.' . $entity->getAttribute($column['key']) . '.' . 'key') }}">
@@ -75,6 +76,7 @@
                             @if(isset($column['button']) && $column['button'] === true)
                                 </button>
                             @endif
+                        {{-- show value from collection --}}
                         @elseif(is_a($entity->getAttribute($column['key']), '\Illuminate\Database\Eloquent\Collection') && isset($column['collection']) && !empty($column['collection']))
                             @foreach($entity->getAttribute($column['key']) as $object)
                                 @if(isset($column['button']['attribute']) && !empty($column['button']['attribute']))
@@ -85,11 +87,20 @@
                                     </button>
                                 @endif
                             @endforeach
+                        {{-- show activation toggle --}}
                         @elseif(isset($column['activate']) && !empty($column['activate']))
                             <div class="swipe-group">
                                 <input class="swipe" id="activate_{{ $entity->id }}" type="checkbox" name="{{ $entity->id }}" @if($entity->getAttribute($column['key'])) checked @endif>
                                 <label class="swipe-btn activate" data-url="{{ route($column['activate']) }}" data-id="{{ $entity->id }}" for="activate_{{ $entity->id }}"></label>
                             </div>
+                        {{-- show image --}}
+                        @elseif(isset($column['image']) && !empty($image = $column['image']) && !empty($entity->getAttribute($column['key'])))
+                            <img width="80" height="80" src="{{ route('image', [
+                            'filename' => $entity->getAttribute($column['key']),
+                            'storage_path' => $image['storage_path'],
+                            'size' => $image['size']
+                            ]) }}" alt="">
+                        {{-- show value --}}
                         @else
                             @if(isset($column['button']) && $column['button'] === true && !empty($entity->getAttribute($column['key'])))
                                 <button class="btn {{ $column['key'] }}">

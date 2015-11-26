@@ -83,14 +83,14 @@ elixir(function (mix) {
          * JS
          ***************************************************************************************************************/
         // FRONT
-        //.scripts([
-        //    paths.jquery + 'dist/jquery.js',
-        //    paths.jquery_easing + 'js/jquery.easing.js',
-        //    paths.bootstrap + 'javascripts/bootstrap.js',
-        //    paths.js + 'ie10-viewport-bug-workaround.js',
-        //    paths.js + 'app.common.js',
-        //    paths.js + 'app.front.js'
-        //], 'public/js/app.front.js', './')
+        .scripts([
+            paths.jquery + 'dist/jquery.js',
+            paths.jquery_easing + 'js/jquery.easing.js',
+            paths.bootstrap + 'javascripts/bootstrap.js',
+            paths.js + 'ie10-viewport-bug-workaround.js',
+            paths.js + 'app.common.js',
+            paths.js + 'app.front.js'
+        ], 'public/js/app.front.js', './')
         // mix home js files
         //.scripts([
         //    'public/js/app.front.js',

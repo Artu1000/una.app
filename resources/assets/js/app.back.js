@@ -34,15 +34,8 @@ $(function() {
         }
     });
 
-    // datetime picker
-    //$('.datepicker').datetimepicker({
-    //    locale: app.locale,
-    //    format: 'DD/MM/YYYY HH:ii:SS'
-    //    //defaultDate: date
-    //});
-
     $('.datepicker').datepicker({
-        //autoclose: true,
+        autoclose: true,
         todayHighlight: true,
         language: app.locale
     });
