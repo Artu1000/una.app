@@ -121,7 +121,7 @@
 
                 <td class="actions text-right">
 
-                    <form role="form" class="form-inline" method="GET" action="{{ route($tableListData['route'] . '.show', $entity->id) }}">
+                    <form role="form" class="form-inline" method="GET" action="{{ route($tableListData['route'] . '.edit', $entity->id) }}">
                         <a href="#" class="text-info submit-form spin-on-click"><i class="fa fa-pencil-square" title="{{ trans('global.action.edit') }}"></i></a>
                     </form>
 

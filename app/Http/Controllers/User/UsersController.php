@@ -142,7 +142,7 @@ class UsersController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.users.show');
+        $this->seoMeta['page_title'] = trans('seo.users.edit');
 
         // we get the role
         $user = \Sentinel::findById($id);

@@ -3,7 +3,7 @@
 return [
 
     // views
-    "view"    => [
+    "page"    => [
         "title"  => [
             "settings" => "Gestion des paramètres du site",
             "contact"  => "Général",

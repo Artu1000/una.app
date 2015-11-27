@@ -39,7 +39,7 @@
                     </ul>
                 </li>
             @endif
-            <li class="dropdown @if(\Route::current()->getName() === 'account.index')active @endif">
+            <li class="dropdown @if(\Route::current()->getName() === 'users.profile')active @endif">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-user fa-fw"></i>
                     <span class="hidden-xs">{{ \Sentinel::getUser()->first_name }} {{ \Sentinel::getUser()->last_name }}</span>
