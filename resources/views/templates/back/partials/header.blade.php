@@ -14,23 +14,48 @@
             </a>
         </div>
         <ul class="nav navbar-right top-nav">
-            <li class="dropdown">
+            @if(config('settings.multilingual'))
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-globe"></i>
+                        <span class="hidden-xs">{{ trans('template.back.header.language') }}</span>
+                        <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                            <li @if($localeCode === config('app.locale'))class="active" @endif>
+                                <a rel="alternate" hreflang="{{$localeCode}}" href="{{ LaravelLocalization::getLocalizedURL($localeCode) }}">
+                                    <div class="display-table">
+                                        <div class="table-cell flag">
+                                            <img width="20" height="20" class="img-circle" src="{{ url('img/flag/' . $localeCode . '.png') }}" alt="{{ $localeCode }}">
+                                        </div>
+                                        <div class="table-cell">
+                                            {{ $properties['native'] }}
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </li>
+            @endif
+            <li class="dropdown @if(\Route::current()->getName() === 'account.index')active @endif">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-user fa-fw"></i>
                     <span class="hidden-xs">{{ \Sentinel::getUser()->first_name }} {{ \Sentinel::getUser()->last_name }}</span>
                     <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                    <li>
-                        <a href="{{ route('account.index') }}"><i class="fa fa-user fa-fw"></i>
-                            Mon profil
+                    <li class="@if(\Route::current()->getName() === 'users.profile')active @endif">
+                        <a href="{{ route('users.profile') }}"><i class="fa fa-user fa-fw"></i>
+                            {{ trans('template.back.header.my_profile') }}
                         </a>
                     </li>
                     <li class="divider"></li>
                     <li>
                         <a id="login" href="{{ route('logout') }}">
                             <i class="fa fa-power-off"></i>
-                            Déconnexion
+                            {{ trans('template.back.header.logout') }}
                         </a>
                     </li>
                 </ul>
@@ -42,14 +67,14 @@
                     <a href="{{ route('dashboard.index') }}"><i class="fa fa-fw fa-dashboard"></i> {{ trans('template.back.header.dashboard') }}</a>
                 </li>
                 @if(\Sentinel::getUser()->hasAccess('settings.view'))
-                    <li @if(\Route::current()->getName() === 'settings') class="active" @endif>
+                    <li @if(\Route::current()->getName() === 'settings.index') class="active" @endif>
                         <a href="{{ route('settings.index') }}"><i class="fa fa-cogs"></i> {{ trans('template.back.header.settings') }}</a>
                     </li>
                 @endif
                 @if(\Sentinel::getUser()->hasAccess('permissions.list'))
                     <li @if(\Route::current()->getName() === 'permissions.index') class="active"
                         @elseif(\Route::current()->getName() === 'permissions.create')) class="active"
-                        @elseif(\Route::current()->getName() === 'permissions.show')) class="active"
+                        @elseif(\Route::current()->getName() === 'permissions.edit')) class="active"
                         @endif>
                         <a href="{{ route('permissions.index') }}"><i class="fa fa-gavel"></i> {{ trans('template.back.header.permissions') }}</a>
                     </li>
@@ -57,7 +82,7 @@
                 @if(\Sentinel::getUser()->hasAccess('users.list'))
                     <li @if(\Route::current()->getName() === 'users.index') class="active"
                         @elseif(\Route::current()->getName() === 'users.create')) class="active"
-                        @elseif(\Route::current()->getName() === 'users.show')) class="active"
+                        @elseif(\Route::current()->getName() === 'users.edit')) class="active"
                         @endif>
                         <a href="{{ route('users.index') }}"><i class="fa fa-users"></i> {{ trans('template.back.header.users') }}</a>
                     </li>
@@ -66,7 +91,8 @@
                     <a href="#" data-toggle="collapse" data-target="#demo">
                         <i class="fa fa-fw fa-arrows-v"></i>
                         Dropdown
-                        <i class="fa fa-fw fa-caret-down"></i></a>
+                        <i class="fa fa-fw fa-caret-down"></i>
+                    </a>
                     <ul id="demo" class="collapse">
                         <li>
                             <a href="#">Dropdown Item</a>
@@ -78,7 +104,7 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a class="new_window" href="{{ route('home') }}"><i class="fa fa-home"></i> Retour au site</a>
+                    <a class="new_window" href="{{ route('home') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.back') }}</a>
                 </li>
             </ul>
         </div>

@@ -43,18 +43,18 @@ class ModalHelper
         switch ($type) {
             case 'success':
                 $class = 'text-success';
-                $title = '<i class="fa fa-thumbs-up"></i> Succès';
+                $title = '<i class="fa fa-thumbs-up"></i> ' . trans('global.modal.alert.title.success');
                 $icon = '<span class="' . $class . '"><i class="fa fa-check"></i></span>';
                 break;
             case 'error':
                 $class = 'text-danger';
-                $title = '<i class="fa fa-thumbs-down"></i> Erreur';
+                $title = '<i class="fa fa-thumbs-down"></i> ' . trans('global.modal.alert.title.error');;
                 $icon = '<span class="' . $class . '"><i class="fa fa-times"></i></span>';
                 break;
             case 'info':
             default:
                 $class = 'text-info';
-                $title = '<i class="fa fa-bullhorn"></i> Info';
+                $title = '<i class="fa fa-bullhorn"></i> '. trans('global.modal.alert.title.info');;
                 $icon = '<span class="' . $class . '"><i class="fa fa-info-circle"></i></span>';
                 break;
         }

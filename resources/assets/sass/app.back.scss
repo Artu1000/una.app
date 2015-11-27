@@ -57,16 +57,22 @@ html {
               margin: 0;
 
               li {
+                display: inline-block;
+
+                &:hover, &.active {
+                  background-color: #090909;
+                  @include transition(background-color 0.2s ease);
+
+                  a{
+                    color: #fff;
+                    background-color: transparent;
+                  }
+                }
 
                 a {
                   padding: 15px;
                   min-height: 50px;
                   color: #dedede;
-
-                  &:hover {
-                    background-color: #090909;
-                    color: #fff;
-                  }
                 }
 
                 &.open {
@@ -79,19 +85,25 @@ html {
                   ul {
                     margin: 0;
                     padding: 0;
+                    min-width: unset;
 
                     li {
                       width: 100%;
 
                       a {
-                        background-color: #fff;
+                        background-color: transparent;
                         color: #333;
                         padding: 10px 20px;
-                        min-height: 0;
+                        min-height: unset;
 
-                        &:hover {
-                          background-color: #EEEEEE;
+                        .flag {
+                          padding-right: 5px;
                         }
+                      }
+
+                      &:hover, &.active{
+                        background-color: #EEEEEE;
+                        @include transition(background-color 0.2s ease);
                       }
 
                       &.divider {

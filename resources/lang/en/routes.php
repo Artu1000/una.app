@@ -1,22 +1,29 @@
 <?php
 
 return [
-
-    'dashboard' => [
-        'resource' => 'dashboard'
+    "dashboard"   => [
+        "index" => "dashboard",
     ],
-    'my-account' => [
-        'resource' => 'my-profil'
+    "settings"    => [
+        "index"  => "settings",
+        "update" => "settings/update",
     ],
-    'settings' => [
-        'resource' => 'configuration'
+    "permissions" => [
+        "index"   => "permissions",
+        "create"  => "permissions/create",
+        "store"   => "permissions/store",
+        "edit"    => "permissions/edit/{id}",
+        "update"  => "permissions/update",
+        "destroy" => "permissions/destroy",
     ],
-    'permissions' => [
-        'resource' => 'permissions'
+    "users"       => [
+        "index"   => "users",
+        "create"  => "users/create",
+        "store"   => "users/store",
+        "edit"    => "users/edit/{id}",
+        "update"  => "users/update",
+        "profile" => "my-profile",
+        "destroy" => "users/destroy",
     ],
-    'users' => [
-        'activate' => 'users/activate',
-        'resource' => 'users'
-    ],
-
+    "logout"      => "logout",
 ];

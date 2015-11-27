@@ -34,6 +34,7 @@ $(function() {
         }
     });
 
+    // we activate the datepicker
     $('.datepicker').datepicker({
         autoclose: true,
         todayHighlight: true,

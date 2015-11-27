@@ -1,8 +1,20 @@
 <?php
 
 return [
-    '404' => "La page n'existe pas",
-    '405' => "Action non autorisée",
-    '503' => "Site indisponible pour le moment",
-    'contact' => "Veuillez contacter le service support si l'erreur persiste : :email",
+    "title" => "Oups !!!",
+    "404" => [
+        "title" => "Erreur 404.",
+        "message" => "La page n'existe pas."
+    ],
+    "405" => [
+        "title" => "Erreur 405.",
+        "message" => "Action on autorisée."
+    ],
+    "503" => [
+        "title" => "Erreur 503.",
+        "Site hors-service."
+    ],
+    "nav" => [
+        "home" => "Retour à l'accueil"
+    ]
 ];

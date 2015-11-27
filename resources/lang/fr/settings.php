@@ -5,7 +5,7 @@ return [
     // views
     "view"    => [
         "title"  => [
-            "settings" => "Configuration du site",
+            "settings" => "Gestion des paramètres du site",
             "contact"  => "Général",
             "global"   => "Contact",
             "social"   => "Social",
@@ -16,7 +16,7 @@ return [
             "save" => "Enregistrer les modifications"
         ],
         'info'   => [
-            "image" => "Formats acceptés : jpg, jpeg, png.",
+            "image" => "Formats acceptés : ico, jpg, jpeg, png.",
         ],
         "label"  => [
             "site_name"       => "Nom du site",
@@ -37,7 +37,7 @@ return [
             ],
             "favicon"         => "Favicon",
             "loading_spinner" => "Icône de chargement",
-            "ga_code"         => "Code Google Analytics",
+            "ga_code"         => "Code de suivi Google Analytics",
         ],
     ],
 
@@ -45,7 +45,7 @@ return [
     "message" => [
         "update" => [
             "success" => "La configuration a bien été mise à jour.",
-            "failure" => "Une erreur est survenue lors de la mise à jour de la configuration",
+            "failure" => "Une erreur est survenue lors de la mise à jour de la configuration.",
         ],
     ],
 ];

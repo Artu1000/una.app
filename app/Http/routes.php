@@ -11,7 +11,7 @@
 if (!empty($_SERVER['REQUEST_URI'])) {
     $method = !empty($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '';
     $uri = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-    \Log::info(implode(' - ', array($method, $uri)));
+    \Log::info(implode(' - ', [$method, $uri]));
 }
 
 /***********************************************************************************************************************
@@ -19,103 +19,51 @@ if (!empty($_SERVER['REQUEST_URI'])) {
  **********************************************************************************************************************/
 Route::get('file', [
     'uses' => 'File\FileController@image',
-    'as' => 'image'
+    'as'   => 'image',
 ]);
 
 /***********************************************************************************************************************
  * BACKEND ROUTES
  **********************************************************************************************************************/
+
 $group = config('settings.multilingual') ? ['prefix' => LaravelLocalization::setLocale(), 'middleware' => [
     'auth',
+    'localize',
     'localeSessionRedirect',
-    'localizationRedirect'
+    'localizationRedirect',
 ]] : ['middleware' => ['auth']];
 
 // logged routes
 $route = Route::group($group, function () {
+
     // dashboard
-    Route::resource(LaravelLocalization::transRoute('routes.dashboard.resource'), 'Dashboard\DashboardController', [
-        'names' => [
-            'index' => 'dashboard.index'
-        ], 'except' => [
-            'create',
-            'store',
-            'show',
-            'edit',
-            'update',
-            'destroy'
-        ]
-    ]);
-    // account
-    Route::resource(LaravelLocalization::transRoute('routes.my-account.resource'), 'Auth\AccountController', [
-        'names' => [
-            'index' => 'account.index'
-        ], 'except' => [
-            'create',
-            'store',
-            'show',
-            'edit',
-            'update',
-            'destroy'
-        ]
-    ]);
-    // configuration
-    Route::resource(LaravelLocalization::transRoute('routes.settings.resource'), 'Settings\SettingsController', [
-        'names' => [
-            'index' => 'settings.index',
-            'update' => 'settings.update'
-        ], 'except' => [
-            'create',
-            'store',
-            'show',
-            'edit',
-            'destroy'
-        ]
-    ]);
+    Route::get(LaravelLocalization::transRoute('routes.dashboard.index'), ['as' => 'dashboard.index', 'uses' => 'Dashboard\DashboardController@index']);
+
+    // settings
+    Route::get(LaravelLocalization::transRoute('routes.settings.index'), ['as' => 'settings.index', 'uses' => 'Settings\SettingsController@index']);
+    Route::put(LaravelLocalization::transRoute('routes.settings.update'), ['as' => 'settings.update', 'uses' => 'Settings\SettingsController@update']);
 
     // permissions
-    Route::resource(LaravelLocalization::transRoute('routes.permissions.resource'), 'User\PermissionsController', [
-        'names' => [
-            'index' => 'permissions.index',
-            'create' => 'permissions.create',
-            'show' => 'permissions.show',
-            'update' => 'permissions.update',
-            'destroy' => 'permissions.destroy'
-        ], 'except' => [
-            'edit'
-        ]
-    ]);
+    Route::get(LaravelLocalization::transRoute('routes.permissions.index'), ['as' => 'permissions.index', 'uses' => 'User\PermissionsController@index']);
+    Route::get(LaravelLocalization::transRoute('routes.permissions.create'), ['as' => 'permissions.create', 'uses' => 'User\PermissionsController@create']);
+    Route::post(LaravelLocalization::transRoute('routes.permissions.store'), ['as' => 'permissions.store', 'uses' => 'User\PermissionsController@store']);
+    Route::get(LaravelLocalization::transRoute('routes.permissions.edit'), ['as' => 'permissions.show', 'uses' => 'User\PermissionsController@edit']);
+    Route::put(LaravelLocalization::transRoute('routes.permissions.update'), ['as' => 'permissions.update', 'uses' => 'User\PermissionsController@update']);
+    Route::delete(LaravelLocalization::transRoute('routes.permissions.destroy'), ['as' => 'permissions.destroy', 'uses' => 'User\PermissionsController@destroy']);
 
     // users
-    Route::post(LaravelLocalization::transRoute('routes.users.activate'), [
-        'as' => 'users.activate',
-        'uses' => 'User\UsersController@activate'
-    ]);
-    Route::resource(LaravelLocalization::transRoute('routes.users.resource'), 'User\UsersController', [
-        'names' => [
-            'index' => 'users.index',
-            'create' => 'users.create',
-            'show' => 'users.show',
-            'update' => 'users.update',
-            'destroy' => 'users.destroy'
-        ], 'except' => [
-            'edit'
-        ]
-    ]);
+    Route::get(LaravelLocalization::transRoute('routes.users.index'), ['as' => 'users.index', 'uses' => 'User\UsersController@index']);
+    Route::get(LaravelLocalization::transRoute('routes.users.create'), ['as' => 'users.create', 'uses' => 'User\UsersController@create']);
+    Route::post(LaravelLocalization::transRoute('routes.users.store'), ['as' => 'users.store', 'uses' => 'User\UsersController@store']);
+    Route::get(LaravelLocalization::transRoute('routes.users.edit'), ['as' => 'users.show', 'uses' => 'User\UsersController@edit']);
+    Route::put(LaravelLocalization::transRoute('routes.users.update'), ['as' => 'users.update', 'uses' => 'User\UsersController@update']);
+    Route::delete(LaravelLocalization::transRoute('routes.users.destroy'), ['as' => 'users.destroy', 'uses' => 'User\UsersController@destroy']);
+    Route::post(LaravelLocalization::transRoute('routes.users.activate'), ['as' => 'users.activate', 'uses' => 'User\UsersController@activate']);
+    Route::get(LaravelLocalization::transRoute('routes.users.profile'), ['as' => 'users.profile', 'uses' => 'User\UsersController@profile']);
 
     // logout
-    Route::resource('deconnexion', 'Auth\LogoutController', [
-        'names' => [
-            'index' => 'logout'
-        ], 'except' => [
-            'create',
-            'store',
-            'show',
-            'edit',
-            'update',
-            'destroy'
-        ]
-    ]);
+    Route::get(LaravelLocalization::transRoute('routes.logout'), ['as'   => 'logout', 'uses' => 'Auth\AuthController@logout']);
+
 });
 
 /***********************************************************************************************************************
@@ -125,104 +73,79 @@ $route = Route::group($group, function () {
 // we define the middlewares to apply according to the config
 $group = config('settings.multilingual') ? ['prefix' => LaravelLocalization::setLocale(), 'middleware' => [
     'guest',
+    'localize',
     'localeSessionRedirect',
-    'localizationRedirect'
+    'localizationRedirect',
 ]] : ['middleware' => 'guest'];
 Route::group($group, function () {
     // account
     Route::get('mon-compte/creer', [
         'uses' => 'Auth\AccountController@createAccount',
-        'as' => 'create_account'
+        'as'   => 'create_account',
     ]);
     Route::get('mon-compte/renvoi-email-activation', [
         'uses' => 'Auth\AccountController@sendActivationMail',
-        'as' => 'send_activation_mail'
+        'as'   => 'send_activation_mail',
     ]);
     Route::get('mon-compte/activation', [
         'uses' => 'Auth\AccountController@activateAccount',
-        'as' => 'activate_account'
+        'as'   => 'activate_account',
     ]);
     // connection
     Route::resource('espace-connexion', 'Auth\AuthController', [
         'names' => [
             'index' => 'login',
-        ]
+        ],
     ]);
     // password recovery
     Route::resource('mot-de-passe-oublie', 'Auth\PasswordController', [
         'names' => [
-            'index' => 'forgotten_password',
-            'show' => 'password_recovery',
-            'update' => 'password_reset'
-        ]
+            'index'  => 'forgotten_password',
+            'show'   => 'password_recovery',
+            'update' => 'password_reset',
+        ],
     ]);
 });
 
 //public routes
 // we define the middlewares to apply according to the config
 $group = config('settings.multilingual') ? ['prefix' => LaravelLocalization::setLocale(), 'middleware' => [
+    'localize',
     'localeSessionRedirect',
-    'localizationRedirect'
+    'localizationRedirect',
 ]] : [];
 Route::group($group, function () {
+
     // home
-    Route::resource('/', 'Home\HomeController', [
-        'names' => [
-            'index' => 'home',
-        ]
-    ]);
+    Route::resource('/', 'Home\HomeController', ['names' => ['index' => 'home']]);
+
     // news
-    Route::resource('/news', 'News\NewsController', [
-        'names' => [
-            'index' => 'front.news',
-            'show' => 'front.news.show'
-        ]
-    ]);
+    Route::resource('/news', 'News\NewsController', ['names' => ['index' => 'front.news', 'show' => 'front.news.show']]);
+
     // leading team
-    Route::resource('/equipe-dirigeante', 'LeadingTeam\LeadingTeamController', [
-        'names' => [
-            'index' => 'front.leading_team'
-        ]
-    ]);
+    Route::resource('/equipe-dirigeante', 'LeadingTeam\LeadingTeamController', ['names' => ['index' => 'front.leading_team']]);
+
     // palmares
-    Route::resource('/palmares', 'Palmares\PalmaresController', [
-        'names' => [
-            'index' => 'front.palmares'
-        ]
-    ]);
+    Route::resource('/palmares', 'Palmares\PalmaresController', ['names' => ['index' => 'front.palmares']]);
+
     // registration
-    Route::resource('/inscription', 'Registration\RegistrationController', [
-        'names' => [
-            'index' => 'front.registration'
-        ]
-    ]);
+    Route::resource('/inscription', 'Registration\RegistrationController', ['names' => ['index' => 'front.registration']]);
+
     // registration
-    Route::resource('/calendrier', 'Calendar\CalendarController', [
-        'names' => [
-            'index' => 'front.calendar'
-        ]
-    ]);
+    Route::resource('/calendrier', 'Calendar\CalendarController', ['names' => ['index' => 'front.calendar']]);
+
     // schedule
-    Route::resource('/horaires', 'Schedule\ScheduleController', [
-        'names' => [
-            'index' => 'front.schedule'
-        ]
-    ]);
+    Route::resource('/horaires', 'Schedule\ScheduleController', ['names' => ['index' => 'front.schedule']]);
+
     // shop
-    Route::resource('/boutique-en-ligne', 'EShop\EShopController', [
-        'names' => [
-            'index' => 'front.e-shop',
-            'show' => 'front.e-shop.add-to-cart'
-        ]
-    ]);
+    Route::resource('/boutique-en-ligne', 'EShop\EShopController', ['names' => ['index' => 'front.e-shop', 'show' => 'front.e-shop.add-to-cart']]);
+
     // sitemap
     Route::get('sitemap.xml', 'Sitemap\SitemapController@index');
-    // rss
-    Route::get('rss', 'Rss\RssController@index');
+
     // pages
-    Route::resource('page', 'Pages\PageController', [
-        'names' => [
-            'show' => 'front.page'
-        ]
-    ]);
+    Route::resource('page', 'Pages\PageController', ['names' => ['show' => 'front.page']]);
+
+    // active rss according to the settings setup
+    if (config('settings.rss')) Route::get('rss', 'Rss\RssController@index');
 });

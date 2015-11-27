@@ -17,7 +17,7 @@
                             </span>
                             <span class="input-group lines">
                                 <span class="input-group-addon" for="input_lines"><i class="fa fa-list-ol"></i></span>
-                                <input id="input_lines" class="form-control" type="number" name="lines" value="{{ $tableListData['lines'] }}" placeholder="Nombre de lignes">
+                                <input id="input_lines" class="form-control" type="number" name="lines" value="{{ $tableListData['lines'] }}" placeholder="{{ trans('global.table_list.placeholder.lines') }}">
                             </span>
                         </div>
 
@@ -25,7 +25,7 @@
                             @if(!empty($tableListData['search_config']))
                                 <span class="input-group search">
                                         <span class="input-group-addon" for="input_search"><i class="fa fa-search"></i></span>
-                                        <input id="input_search" class="form-control" type="text" name="search" value="{{ $tableListData['search'] }}" placeholder="Rechercher">
+                                        <input id="input_search" class="form-control" type="text" name="search" value="{{ $tableListData['search'] }}" placeholder="{{ trans('global.table_list.placeholder.search') }}">
                                     @if($tableListData['search'])
                                         <span class="input-group-addon"><a href="{{ route($tableListData['route'] . '.index', ['search' => null, 'lines' => $tableListData['lines']]) }}"><i class="fa fa-times"></i></a></span>
                                     @endif
@@ -55,7 +55,7 @@
                 </th>
             @endforeach
 
-            <th class="text-right">Actions</th>
+            <th class="text-right">{{ trans('global.table_list.column.actions') }}</th>
         </tr>
     </thead>
 
@@ -95,11 +95,17 @@
                             </div>
                         {{-- show image --}}
                         @elseif(isset($column['image']) && !empty($image = $column['image']) && !empty($entity->getAttribute($column['key'])))
-                            <img width="80" height="80" src="{{ route('image', [
-                            'filename' => $entity->getAttribute($column['key']),
-                            'storage_path' => $image['storage_path'],
-                            'size' => $image['size']
-                            ]) }}" alt="">
+                            <a href="{{ route('image', [
+                                'filename' => $entity->getAttribute($column['key']),
+                                'storage_path' => $image['storage_path'],
+                                'size' => $image['size']['detail']
+                                ]) }}" data-lity>
+                                <img width="40" height="40" src="{{ route('image', [
+                                'filename' => $entity->getAttribute($column['key']),
+                                'storage_path' => $image['storage_path'],
+                                'size' => $image['size']['thumbnail']
+                                ]) }}">
+                            </a>
                         {{-- show value --}}
                         @else
                             @if(isset($column['button']) && $column['button'] === true && !empty($entity->getAttribute($column['key'])))
@@ -116,14 +122,14 @@
                 <td class="actions text-right">
 
                     <form role="form" class="form-inline" method="GET" action="{{ route($tableListData['route'] . '.show', $entity->id) }}">
-                        <a href="#" class="text-info submit-form spin-on-click"><i class="fa fa-pencil-square" title="Mettre à jour"></i></a>
+                        <a href="#" class="text-info submit-form spin-on-click"><i class="fa fa-pencil-square" title="{{ trans('global.action.edit') }}"></i></a>
                     </form>
 
                     <form role="form" class="form-inline" method="POST" action="{{ route($tableListData['route'] . '.destroy') }}">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="_id" value="{{ $entity->id }}">
-                        <a href="#" class="text-danger confirm" data-confirm="@foreach($confirm['attributes'] as $attribute){{ $entity->getAttribute($attribute) }} @endforeach"><i class="fa fa-trash" title="Supprimer"></i></a>
+                        <a href="#" class="text-danger confirm" data-confirm="@foreach($confirm['attributes'] as $attribute){{ $entity->getAttribute($attribute) }} @endforeach"><i class="fa fa-trash" title="{{ trans('global.action.delete') }}"></i></a>
                     </form>
                 </td>
             </tr>
@@ -131,7 +137,7 @@
         @if(empty($tableListData['pagination']->items()))
             <tr>
                 <td colspan="{{ sizeof($tableListData['columns']) + 1 }}" class="text-center">
-                    <span class="text-info"><i class="fa fa-info-circle"></i></span> Aucun résultat trouvé
+                    <span class="text-info"><i class="fa fa-info-circle"></i></span> {{ trans('global.table_list.results.empty') }}
                 </td>
             </tr>
         @endif
@@ -147,13 +153,13 @@
 
                     <div class="col-sm-4 table-commands">
                         <a href="{{ route($tableListData['route'] . '.create') }}">
-                            <button class="btn btn-success spin-on-click"><i class="fa fa-plus-circle"></i> Ajouter</button>
+                            <button class="btn btn-success spin-on-click"><i class="fa fa-plus-circle"></i> {{ trans('global.action.add') }}</button>
                         </a>
                     </div>
 
                     <div class="col-sm-4 table-nav-infos text-center">
                         @if(!empty($tableListData['pagination']->items()))
-                            <b>{{ $tableListData['nav_infos'] }}</b>
+                            {!! $tableListData['nav_infos'] !!}
                         @endif
                     </div>
 

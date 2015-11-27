@@ -3,10 +3,14 @@
 return [
     "back" => [
         "header" => [
-            "dashboard" => "Tableau de bord",
-            "settings" => "Configuration",
+            "dashboard"   => "Tableau de bord",
+            "settings"    => "Paramètres",
             "permissions" => "Permissions",
-            "users" => "Utilisateurs",
-        ]
-    ]
+            "users"       => "Utilisateurs",
+            "language"    => "Langue",
+            "back"        => "Retour au site",
+            "my_profile"  => "Mon profil",
+            "logout"      => "Déconnexion",
+        ],
+    ],
 ];

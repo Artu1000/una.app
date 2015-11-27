@@ -27,13 +27,14 @@ class SettingsController extends Controller
         $required = 'settings.view';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
+
             return Redirect()->back();
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = 'Configuration du site';
+        $this->seoMeta['page_title'] = trans('seo.settings.index');
 
         // prepare data for the view
         $data = [
@@ -50,8 +51,9 @@ class SettingsController extends Controller
         $required = 'settings.update';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
+
             return Redirect()->back();
         }
 
@@ -91,13 +93,16 @@ class SettingsController extends Controller
 
             return Redirect()->back();
         }
+
         try{
             // we format the number into its international equivalent
-            $inputs['phone_number'] = $formatted_phone_number = phone_format(
-                $inputs['phone_number'],
-                'FR',
-                \libphonenumber\PhoneNumberFormat::INTERNATIONAL
-            );
+            if(isset($inputs['phone_number']) && !empty($inputs['phone_number'])){
+                $inputs['phone_number'] = $formatted_phone_number = phone_format(
+                    $inputs['phone_number'],
+                    'FR',
+                    \libphonenumber\PhoneNumberFormat::INTERNATIONAL
+                );
+            }
 
             // we update the json file
             file_put_contents(storage_path('app/config/settings.json'), json_encode($inputs));
@@ -105,6 +110,7 @@ class SettingsController extends Controller
                 trans('settings.message.update.success')
             ], 'success');
 
+            return Redirect()->back();
         }catch(\Exception $e){
             // we flash the request
             $request->flash();
@@ -113,7 +119,7 @@ class SettingsController extends Controller
             \Log::error($e);
             \Modal::alert([
                 trans('settings.message.update.failure'),
-                trans('errors.contact', [
+                trans('global.message.global.failure.contact.support', [
                     'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
                         config('settings.support_email') . "</a>.",
                 ]),

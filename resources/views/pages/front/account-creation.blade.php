@@ -12,7 +12,7 @@
 
                     <div class="form_capsule col-sm-offset-4 col-sm-4">
 
-                        <form class="form-signin" role="form" method="POST" action="{{ route('account') }}">
+                        <form class="form-signin" role="form" method="POST" action="{{ route('account.update') }}">
 
                             {{-- crsf token --}}
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">

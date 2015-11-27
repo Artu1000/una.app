@@ -116,10 +116,10 @@ abstract class Controller extends BaseController
      */
     public function tableNavStatus(\Illuminate\Pagination\LengthAwarePaginator $paginated_list)
     {
-        $infos = 'Affichage des résultats ' .
-            (($paginated_list->perPage() * ($paginated_list->currentPage() - 1)) + 1) .
-            ' à ' . ($paginated_list->count() + (($paginated_list->currentPage() - 1) * $paginated_list->perPage())) .
-            ', sur un total de ' . $paginated_list->total();
-        return $infos;
+        return trans('global.table_list.results.status', [
+            'start' => ($paginated_list->perPage() * ($paginated_list->currentPage() - 1)) + 1,
+            'stop' => $paginated_list->count() + (($paginated_list->currentPage() - 1) * $paginated_list->perPage()),
+            'total' => $paginated_list->total()
+        ]);
     }
 }

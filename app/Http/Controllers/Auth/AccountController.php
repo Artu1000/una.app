@@ -19,25 +19,6 @@ class AccountController extends Controller
     }
 
     /**
-     * @return $this
-     */
-    public function index()
-    {
-        // SEO Meta settings
-        $this->seoMeta['page_title'] = 'Mon compte';
-
-        // prepare data for the view
-        $data = [
-            'seoMeta' => $this->seoMeta,
-            'user'    => \Sentinel::getUser(),
-            'roles'   => \Sentinel::getRoleRepository()->all(),
-        ];
-
-        // return the view with data
-        return view('pages.back.user-edit')->with($data);
-    }
-
-    /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */

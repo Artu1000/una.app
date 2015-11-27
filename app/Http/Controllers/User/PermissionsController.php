@@ -7,11 +7,8 @@ use Illuminate\Http\Request;
 
 class PermissionsController extends Controller
 {
-
     /**
-     * Create a new home controller instance.
-     *
-     * @return void
+     * PermissionsController constructor.
      */
     public function __construct()
     {
@@ -28,39 +25,40 @@ class PermissionsController extends Controller
         $required = 'permissions.list';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
+
             return Redirect()->back();
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = 'Gestion des permissions';
+        $this->seoMeta['page_title'] = trans('seo.permissions.index');
 
         // we define the table list columns
         $columns = [[
-            'title' => 'Nom',
-            'key' => 'name',
-            'sort_by' => 'roles.name'
+            'title'   => trans('permissions.page.label.name'),
+            'key'     => 'name',
+            'sort_by' => 'roles.name',
         ], [
-            'title' => 'Date création',
-            'key' => 'created_at',
-            'sort_by' => 'roles.created_at'
+            'title'   => trans('permissions.page.label.created_at'),
+            'key'     => 'created_at',
+            'sort_by' => 'roles.created_at',
         ], [
-            'title' => 'Date modification',
-            'key' => 'updated_at',
-            'sort_by' => 'roles.updated_at'
+            'title'   => trans('permissions.page.label.updated_at'),
+            'key'     => 'updated_at',
+            'sort_by' => 'roles.updated_at',
         ]];
 
         // we instantiate the query
         $query = \Sentinel::getRoleRepository()->query();
 
         $confirm_config = [
-            'action' => 'Supression du rôle',
+            'action'     => trans('permissions.page.action.delete'),
             'attributes' => ['name'],
         ];
 
         $search_config = [
-            'name'
+            'name',
         ];
 
         // we format the data for the needs of the view
@@ -69,26 +67,27 @@ class PermissionsController extends Controller
         // prepare data for the view
         $data = [
             'tableListData' => $tableListData,
-            'seoMeta' => $this->seoMeta,
+            'seoMeta'       => $this->seoMeta,
         ];
 
         // return the view with data
         return view('pages.back.permissions-list')->with($data);
     }
 
-    public function show($id)
+    public function edit($id)
     {
         // we check the current user permission
         $required = 'permissions.view';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
+
             return Redirect()->back();
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = "Edition d'un rôle";
+        $this->seoMeta['page_title'] = trans('seo.permissions.edit');
 
         // we get the role
         $role = \Sentinel::findRoleById($id);
@@ -96,17 +95,20 @@ class PermissionsController extends Controller
         // we check if the role exists
         if (!$role) {
             \Modal::alert([
-                "Le rôle que vous avez sélectionné n'existe pas." .
-                "Veuillez contacter le support si l'erreur persiste :" . "<a href='mailto:" .
-                config('settings.support_email') . "' >" . config('settings.support_email') . "</a>."
+                trans('permissions.message.find.failure', ['id' => $id]),
+                trans('global.message.global.failure.contact.support', [
+                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
+                        config('settings.support_email') . "</a>.",
+                ]),
             ], 'error');
+
             return Redirect()->back();
         }
 
         // prepare data for the view
         $data = [
-            'role' => $role,
-            'seoMeta' => $this->seoMeta
+            'role'    => $role,
+            'seoMeta' => $this->seoMeta,
         ];
 
         // return the view with data
@@ -116,7 +118,7 @@ class PermissionsController extends Controller
     public function create()
     {
         // SEO Meta settings
-        $this->seoMeta['page_title'] = "Création d'un rôle";
+        $this->seoMeta['page_title'] = trans('seo.permissions.create');
 
         // prepare data for the view
         $data = [
@@ -133,8 +135,9 @@ class PermissionsController extends Controller
         $required = 'permissions.create';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
+
             return Redirect()->back();
         }
 
@@ -164,7 +167,7 @@ class PermissionsController extends Controller
         // we check the inputs
         $errors = [];
         $validator = \Validator::make($request->all(), [
-            'name' => 'required|unique:roles,name'
+            'name' => 'required|unique:roles,name',
         ]);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
@@ -172,27 +175,32 @@ class PermissionsController extends Controller
         // if errors are found
         if (count($errors)) {
             \Modal::alert($errors, 'error');
+
             return Redirect()->back();
         }
 
         try {
             // we create the role
             $role = \Sentinel::getRoleRepository()->createModel()->create([
-                'slug' => str_slug($request->get('name')),
-                'name' => $request->get('name'),
-                'permissions' => $request->except('_token', 'name')
+                'slug'        => str_slug($request->get('name')),
+                'name'        => $request->get('name'),
+                'permissions' => $request->except('_token', 'name'),
             ]);
             \Modal::alert([
-                'Le rôle <b>' . $role->name . '</b> a bien été créé.'
+                trans('permissions.message.create.success', ['name' => $role->name]),
             ], 'success');
+
             return Redirect(route('permissions.index'));
         } catch (\Exception $e) {
             \Log::error($e);
             \Modal::alert([
-                "Une erreur est survenue lors de la création du rôle <b>" . $request->get('name') . "</b>.",
-                "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
-                config('settings.support_email') . "</a>."
+                trans('permissions.message.create.failure', ['name' => $role->name]),
+                trans('global.message.global.failure.contact.support', [
+                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
+                        config('settings.support_email') . "</a>.",
+                ]),
             ], 'error');
+
             return Redirect()->back();
         }
     }
@@ -203,8 +211,9 @@ class PermissionsController extends Controller
         $required = 'permissions.update';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
+
             return Redirect()->back();
         }
 
@@ -228,21 +237,23 @@ class PermissionsController extends Controller
         // we replace the request by the cleaned one
         $request->replace($inputs);
 
-        // we flash the request
-        $request->flash();
-
         // we check the inputs
         $errors = [];
         $validator = \Validator::make($request->all(), [
-            '_id' => 'required|exists:roles,id',
-            'name' => 'required|unique:roles,name,' . $request->get('_id')
+            '_id'  => 'required|exists:roles,id',
+            'name' => 'required|unique:roles,name,' . $request->get('_id'),
         ]);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
         }
         // if errors are found
         if (count($errors)) {
+            // we flash the request
+            $request->flash();
+
+            // we notify the current user
             \Modal::alert($errors, 'error');
+
             return Redirect()->back();
         }
 
@@ -254,17 +265,26 @@ class PermissionsController extends Controller
             $role->permissions = $request->except('_method', '_id', '_token', 'name');
             $role->save();
 
+            // we notify the user
             \Modal::alert([
-                'Le rôle <b>' . $role->name . '</b> a bien été mis à jour.'
+                trans('permissions.message.update.success', ['name' => $role->name]),
             ], 'success');
+
             return Redirect()->back();
         } catch (\Exception $e) {
+            // we flash the request
+            $request->flash();
+
+            // we log the error and notify the current use
             \Log::error($e);
             \Modal::alert([
-                "Une erreur est survenue lors de la mise à jour du rôle <b>" . $request->get('name') . "</b>.",
-                "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
-                config('settings.support_email') . "</a>."
+                trans('permissions.message.update.failure', ['name' => $role->name]),
+                trans('global.message.global.failure.contact.support', [
+                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
+                        config('settings.support_email') . "</a>.",
+                ]),
             ], 'error');
+
             return Redirect()->back();
         }
     }
@@ -275,33 +295,39 @@ class PermissionsController extends Controller
         $required = 'permissions.delete';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                "Vous n'avez pas l'autorisation d'effectuer l'action : <b>" . trans('permissions.' . $required) . "</b>"
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
+
             return Redirect()->back();
         }
 
         // we get the role
         if (!$role = \Sentinel::findRoleById($request->get('_id'))) {
             \Modal::alert([
-                "Le rôle séléctionné n'existe pas."
+                trans('permissions.message.find.failure', ['name' => $request->get('_id')]),
             ], 'error');
+
             return Redirect()->back();
         }
 
         // we delete the role
         try {
             \Modal::alert([
-                "Le rôle <b>" . $role->name . "</b> a bien été supprimé."
+                trans('permissions.message.delete.success', ['name' => $role->name]),
             ], 'success');
             $role->delete();
+
             return Redirect()->back();
         } catch (\Exception $e) {
             \Log::error($e);
             \Modal::alert([
-                "Une erreur est survenue lors de la mise à jour du rôle <b>" . $request->get('name') . "</b>.",
-                "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
-                config('settings.support_email') . "</a>."
+                trans('permissions.message.delete.failure', ['name' => $role->name]),
+                trans('global.message.global.failure.contact.support', [
+                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
+                        config('settings.support_email') . "</a>.",
+                ]),
             ], 'error');
+
             return Redirect()->back();
         }
     }

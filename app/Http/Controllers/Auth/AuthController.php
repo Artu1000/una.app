@@ -40,8 +40,9 @@ class AuthController extends Controller
         // data send to the view
         $data = [
             'seoMeta' => $this->seoMeta,
-            'css' => url(elixir('css/app.login.css'))
+            'css'     => url(elixir('css/app.login.css')),
         ];
+
         return view('pages.front.login')->with($data);
     }
 
@@ -53,11 +54,11 @@ class AuthController extends Controller
         // we analyse the given inputs
         // we replace the "on" or "off" value from the checkbox by a boolean
         $request->merge([
-            'remember' => filter_var($request->get('remember'), FILTER_VALIDATE_BOOLEAN)
+            'remember' => filter_var($request->get('remember'), FILTER_VALIDATE_BOOLEAN),
         ]);
         $errors = [];
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
+            'email'    => 'required|email',
             'password' => 'required',
             'remember' => 'boolean',
         ]);
@@ -67,6 +68,7 @@ class AuthController extends Controller
         // if errors are found
         if (count($errors)) {
             Modal::alert($errors, 'error');
+
             return Redirect()->back();
         }
 
@@ -74,14 +76,15 @@ class AuthController extends Controller
         try {
             if (!$user = Sentinel::authenticate($request->except('remember'), $request->get('remember'))) {
                 Modal::alert([
-                    "E-mail ou mot de passe erroné. Veuillez rééssayer."
+                    "E-mail ou mot de passe erroné. Veuillez rééssayer.",
                 ], 'error');
+
                 return Redirect()->back();
             }
 
             Modal::alert([
                 "Bienvenue <b>" . $user->first_name . "&nbsp;" . $user->last_name .
-                "</b>, vous êtes maintenant connecté."
+                "</b>, vous êtes maintenant connecté.",
             ], 'success');
 
             // redirect to the url stored in the session
@@ -97,25 +100,53 @@ class AuthController extends Controller
                 "Votre compte n'est pas activé. " .
                 "Activez-le à partir du lien qui vous a été transmis par e-mail lors de votre inscription. ",
                 "Pour recevoir à nouveau votre e-mail d'activation, <a href='" . route('send_activation_mail', [
-                    'email' => $request->get('email')
-                ]) . "' title=\"Me renvoyer l'email d'activation\"><u>cliquez ici</u></a>."
+                    'email' => $request->get('email'),
+                ]) . "' title=\"Me renvoyer l'email d'activation\"><u>cliquez ici</u></a>.",
             ], 'error');
+
             return Redirect()->back();
         } catch (\Cartalyst\Sentinel\Checkpoints\ThrottlingException $e) {
             switch ($e->getType()) {
                 case 'ip':
                     Modal::alert([
                         "En raison d'erreurs répétées, l'accès à l'application depuis votre IP est suspendu pendant " .
-                        $e->getDelay() . " secondes."
+                        $e->getDelay() . " secondes.",
                     ], 'error');
                     break;
                 default:
                     Modal::alert([
-                        $e->getMessage()
+                        $e->getMessage(),
                     ], 'error');
                     break;
             }
+
             return Redirect()->back();
+        }
+    }
+
+    public function logout()
+    {
+        // we get the current user
+        $user = \Sentinel::getUser();
+
+        // we logout the user
+        try {
+            \Sentinel::logout();
+            Modal::alert([
+                trans('auth.message.logout.success', ['name' => $user->first_name . ' ' . $user->last_name]),
+            ], 'success');
+
+            return redirect(route('home'));
+        } catch (\Exception $e) {
+            Modal::alert([
+                trans('auth.message.logout.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
+                trans('global.message.global.failure.contact.support', [
+                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
+                        config('settings.support_email') . "</a>.",
+                ]),
+            ], 'error');
+
+            return redirect()->back();
         }
     }
 }

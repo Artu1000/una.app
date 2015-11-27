@@ -33,8 +33,9 @@ class User extends SentinelUser
     public function availableSizes()
     {
         return [
-            'admin'   => [80, 80],
+            'admin'   => [40, 40],
             'picture' => [145, 160],
+            'large' => [750, null]
         ];
     }
 

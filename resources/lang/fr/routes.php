@@ -1,22 +1,33 @@
 <?php
 
 return [
-
-    'dashboard' => [
-        'resource' => 'tableau-de-bord'
+    "dashboard"   => [
+        "index" => "tableau-de-bord",
     ],
-    'my-account' => [
-        'resource' => 'mon-profil'
+    "account"     => [
+        "index" => "mon-profil",
     ],
-    'settings' => [
-        'resource' => 'configuration'
+    "settings"    => [
+        "index"  => "parametres",
+        "update" => "parametres/mise-a-jour",
     ],
-    'permissions' => [
-        'resource' => 'permissions'
+    "permissions" => [
+        "index"   => "permissions",
+        "create"  => "permissions/creation",
+        "store"   => "permissions/enregistrement",
+        "edit"    => "permissions/edition/{id}",
+        "update"  => "permissions/mise-a-jour",
+        "destroy" => "permissions/suppression",
     ],
-    'users' => [
-        'activate' => 'utilisateurs/activer',
-        'resource' => 'utilisateurs'
+    "users"       => [
+        "index"    => "users",
+        "create"   => "users/creation",
+        "store"    => "users/enregistrement",
+        "edit"     => "users/edition/{id}",
+        "update"   => "users/mise-a-jour",
+        "destroy"  => "users/suppression",
+        "profile"  => "mon-profil",
+        "activate" => "users/activate",
     ],
-
+    "logout"      => "deconnexion",
 ];

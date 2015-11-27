@@ -16,11 +16,14 @@
                             <img width="300" height="280" src="{{ url(env('LOGO_LIGHT')) }}" alt="{{ config('settings.app_name') }}">
                         </a>
 
-                        <h1><i class="fa fa-bullhorn"></i> Oops !!!</h1>
-                        <h2>Erreur {{ $code }}.<br/> {{ trans('errors.'.$code) }}.</h2>
+                        <h1><i class="fa fa-bullhorn"></i> {{ trans('errors.title') }}</h1>
+                        <h2>
+                            {{ trans('errors.'.$code.'.title') }}<br/>
+                            {{ trans('errors.'.$code.'.message') }}
+                        </h2>
 
                         <a href="{{ route('home') }}" title="Revenir à l'accueil de {{ config('settings.app_name') }}" class="btn btn-primary btn-lg">
-                            <i class="fa fa-home"></i> Revenir à l'accueil
+                            <i class="fa fa-home"></i> {{ trans('errors.nav.home') }}
                         </a>
                     </div>
                 </div>

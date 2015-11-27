@@ -10,7 +10,7 @@
                 {!! $alert['message']['content'] !!}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Fermer</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> {{ trans('global.action.close') }}</button>
             </div>
         </div>
     </div>

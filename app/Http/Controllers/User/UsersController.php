@@ -27,7 +27,7 @@ class UsersController extends Controller
         $required = 'users.list';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
             return Redirect()->back();
@@ -39,44 +39,45 @@ class UsersController extends Controller
         // we define the table list columns
         $columns = [
             [
-                'title' => trans('users.view.label.photo'),
+                'title' => trans('users.page.label.photo'),
                 'key'   => 'photo',
                 'image' => [
                     'storage_path' => \Sentinel::createModel()->storagePath(),
-                    'size'   => 'admin',
+                    'size'         => [
+                        'thumbnail' => 'admin',
+                        'detail' => 'large',
+                    ]
                 ],
             ], [
-                'title'   => trans('users.view.label.last_name'),
+                'title'   => trans('users.page.label.last_name'),
                 'key'     => 'last_name',
                 'sort_by' => 'users.last_name',
             ], [
-                'title'   => trans('users.view.label.first_name'),
+                'title'   => trans('users.page.label.first_name'),
                 'key'     => 'first_name',
                 'sort_by' => 'users.first_name',
             ], [
-                'title'   => trans('users.view.label.status'),
+                'title'   => trans('users.page.label.status'),
                 'key'     => 'status',
                 'config'  => 'user.status',
                 'sort_by' => 'users.status',
                 'button'  => true,
             ], [
-                'title'   => trans('users.view.label.board'),
+                'title'   => trans('users.page.label.board'),
                 'key'     => 'board',
                 'config'  => 'user.board',
                 'sort_by' => 'users.board',
                 'button'  => true,
-            ],
-            [
-                'title'      => trans('users.view.label.role'),
+            ], [
+                'title'      => trans('users.page.label.role'),
                 'key'        => 'roles',
                 'collection' => 'name',
                 'sort_by'    => 'roles.name',
                 'button'     => [
                     'attribute' => 'slug',
                 ],
-            ],
-            [
-                'title'    => trans('users.view.label.activation'),
+            ], [
+                'title'    => trans('users.page.label.activation'),
                 'key'      => 'activated',
                 'activate' => 'users.activate',
             ],
@@ -98,7 +99,7 @@ class UsersController extends Controller
 
         // we prepare the confirm config
         $confirm_config = [
-            'action'     => 'Supression de l\'utilisateur',
+            'action'     => trans('users.page.action.delete'),
             'attributes' => ['first_name', 'last_name'],
         ];
 
@@ -128,13 +129,13 @@ class UsersController extends Controller
         return view('pages.back.users-list')->with($data);
     }
 
-    public function show($id)
+    public function edit($id)
     {
         // we check the current user permission
         $required = 'users.view';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
             return Redirect()->back();
@@ -150,7 +151,7 @@ class UsersController extends Controller
         if (!$user) {
             \Modal::alert([
                 trans('users.message.find.failure'),
-                trans('errors.contact', [
+                trans('global.message.global.failure.contact.support', [
                     'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
                         config('settings.support_email') . "</a>.",
                 ]),
@@ -158,6 +159,30 @@ class UsersController extends Controller
 
             return Redirect()->back();
         }
+
+        // we convert the database date to the fr/en format
+        if ($birth_date = $user->birth_date) {
+            $user->birth_date = Carbon::createFromFormat('Y-m-d', $birth_date)->format('d/m/Y');
+        }
+
+        // prepare data for the view
+        $data = [
+            'seoMeta' => $this->seoMeta,
+            'user'    => $user,
+            'roles'   => \Sentinel::getRoleRepository()->all(),
+        ];
+
+        // return the view with data
+        return view('pages.back.user-edit')->with($data);
+    }
+
+    public function profile()
+    {
+        // SEO Meta settings
+        $this->seoMeta['page_title'] = trans('seo.users.profile');
+
+        // we get the current user
+        $user = \Sentinel::getUser();
 
         // we convert the database date to the fr/en format
         if ($birth_date = $user->birth_date) {
@@ -196,7 +221,7 @@ class UsersController extends Controller
         $required = 'users.create';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
             return Redirect()->back();
@@ -250,14 +275,19 @@ class UsersController extends Controller
 
             // we store the photo
             if (isset($inputs['photo']) && !empty($photo = $inputs['photo'])) {
-                // we resize, optimize and save the image
-                $file_name = \ImageManager::resize(
-                    $photo,
-                    $user->id . '_photo', 'user',
-                    $user->image_sizes
+
+                // we optimize, resize and save the image
+                $file_name = \ImageManager::optimizeAndResize(
+                    $photo->getRealPath(),
+                    $user->imageName(),
+                    $photo->getClientOriginalExtension(),
+                    $user->storagePath(),
+                    $user->availableSizes()
                 );
-                // we add the image name to the inputs for saving
-                $inputs['photo'] = $file_name;
+
+                // we update the image name
+                $user->photo = $file_name;
+                $user->save();
             }
 
             // we attach the new role
@@ -292,7 +322,7 @@ class UsersController extends Controller
             \Log::error($e);
             \Modal::alert([
                 trans('users.message.creation.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
-                trans('errors.contact', [
+                trans('global.message.global.failure.contact.support', [
                     'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
                         config('settings.support_email') . "</a>.",
                 ]),
@@ -308,7 +338,7 @@ class UsersController extends Controller
         $required = 'users.update';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
             return Redirect()->back();
@@ -387,7 +417,7 @@ class UsersController extends Controller
             return Redirect()->back();
         }
 
-//        try {
+        try {
             // we format the number into its international equivalent
             $inputs['phone_number'] = $formatted_phone_number = phone_format(
                 $inputs['phone_number'],
@@ -397,10 +427,11 @@ class UsersController extends Controller
 
             // we store the photo
             if (isset($inputs['photo']) && !empty($photo = $inputs['photo'])) {
-                // we resize, optimize and save the image
-                $file_name = \ImageManager::resize(
-                    $photo,
+                // we optimize, resize and save the image
+                $file_name = \ImageManager::optimizeAndResize(
+                    $photo->getRealPath(),
                     $user->imageName(),
+                    $photo->getClientOriginalExtension(),
                     $user->storagePath(),
                     $user->availableSizes()
                 );
@@ -442,22 +473,22 @@ class UsersController extends Controller
             ], 'success');
 
             return Redirect()->back();
-//        } catch (\Exception $e) {
-//            // we flash the request
-//            $request->flash();
-//
-//            // we log the error and we notify the current user
-//            \Log::error($e);
-//            \Modal::alert([
-//                trans('users.message.account.failure'),
-//                trans('errors.contact', [
-//                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
-//                        config('settings.support_email') . "</a>.",
-//                ]),
-//            ], 'error');
-//
-//            return Redirect()->back();
-//        }
+        } catch (\Exception $e) {
+            // we flash the request
+            $request->flash();
+
+            // we log the error and we notify the current user
+            \Log::error($e);
+            \Modal::alert([
+                trans('users.message.account.failure'),
+                trans('global.message.global.failure.contact.support', [
+                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
+                        config('settings.support_email') . "</a>.",
+                ]),
+            ], 'error');
+
+            return Redirect()->back();
+        }
     }
 
     public function destroy(Request $request)
@@ -466,7 +497,7 @@ class UsersController extends Controller
         $required = 'users.delete';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
             return Redirect()->back();
@@ -481,9 +512,19 @@ class UsersController extends Controller
             return Redirect()->back();
         }
 
-        // we delete the role
         try {
+            // we remove the users photos
+            if($user->photo){
+                \ImageManager::remove(
+                    $user->photo,
+                    $user->storagePath(),
+                    $user->availableSizes()
+                );
+            }
+
+            // we delete the role
             $user->delete();
+
             \Modal::alert([
                 trans('users.message.delete.success', ['name' => $user->first_name . ' ' . $user->last_name]),
             ], 'success');
@@ -493,7 +534,7 @@ class UsersController extends Controller
             \Log::error($e);
             \Modal::alert([
                 trans('users.message.delete.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
-                trans('errors.contact', [
+                trans('global.message.global.failure.contact.support', [
                     'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
                         config('settings.support_email') . "</a>.",
                 ]),
@@ -509,7 +550,7 @@ class UsersController extends Controller
         $required = 'users.update';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
-                trans('permissions.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
             return Redirect()->back();

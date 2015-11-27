@@ -41,7 +41,7 @@
                                 <div class="input-group swipe-group">
                                     <span class="input-group-addon" for="input_multilingual"><i class="fa fa-globe"></i></span>
                                     <span class="form-control swipe-label" readonly="">
-                                        {{ trans('actions.activate') }}
+                                        {{ trans('global.action.activate') }}
                                     </span>
                                     <input class="swipe" id="input_multilingual" type="checkbox" name="multilingual"
                                            @if(old('multilingual')) checked
@@ -197,7 +197,7 @@
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <span class="btn btn-primary btn-file">
-                                            <i class="fa fa-picture-o"></i> {{ trans('actions.browse') }} <input type="file" name="favicon">
+                                            <i class="fa fa-picture-o"></i> {{ trans('global.action.browse') }} <input type="file" name="favicon">
                                         </span>
                                     </span>
                                     <input id="input_favicon" type="text" class="form-control" readonly="">

@@ -8,9 +8,7 @@ class DashboardController extends Controller
 {
 
     /**
-     * Create a new home controller instance.
-     *
-     * @return void
+     * DashboardController constructor.
      */
     public function __construct()
     {
@@ -20,12 +18,11 @@ class DashboardController extends Controller
     /**
      * @return $this
      */
-    public function index(){
+    public function index()
+    {
 
         // SEO Meta settings
         $this->seoMeta['page_title'] = 'Espace Membre';
-        $this->seoMeta['meta_desc'] = 'Vous êtes sur l\'espace membre du club Université Nantes Aviron (UNA).';
-        $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, espace, membre';
 
         // prepare data for the view
         $data = [
