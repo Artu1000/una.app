@@ -32,10 +32,9 @@ class AuthController extends Controller
     protected function index()
     {
         // SEO settings
-        $this->seoMeta['page_title'] = 'Espace connexion';
-        $this->seoMeta['meta_desc'] = 'Connectez-vous à votre espace personnel afin de profiter des différentes
-        fonctionnalités de l\'application';
-        $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, espace, connexion';
+        $this->seoMeta['page_title'] = trans('seo.login.index.title');
+        $this->seoMeta['meta_desc'] = trans('seo.login.index.description');
+        $this->seoMeta['meta_keywords'] = trans('seo.login.index.keywords');
 
         // data send to the view
         $data = [
@@ -46,21 +45,22 @@ class AuthController extends Controller
         return view('pages.front.login')->with($data);
     }
 
-    protected function store(Request $request)
+    protected function login(Request $request)
     {
         // we flash inputs
-        $request->flashOnly('email', 'remember');
+        $request->flash();
 
-        // we analyse the given inputs
         // we replace the "on" or "off" value from the checkbox by a boolean
         $request->merge([
             'remember' => filter_var($request->get('remember'), FILTER_VALIDATE_BOOLEAN),
         ]);
+
+        // we analyse the given inputs
         $errors = [];
         $validator = Validator::make($request->all(), [
             'email'    => 'required|email',
             'password' => 'required',
-            'remember' => 'boolean',
+            'remember' => 'required|boolean',
         ]);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
@@ -76,15 +76,14 @@ class AuthController extends Controller
         try {
             if (!$user = Sentinel::authenticate($request->except('remember'), $request->get('remember'))) {
                 Modal::alert([
-                    "E-mail ou mot de passe erroné. Veuillez rééssayer.",
+                    trans('auth.message.login.failure'),
                 ], 'error');
 
                 return Redirect()->back();
             }
 
             Modal::alert([
-                "Bienvenue <b>" . $user->first_name . "&nbsp;" . $user->last_name .
-                "</b>, vous êtes maintenant connecté.",
+                trans('auth.message.login.success', ['name' => $user->first_name . " " . $user->last_name]),
             ], 'success');
 
             // redirect to the url stored in the session
@@ -92,16 +91,16 @@ class AuthController extends Controller
                 return redirect($url);
             } else {
                 // or redirect to home
-                return redirect(route('home.show'));
+                return redirect(route('home'));
             }
         } catch (\Cartalyst\Sentinel\Checkpoints\NotActivatedException $e) {
             \Log::error($e);
             Modal::alert([
-                "Votre compte n'est pas activé. " .
-                "Activez-le à partir du lien qui vous a été transmis par e-mail lors de votre inscription. ",
-                "Pour recevoir à nouveau votre e-mail d'activation, <a href='" . route('send_activation_mail', [
+                trans('auth.message.activation.failure'),
+                trans('auth.message.activation.email.resend', [
                     'email' => $request->get('email'),
-                ]) . "' title=\"Me renvoyer l'email d'activation\"><u>cliquez ici</u></a>.",
+                    'url'   => route('account.activation_email', ['email' => $request->get('email')]),
+                ]),
             ], 'error');
 
             return Redirect()->back();
@@ -109,8 +108,7 @@ class AuthController extends Controller
             switch ($e->getType()) {
                 case 'ip':
                     Modal::alert([
-                        "En raison d'erreurs répétées, l'accès à l'application depuis votre IP est suspendu pendant " .
-                        $e->getDelay() . " secondes.",
+                        trans('auth.message.throttle.ip', ['seconds' => $e->getDelay()]),
                     ], 'error');
                     break;
                 default:
@@ -121,6 +119,13 @@ class AuthController extends Controller
             }
 
             return Redirect()->back();
+        } catch (\Exception $e) {
+            \Modal::alert([
+                trans('auth.message.login.error'),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
+            ], 'error');
+
+            return redirect()->back();
         }
     }
 
@@ -140,10 +145,7 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             Modal::alert([
                 trans('auth.message.logout.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
-                trans('global.message.global.failure.contact.support', [
-                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
-                        config('settings.support_email') . "</a>.",
-                ]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
             return redirect()->back();

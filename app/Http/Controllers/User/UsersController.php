@@ -45,8 +45,8 @@ class UsersController extends Controller
                     'storage_path' => \Sentinel::createModel()->storagePath(),
                     'size'         => [
                         'thumbnail' => 'admin',
-                        'detail' => 'large',
-                    ]
+                        'detail'    => 'large',
+                    ],
                 ],
             ], [
                 'title'   => trans('users.page.label.last_name'),
@@ -155,10 +155,7 @@ class UsersController extends Controller
         if (!$user) {
             \Modal::alert([
                 trans('users.message.find.failure'),
-                trans('global.message.global.failure.contact.support', [
-                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
-                        config('settings.support_email') . "</a>.",
-                ]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
 
             return Redirect()->back();
@@ -326,10 +323,7 @@ class UsersController extends Controller
             \Log::error($e);
             \Modal::alert([
                 trans('users.message.creation.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
-                trans('global.message.global.failure.contact.support', [
-                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
-                        config('settings.support_email') . "</a>.",
-                ]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
 
             return Redirect()->back();
@@ -485,10 +479,7 @@ class UsersController extends Controller
             \Log::error($e);
             \Modal::alert([
                 trans('users.message.account.failure'),
-                trans('global.message.global.failure.contact.support', [
-                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
-                        config('settings.support_email') . "</a>.",
-                ]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
 
             return Redirect()->back();
@@ -518,7 +509,7 @@ class UsersController extends Controller
 
         try {
             // we remove the users photos
-            if($user->photo){
+            if ($user->photo) {
                 \ImageManager::remove(
                     $user->photo,
                     $user->storagePath(),
@@ -538,10 +529,7 @@ class UsersController extends Controller
             \Log::error($e);
             \Modal::alert([
                 trans('users.message.delete.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
-                trans('global.message.global.failure.contact.support', [
-                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
-                        config('settings.support_email') . "</a>.",
-                ]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
             return Redirect()->back();

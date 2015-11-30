@@ -61,7 +61,7 @@ class SettingsController extends Controller
         // we replace the "on" or "off" value from the checkbox by a boolean
         $request->merge([
             'multilingual' => filter_var($request->get('multilingual'), FILTER_VALIDATE_BOOLEAN),
-            'rss' => filter_var($request->get('rss'), FILTER_VALIDATE_BOOLEAN)
+            'rss'          => filter_var($request->get('rss'), FILTER_VALIDATE_BOOLEAN),
         ]);
 
         // we get the inputs
@@ -70,16 +70,16 @@ class SettingsController extends Controller
         // we check the inputs
         $errors = [];
         $validator = \Validator::make($inputs, [
-            'phone_number' => 'phone:FR',
+            'phone_number'  => 'phone:FR',
             'email_contact' => 'email',
             'email_support' => 'email',
-            'zip_code' => 'digits:5',
-            'facebook' => 'url',
-            'twitter' => 'url',
-            'google_plus' => 'url',
-            'youtube' => 'url',
-            'rss' => 'boolean',
-            'favicon' => 'mimes:ico|image_size:16,16',
+            'zip_code'      => 'digits:5',
+            'facebook'      => 'url',
+            'twitter'       => 'url',
+            'google_plus'   => 'url',
+            'youtube'       => 'url',
+            'rss'           => 'boolean',
+            'favicon'       => 'mimes:ico|image_size:16,16',
         ]);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
@@ -95,9 +95,9 @@ class SettingsController extends Controller
             return Redirect()->back();
         }
 
-        try{
+        try {
             // we format the number into its international equivalent
-            if(isset($inputs['phone_number']) && !empty($inputs['phone_number'])){
+            if (isset($inputs['phone_number']) && !empty($inputs['phone_number'])) {
                 $inputs['phone_number'] = $formatted_phone_number = phone_format(
                     $inputs['phone_number'],
                     'FR',
@@ -106,18 +106,18 @@ class SettingsController extends Controller
             }
 
             // we put the favicon at the root of the project
-            if($favicon = $request->file('favicon')){
+            if ($favicon = $request->file('favicon')) {
                 $favicon->move('./', 'favicon.ico');
             };
 
             // we update the json file
             file_put_contents(storage_path('app/config/settings.json'), json_encode($inputs));
             \Modal::alert([
-                trans('settings.message.update.success')
+                trans('settings.message.update.success'),
             ], 'success');
 
             return Redirect()->back();
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             // we flash the request
             $request->flash();
 
@@ -125,10 +125,7 @@ class SettingsController extends Controller
             \Log::error($e);
             \Modal::alert([
                 trans('settings.message.update.failure'),
-                trans('global.message.global.failure.contact.support', [
-                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
-                        config('settings.support_email') . "</a>.",
-                ]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
             return Redirect()->back();

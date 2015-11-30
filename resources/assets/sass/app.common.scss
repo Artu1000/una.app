@@ -171,14 +171,24 @@ html {
         font-size: 14px;
       }
 
+      .underline {
+        text-decoration: underline;
+      }
+      
       a.btn {
         @include lato-font('light');
       }
 
       .noscript {
         background-color: #761c19;
-        padding: 15px;
+        padding: 30px;
         color: #FFFFFF;
+        margin-bottom: 30px;
+
+        h3 {
+          margin: 0 0 5px;
+          color: #fff;
+        }
       }
 
       a {
@@ -444,6 +454,28 @@ html {
           }
         }
       }
+
+      #lang_switcher {
+        position: absolute;
+        top: 30px;
+        right: 60px;
+
+        .dropdown-menu {
+          min-width: unset;
+          padding: 0;
+          margin: 10px 0 0;
+          right: 0;
+          left: auto;
+
+          a {
+            padding: 10px 15px;
+
+            .flag {
+              padding-right: 5px;
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -617,6 +649,16 @@ html {
         h4 {
           font-size: 18px;
           margin: 35px 0 12px;
+        }
+
+        #lang_switcher {
+          position: relative;
+          top: auto;
+          right: auto;
+          max-width: 290px;
+          margin: 30px auto -15px;
+          padding: 0 15px;
+          text-align: right;
         }
       }
     }

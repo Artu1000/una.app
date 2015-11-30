@@ -26,12 +26,21 @@
                         </div>
                         <div class="panel-body">
 
-                            {{-- site name --}}
-                            <label for="input_app_name">{{ trans('settings.page.label.site_name') }}</label>
+                            {{-- app name --}}
+                            <label for="input_app_name">{{ trans('settings.page.label.app_name') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_app_name"><i class="fa fa-sitemap"></i></span>
-                                    <input id="input_app_name" class="form-control" type="text" name="app_name" value="{{ old('app_name') ? old('app_name') : config('settings.app_name') }}" placeholder="{{ trans('settings.page.label.site_name') }}">
+                                    <input id="input_app_name" class="form-control" type="text" name="app_name" value="{{ old('app_name') ? old('app_name') : config('settings.app_name') }}" placeholder="{{ trans('settings.page.label.app_name') }}">
+                                </div>
+                            </div>
+
+                            {{-- app slogan --}}
+                            <label for="input_app_slogan">{{ trans('settings.page.label.app_slogan') }}</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" for="input_app_slogan"><i class="fa fa-flag"></i></span>
+                                    <input id="input_app_slogan" class="form-control" type="text" name="app_slogan" value="{{ old('app_slogan') ? old('app_slogan') : config('settings.app_slogan') }}" placeholder="{{ trans('settings.page.label.app_slogan') }}">
                                 </div>
                             </div>
 
@@ -149,6 +158,24 @@
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_google_plus"><i class="fa fa-google-plus"></i></span>
                                     <input id="input_google_plus" class="form-control" type="text" name="google_plus" value="{{ old('google_plus') ? old('google_plus') : config('settings.google_plus') }}" placeholder="{{ trans('settings.page.label.google+') }}">
+                                </div>
+                            </div>
+
+                            {{-- linkedin --}}
+                            <label for="input_linkedin">{{ trans('settings.page.label.linkedin') }}</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" for="input_linkedin"><i class="fa fa-linkedin-square"></i></span>
+                                    <input id="input_linkedin" class="form-control" type="text" name="linkedin" value="{{ old('linkedin') ? old('linkedin') : config('settings.linkedin') }}" placeholder="{{ trans('settings.page.label.linkedin') }}">
+                                </div>
+                            </div>
+
+                            {{-- pinterest --}}
+                            <label for="input_pinterest">{{ trans('settings.page.label.pinterest') }}</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" for="input_pinterest"><i class="fa fa-pinterest-square"></i></span>
+                                    <input id="input_pinterest" class="form-control" type="text" name="pinterest" value="{{ old('pinterest') ? old('pinterest') : config('settings.pinterest') }}" placeholder="{{ trans('settings.page.label.pinterest') }}">
                                 </div>
                             </div>
 

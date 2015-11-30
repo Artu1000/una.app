@@ -92,28 +92,21 @@ $group = config('settings.multilingual') ? ['prefix' => LaravelLocalization::set
     'localize',
     'localeSessionRedirect',
     'localizationRedirect',
-]] : ['middleware' => 'guest'];
+]] : ['middleware' => ['guest']];
 Route::group($group, function () {
+
     // account
-    Route::get('mon-compte/creer', [
-        'uses' => 'Auth\AccountController@createAccount',
-        'as'   => 'create_account',
-    ]);
-    Route::get('mon-compte/renvoi-email-activation', [
-        'uses' => 'Auth\AccountController@sendActivationMail',
-        'as'   => 'send_activation_mail',
-    ]);
-    Route::get('mon-compte/activation', [
-        'uses' => 'Auth\AccountController@activateAccount',
-        'as'   => 'activate_account',
-    ]);
-    // connection
-    Route::resource('espace-connexion', 'Auth\AuthController', [
-        'names' => [
-            'index' => 'login',
-        ],
-    ]);
+    Route::get(LaravelLocalization::transRoute('routes.account.create'), ['as' => 'account.create', 'uses' => 'Auth\AccountController@createAccount']);
+    Route::post(LaravelLocalization::transRoute('routes.account.store'), ['as' => 'account.store', 'uses' => 'Auth\AccountController@store']);
+    Route::get(LaravelLocalization::transRoute('routes.account.email'), ['as' => 'account.activation_email', 'uses' => 'Auth\AccountController@activationEmail']);
+    Route::get(LaravelLocalization::transRoute('routes.account.activation'), ['as' => 'account.activate', 'uses' => 'Auth\AccountController@activateAccount']);
+
+    // login
+    Route::get(LaravelLocalization::transRoute('routes.login.index'), ['as' => 'login.index', 'uses' => 'Auth\AuthController@index']);
+    Route::post(LaravelLocalization::transRoute('routes.login.login'), ['as' => 'login.login', 'uses' => 'Auth\AuthController@login']);
+
     // password recovery
+//    Route::get(LaravelLocalization::transRoute('routes.password.index'), ['as' => 'login.index', 'uses' => 'Auth\PasswordController@index']);
     Route::resource('mot-de-passe-oublie', 'Auth\PasswordController', [
         'names' => [
             'index'  => 'forgotten_password',

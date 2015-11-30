@@ -20,10 +20,16 @@ return [
         "global" => [
             "failure" => [
                 "contact" => [
-                    "support" => "Please contact the support team if the problem persists : :email",
+                    "support" => "Please contact the support team if the problem persists : <a href='mailto::email' title='Contact the support team' class='underline'>:email</a>",
                 ],
             ],
         ],
+        "javascript" => [
+            "deactivated" => [
+                "title" => "Warning",
+                "message" => "Your Javascript is currently deactivated on your brower and your navigation is therby degraded.<br/> Thank you to reactivate your Javascript to fully use all the features provided by the application."
+            ]
+        ]
     ],
 
     // modals
@@ -34,7 +40,7 @@ return [
         ],
         'alert'   => [
             "title" => [
-                "success" => "Sucess",
+                "success" => "Success",
                 "info"    => "Infos",
                 "error"   => "Error",
             ],

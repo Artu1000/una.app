@@ -13,13 +13,14 @@ return [
             "seo"      => "Référencement",
         ],
         "action" => [
-            "save" => "Enregistrer les modifications"
+            "save" => "Enregistrer les modifications",
         ],
         'info'   => [
             "image" => "Format accepté : 16 x 16 (px) - ico.",
         ],
         "label"  => [
-            "site_name"       => "Nom du site",
+            "app_name"        => "Nom du site",
+            "app_slogan"      => "Slogan du site",
             "multilingual"    => "Multilingue",
             "phone_number"    => "Numéro de téléphone",
             "contact_email"   => "Adresse e-mail de contact",
@@ -30,6 +31,8 @@ return [
             "facebook"        => "Page Facebook",
             "twitter"         => "Page Twitter",
             "google+"         => "Page Google+",
+            "linkedin"        => "Page Linkedin",
+            "pinterest"       => "Page Pinterest",
             "youtube"         => "Chaîne Youtube",
             "rss"             => [
                 "title" => "Flux RSS",

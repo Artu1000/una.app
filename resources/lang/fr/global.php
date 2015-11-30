@@ -20,10 +20,16 @@ return [
         "global" => [
             "failure" => [
                 "contact" => [
-                    "support" => "Veuillez contact l'équipe support si le problème persiste : :email",
+                    "support" => "Veuillez contacter l'équipe support si le problème persiste : <a href='mailto::email' title='Contact the support team' class='underline'>:email</a>",
                 ],
             ],
         ],
+        "javascript" => [
+            "deactivated" => [
+                "title" => "Attention",
+                "message" => "Le Javascript de votre navigateur est désactivé et vous naviguez actuellement en version dégradée.<br/> Merci de réactiver votre Javascript pour bénéficier de l'ensemble des fonctionnalités de l'application."
+            ]
+        ]
     ],
 
     // modals

@@ -43,7 +43,7 @@ class Authenticate
                 // we store the requested url into the session
                 \Session::set('previous_url', $request->url());
                 // we redirect toward the login form
-                return redirect(route('login'));
+                return redirect(route('login.index'));
             }
         }
         return $next($request);

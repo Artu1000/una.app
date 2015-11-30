@@ -14,15 +14,12 @@
 
             {{-- no script specifications --}}
             <noscript>
-                <div class="container-fluid noscript text-muted">
+                <div class="container-fluid noscript text-muted row">
                     <div class="col-lg-offset-2 col-lg-8">
                         <h3>
-                            <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-                            Attention
-                            <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                            <i class="fa fa-exclamation-triangle"></i> {{ trans('global.message.javascript.deactivated.title') }}
                         </h3>
-                        Le Javascript de votre navigateur est désactivé et vous naviguez actuellement en version dégradée.<br/>
-                        Merci de réactiver votre Javascript pour bénéficier de l'ensemble des fonctionnalités de l'application.
+                        {!! trans('global.message.javascript.deactivated.message') !!}
                     </div>
                 </div>
             </noscript>

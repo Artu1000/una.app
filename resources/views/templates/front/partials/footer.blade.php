@@ -43,17 +43,27 @@
                         <a class="new_window" href="{{ config('settings.twitter') }}" title="Twitter du {{ config('settings.app_name') }}">
                             <i class="fa fa-twitter-square fa-3"></i>
                         </a>
-                        @endif
+                    @endif
                     @if(config('settings.google_plus'))
                         <a class="new_window" rel=publisher" href="{{ config('settings.google_plus') }}" title="Google+ {{ config('settings.app_name') }}">
                             <i class="fa fa-google-plus-square fa-3"></i>
                         </a>
-                            @endif
+                    @endif
+                    @if(config('settings.linkedin'))
+                        <a class="new_window" href="{{ config('settings.linkedin') }}" title="Linkedin {{ config('settings.app_name') }}">
+                            <i class="fa fa-linkedin-square fa-3"></i>
+                        </a>
+                    @endif
+                    @if(config('settings.pinterest'))
+                        <a class="new_window" rel=publisher" href="{{ config('settings.pinterest') }}" title="Pinterest {{ config('settings.app_name') }}">
+                            <i class="fa pinterest-square fa-3"></i>
+                        </a>
+                    @endif
                     @if(config('settings.youtube'))
                         <a class="new_window" href="{{ config('settings.youtube') }}" title="Youtube {{ config('settings.app_name') }}">
                             <i class="fa fa-youtube-square fa-3"></i>
                         </a>
-                                @endif
+                    @endif
                     @if(config('settings.rss'))
                         <a class="new_window" href="{{ url('rss') }}" title="Flux RSS des actualités - {{ config('settings.app_name') }}">
                             <i class="fa fa-rss-square fa-3"></i>

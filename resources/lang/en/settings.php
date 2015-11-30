@@ -13,13 +13,14 @@ return [
             "seo"      => "SEO",
         ],
         "action" => [
-            "save" => "Save changes"
+            "save" => "Save changes",
         ],
         'info'   => [
             "image" => "Accepted formats : 16 x 16 (px) - ico.",
         ],
         "label"  => [
-            "site_name"       => "App name",
+            "app_name"        => "App name",
+            "app_slogan"      => "App slogan",
             "multilingual"    => "Multilingual",
             "phone_number"    => "Phone number",
             "contact_email"   => "Contact e-mail",
@@ -30,6 +31,8 @@ return [
             "facebook"        => "Facebook page",
             "twitter"         => "Twitter page",
             "google+"         => "Google+ page",
+            "linkedin"        => "Linkedin page",
+            "pinterest"       => "Pinterest page",
             "youtube"         => "Youtube channel",
             "rss"             => [
                 "title" => "RSS feed",

@@ -19,6 +19,26 @@ class AccountController extends Controller
     }
 
     /**
+     * @return $this
+     */
+    public function createAccount()
+    {
+        // SEO Meta settings
+        $this->seoMeta['page_title'] = trans('seo.account.create.title');
+        $this->seoMeta['meta_desc'] = trans('seo.account.create.description', ['site' => config('settings.app_name')]);
+        $this->seoMeta['meta_keywords'] = trans('seo.account.create.keywords');
+
+        // prepare data for the view
+        $data = [
+            'seoMeta' => $this->seoMeta,
+            'css'     => url(elixir('css/app.login.css')),
+        ];
+
+        // return the view with data
+        return view('pages.front.account-create')->with($data);
+    }
+
+    /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
@@ -53,100 +73,75 @@ class AccountController extends Controller
 
             try {
                 // we send the email asking the account activation
-                \Mail::send('emails.account-confirmation', [
+                \Mail::send('emails.account-activation', [
                     'user'  => $user,
                     'token' => $activation->code,
                 ], function ($email) use ($user) {
                     $email->from(config('mail.from.address'), config('mail.from.name'))
                         ->to($user->email, $user->first_name . ' ' . $user->last_name)
-                        ->subject(config('mail.subject.prefix') . ' Réinitialisation de votre mot de passe.');
+                        ->subject(config('mail.subject.prefix') . ' ' . trans('emails.account_activation.subject'));
                 });
 
                 // notify the user & redirect
                 \Modal::alert([
-                    "Votre compte personnel a été créé. " .
-                    "Un e-mail vous permettant d'activer votre compte vous a été envoyé. " .
-                    "Vous le recevrez dans quelques instants.",
+                    trans('auth.message.account_creation.success'),
+                    trans('auth.message.activation.email.success', ['email' => $user->email]),
                 ], 'success');
 
-                return Redirect(route('login'));
+                return redirect(route('login.index'));
 
             } catch (\Exception $e) {
                 \Log::error($e);
                 // notify the user & redirect
                 \Modal::alert([
-                    "Une erreur est survenue lors de l'envoi de votre e-mail d'activation. " .
-                    "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
-                    config('settings.support_email') . "</a>",
+                    trans('auth.message.activation.email.failure'),
+                    trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
                 ], 'error');
 
-                return Redirect()->back();
+                return redirect()->back();
             }
         }
-    }
-
-    /**
-     * @return $this
-     */
-    public function createAccount()
-    {
-        // SEO Meta settings
-        $this->seoMeta['page_title'] = 'Créer un compte';
-        $this->seoMeta['meta_desc'] = 'Créez votre compte UNA et accédez à nos services en ligne.';
-        $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, creer, creation, compte';
-
-        // prepare data for the view
-        $data = [
-            'seoMeta' => $this->seoMeta,
-            'css'     => url(elixir('css/app.login.css')),
-        ];
-
-        // return the view with data
-        return view('pages.front.account-creation')->with($data);
     }
 
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function sendActivationMail(Request $request)
+    public function activationEmail(Request $request)
     {
         // we flash the email
-        $request->flashOnly('email');
+        $request->flash();
 
-        if ($user = \Sentinel::findUserByCredentials($request->only('email'))
-        ) {
+        if ($user = \Sentinel::findUserByCredentials($request->only('email'))) {
 
             if (!$activation = \Activation::exists($user)) {
                 $activation = \Activation::create($user);
             }
 
             try {
-                // we send the email asking the account activation
-                \Mail::send('emails.account-confirmation', [
-                    'user'  => $user,
-                    'token' => $activation->code,
-                ], function ($email) use ($user) {
-                    $email->from(config('mail.from.address'), config('mail.from.name'))
-                        ->to($user->email, $user->first_name . ' ' . $user->last_name)
-                        ->subject(config('mail.subject.prefix') . ' Réinitialisation de votre mot de passe.');
-                });
+            // we send the activation email
+            \Mail::send('emails.account-activation', [
+                'user'  => $user,
+                'token' => $activation->code,
+            ], function ($email) use ($user) {
+                $email->from(config('mail.from.address'), config('mail.from.name'))
+                    ->to($user->email, $user->first_name . ' ' . $user->last_name)
+                    ->subject(config('mail.subject.prefix') . ' ' . trans('emails.account_activation.subject'));
+            });
 
-                // notify the user & redirect
-                \Modal::alert([
-                    "Un e-mail vous permettant d'activer votre compte vous a été renvoyé. " .
-                    "Vous le recevrez dans quelques instants.",
-                ], 'success');
+            // notify the user & redirect
+            \Modal::alert([
+                trans('auth.message.activation.email.success', ['email' => $user->email]),
+            ], 'success');
 
-                return Redirect(route('login'));
+            return redirect(route('login.index'));
 
             } catch (\Exception $e) {
                 \Log::error($e);
                 // notify the user & redirect
                 \Modal::alert([
-                    "Une erreur est survenue lors de l'envoi de votre e-mail d'activation. " .
-                    "Veuillez contacter le support :" . "<a href='mailto:" . config('settings.support_email') . "' >" .
-                    config('settings.support_email') . "</a>",
+                    trans('auth.message.activation.email.failure'),
+                    trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
                 ], 'error');
 
                 return Redirect()->back();
@@ -154,8 +149,7 @@ class AccountController extends Controller
 
         } else {
             \Modal::alert([
-                "Aucun utilisateur correspondant à l'adresse e-mail <b>" . $request->get('email') .
-                "</b> n'a été trouvé.",
+                trans('auth.message.find.failure', ['email' => $request->get('email')]),
             ], 'error');
 
             return Redirect()->back();
@@ -168,35 +162,47 @@ class AccountController extends Controller
      */
     public function activateAccount(Request $request)
     {
-        // we try to find the user from its email
-        if ($user = \Sentinel::findByCredentials($request->only('email'))) {
 
-            // we verify if the reminder token is valid
-            if (\Activation::complete($user, $request->get('token'))) {
-                \Modal::alert([
-                    "Félicitations " . $user->first_name . " " . $user->last_name .
-                    ", votre compte est maintenant activé. Vous pouvez maintenant vous y connecter.",
-                ], 'success');
+        try {
+            // we try to find the user from its email
+            if ($user = \Sentinel::findByCredentials($request->only('email'))) {
 
-                return Redirect(route('login'))->withInput($request->only('email'));
+                // we verify if the reminder token is valid
+                if (\Activation::complete($user, $request->get('token'))) {
+                    \Modal::alert([
+                        trans('auth.message.activation.success', ['name' => $user->first_name . " " . $user->last_name]),
+                    ], 'success');
+
+                    return Redirect(route('login.index'))->withInput($request->all());
+                } else {
+                    \Modal::alert([
+                        trans('auth.message.activation.token.expired'),
+                        trans('auth.message.activation.token.resend', [
+                            'email' => $request->get('email'),
+                            'url' => route('account.activation_email', ['email' => $request->get('email')])
+                        ]),
+                    ], 'error');
+
+                    return Redirect(route('login.index'))->withInput($request->all());
+                }
             } else {
+                // notify the user & redirect
                 \Modal::alert([
-                    "La clé d'activation de votre compte est incorrecte ou a expirée. ",
-                    "Pour recevoir une nouvelle clé d'activation, <a href='" . route('send_activation_mail', [
-                        'email' => $request->get('email'),
-                    ]) . "' title=\"Me renvoyer l'email d'activation\"><u>cliquez ici</u></a>.",
+                    trans('auth.message.find.failure', ['email' => $request->get('email')]),
+                    trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
                 ], 'error');
 
-                return Redirect(route('login'))->withInput($request->only('email'));
+                return redirect(route('login.index'))->withInput($request->all());
             }
-        } else {
+        } catch (\Exception $e) {
+            \Log::error($e);
             // notify the user & redirect
             \Modal::alert([
-                "Aucun utilisateur correspondant à l'adresse e-mail <b>" . $request->get('email') .
-                "</b> n'a été trouvé.",
+                trans('auth.message.activation.error'),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
-            return Redirect(route('login'))->withInput($request->only('email'));
+            return redirect(route('login.index'))->withInput($request->all());
         }
     }
 

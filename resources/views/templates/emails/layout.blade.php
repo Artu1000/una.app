@@ -103,7 +103,7 @@
                 margin-bottom: 5px;
             }
             .contact .social a {
-                margin: 0 10px 0 0;
+                margin: 0 5px 0 0;
             }
             .contact .delimiter {
                 vertical-align: middle;
@@ -149,7 +149,7 @@
                             </td>
                             <td class="title">
                                 <h1>{{ config('settings.app_name') }}</h1>
-                                <p>Le plus grand club d'aviron universitaire de France</p>
+                                <p>{{ config('settings.app_slogan') }}</p>
                             </td>
                         </tr>
                     </table>
@@ -160,7 +160,7 @@
                     <table class="halign-center w600">
                         <tr>
                             <td>
-                                <p>Cet email vous a été envoyé automatiquement, merci de ne pas y répondre</p>
+                                <p>{{ trans('emails.template.no_reply') }}</p>
                             </td>
                         </tr>
                     </table>
@@ -183,6 +183,17 @@
         </table>
 
         <table class="row">
+            <tr>
+                <td class="info">
+                    <table class="halign-center w600">
+                        <tr>
+                            <td>
+                                <p>{!! trans('emails.template.problem', ['email' => config('settings.support_email')]) !!}</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
             <tr>
                 <td class="footer">
                     <table class="halign-center w600">
@@ -209,22 +220,44 @@
                                             <div></div>
                                         </td>
                                         <td class="social">
-                                            <p>Nous suivre :</p>
-                                            <a href="{{ config('settings.facebook') }}" title="Facebook {{ config('settings.app_name') }}">
-                                                <img src="{{ url('/img/mail/facebook.png') }}" alt="Facebook {{ config('settings.app_name') }}">
+                                            <a href="{{ url('/') }}" title="{{ config('settings.app_name') }}">
+                                                <img src="{{ url('/img/mail/website.png') }}" alt="{{ config('settings.app_name') }}">
                                             </a>
-                                            <a href="{{ config('settings.twitter') }}" title="Twitter {{ config('settings.app_name') }}">
-                                                <img src="{{ url('/img/mail/twitter.png') }}" alt="Twitter {{ config('settings.app_name') }}">
-                                            </a>
-                                            <a href="{{ config('settings.google_plus') }}" title="Google+ {{ config('settings.app_name') }}">
-                                                <img src="{{ url('/img/mail/googleplus.png') }}" alt="Google+ {{ config('settings.app_name') }}">
-                                            </a>
-                                            <a href="{{ config('settings.youtube') }}" title="Chaîne Youtube {{ config('settings.app_name') }}">
-                                                <img src="{{ url('/img/mail/youtube.png') }}" alt="Chaîne Youtube {{ config('settings.app_name') }}">
-                                            </a>
-                                            <a href="mailto:{{ config('settings.contact_email') }}" title="Contacter le {{ config('settings.app_name') }}">
-                                                <img src="{{ url('/img/mail/mail.png') }}" alt="Contacter le {{ config('settings.app_name') }}">
-                                            </a>
+                                            @if(config('settings.facebook'))
+                                                <a href="{{ config('settings.facebook') }}" title="Facebook {{ config('settings.app_name') }}">
+                                                    <img src="{{ url('/img/mail/facebook.png') }}" alt="Facebook {{ config('settings.app_name') }}">
+                                                </a>
+                                            @endif
+                                            @if(config('settings.twitter'))
+                                                <a href="{{ config('settings.twitter') }}" title="Twitter {{ config('settings.app_name') }}">
+                                                    <img src="{{ url('/img/mail/twitter.png') }}" alt="Twitter {{ config('settings.app_name') }}">
+                                                </a>
+                                            @endif
+                                            @if(config('settings.google_plus'))
+                                                <a href="{{ config('settings.google_plus') }}" title="Google+ {{ config('settings.app_name') }}">
+                                                    <img src="{{ url('/img/mail/googleplus.png') }}" alt="Google+ {{ config('settings.app_name') }}">
+                                                </a>
+                                            @endif
+                                            @if(config('settings.linkedin'))
+                                                <a href="{{ config('settings.linkedin') }}" title="Linkedin {{ config('settings.app_name') }}">
+                                                    <img src="{{ url('/img/mail/linkedin.png') }}" alt="Linkedin {{ config('settings.app_name') }}">
+                                                </a>
+                                            @endif
+                                            @if(config('settings.pinterest'))
+                                                <a href="{{ config('settings.pinterest') }}" title="Linkedin {{ config('settings.app_name') }}">
+                                                    <img src="{{ url('/img/mail/pinterest.png') }}" alt="Linkedin {{ config('settings.app_name') }}">
+                                                </a>
+                                            @endif
+                                            @if(config('settings.youtube'))
+                                                <a href="{{ config('settings.youtube') }}" title="Chaîne Youtube {{ config('settings.app_name') }}">
+                                                    <img src="{{ url('/img/mail/youtube.png') }}" alt="Chaîne Youtube {{ config('settings.app_name') }}">
+                                                </a>
+                                            @endif
+                                            @if(config('settings.contact_email'))
+                                                <a href="mailto:{{ config('settings.contact_email') }}" title="Contacter le {{ config('settings.app_name') }}">
+                                                    <img src="{{ url('/img/mail/mail.png') }}" alt="Contacter le {{ config('settings.app_name') }}">
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 </table>

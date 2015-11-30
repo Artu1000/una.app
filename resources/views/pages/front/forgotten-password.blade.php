@@ -43,7 +43,7 @@
 
                         </form>
 
-                        <a href="{{ route('login') }}" class="pull-right cancel" title="Retour">
+                        <a href="{{ route('login.index') }}" class="pull-right cancel" title="Retour">
                             <button class="btn btn-lg btn-default">
                                 <i class="fa fa-ban"></i> Annuler
                             </button>

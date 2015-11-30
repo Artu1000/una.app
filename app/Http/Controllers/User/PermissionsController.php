@@ -106,10 +106,7 @@ class PermissionsController extends Controller
         if (!$role) {
             \Modal::alert([
                 trans('permissions.message.find.failure', ['id' => $id]),
-                trans('global.message.global.failure.contact.support', [
-                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
-                        config('settings.support_email') . "</a>.",
-                ]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
             return Redirect()->back();
@@ -205,10 +202,7 @@ class PermissionsController extends Controller
             \Log::error($e);
             \Modal::alert([
                 trans('permissions.message.create.failure', ['name' => $role->name]),
-                trans('global.message.global.failure.contact.support', [
-                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
-                        config('settings.support_email') . "</a>.",
-                ]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
             return Redirect()->back();
@@ -289,10 +283,7 @@ class PermissionsController extends Controller
             \Log::error($e);
             \Modal::alert([
                 trans('permissions.message.update.failure', ['name' => $role->name]),
-                trans('global.message.global.failure.contact.support', [
-                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
-                        config('settings.support_email') . "</a>.",
-                ]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
             return Redirect()->back();
@@ -332,10 +323,7 @@ class PermissionsController extends Controller
             \Log::error($e);
             \Modal::alert([
                 trans('permissions.message.delete.failure', ['name' => $role->name]),
-                trans('global.message.global.failure.contact.support', [
-                    'email' => "<a href='mailto:" . config('settings.support_email') . "' >" .
-                        config('settings.support_email') . "</a>.",
-                ]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
             return Redirect()->back();

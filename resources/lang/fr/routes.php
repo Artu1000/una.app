@@ -1,12 +1,27 @@
 <?php
 
 return [
-    "admin"       => "admin",
-    "dashboard"   => [
-        "index" => "tableau-de-bord",
+
+    // front
+    // routes
+    "login"       => [
+        "index" => "espace-connexion",
+        "login" => "espace-connexion/connexion",
     ],
     "account"     => [
-        "index" => "mon-profil",
+        "create"     => "mon-compte/creation",
+        "store"      => "mon-compte/enregistrement",
+        "email"      => "mon-compte/envoi-email-activation",
+        "activation" => "mon-compte/activation",
+    ],
+
+    // back
+    // prefixes
+    "admin"       => "admin",
+    "contents"    => "contenus",
+    // routes
+    "dashboard"   => [
+        "index" => "tableau-de-bord",
     ],
     "settings"    => [
         "index"  => "parametres",
@@ -30,16 +45,15 @@ return [
         "profile"  => "mon-profil",
         "activate" => "utilisateurs/activer",
     ],
-    "contents"    => "contenus",
     "home"        => [
         "edit" => "page-d-accueil/edition",
     ],
-    "slide" => [
-        "create"   => "diapo/creation",
-        "store"    => "diapo/enregistrement",
-        "edit"     => "diapo/edition/{id}",
-        "update"   => "diapo/mise-a-jour",
-        "destroy"  => "diapo/suppression",
+    "slide"       => [
+        "create"  => "diapo/creation",
+        "store"   => "diapo/enregistrement",
+        "edit"    => "diapo/edition/{id}",
+        "update"  => "diapo/mise-a-jour",
+        "destroy" => "diapo/suppression",
     ],
     "logout"      => "deconnexion",
 ];

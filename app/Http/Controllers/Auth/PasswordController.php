@@ -75,7 +75,7 @@ class PasswordController extends Controller
                 Modal::alert([
                     "Un e-mail contenant les instructions de réinitialisation de votre mot de passe vous a été envoyé."
                 ], 'success');
-                return Redirect(route('login'));
+                return Redirect(route('login.index'));
 
             } catch (\Exception $e) {
                 dd($e->getMessage());
@@ -158,7 +158,7 @@ class PasswordController extends Controller
                     "Votre nouveau mot de passe a bien été enregistré. " .
                     "Connectez-vous dès à présent sur votre espace personnel."
                 ], 'success');
-                return Redirect(route('login'));
+                return Redirect(route('login.index'));
             } else {
                 Modal::alert([
                     "La clé de réinitialisation du mot de passe est incorrecte ou a expirée. " .
