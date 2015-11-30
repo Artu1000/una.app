@@ -26,12 +26,17 @@ Route::get('file', [
  * BACKEND ROUTES
  **********************************************************************************************************************/
 
-$group = config('settings.multilingual') ? ['prefix' => LaravelLocalization::setLocale(), 'middleware' => [
-    'auth',
-    'localize',
-    'localeSessionRedirect',
-    'localizationRedirect',
-]] : ['middleware' => ['auth']];
+$group = config('settings.multilingual') ? [
+    'prefix'     => LaravelLocalization::setLocale() . '/' . LaravelLocalization::transRoute('routes.admin'),
+    'middleware' => [
+        'auth',
+        'localize',
+        'localeSessionRedirect',
+        'localizationRedirect',
+    ]] : [
+    'prefix'     => 'admin',
+    'middleware' => ['auth'],
+];
 
 // logged routes
 $route = Route::group($group, function () {
@@ -61,8 +66,19 @@ $route = Route::group($group, function () {
     Route::post(LaravelLocalization::transRoute('routes.users.activate'), ['as' => 'users.activate', 'uses' => 'User\UsersController@activate']);
     Route::get(LaravelLocalization::transRoute('routes.users.profile'), ['as' => 'users.profile', 'uses' => 'User\UsersController@profile']);
 
+    // home
+    $contents = LaravelLocalization::transRoute('routes.contents') . '/';
+    Route::get($contents . LaravelLocalization::transRoute('routes.home.edit'), ['as' => 'home.edit', 'uses' => 'Home\HomeController@edit']);
+
+    Route::get(LaravelLocalization::transRoute('routes.slides.create'), ['as' => 'slides.create', 'uses' => 'User\UsersController@create']);
+    Route::post(LaravelLocalization::transRoute('routes.slides.store'), ['as' => 'slides.store', 'uses' => 'User\UsersController@store']);
+    Route::get(LaravelLocalization::transRoute('routes.slides.edit'), ['as' => 'slides.edit', 'uses' => 'User\UsersController@edit']);
+    Route::put(LaravelLocalization::transRoute('routes.slides.update'), ['as' => 'slides.update', 'uses' => 'User\UsersController@update']);
+    Route::delete(LaravelLocalization::transRoute('routes.slides.destroy'), ['as' => 'slides.destroy', 'uses' => 'User\UsersController@destroy']);
+
+
     // logout
-    Route::get(LaravelLocalization::transRoute('routes.logout'), ['as'   => 'logout', 'uses' => 'Auth\AuthController@logout']);
+    Route::get(LaravelLocalization::transRoute('routes.logout'), ['as' => 'logout', 'uses' => 'Auth\AuthController@logout']);
 
 });
 
@@ -117,7 +133,7 @@ $group = config('settings.multilingual') ? ['prefix' => LaravelLocalization::set
 Route::group($group, function () {
 
     // home
-    Route::resource('/', 'Home\HomeController', ['names' => ['index' => 'home']]);
+    Route::get('/', ['as' => 'home', 'uses' => 'Home\HomeController@show']);
 
     // news
     Route::resource('/news', 'News\NewsController', ['names' => ['index' => 'front.news', 'show' => 'front.news.show']]);

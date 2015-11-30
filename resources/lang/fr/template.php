@@ -11,6 +11,8 @@ return [
             "back"        => "Retour au site",
             "my_profile"  => "Mon profil",
             "logout"      => "Déconnexion",
+            "contents"    => "Contenus",
+            "home"        => "Page d'accueil",
         ],
     ],
 ];

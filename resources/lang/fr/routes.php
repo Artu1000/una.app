@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "admin"       => "admin",
     "dashboard"   => [
         "index" => "tableau-de-bord",
     ],
@@ -20,14 +21,25 @@ return [
         "destroy" => "permissions/suppression",
     ],
     "users"       => [
-        "index"    => "users",
-        "create"   => "users/creation",
-        "store"    => "users/enregistrement",
-        "edit"     => "users/edition/{id}",
-        "update"   => "users/mise-a-jour",
-        "destroy"  => "users/suppression",
+        "index"    => "utilisateurs",
+        "create"   => "utilisateurs/creation",
+        "store"    => "utilisateurs/enregistrement",
+        "edit"     => "utilisateurs/edition/{id}",
+        "update"   => "utilisateurs/mise-a-jour",
+        "destroy"  => "utilisateurs/suppression",
         "profile"  => "mon-profil",
-        "activate" => "users/activate",
+        "activate" => "utilisateurs/activer",
+    ],
+    "contents"    => "contenus",
+    "home"        => [
+        "edit" => "page-d-accueil/edition",
+    ],
+    "slide" => [
+        "create"   => "diapo/creation",
+        "store"    => "diapo/enregistrement",
+        "edit"     => "diapo/edition/{id}",
+        "update"   => "diapo/mise-a-jour",
+        "destroy"  => "diapo/suppression",
     ],
     "logout"      => "deconnexion",
 ];

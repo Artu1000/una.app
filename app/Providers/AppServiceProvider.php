@@ -51,5 +51,9 @@ class AppServiceProvider extends ServiceProvider
         // laravel multilingual package
         // https://github.com/mcamara/laravel-localization
         $this->app->register('Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider');
+
+        // laravel image validator
+        // https://github.com/cviebrock/image-validator
+        $this->app->register('Cviebrock\ImageValidator\ImageValidatorServiceProvider');
     }
 }

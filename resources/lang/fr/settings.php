@@ -16,7 +16,7 @@ return [
             "save" => "Enregistrer les modifications"
         ],
         'info'   => [
-            "image" => "Formats acceptés : ico, jpg, jpeg, png.",
+            "image" => "Format accepté : 16 x 16 (px) - ico.",
         ],
         "label"  => [
             "site_name"       => "Nom du site",

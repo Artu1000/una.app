@@ -23,6 +23,14 @@ return [
     "users.update"       => "Modifier un utilisateur",
     "users.delete"       => "Supprimer un utlisateur",
 
+    // home
+    "home"               => "Page d'accueil",
+    "home.update"        => "Modifier la page d'accueil",
+    "home.slide.create"  => "Créer une diapo",
+    "home.slide.view"    => "Consulter le détail d'une diapo",
+    "home.slide.update"  => "Modifier une diapo",
+    "home.slide.delete"  => "Supprimer une diapo",
+
     // pages
     "page"               => [
         "title"  => [
@@ -41,7 +49,7 @@ return [
         'info'   => [
         ],
         "label"  => [
-            "name" => "Nom du rôle",
+            "name"       => "Nom du rôle",
             "created_at" => "Date de création",
             "updated_at" => "Date de modification",
         ],
@@ -49,21 +57,21 @@ return [
 
     // messages
     "message"            => [
-        "access"   => [
+        "access" => [
             "denied" => "Vous n'avez pas l'autorisation d'effectuer cette action",
         ],
         "create" => [
             "success" => "Le rôle <b>:name</b> a bien été créé.",
             "failure" => "Une erreur est survenue lors de la création de l'utilisateur <b>:name</b>.",
         ],
-        "update"   => [
+        "update" => [
             "success" => "Le rôle <b>:name</b> a bien été mis à jour.",
             "failure" => "Une erreur est survenue lors de la mise à jour de l'utilisateur <b>:name</b>.",
         ],
-        "find"     => [
+        "find"   => [
             "failure" => "Le rôle #:id n'existe pas.",
         ],
-        "delete"   => [
+        "delete" => [
             "success" => "Le rôle <b>:name</b> a bien été supprimé.",
             "failure" => "Une erreur est survenue lors de la mise à jour du rôle <b>:name</b>.",
         ],

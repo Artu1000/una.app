@@ -92,7 +92,7 @@ class AuthController extends Controller
                 return redirect($url);
             } else {
                 // or redirect to home
-                return redirect(route('home'));
+                return redirect(route('home.show'));
             }
         } catch (\Cartalyst\Sentinel\Checkpoints\NotActivatedException $e) {
             \Log::error($e);

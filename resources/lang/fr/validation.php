@@ -41,7 +41,7 @@ return [
     "in"                   => "Le champ <b>:attribute</b> est invalide.",
     "integer"              => "Le champ <b>:attribute</b> doit être un entier.",
     "ip"                   => "Le champ <b>:attribute</b> doit être une adresse IP valide.",
-    'json'                 => 'Le champ <b>:attribute</b> doit être un document JSON valide.',
+    "json"                 => "Le champ <b>:attribute</b> doit être un document JSON valide.",
     "max"                  => [
         "numeric" => "La valeur de <b>:attribute</b> ne peut être supérieure à <b>:max</b>.",
         "file"    => "Le fichier <b>:attribute</b> ne peut être plus gros que <b>:max</b> kilo-octets.",
@@ -77,6 +77,16 @@ return [
     "unique"               => "La valeur du champ <b>:attribute</b> est déjà utilisée.",
     "url"                  => "Le format de l'URL de <b>:attribute</b> n'est pas valide.",
 
+    "image_size"         => "<b>:attribute</b> doit être de <b>:width</b> de large et <b>:height</b> de haut",
+//    "between"            => "entre <b>:size1</b> et <b>:size2</b> pixels",
+    "lessthan"           => "moins de <b>:size</b> pixels",
+    "lessthanorequal"    => "plus petit ou égal à <b>:size</b> pixels",
+    "greaterthan"        => "plus grand que <b>:size</b> pixels",
+    "greaterthanorequal" => "plus grand ou égal à <b>:size</b> pixels",
+    "equal"              => "<b>:size</b> pixels",
+    "anysize"            => "n'importe quelle taille",
+    "image_aspect"       => "Le ratio de </b>:attribute</b> doit être de :aspect",
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -88,9 +98,9 @@ return [
     |
     */
 
-    'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+    "custom" => [
+        "attribute-name" => [
+            "rule-name" => "custom-message",
         ],
     ],
 
@@ -105,7 +115,7 @@ return [
     |
     */
 
-    'attributes' => [
+    "attributes" => [
         "name"                  => "Nom",
         "username"              => "Pseudo",
         "email"                 => "E-mail",
@@ -124,6 +134,7 @@ return [
         "phone_number"          => "Numéro de téléphone",
         "zip_code"              => "Code postal",
         "role"                  => "Rôle",
+        "favicon"               => "Favicon",
     ],
 
 ];

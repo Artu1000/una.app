@@ -30,6 +30,9 @@ class User extends SentinelUser
         'permissions',
     ];
 
+    /**
+     * @return array
+     */
     public function availableSizes()
     {
         return [
@@ -39,6 +42,10 @@ class User extends SentinelUser
         ];
     }
 
+    /**
+     * @param $key
+     * @return null
+     */
     public function size($key)
     {
         if (!empty($sizes = $this->availableSizes())) {
@@ -48,6 +55,9 @@ class User extends SentinelUser
         return null;
     }
 
+    /**
+     * @return string
+     */
     public function storagePath()
     {
         if(!is_dir($storage_path = storage_path('app/user'))){
@@ -56,6 +66,9 @@ class User extends SentinelUser
         return $storage_path;
     }
 
+    /**
+     * @return string
+     */
     public function imageName()
     {
         return $this->id . '_photo';

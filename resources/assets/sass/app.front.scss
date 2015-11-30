@@ -11,13 +11,13 @@
 $logo_header_footer: '../../img/logo-una-header-large-white.png';
 
 $footer_2560_background: '/img/footer-bg-2560x383.png';
-$footer_1920_background: '/img/footer-bg-1920x287.png';
+$footer_1919_background: '/img/footer-bg-1919x287.png';
 $footer_1199_background: '/img/footer-bg-1199x167.png';
 $footer_991_background: '/img/footer-bg-991x148.png';
 $footer_767_background: '/img/footer-bg-767x115.png';
 
 $header_2560_background: '/img/header-bg-2560x403.png';
-$header_1920_background: '/img/header-bg-1920x302.png';
+$header_1919_background: '/img/header-bg-1919x302.png';
 $header_1199_background: '/img/header-bg-1199x176.png';
 $header_991_background: '/img/header-bg-991x156.png';
 $header_767_background: '/img/header-bg-767x121.png';
@@ -339,10 +339,10 @@ html {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
- * EXTRA LARGE DEVICES DESKTOPS : 1921 & MORE
+ * EXTRA LARGE DEVICES DESKTOPS : 1920 & MORE
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (min-width: 1921px) {
+@media screen and (min-width: 1920px) {
 
   /*********************************************************************************************************************
    * GENERAL
@@ -352,7 +352,6 @@ html {
 
     .background_responsive_img {
       margin-top: -100px;
-      //height: 1000px;
     }
   }
 
@@ -506,10 +505,10 @@ html {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
- * LARGE DEVICES DESKTOPS : 1920 <=> 1200 (LG)
+ * LARGE DEVICES DESKTOPS : 1919 <=> 1200 (LG)
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (max-width: 1920px) and (min-width: 1200px) {
+@media screen and (max-width: 1919px) and (min-width: 1200px) {
 
   /*********************************************************************************************************************
    * GENERAL
@@ -613,9 +612,9 @@ html {
   }
 
   #header_background {
-    background-image: url($header_1920_background);
+    background-image: url($header_1919_background);
     height: 302px;
-    background-size: 1920px auto;
+    background-size: 1919px auto;
   }
 
   /*********************************************************************************************************************
@@ -659,7 +658,7 @@ html {
         #footer_layout {
 
           #footer_background {
-            background-image: url($footer_1920_background);
+            background-image: url($footer_1919_background);
             height: 287px;
             margin-bottom: -38px;
           }

@@ -136,11 +136,11 @@ var responsiveBackgroundImage = {
     process: function () {
         // we get the responsive size of the screen
         switch (true) {
-            case screen_width >= 1921 :
+            case screen_width >= 1920 :
                 responsiveBackgroundImage.responsive_width = 2560;
                 break;
-            case screen_width >= 1200 && screen_width <= 1920:
-                responsiveBackgroundImage.responsive_width = 1920;
+            case screen_width >= 1200 && screen_width <= 1919:
+                responsiveBackgroundImage.responsive_width = 1919;
                 break;
             case screen_width >= 992 && screen_width <= 1199:
                 responsiveBackgroundImage.responsive_width = 1199;

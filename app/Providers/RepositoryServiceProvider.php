@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Repositories\Configuration\ConfigurationRepository;
 use App\Repositories\EShop\EShopArticleRepository;
 use App\Repositories\News\NewsRepository;
 use App\Repositories\Page\PageRepository;
@@ -13,6 +12,7 @@ use App\Repositories\RegistrationPrice\RegistrationPriceRepository;
 use App\Repositories\Rss\RssRepository;
 use App\Repositories\Schedule\ScheduleRepository;
 use App\Repositories\Sitemap\SitemapRepository;
+use App\Repositories\Slide\SlideRepository;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -86,6 +86,11 @@ class RepositoryServiceProvider extends ServiceProvider
         // rss
         $this->app->bind('App\Repositories\Rss\RssRepositoryInterface', function(){
             return new RssRepository();
+        });
+
+        // slideshow
+        $this->app->bind('App\Repositories\Slide\SlideRepositoryInterface', function(){
+            return new SlideRepository();
         });
 
     }

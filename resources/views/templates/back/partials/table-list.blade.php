@@ -2,40 +2,43 @@
 
     <thead>
 
-        <tr>
+        @if($tableListData['enable_lines_choice'] || !empty($tableListData['search_config']))
+            <tr>
 
-            <td colspan="{{ sizeof($tableListData['columns']) + 1 }}" class="no-padding">
+                <td colspan="{{ sizeof($tableListData['columns']) + 1 }}" class="no-padding">
 
-                <div class="row">
+                    <div class="row">
 
-                    <form role="form" method="GET" action="{{ route($tableListData['route'] . '.index') }}">
+                        <form role="form" method="GET" action="{{ route($tableListData['route'] . '.index') }}">
 
-                        <div class="col-sm-6 table-commands">
+                            <div class="col-sm-6 table-commands">
+                                @if($tableListData['enable_lines_choice'])
+                                    <span class="input-group">
+                                        <button class="hidden" type="submit"></button>
+                                    </span>
+                                    <span class="input-group lines">
+                                        <span class="input-group-addon" for="input_lines"><i class="fa fa-list-ol"></i></span>
+                                        <input id="input_lines" class="form-control" type="number" name="lines" value="{{ $tableListData['lines'] }}" placeholder="{{ trans('global.table_list.placeholder.lines') }}">
+                                    </span>
+                                @endif
+                            </div>
 
-                            <span class="input-group">
-                                <button class="hidden" type="submit"></button>
-                            </span>
-                            <span class="input-group lines">
-                                <span class="input-group-addon" for="input_lines"><i class="fa fa-list-ol"></i></span>
-                                <input id="input_lines" class="form-control" type="number" name="lines" value="{{ $tableListData['lines'] }}" placeholder="{{ trans('global.table_list.placeholder.lines') }}">
-                            </span>
-                        </div>
-
-                        <div class="col-sm-6 table-commands text-right">
-                            @if(!empty($tableListData['search_config']))
-                                <span class="input-group search">
-                                        <span class="input-group-addon" for="input_search"><i class="fa fa-search"></i></span>
-                                        <input id="input_search" class="form-control" type="text" name="search" value="{{ $tableListData['search'] }}" placeholder="{{ trans('global.table_list.placeholder.search') }}">
-                                    @if($tableListData['search'])
-                                        <span class="input-group-addon"><a href="{{ route($tableListData['route'] . '.index', ['search' => null, 'lines' => $tableListData['lines']]) }}"><i class="fa fa-times"></i></a></span>
-                                    @endif
-                                </span>
-                            @endif
-                        </div>
-                    </form>
-                </div>
-            </td>
-        </tr>
+                            <div class="col-sm-6 table-commands text-right">
+                                @if(!empty($tableListData['search_config']))
+                                    <span class="input-group search">
+                                            <span class="input-group-addon" for="input_search"><i class="fa fa-search"></i></span>
+                                            <input id="input_search" class="form-control" type="text" name="search" value="{{ $tableListData['search'] }}" placeholder="{{ trans('global.table_list.placeholder.search') }}">
+                                        @if($tableListData['search'])
+                                            <span class="input-group-addon"><a href="{{ route($tableListData['route'] . '.index', ['search' => null, 'lines' => $tableListData['lines']]) }}"><i class="fa fa-times"></i></a></span>
+                                        @endif
+                                    </span>
+                                @endif
+                            </div>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        @endif
 
         <tr>
 
@@ -61,7 +64,7 @@
 
     <tbody>
 
-        @foreach($tableListData['pagination']->items() as $entity)
+        @foreach($tableListData['pagination'] as $entity)
 
             <tr>
 
@@ -134,7 +137,7 @@
                 </td>
             </tr>
         @endforeach
-        @if(empty($tableListData['pagination']->items()))
+        @if(empty($tableListData['pagination']))
             <tr>
                 <td colspan="{{ sizeof($tableListData['columns']) + 1 }}" class="text-center">
                     <span class="text-info"><i class="fa fa-info-circle"></i></span> {{ trans('global.table_list.results.empty') }}
@@ -158,13 +161,15 @@
                     </div>
 
                     <div class="col-sm-4 table-nav-infos text-center">
-                        @if(!empty($tableListData['pagination']->items()))
+                        @if(isset($tableListData['nav_infos']) && !empty($tableListData['pagination']))
                             {!! $tableListData['nav_infos'] !!}
                         @endif
                     </div>
 
                     <div class="col-sm-4 text-right">
-                        {!! $tableListData['pagination']->render() !!}
+                        @if(is_a($tableListData['pagination'], '\Illuminate\Pagination\LengthAwarePaginator'))
+                            {!! $tableListData['pagination']->render() !!}
+                        @endif
                     </div>
                 </div>
             </td>

@@ -23,4 +23,12 @@ return [
     'users.update' => false,
     'users.delete' => false,
 
+    // home
+    'home' => false,
+    'home.update' => false,
+    'home.slide.create' => false,
+    'home.slide.view' => false,
+    'home.slide.update' => false,
+    'home.slide.delete' => false,
+
 ];

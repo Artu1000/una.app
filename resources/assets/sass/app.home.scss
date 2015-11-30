@@ -10,7 +10,7 @@
  **********************************************************************************************************************/
 @import 'app.front';
 $background_img_2560 : '/img/home/una_club_background_img.jpg';
-$background_img_1920 : '/img/home/una_club_background_img.jpg';
+$background_img_1919 : '/img/home/una_club_background_img.jpg';
 $background_img_1199 : '/img/home/una_club_background_img.jpg';
 $background_img_991 : '/img/home/una_club_background_img.jpg';
 $background_img_767 : '/img/home/una_club_background_img.jpg';
@@ -195,10 +195,10 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
- * EXTRA LARGE DEVICES DESKTOPS : 1200 & MORE
+ * EXTRA LARGE DEVICES DESKTOPS : 1920 & MORE
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (min-width: 1921px){
+@media screen and (min-width: 1920px){
 
   #content.home {
 
@@ -305,10 +305,10 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
- * LARGE DEVICES DESKTOPS : 1920 <=> 1200 (LG)
+ * LARGE DEVICES DESKTOPS : 1919 <=> 1200 (LG)
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (max-width: 1920px) and (min-width: 1200px) {
+@media screen and (max-width: 1919px) and (min-width: 1200px) {
 
   #content.home {
 

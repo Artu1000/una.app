@@ -109,6 +109,9 @@ class UsersController extends Controller
             'users.last_name',
         ];
 
+        // we enable the lines choice
+        $enable_lines_choice = true;
+
         // we format the data for the needs of the view
         $tableListData = $this->prepareTableListData(
             $query,
@@ -116,7 +119,8 @@ class UsersController extends Controller
             $columns,
             'users',
             $confirm_config,
-            $search_config
+            $search_config,
+            $enable_lines_choice
         );
 
         // prepare data for the view
@@ -238,7 +242,7 @@ class UsersController extends Controller
         // we check the inputs
         $errors = [];
         $validator = \Validator::make($inputs, [
-            'photo'        => 'mimes:jpg,jpeg,png',
+            'photo'        => 'image|mimes:jpg,jpeg,png',
             'gender'       => 'required|in:' . implode(',', array_keys(config('user.gender'))),
             'last_name'    => 'required',
             'first_name'   => 'required',
@@ -376,7 +380,7 @@ class UsersController extends Controller
         } else {
             $rules = [
                 '_id'          => 'required|numeric|exists:users,id',
-                'photo'        => 'mimes:jpg,jpeg,png',
+                'photo'        => 'image|mimes:jpg,jpeg,png',
                 'gender'       => 'required|in:' . implode(',', array_keys(config('user.gender'))),
                 'last_name'    => 'required',
                 'first_name'   => 'required',

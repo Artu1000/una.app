@@ -87,22 +87,28 @@
                         <a href="{{ route('users.index') }}"><i class="fa fa-users"></i> {{ trans('template.back.header.users') }}</a>
                     </li>
                 @endif
+
+                <li class="divider"></li>
+
                 <li>
-                    <a href="#" data-toggle="collapse" data-target="#demo">
-                        <i class="fa fa-fw fa-arrows-v"></i>
-                        Dropdown
+                    <a href="#" data-toggle="collapse" data-target="#contents">
+                        <i class="fa fa-list-alt"></i> {{ trans('template.back.header.contents') }}
                         <i class="fa fa-fw fa-caret-down"></i>
                     </a>
-                    <ul id="demo" class="collapse">
-                        <li>
-                            <a href="#">Dropdown Item</a>
-                        </li>
+                    <ul id="contents" class="collapse">
+                        @if(\Sentinel::getUser()->hasAccess('home.update'))
+                            <li>
+                                <a href="{{ route('home.edit') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.home') }}</a>
+                            </li>
+                        @endif
                         <li>
                             <a href="#">Dropdown Item</a>
                         </li>
                     </ul>
                 </li>
+
                 <li class="divider"></li>
+
                 <li>
                     <a class="new_window" href="{{ route('home') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.back') }}</a>
                 </li>

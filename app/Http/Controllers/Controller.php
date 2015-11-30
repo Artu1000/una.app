@@ -13,38 +13,44 @@ abstract class Controller extends BaseController
     protected $repository;
 
     protected $seoMeta = [
-        'page_title' => '',
-        'meta_desc' => '',
-        'meta_keywords' => ''
+        'page_title'    => '',
+        'meta_desc'     => '',
+        'meta_keywords' => '',
     ];
 
     public function __construct()
     {
         // load base JS
         \JavaScript::put([
-            'csrf_token' => csrf_token(),
-            'base_url' => url('/'),
-            'app_name' => config('settings.app_name'),
+            'csrf_token'      => csrf_token(),
+            'base_url'        => url('/'),
+            'app_name'        => config('settings.app_name'),
             'loading_spinner' => config('settings.loading_spinner'),
-            'locale' => config('app.locale')
+            'locale'          => config('app.locale'),
         ]);
 
         // load modal if an alert is waiting
         if (\Session::get('alert')) {
             \Javascript::put([
-                'modal_alert' => true
+                'modal_alert' => true,
             ]);
         }
     }
 
-    public function prepareTableListData($query, \Illuminate\Http\Request $request, array $columns, $route, array $confirm_config, array $search_config = [])
-    {
+    public function prepareTableListData(
+        $query, \Illuminate\Http\Request $request,
+        array $columns,
+        $route,
+        array $confirm_config,
+        array $search_config = [],
+        $enable_lines_choice = false
+    ) {
         // we set the default data
         $default_lines = 20;
-        $default_sort_by = array_first($columns, function($key, $column){
+        $default_sort_by = array_first($columns, function ($key, $column) {
             return isset($column['sort_by']);
         })['sort_by'];
-        $default_sort_by = isset($default_sort_by) ? $default_sort_by : '';
+        $default_sort_by = isset($default_sort_by) ? $default_sort_by : null;
         $default_search = '';
 
         // we set the nav data accordingly to the inputs
@@ -54,8 +60,8 @@ abstract class Controller extends BaseController
 
         // we check the inputs
         $validator = \Validator::make($tableListData, [
-            'lines' => 'required|numeric',
-            'search' => 'alpha_dash'
+            'lines'  => 'required|numeric',
+            'search' => 'alpha_dash',
         ]);
         // if errors are found
         if ($validator->fails()) {
@@ -70,14 +76,16 @@ abstract class Controller extends BaseController
         $request->get('sort-dir') ? $request->get('sort-dir') : false
         );
         $query_sort_dir = $tableListData['sort_dir'] ? 'asc' : 'desc';
-        $query->orderBy($tableListData['sort_by'], $query_sort_dir);
+        if($tableListData['sort_by']){
+            $query->orderBy($tableListData['sort_by'], $query_sort_dir);
+        }
 
         // we search into the request
         $tableListData['search_config'] = $search_config;
         if ($tableListData['search'] = $request->get('search')) {
             // we search only the configured field
-            foreach($tableListData['search_config'] as $key => $searched_field){
-                if($key > 0) {
+            foreach ($tableListData['search_config'] as $key => $searched_field) {
+                if ($key > 0) {
                     $query->orWhere($searched_field, 'like', '%' . $tableListData['search'] . '%');
                 } else {
                     $query->where($searched_field, 'like', '%' . $tableListData['search'] . '%');
@@ -85,24 +93,30 @@ abstract class Controller extends BaseController
             }
         }
 
-        // we paginate the results
-        $pagination = $query->paginate($tableListData['lines']);
+        // if the number of lines to show is defined
+        $tableListData['enable_lines_choice'] = $enable_lines_choice;
+        if($tableListData['enable_lines_choice']){
+            // we paginate the results
+            $pagination = $query->paginate($tableListData['lines']);
 
-        // we add the lines and search inputs to the pagination url
-        $pagination->appends([
-            'lines' => $tableListData['lines'],
-            'search' => $tableListData['search']
-        ]);
-        $tableListData['pagination'] = $pagination;
+            // we add the lines and search inputs to the pagination url
+            $pagination->appends([
+                'lines'  => $tableListData['lines'],
+                'search' => $tableListData['search'],
+            ]);
+            $tableListData['pagination'] = $pagination;
+
+            // we generate the table nav infos
+            $tableListData['nav_infos'] = $this->tableNavStatus($tableListData['pagination']);
+        } else {
+            $tableListData['pagination'] = $query->get();
+        }
 
         // we put the columns into the table list data
         $tableListData['columns'] = $columns;
 
         // we put the route into the table list data
         $tableListData['route'] = $route;
-
-        // we generate the table nav infos
-        $tableListData['nav_infos'] = $this->tableNavStatus($tableListData['pagination']);
 
         // we activate the confirm modal for the entity removal
         \Modal::confirm($confirm_config);
@@ -118,8 +132,8 @@ abstract class Controller extends BaseController
     {
         return trans('global.table_list.results.status', [
             'start' => ($paginated_list->perPage() * ($paginated_list->currentPage() - 1)) + 1,
-            'stop' => $paginated_list->count() + (($paginated_list->currentPage() - 1) * $paginated_list->perPage()),
-            'total' => $paginated_list->total()
+            'stop'  => $paginated_list->count() + (($paginated_list->currentPage() - 1) * $paginated_list->perPage()),
+            'total' => $paginated_list->total(),
         ]);
     }
 }

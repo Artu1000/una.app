@@ -16,7 +16,7 @@ return [
             "save" => "Save changes"
         ],
         'info'   => [
-            "image" => "Accepted formats : ico, jpg, jpeg, png.",
+            "image" => "Accepted formats : 16 x 16 (px) - ico.",
         ],
         "label"  => [
             "site_name"       => "App name",

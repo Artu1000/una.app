@@ -13,7 +13,8 @@
         "approached/laravel-image-optimizer": "dev-master",
         "intervention/image": "^2.3@dev",
         "propaganistas/laravel-phone": "dev-master",
-        "mcamara/laravel-localization": "^1.0"
+        "mcamara/laravel-localization": "^1.0",
+        "cviebrock/image-validator": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

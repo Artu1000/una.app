@@ -78,7 +78,8 @@ class SettingsController extends Controller
             'twitter' => 'url',
             'google_plus' => 'url',
             'youtube' => 'url',
-            'rss' => 'boolean'
+            'rss' => 'boolean',
+            'favicon' => 'mimes:ico|image_size:16,16',
         ]);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
@@ -103,6 +104,11 @@ class SettingsController extends Controller
                     \libphonenumber\PhoneNumberFormat::INTERNATIONAL
                 );
             }
+
+            // we put the favicon at the root of the project
+            if($favicon = $request->file('favicon')){
+                $favicon->move('./', 'favicon.ico');
+            };
 
             // we update the json file
             file_put_contents(storage_path('app/config/settings.json'), json_encode($inputs));

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div id="content" class="config row">
+    <div id="content" class="settings row">
 
         <div class="text-content">
 
@@ -189,9 +189,9 @@
                             {{-- favicon --}}
                             <label for="input_favicon">{{ trans('settings.page.label.favicon') }}</label>
                             <div class="form-group">
-                                @if(config('settings.favicon'))
-                                    <div class="form-group">
-                                        <img width="16" height="16" src="{{ route('image', ['filename' => '', 'folder' => 'user', 'size' => [16, 16]]) }}" alt="Favicon {{ config('settings.app_name') }}">
+                                @if(is_file('./favicon.ico'))
+                                    <div class="favicon img-rounded">
+                                        <img width="16" height="16" src="{{ url('favicon.ico') }}" alt="Favicon {{ config('settings.app_name') }}">
                                     </div>
                                 @endif
                                 <div class="input-group">

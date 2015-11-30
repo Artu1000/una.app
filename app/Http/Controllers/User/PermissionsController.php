@@ -61,8 +61,18 @@ class PermissionsController extends Controller
             'name',
         ];
 
+        // we enable the lines choice
+        $enable_lines_choice = true;
+
         // we format the data for the needs of the view
-        $tableListData = $this->prepareTableListData($query, $request, $columns, 'permissions', $confirm_config, $search_config);
+        $tableListData = $this->prepareTableListData(
+            $query,
+            $request,
+            $columns,
+            'permissions',
+            $confirm_config,
+            $search_config,
+            $enable_lines_choice);
 
         // prepare data for the view
         $data = [

@@ -72,6 +72,16 @@ abstract class BaseRepository implements BaseRepositoryInterface
     protected $scopes = array();
 
     /**
+     * Get the repository model to access to its methods
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
      * Get all the model records in the database
      *
      * @return \Illuminate\Database\Eloquent\Collection
