@@ -30,7 +30,7 @@ class SettingsController extends Controller
                 trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // SEO Meta settings
@@ -54,7 +54,7 @@ class SettingsController extends Controller
                 trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // we analyse the given inputs
@@ -66,6 +66,11 @@ class SettingsController extends Controller
 
         // we get the inputs
         $inputs = $request->except('_token', '_method');
+
+        // we don't update not filled inputs
+        $inputs = array_filter($inputs, function ($input) {
+            return strlen($input);
+        });
 
         // we check the inputs
         $errors = [];
@@ -80,6 +85,8 @@ class SettingsController extends Controller
             'youtube'       => 'url',
             'rss'           => 'boolean',
             'favicon'       => 'mimes:ico|image_size:16,16',
+            'logo_light'    => 'image|mimes:png|image_size:>=300,*',
+            'logo_dark'     => 'image|mimes:png|image_size:>=300,*',
         ]);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
@@ -92,9 +99,10 @@ class SettingsController extends Controller
             // we notify the current user
             \Modal::alert($errors, 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
+        // we save the settings
         try {
             // we format the number into its international equivalent
             if (isset($inputs['phone_number']) && !empty($inputs['phone_number'])) {
@@ -110,13 +118,47 @@ class SettingsController extends Controller
                 $favicon->move('./', 'favicon.ico');
             };
 
+            // logo light treatment
+            if ($logo_dark = $request->file('logo_light')) {
+                // we optimize, resize and save the image
+                $file_name = \ImageManager::optimizeAndResize(
+                    $logo_dark->getRealPath(),
+                    'logo_light',
+                    $logo_dark->getClientOriginalExtension(),
+                    storage_path('app/config'),
+                    ['admin' => [40, 40], 'header' => [70, null], 'large' => [300, null]]
+                );
+                // we add the image name to the inputs for saving
+                $inputs['logo_light'] = $file_name;
+            } elseif (config('settings.logo_light')) {
+                $inputs['logo_light'] = config('settings.logo_light');
+            }
+
+            // logo dark treatment
+            if ($logo_dark = $request->file('logo_dark')) {
+                // we optimize, resize and save the image
+                $file_name = \ImageManager::optimizeAndResize(
+                    $logo_dark->getRealPath(),
+                    'logo_dark',
+                    $logo_dark->getClientOriginalExtension(),
+                    storage_path('app/config'),
+                    ['admin' => [40, 40], 'header' => [70, null], 'large' => [300, null]]
+                );
+                // we add the image name to the inputs for saving
+                $inputs['logo_dark'] = $file_name;
+            } elseif (config('settings.logo_dark')) {
+                $inputs['logo_dark'] = config('settings.logo_dark');
+            }
+
             // we update the json file
             file_put_contents(storage_path('app/config/settings.json'), json_encode($inputs));
+
+            // we notify the current user
             \Modal::alert([
                 trans('settings.message.update.success'),
             ], 'success');
 
-            return Redirect()->back();
+            return redirect()->back();
         } catch (\Exception $e) {
             // we flash the request
             $request->flash();
@@ -128,7 +170,7 @@ class SettingsController extends Controller
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
     }
 

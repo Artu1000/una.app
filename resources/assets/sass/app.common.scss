@@ -25,12 +25,14 @@ $lato-font-path: '/fonts/lato';
 
 
 /***********************************************************************************************************************
- * MIXINS
+ * FONT DEFINITION
  **********************************************************************************************************************/
 @include lato-include-font('black');
 @include lato-include-font('medium');
 @include lato-include-font('light');
 @include lato-include-font('thin');
+$font-size: 16px;
+$font-size-small: 14px;
 
 /***********************************************************************************************************************
  * MIXINS
@@ -130,7 +132,7 @@ html {
 
   body {
     @include lato-font('light');
-    font-size: 16px;
+    font-size: $font-size;
     height: 100%;
 
     #layout {
@@ -155,7 +157,7 @@ html {
       }
 
       p {
-        font-size: 16px;
+        font-size: $font-size;
         @include lato-font('light');
       }
 
@@ -168,14 +170,14 @@ html {
       }
 
       .help-block {
-        font-size: 14px;
+        font-size: $font-size-small;
       }
 
       .underline {
         text-decoration: underline;
       }
       
-      a.btn {
+      .btn, a.btn {
         @include lato-font('light');
       }
 

@@ -16,7 +16,8 @@ return [
             "save" => "Save changes",
         ],
         'info'   => [
-            "image" => "Accepted formats : 16 x 16 (px) - ico.",
+            "image" => "Size : 16 x 16px / format : ico.",
+            "logo" => "Size : min. width 300px / format : png.",
         ],
         "label"  => [
             "app_name"        => "App name",
@@ -25,7 +26,7 @@ return [
             "phone_number"    => "Phone number",
             "contact_email"   => "Contact e-mail",
             "support_email"   => "Support e-mail",
-            "address"         => "Adress",
+            "address"         => "Address",
             "zip_code"        => "Zip code",
             "city"            => "City",
             "facebook"        => "Facebook page",
@@ -39,6 +40,8 @@ return [
                 "news"  => "News",
             ],
             "favicon"         => "Favicon",
+            "logo_light"      => "Logo light",
+            "logo_dark"       => "Logo dark",
             "loading_spinner" => "Loading spinner",
             "ga_code"         => "Google Analytics tracking code",
         ],

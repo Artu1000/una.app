@@ -2,17 +2,26 @@
 
 return [
     // template
-    "template" => [
+    "template"           => [
         "no_reply" => "Cet email vous a été envoyé automatiquement, merci de ne pas y répondre.",
-        "problem" => "En cas de problème, contactez le service support de l'application à l'adresse&nbsp;: <a href='mailto::email'>:email</a>"
+        "problem"  => "En cas de problème, contactez l'équipe support à l'adresse : <a href='mailto::email'>:email</a>",
     ],
 
     // account activation
     "account_activation" => [
-        "subject" => "Réinitialisation de votre mot de passe.",
+        "subject" => "Activation votre compte",
         "title"   => "Activez votre compte",
-        "hello"   => "Bonjour <b>:name</b>,",
+        "hello"   => "Bonjour :name,",
         "content" => "Félicitations, votre compte personnel a bien été créé.<br/> Pour l'activer et vous y connecter, cliquez sur le bouton ci-dessous.",
-        "button"  => "Activer mon compte",
+        "button"  => "J'active mon compte",
+    ],
+
+    // password reset
+    "password_reset"     => [
+        "subject" => "Réinitialisation de votre mot de passe",
+        "title"   => "Réinitialisez votre mot de passe",
+        "hello"   => "Bonjour :name,",
+        "content" => "Accédez à la page de réinitialisation de votre mot de passe en cliquant sur le bouton ci-dessous.",
+        "button"  => "Je réinitialise mon mot de passe",
     ],
 ];

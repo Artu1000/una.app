@@ -27,7 +27,7 @@ Route::get('file', [
  **********************************************************************************************************************/
 
 $group = config('settings.multilingual') ? [
-    'prefix'     => LaravelLocalization::setLocale() . '/' . LaravelLocalization::transRoute('routes.admin'),
+    'prefix'     => LaravelLocalization::setLocale(),
     'middleware' => [
         'auth',
         'localize',
@@ -67,8 +67,7 @@ $route = Route::group($group, function () {
     Route::get(LaravelLocalization::transRoute('routes.users.profile'), ['as' => 'users.profile', 'uses' => 'User\UsersController@profile']);
 
     // home
-    $contents = LaravelLocalization::transRoute('routes.contents') . '/';
-    Route::get($contents . LaravelLocalization::transRoute('routes.home.edit'), ['as' => 'home.edit', 'uses' => 'Home\HomeController@edit']);
+    Route::get(LaravelLocalization::transRoute('routes.home.edit'), ['as' => 'home.edit', 'uses' => 'Home\HomeController@edit']);
 
     Route::get(LaravelLocalization::transRoute('routes.slides.create'), ['as' => 'slides.create', 'uses' => 'User\UsersController@create']);
     Route::post(LaravelLocalization::transRoute('routes.slides.store'), ['as' => 'slides.store', 'uses' => 'User\UsersController@store']);
@@ -98,7 +97,7 @@ Route::group($group, function () {
     // account
     Route::get(LaravelLocalization::transRoute('routes.account.create'), ['as' => 'account.create', 'uses' => 'Auth\AccountController@createAccount']);
     Route::post(LaravelLocalization::transRoute('routes.account.store'), ['as' => 'account.store', 'uses' => 'Auth\AccountController@store']);
-    Route::get(LaravelLocalization::transRoute('routes.account.email'), ['as' => 'account.activation_email', 'uses' => 'Auth\AccountController@activationEmail']);
+    Route::get(LaravelLocalization::transRoute('routes.account.email'), ['as' => 'account.activation_email', 'uses' => 'Auth\AccountController@sendActivationEmail']);
     Route::get(LaravelLocalization::transRoute('routes.account.activation'), ['as' => 'account.activate', 'uses' => 'Auth\AccountController@activateAccount']);
 
     // login
@@ -106,14 +105,10 @@ Route::group($group, function () {
     Route::post(LaravelLocalization::transRoute('routes.login.login'), ['as' => 'login.login', 'uses' => 'Auth\AuthController@login']);
 
     // password recovery
-//    Route::get(LaravelLocalization::transRoute('routes.password.index'), ['as' => 'login.index', 'uses' => 'Auth\PasswordController@index']);
-    Route::resource('mot-de-passe-oublie', 'Auth\PasswordController', [
-        'names' => [
-            'index'  => 'forgotten_password',
-            'show'   => 'password_recovery',
-            'update' => 'password_reset',
-        ],
-    ]);
+    Route::get(LaravelLocalization::transRoute('routes.password.index'), ['as' => 'password.index', 'uses' => 'Auth\PasswordController@index']);
+    Route::post(LaravelLocalization::transRoute('routes.password.email'), ['as' => 'password.email', 'uses' => 'Auth\PasswordController@sendResetEmail']);
+    Route::get(LaravelLocalization::transRoute('routes.password.reset'), ['as' => 'password.reset', 'uses' => 'Auth\PasswordController@show']);
+    Route::put(LaravelLocalization::transRoute('routes.password.update'), ['as' => 'password.update', 'uses' => 'Auth\PasswordController@update']);
 });
 
 //public routes

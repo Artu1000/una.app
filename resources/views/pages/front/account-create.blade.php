@@ -73,13 +73,13 @@
                             </div>
 
                             {{-- submit login --}}
-                            <button class="btn btn-lg btn-primary btn-block spin-on-click" type="submit">
+                            <button class="btn btn-primary btn-block spin-on-click" type="submit">
                                 <i class="fa fa-thumbs-up"></i> {{ trans('auth.account_creation.action.create') }}
                             </button>
                         </form>
 
                         <a href="{{ route('login.index') }}" class="pull-right cancel spin-on-click" title="Annuler">
-                            <button class="btn btn-lg btn-default">
+                            <button class="btn btn-default">
                                 <i class="fa fa-ban"></i> {{ trans('global.action.cancel') }}
                             </button>
                         </a>

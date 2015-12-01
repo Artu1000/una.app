@@ -25,7 +25,7 @@
                            href="{{ route('front.e-shop', ['category' => $id]) }}"
                            title="{{ $cat['title'] }}">{{ $cat['title'] }}</a>
                     @endforeach
-                    @if($current_category)<a href="{{ route('front.e-shop') }}" title="Tout afficher">Tout afficher</a>
+                    @if($current_category)<a href="{{ route('front.e-shop') }}" title="Annuler filtre" class="text-danger"><i class="fa fa-times"></i> Annuler filtre</a>
                     @endif
                 </div>
 
@@ -36,7 +36,7 @@
                                 <a href="" title="{{ $article->title }}">
                                     <img width="150" height="150" src="http://dummyimage.com/150x150/000/fff" alt="{{ $article->title }}">
                                 </a>
-                                <span class="price visible-xs">{{ $article->price }}€</span>
+                                <span class="price visible-xs underline">{{ $article->price }}€</span>
                             </td>
                             <td class="details">
                                 <h3>{{ $article->title }}</h3>
@@ -51,7 +51,7 @@
                                     {{ config('e-shop.availability_type.' . $article->availability_type_id . '.title') }}
                                 </span>
                                 <span class="category hidden-xs"><i class="fa fa-cube"></i> {{ config('e-shop.article_category.' . $article->category_id . '.title') }}</span>
-                                <span class="price hidden-xs">{{ $article->price }}€</span>
+                                <span class="price hidden-xs text-primary">{{ $article->price }}€</span>
                                 <p class="hidden-xs">{{ $article->description }}</p>
                                 <div class="visible-xs size-container">
                                     @if($article->size_s)

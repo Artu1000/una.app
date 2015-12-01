@@ -12,12 +12,8 @@
         {!! trans('emails.account_activation.content') !!}
     </p>
 
-
     <p>
-        <a href="{{ route('account.activate', [
-            'email' => $user->email,
-            'token' => $token
-        ]) }}">
+        <a href="{{ route('account.activate', ['email' => $user->email, 'token' => $token]) }}">
             <button class="btn">
                 {{ trans('emails.account_activation.button') }}
             </button>

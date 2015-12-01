@@ -133,6 +133,8 @@ return [
         "zip_code"              => "Zip code",
         "role"                  => "Role",
         "favicon"               => "Favicon",
+        "logo_light"            => "Logo light",
+        "logo_dark"             => "Logo dark",
     ],
 
 ];

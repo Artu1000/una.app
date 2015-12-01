@@ -19,7 +19,7 @@
 
                             {{-- logo / icon --}}
                             <a class="logo text-center" href="" title="{{ config('settings.app_name') }}">
-                                <img width="300" height="280" src="{{ url(env('LOGO_LIGHT')) }}" alt="{{ config('settings.app_name') }}">
+                                <img width="300" src="{{ url(env('LOGO_LIGHT')) }}" alt="{{ config('settings.app_name') }}">
                             </a>
 
                             {{-- Title--}}
@@ -53,19 +53,19 @@
                             </div>
 
                             {{-- submit login --}}
-                            <button class="btn btn-lg btn-primary btn-block spin-on-click" type="submit">
+                            <button class="btn btn-primary btn-block spin-on-click" type="submit">
                                 <i class="fa fa-thumbs-up"></i> {{ trans('auth.login.action.login') }}
                             </button>
 
                             {{-- forgotten password / create account --}}
                             <div class="form-group others_actions">
-                                <a href="{{ route('forgotten_password', ['email' => old('email')]) }}"> {{ trans('auth.login.label.forgotten_password') }}</a>
+                                <a href="{{ route('password.index', ['email' => old('email')]) }}"> {{ trans('auth.login.label.forgotten_password') }}</a>
                                 <a href="{{ route('account.create') }}" class="pull-right"> {{ trans('auth.login.label.create_account') }}</a>
                             </div>
                         </form>
 
                         <a href="{{ route('home') }}" class="pull-right cancel" title="Retour au site">
-                            <button class="btn btn-lg btn-default">
+                            <button class="btn btn-default">
                                 <i class="fa fa-undo"></i> {{ trans('auth.login.action.back') }}
                             </button>
                         </a>

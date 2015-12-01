@@ -16,6 +16,18 @@ return [
             "keywords"    => "club, universite, nantes, aviron, una, rowing, french, university, sport, account, create, creation, user",
         ]
     ],
+    "password" => [
+        "index" => [
+            "title"       => "Forgotten password",
+            "description" => "Follow the given instruction to reset your password.",
+            "keywords"    => "club, universite, nantes, aviron, una, rowing, french, university, sport, forgotten, password",
+        ],
+        "show" => [
+            "title"       => "Password reset",
+            "description" => "Reset your password securely.",
+            "keywords"    => "club, universite, nantes, aviron, una, rowing, french, university, sport, password, reset",
+        ]
+    ],
 
     // back
     "settings" => [

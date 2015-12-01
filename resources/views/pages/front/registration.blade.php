@@ -18,10 +18,10 @@
                     <h3>Inscription en ligne</h3>
                     <p>Réalisez votre inscription en ligne en cliquant sur le bouton correspondant à votre situation ci-dessous.</p>
                     <a href="http://prototype.una-club.fr/una-backoffice-site/#/registrator" title="Première inscription">
-                        <button class="btn btn-lg btn-info"><i class="fa fa-play"></i> Première inscription</button>
+                        <button class="btn btn-info"><i class="fa fa-play"></i> Première inscription</button>
                     </a>
                     <a href="http://prototype.una-club.fr/una-backoffice-site/" title="Renouvellement">
-                        <button class="btn btn-lg btn-info"><i class="fa fa-repeat"></i> Renouvellement</button>
+                        <button class="btn btn-info"><i class="fa fa-repeat"></i> Renouvellement</button>
                     </a>
                 </div>
 

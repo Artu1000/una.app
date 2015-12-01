@@ -34,7 +34,7 @@ class HomeController extends Controller
                 trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // SEO Meta settings

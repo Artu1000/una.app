@@ -69,7 +69,7 @@ class AuthController extends Controller
         if (count($errors)) {
             Modal::alert($errors, 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // we try to authenticate the user
@@ -79,7 +79,7 @@ class AuthController extends Controller
                     trans('auth.message.login.failure'),
                 ], 'error');
 
-                return Redirect()->back();
+                return redirect()->back();
             }
 
             Modal::alert([
@@ -103,7 +103,7 @@ class AuthController extends Controller
                 ]),
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         } catch (\Cartalyst\Sentinel\Checkpoints\ThrottlingException $e) {
             switch ($e->getType()) {
                 case 'ip':
@@ -118,7 +118,7 @@ class AuthController extends Controller
                     break;
             }
 
-            return Redirect()->back();
+            return redirect()->back();
         } catch (\Exception $e) {
             \Modal::alert([
                 trans('auth.message.login.error'),

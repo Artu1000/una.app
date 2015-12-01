@@ -33,7 +33,7 @@ return [
             "birth_date"       => "Birth date",
             "phone_number"     => "Phone number",
             "email"            => "E-mail",
-            "address"          => "Adress",
+            "address"          => "Address",
             "zip_code"         => "Zip code",
             "city"             => "City",
             "country"          => "Country",

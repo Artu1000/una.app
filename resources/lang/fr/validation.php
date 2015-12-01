@@ -135,6 +135,8 @@ return [
         "zip_code"              => "Code postal",
         "role"                  => "Rôle",
         "favicon"               => "Favicon",
+        "logo_light"            => "Logo clair",
+        "logo_dark"             => "Logo foncé",
     ],
 
 ];

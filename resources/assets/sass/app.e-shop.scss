@@ -76,13 +76,13 @@ html {
               .availability {
 
                 &.in-stock {
-                  color: #5CB85C;
+                  color: $brand-success;
                 }
                 &.on-order {
-                  color: #F0AD4E;
+                  color: $brand-warning;
                 }
                 &.depleted {
-                  color: #D9534F;
+                  color: $brand-danger;
                 }
               }
 

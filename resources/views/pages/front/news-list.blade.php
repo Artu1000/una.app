@@ -26,7 +26,7 @@
                            href="{{ route('front.news', ['category' => $id]) }}"
                            title="{{ $cat['title'] }}">{{ $cat['title'] }}</a>
                     @endforeach
-                    @if($current_category)<a href="{{ route('front.news') }}" title="Tout afficher">Tout afficher</a>
+                    @if($current_category)<a href="{{ route('front.news') }}" title="Annuler filtre" class="text-danger"><i class="fa fa-times"></i> Annuler filtre</a>
                     @endif
                 </div>
 
@@ -57,7 +57,7 @@
                                     </div>
                                     <div class="button mobile visible-xs">
                                         <a href="{{ route('front.news.show', $news->key) }}" title="{{ $news->title }}">
-                                            <button class="btn btn-lg pull-right" role="button">
+                                            <button class="btn pull-right" role="button">
                                                 <i class="fa fa-chevron-circle-right"></i> Lire plus
                                             </button>
                                         </a>

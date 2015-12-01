@@ -22,7 +22,7 @@
                             {{ trans('errors.'.$code.'.message') }}
                         </h2>
 
-                        <a href="{{ route('home') }}" title="Revenir à l'accueil de {{ config('settings.app_name') }}" class="btn btn-primary btn-lg">
+                        <a href="{{ route('home') }}" title="Revenir à l'accueil de {{ config('settings.app_name') }}" class="btn btn-primary">
                             <i class="fa fa-home"></i> {{ trans('errors.nav.home') }}
                         </a>
                     </div>

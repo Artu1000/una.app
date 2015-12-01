@@ -12,7 +12,7 @@
 
                     <div class="form_capsule col-sm-offset-4 col-sm-4">
 
-                        <form class="form-signin" role="form" method="POST" action="{{ route('password_reset', 'reinitialisation') }}">
+                        <form class="form-signin" role="form" method="POST" action="{{ route('password.update') }}">
 
                             {{-- crsf token --}}
                             <input type="hidden" name="_method" value="PUT">
@@ -26,38 +26,38 @@
                             </a>
 
                             {{-- Title--}}
-                            <h1><i class="fa fa-refresh"></i> Réinitialisation</h1>
+                            <h1><i class="fa fa-refresh"></i> {{  trans('auth.password.reset.title') }}</h1>
 
                             {{-- password input --}}
-                            <label class="sr-only" for="input_password">Mot de passe</label>
+                            <label class="sr-only" for="input_password">{{ trans('auth.password.reset.label.password') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_password"><i class="fa fa-unlock-alt"></i></span>
-                                    <input id="input_password" class="form-control" type="password" name="password" placeholder="Mot de passe" autofocus>
+                                    <input id="input_password" class="form-control" type="password" name="password" placeholder="{{ trans('auth.password.reset.label.password') }}" autofocus>
                                 </div>
                             </div>
 
                             {{-- password confirmation input --}}
-                            <label class="sr-only" for="input_password_confirmation">Confirmation du mot de passe</label>
+                            <label class="sr-only" for="input_password_confirmation">{{ trans('auth.password.reset.label.password_confirmation') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_password_confirmation"><i class="fa fa-unlock-alt"></i></span>
-                                    <input id="input_password_confirmation" class="form-control" type="password" name="password_confirmation" placeholder="Confirmation du mot de passe">
+                                    <input id="input_password_confirmation" class="form-control" type="password" name="password_confirmation" placeholder="{{ trans('auth.password.reset.label.password_confirmation') }}">
                                 </div>
                             </div>
 
-                            <p class="quote">Saisissez votre nouveau mot de passe.</p>
+                            <p class="quote">{{ trans('auth.password.reset.info.instructions') }}</p>
 
                             {{-- submit login --}}
-                            <button class="btn btn-lg btn-primary btn-block spin-on-click" type="submit">
-                                <i class="fa fa-magic"></i> Enregistrer
+                            <button class="btn btn-primary btn-block spin-on-click" type="submit">
+                                <i class="fa fa-magic"></i> {{ trans('auth.password.reset.action.save') }}
                             </button>
 
                         </form>
 
                         <a href="{{ route('login.index') }}" class="pull-right cancel" title="Retour">
-                            <button class="btn btn-lg btn-default">
-                                <i class="fa fa-ban"></i> Annuler
+                            <button class="btn btn-default">
+                                <i class="fa fa-ban"></i> {{ trans('global.action.cancel') }}
                             </button>
                         </a>
                     </div>

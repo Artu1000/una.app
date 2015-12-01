@@ -11,6 +11,9 @@
                 <h1>
                     {{ config('settings.app_name') }}
                 </h1>
+                @if(config('settings.app_slogan'))
+                    - {{ config('settings.app_slogan') }}
+                @endif
             </a>
         </div>
         <ul class="nav navbar-right top-nav">

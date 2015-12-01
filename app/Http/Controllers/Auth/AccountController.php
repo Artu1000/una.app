@@ -62,7 +62,7 @@ class AccountController extends Controller
         if (count($errors)) {
             \Modal::alert($errors, 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // we create the user
@@ -107,7 +107,7 @@ class AccountController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function activationEmail(Request $request)
+    public function sendActivationEmail(Request $request)
     {
         // we flash the email
         $request->flash();
@@ -144,7 +144,7 @@ class AccountController extends Controller
                     trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
                 ], 'error');
 
-                return Redirect()->back();
+                return redirect()->back();
             }
 
         } else {
@@ -152,7 +152,7 @@ class AccountController extends Controller
                 trans('auth.message.find.failure', ['email' => $request->get('email')]),
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
     }
 
@@ -173,7 +173,7 @@ class AccountController extends Controller
                         trans('auth.message.activation.success', ['name' => $user->first_name . " " . $user->last_name]),
                     ], 'success');
 
-                    return Redirect(route('login.index'))->withInput($request->all());
+                    return redirect(route('login.index'))->withInput($request->all());
                 } else {
                     \Modal::alert([
                         trans('auth.message.activation.token.expired'),
@@ -183,7 +183,7 @@ class AccountController extends Controller
                         ]),
                     ], 'error');
 
-                    return Redirect(route('login.index'))->withInput($request->all());
+                    return redirect(route('login.index'))->withInput($request->all());
                 }
             } else {
                 // notify the user & redirect

@@ -64,6 +64,6 @@ class EShopController extends Controller
             "La fonctionnalité d'ajout au panier n'est pas disponible pour le moment. Merci de revenir ulterieurement."
         ],'info');
 
-        return Redirect()->back();
+        return redirect()->back();
     }
 }

@@ -76,7 +76,7 @@
             }
             p {
                 font-size: 14px;
-                color: #aaaaaa;
+                color: #606060;
             }
             .contact {
                 padding: 10px 0;

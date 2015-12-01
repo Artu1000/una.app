@@ -109,7 +109,7 @@ html{
               &.result-panel {
 
                 h4 {
-                  font-size: 16px;
+                  font-size: $font-size;
                   @include lato-font('medium');
                   margin-bottom: 10px;
                 }
@@ -137,7 +137,7 @@ html{
                         @include border-radius(50%);
 
                         i.fa {
-                          font-size: 16px;
+                          font-size: 16$font-size;
 
                           &.gold {
                             color: #F4C300;

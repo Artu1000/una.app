@@ -16,7 +16,8 @@ return [
             "save" => "Enregistrer les modifications",
         ],
         'info'   => [
-            "image" => "Format accepté : 16 x 16 (px) - ico.",
+            "image" => "Taille : 16 x 16px / format : ico.",
+            "logo" => "Taille : largeur min. 300px / format : png.",
         ],
         "label"  => [
             "app_name"        => "Nom du site",
@@ -39,6 +40,8 @@ return [
                 "news"  => "Actus",
             ],
             "favicon"         => "Favicon",
+            "logo_light"      => "Logo clair",
+            "logo_dark"       => "Logo foncé",
             "loading_spinner" => "Icône de chargement",
             "ga_code"         => "Code de suivi Google Analytics",
         ],

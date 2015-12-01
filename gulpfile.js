@@ -32,7 +32,7 @@ elixir(function (mix) {
         mix
 
         // FRONT
-        .sass('app.front.scss', 'public/css/app.front.css', {})
+        //.sass('app.front.scss', 'public/css/app.front.css', {})
         //.sass('app.home.scss', 'public/css/app.home.css', {})
         //.sass('app.page.scss', 'public/css/app.page.css', {})
         //.sass('app.palmares.scss', 'public/css/app.palmares.css', {})
@@ -45,7 +45,7 @@ elixir(function (mix) {
         .sass('app.login.scss', 'public/css/app.login.css', {})
 
         // COMMON
-        .sass('app.error.scss', 'public/css/app.error.css', {})
+        //.sass('app.error.scss', 'public/css/app.error.css', {})
 
         // BACK
         .sass('app.back.scss', 'public/css/app.back.css', {})
@@ -61,17 +61,17 @@ elixir(function (mix) {
         //], 'public/css/app.home.css', './')
 
         // combine back stylesheets
-        .styles([
-            paths.datepicker + 'css/bootstrap-datepicker3.css',
-            'public/css/app.back.css',
-            paths.lity + 'lity.css'
-        ], 'public/css/app.back.css', './')
+        //.styles([
+        //    paths.datepicker + 'css/bootstrap-datepicker3.css',
+        //    'public/css/app.back.css',
+        //    paths.lity + 'lity.css'
+        //], 'public/css/app.back.css', './')
 
         /***************************************************************************************************************
          * IMAGES
          ***************************************************************************************************************/
         //// minify images
-        .imagemin('**', 'public/img/')
+        //.imagemin('**', 'public/img/')
 
         /***************************************************************************************************************
          * FONTS

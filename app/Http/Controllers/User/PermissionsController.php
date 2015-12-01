@@ -28,7 +28,7 @@ class PermissionsController extends Controller
                 trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // SEO Meta settings
@@ -93,7 +93,7 @@ class PermissionsController extends Controller
                 trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // SEO Meta settings
@@ -109,7 +109,7 @@ class PermissionsController extends Controller
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // prepare data for the view
@@ -145,7 +145,7 @@ class PermissionsController extends Controller
                 trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // we get the original request content
@@ -183,7 +183,7 @@ class PermissionsController extends Controller
         if (count($errors)) {
             \Modal::alert($errors, 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         try {
@@ -197,7 +197,7 @@ class PermissionsController extends Controller
                 trans('permissions.message.create.success', ['name' => $role->name]),
             ], 'success');
 
-            return Redirect(route('permissions.index'));
+            return redirect(route('permissions.index'));
         } catch (\Exception $e) {
             \Log::error($e);
             \Modal::alert([
@@ -205,7 +205,7 @@ class PermissionsController extends Controller
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
     }
 
@@ -218,7 +218,7 @@ class PermissionsController extends Controller
                 trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // we get the original request content
@@ -258,7 +258,7 @@ class PermissionsController extends Controller
             // we notify the current user
             \Modal::alert($errors, 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         try {
@@ -274,7 +274,7 @@ class PermissionsController extends Controller
                 trans('permissions.message.update.success', ['name' => $role->name]),
             ], 'success');
 
-            return Redirect()->back();
+            return redirect()->back();
         } catch (\Exception $e) {
             // we flash the request
             $request->flash();
@@ -286,7 +286,7 @@ class PermissionsController extends Controller
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
     }
 
@@ -299,7 +299,7 @@ class PermissionsController extends Controller
                 trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // we get the role
@@ -308,7 +308,7 @@ class PermissionsController extends Controller
                 trans('permissions.message.find.failure', ['name' => $request->get('_id')]),
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // we delete the role
@@ -318,7 +318,7 @@ class PermissionsController extends Controller
             ], 'success');
             $role->delete();
 
-            return Redirect()->back();
+            return redirect()->back();
         } catch (\Exception $e) {
             \Log::error($e);
             \Modal::alert([
@@ -326,7 +326,7 @@ class PermissionsController extends Controller
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
     }
 }

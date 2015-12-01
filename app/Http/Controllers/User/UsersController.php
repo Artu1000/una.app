@@ -30,7 +30,7 @@ class UsersController extends Controller
                 trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // SEO Meta settings
@@ -142,7 +142,7 @@ class UsersController extends Controller
                 trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // SEO Meta settings
@@ -158,7 +158,7 @@ class UsersController extends Controller
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // we convert the database date to the fr/en format
@@ -225,7 +225,7 @@ class UsersController extends Controller
                 trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // we get the inputs
@@ -260,7 +260,7 @@ class UsersController extends Controller
             // we notify the current user
             \Modal::alert($errors, 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // we create the user
@@ -309,7 +309,7 @@ class UsersController extends Controller
                 trans('users.message.creation.success', ['name' => $user->first_name . ' ' . $user->last_name]),
             ], 'success');
 
-            return Redirect(route('users.index'));
+            return redirect(route('users.index'));
         } catch (\Exception $e) {
             // we flash the request
             $request->flash();
@@ -326,7 +326,7 @@ class UsersController extends Controller
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
     }
 
@@ -339,7 +339,7 @@ class UsersController extends Controller
                 trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // we get the user
@@ -348,7 +348,7 @@ class UsersController extends Controller
                 trans('users.message.find.failure', ['id' => $request->get('_id')]),
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // we convert the "on" value to the activation order to a boolean value
@@ -412,7 +412,7 @@ class UsersController extends Controller
             // we notify the current user
             \Modal::alert($errors, 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         try {
@@ -470,7 +470,7 @@ class UsersController extends Controller
                 trans('users.message.account.success'),
             ], 'success');
 
-            return Redirect()->back();
+            return redirect()->back();
         } catch (\Exception $e) {
             // we flash the request
             $request->flash();
@@ -482,7 +482,7 @@ class UsersController extends Controller
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
     }
 
@@ -495,7 +495,7 @@ class UsersController extends Controller
                 trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // we get the user
@@ -504,7 +504,7 @@ class UsersController extends Controller
                 trans('users.message.find.failure'),
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         try {
@@ -524,7 +524,7 @@ class UsersController extends Controller
                 trans('users.message.delete.success', ['name' => $user->first_name . ' ' . $user->last_name]),
             ], 'success');
 
-            return Redirect()->back();
+            return redirect()->back();
         } catch (\Exception $e) {
             \Log::error($e);
             \Modal::alert([
@@ -532,7 +532,7 @@ class UsersController extends Controller
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
     }
 
@@ -545,7 +545,7 @@ class UsersController extends Controller
                 trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
 
-            return Redirect()->back();
+            return redirect()->back();
         }
 
         // we convert the "on" value to the activation order to a boolean value
