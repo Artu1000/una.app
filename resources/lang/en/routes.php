@@ -50,6 +50,7 @@ return [
     ],
     "home"        => [
         "edit" => "admin/contents/home-page/edition",
+        "update" => "admin/contents/home-page/update",
     ],
     "slide"       => [
         "create"  => "admin/contents/home-page/diapo/creation",

@@ -49,6 +49,14 @@ class PermissionsController extends Controller
             'sort_by' => 'roles.updated_at',
         ]];
 
+        // we set the routes used in the table list
+        $routes = [
+            'index'   => 'permissions.index',
+            'create'  => 'permissions.create',
+            'edit'    => 'permissions.edit',
+            'destroy' => 'permissions.destroy',
+        ];
+
         // we instantiate the query
         $query = \Sentinel::getRoleRepository()->query();
 
@@ -69,7 +77,7 @@ class PermissionsController extends Controller
             $query,
             $request,
             $columns,
-            'permissions',
+            $routes,
             $confirm_config,
             $search_config,
             $enable_lines_choice);

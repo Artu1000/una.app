@@ -25,6 +25,7 @@ return [
 
     // home
     "home"               => "Page d'accueil",
+    "home.edit"          => "Consulter le détail de la page d'accueil",
     "home.update"        => "Modifier la page d'accueil",
     "home.slide.create"  => "Créer une diapo",
     "home.slide.view"    => "Consulter le détail d'une diapo",

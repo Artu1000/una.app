@@ -83,6 +83,14 @@ class UsersController extends Controller
             ],
         ];
 
+        // we set the routes used in the table list
+        $routes = [
+            'index'   => 'users.index',
+            'create'  => 'users.create',
+            'edit'    => 'users.edit',
+            'destroy' => 'users.destroy',
+        ];
+
         // we instantiate the query
         $query = \Sentinel::getUserRepository()->where('users.id', '<>', \Sentinel::getUser()->id);
 
@@ -117,7 +125,7 @@ class UsersController extends Controller
             $query,
             $request,
             $columns,
-            'users',
+            $routes,
             $confirm_config,
             $search_config,
             $enable_lines_choice

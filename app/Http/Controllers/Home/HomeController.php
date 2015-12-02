@@ -28,7 +28,7 @@ class HomeController extends Controller
     public function edit(Request $request)
     {
         // we check the current user permission
-        $required = 'home.update';
+        $required = 'home.edit';
         if (!\Sentinel::getUser()->hasAccess([$required])) {
             \Modal::alert([
                 trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
@@ -71,7 +71,16 @@ class HomeController extends Controller
             ], [
                 'title'   => trans('home.page.label.slide.position'),
                 'key'     => 'position',
+                'sort_by' => 'slides.position',
             ],
+        ];
+
+        // we set the routes used in the table list
+        $routes = [
+            'index'   => 'home.edit',
+            'create'  => 'slides.create',
+            'edit'    => 'slides.edit',
+            'destroy' => 'slides.destroy',
         ];
 
         // we instantiate the query
@@ -83,26 +92,35 @@ class HomeController extends Controller
             'attributes' => ['title'],
         ];
 
+        $search_config = [
+            'title',
+        ];
+
+        // we enable the lines choice
+        $enable_lines_choice = true;
+
         // we format the data for the needs of the view
         $tableListData = $this->prepareTableListData(
             $query,
             $request,
             $columns,
-            'slides',
-            $confirm_config
+            $routes,
+            $confirm_config,
+            $search_config,
+            $enable_lines_choice
         );
 
         // we get the json home content
         $home = [];
-        if (is_file(storage_path('app/home/home.json'))) {
-            $home = json_decode(file_get_contents(storage_path('app/home/home.json')));
+        if (is_file(storage_path('app/home/content.json'))) {
+            $home = json_decode(file_get_contents(storage_path('app/home/content.json')));
         }
 
         // prepare data for the view
         $data = [
-            'seoMeta'         => $this->seoMeta,
-            'news_activation' => (isset($home['news_activation']) && !empty($home['news_activation'])) ? $home['news_activation'] : null,
-            'description'     => (isset($home['description']) && !empty($home['description'])) ? $home['description'] : null,
+            'seoMeta'       => $this->seoMeta,
+            'title'         => isset($home->title) ? $home->title : null,
+            'description'   => isset($home->description) ? $home->description : null,
             'tableListData' => $tableListData,
         ];
 
@@ -200,6 +218,39 @@ class HomeController extends Controller
 
         // return the view with data
         return view('pages.front.home')->with($data);
+    }
+
+    public function update(Request $request)
+    {
+        // we check the current user permission
+        $required = 'home.update';
+        if (!\Sentinel::getUser()->hasAccess([$required])) {
+            \Modal::alert([
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
+            ], 'error');
+
+            return redirect()->back();
+        }
+
+        try {
+            // we store the content into a json file
+            file_put_contents(storage_path('app/home/content.json'), json_encode($request->only('title', 'description')));
+
+            \Modal::alert([
+                trans('home.message.update.success'),
+            ], 'success');
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            \Log::error($e);
+            \Modal::alert([
+                trans('home.message.update.failure'),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
+            ], 'error');
+
+            return redirect()->back();
+        }
+
     }
 
 }

@@ -145,7 +145,9 @@
                     <table class="halign-center w600">
                         <tr>
                             <td class="logo">
-                                <img width="70" height="66" src="{{ url(env('LOGO_SMALL_LIGHT')) }}" alt="{{ config('settings.app_name') }}">
+                                @if(config('settings.logo_light'))
+                                    <img width="70" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'header']) }}" alt="Logo {{ config('settings.app_name') }}">
+                                @endif
                             </td>
                             <td class="title">
                                 <h1>{{ config('settings.app_name') }}</h1>
@@ -214,7 +216,9 @@
                                             <div></div>
                                         </td>
                                         <td class="logo text-center">
-                                            <img width="70" height="66" src="{{ url(env('LOGO_SMALL_LIGHT')) }}" alt="{{ config('settings.app_name') }}">
+                                            @if(config('settings.logo_light'))
+                                                <img width="70" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'header']) }}" alt="Logo {{ config('settings.app_name') }}">
+                                            @endif
                                         </td>
                                         <td class="delimiter">
                                             <div></div>

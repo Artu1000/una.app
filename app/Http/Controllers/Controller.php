@@ -18,6 +18,9 @@ abstract class Controller extends BaseController
         'meta_keywords' => '',
     ];
 
+    /**
+     * Controller constructor.
+     */
     public function __construct()
     {
         // load base JS
@@ -37,10 +40,20 @@ abstract class Controller extends BaseController
         }
     }
 
+    /**
+     * @param $query
+     * @param \Illuminate\Http\Request $request
+     * @param array $columns
+     * @param array $routes
+     * @param array $confirm_config
+     * @param array $search_config
+     * @param bool|false $enable_lines_choice
+     * @return mixed
+     */
     public function prepareTableListData(
         $query, \Illuminate\Http\Request $request,
         array $columns,
-        $route,
+        array $routes,
         array $confirm_config,
         array $search_config = [],
         $enable_lines_choice = false
@@ -116,7 +129,7 @@ abstract class Controller extends BaseController
         $tableListData['columns'] = $columns;
 
         // we put the route into the table list data
-        $tableListData['route'] = $route;
+        $tableListData['routes'] = $routes;
 
         // we activate the confirm modal for the entity removal
         \Modal::confirm($confirm_config);

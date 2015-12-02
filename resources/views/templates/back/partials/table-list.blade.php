@@ -9,7 +9,7 @@
 
                     <div class="row">
 
-                        <form role="form" method="GET" action="{{ route($tableListData['route'] . '.index') }}">
+                        <form role="form" method="GET" action="{{ route($tableListData['routes']['index']) }}">
 
                             <div class="col-sm-6 table-commands">
                                 @if($tableListData['enable_lines_choice'])
@@ -29,7 +29,7 @@
                                             <span class="input-group-addon" for="input_search"><i class="fa fa-search"></i></span>
                                             <input id="input_search" class="form-control" type="text" name="search" value="{{ $tableListData['search'] }}" placeholder="{{ trans('global.table_list.placeholder.search') }}">
                                         @if($tableListData['search'])
-                                            <span class="input-group-addon"><a href="{{ route($tableListData['route'] . '.index', ['search' => null, 'lines' => $tableListData['lines']]) }}"><i class="fa fa-times"></i></a></span>
+                                            <span class="input-group-addon"><a href="{{ route($tableListData['routes']['index'], ['search' => null, 'lines' => $tableListData['lines']]) }}"><i class="fa fa-times"></i></a></span>
                                         @endif
                                     </span>
                                 @endif
@@ -45,7 +45,7 @@
             @foreach($tableListData['columns'] as $column)
                 <th>
                     @if(isset($column['sort_by']))
-                        <a href="{{ route($tableListData['route'] . '.index', ['search' => $tableListData['search'], 'lines' => $tableListData['lines'], 'sort-by' => $column['sort_by'], 'sort-dir' => !$tableListData['sort_dir']]) }}" class="spin-on-click">
+                        <a href="{{ route($tableListData['routes']['index'], ['search' => $tableListData['search'], 'lines' => $tableListData['lines'], 'sort-by' => $column['sort_by'], 'sort-dir' => !$tableListData['sort_dir']]) }}" class="spin-on-click">
                             @if($tableListData['sort_by'] === $column['sort_by'] && $tableListData['sort_dir']) <i class="fa fa-sort-asc"></i>
                             @elseif($tableListData['sort_by'] === $column['sort_by'] && !$tableListData['sort_dir']) <i class="fa fa-sort-desc"></i>
                             @else <i class="fa fa-sort"></i>
@@ -124,11 +124,11 @@
 
                 <td class="actions text-right">
 
-                    <form role="form" class="form-inline" method="GET" action="{{ route($tableListData['route'] . '.edit', $entity->id) }}">
+                    <form role="form" class="form-inline" method="GET" action="{{ route($tableListData['routes']['edit'], $entity->id) }}">
                         <a href="#" class="text-info submit-form spin-on-click"><i class="fa fa-pencil-square" title="{{ trans('global.action.edit') }}"></i></a>
                     </form>
 
-                    <form role="form" class="form-inline" method="POST" action="{{ route($tableListData['route'] . '.destroy') }}">
+                    <form role="form" class="form-inline" method="POST" action="{{ route($tableListData['routes']['destroy']) }}">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="_id" value="{{ $entity->id }}">
@@ -137,7 +137,7 @@
                 </td>
             </tr>
         @endforeach
-        @if(empty($tableListData['pagination']))
+        @if($tableListData['pagination']->isEmpty())
             <tr>
                 <td colspan="{{ sizeof($tableListData['columns']) + 1 }}" class="text-center">
                     <span class="text-info"><i class="fa fa-info-circle"></i></span> {{ trans('global.table_list.results.empty') }}
@@ -155,13 +155,13 @@
                 <div class="row">
 
                     <div class="col-sm-4 table-commands">
-                        <a href="{{ route($tableListData['route'] . '.create') }}">
+                        <a href="{{ route($tableListData['routes']['create']) }}">
                             <button class="btn btn-success spin-on-click"><i class="fa fa-plus-circle"></i> {{ trans('global.action.add') }}</button>
                         </a>
                     </div>
 
                     <div class="col-sm-4 table-nav-infos text-center">
-                        @if(isset($tableListData['nav_infos']) && !empty($tableListData['pagination']))
+                        @if(isset($tableListData['nav_infos']) && !$tableListData['pagination']->isEmpty())
                             {!! $tableListData['nav_infos'] !!}
                         @endif
                     </div>

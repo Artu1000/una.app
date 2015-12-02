@@ -23,6 +23,15 @@ return [
     "users.update"       => "Edit a user",
     "users.delete"       => "Delete a user",
 
+    // home
+    "home"               => "Home page",
+    "home.edit"          => "View the home page details",
+    "home.update"        => "Update the home page",
+    "home.slide.create"  => "Create a slide",
+    "home.slide.view"    => "View slide details",
+    "home.slide.update"  => "Update a slide",
+    "home.slide.delete"  => "Delete a slide",
+
     // pages
     "page"               => [
         "title"  => [

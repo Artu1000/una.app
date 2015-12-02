@@ -16,7 +16,9 @@
 
                 <a class="navbar-brand" title="Retour à l'accueil" href="{{ route('home') }}">
                     <span class="logo">
-                        <img width="70" height="66" src="{{ url(env('LOGO_SMALL_LIGHT')) }}" alt="Logo {{ config('settings.app_name') }}">
+                        @if(config('settings.logo_light'))
+                            <img width="70" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'header']) }}" alt="Logo {{ config('settings.app_name') }}">
+                        @endif
                     </span>
                     <h1 @if(\Route::current()->getName() === 'home') class="active" @endif>
                         <span>Université</span>

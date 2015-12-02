@@ -25,7 +25,9 @@
                 </div>
                 <div class="logo hidden-xs">
                     <a href="{{ url('/') }}#top" title="Revenir en haut de la page">
-                        <img width="70" height="66" src="{{ url(env('LOGO_SMALL_LIGHT')) }}" alt="Logo {{ config('settings.app_name') }}">
+                        @if(config('settings.logo_light'))
+                            <img width="70" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'header']) }}" alt="Logo {{ config('settings.app_name') }}">
+                        @endif
                     </a>
                 </div>
             </div>

@@ -17,10 +17,12 @@
                             {{-- crsf token --}}
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                            {{-- logo / icon --}}
-                            <a class="logo text-center" href="" title="{{ config('settings.app_name') }}">
-                                <img width="300" height="280" src="{{ url(env('LOGO_LIGHT')) }}" alt="{{ config('settings.app_name') }}">
-                            </a>
+                            {{-- logo --}}
+                            @if(config('settings.logo_light'))
+                                <a class="logo text-center" href="#">
+                                    <img width="300" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" alt="Logo {{ config('settings.app_name') }}">
+                                </a>
+                            @endif
 
                             {{-- Title--}}
                             <h1><i class="fa fa-unlock-alt"></i> {{ trans('auth.password.forgotten.title') }}</h1>

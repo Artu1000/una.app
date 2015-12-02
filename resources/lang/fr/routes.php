@@ -49,14 +49,15 @@ return [
         "activate" => "admin/utilisateurs/activer",
     ],
     "home"        => [
-        "edit" => "admin/contenus/page-d-accueil/edition",
+        "edit"   => "admin/contenus/page-accueil/edition",
+        "update" => "admin/contenus/page-accueil/mise-a-jour",
     ],
-    "slide"       => [
-        "create"  => "admin/contenus/page-d-accueil/diapo/creation",
-        "store"   => "admin/contenus/page-d-accueil/diapo/enregistrement",
-        "edit"    => "admin/contenus/page-d-accueil/diapo/edition/{id}",
-        "update"  => "admin/contenus/page-d-accueil/diapo/mise-a-jour",
-        "destroy" => "admin/contenus/page-d-accueil/diapo/suppression",
+    "slides"       => [
+        "create"  => "admin/contenus/page-accueil/diapo/creation",
+        "store"   => "admin/contenus/page-accueil/diapo/enregistrement",
+        "edit"    => "admin/contenus/page-accueil/diapo/edition/{id}",
+        "update"  => "admin/contenus/page-accueil/diapo/mise-a-jour",
+        "destroy" => "admin/contenus/page-accueil/diapo/suppression",
     ],
     "logout"      => "admin/deconnexion",
 ];

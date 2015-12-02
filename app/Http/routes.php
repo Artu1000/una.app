@@ -34,7 +34,6 @@ $group = config('settings.multilingual') ? [
         'localeSessionRedirect',
         'localizationRedirect',
     ]] : [
-    'prefix'     => 'admin',
     'middleware' => ['auth'],
 ];
 
@@ -68,13 +67,14 @@ $route = Route::group($group, function () {
 
     // home
     Route::get(LaravelLocalization::transRoute('routes.home.edit'), ['as' => 'home.edit', 'uses' => 'Home\HomeController@edit']);
+    Route::put(LaravelLocalization::transRoute('routes.home.update'), ['as' => 'home.update', 'uses' => 'Home\HomeController@update']);
 
-    Route::get(LaravelLocalization::transRoute('routes.slides.create'), ['as' => 'slides.create', 'uses' => 'User\UsersController@create']);
-    Route::post(LaravelLocalization::transRoute('routes.slides.store'), ['as' => 'slides.store', 'uses' => 'User\UsersController@store']);
-    Route::get(LaravelLocalization::transRoute('routes.slides.edit'), ['as' => 'slides.edit', 'uses' => 'User\UsersController@edit']);
-    Route::put(LaravelLocalization::transRoute('routes.slides.update'), ['as' => 'slides.update', 'uses' => 'User\UsersController@update']);
-    Route::delete(LaravelLocalization::transRoute('routes.slides.destroy'), ['as' => 'slides.destroy', 'uses' => 'User\UsersController@destroy']);
-
+    // slides
+    Route::get(LaravelLocalization::transRoute('routes.slides.create'), ['as' => 'slides.create', 'uses' => 'Home\SlidesController@create']);
+    Route::post(LaravelLocalization::transRoute('routes.slides.store'), ['as' => 'slides.store', 'uses' => 'Home\SlidesController@store']);
+    Route::get(LaravelLocalization::transRoute('routes.slides.edit'), ['as' => 'slides.edit', 'uses' => 'Home\SlidesController@edit']);
+    Route::put(LaravelLocalization::transRoute('routes.slides.update'), ['as' => 'slides.update', 'uses' => 'Home\SlidesController@update']);
+    Route::delete(LaravelLocalization::transRoute('routes.slides.destroy'), ['as' => 'slides.destroy', 'uses' => 'Home\SlidesController@destroy']);
 
     // logout
     Route::get(LaravelLocalization::transRoute('routes.logout'), ['as' => 'logout', 'uses' => 'Auth\AuthController@logout']);
