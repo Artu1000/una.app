@@ -55,5 +55,9 @@ class AppServiceProvider extends ServiceProvider
         // laravel image validator
         // https://github.com/cviebrock/image-validator
         $this->app->register('Cviebrock\ImageValidator\ImageValidatorServiceProvider');
+
+        // laravel breadcrumb
+        // http://laravel-breadcrumbs.davejamesmiller.com/en/latest/start.html
+        $this->app->register('DaveJamesMiller\Breadcrumbs\ServiceProvider');
     }
 }

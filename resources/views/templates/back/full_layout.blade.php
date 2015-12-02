@@ -29,6 +29,9 @@
 
             {{-- content inclusion --}}
             <div id="wrapper" class="row">
+                @if(config('breadcrumbs'))
+                    {!! Breadcrumbs::renderIfExists(\Request::route()->getName()) !!}
+                @endif
                 @yield('content')
             </div>
 

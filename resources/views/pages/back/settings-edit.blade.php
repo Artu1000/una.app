@@ -22,7 +22,7 @@
                     {{-- app data --}}
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">{{ trans('settings.page.title.global') }}</h3>
+                            <h3 class="panel-title">{{ trans('settings.page.title.identity') }}</h3>
                         </div>
                         <div class="panel-body">
 
@@ -41,6 +41,32 @@
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_app_slogan"><i class="fa fa-flag"></i></span>
                                     <input id="input_app_slogan" class="form-control" type="text" name="app_slogan" value="{{ old('app_slogan') ? old('app_slogan') : config('settings.app_slogan') }}" placeholder="{{ trans('settings.page.label.app_slogan') }}">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {{-- navigation data --}}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ trans('settings.page.title.navigation') }}</h3>
+                        </div>
+                        <div class="panel-body">
+
+                            {{-- breadcrumbs --}}
+                            <label for="input_breadcrumbs">{{ trans('settings.page.label.breadcrumbs') }}</label>
+                            <div class="form-group">
+                                <div class="input-group swipe-group">
+                                    <span class="input-group-addon" for="input_breadcrumbs"><i class="fa fa-compass"></i></span>
+                                    <span class="form-control swipe-label" readonly="">
+                                        {{ trans('global.action.activate') }}
+                                    </span>
+                                    <input class="swipe" id="input_breadcrumbs" type="checkbox" name="breadcrumbs"
+                                           @if(old('breadcrumbs')) checked
+                                           @elseif(config('settings.breadcrumbs')) checked
+                                            @endif>
+                                    <label class="swipe-btn" for="input_breadcrumbs"></label>
                                 </div>
                             </div>
 
@@ -63,7 +89,7 @@
                         </div>
                     </div>
 
-                    {{-- personal data --}}
+                    {{-- contact data --}}
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">{{ trans('settings.page.title.contact') }}</h3>
@@ -217,7 +243,7 @@
                             <label for="input_favicon">{{ trans('settings.page.label.favicon') }}</label>
                             <div class="form-group">
                                 @if(is_file('./favicon.ico'))
-                                    <div class="logo">
+                                    <div class="logo img-rounded">
                                         <img width="16" height="16" src="{{ url('favicon.ico') }}" alt="Favicon {{ config('settings.app_name') }}">
                                     </div>
                                 @endif
@@ -236,7 +262,7 @@
                             <label for="input_logo_light">{{ trans('settings.page.label.logo_light') }}</label>
                             <div class="form-group">
                                 @if(config('settings.logo_light'))
-                                    <a class="logo light" href="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" data-lity>
+                                    <a class="logo light img-rounded" href="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" data-lity>
                                         <img width="40" height="40" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'admin']) }}" alt="{{ trans('settings.page.label.logo_light') }}">
                                     </a>
                                 @endif
@@ -255,7 +281,7 @@
                             <label for="input_logo_dark">{{ trans('settings.page.label.logo_dark') }}</label>
                             <div class="form-group">
                                 @if(config('settings.logo_dark'))
-                                    <a class="logo" href="{{ route('image', ['filename' => config('settings.logo_dark'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" data-lity>
+                                    <a class="logo img-rounded" href="{{ route('image', ['filename' => config('settings.logo_dark'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" data-lity>
                                         <img width="40" height="40" src="{{ route('image', ['filename' => config('settings.logo_dark'), 'storage_path' => storage_path('app/config'), 'size' => 'admin']) }}" alt="{{ trans('settings.page.label.logo_dark') }}">
                                     </a>
                                 @endif

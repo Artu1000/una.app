@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand new_window" href="{{ route('home') }}">
+            <a class="navbar-brand" href="{{ route('dashboard.index') }}">
                 <h1>
                     {{ config('settings.app_name') }}
                 </h1>
@@ -112,9 +112,9 @@
 
                 <li class="divider"></li>
 
-                <li>
-                    <a class="new_window" href="{{ route('home') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.back') }}</a>
-                </li>
+                {{--<li>--}}
+                    {{--<a class="new_window" href="{{ route('home') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.back') }}</a>--}}
+                {{--</li>--}}
             </ul>
         </div>
     </nav>

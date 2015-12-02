@@ -5,23 +5,25 @@ return [
     // views
     "page"    => [
         "title"  => [
-            "settings" => "Gestion des paramètres du site",
-            "contact"  => "Général",
-            "global"   => "Contact",
-            "social"   => "Social",
-            "design"   => "Apparence",
-            "seo"      => "Référencement",
+            "settings"   => "Gestion des paramètres du site",
+            "identity"   => "Identité",
+            "navigation" => "Navigation",
+            "contact"    => "Contact",
+            "social"     => "Social",
+            "design"     => "Apparence",
+            "seo"        => "Référencement",
         ],
         "action" => [
             "save" => "Enregistrer les modifications",
         ],
         'info'   => [
             "image" => "Taille : 16 x 16px / format : ico.",
-            "logo" => "Taille : largeur min. 300px / format : png.",
+            "logo"  => "Taille : largeur min. 300px / format : png.",
         ],
         "label"  => [
             "app_name"        => "Nom du site",
             "app_slogan"      => "Slogan du site",
+            "breadcrumbs"     => "Fil d'ariane",
             "multilingual"    => "Multilingue",
             "phone_number"    => "Numéro de téléphone",
             "contact_email"   => "Adresse e-mail de contact",

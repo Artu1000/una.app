@@ -45,7 +45,7 @@ return [
         "action" => [
             "edit"   => "Éditer le rôle",
             "create" => "Créer le rôle",
-            "delete" => "Remove the role",
+            "delete" => "Supprimer le rôle",
         ],
         'info'   => [
         ],

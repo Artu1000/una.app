@@ -57,7 +57,8 @@ abstract class Controller extends BaseController
         array $confirm_config,
         array $search_config = [],
         $enable_lines_choice = false
-    ) {
+    )
+    {
         // we set the default data
         $default_lines = 20;
         $default_sort_by = array_first($columns, function ($key, $column) {
@@ -89,7 +90,7 @@ abstract class Controller extends BaseController
         $request->get('sort-dir') ? $request->get('sort-dir') : false
         );
         $query_sort_dir = $tableListData['sort_dir'] ? 'asc' : 'desc';
-        if($tableListData['sort_by']){
+        if ($tableListData['sort_by']) {
             $query->orderBy($tableListData['sort_by'], $query_sort_dir);
         }
 
@@ -108,7 +109,7 @@ abstract class Controller extends BaseController
 
         // if the number of lines to show is defined
         $tableListData['enable_lines_choice'] = $enable_lines_choice;
-        if($tableListData['enable_lines_choice']){
+        if ($tableListData['enable_lines_choice']) {
             // we paginate the results
             $pagination = $query->paginate($tableListData['lines']);
 

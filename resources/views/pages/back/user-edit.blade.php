@@ -22,7 +22,7 @@
 
                 <hr>
 
-                <form role="form" method="POST" action="@if(isset($user)){{ route('users.update') }} @else{{ route('users.index') }} @endif" enctype="multipart/form-data">
+                <form role="form" method="POST" action="@if(isset($user)){{ route('users.update') }} @else{{ route('users.store') }} @endif" enctype="multipart/form-data">
 
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">

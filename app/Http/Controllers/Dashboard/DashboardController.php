@@ -22,7 +22,7 @@ class DashboardController extends Controller
     {
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = 'Espace Membre';
+        $this->seoMeta['page_title'] = trans('seo.dashboard.index');
 
         // prepare data for the view
         $data = [

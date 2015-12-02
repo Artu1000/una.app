@@ -68,6 +68,16 @@ class AccountController extends Controller
         // we create the user
         if ($user = \Sentinel::register($request->all())) {
 
+            // we attach the user to the "User" role by default
+            if (!$user_role = Sentinel::findRoleBySlug('user')) {
+                // if the user role is not found, we create it
+                $user_role = Sentinel::getRoleRepository()->createModel()->create([
+                    'name' => 'User',
+                    'slug' => 'user',
+                ]);
+            }
+            $user_role->users()->attach($user);
+
             // we create an activation line
             $activation = \Activation::create($user);
 
@@ -119,22 +129,22 @@ class AccountController extends Controller
             }
 
             try {
-            // we send the activation email
-            \Mail::send('emails.account-activation', [
-                'user'  => $user,
-                'token' => $activation->code,
-            ], function ($email) use ($user) {
-                $email->from(config('mail.from.address'), config('mail.from.name'))
-                    ->to($user->email, $user->first_name . ' ' . $user->last_name)
-                    ->subject(config('mail.subject.prefix') . ' ' . trans('emails.account_activation.subject'));
-            });
+                // we send the activation email
+                \Mail::send('emails.account-activation', [
+                    'user'  => $user,
+                    'token' => $activation->code,
+                ], function ($email) use ($user) {
+                    $email->from(config('mail.from.address'), config('mail.from.name'))
+                        ->to($user->email, $user->first_name . ' ' . $user->last_name)
+                        ->subject(config('mail.subject.prefix') . ' ' . trans('emails.account_activation.subject'));
+                });
 
-            // notify the user & redirect
-            \Modal::alert([
-                trans('auth.message.activation.email.success', ['email' => $user->email]),
-            ], 'success');
+                // notify the user & redirect
+                \Modal::alert([
+                    trans('auth.message.activation.email.success', ['email' => $user->email]),
+                ], 'success');
 
-            return redirect(route('login.index'));
+                return redirect(route('login.index'));
 
             } catch (\Exception $e) {
                 \Log::error($e);
@@ -179,7 +189,7 @@ class AccountController extends Controller
                         trans('auth.message.activation.token.expired'),
                         trans('auth.message.activation.token.resend', [
                             'email' => $request->get('email'),
-                            'url' => route('account.activation_email', ['email' => $request->get('email')])
+                            'url'   => route('account.activation_email', ['email' => $request->get('email')]),
                         ]),
                     ], 'error');
 

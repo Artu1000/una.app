@@ -9,27 +9,30 @@ return [
             "keywords"    => "club, universite, nantes, aviron, una, sport, universitaire, espace, connexion",
         ],
     ],
-    "account" => [
+    "account"     => [
         "create" => [
             "title"       => "Créer un compte utilisateur",
             "description" => "Créez votre compte :site et accédez à nos services en ligne.",
             "keywords"    => "club, universite, nantes, aviron, una, sport, universitaire, creer, creation, compte, utilisateur",
-        ]
+        ],
     ],
-    "password" => [
+    "password"    => [
         "index" => [
             "title"       => "Mot de passe oublié",
             "description" => "Suivez les instructions afin de réinitialiser votre mot de passe.",
             "keywords"    => "club, universite, nantes, aviron, una, sport, universitaire, mot de passe, oublie",
         ],
-        "show" => [
+        "show"  => [
             "title"       => "Réinitialisation du mot de passe",
             "description" => "Réinitialisez votre mot de passe de manière sécurisée.",
             "keywords"    => "club, universite, nantes, aviron, una, sport, universitaire, mot de passe, reinitialisation, reinitialiser",
-        ]
+        ],
     ],
 
     // back
+    "dashboard"   => [
+        "index" => "Tableau de bord",
+    ],
     "settings"    => [
         "index" => "Gestion des paramètres du site",
     ],

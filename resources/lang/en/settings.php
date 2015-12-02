@@ -5,23 +5,25 @@ return [
     // views
     "page"    => [
         "title"  => [
-            "settings" => "App settings management",
-            "contact"  => "Global",
-            "global"   => "Contact",
-            "social"   => "Social",
-            "design"   => "Design",
-            "seo"      => "SEO",
+            "settings"   => "App settings management",
+            "identity"   => "Identity",
+            "navigation" => "Navigation",
+            "contact"    => "Contact",
+            "social"     => "Social",
+            "design"     => "Design",
+            "seo"        => "SEO",
         ],
         "action" => [
             "save" => "Save changes",
         ],
         'info'   => [
             "image" => "Size : 16 x 16px / format : ico.",
-            "logo" => "Size : min. width 300px / format : png.",
+            "logo"  => "Size : min. width 300px / format : png.",
         ],
         "label"  => [
             "app_name"        => "App name",
             "app_slogan"      => "App slogan",
+            "breadcrumbs"     => "Breadcrumbs",
             "multilingual"    => "Multilingual",
             "phone_number"    => "Phone number",
             "contact_email"   => "Contact e-mail",

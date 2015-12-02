@@ -202,6 +202,7 @@ return [
         'Sentinel'            => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
         'Image'               => Intervention\Image\Facades\Image::class,
         'LaravelLocalization' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
+        'Breadcrumbs'         => DaveJamesMiller\Breadcrumbs\Facade::class,
         // created
         'Modal'               => App\Facades\ModalHelperFacade::class,
         'ImageManager'        => App\Facades\ImageManagerHelperFacade::class,

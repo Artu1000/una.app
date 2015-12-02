@@ -60,17 +60,13 @@ class SettingsController extends Controller
         // we analyse the given inputs
         // we replace the "on" or "off" value from the checkbox by a boolean
         $request->merge([
+            'breadcrumbs'  => filter_var($request->get('breadcrumbs'), FILTER_VALIDATE_BOOLEAN),
             'multilingual' => filter_var($request->get('multilingual'), FILTER_VALIDATE_BOOLEAN),
             'rss'          => filter_var($request->get('rss'), FILTER_VALIDATE_BOOLEAN),
         ]);
 
         // we get the inputs
         $inputs = $request->except('_token', '_method');
-
-        // we don't update not filled inputs
-        $inputs = array_filter($inputs, function ($input) {
-            return strlen($input);
-        });
 
         // we check the inputs
         $errors = [];

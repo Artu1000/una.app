@@ -30,6 +30,9 @@ return [
     ],
 
     // back
+    "dashboard"   => [
+        "index" => "Dashboard",
+    ],
     "settings" => [
         "index" => "App settings management"
     ],

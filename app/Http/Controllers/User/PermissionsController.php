@@ -160,13 +160,13 @@ class PermissionsController extends Controller
         $inputs = $request->all();
         // we replace the wrong keys (php forbid dots and replace them by underscores)
         foreach (array_dot(config('permissions')) as $permission => $value) {
-            // we only take care about the children permissions
-            if (strpos($permission, '.')) {
-                // we translate the permission slug to the wrong key given by php
-                $wrong_key = str_replace('.', '_', $permission);
-                // we get the value and store it into the correct key
-                if (isset($inputs[$wrong_key])) {
-                    $inputs[$permission] = $inputs[$wrong_key];
+            // we translate the permission slug to the wrong key given by php
+            $wrong_key = str_replace('.', '_', $permission);
+            // we translate "on" value in boolean value
+            if (isset($inputs[$wrong_key])) {
+                $inputs[$permission] = filter_var($inputs[$wrong_key], FILTER_VALIDATE_BOOLEAN);
+                // we delete the wrong key if a dot is found (it is the case for children permissions
+                if (strpos($permission, '.')) {
                     // we delete the wrong key
                     unset ($inputs[$wrong_key]);
                 }

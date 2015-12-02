@@ -14,9 +14,11 @@
 
                         {{-- logo --}}
                         @if(config('settings.logo_light'))
-                            <a class="logo text-center" href="#">
-                                <img width="300" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" alt="Logo {{ config('settings.app_name') }}">
-                            </a>
+                            <div class="logo display-table">
+                                <div class="text-center table-cell fill">
+                                    <img width="300" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" alt="Logo {{ config('settings.app_name') }}">
+                                </div>
+                            </div>
                         @endif
 
                         <h1><i class="fa fa-bullhorn"></i> {{ trans('errors.title') }}</h1>
