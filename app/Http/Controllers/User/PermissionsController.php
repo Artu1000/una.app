@@ -120,10 +120,16 @@ class PermissionsController extends Controller
             return redirect()->back();
         }
 
+        // we prepare the data for breadcrumbs
+        $breadcrumbs_data = [
+            $role->name,
+        ];
+
         // prepare data for the view
         $data = [
-            'role'    => $role,
-            'seoMeta' => $this->seoMeta,
+            'seoMeta'          => $this->seoMeta,
+            'role'             => $role,
+            'breadcrumbs_data' => $breadcrumbs_data,
         ];
 
         // return the view with data

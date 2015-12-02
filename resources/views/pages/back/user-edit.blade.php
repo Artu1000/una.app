@@ -221,7 +221,7 @@
                                         {{ trans('users.page.label.account') }}
                                     </span>
                                         <input class="swipe" id="input_activation" type="checkbox" name="activation"
-                                               @if(old('activation'))checked @elseif(isset($user) && !empty($user->activations()->whereNotNull('completed_at')->first()))checked @endif>
+                                               @if(old('activation'))checked @elseif(isset($user) && !empty($user->activations()->where('completed', true)->orderBy('completed_at', 'desc')->first()))checked @endif>
                                         <label class="swipe-btn" for="input_activation"></label>
                                     </div>
                                 </div>

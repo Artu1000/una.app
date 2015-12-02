@@ -26,25 +26,25 @@ var paths = {
 };
 
 elixir(function (mix) {
-        /***************************************************************************************************************
-         * SASS
-         ***************************************************************************************************************/
-        mix
+    /***************************************************************************************************************
+     * SASS
+     ***************************************************************************************************************/
+    mix
 
-        // FRONT
-        //.sass('app.front.scss', 'public/css/app.front.css', {})
-        //.sass('app.home.scss', 'public/css/app.home.css', {})
-        //.sass('app.page.scss', 'public/css/app.page.css', {})
-        //.sass('app.palmares.scss', 'public/css/app.palmares.css', {})
-        //.sass('app.news.scss', 'public/css/app.news.css', {})
-        //.sass('app.leading-team.scss', 'public/css/app.leading-team.css', {})
-        //.sass('app.registration.scss', 'public/css/app.registration.css', {})
-        //.sass('app.schedule.scss', 'public/css/app.schedule.css', {})
-        //.sass('app.calendar.scss', 'public/css/app.calendar.css', {})
-        //.sass('app.e-shop.scss', 'public/css/app.e-shop.css', {})
-        //.sass('app.login.scss', 'public/css/app.login.css', {})
+    // FRONT
+    //.sass('app.front.scss', 'public/css/app.front.css', {})
+    //.sass('app.home.scss', 'public/css/app.home.css', {})
+    //.sass('app.page.scss', 'public/css/app.page.css', {})
+    //.sass('app.palmares.scss', 'public/css/app.palmares.css', {})
+    //.sass('app.news.scss', 'public/css/app.news.css', {})
+    //.sass('app.leading-team.scss', 'public/css/app.leading-team.css', {})
+    //.sass('app.registration.scss', 'public/css/app.registration.css', {})
+    //.sass('app.schedule.scss', 'public/css/app.schedule.css', {})
+    //.sass('app.calendar.scss', 'public/css/app.calendar.css', {})
+    //.sass('app.e-shop.scss', 'public/css/app.e-shop.css', {})
+    //.sass('app.login.scss', 'public/css/app.login.css', {})
 
-        // COMMON
+    // COMMON
         .sass('app.error.scss', 'public/css/app.error.css', {})
 
         // BACK

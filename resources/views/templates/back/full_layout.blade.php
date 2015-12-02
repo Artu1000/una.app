@@ -30,7 +30,7 @@
             {{-- content inclusion --}}
             <div id="wrapper" class="row">
                 @if(config('breadcrumbs'))
-                    {!! Breadcrumbs::renderIfExists(\Request::route()->getName()) !!}
+                    {!! Breadcrumbs::renderIfExists(\Request::route()->getName(), (isset($breadcrumbs_data) && !empty($breadcrumbs_data) ? $breadcrumbs_data : [])) !!}
                 @endif
                 @yield('content')
             </div>

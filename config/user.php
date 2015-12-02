@@ -88,6 +88,14 @@ foreach ($genders as $id => $gender) {
     ];
 }
 
+// hierarchy
+//$hierarchy = [
+//    1 => 'admin',
+//    2 => 'mod',
+//    1 => 'admin',
+//    1 => 'admin',
+//];
+
 return [
     'status' => $statuses,
     'status_key' => $statuses_keys,

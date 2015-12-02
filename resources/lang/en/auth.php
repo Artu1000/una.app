@@ -47,16 +47,16 @@ return [
             ],
         ],
         "reset"     => [
-            "title"  => "Réinitialisation",
+            "title"  => "Password reset",
             "label"  => [
-                "password"              => "Nouveau mot de passe",
-                "password_confirmation" => "Confirmation du nouveau mot de passe",
+                "password"              => "New password",
+                "password_confirmation" => "New password confirmation",
             ],
             "info"   => [
-                "instructions" => "Veuillez créer un nouveau mot de passe afin de remplacer celui que vous avez perdu.",
+                "instructions" => "Please create a new password to replace the one you lost.",
             ],
             "action" => [
-                "save" => "Modifier mon mot de passe",
+                "save" => "Update my password",
             ],
         ],
     ],

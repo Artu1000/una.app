@@ -4,12 +4,13 @@ if (config('settings.breadcrumbs')) {
 
     // home
     \Breadcrumbs::register('home', function ($breadcrumbs) {
-        $breadcrumbs->push('<i class="fa fa-home"></i>', route('dashboard.index'));
+        $breadcrumbs->push('<i class="fa fa-home"></i> VACO', route('dashboard.index'));
     });
 
     // dashboard
     \Breadcrumbs::register('dashboard.index', function ($breadcrumbs) {
-        $breadcrumbs->push('<i class="fa fa-home"></i> ' . trans('breadcrumbs.dashboard.index'), route('dashboard.index'));
+        $breadcrumbs->parent('home');
+        $breadcrumbs->push(trans('breadcrumbs.dashboard.index'), route('dashboard.index'));
     });
 
     // settings
@@ -27,9 +28,16 @@ if (config('settings.breadcrumbs')) {
         $breadcrumbs->parent('permissions.index');
         $breadcrumbs->push(trans('breadcrumbs.permissions.create'), route('permissions.create'));
     });
-    \Breadcrumbs::register('permissions.edit', function ($breadcrumbs) {
+    \Breadcrumbs::register('permissions.edit', function ($breadcrumbs, array $data) {
         $breadcrumbs->parent('permissions.index');
         $breadcrumbs->push(trans('breadcrumbs.permissions.edit'), route('permissions.edit'));
+
+        // we personalize the breadcrumb on edition
+        if (!empty($data)) {
+            foreach ($data as $additionnal_breadcrumb) {
+                $breadcrumbs->push($additionnal_breadcrumb, '');
+            }
+        }
     });
 
     // users
@@ -41,9 +49,17 @@ if (config('settings.breadcrumbs')) {
         $breadcrumbs->parent('users.index');
         $breadcrumbs->push(trans('breadcrumbs.users.create'), route('users.create'));
     });
-    \Breadcrumbs::register('users.edit', function ($breadcrumbs) {
+
+    \Breadcrumbs::register('users.edit', function ($breadcrumbs, array $data) {
         $breadcrumbs->parent('users.index');
-        $breadcrumbs->push(trans('breadcrumbs.users.edit'), route('users.edit'));
+        $breadcrumbs->push(trans('breadcrumbs.users.edit'), '');
+
+        // we personalize the breadcrumb on edition
+        if (!empty($data)) {
+            foreach ($data as $additionnal_breadcrumb) {
+                $breadcrumbs->push($additionnal_breadcrumb, '');
+            }
+        }
     });
 
 }

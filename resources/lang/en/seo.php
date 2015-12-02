@@ -9,39 +9,41 @@ return [
             "keywords"    => "club, universite, nantes, aviron, una, rowing, french, university, sport, login, area",
         ],
     ],
-    "account" => [
+    "account"     => [
         "create" => [
             "title"       => "Create a user account",
             "description" => "Create your account on :site and access to our online services.",
             "keywords"    => "club, universite, nantes, aviron, una, rowing, french, university, sport, account, create, creation, user",
-        ]
+        ],
     ],
-    "password" => [
+    "password"    => [
         "index" => [
             "title"       => "Forgotten password",
             "description" => "Follow the given instruction to reset your password.",
             "keywords"    => "club, universite, nantes, aviron, una, rowing, french, university, sport, forgotten, password",
         ],
-        "show" => [
+        "show"  => [
             "title"       => "Password reset",
             "description" => "Reset your password securely.",
             "keywords"    => "club, universite, nantes, aviron, una, rowing, french, university, sport, password, reset",
-        ]
+        ],
     ],
 
     // back
     "dashboard"   => [
         "index" => "Dashboard",
     ],
-    "settings" => [
-        "index" => "App settings management"
+    "settings"    => [
+        "index" => "App settings management",
     ],
     "permissions" => [
-        "index" => "Users permissions management",
+        "index"  => "Users permissions management",
+        "edit"   => "Role edit",
+        "create" => "Role create",
     ],
-    "users" => [
-        "index" => "Users management",
-        "show" => "User update",
-        "create" => "User create"
+    "users"       => [
+        "index"  => "Users management",
+        "edit"   => "User edit",
+        "create" => "User create",
     ],
 ];

@@ -4,7 +4,7 @@
 $btn-default-border : #aeb6cb;
 $btn-default-color: #fff;
 $btn-default-bg: #aeb6cb;
-
+$breadcrumb-separator: "> ";
 
 /***********************************************************************************************************************
  * PATH MODIFICATION
@@ -33,6 +33,7 @@ $lato-font-path: '/fonts/lato';
 @include lato-include-font('thin');
 $font-size: 16px;
 $font-size-small: 14px;
+
 
 /***********************************************************************************************************************
  * MIXINS

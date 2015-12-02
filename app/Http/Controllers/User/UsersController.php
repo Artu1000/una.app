@@ -56,19 +56,21 @@ class UsersController extends Controller
                 'title'   => trans('users.page.label.first_name'),
                 'key'     => 'first_name',
                 'sort_by' => 'users.first_name',
-            ], [
-                'title'   => trans('users.page.label.status'),
-                'key'     => 'status',
-                'config'  => 'user.status',
-                'sort_by' => 'users.status',
-                'button'  => true,
-            ], [
-                'title'   => trans('users.page.label.board'),
-                'key'     => 'board',
-                'config'  => 'user.board',
-                'sort_by' => 'users.board',
-                'button'  => true,
-            ], [
+            ],
+//            [
+//                'title'   => trans('users.page.label.status'),
+//                'key'     => 'status',
+//                'config'  => 'user.status',
+//                'sort_by' => 'users.status',
+//                'button'  => true,
+//            ], [
+//                'title'   => trans('users.page.label.board'),
+//                'key'     => 'board',
+//                'config'  => 'user.board',
+//                'sort_by' => 'users.board',
+//                'button'  => true,
+//            ],
+            [
                 'title'      => trans('users.page.label.role'),
                 'key'        => 'roles',
                 'collection' => 'name',
@@ -98,7 +100,7 @@ class UsersController extends Controller
 
         // we select the data we want
         $query->select('users.*');
-        $query->selectRaw('if(activations.completed_at, true, false) as activated');
+        $query->selectRaw('if(activations.completed, true, false) as activated');
 
         // we execute the table joins
         $query->leftJoin('role_users', 'role_users.user_id', '=', 'users.id');
@@ -174,11 +176,17 @@ class UsersController extends Controller
             $user->birth_date = Carbon::createFromFormat('Y-m-d', $birth_date)->format('d/m/Y');
         }
 
+        // we prepare the data for breadcrumbs
+        $breadcrumbs_data = [
+            $user->first_name . ' ' . $user->last_name,
+        ];
+
         // prepare data for the view
         $data = [
-            'seoMeta' => $this->seoMeta,
-            'user'    => $user,
-            'roles'   => \Sentinel::getRoleRepository()->all(),
+            'seoMeta'          => $this->seoMeta,
+            'user'             => $user,
+            'roles'            => \Sentinel::getRoleRepository()->all(),
+            'breadcrumbs_data' => $breadcrumbs_data,
         ];
 
         // return the view with data
@@ -448,7 +456,7 @@ class UsersController extends Controller
             // we update the user
             \Sentinel::update($user, $inputs);
 
-            // if we're not updating the current user profile
+            // if we're updating the profile of another user
             if ($user->id !== \Sentinel::getUser()->id) {
                 // we check is the user is attached to roles
                 $current_roles = $user->roles;
@@ -471,6 +479,13 @@ class UsersController extends Controller
                     // or we deactivate him
                     \Activation::remove($user);
                 }
+
+                // we notify the current user
+                \Modal::alert([
+                    trans('users.message.update.success', ['name' => $user->first_name . ' ' . $user->last_name]),
+                ], 'success');
+
+                return redirect()->back();
             }
 
             // we notify the current user
@@ -485,10 +500,19 @@ class UsersController extends Controller
 
             // we log the error and we notify the current user
             \Log::error($e);
-            \Modal::alert([
-                trans('users.message.account.failure'),
-                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
-            ], 'error');
+
+            // if we're updating the profile of another user
+            if ($user->id !== \Sentinel::getUser()->id) {
+                \Modal::alert([
+                    trans('users.message.update.failure'),
+                    trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
+                ], 'error');
+            } else {
+                \Modal::alert([
+                    trans('users.message.account.failure'),
+                    trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
+                ], 'error');
+            }
 
             return redirect()->back();
         }

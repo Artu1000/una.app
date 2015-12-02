@@ -43,7 +43,7 @@ return [
     ],
     "users"       => [
         "index"  => "Gestion des utilisateurs",
-        "show"   => "Edition d'un utlisateur",
+        "edit"   => "Edition d'un utlisateur",
         "create" => "Création d'un rôle",
     ],
 ];
