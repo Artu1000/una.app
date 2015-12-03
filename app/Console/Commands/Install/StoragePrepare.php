@@ -58,23 +58,23 @@ class StoragePrepare extends Command
         }
 
         if(!empty($created)){
-            $this->info('Storage folder prepared. Folders created :');
+            $this->info('✔ Storage folder prepared. Folders created :');
             foreach($created as $folder){
                 $this->info('- ' . $folder);
             }
         } else {
-            $this->info('No folder is missing.');
+            $this->info('✔ No folder are missing');
         }
 
-        $this->info(' ');
+        $this->line(' ');
 
         // settings.json existence verification
         if (!is_file(storage_path('app/config/settings.json'))) {
             if (file_put_contents(storage_path('app/config/settings.json'), '{}')) {
-                $this->info('File "' . storage_path('app/config/settings.json') . '" has not been found. The file has been created.');
+                $this->info('✔ File "' . storage_path('app/config/settings.json') . '" has not been found. The file has been created');
                 exec('php artisan db:seed --class=SettingsTableSeeder');
             } else {
-                $this->error('File "storage/framework/config/settings.json" has not been found and a problem occurend while we tried to create it.');
+                $this->error('File "storage/framework/config/settings.json" has not been found and a problem occurend while we tried to create it');
             };
         }
     }

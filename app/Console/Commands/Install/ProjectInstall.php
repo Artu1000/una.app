@@ -57,9 +57,9 @@ class ProjectInstall extends Command
         // Close the script and get the return code
         $return_code = proc_close($proc);
 
-        $this->info($stdin);
-        $this->info($stdout);
-        $this->info($stderr);
+        $this->line($stdin);
+        $this->line($stdout);
+        $this->line($stderr);
 //        $this->info($return_code);
 
         if (strpos($stdout, 'continue?')) {
@@ -78,64 +78,71 @@ class ProjectInstall extends Command
     public function handle()
     {
         // composer install
-        $this->info('Executing composer install / update ...');
+        $this->line('Executing composer install / update ...');
         $this->execWithOutput('composer install');
         $this->execWithOutput('composer update');
+        $this->info('✔ Composer dependencies are up to date');
 
-        $this->info(' ');
+        $this->line(' ');
 
         // bower install
-        $this->info('Executing bower install / update ...');
+        $this->line('Executing bower install / update ...');
         $this->execWithOutput('bower install');
         $this->execWithOutput('bower update');
+        $this->info('✔ Bower dependencies are up to date');
 
-        $this->info(' ');
+        $this->line(' ');
 
         // apt-get update
-        $this->info('processing apt-get update ...');
+        $this->line('processing apt-get update ...');
         $this->execWithOutput('sudo apt-get update');
+        $this->info('✔ apt-get dependencies are up to date');
 
-        $this->info(' ');
+        $this->line(' ');
 
         // image optimization
-        $this->info('Installing OptiPNG and jpegoptim image optimizers ...');
+        $this->line('Installing OptiPNG and jpegoptim image optimizers ...');
         $this->execWithOutput('sudo apt-get install optipng jpegoptim');
+        $this->info('✔ OptiPNG and jpegoptim installed');
 
-        $this->info(' ');
+        $this->line(' ');
 
         // prepare storage folder
-        $this->info('Preparing storage folders ...');
+        $this->line('Preparing storage folders ...');
         $this->call('storage:prepare');
 
-        $this->info(' ');
+        $this->line(' ');
 
         // generate application key
-        $this->info('Generate new Laravel app key ...');
+        $this->line('Generate new Laravel app key ...');
         $this->execWithOutput('php artisan key:generate');
+        $this->info('✔ New app key generated');
 
-        $this->info(' ');
+        $this->line(' ');
 
         // mailcatcher install
         if ($this->ask('Do you want to install mailcatcher on your project ? [y/N]', false)) {
             $this->call('mailcatcher:install');
         };
 
-        $this->info(' ');
+        $this->line(' ');
 
         // migrations
-        $this->info('Executing migrations ...');
+        $this->line('Executing migrations ...');
         $this->execWithOutput('php artisan migrate');
+        $this->info('✔ Migration done');
 
-        $this->info(' ');
+        $this->line(' ');
 
         // seeds
         if ($this->ask('Do you want to execute the database seed on your project ? [y/N]', false)) {
-            $this->info('Executing seeds ...');
+            $this->line('Executing seeds ...');
             $this->execWithOutput('php artisan db:seed');
+            $this->info('✔ Seed done');
         }
 
-        $this->info(' ');
+        $this->line(' ');
 
-        $this->info('Project installation complete !');
+        $this->info('✔ Project installation complete !');
     }
 }

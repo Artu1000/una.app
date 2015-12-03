@@ -19,6 +19,7 @@ var paths = {
     bootstrap: './resources/assets/vendor/bootstrap-sass-official/assets/',
     datepicker: './resources/assets/vendor/bootstrap-datepicker/dist/',
     lity: './resources/assets/vendor/lity/dist/',
+    simplemde: './resources/assets/vendor/simplemde/dist/',
     fontawesome: './resources/assets/vendor/fontawesome/',
     lato: './resources/assets/vendor/lato-font/',
     js: './resources/assets/js/',
@@ -63,8 +64,9 @@ elixir(function (mix) {
         // combine back stylesheets
         .styles([
             paths.datepicker + 'css/bootstrap-datepicker3.css',
-            'public/css/app.back.css',
-            paths.lity + 'lity.css'
+            paths.lity + 'lity.css',
+            paths.simplemde + 'simplemde.min.css',
+            'public/css/app.back.css'
         ], 'public/css/app.back.css', './')
 
         /***************************************************************************************************************
@@ -121,6 +123,7 @@ elixir(function (mix) {
             paths.datepicker + 'locales/bootstrap-datepicker.fr.min.js',
             paths.js + 'ie10-viewport-bug-workaround.js',
             paths.lity + 'lity.js',
+            paths.simplemde + 'simplemde.min.js',
             paths.js + 'app.common.js',
             paths.js + 'app.back.js'
         ], 'public/js/app.back.js', './')

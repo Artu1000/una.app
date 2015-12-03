@@ -35,10 +35,15 @@
                             </div>
 
                             <label for="input_description">{{ trans('home.page.label.description') }}</label>
-                            <div class="form-group">
+                            <div class="form-group textarea">
+                                <textarea id="input_description" class="form-control markdown" name="description" placeholder="{{ trans('home.page.label.description') }}">{{ old('description') ? old('description') : $description }}</textarea>
+                            </div>
+
+                            <label for="input_video_embed">{{ trans('home.page.label.video_embed') }}</label>
+                            <div class="form-group textarea">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_zip_code"><i class="fa fa-paragraph"></i></span>
-                                    <textarea id="input_description" class="form-control" name="description" placeholder="{{ trans('home.page.label.description') }}">{{ old('description') ? old('description') : $description }}</textarea>
+                                    <span class="input-group-addon" for="input_video_embed"><i class="fa fa-paragraph"></i></span>
+                                    <textarea id="input_video_embed" class="form-control" name="video_embed" placeholder="{{ trans('home.page.label.video_embed') }}">{{ old('video_embed') ? old('video_embed') : $video_embed }}</textarea>
                                 </div>
                             </div>
 

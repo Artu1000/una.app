@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "admin"       => "Admin",
     "dashboard"   => [
         "index" => "Dashboard",
     ],

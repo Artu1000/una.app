@@ -4,7 +4,7 @@ if (config('settings.breadcrumbs')) {
 
     // home
     \Breadcrumbs::register('home', function ($breadcrumbs) {
-        $breadcrumbs->push('<i class="fa fa-home"></i> VACO', route('dashboard.index'));
+        $breadcrumbs->push('<i class="fa fa-cogs"></i> ' . trans('breadcrumbs.admin'), route('dashboard.index'));
     });
 
     // dashboard

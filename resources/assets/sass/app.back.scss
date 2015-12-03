@@ -253,11 +253,16 @@ html {
           }
 
           .form-group {
-            width: 400px;
+            max-width: 400px;
 
             &:last-of-type {
               margin: 0;
             }
+
+            &.textarea {
+              max-width: unset;
+            }
+
           }
 
           .checkbox {

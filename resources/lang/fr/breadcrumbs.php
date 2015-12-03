@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "admin"       => "Admin",
     "dashboard"   => [
         "index" => "Tableau de bord",
     ],
@@ -12,7 +13,7 @@ return [
         "create" => "Création",
         "edit"   => "Édition",
     ],
-    "users" => [
+    "users"       => [
         "index"  => "Utilisateurs",
         "create" => "Création",
         "edit"   => "Édition",

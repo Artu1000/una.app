@@ -106,5 +106,8 @@ $(function() {
             });
         });
     });
+
+    // we activate the markdown editor
+    var simplemde = new SimpleMDE({ element: $(".markdown")[0] });
 });
 

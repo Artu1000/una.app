@@ -121,6 +121,7 @@ class HomeController extends Controller
             'seoMeta'       => $this->seoMeta,
             'title'         => isset($home->title) ? $home->title : null,
             'description'   => isset($home->description) ? $home->description : null,
+            'video_embed'   => isset($home->video_embed) ? $home->video_embed : null,
             'tableListData' => $tableListData,
         ];
 
@@ -197,23 +198,35 @@ class HomeController extends Controller
 //            'bg_color' => ''
 //        ];
 
-        $slides = $this->slide->orderBy('position', 'asc')->get();
-
         // we get the two last news
         $last_news = $this->news->orderBy('released_at', 'desc')->take(2)->get();
 
-        // js data insertion
+        // we get the slides
+        $slides = $this->slide->orderBy('position', 'asc')->get();
         \JavaScript::put([
             'slides_count' => sizeof($slides),
         ]);
 
+        // we get the json home content
+        $home = [];
+        if (is_file(storage_path('app/home/content.json'))) {
+            $home = json_decode(file_get_contents(storage_path('app/home/content.json')));
+        }
+
+        // we parse the markdown content
+        $parsedown = new \Parsedown();
+        $description = isset($home->description) ? $parsedown->text($home->description) : null;
+
         // prepare data for the view
         $data = [
-            'seoMeta'   => $this->seoMeta,
-            'slides'    => $slides,
-            'last_news' => $last_news,
-            'css'       => url(elixir('css/app.home.css')),
-            'js'        => url(elixir('js/app.home.js')),
+            'seoMeta'     => $this->seoMeta,
+            'slides'      => $slides,
+            'last_news'   => $last_news,
+            'title'       => isset($home->title) ? $home->title : null,
+            'description' => $description,
+            'video_embed' => isset($home->video_embed) ? $home->video_embed : null,
+            'css'         => url(elixir('css/app.home.css')),
+            'js'          => url(elixir('js/app.home.js')),
         ];
 
         // return the view with data
@@ -234,7 +247,7 @@ class HomeController extends Controller
 
         try {
             // we store the content into a json file
-            file_put_contents(storage_path('app/home/content.json'), json_encode($request->only('title', 'description')));
+            file_put_contents(storage_path('app/home/content.json'), json_encode($request->except('_token', '_method')));
 
             \Modal::alert([
                 trans('home.message.update.success'),

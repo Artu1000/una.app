@@ -71,7 +71,7 @@
                 </li>
                 @if(\Sentinel::getUser()->hasAccess('settings.view'))
                     <li @if(\Route::current()->getName() === 'settings.index') class="active" @endif>
-                        <a href="{{ route('settings.index') }}"><i class="fa fa-cogs"></i> {{ trans('template.back.header.settings') }}</a>
+                        <a href="{{ route('settings.index') }}"><i class="fa fa-wrench"></i> {{ trans('template.back.header.settings') }}</a>
                     </li>
                 @endif
                 @if(\Sentinel::getUser()->hasAccess('permissions.list'))
@@ -112,9 +112,9 @@
 
                 <li class="divider"></li>
 
-                {{--<li>--}}
-                    {{--<a class="new_window" href="{{ route('home') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.back') }}</a>--}}
-                {{--</li>--}}
+                <li>
+                    <a class="new_window" href="{{ route('home') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.back') }}</a>
+                </li>
             </ul>
         </div>
     </nav>

@@ -6,8 +6,8 @@ return [
     "page"    => [
         "title"  => [
             "management" => "Gestion de la page d'accueil",
-            "content" => "Contenu",
-            "slides"  => "Liste des diapos",
+            "content"    => "Contenu",
+            "slides"     => "Liste des diapos",
         ],
         "action" => [
 
@@ -18,6 +18,7 @@ return [
         "label"  => [
             "title"       => "Titre",
             "description" => "Description",
+            "video_embed" => "Code intégration vidéo promo",
             "slide"       => [
                 "background_image" => "Image de fond",
                 "picto"            => "Picto",
@@ -32,7 +33,7 @@ return [
     "message" => [
         "update" => [
             "success" => "La page d'accueil a bien été mise à jour.",
-            "failure" => "Une erreur est survenue lors de la mise à jour de la page d'accueil."
-        ]
+            "failure" => "Une erreur est survenue lors de la mise à jour de la page d'accueil.",
+        ],
     ],
 ];

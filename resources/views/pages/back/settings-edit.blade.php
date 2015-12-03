@@ -317,7 +317,7 @@
 
                             {{-- google analytics code --}}
                             <label for="input_google_analytics">{{ trans('settings.page.label.ga_code') }}</label>
-                            <div class="form-group">
+                            <div class="form-group textarea">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_google_analytics"><i class="fa fa-code"></i></span>
                                     <textarea id="input_google_analytics" class="form-control" type="google_analytics" name="google_analytics" placeholder="{{ trans('settings.page.label.ga_code') }}">{{ old('google_analytics') ? old('google_analytics') : config('settings.google_analytics') }}</textarea>
