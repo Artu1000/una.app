@@ -121,7 +121,7 @@ class HomeController extends Controller
             'seoMeta'       => $this->seoMeta,
             'title'         => isset($home->title) ? $home->title : null,
             'description'   => isset($home->description) ? $home->description : null,
-            'video_embed'   => isset($home->video_embed) ? $home->video_embed : null,
+            'video_link'   => isset($home->video_link) ? $home->video_link : null,
             'tableListData' => $tableListData,
         ];
 
@@ -224,7 +224,7 @@ class HomeController extends Controller
             'last_news'   => $last_news,
             'title'       => isset($home->title) ? $home->title : null,
             'description' => $description,
-            'video_embed' => isset($home->video_embed) ? $home->video_embed : null,
+            'video_link' => isset($home->video_link) ? $home->video_link : null,
             'css'         => url(elixir('css/app.home.css')),
             'js'          => url(elixir('js/app.home.js')),
         ];

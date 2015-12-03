@@ -32,20 +32,20 @@ elixir(function (mix) {
      ***************************************************************************************************************/
     mix
 
-    // FRONT
-    //.sass('app.front.scss', 'public/css/app.front.css', {})
-    //.sass('app.home.scss', 'public/css/app.home.css', {})
-    //.sass('app.page.scss', 'public/css/app.page.css', {})
-    //.sass('app.palmares.scss', 'public/css/app.palmares.css', {})
-    //.sass('app.news.scss', 'public/css/app.news.css', {})
-    //.sass('app.leading-team.scss', 'public/css/app.leading-team.css', {})
-    //.sass('app.registration.scss', 'public/css/app.registration.css', {})
-    //.sass('app.schedule.scss', 'public/css/app.schedule.css', {})
-    //.sass('app.calendar.scss', 'public/css/app.calendar.css', {})
-    //.sass('app.e-shop.scss', 'public/css/app.e-shop.css', {})
-    //.sass('app.login.scss', 'public/css/app.login.css', {})
+        // FRONT
+        .sass('app.front.scss', 'public/css/app.front.css', {})
+        .sass('app.home.scss', 'public/css/app.home.css', {})
+        //.sass('app.page.scss', 'public/css/app.page.css', {})
+        //.sass('app.palmares.scss', 'public/css/app.palmares.css', {})
+        //.sass('app.news.scss', 'public/css/app.news.css', {})
+        //.sass('app.leading-team.scss', 'public/css/app.leading-team.css', {})
+        //.sass('app.registration.scss', 'public/css/app.registration.css', {})
+        //.sass('app.schedule.scss', 'public/css/app.schedule.css', {})
+        //.sass('app.calendar.scss', 'public/css/app.calendar.css', {})
+        //.sass('app.e-shop.scss', 'public/css/app.e-shop.css', {})
+        //.sass('app.login.scss', 'public/css/app.login.css', {})
 
-    // COMMON
+        // COMMON
         .sass('app.error.scss', 'public/css/app.error.css', {})
 
         // BACK
@@ -54,12 +54,15 @@ elixir(function (mix) {
         /***************************************************************************************************************
          * CSS
          ***************************************************************************************************************/
+
+
         //combine home stylesheets
-        //.styles([
-        //    paths.glide + 'dist/css/glide.core.css',
-        //    paths.glide + 'dist/css/glide.theme.css',
-        //    'public/css/app.home.css'
-        //], 'public/css/app.home.css', './')
+        .styles([
+            paths.glide + 'dist/css/glide.core.css',
+            paths.glide + 'dist/css/glide.theme.css',
+            paths.lity + 'lity.css',
+            'public/css/app.home.css'
+        ], 'public/css/app.home.css', './')
 
         // combine back stylesheets
         .styles([
@@ -89,21 +92,22 @@ elixir(function (mix) {
          * JS
          ***************************************************************************************************************/
         // FRONT
-        //.scripts([
-        //    paths.jquery + 'dist/jquery.js',
-        //    paths.jquery_easing + 'js/jquery.easing.js',
-        //    paths.bootstrap + 'javascripts/bootstrap.js',
-        //    paths.js + 'ie10-viewport-bug-workaround.js',
-        //    paths.js + 'app.common.js',
-        //    paths.js + 'app.front.js'
-        //], 'public/js/app.front.js', './')
-        // // mix home js files
-        //.scripts([
-        //    'public/js/app.front.js',
-        //    paths.glide + 'dist/glide.js',
-        //    paths.js + 'app.home.js'
-        //], 'public/js/app.home.js', './')
-        // // mix news list js files
+        .scripts([
+            paths.jquery + 'dist/jquery.js',
+            paths.jquery_easing + 'js/jquery.easing.js',
+            paths.bootstrap + 'javascripts/bootstrap.js',
+            paths.js + 'ie10-viewport-bug-workaround.js',
+            paths.js + 'app.common.js',
+            paths.js + 'app.front.js'
+        ], 'public/js/app.front.js', './')
+         // mix home js files
+        .scripts([
+            'public/js/app.front.js',
+            paths.glide + 'dist/glide.js',
+            paths.lity + 'lity.js',
+            paths.js + 'app.home.js'
+        ], 'public/js/app.home.js', './')
+         // mix news list js files
         //.scripts([
         //    'public/js/app.front.js',
         //    paths.js + 'app.news-list.js'

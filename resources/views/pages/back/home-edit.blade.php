@@ -29,7 +29,7 @@
                             <label for="input_title">{{ trans('home.page.label.title') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_zip_code"><i class="fa fa-paragraph"></i></span>
+                                    <span class="input-group-addon" for="input_title"><i class="fa fa-paragraph"></i></span>
                                     <input id="input_title" class="form-control capitalize-first-letter" name="title" placeholder="{{ trans('home.page.label.title') }}" value="{{ old('title') ? old('title') : $title }}">
                                 </div>
                             </div>
@@ -39,11 +39,11 @@
                                 <textarea id="input_description" class="form-control markdown" name="description" placeholder="{{ trans('home.page.label.description') }}">{{ old('description') ? old('description') : $description }}</textarea>
                             </div>
 
-                            <label for="input_video_embed">{{ trans('home.page.label.video_embed') }}</label>
-                            <div class="form-group textarea">
+                            <label for="input_video_link">{{ trans('home.page.label.video_link') }}</label>
+                            <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_video_embed"><i class="fa fa-paragraph"></i></span>
-                                    <textarea id="input_video_embed" class="form-control" name="video_embed" placeholder="{{ trans('home.page.label.video_embed') }}">{{ old('video_embed') ? old('video_embed') : $video_embed }}</textarea>
+                                    <span class="input-group-addon" for="input_video_link"><i class="fa fa-video-camera"></i></span>
+                                    <input id="input_video_link" class="form-control" name="video_link" placeholder="{{ trans('home.page.label.video_link') }}" value="{{ old('video_link') ? old('video_link') : $video_link }}">
                                 </div>
                             </div>
 

@@ -286,6 +286,14 @@ html {
           }
         }
       }
+
+      .CodeMirror {
+        height: 300px;
+
+        .CodeMirror-code {
+          padding: 5px 5px 25px;
+        }
+      }
     }
   }
 

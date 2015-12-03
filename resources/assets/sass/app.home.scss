@@ -179,8 +179,12 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
     &#una-club{
       margin-bottom: 0;
 
-      .embed-responsive{
+      .video{
+        height: 600px;
         margin-top: 30px;
+        background-color: #000;
+        color: $brand-primary;
+        font-size: 250px;
       }
     }
   }

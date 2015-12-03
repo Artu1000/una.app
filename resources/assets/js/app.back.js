@@ -1,5 +1,5 @@
 // custom file input
-$(document).on('change', '.btn-file :file', function() {
+$(document).on('change', '.btn-file :file', function () {
     var input = $(this),
         numFiles = input.get(0).files ? input.get(0).files.length : 1,
         label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
@@ -7,13 +7,13 @@ $(document).on('change', '.btn-file :file', function() {
 });
 
 // check parent checkbox or not, according if all the children checkboxes are checked or not
-function evalChildrenCheckboxes(elt){
+function evalChildrenCheckboxes(elt) {
     var permission_group = elt.attr('id').split('.')[0];
     var checked = true;
-    $('.permission input[type=checkbox]').each(function(key, checkbox){
+    $('.permission input[type=checkbox]').each(function (key, checkbox) {
         var id = checkbox.id.split('.');
-        if(id[0] === permission_group && id[1]){
-            if(!checkbox.checked){
+        if (id[0] === permission_group && id[1]) {
+            if (!checkbox.checked) {
                 checked = false;
             }
         }
@@ -21,16 +21,16 @@ function evalChildrenCheckboxes(elt){
     $('input#' + permission_group).prop('checked', checked);
 }
 
-$(function() {
+$(function () {
 
     // custom file input
-    $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+    $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
         var input = $(this).parents('.input-group').find(':text'),
             log = numFiles > 1 ? numFiles + ' files selected' : label;
-        if( input.length ) {
+        if (input.length) {
             input.val(log);
         } else {
-            if( log ) alert(log);
+            if (log) alert(log);
         }
     });
 
@@ -43,22 +43,22 @@ $(function() {
 
     // permissions checkboxes
     // permission child checkboxes check on click on the parent
-    $('.permission.parent input').click(function(){
+    $('.permission.parent input').click(function () {
         var permission_group = $(this).attr('id');
         var checked = $(this).is(':checked');
-        $('.permission input[type=checkbox]').each(function(key, checkbox){
-            if(checkbox.id.split('.')[0] === permission_group){
+        $('.permission input[type=checkbox]').each(function (key, checkbox) {
+            if (checkbox.id.split('.')[0] === permission_group) {
                 checkbox.checked = checked;
             }
         });
     });
     // on check on child checkbox, manage parent checkbox check status
-    $('.permission input[type=checkbox]').change(function(){
+    $('.permission input[type=checkbox]').change(function () {
         evalChildrenCheckboxes($(this));
     });
 
     // we manage the activation in list from the swipe button
-    $('.swipe-btn.activate').click(function(){
+    $('.swipe-btn.activate').click(function () {
         // we get the swipe group
         var swipe_group = $(this).parent('.swipe-group');
 
@@ -75,24 +75,24 @@ $(function() {
             method: 'POST',
             url: url,
             data: {
-                _token : app.csrf_token,
+                _token: app.csrf_token,
                 id: id,
                 activation_order: activation_order
             }
-        }).done(function() {
+        }).done(function () {
             // we replace the loading spinner by a check icon
             swipe_group.find('.swipe-action-icon').remove();
             swipe_group.append('<span class="swipe-action-icon text-success"><i class="fa fa-thumbs-up"></i></span>');
-        }).fail(function() {
+        }).fail(function () {
             // we replace the loading spinner by a check icon
             swipe_group.find('.swipe-action-icon').remove();
             swipe_group.append('<span class="swipe-action-icon text-danger"><i class="fa fa-thumbs-down"></i></span>');
 
             // we set the checkbox at its original value
-            window.setTimeout(function(){
+            window.setTimeout(function () {
                 swipe_group.find('input.swipe').prop('checked', !activation_order);
             }, 500);
-        }).always(function() {
+        }).always(function () {
             // we fade out the icon
             swipe_group.find('.swipe-action-icon').css({
                 '-webkit-animation': 'fadeOut 10000ms',
@@ -100,7 +100,7 @@ $(function() {
                 '-ms-animation': 'fadeOut 10000ms',
                 '-o-animation': 'fadeOut 10000ms',
                 'animation': 'fadeOut 10000ms'
-            }).promise().done(function(){
+            }).promise().done(function () {
                 // keep invisible
                 $(this).css('opacity', 0);
             });
@@ -108,6 +108,12 @@ $(function() {
     });
 
     // we activate the markdown editor
-    var simplemde = new SimpleMDE({ element: $(".markdown")[0] });
+    if ($('.markdown').length) {
+        var simplemde = new SimpleMDE({
+            element: $(".markdown")[0],
+            hideIcons: ['side-by-side', 'fullscreen'],
+            spellChecker: false
+        });
+    }
 });
 
