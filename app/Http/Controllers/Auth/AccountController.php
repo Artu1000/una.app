@@ -50,8 +50,8 @@ class AccountController extends Controller
         // we check the inputs
         $errors = [];
         $validator = \Validator::make($request->all(), [
-            'last_name'  => 'required',
-            'first_name' => 'required',
+            'last_name'  => 'required|string',
+            'first_name' => 'required|string',
             'email'      => 'required|email|unique:users,email',
             'password'   => 'required|min:6|confirmed',
         ]);

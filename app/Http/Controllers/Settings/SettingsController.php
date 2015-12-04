@@ -71,10 +71,16 @@ class SettingsController extends Controller
         // we check the inputs
         $errors = [];
         $validator = \Validator::make($inputs, [
+            'app_name'      => 'string',
+            'app_slogan'    => 'string',
+            'breadcrumbs'   => 'boolean',
+            'multilingual'  => 'boolean',
             'phone_number'  => 'phone:FR',
             'email_contact' => 'email',
             'email_support' => 'email',
+            'address'       => 'string',
             'zip_code'      => 'digits:5',
+            'city'          => 'string',
             'facebook'      => 'url',
             'twitter'       => 'url',
             'google_plus'   => 'url',

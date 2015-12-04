@@ -121,7 +121,7 @@ class HomeController extends Controller
             'seoMeta'       => $this->seoMeta,
             'title'         => isset($home->title) ? $home->title : null,
             'description'   => isset($home->description) ? $home->description : null,
-            'video_link'   => isset($home->video_link) ? $home->video_link : null,
+            'video_link'    => isset($home->video_link) ? $home->video_link : null,
             'tableListData' => $tableListData,
         ];
 
@@ -224,7 +224,7 @@ class HomeController extends Controller
             'last_news'   => $last_news,
             'title'       => isset($home->title) ? $home->title : null,
             'description' => $description,
-            'video_link' => isset($home->video_link) ? $home->video_link : null,
+            'video_link'  => isset($home->video_link) ? $home->video_link : null,
             'css'         => url(elixir('css/app.home.css')),
             'js'          => url(elixir('js/app.home.js')),
         ];
@@ -241,6 +241,27 @@ class HomeController extends Controller
             \Modal::alert([
                 trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
             ], 'error');
+
+            return redirect()->back();
+        }
+
+        // we check the inputs
+        $errors = [];
+        $validator = \Validator::make($request->all(), [
+            'title'       => 'string',
+            'description' => 'string',
+            'video_link'  => 'url',
+        ]);
+        foreach ($validator->errors()->all() as $error) {
+            $errors[] = $error;
+        }
+        // if errors are found
+        if (count($errors)) {
+            // we flash the request
+            $request->flash();
+
+            // we notify the current user
+            \Modal::alert($errors, 'error');
 
             return redirect()->back();
         }

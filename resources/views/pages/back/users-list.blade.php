@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div id="content" class="users row">
+    <div id="content" class="users">
 
         <div class="text-content">
 

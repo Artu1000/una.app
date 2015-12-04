@@ -155,11 +155,24 @@ class UsersController extends Controller
             return redirect()->back();
         }
 
+        // we get the user
+        $user = \Sentinel::findById($id);
+
+        // we check if the current user has a role rank high enough to edit the user
+        $edited_user_role = $user->roles->first();
+        $current_user_role = \Sentinel::getUser()->roles->first();
+        if ($edited_user_role && $current_user_role && $edited_user_role->rank < $current_user_role->rank) {
+            \Modal::alert([
+                trans('permissions.message.rank.denied', ['action' => trans('permissions.message.rank.action.edit')]),
+            ], 'error');
+
+            return redirect()->back();
+        }
+
+
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.users.edit');
 
-        // we get the role
-        $user = \Sentinel::findById($id);
 
         // we check if the role exists
         if (!$user) {
@@ -257,8 +270,8 @@ class UsersController extends Controller
         $validator = \Validator::make($inputs, [
             'photo'        => 'image|mimes:jpg,jpeg,png',
             'gender'       => 'required|in:' . implode(',', array_keys(config('user.gender'))),
-            'last_name'    => 'required',
-            'first_name'   => 'required',
+            'last_name'    => 'required|string',
+            'first_name'   => 'required|string',
             'birth_date'   => 'required|date_format:Y-m-d',
             'phone_number' => 'required|phone:FR',
             'email'        => 'required|email|unique:users,email',
@@ -378,8 +391,8 @@ class UsersController extends Controller
                 '_id'          => 'required|numeric|exists:users,id',
                 'photo'        => 'mimes:jpg,jpeg,png',
                 'gender'       => 'required|in:' . implode(',', array_keys(config('user.gender'))),
-                'last_name'    => 'required',
-                'first_name'   => 'required',
+                'last_name'    => 'required|string',
+                'first_name'   => 'required|string',
                 'birth_date'   => 'required|date_format:Y-m-d',
                 'phone_number' => 'required|phone:FR',
                 'email'        => 'required|email|unique:users,email,' . $request->get('_id'),
@@ -392,8 +405,8 @@ class UsersController extends Controller
                 '_id'          => 'required|numeric|exists:users,id',
                 'photo'        => 'image|mimes:jpg,jpeg,png',
                 'gender'       => 'required|in:' . implode(',', array_keys(config('user.gender'))),
-                'last_name'    => 'required',
-                'first_name'   => 'required',
+                'last_name'    => 'required|string',
+                'first_name'   => 'required|string',
                 'birth_date'   => 'required|date_format:Y-m-d',
                 'phone_number' => 'required|phone:FR',
                 'email'        => 'required|email|unique:users,email,' . $request->get('_id'),
@@ -539,6 +552,17 @@ class UsersController extends Controller
             return redirect()->back();
         }
 
+        // we check if the current user has a role rank high enough to edit the user
+        $edited_user_role = $user->roles->first();
+        $current_user_role = \Sentinel::getUser()->roles->first();
+        if ($edited_user_role && $current_user_role && $edited_user_role->rank < $current_user_role->rank) {
+            \Modal::alert([
+                trans('permissions.message.rank.denied', ['action' => trans('permissions.message.rank.action.delete')]),
+            ], 'error');
+
+            return redirect()->back();
+        }
+
         try {
             // we remove the users photos
             if ($user->photo) {
@@ -580,6 +604,18 @@ class UsersController extends Controller
             return redirect()->back();
         }
 
+        // we get the user
+        $user = \Sentinel::findById($request->get('id'));
+
+        // we check if the current user has a role rank high enough to edit the user
+        $edited_user_role = $user->roles->first();
+        $current_user_role = \Sentinel::getUser()->roles->first();
+        if ($edited_user_role && $current_user_role && $edited_user_role->rank < $current_user_role->rank) {
+            return response([
+                trans('permissions.message.rank.denied', ['action' => trans('permissions.message.rank.action.delete')]),
+            ], 401);
+        }
+
         // we convert the "on" value to the activation order to a boolean value
         $request->merge([
             'activation_order' => filter_var($request->get('activation_order'), FILTER_VALIDATE_BOOLEAN),
@@ -598,9 +634,6 @@ class UsersController extends Controller
         if (count($errors)) {
             return response($errors, 401);
         }
-
-        // we get the user
-        $user = \Sentinel::findById($request->get('id'));
 
         try {
             // if the order is : activation

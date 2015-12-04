@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div id="content" class="permissions creation row">
+    <div id="content" class="permissions creation">
 
         <div class="text-content">
 

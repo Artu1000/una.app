@@ -18,7 +18,7 @@ return [
         "label"  => [
             "title"       => "Titre",
             "description" => "Description",
-            "video_link"  => "Lien vidéo promo",
+            "video_link"  => "Lien vidéo",
             "slide"       => [
                 "background_image" => "Image de fond",
                 "picto"            => "Picto",

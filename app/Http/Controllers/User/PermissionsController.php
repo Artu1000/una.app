@@ -44,14 +44,14 @@ class PermissionsController extends Controller
             'key'     => 'slug',
             'sort_by' => 'roles.slug',
         ], [
-            'title'   => trans('permissions.page.label.rank'),
-            'key'     => 'rank',
-            'sort_by' => 'roles.rank',
-        ], [
-            'title'           => trans('permissions.page.label.created_at'),
-            'key'             => 'created_at',
-            'sort_by'         => 'roles.created_at',
+            'title'           => trans('permissions.page.label.rank'),
+            'key'             => 'rank',
+            'sort_by'         => 'roles.rank',
             'sort_by_default' => true,
+        ], [
+            'title'   => trans('permissions.page.label.created_at'),
+            'key'     => 'created_at',
+            'sort_by' => 'roles.created_at',
         ], [
             'title'   => trans('permissions.page.label.updated_at'),
             'key'     => 'updated_at',
@@ -89,7 +89,8 @@ class PermissionsController extends Controller
             $routes,
             $confirm_config,
             $search_config,
-            $enable_lines_choice);
+            $enable_lines_choice
+        );
 
         // prepare data for the view
         $data = [
@@ -134,17 +135,27 @@ class PermissionsController extends Controller
             $role->name,
         ];
 
-        // we get the role
-        $parent_role = $role->rank > 1 ? \Sentinel::getRoleRepository()->where('rank', ($role->rank - 1))->firstOrFail() : null;
+        // if the current role is the master role
+        if($role->rank === 1){
 
-        // we get the role list without the current
-        $role_list = \Sentinel::getRoleRepository()->where('id', '<>', $role->id)->orderBy('rank', 'asc')->get();
+            // we get the role list without the current
+            $role_list = \Sentinel::getRoleRepository()->orderBy('rank', 'asc')->where('id', '<>', $role->id)->get();
 
-        // we prepare the master role status and we add at the beginning of the role list
-        $master_role = new \stdClass();
-        $master_role->id = 0;
-        $master_role->name = trans('permissions.page.label.master');
-        $role_list->prepend($master_role);
+            // we prepare the master role status and we add at the beginning of the role list
+            $master_role = new \stdClass();
+            $master_role->id = 0;
+            $master_role->name = trans('permissions.page.label.master');
+            $role_list->prepend($master_role);
+
+            // we set the parent role as null
+            $parent_role = null;
+        } else {
+            // we get the role list without the current
+            $role_list = \Sentinel::getRoleRepository()->orderBy('rank', 'asc')->get();
+
+            // we get the parent role of the current role
+            $parent_role = \Sentinel::getRoleRepository()->where('rank', ($role->rank - 1))->firstOrFail();
+        }
 
         // prepare data for the view
         $data = [
@@ -222,9 +233,9 @@ class PermissionsController extends Controller
         // we check the inputs
         $errors = [];
         $validator = \Validator::make($request->all(), [
-            'name'        => 'required|unique:roles,name',
-            'slug'        => 'required|alpha_dash|unique:roles,slug',
-            'parent_role' => 'required|numeric',
+            'name'           => 'required|string|unique:roles,name',
+            'slug'           => 'required|alpha_dash|unique:roles,slug',
+            'parent_role_id' => 'required|numeric|exists:roles,id',
         ]);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
@@ -236,31 +247,21 @@ class PermissionsController extends Controller
             return redirect()->back();
         }
 
-        // we manage the roles ranks according to the given parent
-        if ($parent_role = \Sentinel::findRoleById($request->get('parent_role'))) {
-
-            // we increment the rank of the following roles
-            $roles = \Sentinel::getRoleRepository()->where('rank', '>=', $parent_role->rank)
-                ->orderBy('rank', 'desc')
-                ->get();
-
-            foreach ($roles as $r) {
-                $r->rank = $r->rank + 1;
-                $r->save();
-            }
-        } else {
-            // we put the role as the master one
-
-        }
-
         try {
+            // we update the roles hierarchy
+            $new_rank = \Sentinel::getRoleRepository()->createModel()->updateHierarchy($request->get('parent_role_id'));
+
             // we create the role
             $role = \Sentinel::getRoleRepository()->createModel()->create([
                 'slug'        => str_slug($request->get('slug')),
                 'name'        => $request->get('name'),
-                'rank'        => $parent_role->rank,
+                'rank'        => $new_rank,
                 'permissions' => $request->except('_token', 'name', 'slug', 'parent_role'),
             ]);
+
+            // we sanitize the roles ranks
+            \Sentinel::getRoleRepository()->createModel()->sanitizeRanks();
+
             \Modal::alert([
                 trans('permissions.message.create.success', ['name' => $role->name]),
             ], 'success');
@@ -269,7 +270,7 @@ class PermissionsController extends Controller
         } catch (\Exception $e) {
             \Log::error($e);
             \Modal::alert([
-                trans('permissions.message.create.failure', ['name' => $role->name]),
+                trans('permissions.message.create.failure', ['name' => $request->get('name')]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
@@ -312,8 +313,10 @@ class PermissionsController extends Controller
         // we check the inputs
         $errors = [];
         $validator = \Validator::make($request->all(), [
-            '_id'  => 'required|exists:roles,id',
-            'name' => 'required|unique:roles,name,' . $request->get('_id'),
+            '_id'            => 'required|numeric|exists:roles,id',
+            'name'           => 'required|string|unique:roles,name,' . $request->get('_id'),
+            'slug'           => 'required|alpha_dash|unique:roles,slug,' . $request->get('_id'),
+            'parent_role_id' => 'required|numeric|different:_id',
         ]);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
@@ -330,12 +333,19 @@ class PermissionsController extends Controller
         }
 
         try {
+            // we update the roles hierarchy
+            $new_rank = \Sentinel::getRoleRepository()->createModel()->updateHierarchy($request->get('parent_role_id'));
+
             // we update the role
             $role = \Sentinel::findRoleById($request->get('_id'));
             $role->name = $request->get('name');
-            $role->slug = str_slug($request->get('name'));
-            $role->permissions = $request->except('_method', '_id', '_token', 'name', 'slug', 'parent_role');
+            $role->slug = str_slug($request->get('slug'));
+            $role->rank = $new_rank;
+            $role->permissions = $request->except('_method', '_id', '_token', 'name', 'slug', 'parent_role_id');
             $role->save();
+
+            // we sanitize the roles ranks
+            \Sentinel::getRoleRepository()->createModel()->sanitizeRanks();
 
             // we notify the user
             \Modal::alert([
@@ -384,7 +394,12 @@ class PermissionsController extends Controller
             \Modal::alert([
                 trans('permissions.message.delete.success', ['name' => $role->name]),
             ], 'success');
+
+            // we delete the role
             $role->delete();
+
+            // we sanitize the roles ranks
+            \Sentinel::getRoleRepository()->createModel()->sanitizeRanks();
 
             return redirect()->back();
         } catch (\Exception $e) {

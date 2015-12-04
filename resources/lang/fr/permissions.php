@@ -48,14 +48,14 @@ return [
             "delete" => "Supprimer le rôle",
         ],
         'info'   => [
-            "rank" => "Configurez la position hiérarchique du rôle actuel en choisissant son rôle parent.",
+            "rank" => "Configurez la position hiérarchique du rôle actuel en choisissant son supérieur direct.",
         ],
         "label"  => [
             "placeholder" => "--- Séléctionnez le rôle parent ---",
-            "master"      => "Rôle principal (pas de rôle parent)",
+            "master"      => "Rôle maître (pas de rôle parent)",
             "name"        => "Nom du rôle",
             "slug"        => "Clé du rôle",
-            "rank"        => "Hiérarchie",
+            "rank"        => "Rang",
             "parent_role" => "Rôle parent",
             "created_at"  => "Date de création",
             "updated_at"  => "Date de modification",
@@ -81,6 +81,13 @@ return [
         "delete" => [
             "success" => "Le rôle <b>:name</b> a bien été supprimé.",
             "failure" => "Une erreur est survenue lors de la mise à jour du rôle <b>:name</b>.",
+        ],
+        "rank"   => [
+            "denied" => "Vous n'avez pas droits nécessaire pour :action un utilisateur avec un rôle hiérarchiquement supérieur au votre.",
+            "action" => [
+                "edit"   => "éditer",
+                "delete" => "supprimer",
+            ],
         ],
     ],
 

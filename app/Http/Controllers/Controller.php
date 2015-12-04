@@ -61,6 +61,9 @@ abstract class Controller extends BaseController
         // we set the default data
         $default_lines = 20;
         $default_sort_by = array_first($columns, function ($key, $column) {
+            return isset($column['sort_by_default']) && $column['sort_by_default'] === true;
+        })['sort_by'];
+        $default_sort_by = isset($default_sort_by) ? $default_sort_by : array_first($columns, function ($key, $column) {
             return isset($column['sort_by']);
         })['sort_by'];
         $default_sort_by = isset($default_sort_by) ? $default_sort_by : null;

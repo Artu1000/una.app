@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div id="content" class="config row">
+    <div id="content" class="config">
 
         <div class="text-content">
 

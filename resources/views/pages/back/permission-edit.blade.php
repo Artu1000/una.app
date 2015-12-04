@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div id="content" class="permissions creation row">
+    <div id="content" class="permissions creation">
 
         <div class="text-content">
 
@@ -53,15 +53,30 @@
                                 </div>
                             </div>
 
+                            {{-- slug --}}
+                            <label for="input_rank">{{ trans('permissions.page.label.rank') }}</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" for="input_rank"><i class="fa fa-sort"></i></span>
+                                    <input id="input_rank" class="form-control" type="text" name="slug" value="{{ !empty(old('rank')) ? old('rank') : ((isset($role->rank)) ? $role->rank : null) }}" placeholder="{{ trans('permissions.page.label.rank') }}" disabled>
+                                </div>
+                            </div>
+
                             {{-- rank --}}
                             <label for="input_parent_role" class="required">{{ trans('permissions.page.label.parent_role') }}</label>
                             <div class="form-group">
-                                <select class="form-control" name="parent_role" id="input_parent_role">
-                                    @if(!isset($role))
-                                        <option value="" selected>{{ trans('permissions.page.label.placeholder') }}</option>
-                                    @endif
+                                <select class="form-control" name="parent_role_id" id="input_parent_role">
+                                    {{--@if(!isset($role))--}}
+                                        <option value="" disabled selected>{{ trans('permissions.page.label.placeholder') }}</option>
+                                    {{--@endif--}}
                                     @foreach($role_list as $r)
-                                        <option value="{{ $r->id }}" @if(isset($parent_role) && $parent_role->id === $r->id)selected @endif>{{ $r->name }}</option>
+                                        <option value="{{ $r->id }}" @if((isset($parent_role) && $parent_role->id === $r->id) || ($r->id === 0))selected @endif>
+                                            @if(!isset($r->rank))
+                                                X - {{ $r->name }}
+                                            @else
+                                                {{ $r->rank }} - {{ $r->name }}
+                                            @endif
+                                        </option>
                                     @endforeach
                                 </select>
                                 <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('permissions.page.info.rank') }}</p>

@@ -112,9 +112,9 @@
 
                 <li class="divider"></li>
 
-                {{--<li>--}}
-                    {{--<a class="new_window" href="{{ route('home') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.back') }}</a>--}}
-                {{--</li>--}}
+                <li>
+                    <a class="new_window" href="{{ route('home') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.back') }}</a>
+                </li>
             </ul>
         </div>
     </nav>

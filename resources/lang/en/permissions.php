@@ -39,8 +39,8 @@ return [
             "list"        => "User roles list",
             "create"      => "User role creation",
             "edit"        => "User role edition",
-            "info"        => "Role's informations",
-            "permissions" => "Role's permissions",
+            "info"        => "Role data",
+            "permissions" => "Role permissions",
         ],
         "action" => [
             "edit"   => "Edit the role",
@@ -48,11 +48,17 @@ return [
             "delete" => "Remove the role",
         ],
         'info'   => [
+            "rank" => "Configure the hierarchical position of the current role by choosing its immediate superior.",
         ],
         "label"  => [
-            "name"       => "Role name",
-            "created_at" => "Creation date",
-            "updated_at" => "Update date",
+            "placeholder" => "--- Select the parent role ---",
+            "master"      => "Main role (no parent role)",
+            "name"        => "Role name",
+            "slug"        => "Role slug",
+            "rank"        => "Rank",
+            "parent_role" => "Parent role",
+            "created_at"  => "Creation date",
+            "updated_at"  => "Modification date",
         ],
     ],
 
@@ -75,6 +81,13 @@ return [
         "delete" => [
             "success" => "The role <b>:name</b> has been deleted with success.",
             "failure" => "An error occurred during the removal of the role <b>:name</b>.",
+        ],
+        "rank"   => [
+            "denied" => "You don't have the permission to :action a user with a role hierarchically superior than yours.",
+            "action" => [
+                "edit"   => "edit",
+                "delete" => "delete",
+            ],
         ],
     ],
 

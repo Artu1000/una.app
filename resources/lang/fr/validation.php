@@ -137,6 +137,10 @@ return [
         "favicon"               => "Favicon",
         "logo_light"            => "Logo clair",
         "logo_dark"             => "Logo foncé",
+        "title"                 => "Titre",
+        "description"           => "Description",
+        "video_link"            => "Lien vidéo",
+        "parent_role_id"        => "Role parent",
     ],
 
 ];
