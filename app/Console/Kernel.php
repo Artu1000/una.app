@@ -13,10 +13,10 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Console\Commands\Inspire::class,
         \App\Console\Commands\Install\StoragePrepare::class,
         \App\Console\Commands\Install\MailcatcherInstall::class,
         \App\Console\Commands\Install\ProjectInstall::class,
+        \App\Console\Commands\Install\NpmInstall::class,
         \App\Console\Commands\Database\UsersAndRelatedTablesClean::class,
         \App\Console\Commands\Image\ImageGenerate::class,
     ];

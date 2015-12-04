@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helpers\ConsoleHelper;
 use App\Helpers\ImageManagerHelper;
 use App\Helpers\ModalHelper;
 use App\Helpers\StringHelper;
@@ -35,6 +36,11 @@ class FacadeServiceProvider extends ServiceProvider
         // image optimizer helper
         App::bind('ImageManager', function(){
             return new ImageManagerHelper();
+        });
+
+        // console helper
+        App::bind('Console', function(){
+            return new ConsoleHelper();
         });
     }
 }

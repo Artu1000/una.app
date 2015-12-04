@@ -206,6 +206,7 @@ return [
         // created
         'Modal'               => App\Facades\ModalHelperFacade::class,
         'ImageManager'        => App\Facades\ImageManagerHelperFacade::class,
+        'Console'             => App\Facades\ConsoleHelperFacade::class,
     ],
 
 ];

@@ -48,11 +48,17 @@ return [
             "delete" => "Supprimer le rôle",
         ],
         'info'   => [
+            "rank" => "Configurez la position hiérarchique du rôle actuel en choisissant son rôle parent.",
         ],
         "label"  => [
-            "name"       => "Nom du rôle",
-            "created_at" => "Date de création",
-            "updated_at" => "Date de modification",
+            "placeholder" => "--- Séléctionnez le rôle parent ---",
+            "master"      => "Rôle principal (pas de rôle parent)",
+            "name"        => "Nom du rôle",
+            "slug"        => "Clé du rôle",
+            "rank"        => "Hiérarchie",
+            "parent_role" => "Rôle parent",
+            "created_at"  => "Date de création",
+            "updated_at"  => "Date de modification",
         ],
     ],
 

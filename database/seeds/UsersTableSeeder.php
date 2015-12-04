@@ -6,6 +6,13 @@ class UsersTableSeeder extends Seeder
 {
     public function run()
     {
+        // we remove all the files in the storage user folder
+        $files = glob(storage_path('app/user/*'));
+        foreach($files as $file){
+            if(is_file($file))
+                unlink($file);
+        }
+
         // we create a user
         $user = Sentinel::register([
             'last_name' => 'LORENT',
@@ -21,24 +28,11 @@ class UsersTableSeeder extends Seeder
         $activation = Activation::create($user);
         Activation::complete($user, $activation->code);
 
-        // we create the admin role
-        $role = \Sentinel::getRoleRepository()->createModel()->create([
-            'name' => 'Admin',
-            'slug' => 'admin'
-        ]);
-
-        // we give all permissions to the admin role
-        $permissions = [];
-        foreach(array_dot(config('permissions')) as $permission => $value){
-            $permissions[$permission] = true;
-        }
-        $role->permissions = $permissions;
-        $role->save();
-
         // we attach the user to the admin role
-        $role->users()->attach($user);
+        $admin = Sentinel::findRoleBySlug('admin');
+        $admin->users()->attach($user);
 
-        Sentinel::register([
+        $user = Sentinel::register([
             'last_name' => 'GIRARD',
             'first_name' => 'Lionel',
             'email' => 'a',
@@ -46,8 +40,11 @@ class UsersTableSeeder extends Seeder
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
         ]);
+        // we attach the user to the user role
+        $user_role = Sentinel::findRoleBySlug('user');
+        $admin->users()->attach($user);
 
-        Sentinel::register([
+        $user = Sentinel::register([
             'last_name' => 'VARAINE',
             'first_name' => 'David',
             'email' => 'b',
@@ -55,8 +52,10 @@ class UsersTableSeeder extends Seeder
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
         ]);
+        // we attach the user to the user role
+        $user_role->users()->attach($user);
 
-        Sentinel::register([
+        $user = Sentinel::register([
             'last_name' => 'PLANCHENAULT',
             'first_name' => 'Thomas',
             'email' => 'c',
@@ -64,8 +63,9 @@ class UsersTableSeeder extends Seeder
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
         ]);
+        $user_role->users()->attach($user);
 
-        Sentinel::register([
+        $user = Sentinel::register([
             'last_name' => 'DISCAZEAU',
             'first_name' => 'Gérard',
             'email' => 'd',
@@ -73,8 +73,9 @@ class UsersTableSeeder extends Seeder
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
         ]);
+        $user_role->users()->attach($user);
 
-        Sentinel::register([
+        $user = Sentinel::register([
             'last_name' => 'PLANTIER',
             'first_name' => 'Christophe',
             'email' => 'e',
@@ -82,8 +83,9 @@ class UsersTableSeeder extends Seeder
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
         ]);
+        $user_role->users()->attach($user);
 
-        Sentinel::register([
+        $user = Sentinel::register([
             'last_name' => 'PROTT',
             'first_name' => 'Thierry',
             'email' => 'f',
@@ -91,8 +93,9 @@ class UsersTableSeeder extends Seeder
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
         ]);
+        $user_role->users()->attach($user);
 
-        Sentinel::register([
+        $user = Sentinel::register([
             'last_name' => 'ABRAHAMSON',
             'first_name' => 'Jeff',
             'email' => 'g',
@@ -100,61 +103,69 @@ class UsersTableSeeder extends Seeder
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
         ]);
+        $user_role->users()->attach($user);
 
-        Sentinel::register([
+        $user = Sentinel::register([
             'last_name' => 'LECIEUX',
             'first_name' => 'Yann',
             'email' => 'h',
             'board' => config('user.board_key.leading-board'),
             'password' => 'una'
         ]);
+        $user_role->users()->attach($user);
 
-        Sentinel::register([
+        $user = Sentinel::register([
             'last_name' => 'BOUZIDI',
             'first_name' => 'Rabah',
             'email' => 'i',
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
         ]);
+        $user_role->users()->attach($user);
 
-        Sentinel::register([
+        $user = Sentinel::register([
             'last_name' => 'CORNUEL',
             'first_name' => 'Benjamin',
             'email' => 'j',
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
         ]);
+        $user_role->users()->attach($user);
 
-        Sentinel::register([
+        $user = Sentinel::register([
             'last_name' => 'MARINGER',
             'first_name' => 'Françoise',
             'email' => 'k',
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
         ]);
+        $user_role->users()->attach($user);
 
-        Sentinel::register([
+        $user = Sentinel::register([
             'last_name' => 'MOUGEL',
             'first_name' => 'Jean-Bruno',
             'email' => 'l',
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
         ]);
+        $user_role->users()->attach($user);
 
-        Sentinel::register([
+        $user = Sentinel::register([
             'last_name' => 'TARDY',
             'first_name' => 'Mickaël',
             'email' => 'm',
             'board' => config('user.board_key.executive-committee'),
             'password' => 'una'
         ]);
+        $user_role->users()->attach($user);
 
-        Sentinel::register([
+        $user = Sentinel::register([
             'last_name' => 'VESPERINI',
             'first_name' => 'Laurent',
             'email' => 'n',
             'status' => config('user.status_key.employee'),
             'password' => 'una'
         ]);
+        $user_role->users()->attach($user);
     }
 }
