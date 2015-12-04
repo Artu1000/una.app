@@ -37,6 +37,10 @@ class StoragePrepare extends Command
      */
     public function handle()
     {
+        $this->line(' ');
+
+        $this->line('Preparing storage folders ...');
+
         // we set the folder to verify
         $to_create = [
             storage_path(),
@@ -76,6 +80,7 @@ class StoragePrepare extends Command
             } else {
                 $this->error('File "storage/framework/config/settings.json" has not been found and a problem occurend while we tried to create it');
             };
+            $this->line(' ');
         }
     }
 }

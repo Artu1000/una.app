@@ -36,13 +36,37 @@
                         <div class="panel-body">
 
                             {{-- name --}}
-                            <label for="input_name">{{ trans('permissions.page.label.name') }}</label>
+                            <label for="input_name" class="required">{{ trans('permissions.page.label.name') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_name"><i class="fa fa-font"></i></span>
                                     <input id="input_name" class="form-control capitalize-first-letter" type="text" name="name" value="{{ !empty(old('name')) ? old('name') : ((isset($role->name)) ? $role->name : null) }}" placeholder="{{ trans('permissions.page.label.name') }}">
                                 </div>
                             </div>
+
+                            {{-- slug --}}
+                            <label for="input_slug" class="required">{{ trans('permissions.page.label.slug') }}</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" for="input_name"><i class="fa fa-key"></i></span>
+                                    <input id="input_slug" class="form-control" type="text" name="slug" value="{{ !empty(old('slug')) ? old('slug') : ((isset($role->slug)) ? $role->slug : null) }}" placeholder="{{ trans('permissions.page.label.slug') }}">
+                                </div>
+                            </div>
+
+                            {{-- rank --}}
+                            <label for="input_parent_role" class="required">{{ trans('permissions.page.label.parent_role') }}</label>
+                            <div class="form-group">
+                                <select class="form-control" name="parent_role" id="input_parent_role">
+                                    @if(!isset($role))
+                                        <option value="" selected>{{ trans('permissions.page.label.placeholder') }}</option>
+                                    @endif
+                                    @foreach($role_list as $r)
+                                        <option value="{{ $r->id }}" @if(isset($parent_role) && $parent_role->id === $r->id)selected @endif>{{ $r->name }}</option>
+                                    @endforeach
+                                </select>
+                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('permissions.page.info.rank') }}</p>
+                            </div>
+
                         </div>
                     </div>
 

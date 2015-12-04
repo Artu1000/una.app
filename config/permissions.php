@@ -3,9 +3,9 @@
 return [
 
     // configuration
-//    'settings' => false,
-//    'settings.view' => false,
-//    'settings.update' => false,
+    'settings' => false,
+    'settings.view' => false,
+    'settings.update' => false,
 
     // permissions
     'permissions' => false,
@@ -24,12 +24,12 @@ return [
     'users.delete' => false,
 
     // home
-//    'home' => false,
-//    'home.edit' => false,
-//    'home.update' => false,
-//    'home.slide.create' => false,
-//    'home.slide.view' => false,
-//    'home.slide.update' => false,
-//    'home.slide.delete' => false,
+    'home' => false,
+    'home.edit' => false,
+    'home.update' => false,
+    'home.slide.create' => false,
+    'home.slide.view' => false,
+    'home.slide.update' => false,
+    'home.slide.delete' => false,
 
 ];

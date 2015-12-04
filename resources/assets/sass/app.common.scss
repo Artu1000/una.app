@@ -1,7 +1,7 @@
 /***********************************************************************************************************************
  * VARIABLES OVERRIDES
  **********************************************************************************************************************/
-$btn-default-border : #aeb6cb;
+$btn-default-border: #aeb6cb;
 $btn-default-color: #fff;
 $btn-default-bg: #aeb6cb;
 $breadcrumb-separator: "> ";
@@ -13,16 +13,12 @@ $icon-font-path: "../../fonts/bootstrap/";
 $fa-font-path: "../../fonts/fontawesome";
 $lato-font-path: '/fonts/lato';
 
-
-
 /***********************************************************************************************************************
  * IMPORTS
  **********************************************************************************************************************/
 @import '../vendor/bootstrap-sass-official/assets/stylesheets/bootstrap';
 @import '../vendor/fontawesome/scss/font-awesome';
 @import '../vendor/lato-font/scss/public-api';
-
-
 
 /***********************************************************************************************************************
  * FONT DEFINITION
@@ -34,7 +30,6 @@ $lato-font-path: '/fonts/lato';
 $font-size: 16px;
 $font-size-small: 14px;
 
-
 /***********************************************************************************************************************
  * MIXINS
  **********************************************************************************************************************/
@@ -45,83 +40,142 @@ $font-size-small: 14px;
   border-radius: $radius;
 }
 
-@mixin spin($time){
-  -webkit-animation:spin $time linear infinite;
-  -moz-animation:spin $time linear infinite;
-  animation:spin $time linear infinite;
-}
-@-moz-keyframes spin {
-  100% { -moz-transform: rotate(360deg); }
-}
-@-webkit-keyframes spin {
-  100% { -webkit-transform: rotate(360deg); }
-}
-@keyframes spin {
-  100% { transform:rotate(360deg); }
+@mixin spin($time) {
+  -webkit-animation: spin $time linear infinite;
+  -moz-animation: spin $time linear infinite;
+  animation: spin $time linear infinite;
 }
 
-@mixin fadeIn($time){
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@mixin fadeIn($time) {
   -webkit-animation: fadeIn $time; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: fadeIn $time; /* Firefox < 16 */
   -ms-animation: fadeIn $time; /* Internet Explorer */
   -o-animation: fadeIn $time; /* Opera < 12.1 */
   animation: fadeIn $time;
 }
+
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-/* Firefox < 16 */
-@-moz-keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-/* Safari, Chrome and Opera > 12.1 */
-@-webkit-keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-/* Internet Explorer */
-@-ms-keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-/* Opera < 12.1 */
-@-o-keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-@mixin fadeOut($duration){
+/* Firefox < 16 */
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@mixin fadeOut($duration) {
   -webkit-animation: fadeOut $duration; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: fadeOut $duration; /* Firefox < 16 */
   -ms-animation: fadeOut $duration; /* Internet Explorer */
   -o-animation: fadeOut $duration; /* Opera < 12.1 */
   animation: fadeOut $duration;
 }
+
 @keyframes fadeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
+
 /* Firefox < 16 */
 @-moz-keyframes fadeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
+
 /* Safari, Chrome and Opera > 12.1 */
 @-webkit-keyframes fadeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
+
 /* Internet Explorer */
 @-ms-keyframes fadeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
+
 /* Opera < 12.1 */
 @-o-keyframes fadeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 /***********************************************************************************************************************
@@ -168,6 +222,10 @@ html {
 
       p.quote {
         @include lato-font('light', italic);
+
+        b {
+          @include lato-font('medium', italic);
+        }
       }
 
       .help-block {
@@ -177,7 +235,7 @@ html {
       .underline {
         text-decoration: underline;
       }
-      
+
       .btn, a.btn {
         @include lato-font('light');
       }
@@ -377,7 +435,7 @@ html {
             &.active {
               @extend .btn-primary;
 
-              &.active{
+              &.active {
                 background-color: $btn-primary-bg;
                 border-color: $btn-primary-border;
               }
@@ -389,6 +447,18 @@ html {
       label {
         font-weight: normal;
         @include lato-font('medium');
+
+        &.required {
+          position: relative;
+
+          &:after {
+            content: "*";
+            color: $brand-danger;
+            position: absolute;
+            right: -10px;
+            top: 0;
+          }
+        }
       }
 
       .swipe-group {
@@ -414,7 +484,7 @@ html {
       .swipe {
         display: none;
 
-        +.swipe-btn {
+        + .swipe-btn {
           margin: 0;
           outline: 0;
           width: 4em;
@@ -481,19 +551,15 @@ html {
       }
     }
   }
+
 }
-
-
-
-
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
  * EXTRA LARGE DEVICES DESKTOPS : 1920 & MORE
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (min-width: 1920px){
+@media screen and (min-width: 1920px) {
 
   html {
 
@@ -519,15 +585,13 @@ html {
     }
   }
 }
-
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
  * LARGE DEVICES DESKTOPS : 1920 <=> 1919 (LG)
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (max-width: 1919px) and (min-width: 1200px){
+@media screen and (max-width: 1919px) and (min-width: 1200px) {
 
   html {
 
@@ -554,14 +618,12 @@ html {
   }
 }
 
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
  * MEDIUM DEVICES DESKTOPS : : 1199 <=> 992 (MD)
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (max-width: 1199px) and (min-width: 992px){
+@media screen and (max-width: 1199px) and (min-width: 992px) {
 
   html {
 
@@ -587,9 +649,6 @@ html {
     }
   }
 }
-
-
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
@@ -622,15 +681,12 @@ html {
   }
 }
 
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
  * EXTRA SMALL DEVICES : 767 & LESS (SM)
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (max-width: 767px){
+@media screen and (max-width: 767px) {
 
   html {
 

@@ -30,46 +30,6 @@ class ProjectInstall extends Command
         parent::__construct();
     }
 
-    public function execWithOutput($cmd)
-    {
-        // Setup the file descriptors
-        $descriptors = [
-            0 => ['pipe', 'w'],
-            1 => ['pipe', 'w'],
-            2 => ['pipe', 'w'],
-        ];
-
-        // Start the script
-        $proc = proc_open($cmd, $descriptors, $pipes);
-
-        // Read the stdin
-        $stdin = stream_get_contents($pipes[0]);
-        fclose($pipes[0]);
-
-        // Read the stdout
-        $stdout = stream_get_contents($pipes[1]);
-        fclose($pipes[1]);
-
-        // Read the stderr
-        $stderr = stream_get_contents($pipes[2]);
-        fclose($pipes[2]);
-
-        // Close the script and get the return code
-        $return_code = proc_close($proc);
-
-        $this->line($stdin);
-        $this->line($stdout);
-        $this->line($stderr);
-//        $this->info($return_code);
-
-        if (strpos($stdout, 'continue?')) {
-            $this->error('A confirmation has been asked during the shell command execution.');
-            $this->error('Please manually execute the command "' . $cmd . '" to treat that particular case.');
-            exit();
-        }
-
-    }
-
     /**
      * Execute the console command.
      *
@@ -77,45 +37,61 @@ class ProjectInstall extends Command
      */
     public function handle()
     {
-        // composer install
-        $this->line('Executing composer install / update ...');
-        $this->execWithOutput('composer install');
-        $this->execWithOutput('composer update');
-        $this->info('✔ Composer dependencies are up to date');
+        // npm / node and all necessary dependencies install & update
+        $this->call('npm:install');
 
         $this->line(' ');
 
         // bower install
-        $this->line('Executing bower install / update ...');
-        $this->execWithOutput('bower install');
-        $this->execWithOutput('bower update');
-        $this->info('✔ Bower dependencies are up to date');
+        $this->line('Processing bower dependencies install ...');
+        \Console::execWithOutput('bower install', $this);
+        $this->info('✔ Bower dependencies installed');
+
+        $this->line(' ');
+
+        // bower update
+        $this->line('Processing bower dependencies update ...');
+        \Console::execWithOutput('bower update', $this);
+        $this->info('✔ Bower dependencies updated');
+
+        $this->line(' ');
+
+        // composer install
+        $this->line('Processing composer dependencies install ...');
+        \Console::execWithOutput('composer install', $this);
+        $this->info('✔ Composer dependencies installed');
+
+        $this->line(' ');
+
+        // composer update
+        $this->line('Processing composer dependencies update ...');
+        \Console::execWithOutput('composer update', $this);
+        $this->info('✔ Composer dependencies updated');
 
         $this->line(' ');
 
         // apt-get update
-        $this->line('processing apt-get update ...');
-        $this->execWithOutput('sudo apt-get update');
-        $this->info('✔ apt-get dependencies are up to date');
+        $this->line('Processing apt-get update ...');
+        \Console::execWithOutput('sudo apt-get update', $this);
+        $this->info('✔ apt-get updated');
 
         $this->line(' ');
 
         // image optimization
-        $this->line('Installing OptiPNG and jpegoptim image optimizers ...');
-        $this->execWithOutput('sudo apt-get install optipng jpegoptim');
+        $this->line('Processing OptiPNG and jpegoptim image optimizers install ...');
+        \Console::execWithOutput('sudo apt-get install optipng jpegoptim', $this);
         $this->info('✔ OptiPNG and jpegoptim installed');
 
         $this->line(' ');
 
-        // prepare storage folder
-        $this->line('Preparing storage folders ...');
+        // storage file verification
         $this->call('storage:prepare');
 
         $this->line(' ');
 
         // generate application key
-        $this->line('Generate new Laravel app key ...');
-        $this->execWithOutput('php artisan key:generate');
+        $this->line('Generating new Laravel app key ...');
+        \Console::execWithOutput('php artisan key:generate', $this);
         $this->info('✔ New app key generated');
 
         $this->line(' ');
@@ -129,7 +105,7 @@ class ProjectInstall extends Command
 
         // migrations
         $this->line('Executing migrations ...');
-        $this->execWithOutput('php artisan migrate');
+        \Console::execWithOutput('php artisan migrate', $this);
         $this->info('✔ Migration done');
 
         $this->line(' ');
@@ -137,11 +113,10 @@ class ProjectInstall extends Command
         // seeds
         if ($this->ask('Do you want to execute the database seed on your project ? [y/N]', false)) {
             $this->line('Executing seeds ...');
-            $this->execWithOutput('php artisan db:seed');
+            \Console::execWithOutput('php artisan migrate:refresh', $this);
+            \Console::execWithOutput('php artisan db:seed', $this);
             $this->info('✔ Seed done');
         }
-
-        $this->line(' ');
 
         $this->info('✔ Project installation complete !');
     }
