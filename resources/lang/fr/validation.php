@@ -141,6 +141,10 @@ return [
         "description"           => "Description",
         "video_link"            => "Lien vidéo",
         "parent_role_id"        => "Role parent",
+        "quote"                 => "Citation",
+        "picto"                 => "Picto",
+        "background_image"      => "Image de fond",
+        "previous_slide_id"     => "Diapo précédente",
     ],
 
 ];

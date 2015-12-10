@@ -17,8 +17,8 @@ return [
             "save" => "Enregistrer les modifications",
         ],
         'info'   => [
-            "image" => "Taille : 16 x 16px / format : ico.",
-            "logo"  => "Taille : largeur min. 300px / format : png.",
+            "image" => "Taille : 16 x 16px / Format : ico.",
+            "logo"  => "Largeur min : 300px / Format : png.",
         ],
         "label"  => [
             "app_name"        => "Nom du site",

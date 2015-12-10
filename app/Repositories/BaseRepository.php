@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 
 abstract class BaseRepository implements BaseRepositoryInterface
@@ -41,35 +40,35 @@ abstract class BaseRepository implements BaseRepositoryInterface
      *
      * @var array
      */
-    protected $with = array();
+    protected $with = [];
 
     /**
      * Array of one or more where clause parameters
      *
      * @var array
      */
-    protected $wheres = array();
+    protected $wheres = [];
 
     /**
      * Array of one or more where in clause parameters
      *
      * @var array
      */
-    protected $whereIns = array();
+    protected $whereIns = [];
 
     /**
      * Array of one or more ORDER BY column/value pairs
      *
      * @var array
      */
-    protected $orderBys = array();
+    protected $orderBys = [];
 
     /**
      * Array of scope methods to call on the model
      *
      * @var array
      */
-    protected $scopes = array();
+    protected $scopes = [];
 
     /**
      * Get the repository model to access to its methods
@@ -82,15 +81,24 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
+     * Get the model from the IoC container
+     */
+    public function __construct()
+    {
+        $this->model = app()->make($this->model);
+    }
+
+    /**
      * Get all the model records in the database
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function all()
+    public function all($columns = ['*'])
     {
         $this->newQuery()->eagerLoad();
         $models = $this->query->get();
         $this->unsetClauses();
+
         return $models;
     }
 
@@ -114,8 +122,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function create(array $data)
     {
         $this->unsetClauses();
-        $data['created_at'] = Carbon::now();
-        $data['updated_at'] = Carbon::now();
+
         return $this->model->create($data);
     }
 
@@ -132,6 +139,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         foreach ($data as $d) {
             $models->push($this->create($d));
         }
+
         return $models;
     }
 
@@ -145,6 +153,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         $this->newQuery()->setClauses()->setScopes();
         $result = $this->query->delete();
         $this->unsetClauses();
+
         return $result;
     }
 
@@ -159,6 +168,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function deleteById($id)
     {
         $this->unsetClauses();
+
         return $this->find($id)->delete();
     }
 
@@ -184,6 +194,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         $this->newQuery()->eagerLoad()->setClauses()->setScopes();
         $model = $this->query->firstOrFail();
         $this->unsetClauses();
+
         return $model;
     }
 
@@ -197,6 +208,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         $this->newQuery()->eagerLoad()->setClauses()->setScopes();
         $models = $this->query->get();
         $this->unsetClauses();
+
         return $models;
     }
 
@@ -211,6 +223,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         $this->unsetClauses();
         $this->newQuery()->eagerLoad();
+
         return $this->query->findOrFail($id);
     }
 
@@ -222,7 +235,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * @param array $columns
      * @return mixed
      */
-    public function findBy($attribute, $value) {
+    public function findBy($attribute, $value)
+    {
         return $this->model->where($attribute, '=', $value)->first();
     }
 
@@ -236,6 +250,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function take($limit)
     {
         $this->take = $limit;
+
         return $this;
     }
 
@@ -249,6 +264,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function skip($start)
     {
         $this->skip = $start;
+
         return $this;
     }
 
@@ -262,6 +278,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function orderBy($column, $direction = 'asc')
     {
         $this->orderBys[] = compact('column', 'direction');
+
         return $this;
     }
 
@@ -278,21 +295,25 @@ abstract class BaseRepository implements BaseRepositoryInterface
         $this->unsetClauses();
         $model = $this->find($id);
         $model->update($data);
+
         return $model;
     }
 
     /**
-     * Add a simple where clause to the query
-     *
-     * @param string $column
-     * @param string $value
-     * @param string $operator
-     *
+     * @param $column
+     * @param $operator
+     * @param null $value
      * @return $this
      */
-    public function where($column, $value, $operator = '=')
+    public function where($column, $operator, $value = null)
     {
-        $this->wheres[] = compact('column', 'value', 'operator');
+        if(!isset($value)){
+            $value = $operator;
+            $operator = '=';
+        }
+
+        $this->wheres[] = compact('column', 'operator', 'value');
+
         return $this;
     }
 
@@ -306,8 +327,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function whereIn($column, $values)
     {
-        $values = is_array($values) ? $values : array($values);
+        $values = is_array($values) ? $values : [$values];
         $this->whereIns[] = compact('column', 'values');
+
         return $this;
     }
 
@@ -322,6 +344,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         if (is_string($relations)) $relations = func_get_args();
         $this->with = $relations;
+
         return $this;
     }
 
@@ -333,6 +356,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     protected function newQuery()
     {
         $this->query = $this->model->newQuery();
+
         return $this;
     }
 
@@ -346,6 +370,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         foreach ($this->with as $relation) {
             $this->query->with($relation);
         }
+
         return $this;
     }
 
@@ -359,6 +384,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         foreach ($this->wheres as $where) {
             $this->query->where($where['column'], $where['operator'], $where['value']);
         }
+
         foreach ($this->whereIns as $whereIn) {
             $this->query->whereIn($whereIn['column'], $whereIn['values']);
         }
@@ -374,6 +400,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         if (isset($this->paginate) and !is_null($this->paginate)) {
             $this->query->paginate($this->paginate);
         }
+
         return $this;
     }
 
@@ -387,6 +414,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         foreach ($this->scopes as $method => $args) {
             $this->query->$method(implode(', ', $args));
         }
+
         return $this;
     }
 
@@ -397,10 +425,11 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     protected function unsetClauses()
     {
-        $this->wheres = array();
-        $this->whereIns = array();
-        $this->scopes = array();
+        $this->wheres = [];
+        $this->whereIns = [];
+        $this->scopes = [];
         $this->take = null;
+
         return $this;
     }
 
@@ -411,11 +440,12 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * @param array $columns
      * @return mixed
      */
-    public function paginate($perPage = 15, $columns = array('*'))
+    public function paginate($perPage = 15, $columns = ['*'])
     {
         $this->newQuery()->eagerLoad()->setClauses()->setScopes();
         $models = $this->query->paginate($perPage, $columns);
         $this->unsetClauses();
+
         return $models;
     }
 }

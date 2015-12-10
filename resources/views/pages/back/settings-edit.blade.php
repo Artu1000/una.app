@@ -241,12 +241,14 @@
 
                             {{-- favicon --}}
                             <label for="input_favicon">{{ trans('settings.page.label.favicon') }}</label>
-                            <div class="form-group">
-                                @if(is_file('./favicon.ico'))
+                            @if(is_file('./favicon.ico'))
+                                <div class="form-group image">
                                     <div class="logo img-rounded">
-                                        <img width="16" height="16" src="{{ url('favicon.ico') }}" alt="Favicon {{ config('settings.app_name') }}">
+                                        <img src="{{ url('favicon.ico') }}" alt="Favicon {{ config('settings.app_name') }}">
                                     </div>
-                                @endif
+                                </div>
+                            @endif
+                            <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <span class="btn btn-primary btn-file">
@@ -260,12 +262,14 @@
 
                             {{-- logo light --}}
                             <label for="input_logo_light">{{ trans('settings.page.label.logo_light') }}</label>
-                            <div class="form-group">
-                                @if(config('settings.logo_light'))
-                                    <a class="logo light img-rounded" href="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" data-lity>
-                                        <img width="40" height="40" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'admin']) }}" alt="{{ trans('settings.page.label.logo_light') }}">
+                            @if(config('settings.logo_light'))
+                                <div class="form-group image">
+                                    <a class="img-thumbnail bg-dark" href="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" data-lity>
+                                        <img src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'admin']) }}" alt="{{ trans('settings.page.label.logo_light') }}">
                                     </a>
-                                @endif
+                                </div>
+                            @endif
+                            <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <span class="btn btn-primary btn-file">
@@ -279,12 +283,14 @@
 
                             {{-- logo dark --}}
                             <label for="input_logo_dark">{{ trans('settings.page.label.logo_dark') }}</label>
-                            <div class="form-group">
-                                @if(config('settings.logo_dark'))
-                                    <a class="logo img-rounded" href="{{ route('image', ['filename' => config('settings.logo_dark'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" data-lity>
-                                        <img width="40" height="40" src="{{ route('image', ['filename' => config('settings.logo_dark'), 'storage_path' => storage_path('app/config'), 'size' => 'admin']) }}" alt="{{ trans('settings.page.label.logo_dark') }}">
+                            @if(config('settings.logo_dark'))
+                                <div class="form-group image">
+                                    <a class="img-thumbnail" href="{{ route('image', ['filename' => config('settings.logo_dark'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" data-lity>
+                                        <img src="{{ route('image', ['filename' => config('settings.logo_dark'), 'storage_path' => storage_path('app/config'), 'size' => 'admin']) }}" alt="{{ trans('settings.page.label.logo_dark') }}">
                                     </a>
-                                @endif
+                                </div>
+                            @endif
+                            <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <span class="btn btn-primary btn-file">

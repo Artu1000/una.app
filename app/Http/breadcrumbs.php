@@ -62,4 +62,24 @@ if (config('settings.breadcrumbs')) {
         }
     });
 
+    // home
+    \Breadcrumbs::register('home.edit', function ($breadcrumbs) {
+        $breadcrumbs->parent('home');
+        $breadcrumbs->push(trans('breadcrumbs.home.edit'), route('home.edit'));
+    });
+    \Breadcrumbs::register('slides.create', function ($breadcrumbs) {
+        $breadcrumbs->parent('home.edit');
+        $breadcrumbs->push(trans('breadcrumbs.slides.create'), route('slides.create'));
+    });
+    \Breadcrumbs::register('slides.edit', function ($breadcrumbs, array $data) {
+        $breadcrumbs->parent('home.edit');
+        $breadcrumbs->push(trans('breadcrumbs.slides.edit'), route('slides.edit'));
+
+        // we personalize the breadcrumb on edition
+        if (!empty($data)) {
+            foreach ($data as $additionnal_breadcrumb) {
+                $breadcrumbs->push($additionnal_breadcrumb, '');
+            }
+        }
+    });
 }

@@ -12,7 +12,7 @@
                     {{ config('settings.app_name') }}
                 </h1>
                 @if(config('settings.app_slogan'))
-                    - {{ config('settings.app_slogan') }}
+                    <span class="hidden-xs">- {{ config('settings.app_slogan') }}</span>
                 @endif
             </a>
         </div>

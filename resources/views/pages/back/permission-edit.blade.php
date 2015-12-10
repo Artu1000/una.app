@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div id="content" class="permissions creation">
+    <div id="content" class="permissions edit">
 
         <div class="text-content">
 
@@ -66,11 +66,13 @@
                             <label for="input_parent_role" class="required">{{ trans('permissions.page.label.parent_role') }}</label>
                             <div class="form-group">
                                 <select class="form-control" name="parent_role_id" id="input_parent_role">
-                                    {{--@if(!isset($role))--}}
-                                        <option value="" disabled selected>{{ trans('permissions.page.label.placeholder') }}</option>
-                                    {{--@endif--}}
+                                    <option value="" disabled selected>{{ trans('permissions.page.label.placeholder') }}</option>
                                     @foreach($role_list as $r)
-                                        <option value="{{ $r->id }}" @if((isset($parent_role) && $parent_role->id === $r->id) || ($r->id === 0))selected @endif>
+                                        <option value="{{ $r->id }}"
+                                            @if(old('parent_role_id') == $r->id)selected
+                                            @elseif(isset($parent_role) && $parent_role->id === $r->id)selected
+                                            @elseif($r->id === 0)selected
+                                            @endif>
                                             @if(!isset($r->rank))
                                                 X - {{ $r->name }}
                                             @else

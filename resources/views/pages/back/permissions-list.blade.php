@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div id="content" class="config">
+    <div id="content" class="permissions list">
 
         <div class="text-content">
 

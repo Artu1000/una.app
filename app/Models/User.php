@@ -60,7 +60,7 @@ class User extends SentinelUser
      */
     public function storagePath()
     {
-        if(!is_dir($storage_path = storage_path('app/user'))){
+        if(!is_dir($storage_path = storage_path('app/users'))){
             mkdir($storage_path);
         }
         return $storage_path;

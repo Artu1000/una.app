@@ -8,19 +8,17 @@
  **********************************************************************************************************************/
 @import 'app.common';
 
-$logo_header_footer: '../../img/logo-una-header-large-white.png';
+$footer_2560_background: '/img/app/footer-bg-2560x383.png';
+$footer_1919_background: '/img/app/footer-bg-1919x287.png';
+$footer_1199_background: '/img/app/footer-bg-1199x167.png';
+$footer_991_background: '/img/app/footer-bg-991x148.png';
+$footer_767_background: '/img/app/footer-bg-767x115.png';
 
-$footer_2560_background: '/img/footer-bg-2560x383.png';
-$footer_1919_background: '/img/footer-bg-1919x287.png';
-$footer_1199_background: '/img/footer-bg-1199x167.png';
-$footer_991_background: '/img/footer-bg-991x148.png';
-$footer_767_background: '/img/footer-bg-767x115.png';
-
-$header_2560_background: '/img/header-bg-2560x403.png';
-$header_1919_background: '/img/header-bg-1919x302.png';
-$header_1199_background: '/img/header-bg-1199x176.png';
-$header_991_background: '/img/header-bg-991x156.png';
-$header_767_background: '/img/header-bg-767x121.png';
+$header_2560_background: '/img/app/header-bg-2560x403.png';
+$header_1919_background: '/img/app/header-bg-1919x302.png';
+$header_1199_background: '/img/app/header-bg-1199x176.png';
+$header_991_background: '/img/app/header-bg-991x156.png';
+$header_767_background: '/img/app/header-bg-767x121.png';
 
 /***********************************************************************************************************************
  * HEADER

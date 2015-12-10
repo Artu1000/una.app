@@ -38,12 +38,19 @@ return [
     ],
     "permissions" => [
         "index"  => "Gestion des permissions utilisateurs",
-        "edit"   => "Edition d'un rôle utilisateur",
+        "edit"   => "Édition d'un rôle utilisateur",
         "create" => "Création d'un rôle utilisateur",
     ],
     "users"       => [
         "index"  => "Gestion des utilisateurs",
-        "edit"   => "Edition d'un utlisateur",
+        "edit"   => "Édition d'un utlisateur",
         "create" => "Création d'un rôle",
+    ],
+    "home"        => [
+        "slide" => [
+            "create" => "Création d'une diapo",
+            "edit"   => "Édition d'une diapo",
+        ],
+        "edit"  => "Édition de la page d'accueil",
     ],
 ];

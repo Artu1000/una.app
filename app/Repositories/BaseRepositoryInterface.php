@@ -5,5 +5,5 @@ namespace app\Repositories;
 
 interface BaseRepositoryInterface
 {
-
+    //
 }

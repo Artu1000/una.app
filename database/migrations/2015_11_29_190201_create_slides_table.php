@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSlideshowsTable extends Migration
+class CreateSlidesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,11 @@ class CreateSlideshowsTable extends Migration
     {
         Schema::create('slides', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('background_image');
-            $table->string('picto');
             $table->string('title');
             $table->string('quote');
-            $table->integer('position');
+            $table->string('picto')->nullable();
+            $table->string('background_image')->nullable();
+            $table->integer('position')->unique();
 
             $table->timestamps();
             $table->engine = 'InnoDB';

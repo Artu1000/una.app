@@ -19,22 +19,22 @@
                                 <div class="fill slide_content text-center">
                                     <div class="fill">
                                         <div class="fill">
-                                            @if(!empty($slide['picto']))
-                                                <img class="picto" src="{{ $slide['picto'] }}" alt="{{ $slide['title'] }}">
+                                            @if($slide->picto)
+                                                <img class="picto" src="{{ route('image', ['filename' => $slide->picto, 'storage_path' => $slide->storagePath(), 'size' => 'picto']) }}" alt="{{ $slide->title }}">
                                             @endif
-                                            @if(!empty($slide['title']))
-                                                <h2 class="title">{{ $slide['title'] }}</h2>
+                                            @if($slide->title)
+                                                <h2 class="title">{{ $slide->title }}</h2>
                                             @endif
-                                            @if(!empty($slide['quote']))
-                                                <p class="quote" class="quote">{!! $slide['quote'] !!}</p>
+                                            @if($slide->quote)
+                                                <p class="quote" class="quote">{!! $slide->quote !!}</p>
                                             @endif
                                         </div>
                                     </div>
                                 </div>
                                 @if($key === 1)
-                                    <div class="background_responsive_img fill" data-background-image="{{ $slide['src'] }}" style="background-image: url({{ $slide['src'] }})"></div>
+                                    <div class="background_responsive_img fill" data-background-image="{{ $slide->background_image }}" style="background-image: url({{ $slide->background_image }})"></div>
                                 @endif
-                                <div class="background_responsive_img fill" data-background-image="{{ $slide['src'] }}"></div>
+                                <div class="background_responsive_img fill" data-background-image="{{ $slide->background_image }}"></div>
                             </section>
                         </li>
                     @endforeach

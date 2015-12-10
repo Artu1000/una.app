@@ -32,6 +32,7 @@ class Slide extends Model
         'quote',
         'picto',
         'background_image',
+        'position',
     ];
 
     /**
@@ -45,17 +46,15 @@ class Slide extends Model
     protected $sizes = [
         'background_image' => [
             'admin' => [40, 40],
-            '767'   => [767, 0],
-            '991'   => [991, 0],
-            '1199'  => [1199, 0],
-            '1919'  => [1919, 0],
+            '767'   => [767, null],
+            '991'   => [991, null],
+            '1199'  => [1199, null],
+            '1919'  => [1919, null],
             '2560'  => [2560, 1440],
         ],
         'picto'            => [
-            [
-                'admin' => [40, 40],
-                'picto' => [300, 300],
-            ],
+            'admin' => [40, 40],
+            'picto' => [300, 300],
         ],
     ];
 
@@ -85,11 +84,11 @@ class Slide extends Model
      */
     public function storagePath()
     {
-        if (!is_dir($storage_path = storage_path('app/home/slide'))) {
+        if (!is_dir($storage_path = storage_path('app/home/slides'))) {
             if (!is_dir($path = storage_path('app/home'))) {
                 mkdir($path);
             }
-            mkdir($path . '/slide');
+            mkdir($path . '/slides');
         }
 
         return $storage_path;

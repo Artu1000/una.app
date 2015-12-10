@@ -6,16 +6,23 @@ return [
         "index" => "Tableau de bord",
     ],
     "settings"    => [
-        "index" => "Paramètres",
+        "index" => "Gestion des paramètres",
     ],
     "permissions" => [
-        "index"  => "Permissions",
-        "create" => "Création",
-        "edit"   => "Édition",
+        "index"  => "Gestion des permissions",
+        "create" => "Création d'une permission",
+        "edit"   => "Édition d'une permission",
     ],
     "users"       => [
-        "index"  => "Utilisateurs",
-        "create" => "Création",
-        "edit"   => "Édition",
+        "index"  => "Gestion des utilisateurs",
+        "create" => "Création d'un utilisateur",
+        "edit"   => "Édition d'un utilisateur",
+    ],
+    "home"        => [
+        "edit" => "Édition de la page d'accueil",
+    ],
+    "slides"      => [
+        "create" => "Création d'une diapo",
+        "edit"   => "Édition d'une diapo",
     ],
 ];
