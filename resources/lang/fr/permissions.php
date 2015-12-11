@@ -32,6 +32,14 @@ return [
     "home.slide.update"  => "Modifier une diapo",
     "home.slide.delete"  => "Supprimer une diapo",
 
+    // partners
+    "partners"           => "Partenaires",
+    "partners.list"      => "Consulter la liste des partenaires",
+    "partners.create"    => "Créer un partenaire",
+    "partners.view"      => "Consulter le détail d'un partenaire",
+    "partners.update"    => "Modifier un partenaire",
+    "partners.delete"    => "Supprimer un partenaire",
+
     // pages
     "page"               => [
         "title"  => [

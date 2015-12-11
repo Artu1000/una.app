@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\Install\MailcatcherInstall::class,
         \App\Console\Commands\Install\ProjectInstall::class,
         \App\Console\Commands\Install\NpmInstall::class,
+        \App\Console\Commands\Install\SymLinksPrepare::class,
         \App\Console\Commands\Database\UsersAndRelatedTablesClean::class,
         \App\Console\Commands\Image\ImageGenerate::class,
     ];

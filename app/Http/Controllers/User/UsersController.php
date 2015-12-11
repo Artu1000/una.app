@@ -48,11 +48,13 @@ class UsersController extends Controller
                         'detail'    => 'large',
                     ],
                 ],
-            ], [
+            ],
+            [
                 'title'   => trans('users.page.label.last_name'),
                 'key'     => 'last_name',
                 'sort_by' => 'users.last_name',
-            ], [
+            ],
+            [
                 'title'   => trans('users.page.label.first_name'),
                 'key'     => 'first_name',
                 'sort_by' => 'users.first_name',
@@ -78,7 +80,8 @@ class UsersController extends Controller
                 'button'     => [
                     'attribute' => 'slug',
                 ],
-            ], [
+            ],
+            [
                 'title'    => trans('users.page.label.activation'),
                 'key'      => 'activated',
                 'activate' => 'users.activate',

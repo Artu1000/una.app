@@ -32,4 +32,12 @@ return [
     'home.slide.update' => false,
     'home.slide.delete' => false,
 
+    // partners
+    'partners' => false,
+    'partners.list' => false,
+    'partners.create' => false,
+    'partners.view' => false,
+    'partners.update' => false,
+    'partners.delete' => false,
+
 ];

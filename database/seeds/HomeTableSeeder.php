@@ -167,7 +167,7 @@ class HomeTableSeeder extends Seeder
             'position' => 6,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/home/una_picto_aviron_feminin_300.png',
+            './database/seeds/files/home/una_picto_aviron_loisir_300.png',
             $slide->imageName('picto'),
             'png',
             $slide->storagePath(),
@@ -177,7 +177,7 @@ class HomeTableSeeder extends Seeder
         $slide->picto = $file_name;
         $slide->save();
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/home/una_bg_aviron_feminin_2560.jpg',
+            './database/seeds/files/home/una_bg_aviron_loisir_2560.jpg',
             $slide->imageName('background_image'),
             'jpg',
             $slide->storagePath(),

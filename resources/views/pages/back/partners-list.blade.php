@@ -2,20 +2,20 @@
 
 @section('content')
 
-    <div id="content" class="users">
+    <div id="content" class="partners">
 
         <div class="text-content">
 
             <div class="col-sm-12">
 
                 {{-- Title--}}
-                <h2><i class="fa fa-life-ring"></i> {{ trans('users.page.title.management') }}</h2>
+                <h2><i class="fa fa-users"></i> {{ trans('partners.page.title.management') }}</h2>
 
                 <hr>
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{ trans('users.page.title.list') }}</h3>
+                        <h3 class="panel-title">{{ trans('partners.page.title.list') }}</h3>
                     </div>
                     <div class="panel-body table-responsive">
 

@@ -104,9 +104,11 @@
                                 <a href="{{ route('home.edit') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.home') }}</a>
                             </li>
                         @endif
-                        <li>
-                            <a href="#">Dropdown Item</a>
-                        </li>
+                        @if(\Sentinel::getUser()->hasAccess('partners.list'))
+                            <li>
+                                <a href="{{ route('partners.index') }}"><i class="fa fa-life-ring"></i> {{ trans('template.back.header.partners') }}</a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
 

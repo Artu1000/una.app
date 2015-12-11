@@ -13,6 +13,7 @@ return [
             "logout"      => "Déconnexion",
             "contents"    => "Contenus",
             "home"        => "Page d'accueil",
+            "partners"    => "Partenaires",
         ],
     ],
 ];
