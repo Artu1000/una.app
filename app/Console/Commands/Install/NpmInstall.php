@@ -75,14 +75,6 @@ class NpmInstall extends Command
             $this->line('Processing npm rebuild node-sass ...');
             \Console::execWithOutput('npm rebuild node-sass', $this);
             $this->info('✔ npm node-sass rebuilt');
-
-            $this->line(' ');
-
-            $this->line('Processing elixir task ...');
-            \Console::execWithOutput('gulp --production', $this);
-            $this->info('✔ Sass and js compiled and minified');
-
-            $this->line(' ');
         };
     }
 }

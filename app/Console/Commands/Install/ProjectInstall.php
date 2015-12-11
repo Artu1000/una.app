@@ -96,6 +96,12 @@ class ProjectInstall extends Command
 
         $this->line(' ');
 
+        $this->line('Processing elixir task ...');
+        \Console::execWithOutput('gulp --production', $this);
+        $this->info('✔ Sass and js compiled and minified');
+
+        $this->line(' ');
+
         // mailcatcher install
         if ($this->ask('Do you want to install mailcatcher on your project ? [y/N]', false)) {
             $this->call('mailcatcher:install');
