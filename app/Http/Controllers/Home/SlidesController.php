@@ -34,7 +34,7 @@ class SlidesController extends Controller
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.home.slide.create');
 
-        // we get the role list without the current
+        // we get the slide list
         $slide_list = $this->repository->orderBy('position', 'asc')->get();
 
         // we prepare the master role status and we add at the beginning of the role list
@@ -65,22 +65,17 @@ class SlidesController extends Controller
             return redirect()->back();
         }
 
+        // we set the validation rules
+        $rules = [
+            'title'            => 'required|string',
+            'quote'            => 'required|string',
+            'picto'            => 'image|mimes:png|image_size:>=300,>=300',
+            'background_image' => 'image|mimes:jpg,jpeg|image_size:>=2560,>=1440',
+        ];
         if ($request->get('previous_slide_id') === '0') {
-            $rules = [
-                'title'             => 'required|string',
-                'quote'             => 'required|string',
-                'picto'             => 'image|mimes:png|image_size:>=300,>=300',
-                'background_image'  => 'image|mimes:jpg,jpeg|image_size:>=2560,>=1440',
-                'previous_slide_id' => 'numeric',
-            ];
+            $rules['previous_slide_id'] = 'numeric';
         } else {
-            $rules = [
-                'title'             => 'required|string',
-                'quote'             => 'required|string',
-                'picto'             => 'image|mimes:png|image_size:>=300,>=300',
-                'background_image'  => 'image|mimes:jpg,jpeg|image_size:>=2560,>=1440',
-                'previous_slide_id' => 'required|numeric|exists:slides,id',
-            ];
+            $rules['previous_slide_id'] = 'required|numeric|exists:slides,id';
         }
 
         // we check the inputs
@@ -179,7 +174,7 @@ class SlidesController extends Controller
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.home.slide.edit');
 
-        // we check if the role exists
+        // we check if the slide exists
         if (!$slide = $this->repository->find($id)) {
             \Modal::alert([
                 trans('home.message.diapo.find.failure', ['id' => $id]),
@@ -189,12 +184,7 @@ class SlidesController extends Controller
             return redirect()->back();
         }
 
-        // we prepare the data for breadcrumbs
-        $breadcrumbs_data = [
-            $slide->title,
-        ];
-
-        // we get the role list without the current
+        // we get the slide list without the current
         $slide_list = $this->repository->orderBy('position', 'asc')->where('id', '<>', $id)->get();
 
         // we get the parent role of the current role
@@ -208,6 +198,11 @@ class SlidesController extends Controller
         $first_slide->id = 0;
         $first_slide->title = trans('home.page.label.slide.first');
         $slide_list->prepend($first_slide);
+
+        // we prepare the data for breadcrumbs
+        $breadcrumbs_data = [
+            $slide->title,
+        ];
 
         // prepare data for the view
         $data = [

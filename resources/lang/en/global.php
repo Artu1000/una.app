@@ -58,7 +58,7 @@ return [
         ],
         "results"     => [
             "empty"  => "No results were found.",
-            "status" => "Results <b>:start</b> to <b>:stop</b> - Total : <b>:total</b>",
+            "status" => "Showing results <b>:start</b> to <b>:stop</b> on <b>:total</b>",
         ],
     ],
 ];

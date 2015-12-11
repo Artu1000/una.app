@@ -11,6 +11,7 @@ class PartnersController extends Controller
 
     /**
      * UsersController constructor.
+     * @param PartnerRepositoryInterface $partner
      */
     public function __construct(PartnerRepositoryInterface $partner)
     {
@@ -43,10 +44,10 @@ class PartnersController extends Controller
                 'title' => trans('partners.page.label.logo'),
                 'key'   => 'logo',
                 'image' => [
-                    'storage_path' => \Sentinel::createModel()->storagePath(),
+                    'storage_path' => $this->repository->getModel()->storagePath(),
                     'size'         => [
                         'thumbnail' => 'admin',
-                        'detail'    => 'large',
+                        'detail'    => 'logo',
                     ],
                 ],
             ],
@@ -61,9 +62,10 @@ class PartnersController extends Controller
                 'sort_by' => 'partners.url',
             ],
             [
-                'title'   => trans('partners.page.label.position'),
-                'key'     => 'position',
-                'sort_by' => 'partners.position',
+                'title'           => trans('partners.page.label.position'),
+                'key'             => 'position',
+                'sort_by'         => 'partners.position',
+                'sort_by_default' => true,
             ],
             [
                 'title'    => trans('partners.page.label.activation'),
@@ -118,59 +120,25 @@ class PartnersController extends Controller
         return view('pages.back.partners-list')->with($data);
     }
 
-    public function edit($id)
-    {
-        // we check the current user permission
-        $required = 'partners.view';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
-            return redirect()->back();
-        }
-
-        // we get the partner
-        $partner = $this->repository->find($id);
-
-        // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.partners.edit');
-
-
-        // we check if the role exists
-        if (!$partner) {
-            \Modal::alert([
-                trans('partners.message.find.failure'),
-                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
-            ], 'error');
-
-            return redirect()->back();
-        }
-
-        // we prepare the data for breadcrumbs
-        $breadcrumbs_data = [
-            $partner->name,
-        ];
-
-        // prepare data for the view
-        $data = [
-            'seoMeta'          => $this->seoMeta,
-            'partner'          => $partner,
-            'breadcrumbs_data' => $breadcrumbs_data,
-        ];
-
-        // return the view with data
-        return view('pages.back.partner-edit')->with($data);
-    }
-
     public function create()
     {
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.partners.create');
 
+        // we get the partner list
+        $partner_list = $this->repository->orderBy('position', 'asc')->get();
+
+        // we prepare the master role status and we add at the beginning of the role list
+        $first_slide = new \stdClass();
+        $first_slide->id = 0;
+        $first_slide->name = trans('home.page.label.slide.first');
+        $partner_list->prepend($first_slide);
+
+
         // prepare data for the view
         $data = [
-            'seoMeta' => $this->seoMeta,
+            'seoMeta'      => $this->seoMeta,
+            'partner_list' => $partner_list,
         ];
 
         // return the view with data
@@ -189,16 +157,27 @@ class PartnersController extends Controller
             return redirect()->back();
         }
 
-        // we get the inputs
-        $inputs = $request->except('_token');
+        // we convert the "on" value to a boolean value
+        $request->merge([
+            'active' => filter_var($request->get('active'), FILTER_VALIDATE_BOOLEAN),
+        ]);
+
+        // we set the validation rules
+        $rules = [
+            'logo'   => 'image|mimes:png|image_size:*,>=100',
+            'name'   => 'required|string',
+            'url'    => 'url',
+            'active' => 'required|boolean',
+        ];
+        if ($request->get('previous_partner_id') === '0') {
+            $rules['previous_partner_id'] = 'numeric';
+        } else {
+            $rules['previous_partner_id'] = 'required|numeric|exists:slides,id';
+        }
 
         // we check the inputs
         $errors = [];
-        $validator = \Validator::make($inputs, [
-            'logo' => 'required|image|mimes:jpg,jpeg,png',
-            'name' => 'required|string',
-            'url'  => 'required|url',
-        ]);
+        $validator = \Validator::make($request->all(), $rules);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
         }
@@ -213,12 +192,14 @@ class PartnersController extends Controller
         }
 
         // we create the user
-        $partner = $this->repository->create($inputs);
+        $partner = $this->repository->create($request->except('_token', 'previous_partner_id', 'logo'));
 
         try {
+            // we update the slides positions
+            $partner->position = $this->repository->updatePositions($request->get('previous_slide_id'));
 
             // we store the photo
-            if (isset($inputs['logo']) && !empty($logo = $inputs['logo'])) {
+            if ($logo = $request->file('logo')) {
 
                 // we optimize, resize and save the image
                 $file_name = \ImageManager::optimizeAndResize(
@@ -231,8 +212,13 @@ class PartnersController extends Controller
 
                 // we update the image name
                 $partner->logo = $file_name;
-                $partner->save();
             }
+
+            // we update the partner
+            $partner->save();
+
+            // we sanitize the positions
+            $this->repository->sanitizePositions();
 
             // we notify the current user
             \Modal::alert([
@@ -252,12 +238,66 @@ class PartnersController extends Controller
             // we log the error and we notify the current user
             \Log::error($e);
             \Modal::alert([
-                trans('users.message.creation.failure', ['name' => $request->get('name')]),
+                trans('users.message.creation.failure', ['name' => $partner->name]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
 
             return redirect()->back();
         }
+    }
+
+    public function edit($id)
+    {
+        // we check the current user permission
+        $required = 'partners.view';
+        if (!\Sentinel::getUser()->hasAccess([$required])) {
+            \Modal::alert([
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
+            ], 'error');
+
+            return redirect()->back();
+        }
+
+        // we get the partner
+        $partner = $this->repository->find($id);
+
+        // we check if the role exists
+        if (!$partner) {
+            \Modal::alert([
+                trans('partners.message.find.failure'),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
+            ], 'error');
+
+            return redirect()->back();
+        }
+
+        // SEO Meta settings
+        $this->seoMeta['page_title'] = trans('seo.partners.edit');
+
+        // we get the slide list without the current
+        $partner_list = $this->repository->orderBy('position', 'asc')->where('id', '<>', $id)->get();
+
+        // we prepare the master role status and we add at the beginning of the role list
+        $first_slide = new \stdClass();
+        $first_slide->id = 0;
+        $first_slide->name = trans('home.page.label.slide.first');
+        $partner_list->prepend($first_slide);
+
+        // we prepare the data for breadcrumbs
+        $breadcrumbs_data = [
+            $partner->name,
+        ];
+
+        // prepare data for the view
+        $data = [
+            'seoMeta'          => $this->seoMeta,
+            'partner'          => $partner,
+            'partner_list'     => $partner_list,
+            'breadcrumbs_data' => $breadcrumbs_data,
+        ];
+
+        // return the view with data
+        return view('pages.back.partner-edit')->with($data);
     }
 
     public function update(Request $request)
@@ -272,23 +312,28 @@ class PartnersController extends Controller
             return redirect()->back();
         }
 
-        // we get the user
-        if (!$partner = $this->repository->find($request->get('_id'))) {
-            \Modal::alert([
-                trans('partners.message.find.failure', ['id' => $request->get('_id')]),
-            ], 'error');
+        // we convert the "on" value to a boolean value
+        $request->merge([
+            'active' => filter_var($request->get('active'), FILTER_VALIDATE_BOOLEAN),
+        ]);
 
-            return redirect()->back();
+        // we set the validation rules
+        $rules = [
+            '_id'    => 'numeric|exists:partners,id',
+            'logo'   => 'image|mimes:png|image_size:*,>=100',
+            'name'   => 'required|string',
+            'url'    => 'url',
+            'active' => 'required|boolean',
+        ];
+        if ($request->get('previous_partner_id') === '0') {
+            $rules['previous_partner_id'] = 'numeric';
+        } else {
+            $rules['previous_partner_id'] = 'required|numeric|exists:slides,id';
         }
 
         // we check the inputs
         $errors = [];
-        $inputs = $request->all();
-        $validator = \Validator::make($inputs, [
-            'logo' => 'required|image|mimes:jpg,jpeg,png',
-            'name' => 'required|string',
-            'url'  => 'required|url',
-        ]);
+        $validator = \Validator::make($request->all(), $rules);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
         }
@@ -296,6 +341,7 @@ class PartnersController extends Controller
         if (count($errors)) {
             // we flash the request
             $request->flash();
+
             // we notify the current user
             \Modal::alert($errors, 'error');
 
@@ -303,8 +349,13 @@ class PartnersController extends Controller
         }
 
         try {
+            $partner = $this->repository->find($request->get('_id'));
+
+            // we get the inputs
+            $inputs = $request->except('_token', '_id');
+
             // we store the logo
-            if (isset($inputs['logo']) && !empty($logo = $inputs['logo'])) {
+            if ($logo = $request->file('logo')) {
                 // we optimize, resize and save the image
                 $file_name = \ImageManager::optimizeAndResize(
                     $logo->getRealPath(),
@@ -374,6 +425,9 @@ class PartnersController extends Controller
 
             // we delete the role
             $partner->delete();
+
+            // we sanitize the positions
+            $this->repository->sanitizePositions();
 
             \Modal::alert([
                 trans('users.message.delete.success', ['name' => $partner->name]),

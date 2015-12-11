@@ -52,12 +52,21 @@ return [
         "edit"   => "admin/contenus/page-accueil/edition",
         "update" => "admin/contenus/page-accueil/mise-a-jour",
     ],
-    "slides"       => [
+    "slides"      => [
         "create"  => "admin/contenus/page-accueil/diapo/creation",
         "store"   => "admin/contenus/page-accueil/diapo/enregistrement",
         "edit"    => "admin/contenus/page-accueil/diapo/edition/{id}",
         "update"  => "admin/contenus/page-accueil/diapo/mise-a-jour",
         "destroy" => "admin/contenus/page-accueil/diapo/suppression",
+    ],
+    "partners"    => [
+        "index"    => "admin/contenus/partenaires",
+        "create"   => "admin/contenus/partenaires/creation",
+        "store"    => "admin/contenus/partenaires/enregistrement",
+        "edit"     => "admin/contenus/partenaires/edition/{id}",
+        "update"   => "admin/contenus/partenaires/mise-a-jour",
+        "destroy"  => "admin/contenus/partenaires/suppression",
+        "activate" => "admin/contenus/partenaires/activer",
     ],
     "logout"      => "admin/deconnexion",
 ];

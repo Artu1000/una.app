@@ -271,7 +271,7 @@ class UsersController extends Controller
         // we check the inputs
         $errors = [];
         $validator = \Validator::make($inputs, [
-            'photo'        => 'image|mimes:jpg,jpeg,png',
+            'photo'        => 'image|mimes:jpg,jpeg,png|image_size:>=145,>=160',
             'gender'       => 'required|in:' . implode(',', array_keys(config('user.gender'))),
             'last_name'    => 'required|string',
             'first_name'   => 'required|string',
@@ -388,36 +388,26 @@ class UsersController extends Controller
             'activation' => filter_var($request->get('activation'), FILTER_VALIDATE_BOOLEAN),
         ]);
 
-        // we get the inputs, according if we update the current profile account or a user profile
+        // we set the validation rules
+        $rules = [
+            '_id'          => 'required|numeric|exists:users,id',
+            'photo'        => 'image|mimes:jpg,jpeg,png|image_size:>=145,>=160',
+            'gender'       => 'required|in:' . implode(',', array_keys(config('user.gender'))),
+            'last_name'    => 'required|string',
+            'first_name'   => 'required|string',
+            'birth_date'   => 'required|date_format:Y-m-d',
+            'phone_number' => 'required|phone:FR',
+            'email'        => 'required|email|unique:users,email,' . $request->get('_id'),
+            'zip_code'     => 'digits:5',
+            'password'     => 'min:6|confirmed',
+        ];
+
+        // we add inputs, according if we update the current profile account or a user profile
         if ($user->id === \Sentinel::getUser()->id) {
-            $rules = [
-                '_id'          => 'required|numeric|exists:users,id',
-                'photo'        => 'mimes:jpg,jpeg,png',
-                'gender'       => 'required|in:' . implode(',', array_keys(config('user.gender'))),
-                'last_name'    => 'required|string',
-                'first_name'   => 'required|string',
-                'birth_date'   => 'required|date_format:Y-m-d',
-                'phone_number' => 'required|phone:FR',
-                'email'        => 'required|email|unique:users,email,' . $request->get('_id'),
-                'zip_code'     => 'digits:5',
-                'password'     => 'min:6|confirmed',
-            ];
             $inputs = $request->except('_token', '_method', 'activation', 'role');
         } else {
-            $rules = [
-                '_id'          => 'required|numeric|exists:users,id',
-                'photo'        => 'image|mimes:jpg,jpeg,png',
-                'gender'       => 'required|in:' . implode(',', array_keys(config('user.gender'))),
-                'last_name'    => 'required|string',
-                'first_name'   => 'required|string',
-                'birth_date'   => 'required|date_format:Y-m-d',
-                'phone_number' => 'required|phone:FR',
-                'email'        => 'required|email|unique:users,email,' . $request->get('_id'),
-                'zip_code'     => 'digits:5',
-                'role'         => 'required|numeric|exists:roles,id',
-                'activation'   => 'boolean',
-                'password'     => 'min:6|confirmed',
-            ];
+            $rules['role'] = 'required|numeric|exists:roles,id';
+            $rules['activation'] = 'boolean';
             $inputs = $request->except('_token', '_method');
         }
 

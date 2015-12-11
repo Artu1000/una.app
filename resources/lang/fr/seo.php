@@ -42,9 +42,10 @@ return [
         "create" => "Création d'un rôle utilisateur",
     ],
     "users"       => [
-        "index"  => "Gestion des utilisateurs",
-        "edit"   => "Édition d'un utlisateur",
-        "create" => "Création d'un rôle",
+        "index"   => "Gestion des utilisateurs",
+        "edit"    => "Édition d'un utlisateur",
+        "create"  => "Création d'un rôle",
+        "profile" => "Mon profil",
     ],
     "home"        => [
         "slide" => [
@@ -52,5 +53,10 @@ return [
             "edit"   => "Édition d'une diapo",
         ],
         "edit"  => "Édition de la page d'accueil",
+    ],
+    "partners"    => [
+        "index"  => "Gestion des partenaires",
+        "edit"   => "Édition d'un partenaire",
+        "create" => "Création d'un partenaire",
     ],
 ];

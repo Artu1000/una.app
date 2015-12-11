@@ -5,8 +5,15 @@ namespace App\Models;
 class Partner extends _BaseModel
 {
 
-    public function __construct()
+    /**
+     * Partner constructor.
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
     {
+        // we set the object attributes
+        $this->attributes = $attributes;
+
         // we define the table name
         $this->table = 'partners';
 
@@ -23,7 +30,7 @@ class Partner extends _BaseModel
         $this->sizes = [
             'logo' => [
                 'admin' => [40, 40],
-                'logo'  => [null, 300],
+                'logo'  => [null, 100],
             ],
         ];
 

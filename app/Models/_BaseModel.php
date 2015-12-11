@@ -2,40 +2,10 @@
 
 namespace App\Models;
 
-use Cartalyst\Sentinel\Users\EloquentUser as SentinelUser;
+use Illuminate\Database\Eloquent\Model;
 
-abstract class _BaseModel extends SentinelUser
+abstract class _BaseModel extends Model
 {
-
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = '';
-
-    /**
-     * The attributes that are not assignable.
-     *
-     * @var string
-     */
-    protected $guarded = [
-        'id'
-    ];
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [];
-
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = [];
 
     /**
      * The available sizes of the model images.
@@ -49,23 +19,35 @@ abstract class _BaseModel extends SentinelUser
      *
      * @var array
      */
-    protected $public_path = '';
+    protected $public_path;
 
     /**
      * The public image folder to target
      *
      * @var array
      */
-    protected $storage_path = '';
-
+    protected $storage_path;
 
     /**
      * @param $file_name
      * @return string
      */
-    public function imagePath($file_name)
+    public function imagePath($file_name, $key = null, $size = null)
     {
-        return url($this->public_path . '/' . $file_name);
+        // if the key / size are not given
+        if (!$key || !$size) {
+            // we return the original image path
+            return url($this->public_path . '/' . $file_name);
+        }
+        try {
+            // we return the sized image path
+            list($name, $ext) = explode('.', $file_name);
+
+            return url($this->public_path . '/' . $name . '_' . $size . '.' . $ext);
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return 'error';
+        }
     }
 
     /**
@@ -111,9 +93,10 @@ abstract class _BaseModel extends SentinelUser
      */
     public function imageName($key)
     {
-        if(!in_array($key, $this->sizes)){
+        if (!array_key_exists($key, $this->sizes)) {
             throw new \InvalidArgumentException('The key must be declared into the eloquent object sizes.');
         };
+
         return $this->id . '_' . $key;
     }
 }

@@ -8,39 +8,31 @@ class PartnersTableSeeder extends Seeder
     {
         $partner_repo = app()->make(App\Repositories\Partner\PartnerRepositoryInterface::class);
 
-        $partner_repo->create([
-            'name'     => 'Ville de Nantes',
-            'logo'     => 'img/home/logo-ville-nantes.png',
-            'url'      => 'http://www.nantes.fr',
-            'position' => 1,
-            'active'   => true,
-        ]);
-
         $partner_repo->createMultiple([
             [
                 'name'     => 'Ville de Nantes',
-                'logo'     => 'img/home/logo-ville-nantes.png',
+                'logo'     => null,
                 'url'      => 'http://www.nantes.fr',
                 'position' => 1,
                 'active'   => true,
             ],
             [
                 'name'     => 'Université de Nantes',
-                'logo'     => 'img/home/logo-univ-nantes.png',
+                'logo'     => null,
                 'url'      => 'http://www.univ-nantes.fr',
                 'position' => 2,
                 'active'   => true,
             ],
             [
                 'name'     => 'Fédération Française d\'Aviron (FFA)',
-                'logo'     => 'img/home/logo-ffa.png',
+                'logo'     => null,
                 'url'      => 'http://avironfrance.fr',
                 'position' => 3,
                 'active'   => true,
             ],
             [
                 'name'     => 'Fédération Française des Sports Universitaires',
-                'logo'     => 'img/home/logo-ffsu.png',
+                'logo'     => null,
                 'url'      => 'http://www.sport-u.com',
                 'position' => 4,
                 'active'   => true,

@@ -77,15 +77,8 @@ return [
     "unique"               => "La valeur du champ <b>:attribute</b> est déjà utilisée.",
     "url"                  => "Le format de l'URL de <b>:attribute</b> n'est pas valide.",
 
-    "image_size"         => "<b>:attribute</b> doit être de <b>:width</b> de large et <b>:height</b> de haut",
-//    "between"            => "entre <b>:size1</b> et <b>:size2</b> pixels",
-    "lessthan"           => "moins de <b>:size</b> pixels",
-    "lessthanorequal"    => "plus petit ou égal à <b>:size</b> pixels",
-    "greaterthan"        => "plus grand que <b>:size</b> pixels",
-    "greaterthanorequal" => "plus grand ou égal à <b>:size</b> pixels",
-    "equal"              => "<b>:size</b> pixels",
-    "anysize"            => "n'importe quelle taille",
-    "image_aspect"       => "Le ratio de </b>:attribute</b> doit être de :aspect",
+    "image_size"   => "<b>:attribute</b> doit être :width de large et :height de haut.",
+    'image_aspect' => 'Le ratio de <b>:attribute</b> doit être de :aspect',
 
     /*
     |--------------------------------------------------------------------------
@@ -145,6 +138,10 @@ return [
         "picto"                 => "Picto",
         "background_image"      => "Image de fond",
         "previous_slide_id"     => "Diapo précédente",
+        "photo"                 => "Photo",
+        "logo"                  => "Logo",
+        "url"                   => "Url",
+        "previous_partner_id"   => "Partenaire précédent",
     ],
 
 ];

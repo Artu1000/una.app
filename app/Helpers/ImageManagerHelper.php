@@ -58,7 +58,7 @@ class ImageManagerHelper
             $optimized_original_image = \Image::make($storage_path . '/' . $file_name . '.' . $extension);
 
             // we resize the image
-            switch(true){
+            switch (true) {
                 case $size[0] && $size[1] :
                     $optimized_original_image->fit($size[0], $size[1], function ($constraint) {
                         $constraint->upsize();
@@ -140,12 +140,15 @@ class ImageManagerHelper
         // we delete each resized image
         foreach ($sizes as $key => $size) {
             $path = $storage_path . '/' . $file_name . '_' . $key . '.' . $extension;
-            unlink($path);
-            // we check that the image file has really been deleted
+            // we tcheck if the path exists
             if (is_file($path)) {
-                throw new \Exception('The source image removal went wrong. The file ' .
-                    $path . 'still exists after removal.');
-            };
+                unlink($path);
+                // we check that the image file has really been deleted
+                if (is_file($path)) {
+                    throw new \Exception('The source image removal went wrong. The file ' .
+                        $path . 'still exists after removal.');
+                };
+            }
         }
 
         // we delete the main image file

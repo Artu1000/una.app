@@ -37,8 +37,7 @@ class User extends SentinelUser
     {
         return [
             'admin'   => [40, 40],
-            'picture' => [145, 160],
-            'large' => [750, null]
+            'picture' => [145, 160]
         ];
     }
 

@@ -17,8 +17,8 @@ class CreatePartnersTable extends Migration
             $table->string('name')->nullable();
             $table->string('logo')->nullable();
             $table->string('url')->nullable();
-            $table->integer('position')->nullable();
-            $table->boolean('active');
+            $table->integer('position')->unique();
+            $table->boolean('active')->default(false);
 
             $table->timestamps();
             $table->engine = 'InnoDB';

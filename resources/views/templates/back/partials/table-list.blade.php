@@ -110,16 +110,8 @@
                         </div>
                         {{-- show image --}}
                     @elseif(isset($column['image']) && !empty($image = $column['image']) && !empty($entity->getAttribute($column['key'])))
-                        <a href="{{ route('image', [
-                                'filename' => $entity->getAttribute($column['key']),
-                                'storage_path' => $image['storage_path'],
-                                'size' => $image['size']['detail']
-                                ]) }}" data-lity>
-                            <img class="img-thumbnail @if(isset($image['class'])){{ $image['class'] }} @endif" src="{{ route('image', [
-                                'filename' => $entity->getAttribute($column['key']),
-                                'storage_path' => $image['storage_path'],
-                                'size' => $image['size']['thumbnail']
-                                ]) }}">
+                        <a href="{{ $entity->imagePath($entity->getAttribute($column['key']), $column['key'], $image['size']['detail']) }}" data-lity>
+                            <img class="img-thumbnail @if(isset($image['class'])){{ $image['class'] }} @endif" src="{{ $entity->imagePath($entity->getAttribute($column['key']), $column['key'], $image['size']['thumbnail']) }}">
                         </a>
                         {{-- show value --}}
                     @else
