@@ -103,12 +103,13 @@ class ProjectInstall extends Command
 
         $this->line(' ');
 
-        // migrations
+        // we execute migrations
         $this->line('Executing migrations ...');
         \Console::execWithOutput('php artisan migrate', $this);
         $this->info('✔ Migration done');
 
-        $this->line(' ');
+        // we prepare symlinks
+        $this->call('npm:install');
 
         // seeds
         if ($this->ask('Do you want to execute the database seed on your project ? [y/N]', false)) {

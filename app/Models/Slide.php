@@ -44,6 +44,10 @@ class Slide extends Model
     ];
 
     protected $sizes = [
+        'picto'            => [
+            'admin' => [40, 40],
+            'picto' => [300, 300],
+        ],
         'background_image' => [
             'admin' => [40, 40],
             '767'   => [767, null],
@@ -51,10 +55,6 @@ class Slide extends Model
             '1199'  => [1199, null],
             '1919'  => [1919, null],
             '2560'  => [2560, 1440],
-        ],
-        'picto'            => [
-            'admin' => [40, 40],
-            'picto' => [300, 300],
         ],
     ];
 
@@ -77,6 +77,15 @@ class Slide extends Model
         }
 
         return null;
+    }
+
+    /**
+     * @param $image_name
+     * @return string
+     */
+    public function imagePath($image_name)
+    {
+        return 'img/slides/' . $image_name;
     }
 
     /**

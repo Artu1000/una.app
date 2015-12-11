@@ -2,42 +2,36 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Partner extends Model
+class Partner extends _BaseModel
 {
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'partners';
 
-    /**
-     * The attributes that are not assignable.
-     *
-     * @var string
-     */
-    protected $guarded = [
-        'id'
-    ];
+    public function __construct()
+    {
+        // we define the table name
+        $this->table = 'partners';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'logo',
-        'url'
-    ];
+        // we define the fillable attributes
+        $this->fillable = [
+            'name',
+            'logo',
+            'url',
+            'position',
+            'active',
+        ];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = [
-    ];
+        // we define the image(s) size(s)
+        $this->sizes = [
+            'logo' => [
+                'admin' => [40, 40],
+                'logo'  => [null, 300],
+            ],
+        ];
+
+        // we define the public path to retrieve files
+        $this->public_path = 'img/partners';
+
+        // we define the storage path to store files
+        $this->storage_path = 'app/partners';
+    }
+
 }

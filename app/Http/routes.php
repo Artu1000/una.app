@@ -77,6 +77,15 @@ $route = Route::group($group, function () {
     Route::put(LaravelLocalization::transRoute('routes.slides.update'), ['as' => 'slides.update', 'uses' => 'Home\SlidesController@update']);
     Route::delete(LaravelLocalization::transRoute('routes.slides.destroy'), ['as' => 'slides.destroy', 'uses' => 'Home\SlidesController@destroy']);
 
+    // partners
+    Route::get(LaravelLocalization::transRoute('routes.partners.index'), ['as' => 'partners.index', 'uses' => 'Partner\PartnersController@index']);
+    Route::get(LaravelLocalization::transRoute('routes.partners.create'), ['as' => 'partners.create', 'uses' => 'Partner\PartnersController@create']);
+    Route::post(LaravelLocalization::transRoute('routes.partners.store'), ['as' => 'partners.store', 'uses' => 'Partner\PartnersController@store']);
+    Route::get(LaravelLocalization::transRoute('routes.partners.edit'), ['as' => 'partners.edit', 'uses' => 'Partner\PartnersController@edit']);
+    Route::put(LaravelLocalization::transRoute('routes.partners.update'), ['as' => 'partners.update', 'uses' => 'Partner\PartnersController@update']);
+    Route::delete(LaravelLocalization::transRoute('routes.partners.destroy'), ['as' => 'partners.destroy', 'uses' => 'Partner\PartnersController@destroy']);
+    Route::post(LaravelLocalization::transRoute('routes.partners.activate'), ['as' => 'partners.activate', 'uses' => 'Partner\PartnersController@activate']);
+
     // logout
     Route::get(LaravelLocalization::transRoute('routes.logout'), ['as' => 'logout', 'uses' => 'Auth\AuthController@logout']);
 

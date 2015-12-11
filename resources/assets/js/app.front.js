@@ -127,8 +127,13 @@ var responsiveBackgroundImage = {
         $('.background_responsive_img').each(function (index, element) {
             // we get the url of the background-image
             var bg_img_url = $(this).attr('data-background-image');
-            // we remove the extension (has to be jpg)
-            bg_img_url = bg_img_url.substr(0, bg_img_url.length - 4);
+
+            // we remove the extension
+            var segments = bg_img_url.split('.');
+            bg_img_url = segments.filter(function(segment, key){
+                return key != (segments.length - 1);
+            }).join('.');
+
             // we add the responsive size
             $(this).css('background-image', 'url(' + bg_img_url + '_' + responsiveBackgroundImage.responsive_width + '.jpg)');
         });

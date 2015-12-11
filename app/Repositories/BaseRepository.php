@@ -93,7 +93,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function all($columns = ['*'])
+    public function all()
     {
         $this->newQuery()->eagerLoad();
         $models = $this->query->get();
