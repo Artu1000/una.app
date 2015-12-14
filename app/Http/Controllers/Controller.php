@@ -30,6 +30,7 @@ abstract class Controller extends BaseController
             'app_name'        => config('settings.app_name'),
             'loading_spinner' => config('settings.loading_spinner'),
             'locale'          => config('app.locale'),
+            'multilingual'    => config('settings.multilingual'),
         ]);
 
         // load modal if an alert is waiting
@@ -57,7 +58,8 @@ abstract class Controller extends BaseController
         array $confirm_config,
         array $search_config = [],
         $enable_lines_choice = false
-    ) {
+    )
+    {
         // we set the default data
         $default_lines = 20;
         $default_sort_by = array_first($columns, function ($key, $column) {

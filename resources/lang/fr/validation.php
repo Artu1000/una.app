@@ -110,6 +110,8 @@ return [
 
     "attributes" => [
         "name"                  => "Nom",
+        "name_fr"               => "Nom (FR)",
+        "name_en"               => "Nom (EN)",
         "username"              => "Pseudo",
         "email"                 => "E-mail",
         "remember"              => "Se souvenir de moi",

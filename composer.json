@@ -16,7 +16,8 @@
         "mcamara/laravel-localization": "^1.0",
         "cviebrock/image-validator": "^2.0",
         "davejamesmiller/laravel-breadcrumbs": "^3.0",
-        "erusev/parsedown": "dev-master"
+        "erusev/parsedown": "dev-master",
+        "dimsav/laravel-translatable": "^5.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

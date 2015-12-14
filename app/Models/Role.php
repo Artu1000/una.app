@@ -3,9 +3,14 @@
 namespace App\Models;
 
 use Cartalyst\Sentinel\Roles\EloquentRole as SentinelRole;
+use \Dimsav\Translatable\Translatable;
 
 class Role extends SentinelRole
 {
+
+    use Translatable;
+
+    public $translatedAttributes = ['name'];
 
     /**
      * The attributes that are mass assignable.

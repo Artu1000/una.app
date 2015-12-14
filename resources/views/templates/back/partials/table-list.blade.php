@@ -85,7 +85,7 @@
                                 @if(isset($column['button']) && $column['button'] === true)
                             </button>
                         @endif
-                        {{-- show value from collection --}}
+                    {{-- show value from collection --}}
                     @elseif(is_a($entity->getAttribute($column['key']), '\Illuminate\Database\Eloquent\Collection') && isset($column['collection']) && !empty($column['collection']))
                         @foreach($entity->getAttribute($column['key']) as $object)
                             @if(isset($column['button']['attribute']) && !empty($column['button']['attribute']))
@@ -96,18 +96,18 @@
                                 </button>
                             @endif
                         @endforeach
-                        {{-- show activation toggle --}}
+                    {{-- show activation toggle --}}
                     @elseif(isset($column['activate']) && !empty($column['activate']))
                         <div class="swipe-group">
                             <input class="swipe" id="activate_{{ $entity->id }}" type="checkbox" name="{{ $entity->id }}" @if($entity->getAttribute($column['key'])) checked @endif>
                             <label class="swipe-btn activate" data-url="{{ route($column['activate']) }}" data-id="{{ $entity->id }}" for="activate_{{ $entity->id }}"></label>
                         </div>
-                        {{-- show image --}}
+                    {{-- show image --}}
                     @elseif(isset($column['image']) && !empty($image = $column['image']) && !empty($entity->getAttribute($column['key'])))
                         <a href="{{ $entity->imagePath($entity->getAttribute($column['key']), $column['key'], $image['size']['detail']) }}" data-lity>
                             <img class="img-thumbnail @if(isset($image['class'])){{ $image['class'] }} @endif" src="{{ $entity->imagePath($entity->getAttribute($column['key']), $column['key'], $image['size']['thumbnail']) }}">
                         </a>
-                        {{-- show value --}}
+                    {{-- show value --}}
                     @else
                         @if(isset($column['button']) && $column['button'] === true && !empty($entity->getAttribute($column['key'])))
                             <button class="btn {{ $column['key'] }}">
@@ -127,8 +127,10 @@
             <td class="actions text-right">
 
                 <form role="form" class="form-inline" method="GET" action="{{ route($tableListData['routes']['edit'], $entity->id) }}">
-                    <a href="#" class="text-primary submit-form spin-on-click">
-                        <i class="fa fa-pencil-square" title="{{ trans('global.action.edit') }}"></i>
+                    <a href="#" class="submit-form">
+                        <button class="btn btn-primary btn-rounded btn-sm spin-on-click">
+                            <i class="fa fa-pencil" title="{{ trans('global.action.edit') }}"></i>
+                        </button>
                     </a>
                 </form>
 
@@ -136,8 +138,10 @@
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="_id" value="{{ $entity->id }}">
-                    <a href="#" class="text-danger confirm" data-confirm="@foreach($confirm['attributes'] as $attribute){{ $entity->getAttribute($attribute) }} @endforeach">
-                        <i class="fa fa-trash" title="{{ trans('global.action.delete') }}"></i>
+                    <a href="#" class="confirm" data-confirm="@foreach($confirm['attributes'] as $attribute){{ $entity->getAttribute($attribute) }} @endforeach">
+                        <button class="btn btn-danger btn-rounded btn-sm">
+                            <i class="fa fa-times" title="{{ trans('global.action.delete') }}"></i>
+                        </button>
                     </a>
                 </form>
             </td>

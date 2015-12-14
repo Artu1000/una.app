@@ -145,7 +145,7 @@ class PermissionsController extends Controller
         $role_list->prepend($master_role);
 
         // if the current entity is the first one
-        if($role->rank === 1){
+        if ($role->rank === 1) {
             // we set the parent role as null
             $parent_role = null;
         } else {
@@ -226,13 +226,31 @@ class PermissionsController extends Controller
         // we flash the request
         $request->flash();
 
+        // we set the rules according to the multilingual config
+        if (config('settings.multilingual')) {
+            $rules = [
+                'name_fr'        => 'required|string',
+                'name_en'        => 'required|string',
+                'slug'           => 'required|alpha_dash|unique:roles,slug',
+                'parent_role_id' => 'required|numeric|exists:roles,id',
+            ];
+        } else {
+            $rules = [
+                'name'           => 'required|string',
+                'slug'           => 'required|alpha_dash|unique:roles,slug',
+                'parent_role_id' => 'required|numeric|exists:roles,id',
+            ];
+        }
+
+        if ($request->get('parent_role_id') === '0') {
+            $rules['parent_role_id'] = 'numeric';
+        } else {
+            $rules['parent_role_id'] = 'required|numeric|exists:slides,id';
+        }
+
         // we check the inputs
         $errors = [];
-        $validator = \Validator::make($request->all(), [
-            'name'           => 'required|string|unique:roles,name',
-            'slug'           => 'required|alpha_dash|unique:roles,slug',
-            'parent_role_id' => 'required|numeric|exists:roles,id',
-        ]);
+        $validator = \Validator::make($request->all(), $rules);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
         }
@@ -247,13 +265,21 @@ class PermissionsController extends Controller
             // we update the roles hierarchy
             $new_rank = \Sentinel::getRoleRepository()->createModel()->updateHierarchy($request->get('parent_role_id'));
 
-            // we create the role
-            $role = \Sentinel::getRoleRepository()->createModel()->create([
+            // we set the data for the role creation
+            $data = [
                 'slug'        => str_slug($request->get('slug')),
-                'name'        => $request->get('name'),
                 'rank'        => $new_rank,
                 'permissions' => $request->except('_token', 'name', 'slug', 'parent_role'),
-            ]);
+            ];
+            if (config('settings.multilingual')) {
+                $data['fr'] = ['name' => $request->get('name_fr')];
+                $data['en'] = ['name' => $request->get('name_en')];
+            } else {
+                $data['name'] = $request->get('name_fr');
+            }
+
+            // we create the role
+            $role = \Sentinel::getRoleRepository()->createModel()->create($data);
 
             // we sanitize the roles ranks
             \Sentinel::getRoleRepository()->createModel()->sanitizeRanks();

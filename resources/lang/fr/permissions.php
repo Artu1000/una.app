@@ -91,8 +91,9 @@ return [
             "failure" => "Une erreur est survenue lors de la mise à jour du rôle <b>:name</b>.",
         ],
         "rank"   => [
-            "denied" => "Vous n'avez pas droits nécessaire pour :action un utilisateur avec un rôle hiérarchiquement supérieur au votre.",
+            "denied" => "Vous n'avez pas les droits nécessaires pour :action un utilisateur possédant un rôle hiérarchiquement supérieur au votre.",
             "action" => [
+                "create" => "créer",
                 "edit"   => "éditer",
                 "delete" => "supprimer",
             ],

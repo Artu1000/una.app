@@ -13,6 +13,7 @@ class UsersTableSeeder extends Seeder
                 unlink($file);
         }
 
+
         // we create a user
         $user = Sentinel::register([
             'last_name' => 'LORENT',
@@ -23,15 +24,16 @@ class UsersTableSeeder extends Seeder
             'board' => config('user.board_key.leading-board'),
             'password' => 'admin'
         ]);
-
         // we activate the user
         $activation = Activation::create($user);
         Activation::complete($user, $activation->code);
 
+
         // we attach the user to the admin role
-        $admin = Sentinel::findRoleBySlug('admin');
+        $admin = \Sentinel::findRoleBySlug('admin');
         $admin->users()->attach($user);
 
+        // we create a user
         $user = Sentinel::register([
             'last_name' => 'GIRARD',
             'first_name' => 'Lionel',
@@ -42,8 +44,10 @@ class UsersTableSeeder extends Seeder
         ]);
         // we attach the user to the user role
         $user_role = Sentinel::findRoleBySlug('user');
-        $admin->users()->attach($user);
+        $user_role->users()->attach($user);
 
+
+        // we create a user
         $user = Sentinel::register([
             'last_name' => 'VARAINE',
             'first_name' => 'David',
@@ -55,6 +59,8 @@ class UsersTableSeeder extends Seeder
         // we attach the user to the user role
         $user_role->users()->attach($user);
 
+
+        // we create a user
         $user = Sentinel::register([
             'last_name' => 'PLANCHENAULT',
             'first_name' => 'Thomas',
@@ -65,6 +71,8 @@ class UsersTableSeeder extends Seeder
         ]);
         $user_role->users()->attach($user);
 
+
+        // we create a user
         $user = Sentinel::register([
             'last_name' => 'DISCAZEAU',
             'first_name' => 'Gérard',
@@ -75,6 +83,8 @@ class UsersTableSeeder extends Seeder
         ]);
         $user_role->users()->attach($user);
 
+
+        // we create a user
         $user = Sentinel::register([
             'last_name' => 'PLANTIER',
             'first_name' => 'Christophe',
@@ -85,6 +95,8 @@ class UsersTableSeeder extends Seeder
         ]);
         $user_role->users()->attach($user);
 
+
+        // we create a user
         $user = Sentinel::register([
             'last_name' => 'PROTT',
             'first_name' => 'Thierry',
@@ -95,6 +107,8 @@ class UsersTableSeeder extends Seeder
         ]);
         $user_role->users()->attach($user);
 
+
+        // we create a user
         $user = Sentinel::register([
             'last_name' => 'ABRAHAMSON',
             'first_name' => 'Jeff',
@@ -105,6 +119,8 @@ class UsersTableSeeder extends Seeder
         ]);
         $user_role->users()->attach($user);
 
+
+        // we create a user
         $user = Sentinel::register([
             'last_name' => 'LECIEUX',
             'first_name' => 'Yann',
@@ -114,6 +130,8 @@ class UsersTableSeeder extends Seeder
         ]);
         $user_role->users()->attach($user);
 
+
+        // we create a user
         $user = Sentinel::register([
             'last_name' => 'BOUZIDI',
             'first_name' => 'Rabah',
@@ -123,6 +141,8 @@ class UsersTableSeeder extends Seeder
         ]);
         $user_role->users()->attach($user);
 
+
+        // we create a user
         $user = Sentinel::register([
             'last_name' => 'CORNUEL',
             'first_name' => 'Benjamin',
@@ -132,6 +152,8 @@ class UsersTableSeeder extends Seeder
         ]);
         $user_role->users()->attach($user);
 
+
+        // we create a user
         $user = Sentinel::register([
             'last_name' => 'MARINGER',
             'first_name' => 'Françoise',
@@ -141,6 +163,8 @@ class UsersTableSeeder extends Seeder
         ]);
         $user_role->users()->attach($user);
 
+
+        // we create a user
         $user = Sentinel::register([
             'last_name' => 'MOUGEL',
             'first_name' => 'Jean-Bruno',
@@ -150,6 +174,8 @@ class UsersTableSeeder extends Seeder
         ]);
         $user_role->users()->attach($user);
 
+
+        // we create a user
         $user = Sentinel::register([
             'last_name' => 'TARDY',
             'first_name' => 'Mickaël',
@@ -159,6 +185,8 @@ class UsersTableSeeder extends Seeder
         ]);
         $user_role->users()->attach($user);
 
+
+        // we create a user
         $user = Sentinel::register([
             'last_name' => 'VESPERINI',
             'first_name' => 'Laurent',

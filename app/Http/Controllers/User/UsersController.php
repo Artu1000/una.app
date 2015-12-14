@@ -146,93 +146,6 @@ class UsersController extends Controller
         return view('pages.back.users-list')->with($data);
     }
 
-    public function edit($id)
-    {
-        // we check the current user permission
-        $required = 'users.view';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
-            return redirect()->back();
-        }
-
-        // we get the user
-        $user = \Sentinel::findById($id);
-
-        // we check if the current user has a role rank high enough to edit the user
-        $edited_user_role = $user->roles->first();
-        $current_user_role = \Sentinel::getUser()->roles->first();
-        if ($edited_user_role && $current_user_role && $edited_user_role->rank < $current_user_role->rank) {
-            \Modal::alert([
-                trans('permissions.message.rank.denied', ['action' => trans('permissions.message.rank.action.edit')]),
-            ], 'error');
-
-            return redirect()->back();
-        }
-
-
-        // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.users.edit');
-
-
-        // we check if the role exists
-        if (!$user) {
-            \Modal::alert([
-                trans('users.message.find.failure'),
-                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
-            ], 'error');
-
-            return redirect()->back();
-        }
-
-        // we convert the database date to the fr/en format
-        if ($birth_date = $user->birth_date) {
-            $user->birth_date = Carbon::createFromFormat('Y-m-d', $birth_date)->format('d/m/Y');
-        }
-
-        // we prepare the data for breadcrumbs
-        $breadcrumbs_data = [
-            $user->first_name . ' ' . $user->last_name,
-        ];
-
-        // prepare data for the view
-        $data = [
-            'seoMeta'          => $this->seoMeta,
-            'user'             => $user,
-            'roles'            => \Sentinel::getRoleRepository()->all(),
-            'breadcrumbs_data' => $breadcrumbs_data,
-        ];
-
-        // return the view with data
-        return view('pages.back.user-edit')->with($data);
-    }
-
-    public function profile()
-    {
-        // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.users.profile');
-
-        // we get the current user
-        $user = \Sentinel::getUser();
-
-        // we convert the database date to the fr/en format
-        if ($birth_date = $user->birth_date) {
-            $user->birth_date = Carbon::createFromFormat('Y-m-d', $birth_date)->format('d/m/Y');
-        }
-
-        // prepare data for the view
-        $data = [
-            'seoMeta' => $this->seoMeta,
-            'user'    => $user,
-            'roles'   => \Sentinel::getRoleRepository()->all(),
-        ];
-
-        // return the view with data
-        return view('pages.back.user-edit')->with($data);
-    }
-
     public function create()
     {
         // SEO Meta settings
@@ -240,7 +153,7 @@ class UsersController extends Controller
 
         // prepare data for the view
         $data = [
-            'roles'   => \Sentinel::getRoleRepository()->all(),
+            'roles'   => \Sentinel::getRoleRepository()->orderBy('rank', 'asc')->get(),
             'seoMeta' => $this->seoMeta,
         ];
 
@@ -260,6 +173,21 @@ class UsersController extends Controller
             return redirect()->back();
         }
 
+        // we check if the new user role is not higher than the role of the current user
+        $new_user_role = \Sentinel::findRoleById($request->get('role'));
+        $current_user_role = \Sentinel::getUser()->roles->first();
+        if ($new_user_role && $current_user_role && $new_user_role->rank < $current_user_role->rank) {
+            // we flash the request
+            $request->flash();
+
+            // we notify the user
+            \Modal::alert([
+                trans('permissions.message.rank.denied', ['action' => trans('permissions.message.rank.action.create')]),
+            ], 'error');
+
+            return redirect()->back();
+        }
+
         // we get the inputs
         $inputs = $request->except('_token');
 
@@ -272,13 +200,16 @@ class UsersController extends Controller
         $errors = [];
         $validator = \Validator::make($inputs, [
             'photo'        => 'image|mimes:jpg,jpeg,png|image_size:>=145,>=160',
-            'gender'       => 'required|in:' . implode(',', array_keys(config('user.gender'))),
+            'gender'       => 'in:' . implode(',', array_keys(config('user.gender'))),
             'last_name'    => 'required|string',
             'first_name'   => 'required|string',
-            'birth_date'   => 'required|date_format:Y-m-d',
-            'phone_number' => 'required|phone:FR',
+            'birth_date'   => 'date_format:Y-m-d',
+            'phone_number' => 'phone:FR',
             'email'        => 'required|email|unique:users,email',
+            'address'      => 'string',
             'zip_code'     => 'digits:5',
+            'city'         => 'string',
+            'country'      => 'string',
             'role'         => 'required|numeric|exists:roles,id',
             'password'     => 'required|min:6|confirmed',
         ]);
@@ -362,6 +293,92 @@ class UsersController extends Controller
         }
     }
 
+    public function edit($id)
+    {
+        // we check the current user permission
+        $required = 'users.view';
+        if (!\Sentinel::getUser()->hasAccess([$required])) {
+            \Modal::alert([
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
+            ], 'error');
+
+            return redirect()->back();
+        }
+
+        // we get the user
+        $user = \Sentinel::findById($id);
+
+        // we check if the current user has a role rank high enough to edit the user
+        $edited_user_role = $user->roles->first();
+        $current_user_role = \Sentinel::getUser()->roles->first();
+        if ($edited_user_role && $current_user_role && $edited_user_role->rank < $current_user_role->rank) {
+            \Modal::alert([
+                trans('permissions.message.rank.denied', ['action' => trans('permissions.message.rank.action.edit')]),
+            ], 'error');
+
+            return redirect()->back();
+        }
+
+        // SEO Meta settings
+        $this->seoMeta['page_title'] = trans('seo.users.edit');
+
+
+        // we check if the role exists
+        if (!$user) {
+            \Modal::alert([
+                trans('users.message.find.failure'),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
+            ], 'error');
+
+            return redirect()->back();
+        }
+
+        // we convert the database date to the fr/en format
+        if ($birth_date = $user->birth_date) {
+            $user->birth_date = Carbon::createFromFormat('Y-m-d', $birth_date)->format('d/m/Y');
+        }
+
+        // we prepare the data for breadcrumbs
+        $breadcrumbs_data = [
+            $user->first_name . ' ' . $user->last_name,
+        ];
+
+        // prepare data for the view
+        $data = [
+            'seoMeta'          => $this->seoMeta,
+            'user'             => $user,
+            'roles'            => \Sentinel::getRoleRepository()->orderBy('rank', 'asc')->get(),
+            'breadcrumbs_data' => $breadcrumbs_data,
+        ];
+
+        // return the view with data
+        return view('pages.back.user-edit')->with($data);
+    }
+
+    public function profile()
+    {
+        // SEO Meta settings
+        $this->seoMeta['page_title'] = trans('seo.users.profile');
+
+        // we get the current user
+        $user = \Sentinel::getUser();
+
+        // we convert the database date to the fr/en format
+        if ($birth_date = $user->birth_date) {
+            $user->birth_date = Carbon::createFromFormat('Y-m-d', $birth_date)->format('d/m/Y');
+        }
+
+        // prepare data for the view
+        $data = [
+            'seoMeta' => $this->seoMeta,
+            'user'    => $user,
+            'roles'   => \Sentinel::getRoleRepository()->all(),
+        ];
+
+        // return the view with data
+        return view('pages.back.user-edit')->with($data);
+    }
+
     public function update(Request $request)
     {
         // we check the current user permission
@@ -383,6 +400,32 @@ class UsersController extends Controller
             return redirect()->back();
         }
 
+        // we check if the current user has a role rank high enough to edit the user
+        $edited_user_role = $user->roles->first();
+        $current_user_role = \Sentinel::getUser()->roles->first();
+        if ($edited_user_role && $current_user_role && $edited_user_role->rank < $current_user_role->rank) {
+            \Modal::alert([
+                trans('permissions.message.rank.denied', ['action' => trans('permissions.message.rank.action.edit')]),
+            ], 'error');
+
+            return redirect()->back();
+        }
+
+        // we check if the chosen role is not higher than the role of the current user
+        $new_user_role = \Sentinel::findRoleById($request->get('role'));
+        $current_user_role = \Sentinel::getUser()->roles->first();
+        if ($new_user_role && $current_user_role && $new_user_role->rank < $current_user_role->rank) {
+            // we flash the request
+            $request->flash();
+
+            // we notify the user
+            \Modal::alert([
+                trans('permissions.message.rank.denied', ['action' => trans('permissions.message.rank.action.edit')]),
+            ], 'error');
+
+            return redirect()->back();
+        }
+
         // we convert the "on" value to the activation order to a boolean value
         $request->merge([
             'activation' => filter_var($request->get('activation'), FILTER_VALIDATE_BOOLEAN),
@@ -392,13 +435,16 @@ class UsersController extends Controller
         $rules = [
             '_id'          => 'required|numeric|exists:users,id',
             'photo'        => 'image|mimes:jpg,jpeg,png|image_size:>=145,>=160',
-            'gender'       => 'required|in:' . implode(',', array_keys(config('user.gender'))),
+            'gender'       => 'in:' . implode(',', array_keys(config('user.gender'))),
             'last_name'    => 'required|string',
             'first_name'   => 'required|string',
-            'birth_date'   => 'required|date_format:Y-m-d',
-            'phone_number' => 'required|phone:FR',
+            'birth_date'   => 'date_format:Y-m-d',
+            'phone_number' => 'phone:FR',
             'email'        => 'required|email|unique:users,email,' . $request->get('_id'),
+            'address'      => 'string',
             'zip_code'     => 'digits:5',
+            'city'         => 'string',
+            'country'      => 'string',
             'password'     => 'min:6|confirmed',
         ];
 

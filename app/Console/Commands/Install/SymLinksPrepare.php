@@ -41,7 +41,21 @@ class SymLinksPrepare extends Command
 
         $this->line('Preparing symlinks ...');
 
-        // we prepare the symlinks we want to prepare
+        // we remove all the symlinks found into the public/img folder
+        $this->line('Removing existing symlinks ...');
+        $links = [];
+        foreach(scandir(public_path('img')) as $item){
+            if(is_link($link = public_path('img/' . $item))){
+                $links[] = $link;
+                unlink($link);
+            }
+        }
+        $this->info('✔ Existing symlinks removed :');
+        foreach($links as $link){
+            $this->line('- ' . $link);
+        }
+
+        // we prepare the symlinks we want to add
         $symlinks = [
             [
                 'storage' => app()->make(\App\Repositories\Slide\SlideRepositoryInterface::class)
@@ -61,16 +75,21 @@ class SymLinksPrepare extends Command
             ],
         ];
 
-        // we create the symlinks that are not already are operationnals
+        // we create the symlinks that are not already are operational
+        $links = [];
         foreach ($symlinks as $symlink) {
             if (!is_link($symlink['public'])) {
                 $command = 'ln -s ' . $symlink['storage'] . ' ' . $symlink['public'];
                 \Console::execWithOutput($command, $this);
-                $this->info('✔ "' . $symlink['public'] . '" symlink created');
+                $links[] = $symlink['public'];
             }
         }
-
-        $this->info('✔ Symlinks operational');
+        if(!empty($links)){
+            $this->info('✔ New symlinks created :');
+            foreach($links as $link){
+                $this->line('- ' . $link);
+            }
+        }
 
         $this->line(' ');
     }

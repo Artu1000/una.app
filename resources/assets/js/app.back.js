@@ -23,6 +23,23 @@ function evalChildrenCheckboxes(elt) {
 
 $(function () {
 
+    // manage language inputs visibility
+    if(app.multilingual){
+        var model_trans_language = app.locale;
+        function showLocaleFields(){
+            $('.model_trans_input').addClass('hidden');
+            $('.model_trans_input.' + model_trans_language).removeClass('hidden');
+        }
+        showLocaleFields();
+        $('.model_trans_manager li').click(function(e){
+            e.preventDefault();
+            $('.model_trans_manager li').removeClass('active');
+            $(this).addClass('active');
+            model_trans_language = $(this).children('a').attr('href');
+            showLocaleFields();
+        });
+    }
+
     // custom file input
     $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
         var input = $(this).parents('.input-group').find(':text'),
