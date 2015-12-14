@@ -61,8 +61,13 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_name"><i class="fa fa-font"></i></span>
-                                    <input id="input_name" class="form-control capitalize-first-letter model_trans_input fr" type="text" name="name_fr" value="{{ !empty(old('name_fr')) ? old('name_fr') : (isset($role) && isset($role->translate('fr')->name) ? $role->translate('fr')->name : null) }}" placeholder="{{ trans('permissions.page.label.name') }}">
-                                    <input id="input_name" class="form-control capitalize-first-letter model_trans_input en hidden" type="text" name="name_en" value="{{ !empty(old('name_en')) ? old('name_en') : (isset($role) && isset($role->translate('en')->name) ? $role->translate('en')->name : null) }}" placeholder="{{ trans('permissions.page.label.name') }}">
+                                    @if(config('settings.multilingual'))
+                                        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                            <input id="input_name" class="form-control capitalize-first-letter model_trans_input {{ $localeCode }} @if($localeCode !== config('app.locale'))hidden @endif" type="text" name="name_{{ $localeCode }}" value="{{ !empty(old('name_' . $localeCode)) ? old('name_' . $localeCode) : (isset($role) && isset($role->translate($localeCode)->name) ? $role->translate($localeCode)->name : null) }}" placeholder="{{ trans('permissions.page.label.name') }}">
+                                        @endforeach
+                                    @else
+                                        <input id="input_name" class="form-control capitalize-first-letter model_trans_input" type="text" name="name" value="{{ !empty(old('name')) ? old('name') : (isset($role) && isset($role->name) ? $role->name : null) }}" placeholder="{{ trans('permissions.page.label.name') }}">
+                                    @endif
                                 </div>
                             </div>
 
@@ -84,7 +89,7 @@
                                 </div>
                             </div>
 
-                            {{-- rank --}}
+                            {{-- parent role --}}
                             <label for="input_parent_role" class="required">{{ trans('permissions.page.label.parent_role') }}</label>
                             <div class="form-group">
                                 <select class="form-control" name="parent_role_id" id="input_parent_role">
