@@ -9,7 +9,7 @@
             <div class="col-sm-12">
 
                 {{-- Title--}}
-                <h2><i class="fa fa-life-ring"></i> {{ trans('users.page.title.management') }}</h2>
+                <h2><i class="fa fa-users"></i> {{ trans('users.page.title.management') }}</h2>
 
                 <hr>
 
