@@ -23,7 +23,7 @@ class HomeTableSeeder extends Seeder
 
         file_put_contents(storage_path('app/home/content.json'), json_encode($inputs));
 
-        $slide_repo = App::make(App\Repositories\Slide\SlideRepositoryInterface::class);
+        $slide_repo = app(\App\Repositories\Slide\SlideRepositoryInterface::class);
 
         // una
         $slide = $slide_repo->create([

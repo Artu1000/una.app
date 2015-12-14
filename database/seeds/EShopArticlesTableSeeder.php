@@ -6,7 +6,7 @@ class EShopArticlesTableSeeder extends Seeder
 {
     public function run()
     {
-        $e_shop_article_repo = App::make(App\Repositories\EShop\EShopArticleRepositoryInterface::class);
+        $e_shop_article_repo = app(\App\Repositories\EShop\EShopArticleRepositoryInterface::class);
 
         $e_shop_article_repo->createMultiple([
             [

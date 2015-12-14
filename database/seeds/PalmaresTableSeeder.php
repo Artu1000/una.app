@@ -6,8 +6,8 @@ class PalmaresTableSeeder extends Seeder
 {
     public function run()
     {
-        $event_repo = App::make(App\Repositories\Palmares\PalmaresEventRepositoryInterface::class);
-        $result_repo = App::make(App\Repositories\Palmares\PalmaresResultRepositoryInterface::class);
+        $event_repo = app(\App\Repositories\Palmares\PalmaresEventRepositoryInterface::class);
+        $result_repo = app(\App\Repositories\Palmares\PalmaresResultRepositoryInterface::class);
 
         $event = $event_repo->create([
             'category_id' => config('palmares.categories_keys.france-ffa-senior'),

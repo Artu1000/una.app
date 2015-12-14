@@ -6,7 +6,7 @@ class PagesTableSeeder extends Seeder
 {
     public function run()
     {
-        $page_repo = App::make(App\Repositories\Page\PageRepositoryInterface::class);
+        $page_repo = app(\App\Repositories\Page\PageRepositoryInterface::class);
 
         $page_repo->createMultiple([
             [

@@ -6,7 +6,7 @@ class NewsTableSeeder extends Seeder
 {
     public function run()
     {
-        $news_repo = App::make(App\Repositories\News\NewsRepositoryInterface::class);
+        $news_repo = app(\App\Repositories\News\NewsRepositoryInterface::class);
 
         $news_repo->createMultiple([
             [

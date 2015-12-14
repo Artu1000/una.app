@@ -6,7 +6,7 @@ class RegistrationPricesTableSeeder extends Seeder
 {
     public function run()
     {
-        $prices_repo = App::make(App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface::class);
+        $prices_repo = app(\App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface::class);
 
         $prices_repo->createMultiple([
             [

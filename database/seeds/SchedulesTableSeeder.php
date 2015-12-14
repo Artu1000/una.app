@@ -6,7 +6,7 @@ class SchedulesTableSeeder extends Seeder
 {
     public function run()
     {
-        $chedule_repo = App::make(App\Repositories\Schedule\ScheduleRepositoryInterface::class);
+        $chedule_repo = app(\App\Repositories\Schedule\ScheduleRepositoryInterface::class);
 
         $chedule_repo->createMultiple([
             // monday
