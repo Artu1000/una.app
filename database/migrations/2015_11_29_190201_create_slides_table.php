@@ -19,6 +19,7 @@ class CreateSlidesTable extends Migration
             $table->string('picto')->nullable();
             $table->string('background_image')->nullable();
             $table->integer('position')->unique();
+            $table->boolean('active')->default(false);
 
             $table->timestamps();
             $table->engine = 'InnoDB';

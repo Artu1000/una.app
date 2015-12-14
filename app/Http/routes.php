@@ -76,6 +76,7 @@ $route = Route::group($group, function () {
     Route::get(LaravelLocalization::transRoute('routes.slides.edit'), ['as' => 'slides.edit', 'uses' => 'Home\SlidesController@edit']);
     Route::put(LaravelLocalization::transRoute('routes.slides.update'), ['as' => 'slides.update', 'uses' => 'Home\SlidesController@update']);
     Route::delete(LaravelLocalization::transRoute('routes.slides.destroy'), ['as' => 'slides.destroy', 'uses' => 'Home\SlidesController@destroy']);
+    Route::post(LaravelLocalization::transRoute('routes.slides.activate'), ['as' => 'slides.activate', 'uses' => 'Home\SlidesController@activate']);
 
     // partners
     Route::get(LaravelLocalization::transRoute('routes.partners.index'), ['as' => 'partners.index', 'uses' => 'Partner\PartnersController@index']);

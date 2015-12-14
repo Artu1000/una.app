@@ -30,6 +30,7 @@ class HomeTableSeeder extends Seeder
             'title'    => 'Club d\'aviron à Nantes',
             'quote'    => 'Nous sommes ouvert à tous les publics, (collegiens, lycéens, étudiants ou actifs).<br/> Lancez-vous et venez vous initier gratuitement à notre sport !',
             'position' => 1,
+            'active'   => true,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
             './database/seeds/files/home/una_picto_club_300.png',
@@ -57,6 +58,7 @@ class HomeTableSeeder extends Seeder
             'title'    => 'Aviron universitaire',
             'quote'    => 'Rejoignez le plus grand club d\'aviron universitaire de France.<br /> Nous proposons des tarifs avantageux pour tous les étudiants nantais !',
             'position' => 2,
+            'active'   => true,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
             './database/seeds/files/home/una_picto_aviron_universitaire_300.png',
@@ -84,6 +86,7 @@ class HomeTableSeeder extends Seeder
             'title'    => 'Aviron en compétition',
             'quote'    => 'Sport de glisse et de vitesse par excellence, <br/> choisissez l\'aviron de compétition et rejoignez nos athlètes !',
             'position' => 3,
+            'active'   => true,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
             './database/seeds/files/home/una_picto_aviron_competition_300.png',
@@ -111,6 +114,7 @@ class HomeTableSeeder extends Seeder
             'title'    => 'École d\'Aviron',
             'quote'    => 'Nous encadrons et formons les collegiens et lycéens de 18 ans et moins.<br/> Evoluez avec d\'autres jeunes et intégrez un groupe performant et dynamique !',
             'position' => 4,
+            'active'   => true,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
             './database/seeds/files/home/una_picto_ecole_aviron_300.png',
@@ -138,6 +142,7 @@ class HomeTableSeeder extends Seeder
             'title'    => 'Aviron sport féminin',
             'quote'    => 'Pour la compétition ou la pratique loisir, rejoignez nos équipes 100% féminines.<br/> Favorisez le développement harmonieux de vos muscles et de votre endurance !',
             'position' => 5,
+            'active'   => true,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
             './database/seeds/files/home/una_picto_aviron_feminin_300.png',
@@ -165,6 +170,7 @@ class HomeTableSeeder extends Seeder
             'title'    => 'Pratique loisir',
             'quote'    => 'L\'UNA est une association sportive ouverte à la pratique loisir.<br/> Ballades, détente, ... Profitez de l\'Erdre, réputée plus belle rivière de France !',
             'position' => 6,
+            'active'   => true,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
             './database/seeds/files/home/una_picto_aviron_loisir_300.png',

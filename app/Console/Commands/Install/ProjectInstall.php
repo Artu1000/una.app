@@ -115,7 +115,7 @@ class ProjectInstall extends Command
         $this->info('✔ Migration done');
 
         // we prepare symlinks
-        $this->call('npm:install');
+        $this->call('symlinks:prepare');
 
         // seeds
         if ($this->ask('Do you want to execute the database seed on your project ? [y/N]', false)) {

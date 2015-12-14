@@ -77,6 +77,11 @@ class HomeController extends Controller
                 'sort_by'         => 'slides.position',
                 'sort_by_default' => true,
             ],
+            [
+                'title'    => trans('home.page.label.slide.activation'),
+                'key'      => 'active',
+                'activate' => 'slides.activate',
+            ],
         ];
 
         // we set the routes used in the table list

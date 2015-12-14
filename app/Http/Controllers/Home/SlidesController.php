@@ -366,4 +366,52 @@ class SlidesController extends Controller
         }
     }
 
+    public function activate(Request $request)
+    {
+        // we check the current user permission
+        $required = 'home.slide.update';
+        if (!\Sentinel::getUser()->hasAccess([$required])) {
+            return response([
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
+            ], 401);
+        }
+
+        // we convert the "on" value to the activation order to a boolean value
+        $request->merge([
+            'activation_order' => filter_var($request->get('activation_order'), FILTER_VALIDATE_BOOLEAN),
+        ]);
+
+        // we check the inputs
+        $errors = [];
+        $validator = \Validator::make($request->all(), [
+            'id'               => 'required|exists:slides,id',
+            'activation_order' => 'required|boolean',
+        ]);
+        foreach ($validator->errors()->all() as $error) {
+            $errors[] = $error;
+        }
+        // if errors are found
+        if (count($errors)) {
+            return response($errors, 401);
+        }
+
+        // we get the partner
+        $slide = $this->repository->find($request->get('id'));
+
+        try {
+            $slide->active = $request->activation_order;
+            $slide->save();
+
+            return response([
+                trans('partners.message.activation.success'),
+            ], 200);
+        } catch (\Exception $e) {
+            \Log::error($e);
+
+            return response([
+                trans('partners.message.activation.failure'),
+            ], 401);
+        }
+    }
+
 }

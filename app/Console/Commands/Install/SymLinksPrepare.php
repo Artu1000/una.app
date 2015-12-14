@@ -43,10 +43,14 @@ class SymLinksPrepare extends Command
 
         // we prepare the symlinks we want to prepare
         $symlinks = [
-//            [
-//                'storage' => 'app/home/slides',
-//                'public'  => 'img/slides',
-//            ],
+            [
+                'storage' => app()->make(\App\Repositories\Slide\SlideRepositoryInterface::class)
+                    ->getModel()
+                    ->storagePath(),
+                'public'  => app()->make(\App\Repositories\Slide\SlideRepositoryInterface::class)
+                    ->getModel()
+                    ->publicPath(),
+            ],
             [
                 'storage' => app()->make(\App\Repositories\Partner\PartnerRepositoryInterface::class)
                     ->getModel()

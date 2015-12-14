@@ -274,10 +274,10 @@ class PartnersController extends Controller
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.partners.edit');
 
-        // we get the slide list without the current
+        // we get the list without the current entity
         $partner_list = $this->repository->orderBy('position', 'asc')->where('id', '<>', $id)->get();
 
-        // we prepare the master role status and we add at the beginning of the role list
+        // we prepare the first entity and we add it at the beginning of the list
         $first_slide = new \stdClass();
         $first_slide->id = 0;
         $first_slide->name = trans('home.page.label.slide.first');

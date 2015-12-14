@@ -6,6 +6,8 @@ return [
     "page"    => [
         "title"  => [
             "management" => "Gestion des partenaires",
+            "create"     => "Création d'un partenaire",
+            "edit"       => "Édition d'un partenaire",
             "list"       => "Liste des partenaires",
             "data"       => "Données du partenaire",
         ],

@@ -133,11 +133,7 @@
                     </div>
 
                     {{-- submit login --}}
-                    @if(isset($slide) && (\Sentinel::getUser()->id === $slide->id))
-                        <button class="btn btn-primary spin-on-click" type="submit">
-                            <i class="fa fa-floppy-o"></i> {{ trans('global.action.save') }}
-                        </button>
-                    @elseif(isset($slide) && !(\Sentinel::getUser()->id === $slide->id))
+                    @if(isset($slide))
                         <button class="btn btn-primary spin-on-click" type="submit">
                             <i class="fa fa-pencil-square"></i> {{ trans('home.page.action.slide.update') }}
                         </button>

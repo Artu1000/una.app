@@ -104,24 +104,6 @@
                     {!! $description !!}
                 @endif
 
-                    {{--Créé en 1985, le club Université Nantes Aviron (UNA) est **LE club d'aviron des étudiants nantais**.--}}
-
-                    {{--Conventionné avec plusieurs écoles supérieures nantaises, l'UNA est lié à l'Université de Nantes et gère l'activité aviron au sein de la structure, en complément des autres activités sportives proposées par le SUAPS (Service Universitaire des Activités Physiques et Sportives).--}}
-                    {{--Basé sur les rives de l'Erdre à Nantes, à proximité du pont de la Tortière et de la Faculté de Sciences, l'UNA est aujourd'hui **le plus grand club d'aviron universitaire de France**, avec près de 600 licenciés chaque année.--}}
-
-                    {{--Orienté vers la compétition, le club est toutefois ouvert à toutes les formes de pratiques et donne aussi la possibilité de suivre des formations spécifiques à l'encadrement de l'aviron.--}}
-                    {{--Outre son public d'étudiants, l'UNA favorise également l'encadrement pour un public de jeunes collegiens et de lycéens, au sein de l'Ecole d'Aviron (- de 18 ans). Le club accueille parallèlement un public de seniors loisir, pratiquant l'aviron dans un objectif plus récréatif.--}}
-
-                    {{--A l'UNA, il est **possible de s'entrainer sans limitation de nombre de séances par semaine**. La pratique de l'aviron vous est proposée toute l'année, vacances incluses. Pour cela, l'association met à la disposition de ses membres, un parc à bateaux recensant plus de 150 coques de toutes catégories, mais aussi une salle d'ergomètres (machines à ramer) et une salle de musculation pour les compétiteurs.--}}
-                    {{--Etant affilié à la Fédération Française d'Aviron (FFA), l'association donne la possibilité, en plus des activités proposées par la FFSU (Fédération Française des Sports Universitaires), de participer à toutes les activités civiles de la Fédération au travers de la licence fédérale incluse dans la cotisation. C'est ainsi que le club participe chaque année à des compétitions de tous niveaux en France et à l'étranger, aussi bien dans l'aviron fédéral que face aux autres universités et établissements de l'enseignement supérieur. Il est également l'organisateur depuis 1985 des <a href="http://regataiades.fr/" title="Regataïades Internationales de Nantes">Regataïades Internationales de Nantes</a>, reconnues comme **la plus importante régate internationale d'aviron universitaire en France**.--}}
-
-                    {{--Club d'aviron universitaire à l'ambiance sportive et chaleureuse, l'UNA se base sur le modèle de ses confrères britanniques et americains pour contribuer au **développement du sport majestueux de glisse, de vitesse et d'endurance de force qu'est l'aviron**, auprès de la population étudiante française.--}}
-
-
-                    {{--<span class="text-info"><i class="fa fa-exclamation-circle"></i> A noter :</span>--}}
-                    {{--1. Pour les universitaires, l'inscription à l'aviron doit s'effectuer <b>directement au club Université Nantes Aviron (UNA)</b> pour bénéficier de l'ensemble des créneaux d'encadrement (**ne pas s'inscrire via le SUAPS**).--}}
-                    {{--2. Des **tarifs préférenciels sont proposés pour tous les étudiants nantais**, sur présentation de justificatif. Des réductions plus avantageuses sont appliqués pour les membres de l'Université de Nantes (étudiants et salariés) ou d'écoles conventionnées avec l'UNA.--}}
-
                 @if($video_link)
                 <hr>
 
