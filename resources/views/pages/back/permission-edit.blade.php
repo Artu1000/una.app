@@ -53,7 +53,7 @@
                                 </div>
                             </div>
 
-                            {{-- slug --}}
+                            {{-- rank --}}
                             <label for="input_rank">{{ trans('permissions.page.label.rank') }}</label>
                             <div class="form-group">
                                 <div class="input-group">

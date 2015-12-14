@@ -475,13 +475,13 @@ html {
         }
 
         label.swipe-btn {
-          margin-top: 1px;
+          margin-top: 4px;
         }
 
         .swipe-action-icon {
           position: absolute;
-          top: 0.5em;
-          left: 4.3em;
+          top: 5px;
+          left: 55px;
         }
       }
 
@@ -491,8 +491,8 @@ html {
         + .swipe-btn {
           margin: 0;
           outline: 0;
-          width: 4em;
-          height: 2em;
+          width: 50px;
+          height: 26px;
           position: relative;
           cursor: pointer;
           user-select: none;

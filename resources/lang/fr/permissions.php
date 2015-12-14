@@ -60,7 +60,7 @@ return [
         ],
         "label"  => [
             "placeholder" => "--- Séléctionnez le rôle parent ---",
-            "master"      => "Rôle maître (pas de rôle parent)",
+            "master"      => "Premier rôle (pas de rôle parent)",
             "name"        => "Nom du rôle",
             "slug"        => "Clé du rôle",
             "rank"        => "Rang",

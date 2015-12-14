@@ -25,4 +25,9 @@ return [
         "create" => "Création d'une diapo",
         "edit"   => "Édition d'une diapo",
     ],
+    "partners"    => [
+        "index"  => "Gestion des partenaires",
+        "create" => "Création d'un partenaire",
+        "edit"   => "Édition d'un partenaire",
+    ],
 ];

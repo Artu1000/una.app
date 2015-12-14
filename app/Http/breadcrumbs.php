@@ -49,7 +49,6 @@ if (config('settings.breadcrumbs')) {
         $breadcrumbs->parent('users.index');
         $breadcrumbs->push(trans('breadcrumbs.users.create'), route('users.create'));
     });
-
     \Breadcrumbs::register('users.edit', function ($breadcrumbs, array $data) {
         $breadcrumbs->parent('users.index');
         $breadcrumbs->push(trans('breadcrumbs.users.edit'), '');
@@ -74,6 +73,27 @@ if (config('settings.breadcrumbs')) {
     \Breadcrumbs::register('slides.edit', function ($breadcrumbs, array $data) {
         $breadcrumbs->parent('home.edit');
         $breadcrumbs->push(trans('breadcrumbs.slides.edit'), route('slides.edit'));
+
+        // we personalize the breadcrumb on edition
+        if (!empty($data)) {
+            foreach ($data as $additionnal_breadcrumb) {
+                $breadcrumbs->push($additionnal_breadcrumb, '');
+            }
+        }
+    });
+
+    // partners
+    \Breadcrumbs::register('partners.index', function ($breadcrumbs) {
+        $breadcrumbs->parent('home');
+        $breadcrumbs->push(trans('breadcrumbs.partners.index'), route('partners.edit'));
+    });
+    \Breadcrumbs::register('partners.create', function ($breadcrumbs) {
+        $breadcrumbs->parent('partners.index');
+        $breadcrumbs->push(trans('breadcrumbs.partners.create'), route('partners.create'));
+    });
+    \Breadcrumbs::register('partners.edit', function ($breadcrumbs, array $data) {
+        $breadcrumbs->parent('partners.index');
+        $breadcrumbs->push(trans('breadcrumbs.partners.edit'), route('partners.edit'));
 
         // we personalize the breadcrumb on edition
         if (!empty($data)) {

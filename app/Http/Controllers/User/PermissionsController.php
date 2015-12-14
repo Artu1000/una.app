@@ -135,24 +135,20 @@ class PermissionsController extends Controller
             $role->name,
         ];
 
-        // if the current role is the master role
+        // we get the list without the current entity
+        $role_list = \Sentinel::getRoleRepository()->orderBy('rank', 'asc')->where('id', '<>', $role->id)->get();
+
+        // we prepare the first entity and we add it at the beginning of the list
+        $master_role = new \stdClass();
+        $master_role->id = 0;
+        $master_role->name = trans('permissions.page.label.master');
+        $role_list->prepend($master_role);
+
+        // if the current entity is the first one
         if($role->rank === 1){
-
-            // we get the role list without the current
-            $role_list = \Sentinel::getRoleRepository()->orderBy('rank', 'asc')->where('id', '<>', $role->id)->get();
-
-            // we prepare the master role status and we add at the beginning of the role list
-            $master_role = new \stdClass();
-            $master_role->id = 0;
-            $master_role->name = trans('permissions.page.label.master');
-            $role_list->prepend($master_role);
-
             // we set the parent role as null
             $parent_role = null;
         } else {
-            // we get the role list without the current
-            $role_list = \Sentinel::getRoleRepository()->orderBy('rank', 'asc')->get();
-
             // we get the parent role of the current role
             $parent_role = \Sentinel::getRoleRepository()->where('rank', ($role->rank - 1))->firstOrFail();
         }

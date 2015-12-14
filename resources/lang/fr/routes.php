@@ -53,11 +53,12 @@ return [
         "update" => "admin/contenus/page-accueil/mise-a-jour",
     ],
     "slides"      => [
-        "create"  => "admin/contenus/page-accueil/diapo/creation",
-        "store"   => "admin/contenus/page-accueil/diapo/enregistrement",
-        "edit"    => "admin/contenus/page-accueil/diapo/edition/{id}",
-        "update"  => "admin/contenus/page-accueil/diapo/mise-a-jour",
-        "destroy" => "admin/contenus/page-accueil/diapo/suppression",
+        "create"   => "admin/contenus/page-accueil/diapo/creation",
+        "store"    => "admin/contenus/page-accueil/diapo/enregistrement",
+        "edit"     => "admin/contenus/page-accueil/diapo/edition/{id}",
+        "update"   => "admin/contenus/page-accueil/diapo/mise-a-jour",
+        "destroy"  => "admin/contenus/page-accueil/diapo/suppression",
+        "activate" => "admin/contenus/page-accueil/diapo/activer",
     ],
     "partners"    => [
         "index"    => "admin/contenus/partenaires",

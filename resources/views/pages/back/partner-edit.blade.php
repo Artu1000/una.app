@@ -11,7 +11,7 @@
                 {{-- Title--}}
                 <h2>
                     <i class="fa fa-user"></i>
-                    @if(isset($partner) && !(\Sentinel::getUser()->id === $partner->id))
+                    @if(isset($partner))
                         {{ trans('partners.page.title.edit') }}
                     @else
                         {{ trans('partners.page.title.create') }}
@@ -52,7 +52,7 @@
                             @if(isset($partner) && $partner->logo)
                                 <div class="form-group image">
                                     <div class="form-group">
-                                        <a href="{{ $partner->imagePath($partner->logo, 'logo', 'logo') }}" data-lity>
+                                        <a class="img-thumbnail" href="{{ $partner->imagePath($partner->logo, 'logo', 'logo') }}" data-lity>
                                             <img src="{{ $partner->imagePath($partner->logo, 'logo', 'admin') }}" alt="{{ $partner->name }}">
                                         </a>
                                     </div>
@@ -130,11 +130,7 @@
                     </div>
 
                     {{-- submit login --}}
-                    @if(isset($partner) && (\Sentinel::getUser()->id === $partner->id))
-                        <button class="btn btn-primary spin-on-click" type="submit">
-                            <i class="fa fa-floppy-o"></i> {{ trans('global.action.save') }}
-                        </button>
-                    @elseif(isset($partner) && !(\Sentinel::getUser()->id === $partner->id))
+                    @if(isset($partner))
                         <button class="btn btn-primary spin-on-click" type="submit">
                             <i class="fa fa-pencil-square"></i> {{ trans('partners.page.action.update') }}
                         </button>

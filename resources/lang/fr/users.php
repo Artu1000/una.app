@@ -5,6 +5,8 @@ return [
     // views
     "page"    => [
         "title"  => [
+            "management"    => "Gestion des utilisateurs",
+            "list"          => "Liste des utilisateurs",
             "profile"       => "Mon profil",
             "edit"          => "Édition d'un utilisateur",
             "create"        => "Création d'un utlisateur",
