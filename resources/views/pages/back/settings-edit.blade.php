@@ -19,6 +19,27 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="_method" value="PUT">
 
+                    {{-- language choice --}}
+                    @if(config('settings.multilingual'))
+                        <ul class="nav nav-tabs model_trans_manager">
+                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                <li role="presentation" @if($localeCode === config('app.locale'))class="active" @endif>
+                                    <a href="{{ $localeCode }}" title="{{ $properties['native'] }}">
+                                        <div class="display-table">
+                                            <div class="table-cell flag">
+                                                <img width="20" height="20" class="img-circle" src="{{ url('img/flag/' . $localeCode . '.png') }}" alt="{{ $localeCode }}">
+                                            </div>
+                                            &nbsp;
+                                            <div class="table-cell">
+                                                {{ $properties['native'] }}
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+
                     {{-- app data --}}
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -31,7 +52,9 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_app_name"><i class="fa fa-sitemap"></i></span>
-                                    <input id="input_app_name" class="form-control" type="text" name="app_name" value="{{ old('app_name') ? old('app_name') : config('settings.app_name') }}" placeholder="{{ trans('settings.page.label.app_name') }}">
+                                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                        <input id="input_app_name_{{ $localeCode }}" class="form-control capitalize-first-letter model_trans_input {{ $localeCode }} @if($localeCode !== config('app.locale'))hidden @endif" type="text" name="app_name_{{ $localeCode }}" value="{{ !empty(old('app_name_' . $localeCode)) ? old('app_name_' . $localeCode) : config('settings.app_name_' . $localeCode) }}" placeholder="{{ trans('settings.page.label.app_name') }}">
+                                    @endforeach
                                 </div>
                             </div>
 
@@ -40,7 +63,9 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_app_slogan"><i class="fa fa-flag"></i></span>
-                                    <input id="input_app_slogan" class="form-control" type="text" name="app_slogan" value="{{ old('app_slogan') ? old('app_slogan') : config('settings.app_slogan') }}" placeholder="{{ trans('settings.page.label.app_slogan') }}">
+                                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                        <input id="input_app_slogan_{{ $localeCode }}" class="form-control capitalize-first-letter model_trans_input {{ $localeCode }} @if($localeCode !== config('app.locale'))hidden @endif" type="text" name="app_slogan_{{ $localeCode }}" value="{{ old('app_slogan_' . $localeCode) ? old('app_slogan_' . $localeCode) : config('settings.app_slogan_' . $localeCode) }}" placeholder="{{ trans('settings.page.label.app_slogan') }}">
+                                    @endforeach
                                 </div>
                             </div>
 
@@ -244,7 +269,7 @@
                             @if(is_file('./favicon.ico'))
                                 <div class="form-group image">
                                     <div class="logo img-rounded">
-                                        <img src="{{ url('favicon.ico') }}" alt="Favicon {{ config('settings.app_name') }}">
+                                        <img src="{{ url('favicon.ico') }}" alt="Favicon {{ config('settings.app_name_' . config('app.locale')) }}">
                                     </div>
                                 </div>
                             @endif

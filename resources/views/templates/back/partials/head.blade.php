@@ -1,5 +1,5 @@
 {{-- page title --}}
-<title>{{ $seoMeta['page_title'] }} - {{ config('settings.app_name') }}</title>
+<title>{{ $seoMeta['page_title'] }} - {{ config('settings.app_name_' . config('app.locale')) }}</title>
 
 {{-- favicon --}}
 <link rel="icon" href="{{ url('/') }}/favicon.ico">

@@ -27,7 +27,7 @@ abstract class Controller extends BaseController
         \JavaScript::put([
             'csrf_token'      => csrf_token(),
             'base_url'        => url('/'),
-            'app_name'        => config('settings.app_name'),
+            'app_name'        => config('settings.app_name_' . config('app.locale')),
             'loading_spinner' => config('settings.loading_spinner'),
             'locale'          => config('app.locale'),
             'multilingual'    => config('settings.multilingual'),

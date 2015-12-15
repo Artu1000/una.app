@@ -102,6 +102,135 @@ class PermissionsController extends Controller
         return view('pages.back.permissions-list')->with($data);
     }
 
+    public function create()
+    {
+        // SEO Meta settings
+        $this->seoMeta['page_title'] = trans('seo.permissions.create');
+
+        // we get the role list without the current
+        $role_list = \Sentinel::getRoleRepository()->orderBy('rank', 'asc')->get();
+
+        // we prepare the master role status and we add at the beginning of the role list
+        $master_role = new \stdClass();
+        $master_role->id = 0;
+        $master_role->name = trans('permissions.page.label.master');
+        $role_list->prepend($master_role);
+
+        // prepare data for the view
+        $data = [
+            'parent_role' => null,
+            'seoMeta'     => $this->seoMeta,
+            'role_list'   => $role_list,
+        ];
+
+        // return the view with data
+        return view('pages.back.permission-edit')->with($data);
+    }
+
+    public function store(Request $request)
+    {
+        // we check the current user permission
+        $required = 'permissions.create';
+        if (!\Sentinel::getUser()->hasAccess([$required])) {
+            \Modal::alert([
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
+            ], 'error');
+
+            return redirect()->back();
+        }
+
+        // we get the original request content
+        $inputs = $request->all();
+        // we replace the wrong keys (php forbid dots and replace them by underscores)
+        foreach (array_dot(config('permissions')) as $permission => $value) {
+            // we translate the permission slug to the wrong key given by php
+            $wrong_key = str_replace('.', '_', $permission);
+            // we translate "on" value in boolean value
+            if (isset($inputs[$wrong_key])) {
+                $inputs[$permission] = filter_var($inputs[$wrong_key], FILTER_VALIDATE_BOOLEAN);
+                // we delete the wrong key if a dot is found (it is the case for children permissions
+                if (strpos($permission, '.')) {
+                    // we delete the wrong key
+                    unset ($inputs[$wrong_key]);
+                }
+            }
+        }
+
+        // we replace the request by the cleaned one
+        $request->replace($inputs);
+
+        // we flash the request
+        $request->flash();
+
+        // we set the rules according to the multilingual config
+        $rules = [
+            'name_fr'           => 'required|string',
+            'slug'           => 'required|alpha_dash|unique:roles,slug',
+            'parent_role_id' => 'required|numeric|exists:roles,id',
+        ];
+        if (config('settings.multilingual')) {
+            $rules['name_en'] = 'required|string';
+        }
+
+        // we set the rules according to the parent role
+        if ($request->get('parent_role_id') === '0') {
+            $rules['parent_role_id'] = 'numeric';
+        } else {
+            $rules['parent_role_id'] = 'required|numeric|exists:slides,id';
+        }
+
+        // we check the inputs
+        $errors = [];
+        $validator = \Validator::make($request->all(), $rules);
+        foreach ($validator->errors()->all() as $error) {
+            $errors[] = $error;
+        }
+        // if errors are found
+        if (count($errors)) {
+            \Modal::alert($errors, 'error');
+
+            return redirect()->back();
+        }
+
+        try {
+            // we update the roles hierarchy
+            $new_rank = \Sentinel::getRoleRepository()->createModel()->updateHierarchy($request->get('parent_role_id'));
+
+            // we set the data for the role creation
+            $data = [
+                'slug'        => str_slug($request->get('slug')),
+                'rank'        => $new_rank,
+                'permissions' => $request->except('_token', 'name', 'slug', 'parent_role'),
+            ];
+            if (config('settings.multilingual')) {
+                $data['fr'] = ['name' => $request->get('name_fr')];
+                $data['en'] = ['name' => $request->get('name_en')];
+            } else {
+                $data['name'] = $request->get('name_fr');
+            }
+
+            // we create the role
+            $role = \Sentinel::getRoleRepository()->createModel()->create($data);
+
+            // we sanitize the roles ranks
+            \Sentinel::getRoleRepository()->createModel()->sanitizeRanks();
+
+            \Modal::alert([
+                trans('permissions.message.create.success', ['name' => $role->name]),
+            ], 'success');
+
+            return redirect(route('permissions.index'));
+        } catch (\Exception $e) {
+            \Log::error($e);
+            \Modal::alert([
+                trans('permissions.message.create.failure', ['name' => $request->get('name')]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
+            ], 'error');
+
+            return redirect()->back();
+        }
+    }
+
     public function edit($id)
     {
         // we check the current user permission
@@ -166,140 +295,6 @@ class PermissionsController extends Controller
         return view('pages.back.permission-edit')->with($data);
     }
 
-    public function create()
-    {
-        // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.permissions.create');
-
-        // we get the role list without the current
-        $role_list = \Sentinel::getRoleRepository()->orderBy('rank', 'asc')->get();
-
-        // we prepare the master role status and we add at the beginning of the role list
-        $master_role = new \stdClass();
-        $master_role->id = 0;
-        $master_role->name = trans('permissions.page.label.master');
-        $role_list->prepend($master_role);
-
-        // prepare data for the view
-        $data = [
-            'parent_role' => null,
-            'seoMeta'     => $this->seoMeta,
-            'role_list'   => $role_list,
-        ];
-
-        // return the view with data
-        return view('pages.back.permission-edit')->with($data);
-    }
-
-    public function store(Request $request)
-    {
-        // we check the current user permission
-        $required = 'permissions.create';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
-            return redirect()->back();
-        }
-
-        // we get the original request content
-        $inputs = $request->all();
-        // we replace the wrong keys (php forbid dots and replace them by underscores)
-        foreach (array_dot(config('permissions')) as $permission => $value) {
-            // we translate the permission slug to the wrong key given by php
-            $wrong_key = str_replace('.', '_', $permission);
-            // we translate "on" value in boolean value
-            if (isset($inputs[$wrong_key])) {
-                $inputs[$permission] = filter_var($inputs[$wrong_key], FILTER_VALIDATE_BOOLEAN);
-                // we delete the wrong key if a dot is found (it is the case for children permissions
-                if (strpos($permission, '.')) {
-                    // we delete the wrong key
-                    unset ($inputs[$wrong_key]);
-                }
-            }
-        }
-
-        // we replace the request by the cleaned one
-        $request->replace($inputs);
-
-        // we flash the request
-        $request->flash();
-
-        // we set the rules according to the multilingual config
-        if (config('settings.multilingual')) {
-            $rules = [
-                'name_fr'        => 'required|string',
-                'name_en'        => 'required|string',
-                'slug'           => 'required|alpha_dash|unique:roles,slug',
-                'parent_role_id' => 'required|numeric|exists:roles,id',
-            ];
-        } else {
-            $rules = [
-                'name'           => 'required|string',
-                'slug'           => 'required|alpha_dash|unique:roles,slug',
-                'parent_role_id' => 'required|numeric|exists:roles,id',
-            ];
-        }
-
-        if ($request->get('parent_role_id') === '0') {
-            $rules['parent_role_id'] = 'numeric';
-        } else {
-            $rules['parent_role_id'] = 'required|numeric|exists:slides,id';
-        }
-
-        // we check the inputs
-        $errors = [];
-        $validator = \Validator::make($request->all(), $rules);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
-            \Modal::alert($errors, 'error');
-
-            return redirect()->back();
-        }
-
-        try {
-            // we update the roles hierarchy
-            $new_rank = \Sentinel::getRoleRepository()->createModel()->updateHierarchy($request->get('parent_role_id'));
-
-            // we set the data for the role creation
-            $data = [
-                'slug'        => str_slug($request->get('slug')),
-                'rank'        => $new_rank,
-                'permissions' => $request->except('_token', 'name', 'slug', 'parent_role'),
-            ];
-            if (config('settings.multilingual')) {
-                $data['fr'] = ['name' => $request->get('name_fr')];
-                $data['en'] = ['name' => $request->get('name_en')];
-            } else {
-                $data['name'] = $request->get('name_fr');
-            }
-
-            // we create the role
-            $role = \Sentinel::getRoleRepository()->createModel()->create($data);
-
-            // we sanitize the roles ranks
-            \Sentinel::getRoleRepository()->createModel()->sanitizeRanks();
-
-            \Modal::alert([
-                trans('permissions.message.create.success', ['name' => $role->name]),
-            ], 'success');
-
-            return redirect(route('permissions.index'));
-        } catch (\Exception $e) {
-            \Log::error($e);
-            \Modal::alert([
-                trans('permissions.message.create.failure', ['name' => $request->get('name')]),
-                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
-            ], 'error');
-
-            return redirect()->back();
-        }
-    }
-
     public function update(Request $request)
     {
         // we check the current user permission
@@ -332,14 +327,27 @@ class PermissionsController extends Controller
         // we replace the request by the cleaned one
         $request->replace($inputs);
 
-        // we check the inputs
-        $errors = [];
-        $validator = \Validator::make($request->all(), [
+        // we set the rules according to the multilingual config
+        $rules = [
             '_id'            => 'required|numeric|exists:roles,id',
-            'name'           => 'required|string|unique:roles,name,' . $request->get('_id'),
+            'name_fr'        => 'required|string',
             'slug'           => 'required|alpha_dash|unique:roles,slug,' . $request->get('_id'),
             'parent_role_id' => 'required|numeric|different:_id',
-        ]);
+        ];
+        if (config('settings.multilingual')) {
+            $rules['name_en'] = 'required|string';
+        }
+
+        // we set the rules according to the parent role
+        if ($request->get('parent_role_id') === '0') {
+            $rules['parent_role_id'] = 'numeric';
+        } else {
+            $rules['parent_role_id'] = 'required|numeric|exists:slides,id';
+        }
+
+        // we check the inputs
+        $errors = [];
+        $validator = \Validator::make($request->all(), $rules);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
         }
@@ -360,10 +368,15 @@ class PermissionsController extends Controller
 
             // we update the role
             $role = \Sentinel::findRoleById($request->get('_id'));
-            $role->name = $request->get('name');
+            if (config('settings.multilingual')) {
+                $role->translate('fr')->name = $request->get('name_fr');
+                $role->translate('en')->name = $request->get('name_en');
+            } else {
+                $role->name = $request->get('name_fr');
+            }
             $role->slug = str_slug($request->get('slug'));
             $role->rank = $new_rank;
-            $role->permissions = $request->except('_method', '_id', '_token', 'name', 'slug', 'parent_role_id');
+            $role->permissions = $request->except('_method', '_id', '_token', 'name_fr', 'name_en', 'slug', 'parent_role_id');
             $role->save();
 
             // we sanitize the roles ranks

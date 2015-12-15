@@ -45,7 +45,7 @@ class UsersController extends Controller
                     'storage_path' => \Sentinel::createModel()->storagePath(),
                     'size'         => [
                         'thumbnail' => 'admin',
-                        'detail'    => 'large',
+                        'detail'    => 'picture',
                     ],
                 ],
             ],
@@ -245,10 +245,10 @@ class UsersController extends Controller
                 // we optimize, resize and save the image
                 $file_name = \ImageManager::optimizeAndResize(
                     $photo->getRealPath(),
-                    $user->imageName(),
+                    $user->imageName('photo'),
                     $photo->getClientOriginalExtension(),
                     $user->storagePath(),
-                    $user->availableSizes()
+                    $user->availableSizes('photo')
                 );
 
                 // we update the image name
@@ -500,10 +500,10 @@ class UsersController extends Controller
                 // we optimize, resize and save the image
                 $file_name = \ImageManager::optimizeAndResize(
                     $photo->getRealPath(),
-                    $user->imageName(),
+                    $user->imageName('photo'),
                     $photo->getClientOriginalExtension(),
                     $user->storagePath(),
-                    $user->availableSizes()
+                    $user->availableSizes('photo')
                 );
                 // we add the image name to the inputs for saving
                 $inputs['photo'] = $file_name;

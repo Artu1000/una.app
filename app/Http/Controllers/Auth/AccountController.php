@@ -25,7 +25,7 @@ class AccountController extends Controller
     {
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.account.create.title');
-        $this->seoMeta['meta_desc'] = trans('seo.account.create.description', ['site' => config('settings.app_name')]);
+        $this->seoMeta['meta_desc'] = trans('seo.account.create.description', ['site' => config('settings.app_name_' . config('app.locale'))]);
         $this->seoMeta['meta_keywords'] = trans('seo.account.create.keywords');
 
         // prepare data for the view

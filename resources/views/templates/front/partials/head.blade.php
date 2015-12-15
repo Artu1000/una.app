@@ -1,5 +1,5 @@
 {{-- page title --}}
-<title>{{ $seoMeta['page_title'] }} - {{ config('settings.app_name') }}</title>
+<title>{{ $seoMeta['page_title'] }} - {{ config('settings.app_name_' . config('app.locale')) }}</title>
 
 {{-- favicon --}}
 <link rel="icon" href="{{ url('favicon.ico') }}">
@@ -12,7 +12,7 @@
 <meta name="keywords" content="{{ $seoMeta['meta_keywords'] }}">
 <meta name="author" content='Arthur LORENT'>
 @if(config('settings.rss'))
-    <link rel="alternate" type="application/rss+xml" href="{{ url('rss') }}" title="Flux RSS des actualités du {{ config('settings.app_name') }}">
+    <link rel="alternate" type="application/rss+xml" href="{{ url('rss') }}" title="Flux RSS des actualités du {{ config('settings.app_name_' . config('app.locale')) }}">
 @endif
 
 {{-- csrf token --}}

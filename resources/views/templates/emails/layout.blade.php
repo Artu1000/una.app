@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width">
         <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
-        <title>Email du {{ config('settings.app_name') }}</title>
+        <title>Email du {{ config('settings.app_name_' . config('app.locale')) }}</title>
     </head>
     <body style="width: 100% !important;min-width: 100%;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100% !important;margin: 0;padding: 0;background-color: #FFFFFF">
 
@@ -146,12 +146,12 @@
                         <tr>
                             <td class="logo">
                                 @if(config('settings.logo_light'))
-                                    <img width="70" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'header']) }}" alt="Logo {{ config('settings.app_name') }}">
+                                    <img width="70" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'header']) }}" alt="Logo {{ config('settings.app_name_' . config('app.locale')) }}">
                                 @endif
                             </td>
                             <td class="title">
-                                <h1>{{ config('settings.app_name') }}</h1>
-                                <p>{{ config('settings.app_slogan') }}</p>
+                                <h1>{{ config('settings.app_name_' . config('app.locale')) }}</h1>
+                                <p>{{ config('settings.app_slogan_' . config('app.locale')) }}</p>
                             </td>
                         </tr>
                     </table>
@@ -206,7 +206,7 @@
                                         <td class="address">
                                             <p>{{ config('settings.phone_number') }}</p>
                                             <p>
-                                                <a href="mailto:{{ config('settings.contact_email') }}" title="{{ config('settings.app_name') }}">
+                                                <a href="mailto:{{ config('settings.contact_email') }}" title="{{ config('settings.app_name_' . config('app.locale')) }}">
                                                     {{ config('settings.contact_email') }}
                                                 </a>
                                             <p>
@@ -217,49 +217,49 @@
                                         </td>
                                         <td class="logo text-center">
                                             @if(config('settings.logo_light'))
-                                                <img width="70" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'header']) }}" alt="Logo {{ config('settings.app_name') }}">
+                                                <img width="70" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'header']) }}" alt="Logo {{ config('settings.app_name_' . config('app.locale')) }}">
                                             @endif
                                         </td>
                                         <td class="delimiter">
                                             <div></div>
                                         </td>
                                         <td class="social">
-                                            <a href="{{ url('/') }}" title="{{ config('settings.app_name') }}">
-                                                <img src="{{ url('/img/mail/website.png') }}" alt="{{ config('settings.app_name') }}">
+                                            <a href="{{ url('/') }}" title="{{ config('settings.app_name_' . config('app.locale')) }}">
+                                                <img src="{{ url('/img/mail/website.png') }}" alt="{{ config('settings.app_name_' . config('app.locale')) }}">
                                             </a>
                                             @if(config('settings.facebook'))
-                                                <a href="{{ config('settings.facebook') }}" title="Facebook {{ config('settings.app_name') }}">
-                                                    <img src="{{ url('/img/mail/facebook.png') }}" alt="Facebook {{ config('settings.app_name') }}">
+                                                <a href="{{ config('settings.facebook') }}" title="Facebook {{ config('settings.app_name_' . config('app.locale')) }}">
+                                                    <img src="{{ url('/img/mail/facebook.png') }}" alt="Facebook {{ config('settings.app_name_' . config('app.locale')) }}">
                                                 </a>
                                             @endif
                                             @if(config('settings.twitter'))
-                                                <a href="{{ config('settings.twitter') }}" title="Twitter {{ config('settings.app_name') }}">
-                                                    <img src="{{ url('/img/mail/twitter.png') }}" alt="Twitter {{ config('settings.app_name') }}">
+                                                <a href="{{ config('settings.twitter') }}" title="Twitter {{ config('settings.app_name_' . config('app.locale')) }}">
+                                                    <img src="{{ url('/img/mail/twitter.png') }}" alt="Twitter {{ config('settings.app_name_' . config('app.locale')) }}">
                                                 </a>
                                             @endif
                                             @if(config('settings.google_plus'))
-                                                <a href="{{ config('settings.google_plus') }}" title="Google+ {{ config('settings.app_name') }}">
-                                                    <img src="{{ url('/img/mail/googleplus.png') }}" alt="Google+ {{ config('settings.app_name') }}">
+                                                <a href="{{ config('settings.google_plus') }}" title="Google+ {{ config('settings.app_name_' . config('app.locale')) }}">
+                                                    <img src="{{ url('/img/mail/googleplus.png') }}" alt="Google+ {{ config('settings.app_name_' . config('app.locale')) }}">
                                                 </a>
                                             @endif
                                             @if(config('settings.linkedin'))
-                                                <a href="{{ config('settings.linkedin') }}" title="Linkedin {{ config('settings.app_name') }}">
-                                                    <img src="{{ url('/img/mail/linkedin.png') }}" alt="Linkedin {{ config('settings.app_name') }}">
+                                                <a href="{{ config('settings.linkedin') }}" title="Linkedin {{ config('settings.app_name_' . config('app.locale')) }}">
+                                                    <img src="{{ url('/img/mail/linkedin.png') }}" alt="Linkedin {{ config('settings.app_name_' . config('app.locale')) }}">
                                                 </a>
                                             @endif
                                             @if(config('settings.pinterest'))
-                                                <a href="{{ config('settings.pinterest') }}" title="Linkedin {{ config('settings.app_name') }}">
-                                                    <img src="{{ url('/img/mail/pinterest.png') }}" alt="Linkedin {{ config('settings.app_name') }}">
+                                                <a href="{{ config('settings.pinterest') }}" title="Linkedin {{ config('settings.app_name_' . config('app.locale')) }}">
+                                                    <img src="{{ url('/img/mail/pinterest.png') }}" alt="Linkedin {{ config('settings.app_name_' . config('app.locale')) }}">
                                                 </a>
                                             @endif
                                             @if(config('settings.youtube'))
-                                                <a href="{{ config('settings.youtube') }}" title="Chaîne Youtube {{ config('settings.app_name') }}">
-                                                    <img src="{{ url('/img/mail/youtube.png') }}" alt="Chaîne Youtube {{ config('settings.app_name') }}">
+                                                <a href="{{ config('settings.youtube') }}" title="Chaîne Youtube {{ config('settings.app_name_' . config('app.locale')) }}">
+                                                    <img src="{{ url('/img/mail/youtube.png') }}" alt="Chaîne Youtube {{ config('settings.app_name_' . config('app.locale')) }}">
                                                 </a>
                                             @endif
                                             @if(config('settings.contact_email'))
-                                                <a href="mailto:{{ config('settings.contact_email') }}" title="Contacter le {{ config('settings.app_name') }}">
-                                                    <img src="{{ url('/img/mail/mail.png') }}" alt="Contacter le {{ config('settings.app_name') }}">
+                                                <a href="mailto:{{ config('settings.contact_email') }}" title="Contacter le {{ config('settings.app_name_' . config('app.locale')) }}">
+                                                    <img src="{{ url('/img/mail/mail.png') }}" alt="Contacter le {{ config('settings.app_name_' . config('app.locale')) }}">
                                                 </a>
                                             @endif
                                         </td>

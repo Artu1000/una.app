@@ -108,7 +108,7 @@
                 <hr>
 
                 <div class="video text-center display-table">
-                    <a href="{{ $video_link }}" class="table-cell" title="Vidéo promotionnelle {{ config('settings.app_name') }}" data-lity>
+                    <a href="{{ $video_link }}" class="table-cell" title="Vidéo promotionnelle {{ config('settings.app_name_' . config('app.locale')) }}" data-lity>
                         <i class="fa fa-youtube-square"></i>
                     </a>
                 </div>

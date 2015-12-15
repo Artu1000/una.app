@@ -44,33 +44,41 @@ class SymLinksPrepare extends Command
         // we remove all the symlinks found into the public/img folder
         $this->line('Removing existing symlinks ...');
         $links = [];
-        foreach(scandir(public_path('img')) as $item){
-            if(is_link($link = public_path('img/' . $item))){
+        foreach (scandir(public_path('img')) as $item) {
+            if (is_link($link = public_path('img/' . $item))) {
                 $links[] = $link;
                 unlink($link);
             }
         }
         $this->info('✔ Existing symlinks removed :');
-        foreach($links as $link){
+        foreach ($links as $link) {
             $this->line('- ' . $link);
         }
 
         // we prepare the symlinks we want to add
         $symlinks = [
             [
-                'storage' => app()->make(\App\Repositories\Slide\SlideRepositoryInterface::class)
+                'storage' => app(\App\Repositories\Partner\PartnerRepositoryInterface::class)
                     ->getModel()
                     ->storagePath(),
-                'public'  => app()->make(\App\Repositories\Slide\SlideRepositoryInterface::class)
+                'public'  => app(\App\Repositories\Partner\PartnerRepositoryInterface::class)
                     ->getModel()
                     ->publicPath(),
             ],
             [
-                'storage' => app()->make(\App\Repositories\Partner\PartnerRepositoryInterface::class)
+                'storage' => app(\App\Repositories\Slide\SlideRepositoryInterface::class)
                     ->getModel()
                     ->storagePath(),
-                'public'  => app()->make(\App\Repositories\Partner\PartnerRepositoryInterface::class)
+                'public'  => app(\App\Repositories\Slide\SlideRepositoryInterface::class)
                     ->getModel()
+                    ->publicPath(),
+            ],
+            [
+                'storage' => \Sentinel::getUserRepository()
+                    ->createModel()
+                    ->storagePath(),
+                'public'  => \Sentinel::getUserRepository()
+                    ->createModel()
                     ->publicPath(),
             ],
         ];
@@ -84,9 +92,9 @@ class SymLinksPrepare extends Command
                 $links[] = $symlink['public'];
             }
         }
-        if(!empty($links)){
+        if (!empty($links)) {
             $this->info('✔ New symlinks created :');
-            foreach($links as $link){
+            foreach ($links as $link) {
                 $this->line('- ' . $link);
             }
         }

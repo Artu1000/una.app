@@ -9,11 +9,9 @@
             </button>
             <a class="navbar-brand" href="{{ route('dashboard.index') }}">
                 <h1>
-                    {{ config('settings.app_name') }}
+                    {{ config('settings.app_name_' . config('app.locale')) }}
                 </h1>
-                @if(config('settings.app_slogan'))
-                    <span class="hidden-xs">- {{ config('settings.app_slogan') }}</span>
-                @endif
+                <span class="hidden-xs">- {{ config('settings.app_slogan_' . config('app.locale')) }}</span>
             </a>
         </div>
         <ul class="nav navbar-right top-nav">

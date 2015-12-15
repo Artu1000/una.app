@@ -5,8 +5,10 @@ if (is_file(storage_path('app/config/settings.json'))) {
 }
 
 return [
-    'app_name'         => isset($settings->app_name) ? $settings->app_name : null,
-    'app_slogan'       => isset($settings->app_slogan) ? $settings->app_slogan : null,
+    'app_name_fr'      => isset($settings->app_name_fr) ? $settings->app_name_fr : null,
+    'app_name_en'      => isset($settings->app_name_en) ? $settings->app_name_en : null,
+    'app_slogan_fr'    => isset($settings->app_slogan_fr) ? $settings->app_slogan_fr : null,
+    'app_slogan_en'    => isset($settings->app_slogan_en) ? $settings->app_slogan_en : null,
     'breadcrumbs'      => isset($settings->breadcrumbs) ? $settings->breadcrumbs : null,
     'multilingual'     => isset($settings->multilingual) ? $settings->multilingual : null,
     'phone_number'     => isset($settings->phone_number) ? $settings->phone_number : null,

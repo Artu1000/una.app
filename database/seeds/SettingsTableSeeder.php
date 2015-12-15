@@ -41,8 +41,10 @@ class SettingsTableSeeder extends Seeder
 
         // we insert base settings
         $inputs = [
-            'app_name'        => 'Université Nantes Aviron (UNA)',
-            'app_slogan'      => 'Le plus grand club universitaire de France',
+            'app_name_fr'     => 'Club Université Nantes Aviron (UNA)',
+            'app_name_en'     => 'Nantes University Rowing club',
+            'app_slogan_fr'   => 'Le plus grand club universitaire de France.',
+            'app_slogan_en'   => 'The biggest university rowing club from France.',
             'breadcrumbs'     => true,
             'multilingual'    => false,
             'phone_number'    => '0954014810',

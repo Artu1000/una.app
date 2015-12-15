@@ -56,7 +56,7 @@ return [
 
     'from' => [
         'address' => 'no-reply@una-club.fr',
-        'name' => config('settings.app_name')
+        'name' => config('settings.app_name_' . config('app.locale'))
     ],
 
     'subject' => [

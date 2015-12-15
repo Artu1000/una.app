@@ -112,6 +112,8 @@ return [
         "name"                  => "Nom",
         "name_fr"               => "Nom (FR)",
         "name_en"               => "Nom (EN)",
+        "app_name_fr"           => "Nom du site (FR)",
+        "app_name_en"           => "Nom du site (EN)",
         "username"              => "Pseudo",
         "email"                 => "E-mail",
         "remember"              => "Se souvenir de moi",

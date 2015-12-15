@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
         // load base JS
         \JavaScript::put([
             'base_url' => url('/'),
-            'site_name' => config('settings.app_name')
+            'site_name' => config('settings.app_name_' . config('app.locale'))
         ]);
 
         $seoMeta = [

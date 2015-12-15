@@ -16,7 +16,7 @@
                         @if(config('settings.logo_light'))
                             <div class="logo display-table">
                                 <div class="text-center table-cell fill">
-                                    <img width="300" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" alt="Logo {{ config('settings.app_name') }}">
+                                    <img width="300" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" alt="Logo {{ config('settings.app_name_' . config('app.locale')) }}">
                                 </div>
                             </div>
                         @endif
@@ -27,7 +27,7 @@
                             {{ trans('errors.'.$code.'.message') }}
                         </h2>
 
-                        <a href="{{ route('home') }}" title="Revenir à l'accueil de {{ config('settings.app_name') }}" class="btn btn-primary">
+                        <a href="{{ route('home') }}" title="Revenir à l'accueil de {{ config('settings.app_name_' . config('app.locale')) }}" class="btn btn-primary">
                             <i class="fa fa-home"></i> {{ trans('errors.nav.home') }}
                         </a>
                     </div>

@@ -61,13 +61,9 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_name"><i class="fa fa-font"></i></span>
-                                    @if(config('settings.multilingual'))
-                                        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                            <input id="input_name" class="form-control capitalize-first-letter model_trans_input {{ $localeCode }} @if($localeCode !== config('app.locale'))hidden @endif" type="text" name="name_{{ $localeCode }}" value="{{ !empty(old('name_' . $localeCode)) ? old('name_' . $localeCode) : (isset($role) && isset($role->translate($localeCode)->name) ? $role->translate($localeCode)->name : null) }}" placeholder="{{ trans('permissions.page.label.name') }}">
-                                        @endforeach
-                                    @else
-                                        <input id="input_name" class="form-control capitalize-first-letter model_trans_input" type="text" name="name" value="{{ !empty(old('name')) ? old('name') : (isset($role) && isset($role->name) ? $role->name : null) }}" placeholder="{{ trans('permissions.page.label.name') }}">
-                                    @endif
+                                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                        <input id="input_name" class="form-control capitalize-first-letter model_trans_input {{ $localeCode }} @if($localeCode !== config('app.locale'))hidden @endif" type="text" name="name_{{ $localeCode }}" value="{{ !empty(old('name_' . $localeCode)) ? old('name_' . $localeCode) : (isset($role) && isset($role->translate($localeCode)->name) ? $role->translate($localeCode)->name : null) }}" placeholder="{{ trans('permissions.page.label.name') }}">
+                                    @endforeach
                                 </div>
                             </div>
 

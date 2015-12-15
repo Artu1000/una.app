@@ -68,11 +68,10 @@ class SettingsController extends Controller
         // we get the inputs
         $inputs = $request->except('_token', '_method');
 
-        // we check the inputs
-        $errors = [];
-        $validator = \Validator::make($inputs, [
-            'app_name'      => 'string',
-            'app_slogan'    => 'string',
+        // we set the rules according to the multilingual config
+        $rules = [
+            'app_name_fr'   => 'required|string',
+            'app_slogan_fr' => 'string',
             'breadcrumbs'   => 'boolean',
             'multilingual'  => 'boolean',
             'phone_number'  => 'phone:FR',
@@ -89,7 +88,15 @@ class SettingsController extends Controller
             'favicon'       => 'mimes:ico|image_size:16,16',
             'logo_light'    => 'image|mimes:png|image_size:>=300,*',
             'logo_dark'     => 'image|mimes:png|image_size:>=300,*',
-        ]);
+        ];
+        if (config('settings.multilingual')) {
+            $rules['app_name_en'] = 'required|string';
+            $rules['app_slogan_en'] = 'string';
+        }
+
+        // we check the inputs
+        $errors = [];
+        $validator = \Validator::make($inputs, $rules);
         foreach ($validator->errors()->all() as $error) {
             $errors[] = $error;
         }
