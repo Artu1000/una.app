@@ -231,11 +231,13 @@ class UsersController extends Controller
 
         try {
             // we format the number into its international equivalent
-            $inputs['phone_number'] = $formatted_phone_number = phone_format(
-                $inputs['phone_number'],
-                'FR',
-                \libphonenumber\PhoneNumberFormat::INTERNATIONAL
-            );
+            if (isset($inputs['phone_number']) && !empty($photo = $inputs['phone_number'])) {
+                $inputs['phone_number'] = $formatted_phone_number = phone_format(
+                    $inputs['phone_number'],
+                    'FR',
+                    \libphonenumber\PhoneNumberFormat::INTERNATIONAL
+                );
+            }
 
             // we store the photo
             if (isset($inputs['photo']) && !empty($photo = $inputs['photo'])) {
@@ -485,11 +487,13 @@ class UsersController extends Controller
 
         try {
             // we format the number into its international equivalent
-            $inputs['phone_number'] = $formatted_phone_number = phone_format(
-                $inputs['phone_number'],
-                'FR',
-                \libphonenumber\PhoneNumberFormat::INTERNATIONAL
-            );
+            if (isset($inputs['phone_number']) && !empty($photo = $inputs['phone_number'])) {
+                $inputs['phone_number'] = $formatted_phone_number = phone_format(
+                    $inputs['phone_number'],
+                    'FR',
+                    \libphonenumber\PhoneNumberFormat::INTERNATIONAL
+                );
+            }
 
             // we store the photo
             if (isset($inputs['photo']) && !empty($photo = $inputs['photo'])) {

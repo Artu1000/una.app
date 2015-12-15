@@ -45,7 +45,7 @@
                             <div class="form-group">
                                 @if(isset($user) && $user->photo)
                                     <div class="form-group">
-                                        <a href="{{ route('image', ['filename' => $user->photo, 'storage_path' => $user->storagePath(), 'size' => 'large']) }}" data-lity>
+                                        <a href="{{ route('image', ['filename' => $user->photo, 'storage_path' => $user->storagePath(), 'size' => 'picture']) }}" data-lity>
                                             <img width="145" height="160" src="{{ route('image', ['filename' => $user->photo, 'storage_path' => $user->storagePath(), 'size' => 'picture']) }}" alt="{{ $user->first_name }} {{ $user->last_name }}">
                                         </a>
                                     </div>
