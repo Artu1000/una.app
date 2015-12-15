@@ -89,32 +89,32 @@
                     </li>
                 @endif
 
-                {{--<li class="divider"></li>--}}
+                <li class="divider"></li>
 
-                {{--<li>--}}
-                    {{--<a href="#" data-toggle="collapse" data-target="#contents">--}}
-                        {{--<i class="fa fa-list-alt"></i> {{ trans('template.back.header.contents') }}--}}
-                        {{--<i class="fa fa-fw fa-caret-down"></i>--}}
-                    {{--</a>--}}
-                    {{--<ul id="contents" class="collapse">--}}
-                        {{--@if(\Sentinel::getUser()->hasAccess('home.update'))--}}
-                            {{--<li>--}}
-                                {{--<a href="{{ route('home.edit') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.home') }}</a>--}}
-                            {{--</li>--}}
-                        {{--@endif--}}
-                        {{--@if(\Sentinel::getUser()->hasAccess('partners.list'))--}}
-                            {{--<li>--}}
-                                {{--<a href="{{ route('partners.index') }}"><i class="fa fa-life-ring"></i> {{ trans('template.back.header.partners') }}</a>--}}
-                            {{--</li>--}}
-                        {{--@endif--}}
-                    {{--</ul>--}}
-                {{--</li>--}}
+                <li>
+                    <a href="#" data-toggle="collapse" data-target="#contents">
+                        <i class="fa fa-list-alt"></i> {{ trans('template.back.header.contents') }}
+                        <i class="fa fa-fw fa-caret-down"></i>
+                    </a>
+                    <ul id="contents" class="collapse">
+                        @if(\Sentinel::getUser()->hasAccess('home.update'))
+                            <li>
+                                <a href="{{ route('home.edit') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.home') }}</a>
+                            </li>
+                        @endif
+                        @if(\Sentinel::getUser()->hasAccess('partners.list'))
+                            <li>
+                                <a href="{{ route('partners.index') }}"><i class="fa fa-life-ring"></i> {{ trans('template.back.header.partners') }}</a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
 
-                {{--<li class="divider"></li>--}}
+                <li class="divider"></li>
 
-                {{--<li>--}}
-                    {{--<a class="new_window" href="{{ route('home') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.back') }}</a>--}}
-                {{--</li>--}}
+                <li>
+                    <a class="new_window" href="{{ route('home') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.back') }}</a>
+                </li>
             </ul>
         </div>
     </nav>

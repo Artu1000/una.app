@@ -42,7 +42,6 @@ $route = Route::group($group, function () {
 
     // dashboard
     Route::get(LaravelLocalization::transRoute('routes.dashboard.index'), ['as' => 'dashboard.index', 'uses' => 'Dashboard\DashboardController@index']);
-    Route::get('/', ['as' => 'home', 'uses' => 'Dashboard\DashboardController@index']);
 
     // settings
     Route::get(LaravelLocalization::transRoute('routes.settings.index'), ['as' => 'settings.index', 'uses' => 'Settings\SettingsController@index']);
@@ -132,7 +131,7 @@ $group = config('settings.multilingual') ? ['prefix' => LaravelLocalization::set
 Route::group($group, function () {
 
     // home
-//    Route::get('/', ['as' => 'home', 'uses' => 'Home\HomeController@show']);
+    Route::get('/', ['as' => 'home', 'uses' => 'Home\HomeController@show']);
 
     // news
     Route::resource('/news', 'News\NewsController', ['names' => ['index' => 'front.news', 'show' => 'front.news.show']]);
