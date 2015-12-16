@@ -11,6 +11,10 @@ return [
             "back"        => "Back to the Website",
             "my_profile"  => "My profile",
             "logout"      => "Logout",
+            "admin"       => "Admin",
+            "contents"    => "Contents",
+            "home"        => "Home page",
+            "partners"    => "Partners",
         ],
     ],
 ];

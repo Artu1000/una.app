@@ -137,21 +137,25 @@ html {
                   list-style-type: none;
                   padding: 0;
                   margin: 0;
-                  border-right: solid 1px #EEEEEE;
+                  border-right: solid 1px #eee;
                   font-size: 14px;
 
                   li {
                     height: auto;
                     display: block;
+                    background-color: #fff;
+
+                    &.active {
+                      background-color: #eee;
+                    }
 
                     a {
                       display: block;
                       color: #333;
                       padding: 10px 0 10px 40px;
-                      background-color: #fff;
 
                       &:hover {
-                        background-color: #EEEEEE;
+                        background-color: #eee;
                         color: #333;
                       }
                     }
