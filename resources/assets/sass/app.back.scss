@@ -179,6 +179,14 @@ html {
 
           .table-list {
 
+            .actions {
+              width: 90px;
+            }
+
+            .date {
+              width: 160px;
+            }
+
             th {
               @include lato-font('medium');
             }

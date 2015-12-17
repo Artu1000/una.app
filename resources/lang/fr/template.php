@@ -13,6 +13,7 @@ return [
             "logout"      => "Déconnexion",
             "admin"       => "Administration",
             "contents"    => "Contenus",
+            "news"        => "Actualités",
             "home"        => "Page d'accueil",
             "partners"    => "Partenaires",
         ],

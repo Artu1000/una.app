@@ -75,8 +75,8 @@
         <tr>
 
             @foreach($tableListData['columns'] as $column)
-                <td>
-                    {{-- show value from config --}}
+                <td class="@if(isset($column['date']) && !empty($column['date']))date @endif">
+                    {{-- value from config --}}
                     @if(isset($column['config']) && !empty(config($column['config'] . '.' . $entity->getAttribute($column['key']))))
                         @if(isset($column['button']) && $column['button'] === true)
                             <button class="btn {{ config($column['config'] . '.' . $entity->getAttribute($column['key']) . '.' . 'key') }}">
@@ -85,7 +85,8 @@
                                 @if(isset($column['button']) && $column['button'] === true)
                             </button>
                         @endif
-                    {{-- show value from collection --}}
+
+                    {{-- value from collection --}}
                     @elseif(is_a($entity->getAttribute($column['key']), '\Illuminate\Database\Eloquent\Collection') && isset($column['collection']) && !empty($column['collection']))
                         @foreach($entity->getAttribute($column['key']) as $object)
                             @if(isset($column['button']['attribute']) && !empty($column['button']['attribute']))
@@ -96,24 +97,31 @@
                                 </button>
                             @endif
                         @endforeach
-                    {{-- show activation toggle --}}
+
+                    {{-- date --}}
+                    @elseif(isset($column['date']) && !empty($column['date']) && $entity->getAttribute($column['key']))
+                        {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $entity->getAttribute($column['key']))->format($column['date']) }}
+
+                    {{-- activation toggle --}}
                     @elseif(isset($column['activate']) && !empty($column['activate']))
                         <div class="swipe-group">
                             <input class="swipe" id="activate_{{ $entity->id }}" type="checkbox" name="{{ $entity->id }}" @if($entity->getAttribute($column['key'])) checked @endif>
                             <label class="swipe-btn activate" data-url="{{ route($column['activate']) }}" data-id="{{ $entity->id }}" for="activate_{{ $entity->id }}"></label>
                         </div>
-                    {{-- show image --}}
+
+                    {{-- image --}}
                     @elseif(isset($column['image']) && !empty($image = $column['image']) && !empty($entity->getAttribute($column['key'])))
                         <a href="{{ $entity->imagePath($entity->getAttribute($column['key']), $column['key'], $image['size']['detail']) }}" data-lity>
                             <img class="img-thumbnail @if(isset($image['class'])){{ $image['class'] }} @endif" src="{{ $entity->imagePath($entity->getAttribute($column['key']), $column['key'], $image['size']['thumbnail']) }}">
                         </a>
-                    {{-- show value --}}
+
+                    {{-- simple value --}}
                     @else
                         @if(isset($column['button']) && $column['button'] === true && !empty($entity->getAttribute($column['key'])))
                             <button class="btn {{ $column['key'] }}">
                                 @endif
                                 @if(isset($column['str_limit']) && is_numeric($column['str_limit']))
-                                    {{ str_limit(strip_tags($entity->getAttribute($column['key']), $column['str_limit'])) }}
+                                    {{ str_limit(strip_tags($entity->getAttribute($column['key'])), $column['str_limit']) }}
                                 @else
                                     {{ $entity->getAttribute($column['key']) }}
                                 @endif

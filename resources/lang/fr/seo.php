@@ -54,6 +54,11 @@ return [
         ],
         "edit"  => "Édition de la page d'accueil",
     ],
+    "news"        => [
+        "list"   => "Gestion des actualités",
+        "edit"   => "Édition d'une actualité",
+        "create" => "Création d'une actualité",
+    ],
     "partners"    => [
         "index"  => "Gestion des partenaires",
         "edit"   => "Édition d'un partenaire",

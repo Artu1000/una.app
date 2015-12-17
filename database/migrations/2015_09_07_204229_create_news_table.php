@@ -17,12 +17,13 @@ class CreateNewsTable extends Migration
             $table->integer('category_id')->index();
             $table->string('key')->unique()->index();
             $table->string('title')->nullable();
+            $table->string('image')->nullable();
             $table->text('meta_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->text('meta_keywords')->nullable();
-            $table->datetime('released_at')->nullable();
-            $table->string('image')->nullable();
             $table->text('content')->nullable();
+            $table->datetime('released_at')->nullable();
+            $table->boolean('active')->default(false);
 
             $table->timestamps();
             $table->engine = 'InnoDB';

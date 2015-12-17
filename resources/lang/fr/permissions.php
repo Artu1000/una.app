@@ -32,6 +32,14 @@ return [
     "home.slide.update"  => "Modifier une diapo",
     "home.slide.delete"  => "Supprimer une diapo",
 
+    // news
+    "news"              => "Actualités",
+    "news.list"         => "Consulter la liste des actualités",
+    "news.create"       => "Créer une actualité",
+    "news.view"         => "Consulter le détail d'une actualité",
+    "news.update"       => "Modifier une actualité",
+    "news.delete"       => "Supprimer une actualité",
+
     // partners
     "partners"           => "Partenaires",
     "partners.list"      => "Consulter la liste des partenaires",

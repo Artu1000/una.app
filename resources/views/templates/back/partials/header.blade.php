@@ -14,6 +14,8 @@
                 <span class="hidden-xs">- {{ config('settings.app_slogan_' . config('app.locale')) }}</span>
             </a>
         </div>
+
+        {{-- top menu --}}
         <ul class="nav navbar-right top-nav">
             @if(config('settings.multilingual'))
                 <li>
@@ -62,12 +64,17 @@
                 </ul>
             </li>
         </ul>
+
+        {{-- lateral menu --}}
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav side-nav">
+
+                {{-- dashboard --}}
                 <li class="@if(\Route::current()->getName() === 'dashboard.index')active @endif">
                     <a href="{{ route('dashboard.index') }}"><i class="fa fa-fw fa-dashboard"></i> {{ trans('template.back.header.dashboard') }}</a>
                 </li>
 
+                {{-- admin pannel --}}
                 <li class="@if(\Route::current()->getName() === 'settings.index'
                 || \Route::current()->getName() === 'permissions.index'
                 || \Route::current()->getName() === 'permissions.create'
@@ -86,11 +93,15 @@
                     || \Route::current()->getName() === 'users.index'
                     || \Route::current()->getName() === 'users.create'
                     || \Route::current()->getName() === 'users.edit')in @endif">
+
+                        {{-- settings --}}
                         @if(\Sentinel::getUser()->hasAccess('settings.view'))
                             <li class="@if(\Route::current()->getName() === 'settings.index')active @endif">
                                 <a href="{{ route('settings.index') }}"><i class="fa fa-wrench"></i> {{ trans('template.back.header.settings') }}</a>
                             </li>
                         @endif
+
+                        {{-- permissions --}}
                         @if(\Sentinel::getUser()->hasAccess('permissions.list'))
                             <li class="@if(\Route::current()->getName() === 'permissions.index'
                                 || \Route::current()->getName() === 'permissions.create'
@@ -98,6 +109,8 @@
                                 <a href="{{ route('permissions.index') }}"><i class="fa fa-gavel"></i> {{ trans('template.back.header.permissions') }}</a>
                             </li>
                         @endif
+
+                        {{-- users --}}
                         @if(\Sentinel::getUser()->hasAccess('users.list'))
                             <li class="@if(\Route::current()->getName() === 'users.index'
                                 || \Route::current()->getName() === 'users.create'
@@ -110,9 +123,13 @@
 
                 <li class="divider"></li>
 
+                {{-- contents pannel --}}
                 <li class="@if(\Route::current()->getName() === 'home.edit'
                 || \Route::current()->getName() === 'slides.create'
                 || \Route::current()->getName() === 'slides.edit'
+                || \Route::current()->getName() === 'news.list'
+                || \Route::current()->getName() === 'news.create'
+                || \Route::current()->getName() === 'news.edit'
                 || \Route::current()->getName() === 'partners.index'
                 || \Route::current()->getName() === 'partners.create'
                 || \Route::current()->getName() === 'partners.edit')active @endif">
@@ -123,9 +140,14 @@
                     <ul id="contents" class="collapse @if(\Route::current()->getName() === 'home.edit'
                     || \Route::current()->getName() === 'slides.create'
                     || \Route::current()->getName() === 'slides.edit'
+                    || \Route::current()->getName() === 'news.list'
+                    || \Route::current()->getName() === 'news.create'
+                    || \Route::current()->getName() === 'news.edit'
                     || \Route::current()->getName() === 'partners.index'
                     || \Route::current()->getName() === 'partners.create'
                     || \Route::current()->getName() === 'partners.edit')in @endif">
+
+                        {{-- home --}}
                         @if(\Sentinel::getUser()->hasAccess('home.update'))
                             <li class="@if(\Route::current()->getName() === 'home.edit'
                             || \Route::current()->getName() === 'slides.create'
@@ -133,6 +155,17 @@
                                 <a href="{{ route('home.edit') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.home') }}</a>
                             </li>
                         @endif
+
+                        {{-- news --}}
+                        @if(\Sentinel::getUser()->hasAccess('news.list'))
+                            <li class="@if(\Route::current()->getName() === 'news.list'
+                            || \Route::current()->getName() === 'news.create'
+                            || \Route::current()->getName() === 'news.edit')active @endif">
+                                <a href="{{ route('news.list') }}"><i class="fa fa-paper-plane"></i> {{ trans('template.back.header.news') }}</a>
+                            </li>
+                        @endif
+
+                        {{-- partners --}}
                         @if(\Sentinel::getUser()->hasAccess('partners.list'))
                             <li class="@if(\Route::current()->getName() === 'partners.index'
                             || \Route::current()->getName() === 'partners.create'
@@ -145,6 +178,7 @@
 
                 <li class="divider"></li>
 
+                {{-- back to front--}}
                 <li>
                     <a class="new_window" href="{{ route('home') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.back') }}</a>
                 </li>

@@ -77,6 +77,15 @@ $route = Route::group($group, function () {
     Route::delete(LaravelLocalization::transRoute('routes.slides.destroy'), ['as' => 'slides.destroy', 'uses' => 'Home\SlidesController@destroy']);
     Route::post(LaravelLocalization::transRoute('routes.slides.activate'), ['as' => 'slides.activate', 'uses' => 'Home\SlidesController@activate']);
 
+    // news
+    Route::get(LaravelLocalization::transRoute('routes.news.list'), ['as' => 'news.list', 'uses' => 'News\NewsController@adminList']);
+    Route::get(LaravelLocalization::transRoute('routes.news.create'), ['as' => 'news.create', 'uses' => 'News\NewsController@create']);
+    Route::post(LaravelLocalization::transRoute('routes.news.store'), ['as' => 'news.store', 'uses' => 'News\NewsController@store']);
+    Route::get(LaravelLocalization::transRoute('routes.news.edit'), ['as' => 'news.edit', 'uses' => 'News\NewsController@edit']);
+    Route::put(LaravelLocalization::transRoute('routes.news.update'), ['as' => 'news.update', 'uses' => 'News\NewsController@update']);
+    Route::delete(LaravelLocalization::transRoute('routes.news.destroy'), ['as' => 'news.destroy', 'uses' => 'News\NewsController@destroy']);
+    Route::post(LaravelLocalization::transRoute('routes.news.activate'), ['as' => 'news.activate', 'uses' => 'News\NewsController@activate']);
+
     // partners
     Route::get(LaravelLocalization::transRoute('routes.partners.index'), ['as' => 'partners.index', 'uses' => 'Partner\PartnersController@index']);
     Route::get(LaravelLocalization::transRoute('routes.partners.create'), ['as' => 'partners.create', 'uses' => 'Partner\PartnersController@create']);
