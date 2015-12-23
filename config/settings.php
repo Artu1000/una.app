@@ -24,8 +24,11 @@ return [
     'linkedin'         => isset($settings->linkedin) ? $settings->linkedin : null,
     'pinterest'        => isset($settings->pinterest) ? $settings->pinterest : null,
     'rss'              => isset($settings->rss) ? $settings->rss : null,
-    'loading_spinner'  => isset($settings->loading_spinner) ? $settings->loading_spinner : null,
     'logo_light'       => isset($settings->logo_light) ? $settings->logo_light : null,
     'logo_dark'        => isset($settings->logo_dark) ? $settings->logo_dark : null,
+    'loading_spinner'  => isset($settings->loading_spinner) ? $settings->loading_spinner : '<i class="fa fa-spinner fa-spin"></i>',
+    'success_icon'     => isset($settings->success_icon) ? $settings->success_icon : '<i class="fa fa-check-circle"></i>',
+    'error_icon'       => isset($settings->error_icon) && $settings->error_icon ? $settings->error_icon : '<i class="fa fa-times-circle"></i>',
+    'info_icon'        => isset($settings->info_icon) && $settings->info_icon ? $settings->info_icon : '<i class="fa fa-info-circle"></i>',
     'google_analytics' => isset($settings->google_analytics) ? $settings->google_analytics : null,
 ];

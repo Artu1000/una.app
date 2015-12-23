@@ -19,6 +19,10 @@ return [
         'info'   => [
             "image" => "Size : 16 x 16px / format : ico.",
             "logo"  => "Size : min. width 300px / format : png.",
+            "loading_spinner" => "Let this field empty to replace the icon by the default one.",
+            "success_icon"    => "Let this field empty to replace the icon by the default one.",
+            "error_icon"      => "Let this field empty to replace the icon by the default one.",
+            "info_icon"       => "Let this field empty to replace the icon by the default one.",
         ],
         "label"  => [
             "app_name"        => "App name",
@@ -44,7 +48,10 @@ return [
             "favicon"         => "Favicon",
             "logo_light"      => "Logo light",
             "logo_dark"       => "Logo dark",
-            "loading_spinner" => "Loading spinner",
+            "loading_spinner" => "Loading icon",
+            "success_icon"    => "Success icon",
+            "error_icon"      => "Error icon",
+            "info_icon"       => "Info icon",
             "ga_code"         => "Google Analytics tracking code",
         ],
     ],

@@ -331,9 +331,40 @@
                             <label for="input_loading_spinner">{{ trans('settings.page.label.loading_spinner') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_loading_spinner">{!! config('settings.loading_spinner') ? config('settings.loading_spinner') : '<i class="fa fa-spinner"></i>' !!}</span>
-                                    <input id="input_loading_spinner" class="form-control" type="loading_spinner" name="loading_spinner" placeholder="{{ trans('settings.page.label.loading_spinner') }}" value="{{ old('loading_spinner') ? old('loading_spinner') : config('settings.loading_spinner') }}">
+                                    <span class="input-group-addon" for="input_loading_spinner">{!! config('settings.loading_spinner') !!}</span>
+                                    <input id="input_loading_spinner" class="form-control" type="text" name="loading_spinner" placeholder="{{ trans('settings.page.label.loading_spinner') }}" value="{{ old('loading_spinner') ? old('loading_spinner') : config('settings.loading_spinner') }}">
                                 </div>
+                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('settings.page.info.loading_spinner') }}</p>
+                            </div>
+
+                            {{-- success icon --}}
+                            <label for="input_success_icon">{{ trans('settings.page.label.success_icon') }}</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" for="input_success_icon">{!! config('settings.success_icon') !!}</span>
+                                    <input id="input_success_icon" class="form-control" type="text" name="success_icon" placeholder="{{ trans('settings.page.label.success_icon') }}" value="{{ old('success_icon') ? old('success_icon') : config('settings.success_icon') }}">
+                                </div>
+                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('settings.page.info.success_icon') }}</p>
+                            </div>
+
+                            {{-- error icon --}}
+                            <label for="input_error_icon">{{ trans('settings.page.label.error_icon') }}</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" for="input_error_icon">{!! config('settings.error_icon') !!}</span>
+                                    <input id="input_error_icon" class="form-control" type="text" name="error_icon" placeholder="{{ trans('settings.page.label.error_icon') }}" value="{{ old('error_icon') ? old('error_icon') : config('settings.error_icon') }}">
+                                </div>
+                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('settings.page.info.error_icon') }}</p>
+                            </div>
+
+                            {{-- info icon --}}
+                            <label for="input_info_icon">{{ trans('settings.page.label.info_icon') }}</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" for="input_info_icon">{!! config('settings.info_icon') !!}</span>
+                                    <input id="input_info_icon" class="form-control" type="text" name="info_icon" placeholder="{{ trans('settings.page.label.info_icon') }}" value="{{ old('info_icon') ? old('info_icon') : config('settings.info_icon') }}">
+                                </div>
+                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('settings.page.info.info_icon') }}</p>
                             </div>
 
                         </div>
