@@ -54,7 +54,7 @@ class SettingsTableSeeder extends Seeder
             'zip_code'        => '44300',
             'city'            => 'Nantes',
             'rss'             => true,
-            'loading_spinner' => '<i class="fa fa-cog fa-spin"></i>',
+            'loading_spinner' => '<i class="fa fa-spinner fa-spin"></i>',
             'facebook'        => 'https://www.facebook.com/UniversiteNantesAviron',
             'twitter'         => 'https://twitter.com/UNAClub',
             'google_plus'     => 'https://plus.google.com/+Univ-nantes-avironFr',

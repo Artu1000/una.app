@@ -79,7 +79,7 @@ class NewsController extends Controller
         $columns = [
             [
                 'title' => trans('news.page.label.image'),
-                'key'   => 'logo',
+                'key'   => 'image',
                 'image' => [
                     'storage_path' => $this->repository->getModel()->storagePath(),
                     'size'         => [
@@ -158,10 +158,164 @@ class NewsController extends Controller
         return view('pages.back.news-list')->with($data);
     }
 
+    public function edit($id)
+    {
+        // we check the current user permission
+        $required = 'news.view';
+        if (!\Sentinel::getUser()->hasAccess([$required])) {
+            \Modal::alert([
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
+            ], 'error');
+
+            return redirect()->back();
+        }
+
+        // we get the news
+        $news = $this->repository->find($id);
+
+        // we check if the news exists
+        if (!$news) {
+            \Modal::alert([
+                trans('news.message.find.failure', ['id' => $id]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
+            ], 'error');
+
+            return redirect()->back();
+        }
+
+        // SEO Meta settings
+        $this->seoMeta['page_title'] = trans('seo.news.edit');
+
+        // we convert the database date to the fr/en format
+        if ($released_at = $news->released_at) {
+            $news->released_at = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $released_at)->format('d/m/Y H:i');
+        }
+
+        // we prepare the data for breadcrumbs
+        $breadcrumbs_data = [
+            $news->title,
+        ];
+
+        // prepare data for the view
+        $data = [
+            'seoMeta'          => $this->seoMeta,
+            'news'             => $news,
+            'breadcrumbs_data' => $breadcrumbs_data,
+        ];
+
+        // return the view with data
+        return view('pages.back.news-edit')->with($data);
+    }
+
+    public function update(Request $request)
+    {
+        // we check the current user permission
+        $required = 'news.update';
+        if (!\Sentinel::getUser()->hasAccess([$required])) {
+            \Modal::alert([
+                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
+            ], 'error');
+
+            return redirect()->back();
+        }
+
+        // we convert the "on" value to a boolean value
+        $request->merge([
+            'active' => filter_var($request->get('active'), FILTER_VALIDATE_BOOLEAN),
+        ]);
+
+        // we convert the title into a slug
+        $request->merge([
+            'key' => str_slug($request->get('title')),
+        ]);
+
+        // we convert the fr date to database format
+        if ($request->get('released_at')) {
+            $request->merge([
+                'released_at' => \Carbon\Carbon::createFromFormat('d/m/Y H:i', $request->get('released_at'))->format('Y-m-d H:i:s'),
+            ]);
+        }
+
+        // we check the inputs
+        $errors = [];
+        $validator = \Validator::make($request->all(), [
+            '_id'              => 'numeric|exists:news,id',
+            'image'            => 'image|mimes:png|image_size:>=2560,>=1440',
+            'key'              => 'required|alpha_dash|unique:news,key,' . $request->get('_id'),
+            'title'            => 'required|string',
+            'meta_title'       => 'string',
+            'meta_description' => 'string',
+            'meta_keywords'    => 'string',
+            'content'          => 'string',
+            'released_at'      => 'required|date_format:Y-m-d H:i:s',
+            'active'           => 'required|boolean',
+        ]);
+        foreach ($validator->errors()->all() as $error) {
+            $errors[] = $error;
+        }
+        // if errors are found
+        if (count($errors)) {
+            // we flash the request
+            $request->flash();
+
+            // we notify the current user
+            \Modal::alert($errors, 'error');
+
+            return redirect()->back();
+        }
+
+        try {
+
+            $news = $this->repository->find($request->get('_id'));
+
+            // we store the logo
+            if ($img = $request->file('logo')) {
+                // we optimize, resize and save the image
+                $file_name = \ImageManager::optimizeAndResize(
+                    $img->getRealPath(),
+                    $news->imageName('image'),
+                    $img->getClientOriginalExtension(),
+                    $news->storagePath(),
+                    $news->availableSizes('image')
+                );
+                // we add the image name to the inputs for saving
+                $request->merge([
+                    'image' => $file_name,
+                ]);
+            }
+
+            // we update the partner
+            $news->update($request->all());
+
+            // we notify the current user
+            \Modal::alert([
+                trans('news.message.update.success'),
+            ], 'success');
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            // we flash the request
+            $request->flash();
+
+            // we log the error and we notify the current user
+            \Log::error($e);
+            \Modal::alert([
+                trans('news.message.update.failure'),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
+            ], 'error');
+
+            return redirect()->back();
+        }
+    }
+
     public function show($news_key)
     {
         // we get the news from its unique key
         $news = $this->repository->findBy('key', $news_key);
+
+        // we parse the markdown content
+        $parsedown = new \Parsedown();
+        $news->content = isset($news->content) ? $parsedown->text($news->content) : null;
 
         if (!$news) {
             abort(404);

@@ -2,7 +2,7 @@
 
 return [
     // actions
-    "action"     => [
+    "action"  => [
         "add"      => "Ajouter",
         "edit"     => "Éditer",
         "delete"   => "Supprimer",
@@ -16,8 +16,8 @@ return [
     ],
 
     // messages
-    "message"    => [
-        "global" => [
+    "message" => [
+        "global"     => [
             "failure" => [
                 "contact" => [
                     "support" => "Veuillez contacter l'équipe support si le problème persiste : <a href='mailto::email' title='Contact the support team' class='underline'>:email</a>",
@@ -26,9 +26,18 @@ return [
         ],
         "javascript" => [
             "deactivated" => [
-                "title" => "Attention",
-                "message" => "Le Javascript de votre navigateur est désactivé et vous naviguez actuellement en version dégradée.<br/> Merci de réactiver votre Javascript pour bénéficier de l'ensemble des fonctionnalités de l'application."
-            ]
+                "title"   => "Attention",
+                "message" => "Le Javascript de votre navigateur est désactivé et vous naviguez actuellement en version dégradée.<br/> Merci de réactiver votre Javascript pour bénéficier de l'ensemble des fonctionnalités de l'application.",
+            ],
+        ],
+    ],
+
+    "info"       => [
+        "date" => [
+            "format" => "Format : jj/mm/aaaa.",
+        ],
+        "datetime" => [
+            "format" => "Format : jj/mm/aaaa hh:mm"
         ]
     ],
 
@@ -57,8 +66,8 @@ return [
             "actions" => "Actions",
         ],
         "results"     => [
-            "empty" => "Aucun résultat trouvé.",
-            "status" => "Résultats <b>:start</b> à <b>:stop</b> sur un total de <b>:total</b>"
+            "empty"  => "Aucun résultat trouvé.",
+            "status" => "Résultats <b>:start</b> à <b>:stop</b> sur un total de <b>:total</b>",
         ],
     ],
 ];

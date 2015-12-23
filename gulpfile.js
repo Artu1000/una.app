@@ -17,7 +17,9 @@ var paths = {
     jquery_easing: './resources/assets/vendor/jquery.easing/',
     glide: './resources/assets/vendor/glidejs/',
     bootstrap: './resources/assets/vendor/bootstrap-sass-official/assets/',
-    datepicker: './resources/assets/vendor/bootstrap-datepicker/dist/',
+    //datepicker: './resources/assets/vendor/bootstrap-datepicker/dist/',
+    datepicker: './resources/assets/vendor/eonasdan-bootstrap-datetimepicker/',
+    moment: './resources/assets/vendor/moment/',
     lity: './resources/assets/vendor/lity/dist/',
     simplemde: './resources/assets/vendor/simplemde/dist/',
     fontawesome: './resources/assets/vendor/fontawesome/',
@@ -66,7 +68,7 @@ elixir(function (mix) {
 
         // combine back stylesheets
         .styles([
-            paths.datepicker + 'css/bootstrap-datepicker3.css',
+            //paths.datepicker + 'css/bootstrap-datepicker3.css',
             paths.lity + 'lity.css',
             paths.simplemde + 'simplemde.min.css',
             'public/css/app.back.css'
@@ -138,8 +140,12 @@ elixir(function (mix) {
             paths.jquery + 'dist/jquery.js',
             paths.jquery_easing + 'js/jquery.easing.js',
             paths.bootstrap + 'javascripts/bootstrap.js',
-            paths.datepicker + 'js/bootstrap-datepicker.js',
-            paths.datepicker + 'locales/bootstrap-datepicker.fr.min.js',
+            //paths.datepicker + 'js/bootstrap-datepicker.js',
+            //paths.datepicker + 'locales/bootstrap-datepicker.fr.min.js',
+            paths.moment + 'moment.js',
+            paths.moment + 'locale/fr.js',
+            paths.moment + 'locale/en-gb.js',
+            paths.datepicker + 'src/js/bootstrap-datetimepicker.js',
             paths.js + 'ie10-viewport-bug-workaround.js',
             paths.lity + 'lity.js',
             paths.simplemde + 'simplemde.min.js',

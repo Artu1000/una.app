@@ -51,7 +51,7 @@ return [
                 "failure" => "La diapo #:id n'existe pas.",
             ],
             "delete" => [
-                "success" => "La diapo <b>:title</b> a été supprimée avec succès.",
+                "success" => "La diapo <b>:title</b> a bien été supprimée.",
                 "failure" => "Une erreur est survenue lors de la suppression de la diapo <b>:title</b>.",
             ],
         ],

@@ -19,11 +19,16 @@ class News extends _BaseModel
 
         // we define the fillable attributes
         $this->fillable = [
-            'news_category_id',
+            'category_id',
+            'key',
             'title',
-            'released_at',
             'image',
-            'content'
+            'meta_title',
+            'meta_description',
+            'meta_keyword',
+            'content',
+            'released_at',
+            'active',
         ];
 
         // we define the image(s) size(s)

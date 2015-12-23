@@ -51,12 +51,31 @@ $(function () {
         }
     });
 
+    // we prepare the datepicker and datetimepicker
+    switch(app.locale){
+        case 'fr':
+            var locale = app.locale;
+            var format = 'DD/MM/YYYY HH:mm';
+            break;
+        case 'en':
+            var format = 'DD/MM/YYYY hh:mm A';
+            var locale = 'en-gb';
+            break;
+    }
     // we activate the datepicker
-    $('.datepicker').datepicker({
-        autoclose: true,
-        todayHighlight: true,
-        language: app.locale
-    });
+    if($('.datepicker').length){
+        $('.datepicker').datetimepicker({
+            locale: locale,
+            format: 'DD/MM/YYYY'
+        });
+    }
+    // we activate the datetimepicker
+    if($('.datetimepicker').length){
+        $('.datetimepicker').datetimepicker({
+            locale: locale,
+            format: format
+        });
+    }
 
     // permissions checkboxes
     // permission child checkboxes check on click on the parent

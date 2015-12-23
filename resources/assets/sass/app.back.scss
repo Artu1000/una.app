@@ -7,6 +7,7 @@
  * IMPORTS & VARIABLES
  **********************************************************************************************************************/
 @import 'app.common';
+@import '../vendor/eonasdan-bootstrap-datetimepicker/src/sass/bootstrap-datetimepicker-build';
 
 html {
 
@@ -255,6 +256,11 @@ html {
 
             &.textarea {
               max-width: unset;
+
+              .CodeMirror, .CodeMirror-scroll {
+                min-height: 100px;
+                height: auto;
+              }
             }
 
             &.image {
@@ -284,19 +290,14 @@ html {
         }
       }
 
-      .CodeMirror {
-        height: 300px;
+      .bootstrap-datetimepicker-widget {
+        padding: 15px;
 
-        .CodeMirror-code {
-          padding: 5px 5px 25px;
+        ul {
+          margin: 0;
         }
       }
     }
-  }
-
-  .datepicker-dropdown {
-    margin: 0;
-    padding: 15px;
   }
 }
 

@@ -58,6 +58,14 @@ class SymLinksPrepare extends Command
         // we prepare the symlinks we want to add
         $symlinks = [
             [
+                'storage' => app(\App\Repositories\News\NewsRepositoryInterface::class)
+                    ->getModel()
+                    ->storagePath(),
+                'public'  => app(\App\Repositories\News\NewsRepositoryInterface::class)
+                    ->getModel()
+                    ->publicPath(),
+            ],
+            [
                 'storage' => app(\App\Repositories\Partner\PartnerRepositoryInterface::class)
                     ->getModel()
                     ->storagePath(),
