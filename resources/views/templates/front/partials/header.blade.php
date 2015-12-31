@@ -93,7 +93,7 @@
                             @elseif(\Route::current()->getName() === 'front.e-shop') active
                             @endif">
                         <a title="Infos" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            <i class="fa fa-info-circle"></i> Aviron<span class="caret"></span>
+                            <i class="fa fa-anchor"></i> Aviron<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="menu_tab @if(\Route::current()->getName() === 'front.registration') active @endif">

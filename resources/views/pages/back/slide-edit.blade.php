@@ -74,7 +74,7 @@
                                     </span>
                                     <input id="input_background_image" type="text" class="form-control" readonly="">
                                 </div>
-                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('home.page.info.slide.picto') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('home.page.info.slide.picto') }}</p>
                             </div>
 
                             {{-- background image --}}
@@ -95,7 +95,7 @@
                                     </span>
                                     <input id="input_background_image" type="text" class="form-control" readonly="">
                                 </div>
-                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('home.page.info.slide.background_image') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('home.page.info.slide.background_image') }}</p>
                             </div>
 
                             {{-- position --}}
@@ -126,7 +126,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('home.page.info.slide.previous_slide') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('home.page.info.slide.previous_slide') }}</p>
                             </div>
 
                         </div>

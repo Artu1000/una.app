@@ -17,6 +17,6 @@ foreach ($categories as $id => $cat) {
 }
 
 return [
-    'categories' => $categories,
-    'categories_keys' => $categories_keys
+    'category' => $categories,
+    'category_key' => $categories_keys
 ];

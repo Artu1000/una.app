@@ -58,7 +58,7 @@
 
                             {{-- submit login --}}
                             <button class="btn btn-primary btn-block spin-on-click" type="submit">
-                                <i class="fa fa-thumbs-up"></i> {{ trans('auth.login.action.login') }}
+                                {!! config('settings.success_icon') !!} {{ trans('auth.login.action.login') }}
                             </button>
 
                             {{-- forgotten password / create account --}}

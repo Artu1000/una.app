@@ -15,7 +15,7 @@ class PartnerComposer {
 
     public function compose($view)
     {
-        $view->with('partners', $this->partner->all());
+        $view->with('partners', $this->partner->where('active', true)->get());
     }
 
 }

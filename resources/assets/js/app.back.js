@@ -51,6 +51,7 @@ $(function () {
         }
     });
 
+    // datetime picker
     // we prepare the datepicker and datetimepicker
     switch(app.locale){
         case 'fr':
@@ -118,11 +119,11 @@ $(function () {
         }).done(function () {
             // we replace the loading spinner by a check icon
             swipe_group.find('.swipe-action-icon').remove();
-            swipe_group.append('<span class="swipe-action-icon text-success"><i class="fa fa-thumbs-up"></i></span>');
+            swipe_group.append('<span class="swipe-action-icon text-success">' + app.success_icon + '</i></span>');
         }).fail(function () {
             // we replace the loading spinner by a check icon
             swipe_group.find('.swipe-action-icon').remove();
-            swipe_group.append('<span class="swipe-action-icon text-danger"><i class="fa fa-thumbs-down"></i></span>');
+            swipe_group.append('<span class="swipe-action-icon text-danger">' + app.error_icon + '</i></span>');
 
             // we set the checkbox at its original value
             window.setTimeout(function () {

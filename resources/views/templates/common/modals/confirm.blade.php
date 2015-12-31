@@ -13,8 +13,8 @@
                 </ul>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> {{ trans('global.action.cancel') }}</button>
-                <button type="button" id="modal-confirm-button" class="btn btn-primary spin-on-click"><i class="fa fa-check-circle"></i> {{ trans('global.action.confirm') }}</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">{!! config('settings.error_icon') !!} {{ trans('global.action.cancel') }}</button>
+                <button type="button" id="modal-confirm-button" class="btn btn-success spin-on-click">{!! config('settings.success_icon') !!} {{ trans('global.action.confirm') }}</button>
             </div>
         </div>
     </div>

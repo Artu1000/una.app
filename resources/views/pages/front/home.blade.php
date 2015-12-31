@@ -50,7 +50,7 @@
                             <tr class="news">
                                 <td class="img hidden-xs">
                                     <a class="btn btn-default" href="{{ route('front.news.show', $news->key) }}" role="button" title="{{ $news->title }}">
-                                        <img width="150" height="150" src="{{ url('/') . '/' . $news->image }}" alt="{{ $news->title }}">
+                                        <img class="img-circle" width="150" height="150" src="{{ $news->imagePath($news->image, 'image', 'list') }}" alt="{{ $news->title }}">
                                     </a>
                                 </td>
                                 <td class="content">

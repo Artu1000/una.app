@@ -39,9 +39,11 @@ abstract class _BaseModel extends Model
             // we return the original image path
             return url($this->public_path . '/' . $file_name);
         }
+
         try {
             // we return the sized image path
             list($name, $ext) = explode('.', $file_name);
+
 
             return url($this->public_path . '/' . $name . '_' . $size . '.' . $ext);
         } catch (\Exception $e) {

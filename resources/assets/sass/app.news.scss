@@ -40,76 +40,81 @@
 
       tbody {
 
-        tr.news {
+        tr {
 
-          td {
-            text-align: justify;
-            border: 0;
-            height: 220px;
-          }
+          &.news {
 
-          .img, .content, .button {
-            vertical-align: middle;
-
-            a {
-              padding: 0;
-              background-color: transparent;
+            td {
+              text-align: justify;
               border: 0;
+              height: 220px;
+            }
 
-              &:hover {
-                opacity: 0.7;
-                @include transition(opacity 0.2s ease);
+            .img, .content, .button {
+              vertical-align: middle;
+
+              a {
+                padding: 0;
+                background-color: transparent;
+
+                &:hover {
+                  opacity: 0.7;
+                  @include transition(opacity 0.2s ease);
+                }
               }
             }
-          }
 
-          .img {
-            padding-left: 40px;
+            .img {
+              padding-left: 40px;
 
-            img {
-              @include border-radius(50%);
-              border: dashed 1px;
-              padding: 10px;
-            }
-          }
+              a {
+                @include border-radius(50%);
+                border: solid 1px #ccc;
 
-          .content {
-
-            h3 {
-              margin: 5px 0;
+                img {
+                  padding: 10px;
+                }
+              }
             }
 
-            .date, .category, .comments {
-              display: inline-block;
-            }
+            .content {
 
-            .category {
+              h3 {
+                margin: 5px 0;
+              }
+
+              .date, .category, .comments {
+                display: inline-block;
+              }
+
+              .category {
                 margin-left: 20px;
-            }
+              }
 
-            .comments {
-              color: #337ab7;
-              margin-left: 20px;
-            }
-
-            .sum_up {
-              margin-top: 8px;
-            }
-          }
-
-          .button {
-            padding-right: 40px;
-
-            button {
-              @include border-radius(50%);
-              width: 60px;
-              height: 60px;
-              background-color: transparent;
-              border: solid 1px #ccc;
-
-              i.fa {
-                font-size: 40px;
+              .comments {
                 color: #337ab7;
+                margin-left: 20px;
+              }
+
+              .sum_up {
+                margin-top: 8px;
+              }
+            }
+
+            .button {
+              padding-right: 40px;
+
+              button {
+                @include border-radius(50%);
+                width: 60px;
+                height: 60px;
+                background-color: transparent;
+                border: solid 1px #ccc;
+
+                i.fa {
+                  font-size: 40px;
+                  color: $brand-primary;
+                }
               }
             }
           }

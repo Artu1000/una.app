@@ -33,7 +33,7 @@ var cookie = {
             '<div class="display-table">' +
             '<div class="table-cell text-center">' +
             '<span>Je comprends que le site <b>' + app.app_name + '</b> utilise des cookies afin d\'améliorer mon expérience utilisateur.</span>' +
-            '<button id="cookie_acceptation" class="btn btn-success"><i class="fa fa-thumbs-up"></i> Fermer</button>' +
+            '<button id="cookie_acceptation" class="btn btn-success">' + app.success_icon + '</i> Fermer</button>' +
             '</div>' +
             '</div>' +
             '</div>' +
@@ -130,6 +130,7 @@ var responsiveBackgroundImage = {
 
             // we remove the extension
             var segments = bg_img_url.split('.');
+
             bg_img_url = segments.filter(function(segment, key){
                 return key != (segments.length - 1);
             }).join('.');

@@ -18,7 +18,7 @@
 
                 <div class="categories">
                     <i class="fa fa-cubes"></i> Trier par catégorie :
-                    @foreach(config('news.categories') as $id => $cat)
+                    @foreach(config('news.category') as $id => $cat)
                         <a class="{{ $cat['key'] }}
                             @if($current_category == $id)
                                 selected
@@ -36,7 +36,7 @@
                             <tr class="news">
                                 <td class="img hidden-xs">
                                     <a class="btn btn-default" href="{{ route('front.news.show', $news->key) }}" role="button" title="{{ $news->title }}">
-                                        <img width="150" height="150" src="{{ url('/') . '/' . $news->image }}" alt="{{ $news->title }}">
+                                        <img class="img-circle" width="150" height="150" src="{{ $news->imagePath($news->image, 'image', 'list') }}" alt="{{ $news->title }}">
                                     </a>
                                 </td>
                                 <td class="content">
@@ -46,8 +46,8 @@
                                     <div class="date">
                                         <i class="fa fa-clock-o"></i> {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $news->released_at)->format('d/m/Y H:i') }}
                                     </div>
-                                    <div class="category {{ \config('news.categories.' . $news->category_id . '.key') }}" >
-                                        <i class="fa fa-cube"></i> {{ \config('news.categories.' . $news->category_id . '.title') }}
+                                    <div class="category {{ \config('news.category.' . $news->category_id . '.key') }}" >
+                                        <i class="fa fa-cube"></i> {{ \config('news.category.' . $news->category_id . '.title') }}
                                     </div>
                                     <div class="comments">
                                         <i class="fa fa-comments"></i> <a href="{{ route('front.news.show', $news->key) }}#disqus_thread" title="Commentaires"></a>

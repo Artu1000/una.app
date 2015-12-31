@@ -31,6 +31,7 @@ return [
             "meta_keywords"          => "Meta-keywords",
             "meta_description"       => "Meta-description",
             "content"                => "Contenu",
+            "category"               => "Catégorie",
             "released_at"            => "Date de diffusion",
             "activation"             => "Activation",
             "activation_placeholder" => "Statut",
@@ -53,6 +54,10 @@ return [
         "delete" => [
             "success" => "L'actualité <b>:title</b> a bien été supprimée.",
             "failure" => "Une erreur est survenue lors de la suppression de l'actualité <b>:title</b>.",
+        ],
+        "activation" => [
+            "success" => "Le statut d'activation de l'actualité <b>:title</b> a bien été mis à jour.",
+            "failure" => "Une erreur est survenue de la mise à jour du statut d'activation de l'actualité <b>:title</b>",
         ],
     ],
 ];

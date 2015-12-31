@@ -159,7 +159,7 @@
         <tr>
             <td colspan="{{ sizeof($tableListData['columns']) + 1 }}" class="text-center">
                 <span class="text-info">
-                    <i class="fa fa-info-circle"></i>
+                    {!! config('settings.info_icon') !!}
                 </span>
                 {{ trans('global.table_list.results.empty') }}
             </td>

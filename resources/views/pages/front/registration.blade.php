@@ -38,7 +38,7 @@
                         @endforeach
                     </table>
                     <ul>
-                        <p class="text-info"><i class="fa fa-info-circle"></i> A noter :</p>
+                        <p class="text-info">{!! config('settings.info_icon') !!} A noter :</p>
                         <li>Pour la <b>catégorie "Tous publics" uniquement</b>, une licence mi-saison est possible, valable de mai à septembre.</li>
                         <li>Pour les autres catégories, l'inscription en cours d'année ne donne droit à <b>aucune réduction tarifaire</b>.</li>
                     </ul>

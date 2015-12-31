@@ -53,12 +53,31 @@
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <span class="btn btn-primary btn-file">
-                                            <i class="fa fa-picture-o"></i> {{ trans('global.action.browse') }} <input type="file" name="logo">
+                                            <i class="fa fa-picture-o"></i> {{ trans('global.action.browse') }} <input type="file" name="image">
                                         </span>
                                     </span>
                                     <input id="input_image" type="text" class="form-control" readonly="">
                                 </div>
-                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('news.page.info.image') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('news.page.info.image') }}</p>
+                            </div>
+
+                            {{-- category --}}
+                            <label class="required">{{ trans('news.page.label.category') }}</label>
+                            <div class="form-group">
+                                <div class="btn-group" data-toggle="buttons">
+                                    @foreach($categories as $id => $category)
+                                        <label class="btn toggle
+                                        @if(!isset($news) && old('category_id') == $id)active
+                                        @elseif(isset($news) && isset($news->category_id) && $news->category_id === $id)active
+                                        @endif">
+                                            <input type="radio" name="category_id" value="{{ $id }}" autocomplete="off"
+                                                   @if(!isset($news) && old('category_id') == $id)checked
+                                                   @elseif(isset($news) && isset($news->category_id) && $news->category_id === $id)checked
+                                                   @endif>
+                                            {{ $category['title'] }}
+                                        </label>
+                                    @endforeach
+                                </div>
                             </div>
 
                             {{-- name --}}
@@ -74,7 +93,7 @@
                             <label for="input_content">{{ trans('news.page.label.content') }}</label>
                             <div class="form-group textarea">
                                 <textarea id="input_content" class="form-control markdown" name="content" placeholder="{{ trans('news.page.label.content') }}">{{ old('content') ? old('content') : (isset($news) && $news->content ? $news->content : null) }}</textarea>
-                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('news.page.info.content') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('news.page.info.content') }}</p>
                             </div>
 
                         </div>
@@ -94,7 +113,7 @@
                                     <span class="input-group-addon" for="input_meta_title"><i class="fa fa-link"></i></span>
                                     <input id="input_meta_title" class="form-control" type="text" name="meta_title" value="{{ old('meta_title') ? old('meta_title') : (isset($news) && $news->meta_title ? $news->meta_title : null) }}" placeholder="{{ trans('news.page.label.meta_title') }}">
                                 </div>
-                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('news.page.info.meta_title') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('news.page.info.meta_title') }}</p>
                             </div>
 
                             {{-- meta description --}}
@@ -104,7 +123,7 @@
                                     <span class="input-group-addon" for="input_meta_description"><i class="fa fa-code"></i></span>
                                     <textarea id="input_meta_description" class="form-control" name="meta_description" placeholder="{{ trans('news.page.label.meta_description') }}">{{ old('meta_description') ? old('meta_description') : (isset($news) && $news->meta_description ? $news->meta_description : null) }}</textarea>
                                 </div>
-                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('news.page.info.meta_description') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('news.page.info.meta_description') }}</p>
                             </div>
 
                             {{-- meta keywords --}}
@@ -127,13 +146,13 @@
                         <div class="panel-body">
 
                             {{-- release date --}}
-                            <label for="input_released_at">{{ trans('news.page.label.released_at') }}</label>
+                            <label class="required" for="input_released_at">{{ trans('news.page.label.released_at') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_released_at"><i class="fa fa-birthday-cake"></i></span>
                                     <input id="input_released_at" type='text' class="form-control datetimepicker" name="released_at" value="{{ old('released_at') ? old('released_at') : (isset($news) && $news->released_at ? $news->released_at : \Carbon\Carbon::now()->format('d/m/Y H:i')) }}" placeholder="{{ trans('news.page.label.released_at') }}">
                                 </div>
-                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('global.info.datetime.format') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('global.info.datetime.format') }}</p>
                             </div>
 
                             {{-- activation --}}

@@ -25,7 +25,7 @@ return [
 
     // home
     'home'               => false,
-    'home.edit'          => false,
+    'home.view'          => false,
     'home.update'        => false,
     'home.slide.create'  => false,
     'home.slide.view'    => false,

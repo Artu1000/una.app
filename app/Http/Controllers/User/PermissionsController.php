@@ -22,12 +22,7 @@ class PermissionsController extends Controller
     public function index(Request $request)
     {
         // we check the current user permission
-        $required = 'permissions.list';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('permissions.list')){
             return redirect()->back();
         }
 
@@ -104,6 +99,11 @@ class PermissionsController extends Controller
 
     public function create()
     {
+        // we check the current user permission
+        if(!$this->requirePermission('permissions.create')){
+            return redirect()->back();
+        }
+
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.permissions.create');
 
@@ -130,12 +130,7 @@ class PermissionsController extends Controller
     public function store(Request $request)
     {
         // we check the current user permission
-        $required = 'permissions.create';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('permissions.create')){
             return redirect()->back();
         }
 
@@ -179,16 +174,8 @@ class PermissionsController extends Controller
             $rules['parent_role_id'] = 'required|numeric|exists:slides,id';
         }
 
-        // we check the inputs
-        $errors = [];
-        $validator = \Validator::make($request->all(), $rules);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
-            \Modal::alert($errors, 'error');
-
+        // we check inputs validity
+        if(!$this->checkInputsValidity($request->all(), $rules, $request)){
             return redirect()->back();
         }
 
@@ -234,12 +221,7 @@ class PermissionsController extends Controller
     public function edit($id)
     {
         // we check the current user permission
-        $required = 'permissions.view';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('permissions.view')){
             return redirect()->back();
         }
 
@@ -298,12 +280,7 @@ class PermissionsController extends Controller
     public function update(Request $request)
     {
         // we check the current user permission
-        $required = 'permissions.update';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('permissions.update')){
             return redirect()->back();
         }
 
@@ -345,20 +322,8 @@ class PermissionsController extends Controller
             $rules['parent_role_id'] = 'required|numeric|exists:slides,id';
         }
 
-        // we check the inputs
-        $errors = [];
-        $validator = \Validator::make($request->all(), $rules);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
-            // we flash the request
-            $request->flash();
-
-            // we notify the current user
-            \Modal::alert($errors, 'error');
-
+        // we check inputs validity
+        if(!$this->checkInputsValidity($request->all(), $rules, $request)){
             return redirect()->back();
         }
 
@@ -406,12 +371,7 @@ class PermissionsController extends Controller
     public function destroy(Request $request)
     {
         // we check the current user permission
-        $required = 'permissions.delete';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('permissions.delete')){
             return redirect()->back();
         }
 

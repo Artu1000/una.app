@@ -24,12 +24,7 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         // we check the current user permission
-        $required = 'users.list';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('users.list')){
             return redirect()->back();
         }
 
@@ -59,19 +54,20 @@ class UsersController extends Controller
                 'key'     => 'first_name',
                 'sort_by' => 'users.first_name',
             ],
-//            [
-//                'title'   => trans('users.page.label.status'),
-//                'key'     => 'status',
-//                'config'  => 'user.status',
-//                'sort_by' => 'users.status',
-//                'button'  => true,
-//            ], [
-//                'title'   => trans('users.page.label.board'),
-//                'key'     => 'board',
-//                'config'  => 'user.board',
-//                'sort_by' => 'users.board',
-//                'button'  => true,
-//            ],
+            [
+                'title'   => trans('users.page.label.status'),
+                'key'     => 'status',
+                'config'  => 'user.status',
+                'sort_by' => 'users.status',
+                'button'  => true,
+            ],
+            [
+                'title'   => trans('users.page.label.board'),
+                'key'     => 'board',
+                'config'  => 'user.board',
+                'sort_by' => 'users.board',
+                'button'  => true,
+            ],
             [
                 'title'      => trans('users.page.label.role'),
                 'key'        => 'roles',
@@ -148,6 +144,11 @@ class UsersController extends Controller
 
     public function create()
     {
+        // we check the current user permission
+        if(!$this->requirePermission('users.create')){
+            return redirect()->back();
+        }
+
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.users.create');
 
@@ -164,12 +165,7 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         // we check the current user permission
-        $required = 'users.create';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('users.create')){
             return redirect()->back();
         }
 
@@ -196,9 +192,8 @@ class UsersController extends Controller
             $inputs['birth_date'] = Carbon::createFromFormat('d/m/Y', $inputs['birth_date'])->format('Y-m-d');
         }
 
-        // we check the inputs
-        $errors = [];
-        $validator = \Validator::make($inputs, [
+        // we check inputs validity
+        $rules = [
             'photo'        => 'image|mimes:jpg,jpeg,png|image_size:>=145,>=160',
             'gender'       => 'in:' . implode(',', array_keys(config('user.gender'))),
             'last_name'    => 'required|string',
@@ -212,17 +207,8 @@ class UsersController extends Controller
             'country'      => 'string',
             'role'         => 'required|numeric|exists:roles,id',
             'password'     => 'required|min:6|confirmed',
-        ]);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
-            // we flash the request
-            $request->flash();
-            // we notify the current user
-            \Modal::alert($errors, 'error');
-
+        ];
+        if(!$this->checkInputsValidity($inputs, $rules, $request)){
             return redirect()->back();
         }
 
@@ -298,12 +284,7 @@ class UsersController extends Controller
     public function edit($id)
     {
         // we check the current user permission
-        $required = 'users.view';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('users.view')){
             return redirect()->back();
         }
 
@@ -384,12 +365,7 @@ class UsersController extends Controller
     public function update(Request $request)
     {
         // we check the current user permission
-        $required = 'users.update';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('users.update')){
             return redirect()->back();
         }
 
@@ -469,19 +445,8 @@ class UsersController extends Controller
             $inputs['birth_date'] = Carbon::createFromFormat('d/m/Y', $inputs['birth_date'])->format('Y-m-d');
         }
 
-        // we check the inputs
-        $errors = [];
-        $validator = \Validator::make($inputs, $rules);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
-            // we flash the request
-            $request->flash();
-            // we notify the current user
-            \Modal::alert($errors, 'error');
-
+        // we check inputs validity
+        if(!$this->checkInputsValidity($inputs, $rules, $request)){
             return redirect()->back();
         }
 
@@ -577,12 +542,7 @@ class UsersController extends Controller
     public function destroy(Request $request)
     {
         // we check the current user permission
-        $required = 'users.delete';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('users.delete')){
             return redirect()->back();
         }
 
@@ -638,17 +598,16 @@ class UsersController extends Controller
     public function activate(Request $request)
     {
         // we check the current user permission
-        $required = 'users.update';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('users.update')){
             return redirect()->back();
         }
 
         // we get the user
-        $user = \Sentinel::findById($request->get('id'));
+        if (!$user = \Sentinel::findById($request->get('id'))) {
+            return response([
+                trans('users.message.find.failure', ['id' => $request->get('id')]),
+            ], 401);
+        }
 
         // we check if the current user has a role rank high enough to edit the user
         $edited_user_role = $user->roles->first();
@@ -664,18 +623,13 @@ class UsersController extends Controller
             'activation_order' => filter_var($request->get('activation_order'), FILTER_VALIDATE_BOOLEAN),
         ]);
 
-        // we check the inputs
-        $errors = [];
-        $validator = \Validator::make($request->all(), [
+        // we check inputs validity
+        $rules = [
             'id'               => 'required|exists:users,id',
             'activation_order' => 'required|boolean',
-        ]);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
-            return response($errors, 401);
+        ];
+        if(!$this->checkInputsValidity($request->all(), $rules, $request)){
+            return redirect()->back();
         }
 
         try {

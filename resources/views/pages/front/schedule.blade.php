@@ -77,7 +77,7 @@
 
                     <div class="informations">
                         <ul>
-                            <p class="text-info"><i class="fa fa-info-circle"></i> A noter :</p>
+                            <p class="text-info">{!! config('settings.info_icon') !!} A noter :</p>
                             <li>Il est important d'<b>être en tenue et prêt à ramer</b> à lors du début d'un créneau d'encadrement, afin de profiter au maximum de l'amplitude horaire et de ne pas pénaliser ses équipiers.</li>
                             <li>La pratique en autonomie est <b>strictement interdite</b>, sauf dérogations nominatives délivrées par le Comité , approuvées par l'équipe d'encadrement.</li>
                             <li>Les horaires des séances d'encadrement <b>évoluent en cours d'année</b>, merci de visiter régulièrement cette page.</li>

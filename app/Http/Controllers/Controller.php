@@ -29,6 +29,9 @@ abstract class Controller extends BaseController
             'base_url'        => url('/'),
             'app_name'        => config('settings.app_name_' . config('app.locale')),
             'loading_spinner' => config('settings.loading_spinner'),
+            'success_icon'    => config('settings.success_icon'),
+            'error_icon'      => config('settings.error_icon'),
+            'info_icon'       => config('settings.info_icon'),
             'locale'          => config('app.locale'),
             'multilingual'    => config('settings.multilingual'),
         ]);
@@ -42,6 +45,53 @@ abstract class Controller extends BaseController
     }
 
     /**
+     * @param string $permission
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function requirePermission($permission)
+    {
+
+        if (!\Sentinel::getUser()->hasAccess([$permission])) {
+            \Modal::alert([
+                trans('permissions.message.access.denied') . " : <b>" .
+                trans('permissions.' . $permission) . "</b>",
+            ], 'error');
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param array $inputs
+     * @param array $rules
+     * @param \Illuminate\Http\Request $request
+     * @return bool
+     */
+    public function checkInputsValidity(array $inputs, array $rules, \Illuminate\Http\Request $request)
+    {
+        // we check the inputs
+        $errors = [];
+        $validator = \Validator::make($inputs, $rules);
+        foreach ($validator->errors()->all() as $error) {
+            $errors[] = $error;
+        }
+        // if errors are found
+        if (count($errors)) {
+            // we flash the request
+            $request->flash();
+
+            // we notify the current user
+            \Modal::alert($errors, 'error');
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * @param $query
      * @param \Illuminate\Http\Request $request
      * @param array $columns
@@ -52,7 +102,8 @@ abstract class Controller extends BaseController
      * @return mixed
      */
     public function prepareTableListData(
-        $query, \Illuminate\Http\Request $request,
+        $query,
+        \Illuminate\Http\Request $request,
         array $columns,
         array $routes,
         array $confirm_config,

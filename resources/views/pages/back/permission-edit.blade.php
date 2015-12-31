@@ -104,7 +104,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('permissions.page.info.rank') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('permissions.page.info.rank') }}</p>
                             </div>
 
                         </div>

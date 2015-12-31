@@ -58,7 +58,7 @@
                                     </span>
                                     <input id="input_photo" type="text" class="form-control" readonly="">
                                 </div>
-                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('users.page.info.photo') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('users.page.info.photo') }}</p>
                             </div>
 
                             {{-- gender --}}
@@ -114,7 +114,7 @@
                                     <span class="input-group-addon" for="input_birth_date"><i class="fa fa-birthday-cake"></i></span>
                                     <input id="input_birth_date" type='text' class="form-control datepicker" name="birth_date" value="{{ old('birth_date') ? old('birth_date') : (isset($user) && $user->birth_date ? $user->birth_date : null) }}" placeholder="{{ trans('users.page.label.birth_date') }}">
                                 </div>
-                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('users.page.info.birth_date') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('users.page.info.birth_date') }}</p>
                             </div>
 
                         </div>
@@ -134,7 +134,7 @@
                                     <span class="input-group-addon" for="input_phone_number"><i class="fa fa-phone"></i></span>
                                     <input id="input_phone_number" class="form-control" type="tel" name="phone_number" value="{{ old('phone_number') ? old('phone_number') : (isset($user) && $user->phone_number ? $user->phone_number : null) }}" placeholder="{{ trans('users.page.label.phone_number') }}">
                                 </div>
-                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('users.page.label.phone_number') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('users.page.label.phone_number') }}</p>
                             </div>
 
                             {{-- email --}}
@@ -237,7 +237,7 @@
                                     <input type="password" id="input_password" class="form-control" name="password" value="{{ old('password') }}" placeholder="{{ trans('users.page.label.new_password') }}">
                                 </div>
                                 @if(isset($user))
-                                    <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('users.page.info.password') }}</p>
+                                    <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('users.page.info.password') }}</p>
                                 @endif
                             </div>
 
@@ -249,7 +249,7 @@
                                     <input id="input_password_confirmation" class="form-control" type="password" name="password_confirmation" value="{{ old('password_confirmation') }}" placeholder="{{ trans('users.page.label.password_confirm') }}">
                                 </div>
                                 @if(isset($user))
-                                    <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('users.page.info.password') }}</p>
+                                    <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('users.page.info.password') }}</p>
                                 @endif
                             </div>
 

@@ -60,13 +60,15 @@ return [
         "destroy"  => "admin/contenus/page-accueil/diapo/suppression",
         "activate" => "admin/contenus/page-accueil/diapo/activer",
     ],
-    "news"      => [
-        "list"    => "admin/contenus/actualités",
-        "create"   => "admin/contenus/actualités/creation",
-        "store"    => "admin/contenus/actualités/enregistrement",
-        "edit"     => "admin/contenus/actualités/edition/{id}",
-        "update"   => "admin/contenus/actualités/mise-a-jour",
-        "destroy"  => "admin/contenus/actualités/suppression",
+    "news"        => [
+        "index"   => "actus",
+        "show"    => "actus/{key}",
+        "list"    => "admin/contenus/actus",
+        "create"  => "admin/contenus/actus/creation",
+        "store"   => "admin/contenus/actus/enregistrement",
+        "edit"    => "admin/contenus/actus/edition/{key}",
+        "update"  => "admin/contenus/actus/mise-a-jour",
+        "destroy" => "admin/contenus/actus/suppression",
     ],
     "partners"    => [
         "index"    => "admin/contenus/partenaires",

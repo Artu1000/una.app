@@ -67,7 +67,7 @@
                                     </span>
                                     <input id="input_photo" type="text" class="form-control" readonly="">
                                 </div>
-                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('partners.page.info.logo') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('partners.page.info.logo') }}</p>
                             </div>
 
                             {{-- url --}}
@@ -109,7 +109,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <p class="help-block quote"><i class="fa fa-info-circle"></i> {{ trans('partners.page.info.previous_partner') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('partners.page.info.previous_partner') }}</p>
                             </div>
 
                             {{-- activation --}}

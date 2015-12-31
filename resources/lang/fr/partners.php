@@ -23,7 +23,7 @@ return [
         "label"  => [
             "logo"                         => "Logo",
             "name"                         => "Nom",
-            "url"                          => "url",
+            "url"                          => "Url",
             "position"                     => "Position",
             "previous_partner"             => "Partenaire précédent",
             "previous_partner_placeholder" => "Sélectionnez le partenaire précédent",
@@ -34,26 +34,24 @@ return [
 
     // messages
     "message" => [
-        "update" => [
-            "success" => "La page d'accueil a bien été mise à jour.",
-            "failure" => "Une erreur est survenue lors de la mise à jour de la page d'accueil.",
+        "create"     => [
+            "success" => "Le partenaire a bien été créé.",
+            "failure" => "Une erreur est survenue lors de la création du partenaire.",
         ],
-        "slide"  => [
-            "create" => [
-                "success" => "La diapo a bien été créée.",
-                "failure" => "Une erreur est survenue lors de la création de la diapo.",
-            ],
-            "update" => [
-                "success" => "La diapo a bien été mise à jour.",
-                "failure" => "Une erreur est survenue lors de la mise à jour de la diapo.",
-            ],
-            "find"   => [
-                "failure" => "La diapo #:id n'existe pas.",
-            ],
-            "delete" => [
-                "success" => "La diapo <b>:title</b> a bien été supprimée.",
-                "failure" => "Une erreur est survenue lors de la suppression de la diapo <b>:title</b>.",
-            ],
+        "update"     => [
+            "success" => "Le partenaire a bien été mis à jour.",
+            "failure" => "Une erreur est survenue lors de la mise à jour du partenaire.",
+        ],
+        "find"       => [
+            "failure" => "Le partenaire #:id n'existe pas.",
+        ],
+        "delete"     => [
+            "success" => "Le partenaire <b>:name</b> a bien été supprimé.",
+            "failure" => "Une erreur est survenue lors de la suppression du partenaire <b>:name</b>.",
+        ],
+        "activation" => [
+            "success" => "Le statut d'activation du partenaire <b>:name</b> a bien été mis à jour.",
+            "failure" => "Une erreur est survenue de la mise à jour du statut d'activation du partenaire <b>:name</b>",
         ],
     ],
 ];

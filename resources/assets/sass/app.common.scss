@@ -220,8 +220,12 @@ html {
         margin: 15px 0;
       }
 
-      p.quote {
+      .quote {
         @include lato-font('light', italic);
+
+        &.help-block{
+          color: $brand-primary;
+        }
 
         b {
           @include lato-font('medium', italic);

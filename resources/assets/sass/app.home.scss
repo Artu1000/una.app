@@ -123,7 +123,6 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
               a {
                 padding: 0;
-                @include border-radius(50%);
                 background-color: transparent;
 
                 &:hover {
@@ -135,10 +134,13 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
             .img {
 
-              img {
+              a {
                 @include border-radius(50%);
-                border: dashed 1px;
-                padding: 10px;
+                border: solid 1px #ccc;
+
+                img {
+                  padding: 10px;
+                }
               }
             }
 
@@ -164,10 +166,11 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
                 width: 60px;
                 height: 60px;
                 background-color: #fff;
+                border: solid 1px #ccc;
 
                 i.fa {
                   font-size: 40px;
-                  color: #337ab7;
+                  color: $brand-primary;
                 }
               }
             }

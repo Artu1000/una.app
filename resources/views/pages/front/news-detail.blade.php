@@ -7,7 +7,7 @@
         {{-- parallax img --}}
         <div class="parallax_img">
             @if($news->image)
-                <div class="background_responsive_img fill" data-background-image="{{ url('/') . '/' . $news->image }}"></div>
+                <div class="background_responsive_img fill" data-background-image="{{ $news->imagePath($news->image, 'image') }}"></div>
             @endif
         </div>
         

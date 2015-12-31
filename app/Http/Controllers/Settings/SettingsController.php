@@ -24,12 +24,7 @@ class SettingsController extends Controller
     public function index()
     {
         // we check the current user permission
-        $required = 'settings.view';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('settings.view')){
             return redirect()->back();
         }
 
@@ -48,12 +43,7 @@ class SettingsController extends Controller
     public function update(Request $request)
     {
         // we check the current user permission
-        $required = 'settings.update';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('settings.update')){
             return redirect()->back();
         }
 
@@ -101,20 +91,8 @@ class SettingsController extends Controller
             $rules['app_slogan_en'] = 'string';
         }
 
-        // we check the inputs
-        $errors = [];
-        $validator = \Validator::make($inputs, $rules);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
-            // we flash the data
-            $request->flash();
-
-            // we notify the current user
-            \Modal::alert($errors, 'error');
-
+        // we check inputs validity
+        if(!$this->checkInputsValidity($inputs, $rules, $request)){
             return redirect()->back();
         }
 

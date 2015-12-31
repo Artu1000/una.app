@@ -78,7 +78,7 @@
 
                             {{-- submit login --}}
                             <button class="btn btn-primary btn-block spin-on-click" type="submit">
-                                <i class="fa fa-thumbs-up"></i> {{ trans('auth.account_creation.action.create') }}
+                                {!! config('settings.success_icon') !!} {{ trans('auth.account_creation.action.create') }}
                             </button>
                         </form>
 

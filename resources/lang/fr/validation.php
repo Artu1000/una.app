@@ -77,7 +77,7 @@ return [
     "unique"               => "La valeur du champ <b>:attribute</b> est déjà utilisée.",
     "url"                  => "Le format de l'URL de <b>:attribute</b> n'est pas valide.",
 
-    "image_size"   => "<b>:attribute</b> doit être :width de large et :height de haut.",
+    "image_size"   => "Le fichier <b>:attribute</b> doit être :width de large et :height de haut.",
     'image_aspect' => 'Le ratio de <b>:attribute</b> doit être de :aspect',
 
     /*
@@ -146,6 +146,9 @@ return [
         "logo"                  => "Logo",
         "url"                   => "Url",
         "previous_partner_id"   => "Partenaire précédent",
+        "category_id"           => "Catégorie",
+        "released_at"           => "Date de diffusion",
+        "image"                 => "Image",
     ],
 
 ];

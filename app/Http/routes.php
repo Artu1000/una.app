@@ -25,17 +25,16 @@ Route::get('file', [
 /***********************************************************************************************************************
  * BACKEND ROUTES
  **********************************************************************************************************************/
-
-$group = config('settings.multilingual') ? [
-    'prefix'     => LaravelLocalization::setLocale(),
-    'middleware' => [
-        'auth',
-        'localize',
-        'localeSessionRedirect',
-        'localizationRedirect',
-    ]] : [
-    'middleware' => ['auth'],
-];
+//$group = [];
+if (config('settings.multilingual')) {
+    $group = [
+        'prefix'     => LaravelLocalization::setLocale(),
+        'middleware' => ['auth', 'localize', 'localeSessionRedirect', 'localizationRedirect',
+        ],
+    ];
+} else {
+    $group = ['middleware' => ['auth']];
+}
 
 // logged routes
 $route = Route::group($group, function () {
@@ -143,7 +142,8 @@ Route::group($group, function () {
     Route::get('/', ['as' => 'home', 'uses' => 'Home\HomeController@show']);
 
     // news
-    Route::resource('/news', 'News\NewsController', ['names' => ['index' => 'front.news', 'show' => 'front.news.show']]);
+    Route::get(trans('routes.news.index'), ['as' => 'front.news', 'uses' => 'News\NewsController@index']);
+    Route::get(trans('routes.news.show'), ['as' => 'front.news.show', 'uses' => 'News\NewsController@show']);
 
     // leading team
     Route::resource('/equipe-dirigeante', 'LeadingTeam\LeadingTeamController', ['names' => ['index' => 'front.leading_team']]);

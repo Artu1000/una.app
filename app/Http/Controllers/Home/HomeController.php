@@ -25,15 +25,14 @@ class HomeController extends Controller
         $this->slide = $slide;
     }
 
+    /**
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
     public function edit(Request $request)
     {
         // we check the current user permission
-        $required = 'home.edit';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if (!$this->requirePermission('home.view')) {
             return redirect()->back();
         }
 
@@ -139,6 +138,47 @@ class HomeController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request)
+    {
+        // we check the current user permission
+        if (!$this->requirePermission('home.update')) {
+            return redirect()->back();
+        }
+
+        // we check inputs validity
+        $rules = [
+            'title'       => 'string',
+            'description' => 'string',
+            'video_link'  => 'url',
+        ];
+        if (!$this->checkInputsValidity($request->all(), $rules, $request)) {
+            return redirect()->back();
+        }
+
+        try {
+            // we store the content into a json file
+            file_put_contents(storage_path('app/home/content.json'), json_encode($request->except('_token', '_method')));
+
+            \Modal::alert([
+                trans('home.message.update.success'),
+            ], 'success');
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            \Log::error($e);
+            \Modal::alert([
+                trans('home.message.update.failure'),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
+            ], 'error');
+
+            return redirect()->back();
+        }
+    }
+
+    /**
      * @return $this
      */
     public function show()
@@ -151,10 +191,18 @@ class HomeController extends Controller
         $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, sport, universitaire, etudiant, ramer';
 
         // we get the two last news
-        $last_news = $this->news->orderBy('released_at', 'desc')->take(2)->get();
+        $last_news = $this->news->where('active', true)->orderBy('released_at', 'desc')->take(2)->get();
+
+        // we convert in html the markdown content of each news
+        if ($last_news) {
+            $parsedown = new \Parsedown();
+            foreach ($last_news as $n) {
+                $n->content = isset($n->content) ? $parsedown->text($n->content) : null;
+            }
+        }
 
         // we get the slides
-        $slides = $this->slide->orderBy('position', 'asc')->get();
+        $slides = $this->slide->orderBy('position', 'asc')->where('active', true)->get();
         \JavaScript::put([
             'slides_count' => sizeof($slides),
         ]);
@@ -183,60 +231,6 @@ class HomeController extends Controller
 
         // return the view with data
         return view('pages.front.home')->with($data);
-    }
-
-    public function update(Request $request)
-    {
-        // we check the current user permission
-        $required = 'home.update';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
-            return redirect()->back();
-        }
-
-        // we check the inputs
-        $errors = [];
-        $validator = \Validator::make($request->all(), [
-            'title'       => 'string',
-            'description' => 'string',
-            'video_link'  => 'url',
-        ]);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
-            // we flash the request
-            $request->flash();
-
-            // we notify the current user
-            \Modal::alert($errors, 'error');
-
-            return redirect()->back();
-        }
-
-        try {
-            // we store the content into a json file
-            file_put_contents(storage_path('app/home/content.json'), json_encode($request->except('_token', '_method')));
-
-            \Modal::alert([
-                trans('home.message.update.success'),
-            ], 'success');
-
-            return redirect()->back();
-        } catch (\Exception $e) {
-            \Log::error($e);
-            \Modal::alert([
-                trans('home.message.update.failure'),
-                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
-            ], 'error');
-
-            return redirect()->back();
-        }
-
     }
 
 }

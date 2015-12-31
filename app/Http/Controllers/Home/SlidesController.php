@@ -22,12 +22,7 @@ class SlidesController extends Controller
     public function create()
     {
         // we check the current user permission
-        $required = 'home.slide.create';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('home.slide.create')){
             return redirect()->back();
         }
 
@@ -56,12 +51,7 @@ class SlidesController extends Controller
     public function store(Request $request)
     {
         // we check the current user permission
-        $required = 'home.slide.create';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('home.slide.create')){
             return redirect()->back();
         }
 
@@ -78,20 +68,8 @@ class SlidesController extends Controller
             $rules['previous_slide_id'] = 'required|numeric|exists:slides,id';
         }
 
-        // we check the inputs
-        $errors = [];
-        $validator = \Validator::make($request->all(), $rules);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
-            // we flash the request
-            $request->flash();
-
-            // we notify the current user
-            \Modal::alert($errors, 'error');
-
+        // we check inputs validity
+        if(!$this->checkInputsValidity($request->all(), $rules, $request)){
             return redirect()->back();
         }
 
@@ -162,12 +140,7 @@ class SlidesController extends Controller
     public function edit($id)
     {
         // we check the current user permission
-        $required = 'home.slide.view';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('home.slide.view')){
             return redirect()->back();
         }
 
@@ -220,12 +193,7 @@ class SlidesController extends Controller
     public function update(Request $request)
     {
         // we check the current user permission
-        $required = 'home.slide.update';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('home.slide.update')){
             return redirect()->back();
         }
 
@@ -243,21 +211,10 @@ class SlidesController extends Controller
             $rules ['previous_slide_id'] = 'required|numeric|exists:slides,id';
         }
 
-        // we check the inputs
-        $errors = [];
         $inputs = $request->all();
-        $validator = \Validator::make($inputs, $rules);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
-            // we flash the request
-            $request->flash();
 
-            // we notify the current user
-            \Modal::alert($errors, 'error');
-
+        // we check inputs validity
+        if(!$this->checkInputsValidity($inputs, $rules, $request)){
             return redirect()->back();
         }
 
@@ -324,12 +281,7 @@ class SlidesController extends Controller
     public function destroy(Request $request)
     {
         // we check the current user permission
-        $required = 'home.slide.delete';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('home.slide.delete')){
             return redirect()->back();
         }
 
@@ -369,11 +321,8 @@ class SlidesController extends Controller
     public function activate(Request $request)
     {
         // we check the current user permission
-        $required = 'home.slide.update';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            return response([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 401);
+        if(!$this->requirePermission('home.slide.update')){
+            return redirect()->back();
         }
 
         // we convert the "on" value to the activation order to a boolean value
@@ -381,18 +330,13 @@ class SlidesController extends Controller
             'activation_order' => filter_var($request->get('activation_order'), FILTER_VALIDATE_BOOLEAN),
         ]);
 
-        // we check the inputs
-        $errors = [];
-        $validator = \Validator::make($request->all(), [
+        // we check inputs validity
+        $rules = [
             'id'               => 'required|exists:slides,id',
             'activation_order' => 'required|boolean',
-        ]);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
-            return response($errors, 401);
+        ];
+        if(!$this->checkInputsValidity($request->all(), $rules, $request)){
+            return redirect()->back();
         }
 
         // we get the partner

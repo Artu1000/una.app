@@ -10,7 +10,7 @@ class PartnersController extends Controller
 {
 
     /**
-     * UsersController constructor.
+     * PartnersController constructor.
      * @param PartnerRepositoryInterface $partner
      */
     public function __construct(PartnerRepositoryInterface $partner)
@@ -26,12 +26,7 @@ class PartnersController extends Controller
     public function index(Request $request)
     {
         // we check the current user permission
-        $required = 'partners.list';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('partners.list')){
             return redirect()->back();
         }
 
@@ -122,6 +117,11 @@ class PartnersController extends Controller
 
     public function create()
     {
+        // we check the current user permission
+        if(!$this->requirePermission('partners.create')){
+            return redirect()->back();
+        }
+
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.partners.create');
 
@@ -148,12 +148,7 @@ class PartnersController extends Controller
     public function store(Request $request)
     {
         // we check the current user permission
-        $required = 'partners.create';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('partners.create')){
             return redirect()->back();
         }
 
@@ -175,19 +170,8 @@ class PartnersController extends Controller
             $rules['previous_partner_id'] = 'required|numeric|exists:slides,id';
         }
 
-        // we check the inputs
-        $errors = [];
-        $validator = \Validator::make($request->all(), $rules);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
-            // we flash the request
-            $request->flash();
-            // we notify the current user
-            \Modal::alert($errors, 'error');
-
+        // we check inputs validity
+        if(!$this->checkInputsValidity($request->all(), $rules, $request)){
             return redirect()->back();
         }
 
@@ -222,7 +206,7 @@ class PartnersController extends Controller
 
             // we notify the current user
             \Modal::alert([
-                trans('users.message.creation.success', ['name' => $partner->name]),
+                trans('partners.message.create.success', ['name' => $partner->name]),
             ], 'success');
 
             return redirect(route('partners.index'));
@@ -238,7 +222,7 @@ class PartnersController extends Controller
             // we log the error and we notify the current user
             \Log::error($e);
             \Modal::alert([
-                trans('users.message.creation.failure', ['name' => $partner->name]),
+                trans('partners.message.create.failure', ['name' => $partner->name]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
 
@@ -249,12 +233,7 @@ class PartnersController extends Controller
     public function edit($id)
     {
         // we check the current user permission
-        $required = 'partners.view';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('partners.view')){
             return redirect()->back();
         }
 
@@ -303,12 +282,7 @@ class PartnersController extends Controller
     public function update(Request $request)
     {
         // we check the current user permission
-        $required = 'partners.update';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('partners.update')){
             return redirect()->back();
         }
 
@@ -331,20 +305,8 @@ class PartnersController extends Controller
             $rules['previous_partner_id'] = 'required|numeric|exists:slides,id';
         }
 
-        // we check the inputs
-        $errors = [];
-        $validator = \Validator::make($request->all(), $rules);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
-            // we flash the request
-            $request->flash();
-
-            // we notify the current user
-            \Modal::alert($errors, 'error');
-
+        // we check inputs validity
+        if(!$this->checkInputsValidity($request->all(), $rules, $request)){
             return redirect()->back();
         }
 
@@ -373,7 +335,7 @@ class PartnersController extends Controller
 
             // we notify the current user
             \Modal::alert([
-                trans('users.message.account.success'),
+                trans('partners.message.update.success'),
             ], 'success');
 
             return redirect()->back();
@@ -395,12 +357,7 @@ class PartnersController extends Controller
     public function destroy(Request $request)
     {
         // we check the current user permission
-        $required = 'partners.delete';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
-            \Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
-            ], 'error');
-
+        if(!$this->requirePermission('partners.delete')){
             return redirect()->back();
         }
 
@@ -414,7 +371,7 @@ class PartnersController extends Controller
         }
 
         try {
-            // we remove the users photos
+            // we remove the partner logo
             if ($partner->logo) {
                 \ImageManager::remove(
                     $partner->logo,
@@ -430,14 +387,14 @@ class PartnersController extends Controller
             $this->repository->sanitizePositions();
 
             \Modal::alert([
-                trans('users.message.delete.success', ['name' => $partner->name]),
+                trans('partners.message.delete.success', ['name' => $partner->name]),
             ], 'success');
 
             return redirect()->back();
         } catch (\Exception $e) {
             \Log::error($e);
             \Modal::alert([
-                trans('users.message.delete.failure', ['name' => $partner->name]),
+                trans('partners.message.delete.failure', ['name' => $partner->name]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
@@ -448,10 +405,18 @@ class PartnersController extends Controller
     public function activate(Request $request)
     {
         // we check the current user permission
-        $required = 'partners.update';
-        if (!\Sentinel::getUser()->hasAccess([$required])) {
+        $permission = 'partners.update';
+        if (!\Sentinel::getUser()->hasAccess([$permission])) {
             return response([
-                trans('permissions.message.access.denied') . " : <b>" . trans('permissions.' . $required) . "</b>",
+                trans('permissions.message.access.denied') . " : <b>" .
+                trans('permissions.' . $permission) . "</b>",
+            ], 400);
+        }
+
+        // we get the model
+        if (!$partner = $this->repository->find($request->get('id'))) {
+            return response([
+                trans('partners.message.find.failure', ['id' => $request->get('id')]),
             ], 401);
         }
 
@@ -471,24 +436,23 @@ class PartnersController extends Controller
         }
         // if errors are found
         if (count($errors)) {
-            return response($errors, 401);
+            return response([
+                $errors,
+            ], 400);
         }
-
-        // we get the partner
-        $partner = $this->repository->find($request->get('id'));
 
         try {
             $partner->active = $request->activation_order;
             $partner->save();
 
             return response([
-                trans('partners.message.activation.success'),
+                trans('partners.message.activation.success', ['name' => $partner->name]),
             ], 200);
         } catch (\Exception $e) {
             \Log::error($e);
 
             return response([
-                trans('partners.message.activation.failure'),
+                trans('partners.message.activation.failure', ['name' => $partner->name]),
             ], 401);
         }
     }
