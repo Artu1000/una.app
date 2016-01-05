@@ -65,8 +65,19 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'PLANCHENAULT',
             'first_name' => 'Thomas',
             'email' => 'c',
-            'status' => config('user.status_key.student-vice-president'),
-            'board' => config('user.board_key.leading-board'),
+            'status' => config('user.status_key.student-president'),
+            'board' => config('user.board_key.student-leading-board'),
+            'password' => 'una'
+        ]);
+        $user_role->users()->attach($user);
+
+        // we create a user
+        $user = Sentinel::register([
+            'last_name' => 'DIETER',
+            'first_name' => 'Lara',
+            'email' => 'cc',
+            'status' => config('user.status_key.student-secretary'),
+            'board' => config('user.board_key.student-leading-board'),
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);

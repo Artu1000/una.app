@@ -11,6 +11,7 @@
                 {{-- Title--}}
                 <h2>
                     <i class="fa fa-user"></i>
+
                     @if(isset($partner))
                         {{ trans('partners.page.title.edit') }}
                     @else

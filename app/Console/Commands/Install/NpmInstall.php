@@ -38,7 +38,7 @@ class NpmInstall extends Command
     public function handle()
     {
         // we check if we have a local environment
-        if (env('APP_ENV') == 'local') {
+        if (config('env') == 'local') {
 
             $this->line(' ');
 

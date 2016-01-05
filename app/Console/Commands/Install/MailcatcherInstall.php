@@ -38,7 +38,7 @@ class MailcatcherInstall extends Command
     public function handle()
     {
         // we check if we have a local environment
-        if(env('APP_ENV') == 'local'){
+        if(config('env') == 'local'){
             // we install / reinstall ruby
             $this->info('Installing Ruby ...');
             $output = exec('sudo apt-get install ruby1.9.1-dev');

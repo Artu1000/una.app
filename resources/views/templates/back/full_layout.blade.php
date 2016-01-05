@@ -35,9 +35,6 @@
                 @yield('content')
             </div>
 
-            {{-- footer inclusion --}}
-            @include('templates.back.partials.footer')
-
             {{-- alerts and confirm management --}}
             @if(isset($alert) && !empty($alert))
                 @include('templates.common.modals.alert')

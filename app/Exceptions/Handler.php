@@ -4,8 +4,11 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Symfony\Component\Debug\ExceptionHandler as SymfonyDisplayer;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Validation\ValidationException;
+
 
 class Handler extends ExceptionHandler
 {
@@ -15,7 +18,10 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        HttpException::class
+        AuthorizationException::class,
+        HttpException::class,
+        ModelNotFoundException::class,
+        ValidationException::class,
     ];
 
     /**

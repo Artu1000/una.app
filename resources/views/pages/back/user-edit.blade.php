@@ -90,7 +90,7 @@
                             </div>
 
                             {{-- lastname --}}
-                            <label for="input_lastname">{{ trans('users.page.label.last_name') }}</label>
+                            <label for="input_lastname" class="required">{{ trans('users.page.label.last_name') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_lastname"><i class="fa fa-user"></i></span>
@@ -99,7 +99,7 @@
                             </div>
 
                             {{-- firstname --}}
-                            <label for="input_firstname">{{ trans('users.page.label.first_name') }}</label>
+                            <label for="input_firstname" class="required">{{ trans('users.page.label.first_name') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_firstname"><i class="fa fa-user"></i></span>
@@ -114,9 +114,52 @@
                                     <span class="input-group-addon" for="input_birth_date"><i class="fa fa-birthday-cake"></i></span>
                                     <input id="input_birth_date" type='text' class="form-control datepicker" name="birth_date" value="{{ old('birth_date') ? old('birth_date') : (isset($user) && $user->birth_date ? $user->birth_date : null) }}" placeholder="{{ trans('users.page.label.birth_date') }}">
                                 </div>
-                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('users.page.info.birth_date') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('global.info.date.format') }}</p>
                             </div>
 
+                        </div>
+                    </div>
+
+                    {{-- contact data --}}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ trans('users.page.title.club') }}</h3>
+                        </div>
+                        <div class="panel-body">
+
+                            {{-- status --}}
+                            <label for="input_status" class="required">{{ trans('users.page.label.status') }}</label>
+                            <div class="form-group">
+                                <select class="form-control" name="status" id="input_status">
+                                    <option value="" disabled selected>{{ trans('users.page.label.status_placeholder') }}</option>
+                                    @foreach($statuses as $id => $status)
+                                        <option value="{{ $id }}"
+                                            @if(!isset($user) && old('status') == $id)selected
+                                            @elseif(isset($user) && isset($user->status) && $user->status === $id)selected
+                                            @elseif(((isset($user) && !isset($user->board)) || !isset($user->board)) && $id === config('user.status_key.association-member'))selected
+                                            @endif>
+                                            {{ $status['title'] }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            {{-- board --}}
+                            <label for="input_status" class="required">{{ trans('users.page.label.board') }}</label>
+                            <div class="form-group">
+                                <select class="form-control" name="board" id="input_board">
+                                    <option value="" disabled>{{ trans('users.page.label.board_placeholder') }}</option>
+                                    <option value="null" selected>{{ trans('users.page.label.no_board') }}</option>
+                                    @foreach($boards as $id => $board)
+                                        <option value="{{ $id }}"
+                                            @if(!isset($user) && old('status') == $id)selected
+                                            @elseif(isset($user) && isset($user->board) && $user->board === $id) selected
+                                            @endif>
+                                            {{ $board['title'] }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -138,7 +181,7 @@
                             </div>
 
                             {{-- email --}}
-                            <label for="input_email">{{ trans('users.page.label.email') }}</label>
+                            <label for="input_email" class="required">{{ trans('users.page.label.email') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_email"><i class="fa fa-at"></i></span>
@@ -195,16 +238,19 @@
                             {{-- don't show for personnal account edition --}}
                             @if(!isset($user) || !(\Sentinel::getUser()->id === $user->id))
                                 {{-- role --}}
-                                <label>{{ trans('users.page.label.role') }}</label>
+                                <label class="required">{{ trans('users.page.label.role') }}</label>
                                 <div class="form-group">
                                     <div class="btn-group" data-toggle="buttons">
                                         @foreach($roles as $role)
                                             <label class="btn toggle
                                             @if(!isset($user) && old('role') == $role->id)active
-                                            @elseif(isset($user) && isset($user->roles()->first()->id) && $user->roles()->first()->id === $role->id)active @endif">
+                                            @elseif(isset($user) && isset($user->roles()->first()->id) && $user->roles()->first()->id === $role->id)active
+                                            @elseif(((isset($user) && !isset($user->roles()->first()->id)) || !isset($user)) && $role->slug == 'user')active
+                                            @endif">
                                                 <input type="radio" name="role" value="{{ $role->id }}" autocomplete="off"
                                                         @if(!isset($user) && old('role') == $role->id)checked
                                                         @elseif(isset($user) && isset($user->roles()->first()->id) && $user->roles()->first()->id === $role->id)checked
+                                                        @elseif(((isset($user) && !isset($user->roles()->first()->id)) || !isset($user)) && $role->slug == 'user')checked
                                                         @endif>
                                                 {{ $role->name }}
                                             </label>
@@ -228,7 +274,7 @@
                             @endif
 
                             {{-- password input--}}
-                            <label for="input_password">{{ trans('users.page.label.new_password') }}</label>
+                            <label for="input_password" @if(!isset($user))class="required" @endif>{{ trans('users.page.label.new_password') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
                                         <span class="input-group-addon" for="input_password">
@@ -242,7 +288,7 @@
                             </div>
 
                             {{-- password confirmation input --}}
-                            <label for="input_password_confirmation">{{ trans('users.page.label.password_confirm') }}</label>
+                            <label for="input_password_confirmation" @if(!isset($user))class="required" @endif>{{ trans('users.page.label.password_confirm') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_password_confirmation"><i class="fa fa-unlock-alt"></i></span>

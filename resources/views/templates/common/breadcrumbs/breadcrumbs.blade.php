@@ -1,5 +1,5 @@
 @if ($breadcrumbs)
-    <ul class="breadcrumb">
+    <ul class="breadcrumb hidden-xs">
         @foreach ($breadcrumbs as $breadcrumb)
             @if (!$breadcrumb->last)
                 <li><a href="{{{ $breadcrumb->url }}}">{!! $breadcrumb->title !!}</a></li>

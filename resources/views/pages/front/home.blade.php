@@ -60,8 +60,8 @@
                                     <div class="date">
                                         <i class="fa fa-clock-o"></i> {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $news->released_at)->format('d/m/Y H:i') }}
                                     </div>
-                                    <div class="category {{ \config('news.categories.' . $news->category_id . '.key') }}" >
-                                        <i class="fa fa-cube"></i> {{ \config('news.categories.' . $news->category_id . '.title') }}
+                                    <div class="category {{ \config('news.category.' . $news->category_id . '.key') }}" >
+                                        <i class="fa fa-cube"></i> {{ \config('news.category.' . $news->category_id . '.title') }}
                                     </div>
                                     <div class="comments">
                                         <i class="fa fa-comments"></i> <a href="{{ route('front.news.show', $news->key) }}#disqus_thread" title="Commentaires"></a>
@@ -79,7 +79,7 @@
                                 </td>
                             </tr>
                             <tr class="news visible-xs">
-                                <td class="button mobile">
+                                <td class="button mobile text-right">
                                     <a href="{{ route('front.news.show', $news->key) }}" title="{{ $news->title }}">
                                         <button class="btn" role="button">
                                             <i class="fa fa-chevron-circle-right"></i> Lire plus

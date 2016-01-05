@@ -24,7 +24,7 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         // we check the current user permission
-        if(!$this->requirePermission('users.list')){
+        if (!$this->requirePermission('users.list')) {
             return redirect()->back();
         }
 
@@ -145,7 +145,7 @@ class UsersController extends Controller
     public function create()
     {
         // we check the current user permission
-        if(!$this->requirePermission('users.create')){
+        if (!$this->requirePermission('users.create')) {
             return redirect()->back();
         }
 
@@ -154,8 +154,10 @@ class UsersController extends Controller
 
         // prepare data for the view
         $data = [
-            'roles'   => \Sentinel::getRoleRepository()->orderBy('rank', 'asc')->get(),
-            'seoMeta' => $this->seoMeta,
+            'seoMeta'  => $this->seoMeta,
+            'statuses' => config('user.status'),
+            'boards'   => config('user.board'),
+            'roles'    => \Sentinel::getRoleRepository()->orderBy('rank', 'asc')->get(),
         ];
 
         // return the view with data
@@ -165,7 +167,7 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         // we check the current user permission
-        if(!$this->requirePermission('users.create')){
+        if (!$this->requirePermission('users.create')) {
             return redirect()->back();
         }
 
@@ -199,6 +201,8 @@ class UsersController extends Controller
             'last_name'    => 'required|string',
             'first_name'   => 'required|string',
             'birth_date'   => 'date_format:Y-m-d',
+            'status'       => 'in:' . implode(',', array_keys(config('user.status'))),
+            'board'        => 'in:' . implode(',', array_keys(config('user.board'))),
             'phone_number' => 'phone:FR',
             'email'        => 'required|email|unique:users,email',
             'address'      => 'string',
@@ -208,7 +212,7 @@ class UsersController extends Controller
             'role'         => 'required|numeric|exists:roles,id',
             'password'     => 'required|min:6|confirmed',
         ];
-        if(!$this->checkInputsValidity($inputs, $rules, $request)){
+        if (!$this->checkInputsValidity($inputs, $rules, $request)) {
             return redirect()->back();
         }
 
@@ -284,7 +288,7 @@ class UsersController extends Controller
     public function edit($id)
     {
         // we check the current user permission
-        if(!$this->requirePermission('users.view')){
+        if (!$this->requirePermission('users.view')) {
             return redirect()->back();
         }
 
@@ -330,6 +334,8 @@ class UsersController extends Controller
         $data = [
             'seoMeta'          => $this->seoMeta,
             'user'             => $user,
+            'statuses'         => config('user.status'),
+            'boards'           => config('user.board'),
             'roles'            => \Sentinel::getRoleRepository()->orderBy('rank', 'asc')->get(),
             'breadcrumbs_data' => $breadcrumbs_data,
         ];
@@ -365,7 +371,7 @@ class UsersController extends Controller
     public function update(Request $request)
     {
         // we check the current user permission
-        if(!$this->requirePermission('users.update')){
+        if (!$this->requirePermission('users.update')) {
             return redirect()->back();
         }
 
@@ -417,6 +423,8 @@ class UsersController extends Controller
             'last_name'    => 'required|string',
             'first_name'   => 'required|string',
             'birth_date'   => 'date_format:Y-m-d',
+            'status'       => 'in:' . implode(',', array_keys(config('user.status'))),
+            'board'        => 'in:' . implode(',', array_keys(config('user.board'))),
             'phone_number' => 'phone:FR',
             'email'        => 'required|email|unique:users,email,' . $request->get('_id'),
             'address'      => 'string',
@@ -446,7 +454,7 @@ class UsersController extends Controller
         }
 
         // we check inputs validity
-        if(!$this->checkInputsValidity($inputs, $rules, $request)){
+        if (!$this->checkInputsValidity($inputs, $rules, $request)) {
             return redirect()->back();
         }
 
@@ -542,7 +550,7 @@ class UsersController extends Controller
     public function destroy(Request $request)
     {
         // we check the current user permission
-        if(!$this->requirePermission('users.delete')){
+        if (!$this->requirePermission('users.delete')) {
             return redirect()->back();
         }
 
@@ -598,7 +606,7 @@ class UsersController extends Controller
     public function activate(Request $request)
     {
         // we check the current user permission
-        if(!$this->requirePermission('users.update')){
+        if (!$this->requirePermission('users.update')) {
             return redirect()->back();
         }
 
@@ -628,7 +636,7 @@ class UsersController extends Controller
             'id'               => 'required|exists:users,id',
             'activation_order' => 'required|boolean',
         ];
-        if(!$this->checkInputsValidity($request->all(), $rules, $request)){
+        if (!$this->checkInputsValidity($request->all(), $rules, $request)) {
             return redirect()->back();
         }
 

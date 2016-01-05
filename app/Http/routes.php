@@ -104,12 +104,10 @@ $route = Route::group($group, function () {
  **********************************************************************************************************************/
 // guest routes
 // we define the middlewares to apply according to the config
-$group = config('settings.multilingual') ? ['prefix' => LaravelLocalization::setLocale(), 'middleware' => [
-    'guest',
-    'localize',
-    'localeSessionRedirect',
-    'localizationRedirect',
-]] : ['middleware' => ['guest']];
+$group = config('settings.multilingual') ? [
+    'prefix'     => LaravelLocalization::setLocale(),
+    'middleware' => ['guest', 'localize', 'localeSessionRedirect', 'localizationRedirect'],
+] : ['middleware' => ['guest']];
 Route::group($group, function () {
 
     // account
@@ -131,11 +129,10 @@ Route::group($group, function () {
 
 //public routes
 // we define the middlewares to apply according to the config
-$group = config('settings.multilingual') ? ['prefix' => LaravelLocalization::setLocale(), 'middleware' => [
-    'localize',
-    'localeSessionRedirect',
-    'localizationRedirect',
-]] : [];
+$group = config('settings.multilingual') ? [
+    'prefix'     => LaravelLocalization::setLocale(),
+    'middleware' => ['localize', 'localeSessionRedirect', 'localizationRedirect'],
+] : [];
 Route::group($group, function () {
 
     // home

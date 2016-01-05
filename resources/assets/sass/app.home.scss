@@ -180,14 +180,10 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
     }
 
     &#una-club{
-      margin-bottom: 0;
 
       .video{
-        height: 600px;
-        margin-top: 30px;
         background-color: #000;
         color: $brand-primary;
-        font-size: 250px;
       }
     }
   }
@@ -299,6 +295,15 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
           }
         }
       }
+
+      &#una-club{
+
+        .video{
+          height: 600px;
+          margin-top: 30px;
+          font-size: 250px;
+        }
+      }
     }
   }
 }
@@ -385,6 +390,15 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
           }
         }
       }
+
+      &#una-club{
+
+        .video{
+          height: 600px;
+          margin-top: 30px;
+          font-size: 250px;
+        }
+      }
     }
   }
 }
@@ -468,6 +482,15 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
           }
         }
       }
+
+      &#una-club{
+
+        .video{
+          height: 500px;
+          margin-top: 15px;
+          font-size: 200px;
+        }
+      }
     }
   }
 }
@@ -548,6 +571,15 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
               padding-right: 0;
             }
           }
+        }
+      }
+
+      &#una-club{
+
+        .video{
+          height: 400px;
+          margin-top: 0;
+          font-size: 150px;
         }
       }
     }
@@ -645,11 +677,12 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
             }
 
             .button.mobile {
+              padding: 10px 0 35px;
 
               button {
                 @include border-radius(6px);
                 height: auto;
-                width: 100%;
+                width: auto;
                 border-color: #aeb6cb;
 
                 & > i.fa {
@@ -658,6 +691,15 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
               }
             }
           }
+        }
+      }
+
+      &#una-club{
+
+        .video{
+          height: 350px;
+          margin-top: 0;
+          font-size: 125px;
         }
       }
     }
