@@ -23,10 +23,7 @@ class UsersTableSeeder extends Seeder
             'status' => config('user.status_key.communication-commission'),
             'board' => config('user.board_key.leading-board'),
             'password' => 'admin'
-        ]);
-        // we activate the user
-        $activation = Activation::create($user);
-        Activation::complete($user, $activation->code);
+        ], true);
 
 
         // we attach the user to the admin role

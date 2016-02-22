@@ -19,7 +19,7 @@ class Schedule extends Model
      * @var string
      */
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     /**
@@ -28,10 +28,12 @@ class Schedule extends Model
      * @var array
      */
     protected $fillable = [
+        'label',
         'day_id',
-        'start',
-        'stop',
-        'public_category'
+        'time_start',
+        'time_stop',
+        'public_category',
+        'active',
     ];
 
     /**

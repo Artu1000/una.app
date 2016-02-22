@@ -2,104 +2,51 @@
 
 // boards
 $boards = [
-    1 => [
-        'key'   => 'student-leading-board',
-        'title' => 'Bureau Étudiant',
-    ],
-    2 => [
-        'key'   => 'leading-board',
-        'title' => 'Bureau',
-    ],
-    3 => [
-        'key'   => 'executive-committee',
-        'title' => 'Comité Directeur',
-    ],
+    1 => 'student_leading_board',
+    2 => 'leading_board',
+    3 => 'executive_committee',
 ];
 $boards_keys = [];
 foreach ($boards as $id => $board) {
-    $boards_keys[$board['key']] = $id;
+    $boards_keys[$board] = $id;
 }
 
 // statuses
 $statuses = [
-    1  => [
-        'key'   => 'president',
-        'title' => 'Président',
-    ],
-    2  => [
-        'key'   => 'student-president',
-        'title' => 'Président Étudiant',
-    ],
-    3  => [
-        'key'   => 'student-secretary',
-        'title' => 'Secrétaire',
-    ],
-    4  => [
-        'key'   => 'vice-president',
-        'title' => 'Vice-Président',
-    ],
-    5  => [
-        'key'   => 'secretary-general',
-        'title' => 'Secrétaire Général',
-    ],
-    6  => [
-        'key'   => 'treasurer',
-        'title' => 'Trésorier',
-    ],
-    7  => [
-        'key'   => 'sportive-commission',
-        'title' => 'Commission Sportive',
-    ],
-    8  => [
-        'key'   => 'communication-commission',
-        'title' => 'Commission Communication',
-    ],
-    9  => [
-        'key'   => 'equipment-commission',
-        'title' => 'Commission Matériel',
-    ],
-    10  => [
-        'key'   => 'leisure-commission',
-        'title' => 'Commission Loisirs',
-    ],
-    11 => [
-        'key'   => 'employee',
-        'title' => 'Manager',
-    ],
-    12 => [
-        'key'   => 'association-member',
-        'title' => 'Sociétaire',
-    ],
+    1  => 'president',
+    2  => 'student-president',
+    4  => 'vice-president',
+    5  => 'secretary-general',
+    3  => 'student-secretary',
+    6  => 'treasurer',
+    7  => 'student-treasurer',
+    8  => 'sportive-commission',
+    9  => 'communication-commission',
+    10 => 'equipment-commission',
+    11 => 'leisure-commission',
+    12 => 'employee',
+    13 => 'user',
 ];
 $statuses_keys = [];
 foreach ($statuses as $id => $status) {
-    $statuses_keys[$status['key']] = $id;
+    $statuses_keys[$status] = $id;
 }
 
-// gender
+// genders
 $genders = [
-    1 => [
-        'key'   => 'male',
-        'title' => 'Homme',
-    ],
-    2 => [
-        'key'   => 'female',
-        'title' => 'Femme',
-    ],
+    1 => 'male',
+    2 => 'female',
 ];
 $genders_keys = [];
 foreach ($genders as $id => $gender) {
-    $genders_keys[$gender['key']] = [
-        'id'    => $id,
-        'title' => $gender['title'],
-    ];
+    $genders_keys[$gender] = $id;
 }
 
 return [
-    'status'     => $statuses,
-    'status_key' => $statuses_keys,
     'board'      => $boards,
     'board_key'  => $boards_keys,
+    'status'     => $statuses,
+    'status_key' => $statuses_keys,
     'gender'     => $genders,
     'gender_key' => $genders_keys,
 ];

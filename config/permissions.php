@@ -2,6 +2,9 @@
 
 return [
 
+    // separator
+    'separator'          => '0',
+
     // configuration
     'settings'           => false,
     'settings.view'      => false,
@@ -39,6 +42,14 @@ return [
     'news.view'          => false,
     'news.update'        => false,
     'news.delete'        => false,
+
+    // schedules
+    'schedules'          => false,
+    'schedules.list'     => false,
+    'schedules.create'   => false,
+    'schedules.view'     => false,
+    'schedules.update'   => false,
+    'schedules.delete'   => false,
 
     // partners
     'partners'           => false,

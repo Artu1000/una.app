@@ -6,7 +6,7 @@
 
         {{-- parallax img --}}
         <div class="parallax_img">
-            <div class="background_responsive_img fill" data-background-image="{{url()}}/img/palmares/una-palmares.jpg"></div>
+            <div class="background_responsive_img fill" data-background-image="{{ url('img/palmares/una-palmares.jpg') }}"></div>
         </div>
 
         <div class="text-content">
@@ -28,7 +28,6 @@
                                 @elseif($ii % 7 === 0 || $ii === 2) black
                                 @elseif($ii % 3 === 0) green
                                 @elseif($ii % 4 === 0) red
-                                {{--@elseif($key % 2 === 0 ) yellow--}}
                                 @endif">
                                     <i class="fa fa-star"></i>
                                 </div>

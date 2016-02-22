@@ -2,9 +2,10 @@
 
 return [
     // actions
-    "action"  => [
+    "action"     => [
         "add"      => "Ajouter",
         "edit"     => "Éditer",
+        "show"     => "Voir le détail",
         "delete"   => "Supprimer",
         "confirm"  => "Confirmer",
         "cancel"   => "Annuler",
@@ -15,8 +16,37 @@ return [
         "save"     => "Enregistrer les modifications",
     ],
 
+    // legend
+    "legend"     => [
+        "title"     => "Légende",
+        "required"  => "Champs obligatoires.",
+        "translate" => "Champs à traduire dans différentes langues à l'aide des onglets ci-dessous.",
+    ],
+
+    // label
+    "label"      => [
+        "created_at" => "Date de création",
+        "updated_at" => "Date de modification",
+    ],
+
+    // infos
+    "info"       => [
+        "password" => [
+            "length" => "6 catactères minimum. Nous recommandons un mélange de lettres majuscules, minuscules, nombres et caractères spéciaux.",
+        ],
+        "date"     => [
+            "format" => "Format : jj/mm/aaaa (exemple : 24/03/1985).",
+        ],
+        "datetime" => [
+            "format" => "Format : jj/mm/aaaa hh:mm (exemple : 24/03/1985 15:17).",
+        ],
+        "year"     => [
+            "format" => "Format : aaaa (exemple : 1990).",
+        ],
+    ],
+
     // messages
-    "message" => [
+    "message"    => [
         "global"     => [
             "failure" => [
                 "contact" => [
@@ -30,15 +60,6 @@ return [
                 "message" => "Le Javascript de votre navigateur est désactivé et vous naviguez actuellement en version dégradée.<br/> Merci de réactiver votre Javascript pour bénéficier de l'ensemble des fonctionnalités de l'application.",
             ],
         ],
-    ],
-
-    "info"       => [
-        "date" => [
-            "format" => "Format : jj/mm/aaaa.",
-        ],
-        "datetime" => [
-            "format" => "Format : jj/mm/aaaa hh:mm"
-        ]
     ],
 
     // modals
@@ -59,7 +80,7 @@ return [
     // table list
     "table_list" => [
         "placeholder" => [
-            "search" => "Rechercher",
+            "search" => "Rechercher par",
             "lines"  => "Nombre de lignes",
         ],
         "column"      => [

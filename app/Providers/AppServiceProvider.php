@@ -23,10 +23,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-//        if ($this->app->environment() == 'local') {
-//            // database generator service
-//            $this->app->register(\Laracasts\Generators\GeneratorsServiceProvider::class);
-//        }
+        if ($this->app->environment() == 'local') {
+            // database generator service
+            $this->app->register(\Laracasts\Generators\GeneratorsServiceProvider::class);
+
+            // ide helper
+            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+        }
 
         // laracast javascript service
         // https://github.com/laracasts/PHP-Vars-To-Js-Transformer

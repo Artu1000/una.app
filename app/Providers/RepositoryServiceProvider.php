@@ -9,6 +9,7 @@ use App\Repositories\Palmares\PalmaresEventRepository;
 use App\Repositories\Palmares\PalmaresResultRepository;
 use App\Repositories\Partner\PartnerRepository;
 use App\Repositories\RegistrationPrice\RegistrationPriceRepository;
+use App\Repositories\Roles\RoleRepository;
 use App\Repositories\Rss\RssRepository;
 use App\Repositories\Schedule\ScheduleRepository;
 use App\Repositories\Sitemap\SitemapRepository;
@@ -48,6 +49,11 @@ class RepositoryServiceProvider extends ServiceProvider
         // users
         $this->app->bind('App\Repositories\User\UserRepositoryInterface', function(){
             return new UserRepository();
+        });
+
+        // roles
+        $this->app->bind('App\Repositories\Roles\RoleRepositoryInterface', function () {
+            return new RoleRepository();
         });
 
         // palmares

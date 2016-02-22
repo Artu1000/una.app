@@ -478,16 +478,13 @@ html {
         font-weight: normal;
         @include lato-font('medium');
 
-        &.required {
-          position: relative;
+        .required {
+          padding: 0 2px 0 5px;
+          color: $brand-danger;
+        }
 
-          &:after {
-            content: "*";
-            color: $brand-danger;
-            position: absolute;
-            right: -10px;
-            top: 0;
-          }
+        .translated {
+          color: $brand-success;
         }
       }
 

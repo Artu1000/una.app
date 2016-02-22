@@ -228,6 +228,10 @@ class NewsController extends Controller
         return view('pages.back.news-edit')->with($data);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function store(Request $request)
     {
         // we check the current user permission
@@ -370,6 +374,15 @@ class NewsController extends Controller
             return redirect()->back();
         }
 
+        // we get the user
+        if (!$news = $this->repository->find($request->get('_id'))) {
+            \Modal::alert([
+                trans('news.message.find.failure', ['id' => $request->get('_id')]),
+            ], 'error');
+
+            return redirect()->back();
+        }
+
         // we convert the "on" value to a boolean value
         $request->merge([
             'active' => filter_var($request->get('active'), FILTER_VALIDATE_BOOLEAN),
@@ -392,7 +405,6 @@ class NewsController extends Controller
 
         // we check inputs validity
         $rules = [
-            '_id'              => 'numeric|exists:news,id',
             'category_id'      => 'required|in:' . implode(',', array_keys(config('news.category'))),
             'image'            => 'image|mimes:png|image_size:>=2560,>=1440',
             'key'              => 'required|alpha_dash|unique:news,key,' . $request->get('_id'),
@@ -409,9 +421,6 @@ class NewsController extends Controller
         }
 
         try {
-            // we get the news from its id
-            $news = $this->repository->find($request->get('_id'));
-
             // we store the image
             if ($img = $request->file('image')) {
                 // we optimize, resize and save the image
@@ -450,6 +459,10 @@ class NewsController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(Request $request)
     {
         // we check the current user permission
@@ -495,6 +508,10 @@ class NewsController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function activate(Request $request)
     {
         // we check the current user permission
@@ -519,22 +536,6 @@ class NewsController extends Controller
         ]);
 
         // we check the inputs validity
-        $errors = [];
-        $validator = \Validator::make($request->all(), [
-            'id'               => 'required|exists:news,id',
-            'activation_order' => 'required|boolean',
-        ]);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
-            return response([
-                $errors,
-            ], 400);
-        }
-
-        // we check the inputs
         $errors = [];
         $validator = \Validator::make($request->all(), [
             'id'               => 'required|exists:news,id',

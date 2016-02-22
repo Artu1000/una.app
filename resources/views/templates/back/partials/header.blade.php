@@ -97,7 +97,7 @@
                         {{-- settings --}}
                         @if(\Sentinel::getUser()->hasAccess('settings.view'))
                             <li class="@if(\Route::current()->getName() === 'settings.index')active @endif">
-                                <a href="{{ route('settings.index') }}"><i class="fa fa-wrench"></i> {{ trans('template.back.header.settings') }}</a>
+                                <a href="{{ route('settings.index') }}"><i class="fa fa-wrench"></i> Test {{ trans('template.back.header.settings') }}</a>
                             </li>
                         @endif
 
@@ -130,6 +130,9 @@
                 || \Route::current()->getName() === 'news.list'
                 || \Route::current()->getName() === 'news.create'
                 || \Route::current()->getName() === 'news.edit'
+                || \Route::current()->getName() === 'schedules.list'
+                || \Route::current()->getName() === 'schedules.create'
+                || \Route::current()->getName() === 'schedules.edit'
                 || \Route::current()->getName() === 'partners.index'
                 || \Route::current()->getName() === 'partners.create'
                 || \Route::current()->getName() === 'partners.edit')active @endif">
@@ -143,6 +146,9 @@
                     || \Route::current()->getName() === 'news.list'
                     || \Route::current()->getName() === 'news.create'
                     || \Route::current()->getName() === 'news.edit'
+                    || \Route::current()->getName() === 'schedules.list'
+                    || \Route::current()->getName() === 'schedules.create'
+                    || \Route::current()->getName() === 'schedules.edit'
                     || \Route::current()->getName() === 'partners.index'
                     || \Route::current()->getName() === 'partners.create'
                     || \Route::current()->getName() === 'partners.edit')in @endif">
@@ -162,6 +168,15 @@
                             || \Route::current()->getName() === 'news.create'
                             || \Route::current()->getName() === 'news.edit')active @endif">
                                 <a href="{{ route('news.list') }}"><i class="fa fa-paper-plane"></i> {{ trans('template.back.header.news') }}</a>
+                            </li>
+                        @endif
+
+                        {{-- schedules --}}
+                        @if(\Sentinel::getUser()->hasAccess('schedules.list'))
+                            <li class="@if(\Route::current()->getName() === 'schedules.list'
+                            || \Route::current()->getName() === 'schedules.create'
+                            || \Route::current()->getName() === 'schedules.edit')active @endif">
+                                <a href="{{ route('schedules.list') }}"><i class="fa fa-clock-o"></i> {{ trans('template.back.header.schedules') }}</a>
                             </li>
                         @endif
 

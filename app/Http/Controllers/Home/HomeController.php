@@ -119,7 +119,7 @@ class HomeController extends Controller
         );
 
         // we get the json home content
-        $home = [];
+        $home = null;
         if (is_file(storage_path('app/home/content.json'))) {
             $home = json_decode(file_get_contents(storage_path('app/home/content.json')));
         }

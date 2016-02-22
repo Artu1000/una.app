@@ -11,12 +11,12 @@
                 {{-- Title--}}
                 <h2>
                     <i class="fa fa-gavel"></i>
-                    @if(isset($role)){{ trans('permissions.page.title.edit') }} @else{{ trans('permissions.page.title.create') }} @endif
+                    @if(isset($role)){!! trans('permissions.page.title.edit', ['role' => $role->name]) !!} @else{{ trans('permissions.page.title.create') }} @endif
                 </h2>
 
                 <hr>
 
-                <form role="form" method="POST" action="@if(isset($role)){{ route('permissions.update') }} @else{{ route('permissions.store') }}@endif">
+                <form role="form" method="POST" action="@if(isset($role)){{ route('permissions.update', ['id' => $role->id]) }} @else{{ route('permissions.store') }}@endif">
 
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -24,28 +24,20 @@
                     {{-- add update inputs if we are in update mode --}}
                     @if(isset($role))
                         <input type="hidden" name="_method" value="PUT">
-                        <input type="hidden" name="_id" value="{{ $role->id }}">
                     @endif
 
-                    {{-- language choice --}}
+                    {{-- if the app is multilingual--}}
                     @if(config('settings.multilingual'))
-                        <ul class="nav nav-tabs model_trans_manager">
-                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                <li role="presentation" @if($localeCode === config('app.locale'))class="active" @endif>
-                                    <a href="{{ $localeCode }}" title="{{ $properties['native'] }}">
-                                        <div class="display-table">
-                                            <div class="table-cell flag">
-                                                <img width="20" height="20" class="img-circle" src="{{ url('img/flag/' . $localeCode . '.png') }}" alt="{{ $localeCode }}">
-                                            </div>
-                                            &nbsp;
-                                            <div class="table-cell">
-                                                {{ $properties['native'] }}
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
+
+                        {{-- we include the form multilingual legend --}}
+                        @include('templates.back.partials.form-legend.required-language')
+
+                        {{-- we include the inputs language selector --}}
+                        @include('templates.back.partials.inputs-language-selector')
+                    @else
+
+                        {{-- we include the simple form legend --}}
+                        @include('templates.back.partials.form-legend.required')
                     @endif
 
                     <div class="panel panel-default">
@@ -57,18 +49,22 @@
                         <div class="panel-body">
 
                             {{-- name --}}
-                            <label for="input_name" class="required">{{ trans('permissions.page.label.name') }}</label>
+                            <label for="input_name_{{ config('app.locale') }}">{{ trans('permissions.page.label.name') }}
+                                <span class="required">*</span>
+                                @if(config('settings.multilingual'))
+                                    <span class="translated">*</span></label>
+                                @endif
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_name"><i class="fa fa-font"></i></span>
+                                    <span class="input-group-addon" for="input_name_{{ config('app.locale') }}"><i class="fa fa-font"></i></span>
                                     @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                        <input id="input_name" class="form-control capitalize-first-letter model_trans_input {{ $localeCode }} @if($localeCode !== config('app.locale'))hidden @endif" type="text" name="name_{{ $localeCode }}" value="{{ !empty(old('name_' . $localeCode)) ? old('name_' . $localeCode) : (isset($role) && isset($role->translate($localeCode)->name) ? $role->translate($localeCode)->name : null) }}" placeholder="{{ trans('permissions.page.label.name') }}">
+                                        <input id="input_name_{{ $localeCode }}" class="form-control capitalize-first-letter translated_input {{ $localeCode }} @if($localeCode !== config('app.locale'))hidden @endif" type="text" name="name_{{ $localeCode }}" value="{{ !empty(old('name_' . $localeCode)) ? old('name_' . $localeCode) : (isset($role) && isset($role->translate($localeCode)->name) ? $role->translate($localeCode)->name : null) }}" placeholder="{{ trans('permissions.page.label.name') }}">
                                     @endforeach
                                 </div>
                             </div>
 
                             {{-- slug --}}
-                            <label for="input_slug" class="required">{{ trans('permissions.page.label.slug') }}</label>
+                            <label for="input_slug">{{ trans('permissions.page.label.slug') }}<span class="required">*</span></label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_name"><i class="fa fa-key"></i></span>
@@ -76,35 +72,31 @@
                                 </div>
                             </div>
 
-                            {{-- rank --}}
-                            <label for="input_rank">{{ trans('permissions.page.label.rank') }}</label>
+                            {{-- position --}}
+                            <label for="input_position">{{ trans('permissions.page.label.position') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_rank"><i class="fa fa-sort"></i></span>
-                                    <input id="input_rank" class="form-control" type="text" name="slug" value="{{ !empty(old('rank')) ? old('rank') : ((isset($role->rank)) ? $role->rank : null) }}" placeholder="{{ trans('permissions.page.label.rank') }}" disabled>
+                                    <span class="input-group-addon" for="input_position"><i class="fa fa-sort"></i></span>
+                                    <input id="input_position" class="form-control" type="text" name="position" value="{{ !empty(old('position')) ? old('position') : ((isset($role->position)) ? $role->position : null) }}" placeholder="{{ trans('permissions.page.label.position') }}" disabled>
                                 </div>
                             </div>
 
                             {{-- parent role --}}
-                            <label for="input_parent_role" class="required">{{ trans('permissions.page.label.parent_role') }}</label>
+                            <label for="input_parent_role">{{ trans('permissions.page.label.parent_role') }}<span class="required">*</span></label>
+                            @if($parent_role)
+                                <p>Parent : {{ $parent_role->id }}</p>
+                            @endif
                             <div class="form-group">
                                 <select class="form-control" name="parent_role_id" id="input_parent_role">
-                                    <option value="" disabled selected>{{ trans('permissions.page.label.placeholder') }}</option>
+                                    <option value="" disabled>{{ trans('permissions.page.label.placeholder') }}</option>
                                     @foreach($role_list as $r)
                                         <option value="{{ $r->id }}"
-                                            @if(old('parent_role_id') == $r->id)selected
-                                            @elseif(isset($parent_role) && $parent_role->id === $r->id)selected
-                                            @elseif($r->id === 0)selected
-                                            @endif>
-                                            @if(!isset($r->rank))
-                                                X - {{ $r->name }}
-                                            @else
-                                                {{ $r->rank }} - {{ $r->name }}
-                                            @endif
-                                        </option>
+                                            @if((!is_null(old('parent_role_id'))) && (old('parent_role_id') == $r->id))selected
+                                            @elseif(is_null(old('parent_role_id')) && isset($parent_role) && ($parent_role->id === $r->id))selected
+                                            @endif>@if(!isset($r->position))X - {{ $r->name }}@else{{ $r->position }} - {{ $r->name }}@endif</option>
                                     @endforeach
                                 </select>
-                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('permissions.page.info.rank') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('permissions.page.info.position') }}</p>
                             </div>
 
                         </div>
@@ -117,9 +109,9 @@
                         </div>
 
                         <div class="panel-body">
-                            @foreach(array_dot(config('permissions')) as $permission => $value)
+                            @foreach(array_dot(array_except(config('permissions'), 'separator')) as $permission => $value)
                                 <div class="checkbox permission @if(!strpos($permission, '.'))parent @endif">
-                                    <label for="{{ $permission }}"><input id="{{ $permission }}" type="checkbox" name="{{ $permission }}" @if(old($permission, (isset($role->permissions[$permission]) ? $role->permissions[$permission] : ''))) checked @endif>{!! trans('permissions.' . $permission) !!}</label>
+                                    <label for="{{ str_replace('.', config('permissions.separator'), $permission) }}"><input id="{{ str_replace('.', config('permissions.separator'), $permission) }}" type="checkbox" name="{{ str_replace('.', '0', $permission) }}" @if(old($permission, (isset($role->permissions[$permission]) ? $role->permissions[$permission] : ''))) checked @endif>{!! trans('permissions.' . $permission) !!}</label>
                                 </div>
                             @endforeach
                         </div>

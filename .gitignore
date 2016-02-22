@@ -1,17 +1,19 @@
 # Laravel
 /storage
 /vendor
-/public/build
 /public/css
-/public/fonts
-/public/img
 /public/js
 /public/favicon.ico
-/resources/assets/compiled_sass_to_merge
 /resources/assets/vendor
 /node_modules
 .env
 
+# testing
+tests/_output/*
+
 # composer
 composer.phar
 composer.lock
+
+tests/_output/*
+tests/_output/*

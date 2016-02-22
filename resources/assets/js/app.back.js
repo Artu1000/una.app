@@ -8,10 +8,10 @@ $(document).on('change', '.btn-file :file', function () {
 
 // check parent checkbox or not, according if all the children checkboxes are checked or not
 function evalChildrenCheckboxes(elt) {
-    var permission_group = elt.attr('id').split('.')[0];
+    var permission_group = elt.attr('id').split(app.permissions_separator)[0];
     var checked = true;
     $('.permission input[type=checkbox]').each(function (key, checkbox) {
-        var id = checkbox.id.split('.');
+        var id = checkbox.id.split(app.permissions_separator);
         if (id[0] === permission_group && id[1]) {
             if (!checkbox.checked) {
                 checked = false;
@@ -24,18 +24,58 @@ function evalChildrenCheckboxes(elt) {
 $(function () {
 
     // manage language inputs visibility
-    if(app.multilingual){
-        var model_trans_language = app.locale;
-        function showLocaleFields(){
-            $('.model_trans_input').addClass('hidden');
-            $('.model_trans_input.' + model_trans_language).removeClass('hidden');
+    if (app.multilingual) {
+        var selected_language = app.locale;
+
+        function showLocaleFields() {
+
+            // for each translated input
+            $('.translated_input').each(function () {
+
+                // we add the hidden class
+                $(this).addClass('hidden');
+
+                // we get the id of the input
+                var input_id = $(this).attr('id');
+
+                // for each element which references the input id
+                $('[for=' + input_id + ']').each(function () {
+
+                    // we exclude the last part of the id (locale)
+                    var splitted = input_id.split('_');
+                    var new_name = splitted.filter(function (segment, key) {
+                        return key < (splitted.length - 1);
+                    }).join('_');
+
+                    // we change the for to reference the id according to the selected language
+                    $(this).attr('for', new_name + '_' + selected_language);
+                });
+            });
+
+            // we remove the hidden class on the inputs we want to show
+            $('.translated_input.' + selected_language).removeClass('hidden');
         }
-        showLocaleFields();
-        $('.model_trans_manager li').click(function(e){
+
+        // we execute the method on load
+        showLocaleFields(app.locale);
+
+        // on clicks on an input language selector
+        var inputs_language_selector = $('.inputs_language_selectors li');
+        inputs_language_selector.click(function (e) {
+
+            // we remove the active class on all the selectors
+            inputs_language_selector.removeClass('active');
+
+            // we prevent the click action
             e.preventDefault();
-            $('.model_trans_manager li').removeClass('active');
+
+            // we add the active class on the clicked language selector
             $(this).addClass('active');
-            model_trans_language = $(this).children('a').attr('href');
+
+            // we update our selected language variable
+            selected_language = $(this).children('a').attr('href');
+
+            // we show the correct fields according to the selected language
             showLocaleFields();
         });
     }
@@ -51,28 +91,39 @@ $(function () {
         }
     });
 
-    // datetime picker
-    // we prepare the datepicker and datetimepicker
-    switch(app.locale){
+    // datetime / date / year picker
+    var locale;
+    var format;
+    switch (app.locale) {
         case 'fr':
-            var locale = app.locale;
-            var format = 'DD/MM/YYYY HH:mm';
+            locale = app.locale;
+            format = 'DD/MM/YYYY HH:mm';
             break;
         case 'en':
-            var format = 'DD/MM/YYYY hh:mm A';
-            var locale = 'en-gb';
+            format = 'DD/MM/YYYY hh:mm A';
+            locale = 'en-gb';
             break;
     }
     // we activate the datepicker
-    if($('.datepicker').length){
-        $('.datepicker').datetimepicker({
+    var yearpicker = $('.yearpicker');
+    if (yearpicker.length) {
+        yearpicker.datetimepicker({
+            locale: locale,
+            format: 'YYYY'
+        });
+    }
+    // we activate the datepicker
+    var datepicker = $('.datepicker');
+    if (datepicker.length) {
+        datepicker.datetimepicker({
             locale: locale,
             format: 'DD/MM/YYYY'
         });
     }
     // we activate the datetimepicker
-    if($('.datetimepicker').length){
-        $('.datetimepicker').datetimepicker({
+    var datetimepicker = $('.datetimepicker');
+    if (datetimepicker.length) {
+        datetimepicker.datetimepicker({
             locale: locale,
             format: format
         });
@@ -84,7 +135,7 @@ $(function () {
         var permission_group = $(this).attr('id');
         var checked = $(this).is(':checked');
         $('.permission input[type=checkbox]').each(function (key, checkbox) {
-            if (checkbox.id.split('.')[0] === permission_group) {
+            if (checkbox.id.split(app.permissions_separator)[0] === permission_group) {
                 checkbox.checked = checked;
             }
         });
@@ -96,6 +147,7 @@ $(function () {
 
     // we manage the activation in list from the swipe button
     $('.swipe-btn.activate').click(function () {
+
         // we get the swipe group
         var swipe_group = $(this).parent('.swipe-group');
 
@@ -107,50 +159,114 @@ $(function () {
         var id = $(this).attr('data-id');
         var activation_order = !swipe_group.find('input.swipe').is(':checked');
 
-        // we do the post request
-        $.ajax({
-            method: 'POST',
-            url: url,
-            data: {
-                _token: app.csrf_token,
-                id: id,
-                activation_order: activation_order
-            }
-        }).done(function () {
-            // we replace the loading spinner by a check icon
-            swipe_group.find('.swipe-action-icon').remove();
-            swipe_group.append('<span class="swipe-action-icon text-success">' + app.success_icon + '</i></span>');
-        }).fail(function () {
-            // we replace the loading spinner by a check icon
-            swipe_group.find('.swipe-action-icon').remove();
-            swipe_group.append('<span class="swipe-action-icon text-danger">' + app.error_icon + '</i></span>');
+        // we get the form
+        var form = $(this).closest('form');
 
-            // we set the checkbox at its original value
-            window.setTimeout(function () {
-                swipe_group.find('input.swipe').prop('checked', !activation_order);
-            }, 500);
-        }).always(function () {
-            // we fade out the icon
-            swipe_group.find('.swipe-action-icon').css({
-                '-webkit-animation': 'fadeOut 10000ms',
-                '-moz-animation': 'fadeOut 10000ms',
-                '-ms-animation': 'fadeOut 10000ms',
-                '-o-animation': 'fadeOut 10000ms',
-                'animation': 'fadeOut 10000ms'
-            }).promise().done(function () {
-                // keep invisible
-                $(this).css('opacity', 0);
+        // we execute the ajax activation on the form submit
+        form.one('submit', function (e) {
+
+            // we prevent the default browser behavior
+            e.preventDefault();
+
+            // we get the form object
+            var $this = $(this);
+
+            // we do the post request
+            $.ajax({
+                method: $this.attr('method'),
+                url: $this.attr('action'),
+                data: {
+                    _id: $this.find('input[name=_id]').val(),
+                    _token: $this.find('input[name=_token]').val(),
+                    activation_order: activation_order
+                }
+            }).done(function (data) {
+                // we replace the loading spinner by a success icon
+                swipe_group.find('.swipe-action-icon').remove();
+                swipe_group.append('<span class="swipe-action-icon text-success">' + app.success_icon + '</i></span>');
+
+                // we show the success messages
+                if (data.message) {
+                    data.message.forEach(function (success) {
+                        $.notify({
+                            // options
+                            title: app.success_icon,
+                            message: success
+                        }, {
+                            // settings
+                            type: 'success',
+                            delay: 6000,
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            animate: {
+                                enter: 'animated bounceInDown',
+                                exit: 'animated bounceOutUp'
+                            }
+                        });
+                    });
+                }
+            }).fail(function (data) {
+                // we show the error messages
+                if (data.responseJSON.message) {
+                    data.responseJSON.forEach(function (error) {
+                        $.notify({
+                            // options
+                            title: app.error_icon,
+                            message: error
+                        }, {
+                            // settings
+                            type: 'danger',
+                            delay: 6000,
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            animate: {
+                                enter: 'animated bounceInDown',
+                                exit: 'animated bounceOutUp'
+                            }
+                        });
+                    });
+                }
+
+                // we replace the loading spinner by an error icon
+                swipe_group.find('.swipe-action-icon').remove();
+                swipe_group.append('<span class="swipe-action-icon text-danger">' + app.error_icon + '</span>');
+
+                // we set the checkbox at its original value
+                window.setTimeout(function () {
+                    swipe_group.find('input.swipe').prop('checked', data.responseJSON.active);
+                }, 500);
+            }).always(function () {
+                // we fade out the icon
+                swipe_group.find('.swipe-action-icon').css({
+                    '-webkit-animation': 'fadeOut 10000ms',
+                    '-moz-animation': 'fadeOut 10000ms',
+                    '-ms-animation': 'fadeOut 10000ms',
+                    '-o-animation': 'fadeOut 10000ms',
+                    'animation': 'fadeOut 10000ms'
+                }).promise().done(function () {
+                    // keep invisible
+                    $(this).css('opacity', 0);
+                });
             });
         });
+
+        // we submit the form
+        form.submit();
     });
 
     // we activate the markdown editor
-    if ($('.markdown').length) {
-        var simplemde = new SimpleMDE({
-            element: $(".markdown")[0],
+    var markdown = $('.markdown');
+    if (markdown.length) {
+        new SimpleMDE({
+            element: markdown[0],
             hideIcons: ['side-by-side', 'fullscreen'],
             spellChecker: false
         });
     }
+
+    // we submit the form on select change detection
+    $('select.autosubmit').change(function () {
+        $(this).closest('form').submit();
+    });
 });
 

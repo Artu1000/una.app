@@ -59,6 +59,11 @@ return [
         "edit"   => "Édition d'une actualité",
         "create" => "Création d'une actualité",
     ],
+    "schedules"   => [
+        "list"   => "Gestion des créneaux horaire",
+        "edit"   => "Édition d'un créneau horaire",
+        "create" => "Création d'un créneau horaire",
+    ],
     "partners"    => [
         "index"  => "Gestion des partenaires",
         "edit"   => "Édition d'un partenaire",

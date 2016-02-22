@@ -12,15 +12,15 @@ class ModalComposer {
     public function compose($view)
     {
         // we manage the alert message
-        if($alert = \Session::get('alert')){
+        if($alert = session()->get('alert')){
             $view->with('alert', $alert);
-            \Session::forget('alert');
+            session()->forget('alert');
         }
 
         // we manage the confirm message
-        if($confirm = \Session::get('confirm')){
+        if($confirm = session()->get('confirm')){
             $view->with('confirm', $confirm);
-            \Session::forget('confirm');
+            session()->forget('confirm');
         }
     }
 

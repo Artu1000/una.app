@@ -2,10 +2,11 @@
 
 namespace App\Helpers;
 
+use Illuminate\Console\Command;
+
 class ConsoleHelper
 {
-
-    public function execWithOutput($cmd, $console)
+    public function execWithOutput(string $cmd, Command $console)
     {
         // Setup the file descriptors
         $descriptors = [
@@ -42,17 +43,17 @@ class ConsoleHelper
             $console->error($stderr);
         }
 
+        if (strpos($stdout, 'continue?')) {
+            $console->error('A confirmation has been asked during the shell command execution.');
+            $console->error('Please manually execute the command "' . $cmd . '" to treat that particular case.');
+            return exit();
+        }
+
         if ($return_code) {
             $console->error('Error exit code : ' . $return_code);
             if (!$console->ask('Do you want continue the script execution ? [Y/n]', true)) {
                 return exit();
             }
-        }
-
-        if (strpos($stdout, 'continue?')) {
-            $console->error('A confirmation has been asked during the shell command execution.');
-            $console->error('Please manually execute the command "' . $cmd . '" to treat that particular case.');
-            exit();
         }
     }
 

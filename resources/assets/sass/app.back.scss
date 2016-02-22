@@ -178,6 +178,32 @@ html {
         #content {
           padding: 15px 15px;
 
+          .legend {
+            margin-bottom: 30px;
+
+            h5 {
+              margin: 0 0 5px 0;
+            }
+
+            p{
+              margin: 0;
+              font-size: 12px;
+              line-height: 12px;
+
+              .required_star {
+                color: $brand-danger;
+                @include lato-font('medium');
+                font-size: $font-size;
+              }
+
+              .to_translate_star {
+                color: $brand-success;
+                @include lato-font('medium');
+                font-size: $font-size;
+              }
+            }
+          }
+
           .table-list {
 
             .actions {

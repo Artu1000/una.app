@@ -17,7 +17,6 @@ var paths = {
     jquery_easing: './resources/assets/vendor/jquery.easing/',
     glide: './resources/assets/vendor/glidejs/',
     bootstrap: './resources/assets/vendor/bootstrap-sass-official/assets/',
-    //datepicker: './resources/assets/vendor/bootstrap-datepicker/dist/',
     datepicker: './resources/assets/vendor/eonasdan-bootstrap-datetimepicker/',
     moment: './resources/assets/vendor/moment/',
     lity: './resources/assets/vendor/lity/dist/',
@@ -77,18 +76,18 @@ elixir(function (mix) {
         /***************************************************************************************************************
          * IMAGES
          ***************************************************************************************************************/
-        //// minify images
-        //.imagemin('**', 'public/img/')
+        // minify images
+        .imagemin('**', 'public/img/')
 
         /***************************************************************************************************************
          * FONTS
          ***************************************************************************************************************/
         // // copy glyphicon fonts into public folder
-        //.copy(paths.bootstrap + 'fonts/bootstrap/**', 'public/fonts/bootstrap')
+        .copy(paths.bootstrap + 'fonts/bootstrap/**', 'public/fonts/bootstrap')
         // // copy fontawesome fonts into public folder
-        //.copy(paths.fontawesome + 'fonts/**', 'public/fonts/fontawesome')
+        .copy(paths.fontawesome + 'fonts/**', 'public/fonts/fontawesome')
         // // copy lato fonts into public folder
-        //.copy(paths.lato + 'fonts/**', 'public/fonts/lato')
+        .copy(paths.lato + 'fonts/**', 'public/fonts/lato')
 
         /***************************************************************************************************************
          * JS
@@ -130,8 +129,6 @@ elixir(function (mix) {
             paths.jquery + 'dist/jquery.js',
             paths.jquery_easing + 'js/jquery.easing.js',
             paths.bootstrap + 'javascripts/bootstrap.js',
-            //paths.datepicker + 'js/bootstrap-datepicker.js',
-            //paths.datepicker + 'locales/bootstrap-datepicker.fr.min.js',
             paths.moment + 'moment.js',
             paths.moment + 'locale/fr.js',
             paths.moment + 'locale/en-gb.js',

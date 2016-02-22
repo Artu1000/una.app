@@ -2,6 +2,15 @@
 
 return [
 
+    //scoring form
+    "scoring_form"             => "Formulaire de calcul de score des districts",
+    "scoring_form.create"      => "Remplir le formulaire des districts une première fois",
+    "scoring_form.update"      => "Mettre à jour les données du formulaire des districts",
+    "scoring_form.any_country" => "Remplir / mettre à jour les données du formulaire pour les districts de tous les pays (et pas uniquement pour les districts du pays auquel appartient l'utilisateur)",
+    "scoring_form.any_year"    => "Remplir / mettre à jour les données du formulaire pour toutes les années (et pas uniquement pour l'année en cours)",
+    "scoring_form.logs"        => "Consulter l'historique des formulaires de calcul de score des districts",
+
+
     // settings
     "settings"           => "Paramètres",
     "settings.view"      => "Consulter les paramètres",
@@ -48,64 +57,65 @@ return [
     "partners.update"    => "Modifier un partenaire",
     "partners.delete"    => "Supprimer un partenaire",
 
+    // schedules
+    "schedules"           => "Horaires",
+    "schedules.list"      => "Consulter la liste des horaires",
+    "schedules.create"    => "Créer un horaire",
+    "schedules.view"      => "Consulter le détail d'un horaire",
+    "schedules.update"    => "Modifier un horaire",
+    "schedules.delete"    => "Supprimer un horaire",
+
     // pages
     "page"               => [
-        "title"  => [
-            "management"  => "Gestion des permissions utilisateur",
-            "list"        => "Liste des rôles",
-            "create"      => "Création d'un rôle utlisateur",
-            "edit"        => "Édition d'un rôle utilisateur",
-            "info"        => "Informations du rôle",
-            "permissions" => "Permissions du rôle",
-        ],
-        "action" => [
-            "edit"   => "Éditer le rôle",
-            "create" => "Créer le rôle",
-            "delete" => "Supprimer le rôle",
-        ],
-        'info'   => [
-            "rank" => "Configurez la position hiérarchique du rôle actuel en choisissant son supérieur direct.",
-        ],
-        "label"  => [
-            "placeholder" => "--- Séléctionnez le rôle parent ---",
-            "master"      => "Premier rôle (pas de rôle parent)",
-            "name"        => "Nom du rôle",
-            "slug"        => "Clé du rôle",
-            "rank"        => "Rang",
-            "parent_role" => "Rôle parent",
-            "created_at"  => "Date de création",
-            "updated_at"  => "Date de modification",
-        ],
+    "title"  => [
+        "management"  => "Gestion des rôles",
+        "list"        => "Liste des rôles",
+        "create"      => "Création d'un rôle",
+        "edit"        => "Édition du rôle <b>:role</b>",
+        "info"        => "Informations du rôle",
+        "permissions" => "Permissions du rôle",
     ],
+    "action" => [
+        "edit"   => "Éditer le rôle",
+        "create" => "Créer le rôle",
+        "delete" => "Supprimer le rôle",
+    ],
+    'info'   => [
+        "position" => "Configurez la position hiérarchique du rôle actuel en choisissant son supérieur direct.",
+    ],
+    "label"  => [
+        "placeholder" => "--- Séléctionnez le rôle parent ---",
+        "master"      => "Premier rôle (pas de rôle parent)",
+        "name"        => "Nom",
+        "slug"        => "Clé",
+        "position"    => "Hiérarchie",
+        "parent_role" => "Rôle parent",
+        "created_at"  => "Date de création",
+        "updated_at"  => "Date de modification",
+    ],
+],
 
     // messages
     "message"            => [
-        "access" => [
-            "denied" => "Vous n'avez pas l'autorisation d'effectuer cette action",
-        ],
-        "create" => [
-            "success" => "Le rôle <b>:name</b> a bien été créé.",
-            "failure" => "Une erreur est survenue lors de la création de l'utilisateur <b>:name</b>.",
-        ],
-        "update" => [
-            "success" => "Le rôle <b>:name</b> a bien été mis à jour.",
-            "failure" => "Une erreur est survenue lors de la mise à jour de l'utilisateur <b>:name</b>.",
-        ],
-        "find"   => [
-            "failure" => "Le rôle #:id n'existe pas.",
-        ],
-        "delete" => [
-            "success" => "Le rôle <b>:name</b> a bien été supprimé.",
-            "failure" => "Une erreur est survenue lors de la mise à jour du rôle <b>:name</b>.",
-        ],
-        "rank"   => [
-            "denied" => "Vous n'avez pas les droits nécessaires pour :action un utilisateur possédant un rôle hiérarchiquement supérieur au votre.",
-            "action" => [
-                "create" => "créer",
-                "edit"   => "éditer",
-                "delete" => "supprimer",
-            ],
-        ],
+    "access"   => [
+        "denied" => "Vous n'avez pas l'autorisation d'effectuer cette action",
     ],
-
+    "creation" => [
+        "success" => "Le rôle <b>:name</b> a bien été créé.",
+        "failure" => "Une erreur est survenue lors de la création du rôle <b>:name</b>.",
+    ],
+    "update"   => [
+        "success" => "Le rôle <b>:name</b> a bien été mis à jour.",
+        "denied"  => "Vous ne pouvez pas supprimer vos propres permissions suivantes :",
+        "failure" => "Une erreur est survenue lors de la mise à jour du rôle <b>:name</b>.",
+    ],
+    "find"     => [
+        "failure" => "Le rôle <b>#:id</b> n'existe pas.",
+    ],
+    "delete"   => [
+        "success" => "Le rôle <b>:name</b> a bien été supprimé.",
+        "denied"  => "Vous ne pouvez pas supprimer le rôle <b>:name</b> car vous l'utilisez actuellement.",
+        "failure" => "Une erreur est survenue lors de la mise à jour du rôle <b>:name</b>.",
+    ],
+],
 ];

@@ -64,20 +64,21 @@ class MigrationCartalystSentinel extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug')->unique();
-            $table->integer('rank')->unique();
+            $table->integer('position')->unique();
             $table->text('permissions')->nullable();
 
             $table->timestamps();
             $table->engine = 'InnoDB';
         });
 
-        Schema::create('roles_translations', function (Blueprint $table) {
+        Schema::create('role_translations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('role_id')->unsigned();
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->string('locale')->index();
             $table->string('name');
 
+            $table->engine = 'InnoDB';
             $table->unique(['role_id','locale']);
         });
 
@@ -135,7 +136,7 @@ class MigrationCartalystSentinel extends Migration
         Schema::drop('activations');
         Schema::drop('persistences');
         Schema::drop('reminders');
-        Schema::drop('roles_translations');
+        Schema::drop('role_translations');
         Schema::drop('roles');
         Schema::drop('role_users');
         Schema::drop('throttle');

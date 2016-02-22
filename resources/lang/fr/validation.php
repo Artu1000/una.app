@@ -131,6 +131,7 @@ return [
         "phone_number"          => "Numéro de téléphone",
         "zip_code"              => "Code postal",
         "role"                  => "Rôle",
+        "slug"                  => "Clé",
         "favicon"               => "Favicon",
         "logo_light"            => "Logo clair",
         "logo_dark"             => "Logo foncé",
@@ -149,6 +150,10 @@ return [
         "category_id"           => "Catégorie",
         "released_at"           => "Date de diffusion",
         "image"                 => "Image",
+        "day_id"                => "Jour de la semaine",
+        "time_start"            => "Heure de début",
+        "time_stop"             => "Heure de fin",
+        "public_category"       => "Catégorie de public",
     ],
 
 ];

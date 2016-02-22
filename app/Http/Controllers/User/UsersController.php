@@ -25,7 +25,7 @@ class UsersController extends Controller
     {
         // we check the current user permission
         if (!$this->requirePermission('users.list')) {
-            return redirect()->back();
+            return redirect()->route('dashboard');
         }
 
         // SEO Meta settings
@@ -58,15 +58,21 @@ class UsersController extends Controller
                 'title'   => trans('users.page.label.status'),
                 'key'     => 'status',
                 'config'  => 'user.status',
+                'trans'   => 'users.config.status',
                 'sort_by' => 'users.status',
-                'button'  => true,
+                'button'  => [
+                    'attribute' => 'key',
+                ],
             ],
             [
                 'title'   => trans('users.page.label.board'),
                 'key'     => 'board',
                 'config'  => 'user.board',
+                'trans'   => 'users.config.board',
                 'sort_by' => 'users.board',
-                'button'  => true,
+                'button'  => [
+                    'attribute' => 'key',
+                ],
             ],
             [
                 'title'      => trans('users.page.label.role'),
@@ -80,16 +86,31 @@ class UsersController extends Controller
             [
                 'title'    => trans('users.page.label.activation'),
                 'key'      => 'activated',
-                'activate' => 'users.activate',
+                'activate' => [
+                    'route'  => 'users.activate',
+                    'params' => [],
+                ],
             ],
         ];
 
         // we set the routes used in the table list
         $routes = [
-            'index'   => 'users.index',
-            'create'  => 'users.create',
-            'edit'    => 'users.edit',
-            'destroy' => 'users.destroy',
+            'index'   => [
+                'route'  => 'users.index',
+                'params' => [],
+            ],
+            'create'  => [
+                'route'  => 'users.create',
+                'params' => [],
+            ],
+            'edit'    => [
+                'route'  => 'users.edit',
+                'params' => [],
+            ],
+            'destroy' => [
+                'route'  => 'users.destroy',
+                'params' => [],
+            ],
         ];
 
         // we instantiate the query
@@ -114,8 +135,14 @@ class UsersController extends Controller
 
         // we prepare the search config
         $search_config = [
-            'users.first_name',
-            'users.last_name',
+            [
+                'key'      => trans('users.page.label.first_name'),
+                'database' => 'users.first_name',
+            ],
+            [
+                'key'      => trans('users.page.label.last_name'),
+                'database' => 'users.last_name',
+            ],
         ];
 
         // we enable the lines choice
@@ -359,9 +386,11 @@ class UsersController extends Controller
 
         // prepare data for the view
         $data = [
-            'seoMeta' => $this->seoMeta,
-            'user'    => $user,
-            'roles'   => \Sentinel::getRoleRepository()->all(),
+            'seoMeta'  => $this->seoMeta,
+            'user'     => $user,
+            'statuses' => config('user.status'),
+            'boards'   => config('user.board'),
+            'roles'    => \Sentinel::getRoleRepository()->all(),
         ];
 
         // return the view with data

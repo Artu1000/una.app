@@ -6,18 +6,17 @@ use Approached\LaravelImageOptimizer\ImageOptimizer;
 
 class ImageManagerHelper
 {
-
     /**
-     * @param $src_path
-     * @param $file_name
-     * @param $extension
-     * @param $storage_path
+     * @param string $src_path
+     * @param string $file_name
+     * @param string $extension
+     * @param string $storage_path
      * @param array $sizes
-     * @param bool|true $remove_src
+     * @param bool $remove_src
      * @return string
      * @throws \Exception
      */
-    public function optimizeAndResize($src_path, $file_name, $extension, $storage_path, array $sizes, $remove_src = true)
+    public function optimizeAndResize(string $src_path, string $file_name, string $extension, string $storage_path, array $sizes, bool $remove_src = true)
     {
         // we optimize the image
         if ($remove_src) {
@@ -34,12 +33,12 @@ class ImageManagerHelper
     }
 
     /**
-     * @param $file_name
-     * @param $extension
-     * @param $storage_path
+     * @param string $file_name
+     * @param string $extension
+     * @param string $storage_path
      * @param array $sizes
      */
-    public function resize($file_name, $extension, $storage_path, array $sizes)
+    public function resize(string $file_name, string $extension, string $storage_path, array $sizes)
     {
         // we resize the original image
         foreach ($sizes as $key => $size) {
@@ -47,7 +46,7 @@ class ImageManagerHelper
             // we check that the size is not empty
             if (empty($size) && sizeof($size) !== 2) {
                 throw new \InvalidArgumentException(
-                    'Incorrect size format. Each given size array must contain two line : the width and the height of the image'
+                    'Incorrect size format. Each given size array must contain two line : width and height (one of them can be null)'
                 );
             }
 
@@ -59,13 +58,15 @@ class ImageManagerHelper
 
             // we resize the image
             switch (true) {
-                case $size[0] && $size[1] :
+                // the width and the height are given
+                case isset($size[0]) && isset($size[1]) :
                     $optimized_original_image->fit($size[0], $size[1], function ($constraint) {
                         $constraint->upsize();
                     });
                     break;
-                case $size[0] && !$size[1] :
-                case !$size[0] && $size[1] :
+                // only width or height is given
+                case $size[0] && !isset($size[1]) :
+                case !isset($size[0]) && $size[1] :
                     $optimized_original_image->resize($size[0], $size[1], function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
@@ -79,13 +80,13 @@ class ImageManagerHelper
     }
 
     /**
-     * @param $src_path
-     * @param $dest_path
-     * @param $file_name
-     * @param $extension
+     * @param string $src_path
+     * @param string $dest_path
+     * @param string $file_name
+     * @param string $extension
      * @throws \Exception
      */
-    public function optimize($src_path, $dest_path, $file_name, $extension)
+    public function optimize(string $src_path, string $dest_path, string $file_name, string $extension)
     {
         if (!is_file($src_path)) {
             throw new \InvalidArgumentException('The source image ' . $src_path . ' doesn\'t exists.');
@@ -97,7 +98,15 @@ class ImageManagerHelper
 
         // we save the optimized image
         $optimized_image = \Image::make($src_path);
+
+        // we save the optimized image on ine the dest folder
         $optimized_image->save($dest_path . '/' . $file_name . '.' . $extension);
+
+        // we check if the optimized image is lighter than the original
+        if (\Image::make($src_path)->filesize() < \Image::make($dest_path . '/' . $file_name . '.' . $extension)->filesize()) {
+            // if not, we replace the optimized image by the original (renamed)
+            copy($src_path, $dest_path . '/' . $file_name . '.' . $extension);
+        }
 
         // if the file is found after optimization
         if (!is_file($dest_path . '/' . $file_name . '.' . $extension)) {
@@ -107,13 +116,13 @@ class ImageManagerHelper
     }
 
     /**
-     * @param $src_path
-     * @param $dest_path
-     * @param $file_name
-     * @param $extension
+     * @param string $src_path
+     * @param string $dest_path
+     * @param string $file_name
+     * @param string $extension
      * @throws \Exception
      */
-    public function optimizeAndRemoveSrc($src_path, $dest_path, $file_name, $extension)
+    public function optimizeAndRemoveSrc(string $src_path, string $dest_path, string $file_name, string $extension)
     {
         if (!is_file($src_path)) {
             throw new \InvalidArgumentException('The source image ' . $src_path . ' doesn\'t exists.');
@@ -132,7 +141,13 @@ class ImageManagerHelper
         };
     }
 
-    public function remove($file_name, $storage_path, array $sizes)
+    /**
+     * @param string $file_name
+     * @param string $storage_path
+     * @param array $sizes
+     * @throws \Exception
+     */
+    public function remove(string $file_name, string $storage_path, array $sizes)
     {
         // we get the file name and its extension
         list($file_name, $extension) = explode('.', $file_name);
@@ -159,5 +174,33 @@ class ImageManagerHelper
             throw new \Exception('The source image removal went wrong. The file ' .
                 $path . 'still exists after removal.');
         };
+    }
+
+    /**
+     * @param string $public_path
+     * @param string $file_name
+     * @param string|null $key
+     * @param string|null $size
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     */
+    public function imagePath(string $public_path, string $file_name, string $key = null, string $size = null)
+    {
+        // if the key / size are not given
+        if (!$key || !$size) {
+            // we return the original image path
+            return url($public_path . '/' . $file_name);
+        }
+
+        try {
+            // we return the sized image path
+            list($name, $ext) = explode('.', $file_name);
+
+            return url($public_path . '/' . $name . '_' . $size . '.' . $ext);
+        } catch (\Exception $e) {
+            // we log the error
+            \CustomLog::error($e);
+
+            return 'error';
+        }
     }
 }

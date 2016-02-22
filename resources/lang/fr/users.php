@@ -2,6 +2,33 @@
 
 return [
 
+    // config
+    "config"  => [
+        "board"  => [
+            "student-leading-board" => "Bureau des étudiants",
+            "leading_board"         => "Bureau",
+            "executive_committee"   => "Commité Directeur",
+        ],
+        "status" => [
+            'president'                => "Président",
+            'student-president'        => "Président des étudiants",
+            'vice-president'           => "Vice-président",
+            'secretary-general'        => "Secrétaire général",
+            'student-secretary'        => "Secrétaire des étudiants",
+            'treasurer'                => "Trésorier",
+            'sportive-commission'      => "Trésorier étudiant",
+            'communication-commission' => "Commission Communication",
+            'equipment-commission'     => "Commission matériel",
+            'leisure-commission'       => "Commission loisirs",
+            'employee'                 => "Salarié",
+            'user'                     => "Sociétaire",
+        ],
+        "gender" => [
+            "male"   => "Homme",
+            "female" => "Femme",
+        ],
+    ],
+
     // views
     "page"    => [
         "title"  => [

@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateSchedulesTable extends Migration
 {
@@ -14,10 +14,12 @@ class CreateSchedulesTable extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('label')->nullable();
             $table->integer('day_id')->nullable();
-            $table->string('start')->nullable();
-            $table->string('stop')->nullable();
+            $table->string('time_start')->nullable();
+            $table->string('time_stop')->nullable();
             $table->integer('public_category')->nullable();
+            $table->boolean('active')->default(false);
 
             $table->timestamps();
             $table->engine = 'InnoDB';

@@ -20,7 +20,7 @@ class Role extends SentinelRole
     protected $fillable = [
         'name',
         'slug',
-        'rank',
+        'position',
         'permissions',
     ];
 

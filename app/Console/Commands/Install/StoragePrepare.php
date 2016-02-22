@@ -37,8 +37,6 @@ class StoragePrepare extends Command
      */
     public function handle()
     {
-        $this->line(' ');
-
         $this->line('Preparing storage folders ...');
 
         // we set the folder to verify
@@ -49,6 +47,7 @@ class StoragePrepare extends Command
             storage_path('framework/meta'),
             storage_path('framework/sessions'),
             storage_path('framework/views'),
+            storage_path('app'),
         ];
         // we execute the verification
         $created = [];
@@ -65,14 +64,12 @@ class StoragePrepare extends Command
                 $this->info('- ' . $folder);
             }
         } else {
-            $this->info('✔ No folder are missing');
+            $this->info('✔ No folder were missing' . PHP_EOL);
         }
 
-        $this->line(' ');
-
         // settings.json existence verification
-        if (!is_file(storage_path('app/config/settings.json'))) {
-            exec('php artisan db:seed --class=SettingsTableSeeder');
+        if (!is_file(storage_path('app/settings/settings.json'))) {
+            \Console::execWithOutput('php artisan db:seed --class=SettingsTableSeeder', $this);
         }
     }
 }

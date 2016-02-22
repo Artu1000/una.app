@@ -35,8 +35,8 @@ return [
         "create"  => "admin/permissions/create",
         "store"   => "admin/permissions/store",
         "edit"    => "admin/permissions/edit/{id}",
-        "update"  => "admin/permissions/update",
-        "destroy" => "admin/permissions/destroy",
+        "update"  => "admin/permissions/update/{id}",
+        "destroy" => "admin/permissions/destroy/{id}",
     ],
     "users"       => [
         "index"    => "admin/users",
@@ -45,19 +45,8 @@ return [
         "edit"     => "admin/users/edit/{id}",
         "update"   => "admin/users/update",
         "profile"  => "admin/my-profile",
-        "destroy"  => "admin/users/destroy",
-        "activate" => "admin/users/activate",
-    ],
-    "home"        => [
-        "edit" => "admin/contents/home-page/edition",
-        "update" => "admin/contents/home-page/update",
-    ],
-    "slide"       => [
-        "create"  => "admin/contents/home-page/diapo/creation",
-        "store"   => "admin/contents/home-page/diapo/enregistrement",
-        "edit"    => "admin/contents/home-page/diapo/edition/{id}",
-        "update"  => "admin/contents/home-page/diapo/mise-a-jour",
-        "destroy" => "admin/contents/home-page/diapo/suppression",
+        "destroy"  => "admin/users/destroy/{id}",
+        "activate" => "admin/users/activate/{id}",
     ],
     "logout"      => "admin/logout",
 ];

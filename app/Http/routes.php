@@ -3,16 +3,11 @@
 /***********************************************************************************************************************
  * LOGS
  **********************************************************************************************************************/
+// log http requests
+CustomLog::httpRequests();
 
-// we enable the query logs
-\DB::enableQueryLog();
-
-// log each http request
-if (!empty($_SERVER['REQUEST_URI'])) {
-    $method = !empty($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '';
-    $uri = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-    \Log::info(implode(' - ', [$method, $uri]));
-}
+// log sql requests
+CustomLog::sqlRequests();
 
 /***********************************************************************************************************************
  * IMAGES
@@ -85,6 +80,16 @@ $route = Route::group($group, function () {
     Route::delete(LaravelLocalization::transRoute('routes.news.destroy'), ['as' => 'news.destroy', 'uses' => 'News\NewsController@destroy']);
     Route::post(LaravelLocalization::transRoute('routes.news.activate'), ['as' => 'news.activate', 'uses' => 'News\NewsController@activate']);
 
+    // schedules
+    Route::get(LaravelLocalization::transRoute('routes.schedules.list'), ['as' => 'schedules.list', 'uses' => 'Schedule\ScheduleController@adminList']);
+    Route::get(LaravelLocalization::transRoute('routes.schedules.data_update'), ['as' => 'schedules.data.update', 'uses' => 'Schedule\ScheduleController@dataUpdate']);
+    Route::get(LaravelLocalization::transRoute('routes.schedules.create'), ['as' => 'schedules.create', 'uses' => 'Schedule\ScheduleController@create']);
+    Route::post(LaravelLocalization::transRoute('routes.schedules.store'), ['as' => 'schedules.store', 'uses' => 'Schedule\ScheduleController@store']);
+    Route::get(LaravelLocalization::transRoute('routes.schedules.edit'), ['as' => 'schedules.edit', 'uses' => 'Schedule\ScheduleController@edit']);
+    Route::put(LaravelLocalization::transRoute('routes.schedules.update'), ['as' => 'schedules.update', 'uses' => 'Schedule\ScheduleController@update']);
+    Route::delete(LaravelLocalization::transRoute('routes.schedules.destroy'), ['as' => 'schedules.destroy', 'uses' => 'Schedule\ScheduleController@destroy']);
+    Route::post(LaravelLocalization::transRoute('routes.schedules.activate'), ['as' => 'schedules.activate', 'uses' => 'Schedule\ScheduleController@activate']);
+
     // partners
     Route::get(LaravelLocalization::transRoute('routes.partners.index'), ['as' => 'partners.index', 'uses' => 'Partner\PartnersController@index']);
     Route::get(LaravelLocalization::transRoute('routes.partners.create'), ['as' => 'partners.create', 'uses' => 'Partner\PartnersController@create']);
@@ -155,7 +160,7 @@ Route::group($group, function () {
     Route::resource('/calendrier', 'Calendar\CalendarController', ['names' => ['index' => 'front.calendar']]);
 
     // schedule
-    Route::resource('/horaires', 'Schedule\ScheduleController', ['names' => ['index' => 'front.schedule']]);
+    Route::get(trans('routes.schedules.index'), ['as' => 'front.schedule', 'uses' => 'Schedule\ScheduleController@index']);
 
     // shop
     Route::resource('/boutique-en-ligne', 'EShop\EShopController', ['names' => ['index' => 'front.e-shop', 'show' => 'front.e-shop.add-to-cart']]);

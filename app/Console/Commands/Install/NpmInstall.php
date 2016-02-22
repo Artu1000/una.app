@@ -37,44 +37,32 @@ class NpmInstall extends Command
      */
     public function handle()
     {
-        // we check if we have a local environment
-        if (config('env') == 'local') {
+        $this->line('Deleting node_modules folder ...');
+        \Console::execWithOutput('rm -rf node_modules', $this);
+        $this->info('✔ node_modules folder deleted' . PHP_EOL);
 
-            $this->line(' ');
+        $this->line('Disabling npm progress bar ...');
+        \Console::execWithOutput('npm set progress=false', $this);
+        $this->info('✔ npm progress bar disabled' . PHP_EOL);
 
-            $this->line('Processing npm cache clean ...');
-            \Console::execWithOutput('npm cache clean', $this);
-            $this->info('✔ npm cache clean done');
+        $this->line('Processing npm cache clean ...');
+        \Console::execWithOutput('npm cache clean', $this);
+        $this->info('✔ npm cache clean done' . PHP_EOL);
 
-            $this->line(' ');
+        $this->line('Processing gulp install ...');
+        \Console::execWithOutput('npm install gulp --save-dev', $this);
+        $this->info('✔ gulp installed' . PHP_EOL);
 
-            $this->line('Processing npm self-update ...');
-            \Console::execWithOutput('npm install npm', $this);
-            $this->info('✔ npm self-updated');
+        $this->line('Processing laravel-elixir install ...');
+        \Console::execWithOutput('npm install laravel-elixir --save-dev', $this);
+        $this->info('✔ laravel-elixir installed' . PHP_EOL);
 
-            $this->line(' ');
+        $this->line('Processing laravel-elixir-imagemin install ...');
+        \Console::execWithOutput('npm install laravel-elixir-imagemin --save-dev', $this);
+        $this->info('✔ laravel-elixir-imagemin installed' . PHP_EOL);
 
-            $this->line('Processing node install ...');
-            \Console::execWithOutput('npm install n', $this);
-            $this->info('✔ node installed');
-
-            $this->line(' ');
-
-            $this->line('Processing npm dependencies install ...');
-            \Console::execWithOutput('npm install', $this);
-            $this->info('✔ npm dependencies installed');
-
-            $this->line(' ');
-
-            $this->line('Processing npm dependencies update ...');
-            \Console::execWithOutput('npm update', $this);
-            $this->info('✔ npm dependencies updated');
-
-            $this->line(' ');
-
-            $this->line('Processing npm rebuild node-sass ...');
-            \Console::execWithOutput('npm rebuild node-sass', $this);
-            $this->info('✔ npm node-sass rebuilt');
-        };
+        $this->line('Processing npm rebuild node-sass ...');
+        \Console::execWithOutput('npm rebuild node-sass', $this);
+        $this->info('✔ npm node-sass rebuilt' . PHP_EOL);
     }
 }

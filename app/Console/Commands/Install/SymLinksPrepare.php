@@ -57,6 +57,12 @@ class SymLinksPrepare extends Command
 
         // we prepare the symlinks we want to add
         $symlinks = [
+            // logo
+//            [
+//                'storage' => config('image.settings.storage_path'),
+//                'public'  => public_path(config('image.settings.public_path')),
+//            ],
+            // news
             [
                 'storage' => app(\App\Repositories\News\NewsRepositoryInterface::class)
                     ->getModel()
@@ -65,6 +71,7 @@ class SymLinksPrepare extends Command
                     ->getModel()
                     ->publicPath(),
             ],
+            // partners
             [
                 'storage' => app(\App\Repositories\Partner\PartnerRepositoryInterface::class)
                     ->getModel()
@@ -73,6 +80,7 @@ class SymLinksPrepare extends Command
                     ->getModel()
                     ->publicPath(),
             ],
+            // slides
             [
                 'storage' => app(\App\Repositories\Slide\SlideRepositoryInterface::class)
                     ->getModel()
@@ -81,6 +89,7 @@ class SymLinksPrepare extends Command
                     ->getModel()
                     ->publicPath(),
             ],
+            // users
             [
                 'storage' => \Sentinel::getUserRepository()
                     ->createModel()
@@ -107,6 +116,6 @@ class SymLinksPrepare extends Command
             }
         }
 
-        $this->line(' ');
+        $this->info('✔ Symlinks are ready' . PHP_EOL);
     }
 }

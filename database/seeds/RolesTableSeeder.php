@@ -8,8 +8,8 @@ class RolesTableSeeder extends Seeder
     {
         // we create the admin role
         $admin = \Sentinel::getRoleRepository()->createModel()->create([
-            'slug' => 'admin',
-            'rank' => 1
+            'slug'     => 'admin',
+            'position' => 1,
         ]);
         // we translate the translatable fields
         $admin->translateOrNew('fr')->name = 'Administrateur';
@@ -24,10 +24,10 @@ class RolesTableSeeder extends Seeder
         $admin->save();
 
 
-        // we create the member role
+        // we create the moderator role
         $mod = \Sentinel::getRoleRepository()->createModel()->create([
-            'slug' => 'moderator',
-            'rank' => 2
+            'slug'     => 'moderator',
+            'position' => 2,
         ]);
         // we translate the translatable fields
         $mod->translateOrNew('fr')->name = 'Modérateur';
@@ -36,13 +36,13 @@ class RolesTableSeeder extends Seeder
 
 
         // we create the user role
-        $user = \Sentinel::getRoleRepository()->createModel()->create([
-            'slug' => 'user',
-            'rank' => 3
+        $member = \Sentinel::getRoleRepository()->createModel()->create([
+            'slug'     => 'user',
+            'position' => 3,
         ]);
         // we translate the translatable fields
-        $user->translateOrNew('fr')->name = 'Utilisateur';
-        $user->translateOrNew('en')->name = 'User';
-        $user->save();
+        $member->translateOrNew('fr')->name = 'Utilisateur';
+        $member->translateOrNew('en')->name = 'User';
+        $member->save();
     }
 }

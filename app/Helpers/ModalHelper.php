@@ -12,14 +12,15 @@ class ModalHelper
      */
     public function alert(array $messages, $type = null, $before_reload = true)
     {
-        \Session::set("alert", [
+        session()->set("alert", [
             "message" => $this->formatAlertMessage($messages, $type),
             "before_reload" => $before_reload
         ]);
     }
 
     /**
-     * @param array $messages
+     * @param array $data
+     * @throws \Exception
      */
     public function confirm(array $data)
     {
@@ -29,7 +30,7 @@ class ModalHelper
         if(!isset($data['attributes']) || empty($data['attributes'])){
             throw new \Exception('confirm modal data array require an attributes key.');
         }
-        \Session::set("confirm", $data);
+        session()->set("confirm", $data);
     }
 
     /**
@@ -55,7 +56,7 @@ class ModalHelper
             default:
                 $class = 'text-info';
                 $title = config('settings.info_icon') . ' ' . trans('global.modal.alert.title.info');;
-                $icon = '<span class="' . $class . '"><i class="fa fa-info"></i></span>';
+                $icon = '<span class="' . $class . '"><i class="fa fa-info-circle"></i></span>';
                 break;
         }
 

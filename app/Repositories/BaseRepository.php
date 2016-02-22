@@ -307,7 +307,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function where($column, $operator, $value = null)
     {
-        if(!isset($value)){
+        if (!isset($value)) {
             $value = $operator;
             $operator = '=';
         }
@@ -449,20 +449,25 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $models;
     }
 
+    /**
+     * @param void
+     * @return void
+     */
     public function sanitizePositions()
     {
+        // we get the max position of the table and the count of entities
         $slides_data = $this->model->selectRaw('MAX(position) as max')
             ->selectRaw('COUNT(*) as count')
             ->first();
 
-        // if we detect a position gap
+        // if we detect a position gap between the max and the count
         if ($slides_data->max > $slides_data->count) {
-            // we correct the position of all slides
+            // we correct the position of all entities
             $slides = $this->model->orderBy('position', 'asc')->get();
 
             $verification_position = 0;
             foreach ($slides as $s) {
-                // we update the incorrect ranks
+                // we update the incorrect positions
                 if ($s->position !== $verification_position + 1) {
                     $s->position = $verification_position + 1;
                     $s->save();
@@ -474,33 +479,32 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * @param $previous_slide_id
+     * @param int $parent_entity_id
      * @return int
      */
-    public function updatePositions($previous_slide_id)
+    public function updatePositions(int $parent_entity_id = null)
     {
-
-        // we get the roles concerned by the position incrementation regarding the given previous slide
-        if ($previous_slide = $this->model->find($previous_slide_id)) {
+        // we get the entities concerned by the position incrementation regarding the given previous entity
+        if ($parent_entity_id && $parent_entity = $this->model->find($parent_entity_id)) {
             // if a parent is defined
-            // we get the roles hierarchically inferiors to the parent
-            $slides = $this->model->where('position', '>', $previous_slide->position)
+            // we get the entities hierarchically inferiors to the parent
+            $other_entities = $this->model->where('position', '>', $parent_entity->position)
                 ->orderBy('position', 'desc')
                 ->get();
         } else {
-            // if the role has to be the master role
-            // we get all roles
-            $slides = $this->model->orderBy('position', 'desc')->get();
+            // if the entity has to be the master one
+            // we get all entities
+            $other_entities = $this->model->orderBy('position', 'desc')->get();
         }
 
-        // we increment the position of the selected slides
-        foreach ($slides as $s) {
-            $s->position += 1;
-            $s->save();
+        // we increment the position of the selected entities
+        foreach ($other_entities as $entities) {
+            $entities->position += 1;
+            $entities->save();
         }
 
-        // we get the new position to apply to the current slide
-        $new_position = $previous_slide ? ($previous_slide->position + 1) : 1;
+        // we get the new position to apply it to the current entity
+        $new_position = isset($parent_entity) ? ($parent_entity->position + 1) : 1;
 
         return $new_position;
     }

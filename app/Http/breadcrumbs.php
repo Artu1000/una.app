@@ -30,12 +30,7 @@ if (config('settings.breadcrumbs')) {
     });
     \Breadcrumbs::register('permissions.edit', function ($breadcrumbs, array $data) {
         $breadcrumbs->parent('permissions.index');
-        // we personalize the breadcrumb on edition
-        if (!empty($data)) {
-            foreach ($data as $additionnal_breadcrumb) {
-                $breadcrumbs->push(trans('breadcrumbs.permissions.edit', ['permission' => $additionnal_breadcrumb]), '');
-            }
-        }
+        $breadcrumbs->push(trans('breadcrumbs.permissions.edit', ['role' => $data['role']->name]), '');
     });
 
     // users
@@ -60,7 +55,7 @@ if (config('settings.breadcrumbs')) {
     // home
     \Breadcrumbs::register('home.edit', function ($breadcrumbs) {
         $breadcrumbs->parent('home');
-        $breadcrumbs->push(trans('breadcrumbs.home.edit'), route('home.edit'));
+        $breadcrumbs->push(trans('breadcrumbs.admin.edit'), route('home.edit'));
     });
     \Breadcrumbs::register('slides.create', function ($breadcrumbs) {
         $breadcrumbs->parent('home.edit');

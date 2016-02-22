@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost',
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -118,13 +118,11 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
-//        Illuminate\Foundation\Providers\ArtisanServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
-//        Illuminate\Routing\ControllerServiceProvider::class,
         Illuminate\Cookie\CookieServiceProvider::class,
         Illuminate\Database\DatabaseServiceProvider::class,
         Illuminate\Encryption\EncryptionServiceProvider::class,
@@ -209,6 +207,11 @@ return [
         'Modal'               => App\Facades\ModalHelperFacade::class,
         'ImageManager'        => App\Facades\ImageManagerHelperFacade::class,
         'Console'             => App\Facades\ConsoleHelperFacade::class,
+        'Permission'          => App\Facades\PermissionHelperFacade::class,
+        'Validation'          => App\Facades\ValidationHelperFacade::class,
+        'TableList'           => App\Facades\TableListHelperFacade::class,
+        'Entry'               => App\Facades\EntryHelperFacade::class,
+        'CustomLog'           => App\Facades\CustomLogHelperFacade::class,
     ],
 
 ];

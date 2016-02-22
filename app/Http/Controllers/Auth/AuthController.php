@@ -87,7 +87,9 @@ class AuthController extends Controller
             ], 'success');
 
             // redirect to the url stored in the session
-            if ($url = \Session::get('previous_url')) {
+            if ($url = session()->get('previous_url')) {
+                session()->forget('previous_url');
+
                 return redirect($url);
             } else {
                 // or redirect to home
@@ -136,7 +138,7 @@ class AuthController extends Controller
 
         // we logout the user
         try {
-            \Sentinel::logout();
+            Sentinel::logout();
             Modal::alert([
                 trans('auth.message.logout.success', ['name' => $user->first_name . ' ' . $user->last_name]),
             ], 'success');
