@@ -1,5 +1,5 @@
 /*!
- * jQuery JavaScript Library v2.2.0
+ * jQuery JavaScript Library v2.2.1
  * http://jquery.com/
  *
  * Includes Sizzle.js
@@ -9,7 +9,7 @@
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2016-01-08T20:02Z
+ * Date: 2016-02-22T19:11Z
  */
 
 (function( global, factory ) {
@@ -65,7 +65,7 @@ var support = {};
 
 
 var
-	version = "2.2.0",
+	version = "2.2.1",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -4479,7 +4479,7 @@ function on( elem, types, selector, data, fn, one ) {
 	if ( fn === false ) {
 		fn = returnFalse;
 	} else if ( !fn ) {
-		return this;
+		return elem;
 	}
 
 	if ( one === 1 ) {
@@ -5128,14 +5128,14 @@ var
 	rscriptTypeMasked = /^true\/(.*)/,
 	rcleanScript = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g;
 
+// Manipulating tables requires a tbody
 function manipulationTarget( elem, content ) {
-	if ( jQuery.nodeName( elem, "table" ) &&
-		jQuery.nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ) {
+	return jQuery.nodeName( elem, "table" ) &&
+		jQuery.nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ?
 
-		return elem.getElementsByTagName( "tbody" )[ 0 ] || elem;
-	}
-
-	return elem;
+		elem.getElementsByTagName( "tbody" )[ 0 ] ||
+			elem.appendChild( elem.ownerDocument.createElement( "tbody" ) ) :
+		elem;
 }
 
 // Replace/restore the type attribute of script elements for safe DOM manipulation
@@ -5642,7 +5642,7 @@ var getStyles = function( elem ) {
 		// FF meanwhile throws on frame elements through "defaultView.getComputedStyle"
 		var view = elem.ownerDocument.defaultView;
 
-		if ( !view.opener ) {
+		if ( !view || !view.opener ) {
 			view = window;
 		}
 
@@ -5791,15 +5791,18 @@ function curCSS( elem, name, computed ) {
 		style = elem.style;
 
 	computed = computed || getStyles( elem );
+	ret = computed ? computed.getPropertyValue( name ) || computed[ name ] : undefined;
+
+	// Support: Opera 12.1x only
+	// Fall back to style even without computed
+	// computed is undefined for elems on document fragments
+	if ( ( ret === "" || ret === undefined ) && !jQuery.contains( elem.ownerDocument, elem ) ) {
+		ret = jQuery.style( elem, name );
+	}
 
 	// Support: IE9
 	// getPropertyValue is only needed for .css('filter') (#12537)
 	if ( computed ) {
-		ret = computed.getPropertyValue( name ) || computed[ name ];
-
-		if ( ret === "" && !jQuery.contains( elem.ownerDocument, elem ) ) {
-			ret = jQuery.style( elem, name );
-		}
 
 		// A tribute to the "awesome hack by Dean Edwards"
 		// Android Browser returns percentage for some values,
@@ -7849,7 +7852,7 @@ jQuery.extend( jQuery.event, {
 				// But now, this "simulate" function is used only for events
 				// for which stopPropagation() is noop, so there is no need for that anymore.
 				//
-				// For the compat branch though, guard for "click" and "submit"
+				// For the 1.x branch though, guard for "click" and "submit"
 				// events is still used, but was moved to jQuery.event.stopPropagation function
 				// because `originalEvent` should point to the original event for the constancy
 				// with other events and for more focused logic
@@ -9619,11 +9622,8 @@ jQuery.fn.extend( {
 			}
 
 			// Add offsetParent borders
-			// Subtract offsetParent scroll positions
-			parentOffset.top += jQuery.css( offsetParent[ 0 ], "borderTopWidth", true ) -
-				offsetParent.scrollTop();
-			parentOffset.left += jQuery.css( offsetParent[ 0 ], "borderLeftWidth", true ) -
-				offsetParent.scrollLeft();
+			parentOffset.top += jQuery.css( offsetParent[ 0 ], "borderTopWidth", true );
+			parentOffset.left += jQuery.css( offsetParent[ 0 ], "borderLeftWidth", true );
 		}
 
 		// Subtract parent offsets and element margins
@@ -12463,19 +12463,19 @@ $(function() {
     });
 
     // capitalize input letters
-    $('.capitalize').keyup(function() {
+    $('.capitalize').on('focus change', function() {
         this.value = this.value.toLocaleUpperCase();
     });
 
     // capitalize input first-letter
-    $('.capitalize-first-letter').keyup(function() {
+    $('.capitalize-first-letter').on('focus change', function() {
         this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);
     });
 
     // select all text on click on input
-    $('input').click(function(){
-        //this.setSelectionRange(0, this.value.length);
+    $('input, textarea').on('focus', function(){
         this.select();
+
     });
 
     // open new window when clicking on the link
@@ -12671,7 +12671,7 @@ var responsiveBackgroundImage = {
 
 var anchor = {
     animate: function (target) {
-        $('html,body').animate({
+        $('html, body').animate({
             scrollTop: target.offset().top
         }, 1000);
         return false;
@@ -12701,7 +12701,7 @@ var anchor = {
         }
     },
     listen: function () {
-        $('a[href*=#]:not([href=#])').click(function (event) {
+        $('a:not([href^="#"])').click(function (event) {
 
             // we prevent the redirection
             event.preventDefault();
@@ -12766,4 +12766,15 @@ $(function () {
     // Cookie acceptation verification
     cookie.submit();
 });
-//# sourceMappingURL=app.front.js.map
+$(function() {
+
+    // disqus
+    var disqus_shortname = 'una-club';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+});
+//# sourceMappingURL=app.news-detail.js.map

@@ -156,6 +156,7 @@ $(function() {
 
     // if there are more than one slide, start glide js
     if(app.slides_count > 1){
+
         var carousel = $('#carousel').glide({
             type: 'slideshow',
             autoplay: '8000',

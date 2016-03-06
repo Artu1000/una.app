@@ -12,8 +12,8 @@ class PermissionCest
             'last_name'  => 'Test',
             'first_name' => 'test',
             'email'      => 'test@test.fr',
-            'status'     => config('user.status_key.communication-commission'),
-            'board'      => config('user.board_key.leading-board'),
+            'status'     => config('user.status_key.communication_commission'),
+            'board'      => config('user.board_key.leading_board'),
             'password'   => 'test',
         ];
 

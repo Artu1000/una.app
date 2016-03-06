@@ -14,6 +14,7 @@ return [
         "activate" => "Activation",
         "close"    => "Fermer",
         "save"     => "Enregistrer les modifications",
+        "more"     => "Lire plus",
     ],
 
     // legend
@@ -32,7 +33,7 @@ return [
     // infos
     "info"       => [
         "password" => [
-            "length" => "6 catactères minimum. Nous recommandons un mélange de lettres majuscules, minuscules, nombres et caractères spéciaux.",
+            "length" => "6 catactères minimum. Nous recommandons un mélange de lettres majuscules et minuscules, de nombres et de caractères spéciaux.",
         ],
         "date"     => [
             "format" => "Format : jj/mm/aaaa (exemple : 24/03/1985).",

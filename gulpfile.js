@@ -20,6 +20,8 @@ var paths = {
     datepicker: './resources/assets/vendor/eonasdan-bootstrap-datetimepicker/',
     moment: './resources/assets/vendor/moment/',
     lity: './resources/assets/vendor/lity/dist/',
+    notify: './resources/assets/vendor/remarkable-bootstrap-notify/dist/',
+    animate: './resources/assets/vendor/animate.css/',
     simplemde: './resources/assets/vendor/simplemde/dist/',
     fontawesome: './resources/assets/vendor/fontawesome/',
     lato: './resources/assets/vendor/lato-font/',
@@ -69,6 +71,7 @@ elixir(function (mix) {
         .styles([
             //paths.datepicker + 'css/bootstrap-datepicker3.css',
             paths.lity + 'lity.css',
+            paths.animate + 'animate.css',
             paths.simplemde + 'simplemde.min.css',
             'public/css/app.back.css'
         ], 'public/css/app.back.css', './')
@@ -135,6 +138,7 @@ elixir(function (mix) {
             paths.datepicker + 'src/js/bootstrap-datetimepicker.js',
             paths.js + 'ie10-viewport-bug-workaround.js',
             paths.lity + 'lity.js',
+            paths.notify + 'bootstrap-notify.js',
             paths.simplemde + 'simplemde.min.js',
             paths.js + 'app.common.js',
             paths.js + 'app.back.js'
@@ -163,7 +167,6 @@ elixir(function (mix) {
             // js front
             'public/js/app.front.js',
             'public/js/app.home.js',
-            'public/js/app.news-list.js',
             'public/js/app.news-detail.js',
             // js front
             'public/js/app.back.js'

@@ -5,12 +5,13 @@ return [
     // views
     "page"    => [
         "title"  => [
+            "last_news"  => "Dernières nouvelles",
             "management" => "Gestion de la page d'accueil",
             "content"    => "Contenu",
             "slides"     => "Liste des diapos",
             "slide"      => [
                 "create" => "Création d'une diapo",
-                "edit"   => "Édition d'une diapo",
+                "edit"   => "Édition de la diapo <b>:slide</b>",
                 "data"   => "Données de la diapo",
             ],
         ],
@@ -53,20 +54,27 @@ return [
             "failure" => "Une erreur est survenue lors de la mise à jour de la page d'accueil.",
         ],
         "slide"  => [
-            "create" => [
+            "create"     => [
                 "success" => "La diapo a bien été créée.",
                 "failure" => "Une erreur est survenue lors de la création de la diapo.",
             ],
-            "update" => [
+            "update"     => [
                 "success" => "La diapo a bien été mise à jour.",
                 "failure" => "Une erreur est survenue lors de la mise à jour de la diapo.",
             ],
-            "find"   => [
+            "find"       => [
                 "failure" => "La diapo #:id n'existe pas.",
             ],
-            "delete" => [
-                "success" => "La diapo <b>:title</b> a été supprimée avec succès.",
-                "failure" => "Une erreur est survenue lors de la suppression de la diapo <b>:title</b>.",
+            "delete"     => [
+                "success" => "La diapo <b>:slide</b> a été supprimée avec succès.",
+                "failure" => "Une erreur est survenue lors de la suppression de la diapo <b>:slide</b>.",
+            ],
+            "activation" => [
+                "success" => [
+                    "label"  => "La diapo <b>:slide</b> a bien été :action.",
+                    "action" => "{0}désactivée|{1}activée",
+                ],
+                "failure" => "Une erreur est survenue de la mise à jour du statut d'activation de la diapo <b>:slide</b>",
             ],
         ],
     ],

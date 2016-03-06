@@ -24,8 +24,8 @@ class User extends SentinelUser
         'zip_code',
         'city',
         'country',
-        'status',
-        'board',
+        'status_id',
+        'board_id',
         'password',
         'permissions',
     ];

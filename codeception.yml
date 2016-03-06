@@ -18,7 +18,7 @@ extensions:
 modules:
     config:
         Db:
-            dsn: 'mysql:host=localhost;dbname=vaco_testing'
+            dsn: 'mysql:host=localhost;dbname=una_testing'
             user: 'homestead'
             password: 'secret'
             dump: tests/_data/dump.sql

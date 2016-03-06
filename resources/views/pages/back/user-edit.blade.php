@@ -14,7 +14,7 @@
                     @if(isset($user) && (\Sentinel::getUser()->id === $user->id))
                         {{ trans('users.page.title.profile') }}
                     @elseif(isset($user) && !(\Sentinel::getUser()->id === $user->id))
-                        {{ trans('users.page.title.edit') }}
+                        {!! trans('users.page.title.edit', ['user' => $user->first_name . ' ' . $user->last_name]) !!}
                     @else
                         {{ trans('users.page.title.create') }}
                     @endif
@@ -22,7 +22,7 @@
 
                 <hr>
 
-                <form role="form" method="POST" action="@if(isset($user)){{ route('users.update') }} @else{{ route('users.store') }} @endif" enctype="multipart/form-data">
+                <form role="form" method="POST" action="@if(isset($user)){{ route('users.update', ['id' => $user->id]) }} @else{{ route('users.store', ['id' => 0]) }} @endif" enctype="multipart/form-data">
 
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -30,8 +30,10 @@
                     {{-- add update inputs if we are in update mode --}}
                     @if(isset($user))
                         <input type="hidden" name="_method" value="PUT">
-                        <input type="hidden" name="_id" value="{{ $user->id }}">
                     @endif
+
+                    {{-- we include the form legend --}}
+                    @include('templates.back.partials.form-legend.required')
 
                     {{-- personal data --}}
                     <div class="panel panel-default">
@@ -65,32 +67,25 @@
                             <label>{{ trans('users.page.label.gender') }}</label>
                             <div class="form-group">
                                 <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn toggle
-                                    @if(!isset($user) && old('gender') == config('user.gender_key.female.id'))active
-                                    @elseif(isset($user) && $user->gender == config('user.gender_key.female.id'))active
-                                    @endif">
-                                        <input type="radio" name="gender" value="{{ config('user.gender_key.female.id') }}" autocomplete="off"
-                                                @if(!isset($user) && old('gender') == config('user.gender_key.female.id'))checked
-                                                @elseif(isset($user) && $user->gender == config('user.gender_key.female.id'))checked
-                                                @endif>
-                                        <i class="fa fa-female"></i>
-                                        {{ config('user.gender_key.female.title') }}
-                                    </label>
-                                    <label class="btn toggle
-                                    @if(!isset($user) && old('gender') == config('user.gender_key.male.id'))active
-                                    @elseif(isset($user) && $user->gender == config('user.gender_key.male.id'))active @endif">
-                                        <input type="radio" name="gender" value="{{ config('user.gender_key.male.id') }}" autocomplete="off"
-                                                @if(!isset($user) && old('gender') == config('user.gender_key.male.id'))checked
-                                                @elseif(isset($user) && $user->gender == config('user.gender_key.male.id'))checked
-                                                @endif>
-                                        <i class="fa fa-male"></i>
-                                        {{ config('user.gender_key.male.title') }}
-                                    </label>
+
+                                    @foreach(config('user.gender') as $id => $gender)
+                                        <label class="btn toggle
+                                        @if(old('gender') == $id)active
+                                        @elseif(is_null(old('gender')) && isset($user->gender) && $user->gender == $id)active
+                                        @endif">
+                                            <input type="radio" name="gender" value="{{ $id }}" autocomplete="off"
+                                            @if(old('gender') == $id)checked
+                                            @elseif(is_null(old('gender')) && isset($user->gender) && $user->gender == $id)checked
+                                            @endif>
+                                            {!! trans('users.config.gender.' . $gender) !!}
+                                        </label>
+                                    @endforeach
+
                                 </div>
                             </div>
 
                             {{-- lastname --}}
-                            <label for="input_lastname" class="required">{{ trans('users.page.label.last_name') }}</label>
+                            <label for="input_lastname">{{ trans('users.page.label.last_name') }}<span class="required">*</span></label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_lastname"><i class="fa fa-user"></i></span>
@@ -99,7 +94,7 @@
                             </div>
 
                             {{-- firstname --}}
-                            <label for="input_firstname" class="required">{{ trans('users.page.label.first_name') }}</label>
+                            <label for="input_firstname">{{ trans('users.page.label.first_name') }}<span class="required">*</span></label></label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_firstname"><i class="fa fa-user"></i></span>
@@ -120,48 +115,49 @@
                         </div>
                     </div>
 
-                    {{-- contact data --}}
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">{{ trans('users.page.title.club') }}</h3>
-                        </div>
-                        <div class="panel-body">
+                    {{-- don't show for personnal account edition --}}
+                    @if(!isset($user) || !(\Sentinel::getUser()->id === $user->id))
 
-                            {{-- status --}}
-                            <label for="input_status" class="required">{{ trans('users.page.label.status') }}</label>
-                            <div class="form-group">
-                                <select class="form-control" name="status" id="input_status">
-                                    <option value="" disabled selected>{{ trans('users.page.label.status_placeholder') }}</option>
-                                    @foreach($statuses as $id => $status)
-                                        <option value="{{ $id }}"
-                                            @if(!isset($user) && old('status') == $id)selected
-                                            @elseif(isset($user) && isset($user->status) && $user->status === $id)selected
-                                            @elseif(((isset($user) && !isset($user->board)) || !isset($user->board)) && $id === config('user.status_key.association-member'))selected
-                                            @endif>
-                                            {{ $status['title'] }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                        {{-- club informations --}}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{ trans('users.page.title.club') }}</h3>
                             </div>
+                            <div class="panel-body">
 
-                            {{-- board --}}
-                            <label for="input_status" class="required">{{ trans('users.page.label.board') }}</label>
-                            <div class="form-group">
-                                <select class="form-control" name="board" id="input_board">
-                                    <option value="" disabled>{{ trans('users.page.label.board_placeholder') }}</option>
-                                    <option value="null" selected>{{ trans('users.page.label.no_board') }}</option>
-                                    @foreach($boards as $id => $board)
-                                        <option value="{{ $id }}"
-                                            @if(!isset($user) && old('status') == $id)selected
-                                            @elseif(isset($user) && isset($user->board) && $user->board === $id) selected
-                                            @endif>
-                                            {{ $board['title'] }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                {{-- status --}}
+                                <label for="input_status_id">{{ trans('users.page.label.status_id') }} <span class="required">*</span></label></label>
+                                <div class="form-group">
+                                    <select class="form-control" name="status_id" id="input_status_id">
+                                        <option value="" disabled>{{ trans('users.page.label.status_id_placeholder') }}</option>
+                                        @foreach($statuses as $id => $status)
+                                            <option value="{{ $id }}"
+                                                @if(old('status_id') == $id)selected
+                                                @elseif(is_null(old('status_id')) && isset($user->status_id) && $user->status_id === $id)selected
+                                                @elseif(is_null(old('status_id')) && !isset($user->status_id) && $id === config('user.status_key.user'))selected
+                                                @endif>{{ trans('users.config.status.' . $status) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                {{-- board --}}
+                                <label for="input_board_id">{{ trans('users.page.label.board_id') }}<span class="required">*</span></label></label>
+                                <div class="form-group">
+                                    <select class="form-control" name="board_id" id="input_board_id">
+                                        <option value="" disabled>{{ trans('users.page.label.board_id_placeholder') }}</option>
+                                        <option value="" @if(is_null(old('board_id')) && !isset($user->board_id))selected @endif>{{ trans('users.page.label.no_board') }}</option>
+                                        @foreach($boards as $id => $board)
+                                            <option value="{{ $id }}"
+                                                @if(old('board_id') == $id)selected
+                                                @elseif(is_null(old('board_id')) && isset($user->board_id) && $user->board_id === $id) selected
+                                                @endif>{{ trans('users.config.board.' . $board) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+                    @endif
 
                     {{-- contact data --}}
                     <div class="panel panel-default">
@@ -181,7 +177,7 @@
                             </div>
 
                             {{-- email --}}
-                            <label for="input_email" class="required">{{ trans('users.page.label.email') }}</label>
+                            <label for="input_email">{{ trans('users.page.label.email') }}<span class="required">*</span></label></label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_email"><i class="fa fa-at"></i></span>
@@ -237,8 +233,9 @@
 
                             {{-- don't show for personnal account edition --}}
                             @if(!isset($user) || !(\Sentinel::getUser()->id === $user->id))
+
                                 {{-- role --}}
-                                <label class="required">{{ trans('users.page.label.role') }}</label>
+                                <label>{{ trans('users.page.label.role') }}<span class="required">*</span></label>
                                 <div class="form-group">
                                     <div class="btn-group" data-toggle="buttons">
                                         @foreach($roles as $role)
@@ -247,34 +244,35 @@
                                             @elseif(isset($user) && isset($user->roles()->first()->id) && $user->roles()->first()->id === $role->id)active
                                             @elseif(((isset($user) && !isset($user->roles()->first()->id)) || !isset($user)) && $role->slug == 'user')active
                                             @endif">
-                                                <input type="radio" name="role" value="{{ $role->id }}" autocomplete="off"
-                                                        @if(!isset($user) && old('role') == $role->id)checked
-                                                        @elseif(isset($user) && isset($user->roles()->first()->id) && $user->roles()->first()->id === $role->id)checked
-                                                        @elseif(((isset($user) && !isset($user->roles()->first()->id)) || !isset($user)) && $role->slug == 'user')checked
-                                                        @endif>
-                                                {{ $role->name }}
-                                            </label>
+                                            <input type="radio" name="role" value="{{ $role->id }}" autocomplete="off"
+                                            @if(!isset($user) && old('role') == $role->id)checked
+                                            @elseif(isset($user) && isset($user->roles()->first()->id) && $user->roles()->first()->id === $role->id)checked
+                                            @elseif(((isset($user) && !isset($user->roles()->first()->id)) || !isset($user)) && $role->slug == 'user')checked
+                                            @endif>{{ $role->name }}</label>
                                         @endforeach
                                     </div>
                                 </div>
 
                                 {{-- activation --}}
-                                <label for="input_activation">{{ trans('users.page.label.activation') }}</label>
+                                <label for="input_active">{{ trans('users.page.label.active') }}</label>
                                 <div class="form-group">
                                     <div class="input-group swipe-group">
-                                        <span class="input-group-addon" for="input_activation"><i class="fa fa-power-off"></i></span>
+                                        <span class="input-group-addon" for="input_active"><i class="fa fa-power-off"></i></span>
                                     <span class="form-control swipe-label" readonly="">
                                         {{ trans('users.page.label.account') }}
                                     </span>
-                                        <input class="swipe" id="input_activation" type="checkbox" name="activation"
-                                               @if(old('activation'))checked @elseif(isset($user) && !empty($user->activations()->where('completed', true)->orderBy('completed_at', 'desc')->first()))checked @endif>
-                                        <label class="swipe-btn" for="input_activation"></label>
+                                        <input class="swipe" id="input_active" type="checkbox" name="active"
+                                            @if(old('active'))checked
+                                            @elseif(is_null(old('active')) && isset($user) && \Activation::completed($user))checked
+                                            @elseif(is_null(old('active')) && !isset($user))checked
+                                            @endif>
+                                        <label class="swipe-btn" for="input_active"></label>
                                     </div>
                                 </div>
                             @endif
 
                             {{-- password input--}}
-                            <label for="input_password" @if(!isset($user))class="required" @endif>{{ trans('users.page.label.new_password') }}</label>
+                            <label for="input_password">{{ trans('users.page.label.new_password') }}@if(!isset($user))<span class="required">*</span> @endif</label>
                             <div class="form-group">
                                 <div class="input-group">
                                         <span class="input-group-addon" for="input_password">
@@ -282,13 +280,14 @@
                                         </span>
                                     <input type="password" id="input_password" class="form-control" name="password" value="{{ old('password') }}" placeholder="{{ trans('users.page.label.new_password') }}">
                                 </div>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('global.info.password.length') }}</p>
                                 @if(isset($user))
                                     <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('users.page.info.password') }}</p>
                                 @endif
                             </div>
 
                             {{-- password confirmation input --}}
-                            <label for="input_password_confirmation" @if(!isset($user))class="required" @endif>{{ trans('users.page.label.password_confirm') }}</label>
+                            <label for="input_password_confirmation">{{ trans('users.page.label.password_confirm') }}@if(!isset($user))<span class="required">*</span> @endif</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_password_confirmation"><i class="fa fa-unlock-alt"></i></span>

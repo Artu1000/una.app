@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Repositories\News\NewsRepositoryInterface;
 use App\Repositories\Slide\SlideRepositoryInterface;
 use Illuminate\Http\Request;
+use Permission;
+use Sentinel;
+use TableList;
+use Validation;
 
 class HomeController extends Controller
 {
@@ -32,12 +36,12 @@ class HomeController extends Controller
     public function edit(Request $request)
     {
         // we check the current user permission
-        if (!$this->requirePermission('home.view')) {
-            return redirect()->back();
+        if (!Permission::hasPermission('home.view')) {
+            return redirect()->route('dashboard.index');
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.home.edit');
+        $this->seoMeta['page_title'] = trans('seo.back.home.edit');
 
         // we define the slides table list columns
         $columns = [
@@ -69,26 +73,41 @@ class HomeController extends Controller
             ], [
                 'title'     => trans('home.page.label.slide.quote'),
                 'key'       => 'quote',
-                'str_limit' => 50,
+                'str_limit' => 75,
             ], [
                 'title'           => trans('home.page.label.slide.position'),
                 'key'             => 'position',
                 'sort_by'         => 'slides.position',
-                'sort_by_default' => true,
+                'sort_by_default' => 'asc',
             ],
             [
                 'title'    => trans('home.page.label.slide.activation'),
                 'key'      => 'active',
-                'activate' => 'slides.activate',
+                'activate' => [
+                    'route'  => 'slides.activate',
+                    'params' => [],
+                ],
             ],
         ];
 
         // we set the routes used in the table list
         $routes = [
-            'index'   => 'home.edit',
-            'create'  => 'slides.create',
-            'edit'    => 'slides.edit',
-            'destroy' => 'slides.destroy',
+            'index'   => [
+                'route'  => 'home.edit',
+                'params' => [],
+            ],
+            'create'  => [
+                'route'  => 'slides.create',
+                'params' => [],
+            ],
+            'edit'    => [
+                'route'  => 'slides.edit',
+                'params' => [],
+            ],
+            'destroy' => [
+                'route'  => 'slides.destroy',
+                'params' => [],
+            ],
         ];
 
         // we instantiate the query
@@ -101,14 +120,17 @@ class HomeController extends Controller
         ];
 
         $search_config = [
-            'title',
+            [
+                'key'      => trans('home.page.label.title'),
+                'database' => 'slides.title',
+            ],
         ];
 
         // we enable the lines choice
         $enable_lines_choice = true;
 
         // we format the data for the needs of the view
-        $tableListData = $this->prepareTableListData(
+        $tableListData = TableList::prepare(
             $query,
             $request,
             $columns,
@@ -144,23 +166,39 @@ class HomeController extends Controller
     public function update(Request $request)
     {
         // we check the current user permission
-        if (!$this->requirePermission('home.update')) {
-            return redirect()->back();
+        if (!Permission::hasPermission('home.update')) {
+            // we redirect the current user to the user list if he has the required permission
+            if (Sentinel::getUser()->hasAccess('home.view')) {
+                return redirect()->route('home.edit');
+            } else {
+                // or we redirect the current user to the home page
+                return redirect()->route('dashboard.index');
+            }
         }
+
+        // we sanitize the entries
+        $request->replace(\Entry::sanitizeAll($request->all()));
 
         // we check inputs validity
         $rules = [
-            'title'       => 'string',
-            'description' => 'string',
+            'title'       => 'required|string',
+            'description' => 'string|min:1500',
             'video_link'  => 'url',
         ];
-        if (!$this->checkInputsValidity($request->all(), $rules, $request)) {
+        // we check the inputs validity
+        if (!Validation::check($request->all(), $rules)) {
+            // we flash the request
+            $request->flash();
+
             return redirect()->back();
         }
 
         try {
             // we store the content into a json file
-            file_put_contents(storage_path('app/home/content.json'), json_encode($request->except('_token', '_method')));
+            file_put_contents(
+                storage_path('app/home/content.json'),
+                json_encode($request->except('_token', '_method'))
+            );
 
             \Modal::alert([
                 trans('home.message.update.success'),
@@ -168,7 +206,11 @@ class HomeController extends Controller
 
             return redirect()->back();
         } catch (\Exception $e) {
-            \Log::error($e);
+
+            // we log the error
+            \CustomLog::error($e);
+
+            // we notify the current user
             \Modal::alert([
                 trans('home.message.update.failure'),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
@@ -185,10 +227,9 @@ class HomeController extends Controller
     {
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = 'Accueil';
-        $this->seoMeta['meta_desc'] = 'Bienvenue sur le site du club Université Nantes Aviron,
-        le plus grand club d\'aviron universitaire de France, ouvert à tous les publics !';
-        $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, sport, universitaire, etudiant, ramer';
+        $this->seoMeta['page_title'] = trans('seo.front.home.show.title');
+        $this->seoMeta['meta_desc'] = trans('seo.front.home.show.description');
+        $this->seoMeta['meta_keywords'] = trans('seo.front.home.show.keywords');
 
         // we get the two last news
         $last_news = $this->news->where('active', true)->orderBy('released_at', 'desc')->take(2)->get();

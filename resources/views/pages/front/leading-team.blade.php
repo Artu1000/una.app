@@ -17,22 +17,23 @@
                 <hr>
 
                 @foreach(config('user.board') as $id => $board)
-                    <div class="team">
+                    <div class="team {{ $board }}">
                         <div class="title display-table">
                             <div class="picto table-cell">
                                 <div class="table-cell">
-                                    <i class="fa fa-cog {{ $board['key'] }} text-info"></i>
+                                    <i class="fa fa-cog text-info"></i>
                                 </div>
                             </div>
-                            <h3 class="table-cell">{{ $board['title'] }}</h3>
+                            <h3 class="table-cell">{{ trans('users.config.board.' . $board) }}</h3>
                         </div>
-                        <p class="subtitle quote">@if($id === config('user.board_key.leading-board'))Comprend le président étudiant
-                            @elseif($id === config('user.board_key.executive-committee'))Comprend les membres du Bureau étudiant et du Bureau
-                            @endif</p>
+                        <p class="subtitle quote">
+                        @if($id === config('user.board_key.leading_board'))Comprend également le président étudiant
+                        @elseif($id === config('user.board_key.executive_committee'))Comprend également les membres du Bureau étudiant et du Bureau
+                        @endif</p>
                         @foreach($team as $member)
-                            @if($member->board === $id)
+                            @if($member->board_id === $id)
                                 <div class="member">
-                                    <img width="145" height="160" src="" alt="{{ $member->last_name }} {{ $member->first_name }}">
+                                    <img width="145" height="160" src="{{ $member->imagePath($member->photo, 'photo', 'picture') }}" alt="{{ $member->last_name }} {{ $member->first_name }}">
                                     <h4 class="display-table">
                                     <span class="table-cell">
                                         {{ $member->last_name }}<br>{{ $member->first_name }}
@@ -40,7 +41,7 @@
                                     </h4>
                                     <h5 class="display-table">
                                     <span class="table-cell">
-                                        {{ config('user.status.' . $member->status . '.title') }}
+                                        {{ trans('users.config.status.' . config('user.status.' . $member->status_id)) }}
                                     </span>
                                     </h5>
                                 </div>
@@ -49,7 +50,7 @@
                     </div>
                 @endforeach
 
-                <div class="team">
+                <div class="team employee">
                     <div class="title display-table">
                         <div class="picto table-cell">
                             <div class="table-cell">
@@ -59,9 +60,9 @@
                         <h3 class="table-cell">Salariés</h3>
                     </div>
                     @foreach($team as $member)
-                        @if($member->board === config('user.board_key.employee'))
+                        @if($member->board_id === config('user.board_key.employee'))
                             <div class="member">
-                                <img width="145" height="160" src="{{ $member->photo }}" alt="{{ $member->last_name }} {{ $member->first_name }}">
+                                <img width="145" height="160" src="{{ $member->imagePath($member->photo, 'photo', 'picture') }}" alt="{{ $member->last_name }} {{ $member->first_name }}">
                                 <h4 class="display-table">
                                     <span class="table-cell">
                                         {{ $member->last_name }}<br>{{ $member->first_name }}
@@ -69,7 +70,7 @@
                                 </h4>
                                 <h5 class="display-table">
                                     <span class="table-cell">
-                                        {{ config('user.status.' . $member->status . '.title') }}
+                                        {{ trans('users.config.status.' . config('user.status.' . $member->status_id)) }}
                                     </span>
                                 </h5>
                             </div>

@@ -113,7 +113,7 @@ class NewsController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.news.list');
+        $this->seoMeta['page_title'] = trans('seo.back.news.list');
 
         // we define the table list columns
         $columns = [
@@ -216,7 +216,7 @@ class NewsController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.news.create');
+        $this->seoMeta['page_title'] = trans('seo.back.news.create');
 
         // prepare data for the view
         $data = [
@@ -339,7 +339,7 @@ class NewsController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.news.edit');
+        $this->seoMeta['page_title'] = trans('seo.back.news.edit');
 
         // we convert the database date to the fr/en format
         if ($released_at = $news->released_at) {

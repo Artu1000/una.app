@@ -24,4 +24,17 @@ class PermissionHelper
 
         return true;
     }
+
+    /**
+     * @param array $permission
+     * @return bool
+     */
+    public function hasPermissionJson($permission)
+    {
+        if (!Sentinel::getUser()->hasAccess($permission)) {
+            return trans('permissions.message.access.denied', ['permission' => trans('permissions.' . $permission)]);
+        }
+
+        return false;
+    }
 }

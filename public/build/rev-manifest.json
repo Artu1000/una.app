@@ -4,17 +4,16 @@
   "css/app.page.css": "css/app.page-96631c7b.css",
   "css/app.palmares.css": "css/app.palmares-ba76fcfb.css",
   "css/app.news.css": "css/app.news-9b18e0e5.css",
-  "css/app.leading-team.css": "css/app.leading-team-17100726.css",
+  "css/app.leading-team.css": "css/app.leading-team-3c06062b.css",
   "css/app.registration.css": "css/app.registration-7bd861d1.css",
   "css/app.schedule.css": "css/app.schedule-eb2c21b5.css",
   "css/app.calendar.css": "css/app.calendar-c1932c7d.css",
   "css/app.e-shop.css": "css/app.e-shop-620c8f85.css",
   "css/app.login.css": "css/app.login-59f4f0db.css",
   "css/app.error.css": "css/app.error-86b69c55.css",
-  "css/app.back.css": "css/app.back-d6ac387a.css",
-  "js/app.front.js": "js/app.front-d498bf0e.js",
-  "js/app.home.js": "js/app.home-8475be03.js",
-  "js/app.news-list.js": "js/app.news-list-57b318c9.js",
-  "js/app.news-detail.js": "js/app.news-detail-099112c3.js",
-  "js/app.back.js": "js/app.back-6616692b.js"
+  "css/app.back.css": "css/app.back-839257ac.css",
+  "js/app.front.js": "js/app.front-57ee655e.js",
+  "js/app.home.js": "js/app.home-f9b5bcff.js",
+  "js/app.news-detail.js": "js/app.news-detail-1f424b5e.js",
+  "js/app.back.js": "js/app.back-995e17c2.js"
 }

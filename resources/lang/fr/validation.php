@@ -154,6 +154,9 @@ return [
         "time_start"            => "Heure de début",
         "time_stop"             => "Heure de fin",
         "public_category"       => "Catégorie de public",
+        "status_id"             => "Statut",
+        "board_id"              => "Instance",
+        "active"                => "Active",
     ],
 
 ];

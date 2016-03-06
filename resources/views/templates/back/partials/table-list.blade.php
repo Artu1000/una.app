@@ -199,24 +199,28 @@
                             @endif
                         @endforeach
 
-                        {{-- show activation toggle --}}
+                    {{-- show activation toggle --}}
                     @elseif(
                         isset($column['key'])
                         && isset($column['activate'])
                         && !empty($column['activate'])
                         && !empty($column['activate']['route'])
                     )
-                        <form role="form" id="form_activate_{{ $entity->id }}" class="form-inline" method="POST" action="{{ route($column['activate']['route'], $column['activate']['params']) }}">
+                        <form role="form" id="form_activate_{{ $entity->id }}" class="form-inline" method="POST" action="{{ route($column['activate']['route'], array_merge(
+                            $column['activate']['params'],
+                            [
+                                'id' => $entity->id,
+                            ]
+                        )) }}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="hidden" name="_id" value="{{ $entity->id }}">
 
                             <div class="swipe-group">
-                                <input class="swipe" id="activate_{{ $entity->id }}" type="checkbox" name="activation_order" @if($entity->getAttribute($column['key'])) checked @endif>
+                                <input class="swipe" id="activate_{{ $entity->id }}" type="checkbox" name="active" @if($entity->getAttribute($column['key'])) checked @endif>
                                 <label class="swipe-btn activate" for="activate_{{ $entity->id }}"></label>
                             </div>
                         </form>
 
-                        {{-- show image --}}
+                    {{-- show image --}}
                     @elseif(
                         isset($column['image'])
                         && !empty($image = $column['image'])
@@ -289,7 +293,7 @@
                                     && isset($column['str_limit'])
                                     && is_numeric($column['str_limit'])
                                 )
-                                    {{ str_limit(strip_tags($entity->getAttribute($column['key']), $column['str_limit'])) }}
+                                    {{ str_limit(strip_tags($entity->getAttribute($column['key'])), $column['str_limit']) }}
                                 @elseif(isset($column['key']))
                                     {{ $entity->getAttribute($column['key']) }}
                                 @endif

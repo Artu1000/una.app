@@ -116,8 +116,8 @@ class MigrationCartalystSentinel extends Migration
             $table->string('zip_code')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
-            $table->integer('status')->default(config('user.status_key.association-member'));
-            $table->integer('board')->nullable();
+            $table->integer('status_id')->default(config('user.status_key.user'));
+            $table->integer('board_id')->nullable();
             $table->text('permissions')->nullable();
 
             $table->timestamp('last_login')->nullable();

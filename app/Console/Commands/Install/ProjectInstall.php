@@ -75,9 +75,9 @@ class ProjectInstall extends Command
         $this->info('✔ apt-get updated' . PHP_EOL);
 
         // image optimization
-        $this->line('Processing OptiPNG and jpegoptim image optimizers install ...');
-        \Console::execWithOutput('sudo apt-get install optipng jpegoptim', $this);
-        $this->info('✔ OptiPNG and jpegoptim installed' . PHP_EOL);
+        $this->line('Processing image optimizers packages install ...');
+        \Console::execWithOutput('sudo apt-get install optipng pngquant pngcrush gifsicle jpegoptim', $this);
+        $this->info('✔ Image optimizers packages installed' . PHP_EOL);
 
         // storage file verification
         $this->call('storage:prepare');

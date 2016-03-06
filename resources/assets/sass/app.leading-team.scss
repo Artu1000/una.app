@@ -42,34 +42,6 @@ html {
                 padding: 0;
                 opacity: 0.5;
 
-                &.student-leading-board {
-
-                  &:hover {
-                    color: #2D3E4F;
-                  }
-                }
-
-                &.leading-board {
-
-                  &:hover {
-                    color: #75706B;
-                  }
-                }
-
-                &.executive-committee {
-
-                  &:hover {
-                    color: #503B2D;
-                  }
-                }
-
-                &.employee {
-
-                  &:hover {
-                    color: #652623
-                  }
-                }
-
                 &:hover {
                   @include spin(1s);
                   @include transition(2s ease);
@@ -121,6 +93,22 @@ html {
                 vertical-align: top;
               }
             }
+          }
+
+          &.student_leading_board i.fa:hover {
+            color: #2D3E4F;
+          }
+
+          &.leading_board i.fa:hover {
+            color: #75706B;
+          }
+
+          &.executive_committee i.fa:hover {
+            color: #503B2D;
+          }
+
+          &.employee i.fa:hover {
+            color: #652623
           }
         }
       }

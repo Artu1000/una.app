@@ -12,7 +12,6 @@
             </div>
             <div class="glide__wrapper">
                 <ul class="glide__track">
-
                     @foreach($slides as $key => $slide)
                         <li class="glide__slide fill">
                             <section class="fill">
@@ -42,7 +41,7 @@
 
         <div id="last_news" class="text-content">
             <div class="container">
-                <h2><i class="fa fa-paper-plane"></i> Dernières nouvelles</h2>
+                <h2><i class="fa fa-paper-plane"></i> {{ trans('home.page.title.last_news') }}</h2>
                 <hr>
                 <table class="table table-striped table-hover">
                     <tbody>
@@ -82,7 +81,7 @@
                                 <td class="button mobile text-right">
                                     <a href="{{ route('front.news.show', $news->key) }}" title="{{ $news->title }}">
                                         <button class="btn" role="button">
-                                            <i class="fa fa-chevron-circle-right"></i> Lire plus
+                                            <i class="fa fa-chevron-circle-right"></i> {{ trans('global.action.more') }}
                                         </button>
                                     </a>
                                 </td>

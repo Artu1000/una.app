@@ -31,7 +31,7 @@ class PartnersController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.partners.index');
+        $this->seoMeta['page_title'] = trans('seo.back.partners.index');
 
         // we define the table list columns
         $columns = [
@@ -123,7 +123,7 @@ class PartnersController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.partners.create');
+        $this->seoMeta['page_title'] = trans('seo.back.partners.create');
 
         // we get the partner list
         $partner_list = $this->repository->orderBy('position', 'asc')->get();
@@ -251,7 +251,7 @@ class PartnersController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.partners.edit');
+        $this->seoMeta['page_title'] = trans('seo.back.partners.edit');
 
         // we get the list without the current entity
         $partner_list = $this->repository->orderBy('position', 'asc')->where('id', '<>', $id)->get();

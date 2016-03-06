@@ -41,7 +41,7 @@ class PermissionsController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.permissions.index');
+        $this->seoMeta['page_title'] = trans('seo.back.permissions.index');
 
         // we define the table list columns
         $columns = [[
@@ -159,7 +159,7 @@ class PermissionsController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.permissions.create');
+        $this->seoMeta['page_title'] = trans('seo.back.permissions.create');
 
         // we get the role list without the current
         $role_list = \Sentinel::getRoleRepository()->orderBy('position', 'asc')->get();
@@ -310,7 +310,7 @@ class PermissionsController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.permissions.edit', ['role' => $role->name]);
+        $this->seoMeta['page_title'] = trans('seo.back.permissions.edit', ['role' => $role->name]);
 
         // we prepare the data for breadcrumbs
         $breadcrumbs_data = [

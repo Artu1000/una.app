@@ -14,9 +14,10 @@ return [
         "edit"   => "Édition de la permission <b>:role</b>",
     ],
     "users"       => [
-        "index"  => "Gestion des utilisateurs",
-        "create" => "Création d'un utilisateur",
-        "edit"   => "Édition de l'utilisateur <b>:user</b>",
+        "profile" => "Mon profil",
+        "index"   => "Gestion des utilisateurs",
+        "create"  => "Création d'un utilisateur",
+        "edit"    => "Édition de l'utilisateur <b>:user</b>",
     ],
     "home"        => [
         "edit" => "Édition de la page d'accueil",

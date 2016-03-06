@@ -32,9 +32,9 @@ class AuthController extends Controller
     protected function index()
     {
         // SEO settings
-        $this->seoMeta['page_title'] = trans('seo.login.index.title');
-        $this->seoMeta['meta_desc'] = trans('seo.login.index.description');
-        $this->seoMeta['meta_keywords'] = trans('seo.login.index.keywords');
+        $this->seoMeta['page_title'] = trans('seo.front.login.index.title');
+        $this->seoMeta['meta_desc'] = trans('seo.front.login.index.description');
+        $this->seoMeta['meta_keywords'] = trans('seo.front.login.index.keywords');
 
         // data send to the view
         $data = [

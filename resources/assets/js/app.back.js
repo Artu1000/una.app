@@ -23,8 +23,9 @@ function evalChildrenCheckboxes(elt) {
 
 $(function () {
 
-    // manage language inputs visibility
-    if (app.multilingual) {
+    // if we detect inputs language selectors
+    if (app.multilingual && $('.inputs_language_selectors').length) {
+
         var selected_language = app.locale;
 
         function showLocaleFields() {
@@ -80,70 +81,105 @@ $(function () {
         });
     }
 
-    // custom file input
-    $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
-        var input = $(this).parents('.input-group').find(':text'),
-            log = numFiles > 1 ? numFiles + ' files selected' : label;
-        if (input.length) {
-            input.val(log);
-        } else {
-            if (log) alert(log);
-        }
-    });
+    // if we detect a custom file input
+    if ($('.btn-file :file').length) {
 
-    // datetime / date / year picker
-    var locale;
-    var format;
-    switch (app.locale) {
-        case 'fr':
-            locale = app.locale;
-            format = 'DD/MM/YYYY HH:mm';
-            break;
-        case 'en':
-            format = 'DD/MM/YYYY hh:mm A';
-            locale = 'en-gb';
-            break;
-    }
-    // we activate the datepicker
-    var yearpicker = $('.yearpicker');
-    if (yearpicker.length) {
-        yearpicker.datetimepicker({
-            locale: locale,
-            format: 'YYYY'
+        $(document).on('change', '.btn-file :file', function () {
+            var input = $(this),
+                numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [numFiles, label]);
         });
-    }
-    // we activate the datepicker
-    var datepicker = $('.datepicker');
-    if (datepicker.length) {
-        datepicker.datetimepicker({
-            locale: locale,
-            format: 'DD/MM/YYYY'
-        });
-    }
-    // we activate the datetimepicker
-    var datetimepicker = $('.datetimepicker');
-    if (datetimepicker.length) {
-        datetimepicker.datetimepicker({
-            locale: locale,
-            format: format
-        });
-    }
 
-    // permissions checkboxes
-    // permission child checkboxes check on click on the parent
-    $('.permission.parent input').click(function () {
-        var permission_group = $(this).attr('id');
-        var checked = $(this).is(':checked');
-        $('.permission input[type=checkbox]').each(function (key, checkbox) {
-            if (checkbox.id.split(app.permissions_separator)[0] === permission_group) {
-                checkbox.checked = checked;
+        $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
+            var input = $(this).parents('.input-group').find(':text'),
+                log = numFiles > 1 ? numFiles + ' files selected' : label;
+            if (input.length) {
+                input.val(log);
+            } else {
+                if (log) alert(log);
             }
         });
-    });
-    // on check on child checkbox, manage parent checkbox check status
-    $('.permission input[type=checkbox]').change(function () {
-        evalChildrenCheckboxes($(this));
-    });
+    }
+
+    if ($('.yearpicker').length || $('.datepicker').length || $('.datetimepicker').length) {
+
+        // datetime / date / year picker
+        var locale;
+        var format;
+        switch (app.locale) {
+            case 'fr':
+                locale = app.locale;
+                format = 'DD/MM/YYYY HH:mm';
+                break;
+            case 'en':
+                format = 'DD/MM/YYYY hh:mm A';
+                locale = 'en-gb';
+                break;
+        }
+
+        // we activate the datepicker
+        var yearpicker = $('.yearpicker');
+        if (yearpicker.length) {
+            yearpicker.datetimepicker({
+                locale: locale,
+                format: 'YYYY'
+            });
+        }
+
+        // we activate the datepicker
+        var datepicker = $('.datepicker');
+        if (datepicker.length) {
+            datepicker.datetimepicker({
+                locale: locale,
+                format: 'DD/MM/YYYY'
+            });
+        }
+
+        // we activate the datetimepicker
+        var datetimepicker = $('.datetimepicker');
+        if (datetimepicker.length) {
+            datetimepicker.datetimepicker({
+                locale: locale,
+                format: format
+            });
+        }
+    }
+
+    // if we detect permissions checkboxes
+    if ($('.permission.parent').length) {
+
+        // check parent checkbox or not, according if all the children checkboxes are checked or not
+        function evalChildrenCheckboxes(elt) {
+            var permission_group = elt.attr('id').split(app.permissions_separator)[0];
+            var checked = true;
+            $('.permission input[type=checkbox]').each(function (key, checkbox) {
+                var id = checkbox.id.split(app.permissions_separator);
+                if (id[0] === permission_group && id[1]) {
+                    if (!checkbox.checked) {
+                        checked = false;
+                    }
+                }
+            });
+            $('input#' + permission_group).prop('checked', checked);
+        }
+
+        // permission child checkboxes check on click on the parent
+        $('.permission.parent input').click(function () {
+            var permission_group = $(this).attr('id');
+            var checked = $(this).is(':checked');
+            $('.permission input[type=checkbox]').each(function (key, checkbox) {
+                if (checkbox.id.split(app.permissions_separator)[0] === permission_group) {
+                    checkbox.checked = checked;
+                }
+            });
+        });
+
+        // on check on child checkbox, manage parent checkbox check status
+        $('.permission input[type=checkbox]').change(function () {
+            evalChildrenCheckboxes($(this));
+        });
+    }
 
     // we manage the activation in list from the swipe button
     $('.swipe-btn.activate').click(function () {
@@ -157,7 +193,6 @@ $(function () {
         // we get the ajax request data
         var url = $(this).attr('data-url');
         var id = $(this).attr('data-id');
-        var activation_order = !swipe_group.find('input.swipe').is(':checked');
 
         // we get the form
         var form = $(this).closest('form');
@@ -176,9 +211,8 @@ $(function () {
                 method: $this.attr('method'),
                 url: $this.attr('action'),
                 data: {
-                    _id: $this.find('input[name=_id]').val(),
                     _token: $this.find('input[name=_token]').val(),
-                    activation_order: activation_order
+                    active: !$this.find('input[name=active]').is(':checked')
                 }
             }).done(function (data) {
                 // we replace the loading spinner by a success icon
@@ -254,9 +288,10 @@ $(function () {
         form.submit();
     });
 
-    // we activate the markdown editor
+    // if we detect a markdown text zone
     var markdown = $('.markdown');
     if (markdown.length) {
+        // we activate the markdown editor
         new SimpleMDE({
             element: markdown[0],
             hideIcons: ['side-by-side', 'fullscreen'],
@@ -265,8 +300,11 @@ $(function () {
     }
 
     // we submit the form on select change detection
-    $('select.autosubmit').change(function () {
-        $(this).closest('form').submit();
-    });
+    var autosubmit = $('select.autosubmit');
+    if (autosubmit.length) {
+        autosubmit.change(function () {
+            $(this).closest('form').submit();
+        });
+    }
 });
 

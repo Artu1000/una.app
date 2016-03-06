@@ -120,7 +120,7 @@ class ScheduleController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.schedules.list');
+        $this->seoMeta['page_title'] = trans('seo.back.schedules.list');
 
         // we define the table list columns
         $columns = [
@@ -221,7 +221,7 @@ class ScheduleController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.schedules.create');
+        $this->seoMeta['page_title'] = trans('seo.back.schedules.create');
 
         // prepare data for the view
         $data = [
@@ -322,7 +322,7 @@ class ScheduleController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.schedules.edit');
+        $this->seoMeta['page_title'] = trans('seo.back.schedules.edit');
 
         // we prepare the data for breadcrumbs
         $breadcrumbs_data = [

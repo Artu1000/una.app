@@ -40,19 +40,19 @@ $(function() {
     });
 
     // capitalize input letters
-    $('.capitalize').keyup(function() {
+    $('.capitalize').on('focus change', function() {
         this.value = this.value.toLocaleUpperCase();
     });
 
     // capitalize input first-letter
-    $('.capitalize-first-letter').keyup(function() {
+    $('.capitalize-first-letter').on('focus change', function() {
         this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1);
     });
 
     // select all text on click on input
-    $('input').click(function(){
-        //this.setSelectionRange(0, this.value.length);
+    $('input, textarea').on('focus', function(){
         this.select();
+
     });
 
     // open new window when clicking on the link

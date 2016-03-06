@@ -11,8 +11,8 @@
                 {{-- Title--}}
                 <h2>
                     <i class="fa fa-user"></i>
-                    @if(isset($slide) && !(\Sentinel::getUser()->id === $slide->id))
-                        {{ trans('home.page.title.slide.edit') }}
+                    @if(isset($slide))
+                        {!! trans('home.page.title.slide.edit', ['slide' => $slide->title]) !!}
                     @else
                         {{ trans('home.page.title.slide.create') }}
                     @endif
@@ -20,7 +20,7 @@
 
                 <hr>
 
-                <form role="form" method="POST" action="@if(isset($slide)){{ route('slides.update') }} @else{{ route('slides.store') }} @endif" enctype="multipart/form-data">
+                <form role="form" method="POST" action="@if(isset($slide)){{ route('slides.update', ['id' => $slide->id]) }} @else{{ route('slides.store', ['id' => 0]) }} @endif" enctype="multipart/form-data">
 
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -28,8 +28,9 @@
                     {{-- add update inputs if we are in update mode --}}
                     @if(isset($slide))
                         <input type="hidden" name="_method" value="PUT">
-                        <input type="hidden" name="_id" value="{{ $slide->id }}">
                     @endif
+
+                    @include('templates.back.partials.form-legend.required')
 
                     {{-- personal data --}}
                     <div class="panel panel-default">
@@ -39,19 +40,19 @@
                         <div class="panel-body">
 
                             {{-- title --}}
-                            <label for="input_title" class="required">{{ trans('home.page.label.slide.title') }}</label>
+                            <label for="input_title" class="required">{{ trans('home.page.label.slide.title') }}<span class="required">*</span></label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_title"><i class="fa fa-user"></i></span>
+                                    <span class="input-group-addon" for="input_title"><i class="fa fa-tag"></i></span>
                                     <input id="input_title" class="form-control capitalize-first-letter" type="text" name="title" value="{{ old('title') ? old('title') : (isset($slide) && $slide->title ? $slide->title : null) }}" placeholder="{{ trans('home.page.label.slide.title') }}">
                                 </div>
                             </div>
 
                             {{-- quote --}}
-                            <label for="input_quote" class="required">{{ trans('home.page.label.slide.quote') }}</label>
+                            <label for="input_quote" class="required">{{ trans('home.page.label.slide.quote') }}<span class="required">*</span></label>
                             <div class="form-group textarea">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_quote"><i class="fa fa-user"></i></span>
+                                    <span class="input-group-addon" for="input_quote"><i class="fa fa-quote-right"></i></span>
                                         <textarea name="quote" id="input_quote" class="form-control capitalize-first-letter" placeholder="{{ trans('home.page.label.slide.quote') }}" >{{ old('quote') ? old('quote') : (isset($slide) && $slide->quote ? $slide->quote : null) }}</textarea>
                                 </div>
                             </div>
@@ -72,7 +73,7 @@
                                             <i class="fa fa-picture-o"></i> {{ trans('global.action.browse') }} <input type="file" name="picto">
                                         </span>
                                     </span>
-                                    <input id="input_background_image" type="text" class="form-control" readonly="">
+                                    <input id="input_picto" type="text" class="form-control" readonly="">
                                 </div>
                                 <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('home.page.info.slide.picto') }}</p>
                             </div>
@@ -99,34 +100,47 @@
                             </div>
 
                             {{-- position --}}
-                            <label for="input_position">{{ trans('home.page.label.slide.position') }}</label>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon" for="input_position"><i class="fa fa-sort-numeric-asc"></i></span>
-                                    <input id="input_position" class="form-control" type="number" name="position" value="{{  isset($slide) && $slide->position ? $slide->position : null }}" placeholder="{{ trans('home.page.label.slide.position') }}" disabled>
+                            @if(isset($slide))
+                                <label for="input_position">{{ trans('home.page.label.slide.position') }}</label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" for="input_position"><i class="fa fa-sort-numeric-asc"></i></span>
+                                        <input id="input_position" class="form-control" type="number" name="position" value="{{  isset($slide) && $slide->position ? $slide->position : null }}" placeholder="{{ trans('home.page.label.slide.position') }}" disabled>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
 
                             {{-- previous slide --}}
-                            <label for="input_previous_slide" class="required">{{ trans('home.page.label.slide.previous_slide') }}</label>
+                            <label for="input_previous_slide_id" class="required">{{ trans('home.page.label.slide.previous_slide') }}</label>
                             <div class="form-group">
-                                <select class="form-control" name="previous_slide_id" id="input_previous_slide">
-                                    <option value="" disabled selected>{{ trans('permissions.page.label.placeholder') }}</option>
+                                <select class="form-control" name="previous_slide_id" id="input_previous_slide_id">
+                                    <option value="" disabled>{{ trans('permissions.page.label.placeholder') }}</option>
                                     @foreach($slide_list as $s)
                                         <option value="{{ $s->id }}"
-                                                @if(old('previous_slide_id') == $s->id)selected
-                                                @elseif(isset($previous_slide) && $previous_slide->id === $s->id)selected
-                                                @elseif($s->id === 0)selected
-                                                @endif>
-                                            @if(!isset($s->position))
-                                                X - {{ $s->title }}
-                                            @else
-                                                {{ $s->position }} - {{ $s->title }}
-                                            @endif
-                                        </option>
+                                                @if(is_null(old('previous_slide_id')) && !isset($previous_slide) && $s->id == 0)selected
+                                                @elseif(old('previous_slide_id') && old('previous_slide_id') == $s->id)selected
+                                                @elseif(is_null(old('previous_slide_id')) && isset($previous_slide) && $previous_slide->id && $previous_slide->id === $s->id)selected
+                                                @elseif(is_null(old('previous_slide_id')) && isset($previous_slide->id) && !$previous_slide->id)selected
+                                                @endif>@if(!isset($s->position))X - {{ $s->title }}@else{{ $s->position }} - {{ $s->title }}@endif</option>
                                     @endforeach
                                 </select>
                                 <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('home.page.info.slide.previous_slide') }}</p>
+                            </div>
+
+                            {{-- activation --}}
+                            <label for="input_active">{{ trans('home.page.label.slide.activation') }}</label>
+                            <div class="form-group">
+                                <div class="input-group swipe-group">
+                                    <span class="input-group-addon" for="input_active"><i class="fa fa-power-off"></i></span>
+                                <span class="form-control swipe-label" readonly="">
+                                    {{ trans('partners.page.label.activation_placeholder') }}
+                                </span>
+                                    <input class="swipe" id="input_active" type="checkbox" name="active"
+                                           @if(old('active'))checked
+                                           @elseif(is_null(old('active')) && isset($slide) && $slide->active)checked
+                                           @endif>
+                                    <label class="swipe-btn" for="input_active"></label>
+                                </div>
                             </div>
 
                         </div>

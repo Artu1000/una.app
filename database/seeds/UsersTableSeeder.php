@@ -20,8 +20,8 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Arthur',
             'photo' => '',
             'email' => 'admin@admin.fr',
-            'status' => config('user.status_key.communication-commission'),
-            'board' => config('user.board_key.leading-board'),
+            'status_id' => config('user.status_key.communication_commission'),
+            'board_id' => config('user.board_key.leading_board'),
             'password' => 'admin'
         ], true);
 
@@ -35,8 +35,8 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'GIRARD',
             'first_name' => 'Lionel',
             'email' => 'a',
-            'status' => config('user.status_key.president'),
-            'board' => config('user.board_key.leading-board'),
+            'status_id' => config('user.status_key.president'),
+            'board_id' => config('user.board_key.leading_board'),
             'password' => 'una'
         ]);
         // we attach the user to the user role
@@ -49,8 +49,8 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'VARAINE',
             'first_name' => 'David',
             'email' => 'b',
-            'status' => config('user.status_key.vice-president'),
-            'board' => config('user.board_key.leading-board'),
+            'status_id' => config('user.status_key.vice_president'),
+            'board_id' => config('user.board_key.leading_board'),
             'password' => 'una'
         ]);
         // we attach the user to the user role
@@ -62,8 +62,8 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'PLANCHENAULT',
             'first_name' => 'Thomas',
             'email' => 'c',
-            'status' => config('user.status_key.student-president'),
-            'board' => config('user.board_key.student-leading-board'),
+            'status_id' => config('user.status_key.student_president'),
+            'board_id' => config('user.board_key.student_leading_board'),
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
@@ -73,8 +73,8 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'DIETER',
             'first_name' => 'Lara',
             'email' => 'cc',
-            'status' => config('user.status_key.student-secretary'),
-            'board' => config('user.board_key.student-leading-board'),
+            'status_id' => config('user.status_key.student_secretary'),
+            'board_id' => config('user.board_key.student_leading_board'),
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
@@ -85,8 +85,8 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'DISCAZEAU',
             'first_name' => 'Gérard',
             'email' => 'd',
-            'status' => config('user.status_key.treasurer'),
-            'board' => config('user.board_key.leading-board'),
+            'status_id' => config('user.status_key.treasurer'),
+            'board_id' => config('user.board_key.leading_board'),
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
@@ -97,8 +97,8 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'PLANTIER',
             'first_name' => 'Christophe',
             'email' => 'e',
-            'status' => config('user.status_key.secretary-general'),
-            'board' => config('user.board_key.leading-board'),
+            'status_id' => config('user.status_key.secretary_general'),
+            'board_id' => config('user.board_key.leading_board'),
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
@@ -109,8 +109,8 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'PROTT',
             'first_name' => 'Thierry',
             'email' => 'f',
-            'status' => config('user.status_key.sportive-commission'),
-            'board' => config('user.board_key.executive-committee'),
+            'status_id' => config('user.status_key.sportive_commission'),
+            'board_id' => config('user.board_key.executive_committee'),
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
@@ -121,8 +121,8 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'ABRAHAMSON',
             'first_name' => 'Jeff',
             'email' => 'g',
-            'status' => config('user.status_key.leisure-commission'),
-            'board' => config('user.board_key.leading-board'),
+            'status_id' => config('user.status_key.leisure_commission'),
+            'board_id' => config('user.board_key.leading_board'),
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
@@ -133,7 +133,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'LECIEUX',
             'first_name' => 'Yann',
             'email' => 'h',
-            'board' => config('user.board_key.leading-board'),
+            'board_id' => config('user.board_key.leading_board'),
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
@@ -144,7 +144,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'BOUZIDI',
             'first_name' => 'Rabah',
             'email' => 'i',
-            'board' => config('user.board_key.executive-committee'),
+            'board_id' => config('user.board_key.executive_committee'),
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
@@ -155,7 +155,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'CORNUEL',
             'first_name' => 'Benjamin',
             'email' => 'j',
-            'board' => config('user.board_key.executive-committee'),
+            'board_id' => config('user.board_key.executive_committee'),
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
@@ -166,7 +166,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'MARINGER',
             'first_name' => 'Françoise',
             'email' => 'k',
-            'board' => config('user.board_key.executive-committee'),
+            'board_id' => config('user.board_key.executive_committee'),
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
@@ -177,7 +177,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'MOUGEL',
             'first_name' => 'Jean-Bruno',
             'email' => 'l',
-            'board' => config('user.board_key.executive-committee'),
+            'board_id' => config('user.board_key.executive_committee'),
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
@@ -188,7 +188,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'TARDY',
             'first_name' => 'Mickaël',
             'email' => 'm',
-            'board' => config('user.board_key.executive-committee'),
+            'board_id' => config('user.board_key.executive_committee'),
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
@@ -199,7 +199,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'VESPERINI',
             'first_name' => 'Laurent',
             'email' => 'n',
-            'status' => config('user.status_key.employee'),
+            'status_id' => config('user.status_key.employee'),
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);

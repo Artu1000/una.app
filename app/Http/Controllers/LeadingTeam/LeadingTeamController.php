@@ -4,7 +4,6 @@ namespace App\Http\Controllers\LeadingTeam;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\User\UserRepositoryInterface;
-use Cartalyst\Sentinel\Users\EloquentUser;
 
 class LeadingTeamController extends Controller
 {
@@ -23,22 +22,29 @@ class LeadingTeamController extends Controller
     /**
      * @return $this
      */
-    public function index(){
-
+    public function index()
+    {
         // SEO Meta settings
-        $this->seoMeta['page_title'] = 'Equipe dirigeante';
-        $this->seoMeta['meta_desc'] = 'Découvrez l\équipe dirigeante du club Université Nantes Aviron (UNA).';
-        $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, sport, universitaire, etudiant, equipe, dirigeante';
+        $this->seoMeta['page_title'] = trans('seo.front.leading_team.index');
+        $this->seoMeta['meta_desc'] = trans('seo.front.leading_team.description');
+        $this->seoMeta['meta_keywords'] = trans('seo.front.leading_team.keywords');
 
-
-        // we get the two last news
-        $team = $this->repository->orderBy('status', 'asc')->get();
+        // we get the activated members of the leading team and the employees
+        $team = $this->repository->getModel()
+            ->whereHas('activations', function ($query) {
+                $query->where('activations.completed', true);
+            })->where(function($query){
+                $query->whereIn('board_id', config('user.board_key'));
+                $query->orWhere('status_id', config('user.status_key.employee'));
+            })
+            ->orderBy('status_id', 'asc')
+            ->get();
 
         // prepare data for the view
         $data = [
             'seoMeta' => $this->seoMeta,
-            'team' => $team,
-            'css' => url(elixir('css/app.leading-team.css'))
+            'team'    => $team,
+            'css'     => url(elixir('css/app.leading-team.css')),
         ];
 
         // return the view with data

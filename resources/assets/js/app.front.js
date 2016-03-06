@@ -165,7 +165,7 @@ var responsiveBackgroundImage = {
 
 var anchor = {
     animate: function (target) {
-        $('html,body').animate({
+        $('html, body').animate({
             scrollTop: target.offset().top
         }, 1000);
         return false;
@@ -195,7 +195,7 @@ var anchor = {
         }
     },
     listen: function () {
-        $('a[href*=#]:not([href=#])').click(function (event) {
+        $('a:not([href^="#"])').click(function (event) {
 
             // we prevent the redirection
             event.preventDefault();

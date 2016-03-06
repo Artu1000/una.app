@@ -20,9 +20,9 @@ class PasswordController extends Controller
     protected function index(Request $request)
     {
         // SEO settings
-        $this->seoMeta['page_title'] = trans('seo.password.index.title');
-        $this->seoMeta['meta_desc'] = trans('seo.password.index.description');
-        $this->seoMeta['meta_keywords'] = trans('seo.password.index.keywords');
+        $this->seoMeta['page_title'] = trans('seo.front.password.index.title');
+        $this->seoMeta['meta_desc'] = trans('seo.front.password.index.description');
+        $this->seoMeta['meta_keywords'] = trans('seo.front.password.index.keywords');
 
         // data send to the view
         $data = [
@@ -108,9 +108,9 @@ class PasswordController extends Controller
             if (\Reminder::exists($user, $request->only('token'))) {
 
                 // SEO settings
-                $this->seoMeta['page_title'] = trans('seo.password.show.title');
-                $this->seoMeta['meta_desc'] = trans('seo.password.show.description');
-                $this->seoMeta['meta_keywords'] = trans('seo.password.show.keywords');
+                $this->seoMeta['page_title'] = trans('seo.front.password.show.title');
+                $this->seoMeta['meta_desc'] = trans('seo.front.password.show.description');
+                $this->seoMeta['meta_keywords'] = trans('seo.front.password.show.keywords');
 
                 // data send to the view
                 $data = [

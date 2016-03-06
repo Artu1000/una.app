@@ -29,7 +29,7 @@ class SettingsController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.settings.index');
+        $this->seoMeta['page_title'] = trans('seo.back.settings.index');
 
         // prepare data for the view
         $data = [

@@ -24,9 +24,9 @@ class AccountController extends Controller
     public function createAccount()
     {
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.account.create.title');
-        $this->seoMeta['meta_desc'] = trans('seo.account.create.description', ['site' => config('settings.app_name_' . config('app.locale'))]);
-        $this->seoMeta['meta_keywords'] = trans('seo.account.create.keywords');
+        $this->seoMeta['page_title'] = trans('seo.front.account.create.title');
+        $this->seoMeta['meta_desc'] = trans('seo.front.account.create.description', ['site' => config('settings.app_name_' . config('app.locale'))]);
+        $this->seoMeta['meta_keywords'] = trans('seo.front.account.create.keywords');
 
         // prepare data for the view
         $data = [

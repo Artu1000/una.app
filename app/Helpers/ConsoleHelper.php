@@ -40,7 +40,7 @@ class ConsoleHelper
             $console->line($stdout);
         }
         if ($stderr) {
-            $console->error($stderr);
+            $console->line($stderr);
         }
 
         if (strpos($stdout, 'continue?')) {

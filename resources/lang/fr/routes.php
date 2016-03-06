@@ -41,12 +41,12 @@ return [
     "users"       => [
         "index"    => "admin/utilisateurs",
         "create"   => "admin/utilisateurs/creation",
-        "store"    => "admin/utilisateurs/enregistrement",
+        "store"    => "admin/utilisateurs/enregistrement/{id}",
         "edit"     => "admin/utilisateurs/edition/{id}",
         "update"   => "admin/utilisateurs/mise-a-jour/{id}",
         "destroy"  => "admin/utilisateurs/suppression/{id}",
         "profile"  => "admin/mon-profil",
-        "activate" => "admin/utilisateurs/activer",
+        "activate" => "admin/utilisateurs/activation/{id}",
     ],
     "home"        => [
         "edit"   => "admin/contenus/page-accueil/edition",
@@ -54,11 +54,11 @@ return [
     ],
     "slides"      => [
         "create"   => "admin/contenus/page-accueil/diapo/creation",
-        "store"    => "admin/contenus/page-accueil/diapo/enregistrement",
+        "store"    => "admin/contenus/page-accueil/diapo/enregistrement/{id}",
         "edit"     => "admin/contenus/page-accueil/diapo/edition/{id}",
         "update"   => "admin/contenus/page-accueil/diapo/mise-a-jour/{id}",
         "destroy"  => "admin/contenus/page-accueil/diapo/suppression/{id}",
-        "activate" => "admin/contenus/page-accueil/diapo/activer/{id}",
+        "activate" => "admin/contenus/page-accueil/diapo/activation/{id}",
     ],
     "news"        => [
         "index"   => "actus",
@@ -87,7 +87,7 @@ return [
         "edit"     => "admin/contenus/partenaires/edition/{id}",
         "update"   => "admin/contenus/partenaires/mise-a-jour/{id}",
         "destroy"  => "admin/contenus/partenaires/suppression/{id}",
-        "activate" => "admin/contenus/partenaires/activer/{id}",
+        "activate" => "admin/contenus/partenaires/activation/{id}",
     ],
     "logout"      => "admin/deconnexion",
 ];

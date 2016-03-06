@@ -10,7 +10,7 @@
         "laracasts/utilities": "dev-master",
         "suin/php-rss-writer": "dev-master",
         "cartalyst/sentinel": "2.0.*",
-        "approached/laravel-image-optimizer": "dev-master",
+        "approached/laravel-image-optimizer": "^1.0",
         "intervention/image": "^2.3@dev",
         "propaganistas/laravel-phone": "dev-master",
         "mcamara/laravel-localization": "^1.0",

@@ -2,15 +2,6 @@
 
 return [
 
-    //scoring form
-    "scoring_form"             => "Formulaire de calcul de score des districts",
-    "scoring_form.create"      => "Remplir le formulaire des districts une première fois",
-    "scoring_form.update"      => "Mettre à jour les données du formulaire des districts",
-    "scoring_form.any_country" => "Remplir / mettre à jour les données du formulaire pour les districts de tous les pays (et pas uniquement pour les districts du pays auquel appartient l'utilisateur)",
-    "scoring_form.any_year"    => "Remplir / mettre à jour les données du formulaire pour toutes les années (et pas uniquement pour l'année en cours)",
-    "scoring_form.logs"        => "Consulter l'historique des formulaires de calcul de score des districts",
-
-
     // settings
     "settings"           => "Paramètres",
     "settings.view"      => "Consulter les paramètres",
@@ -36,10 +27,10 @@ return [
     "home"               => "Page d'accueil",
     "home.edit"          => "Consulter le détail de la page d'accueil",
     "home.update"        => "Modifier la page d'accueil",
-    "home.slide.create"  => "Créer une diapo",
-    "home.slide.view"    => "Consulter le détail d'une diapo",
-    "home.slide.update"  => "Modifier une diapo",
-    "home.slide.delete"  => "Supprimer une diapo",
+    "home.slides.create"  => "Créer une diapo",
+    "home.slides.view"    => "Consulter le détail d'une diapo",
+    "home.slides.update"  => "Modifier une diapo",
+    "home.slides.delete"  => "Supprimer une diapo",
 
     // news
     "news"              => "Actualités",
