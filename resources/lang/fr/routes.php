@@ -4,33 +4,36 @@ return [
 
     // front
     // routes
-    "login"       => [
+    "login"        => [
         "index" => "espace-connexion",
         "login" => "espace-connexion/connexion",
     ],
-    "account"     => [
+    "account"      => [
         "create"     => "mon-compte/creation",
         "store"      => "mon-compte/enregistrement",
         "email"      => "mon-compte/email-activation",
         "activation" => "mon-compte/activation",
     ],
-    "password"    => [
+    "password"     => [
         "index"  => "mot-de-passe/oublie",
         "update" => "mot-de-passe/mise-a-jour",
         "email"  => "mot-de-passe/email-reinitialisation",
         "reset"  => "mot-de-passe/reinitialisation",
     ],
+    "leading_team" => [
+        "index" => "equipe-dirigeante",
+    ],
 
     // back
     // routes
-    "dashboard"   => [
+    "dashboard"    => [
         "index" => "admin/tableau-de-bord",
     ],
-    "settings"    => [
+    "settings"     => [
         "index"  => "admin/parametres",
         "update" => "admin/parametres/mise-a-jour",
     ],
-    "permissions" => [
+    "permissions"  => [
         "index"   => "admin/permissions",
         "create"  => "admin/permissions/creation",
         "store"   => "admin/permissions/enregistrement",
@@ -38,7 +41,7 @@ return [
         "update"  => "admin/permissions/mise-a-jour/{id}",
         "destroy" => "admin/permissions/suppression/{id}",
     ],
-    "users"       => [
+    "users"        => [
         "index"    => "admin/utilisateurs",
         "create"   => "admin/utilisateurs/creation",
         "store"    => "admin/utilisateurs/enregistrement/{id}",
@@ -48,11 +51,11 @@ return [
         "profile"  => "admin/mon-profil",
         "activate" => "admin/utilisateurs/activation/{id}",
     ],
-    "home"        => [
+    "home"         => [
         "edit"   => "admin/contenus/page-accueil/edition",
         "update" => "admin/contenus/page-accueil/mise-a-jour",
     ],
-    "slides"      => [
+    "slides"       => [
         "create"   => "admin/contenus/page-accueil/diapo/creation",
         "store"    => "admin/contenus/page-accueil/diapo/enregistrement/{id}",
         "edit"     => "admin/contenus/page-accueil/diapo/edition/{id}",
@@ -60,7 +63,7 @@ return [
         "destroy"  => "admin/contenus/page-accueil/diapo/suppression/{id}",
         "activate" => "admin/contenus/page-accueil/diapo/activation/{id}",
     ],
-    "news"        => [
+    "news"         => [
         "index"   => "actus",
         "show"    => "actus/{key}",
         "list"    => "admin/contenus/actus",
@@ -70,7 +73,7 @@ return [
         "update"  => "admin/contenus/actus/mise-a-jour/{id}",
         "destroy" => "admin/contenus/actus/suppression/{id}",
     ],
-    "schedules"   => [
+    "schedules"    => [
         "index"       => "horaires",
         "list"        => "admin/contenus/horaires",
         "create"      => "admin/contenus/horaires/creation",
@@ -80,7 +83,7 @@ return [
         "data_update" => "admin/contenus/horaires/donnees/mise-a-jour/{id}",
         "destroy"     => "admin/contenus/horaires/suppression/{id}",
     ],
-    "partners"    => [
+    "partners"     => [
         "index"    => "admin/contenus/partenaires",
         "create"   => "admin/contenus/partenaires/creation",
         "store"    => "admin/contenus/partenaires/enregistrement",
@@ -89,5 +92,5 @@ return [
         "destroy"  => "admin/contenus/partenaires/suppression/{id}",
         "activate" => "admin/contenus/partenaires/activation/{id}",
     ],
-    "logout"      => "admin/deconnexion",
+    "logout"       => "admin/deconnexion",
 ];

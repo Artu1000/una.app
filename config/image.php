@@ -1,6 +1,23 @@
 <?php
 
-return array(
+return [
+
+    'settings' => [
+        'logo'         => [
+            'name'      => [
+                'dark'  => 'logo_dark',
+                'light' => 'logo_light',
+            ],
+            'extension' => 'png',
+            'sizes'     => [
+                'admin'  => [40, 40],
+                'header' => [150, null],
+                'large'  => [300, null],
+            ],
+        ],
+        'storage_path' => storage_path('app/settings'),
+        'public_path'  => 'img/settings',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -17,4 +34,4 @@ return array(
 
     'driver' => 'gd'
 
-);
+];

@@ -27,7 +27,7 @@
                     <ul class="dropdown-menu dropdown-user">
                         @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                             <li @if($localeCode === config('app.locale'))class="active" @endif>
-                                <a rel="alternate" hreflang="{{$localeCode}}" href="{{ LaravelLocalization::getLocalizedURL($localeCode) }}">
+                                <a class="spin-on-click" rel="alternate" hreflang="{{$localeCode}}" href="{{ LaravelLocalization::getLocalizedURL($localeCode) }}">
                                     <div class="display-table">
                                         <div class="table-cell flag">
                                             <img width="20" height="20" class="img-circle" src="{{ url('img/flag/' . $localeCode . '.png') }}" alt="{{ $localeCode }}">
@@ -50,13 +50,13 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li class="@if(\Route::current()->getName() === 'users.profile')active @endif">
-                        <a href="{{ route('users.profile') }}"><i class="fa fa-user fa-fw"></i>
+                        <a class="spin-on-click" href="{{ route('users.profile') }}"><i class="fa fa-user fa-fw"></i>
                             {{ trans('template.back.header.my_profile') }}
                         </a>
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="{{ route('logout') }}">
+                        <a class="spin-on-click" href="{{ route('logout') }}">
                             <i class="fa fa-power-off"></i>
                             {{ trans('template.back.header.logout') }}
                         </a>
@@ -97,7 +97,7 @@
                         {{-- settings --}}
                         @if(\Sentinel::getUser()->hasAccess('settings.view'))
                             <li class="@if(\Route::current()->getName() === 'settings.index')active @endif">
-                                <a href="{{ route('settings.index') }}"><i class="fa fa-wrench"></i> {{ trans('template.back.header.settings') }}</a>
+                                <a class="spin-on-click" href="{{ route('settings.index') }}"><i class="fa fa-wrench"></i> {{ trans('template.back.header.settings') }}</a>
                             </li>
                         @endif
 
@@ -106,7 +106,7 @@
                             <li class="@if(\Route::current()->getName() === 'permissions.index'
                                 || \Route::current()->getName() === 'permissions.create'
                                 || \Route::current()->getName() === 'permissions.edit')active @endif">
-                                <a href="{{ route('permissions.index') }}"><i class="fa fa-gavel"></i> {{ trans('template.back.header.permissions') }}</a>
+                                <a class="spin-on-click" href="{{ route('permissions.index') }}"><i class="fa fa-gavel"></i> {{ trans('template.back.header.permissions') }}</a>
                             </li>
                         @endif
 
@@ -115,7 +115,7 @@
                             <li class="@if(\Route::current()->getName() === 'users.index'
                                 || \Route::current()->getName() === 'users.create'
                                 || \Route::current()->getName() === 'users.edit')active @endif">
-                                <a href="{{ route('users.index') }}"><i class="fa fa-users"></i> {{ trans('template.back.header.users') }}</a>
+                                <a class="spin-on-click" href="{{ route('users.index') }}"><i class="fa fa-users"></i> {{ trans('template.back.header.users') }}</a>
                             </li>
                         @endif
                     </ul>
@@ -158,7 +158,7 @@
                             <li class="@if(\Route::current()->getName() === 'home.edit'
                             || \Route::current()->getName() === 'slides.create'
                             || \Route::current()->getName() === 'slides.edit')active @endif">
-                                <a href="{{ route('home.edit') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.home') }}</a>
+                                <a class="spin-on-click" href="{{ route('home.edit') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.home') }}</a>
                             </li>
                         @endif
 
@@ -167,7 +167,7 @@
                             <li class="@if(\Route::current()->getName() === 'news.list'
                             || \Route::current()->getName() === 'news.create'
                             || \Route::current()->getName() === 'news.edit')active @endif">
-                                <a href="{{ route('news.list') }}"><i class="fa fa-paper-plane"></i> {{ trans('template.back.header.news') }}</a>
+                                <a class="spin-on-click" href="{{ route('news.list') }}"><i class="fa fa-paper-plane"></i> {{ trans('template.back.header.news') }}</a>
                             </li>
                         @endif
 
@@ -176,7 +176,7 @@
                             <li class="@if(\Route::current()->getName() === 'schedules.list'
                             || \Route::current()->getName() === 'schedules.create'
                             || \Route::current()->getName() === 'schedules.edit')active @endif">
-                                <a href="{{ route('schedules.list') }}"><i class="fa fa-clock-o"></i> {{ trans('template.back.header.schedules') }}</a>
+                                <a class="spin-on-click" href="{{ route('schedules.list') }}"><i class="fa fa-clock-o"></i> {{ trans('template.back.header.schedules') }}</a>
                             </li>
                         @endif
 
@@ -185,7 +185,7 @@
                             <li class="@if(\Route::current()->getName() === 'partners.index'
                             || \Route::current()->getName() === 'partners.create'
                             || \Route::current()->getName() === 'partners.edit')active @endif">
-                                <a href="{{ route('partners.index') }}"><i class="fa fa-life-ring"></i> {{ trans('template.back.header.partners') }}</a>
+                                <a class="spin-on-click" href="{{ route('partners.index') }}"><i class="fa fa-life-ring"></i> {{ trans('template.back.header.partners') }}</a>
                             </li>
                         @endif
                     </ul>

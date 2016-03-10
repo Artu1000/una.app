@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use CustomLog;
 use Illuminate\Http\Request;
+use Mail;
+use Modal;
+use Sentinel;
+use Validation;
 
 class AccountController extends Controller
 {
@@ -21,7 +26,7 @@ class AccountController extends Controller
     /**
      * @return $this
      */
-    public function createAccount()
+    public function createAccount(Request $request)
     {
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.front.account.create.title');
@@ -31,7 +36,9 @@ class AccountController extends Controller
         // prepare data for the view
         $data = [
             'seoMeta' => $this->seoMeta,
-            'css'     => url(elixir('css/app.login.css')),
+            'email'   => $request->get('email'),
+            'css'     => url(elixir('css/app.auth.css')),
+
         ];
 
         // return the view with data
@@ -44,29 +51,22 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-        // we flash the non sensitive data
-        $request->flashOnly('last_name', 'first_name', 'email');
-
         // we check the inputs
-        $errors = [];
-        $validator = \Validator::make($request->all(), [
+        $rules = [
             'last_name'  => 'required|string',
             'first_name' => 'required|string',
             'email'      => 'required|email|unique:users,email',
-            'password'   => 'required|min:6|confirmed',
-        ]);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
-            \Modal::alert($errors, 'error');
+            'password'   => 'required|min:' . config('password.min.length') . '|confirmed',
+        ];
+        if (!Validation::check($request->all(), $rules)) {
+            // we flash the request
+            $request->flash();
 
             return redirect()->back();
         }
 
         // we create the user
-        if ($user = \Sentinel::register($request->all())) {
+        if ($user = Sentinel::register($request->all())) {
 
             // we attach the user to the "User" role by default
             if (!$user_role = Sentinel::findRoleBySlug('user')) {
@@ -83,7 +83,7 @@ class AccountController extends Controller
 
             try {
                 // we send the email asking the account activation
-                \Mail::send('emails.account-activation', [
+                Mail::send('emails.account-activation', [
                     'user'  => $user,
                     'token' => $activation->code,
                 ], function ($email) use ($user) {
@@ -93,7 +93,7 @@ class AccountController extends Controller
                 });
 
                 // notify the user & redirect
-                \Modal::alert([
+                Modal::alert([
                     trans('auth.message.account_creation.success'),
                     trans('auth.message.activation.email.success', ['email' => $user->email]),
                 ], 'success');
@@ -101,9 +101,11 @@ class AccountController extends Controller
                 return redirect(route('login.index'));
 
             } catch (\Exception $e) {
-                \Log::error($e);
+                // we log the error
+                CustomLog::error($e);
+
                 // notify the user & redirect
-                \Modal::alert([
+                Modal::alert([
                     trans('auth.message.activation.email.failure'),
                     trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
                 ], 'error');
@@ -119,47 +121,53 @@ class AccountController extends Controller
      */
     public function sendActivationEmail(Request $request)
     {
-        // we flash the email
-        $request->flash();
+        // we get the user
+        if (!$user = Sentinel::findUserByCredentials($request->only('email'))) {
+            // we flash the request
+            $request->flash();
 
-        if ($user = \Sentinel::findUserByCredentials($request->only('email'))) {
-
-            if (!$activation = \Activation::exists($user)) {
-                $activation = \Activation::create($user);
-            }
-
-            try {
-                // we send the activation email
-                \Mail::send('emails.account-activation', [
-                    'user'  => $user,
-                    'token' => $activation->code,
-                ], function ($email) use ($user) {
-                    $email->from(config('mail.from.address'), config('mail.from.name'))
-                        ->to($user->email, $user->first_name . ' ' . $user->last_name)
-                        ->subject(config('mail.subject.prefix') . ' ' . trans('emails.account_activation.subject'));
-                });
-
-                // notify the user & redirect
-                \Modal::alert([
-                    trans('auth.message.activation.email.success', ['email' => $user->email]),
-                ], 'success');
-
-                return redirect(route('login.index'));
-
-            } catch (\Exception $e) {
-                \Log::error($e);
-                // notify the user & redirect
-                \Modal::alert([
-                    trans('auth.message.activation.email.failure'),
-                    trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
-                ], 'error');
-
-                return redirect()->back();
-            }
-
-        } else {
-            \Modal::alert([
+            // we notify the current user
+            Modal::alert([
                 trans('auth.message.find.failure', ['email' => $request->get('email')]),
+            ], 'error');
+
+            return redirect()->route('password.index');
+        }
+
+        // we prepare the activation
+        if (!$activation = \Activation::exists($user)) {
+            $activation = \Activation::create($user);
+        }
+
+        try {
+            // we send the activation email
+            Mail::send('emails.account-activation', [
+                'user'  => $user,
+                'token' => $activation->code,
+            ], function ($email) use ($user) {
+                $email->from(config('mail.from.address'), config('mail.from.name'))
+                    ->to($user->email, $user->first_name . ' ' . $user->last_name)
+                    ->subject(config('mail.subject.prefix') . ' ' . trans('emails.account_activation.subject'));
+            });
+
+            // notify the user & redirect
+            Modal::alert([
+                trans('auth.message.activation.email.success', ['email' => $user->email]),
+            ], 'success');
+
+            return redirect(route('login.index'));
+
+        } catch (\Exception $e) {
+            // we flash the request
+            $request->flash();
+
+            // we log the error
+            CustomLog::error($e);
+
+            // notify the user & redirect
+            Modal::alert([
+                trans('auth.message.activation.email.failure'),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
             return redirect()->back();
@@ -172,42 +180,45 @@ class AccountController extends Controller
      */
     public function activateAccount(Request $request)
     {
+        // we get the user
+        if (!$user = Sentinel::findUserByCredentials($request->only('email'))) {
+            // we flash the request
+            $request->flash();
+
+            // we notify the current user
+            Modal::alert([
+                trans('auth.message.find.failure', ['email' => $request->get('email')]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
+            ], 'error');
+
+            return redirect()->route('password.index');
+        }
 
         try {
-            // we try to find the user from its email
-            if ($user = \Sentinel::findByCredentials($request->only('email'))) {
+            // we verify if the reminder token is valid
+            if (\Activation::complete($user, $request->get('token'))) {
+                Modal::alert([
+                    trans('auth.message.activation.success', ['name' => $user->first_name . " " . $user->last_name]),
+                ], 'success');
 
-                // we verify if the reminder token is valid
-                if (\Activation::complete($user, $request->get('token'))) {
-                    \Modal::alert([
-                        trans('auth.message.activation.success', ['name' => $user->first_name . " " . $user->last_name]),
-                    ], 'success');
-
-                    return redirect(route('login.index'))->withInput($request->all());
-                } else {
-                    \Modal::alert([
-                        trans('auth.message.activation.token.expired'),
-                        trans('auth.message.activation.token.resend', [
-                            'email' => $request->get('email'),
-                            'url'   => route('account.activation_email', ['email' => $request->get('email')]),
-                        ]),
-                    ], 'error');
-
-                    return redirect(route('login.index'))->withInput($request->all());
-                }
+                return redirect(route('login.index'))->withInput($request->all());
             } else {
-                // notify the user & redirect
-                \Modal::alert([
-                    trans('auth.message.find.failure', ['email' => $request->get('email')]),
-                    trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
+                Modal::alert([
+                    trans('auth.message.activation.token.expired'),
+                    trans('auth.message.activation.token.resend', [
+                        'email' => $request->get('email'),
+                        'url'   => route('account.activation_email', ['email' => $request->get('email')]),
+                    ]),
                 ], 'error');
 
                 return redirect(route('login.index'))->withInput($request->all());
             }
         } catch (\Exception $e) {
-            \Log::error($e);
+            // we log the error
+            CustomLog::error($e);
+
             // notify the user & redirect
-            \Modal::alert([
+            Modal::alert([
                 trans('auth.message.activation.error'),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');

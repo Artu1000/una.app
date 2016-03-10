@@ -10,7 +10,7 @@
 
                 <div class="form_container v-center table-cell">
 
-                    <div class="form_capsule col-sm-offset-4 col-sm-4">
+                    <div class="form_capsule">
 
                         <form class="form-signin" role="form" method="POST" action="{{ route('account.store') }}">
 
@@ -21,7 +21,7 @@
                             @if(config('settings.logo_light'))
                                 <div class="logo display-table">
                                     <div class="text-center table-cell fill">
-                                        <img width="300" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" alt="Logo {{ config('settings.app_name_' . config('app.locale')) }}">
+                                        <img width="300" height="300" src="{{ \ImageManager::imagePath(config('image.settings.public_path'), config('image.settings.logo.name.light') . '.' . config('image.settings.logo.extension'), 'logo', 'large') }}" alt="{{ config('settings.app_name_' . config('app.locale')) }}">
                                     </div>
                                 </div>
                             @endif
@@ -52,7 +52,7 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_email"><i class="fa fa-at"></i></span>
-                                    <input id="input_email" class="form-control" type="email" name="email" value="{{ old('email') }}" placeholder="{{ trans('auth.account_creation.label.email') }}">
+                                    <input id="input_email" class="form-control" type="email" name="email" value="{{ old('email') ? old('email') : $email }}" placeholder="{{ trans('auth.account_creation.label.email') }}">
                                 </div>
                             </div>
 
@@ -82,10 +82,8 @@
                             </button>
                         </form>
 
-                        <a href="{{ route('login.index') }}" class="pull-right cancel spin-on-click" title="Annuler">
-                            <button class="btn btn-default">
-                                <i class="fa fa-ban"></i> {{ trans('global.action.cancel') }}
-                            </button>
+                        <a href="{{ route('login.index') }}" class="pull-right cancel spin-on-click btn btn-default" title="Annuler">
+                            <i class="fa fa-ban"></i> {{ trans('global.action.cancel') }}
                         </a>
                     </div>
                 </div>

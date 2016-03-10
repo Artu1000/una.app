@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Permission;
+use Validation;
 
 class SettingsController extends Controller
 {
@@ -24,8 +26,8 @@ class SettingsController extends Controller
     public function index()
     {
         // we check the current user permission
-        if(!$this->requirePermission('settings.view')){
-            return redirect()->back();
+        if (!Permission::hasPermission('settings.view')) {
+            return redirect()->route('dashboard.index');
         }
 
         // SEO Meta settings
@@ -43,17 +45,23 @@ class SettingsController extends Controller
     public function update(Request $request)
     {
         // we check the current user permission
-        if(!$this->requirePermission('settings.update')){
-            return redirect()->back();
+        if (!Permission::hasPermission('settings.update')) {
+            // we redirect the current user to the settings view if he has the required permission
+            if (Sentinel::getUser()->hasAccess('settings.view')) {
+                return redirect()->route('settings.view');
+            } else {
+                // or we redirect the current user to the home page
+                return redirect()->route('dashboard.index');
+            }
         }
 
-        // we analyse the given inputs
-        // we replace the "on" or "off" value from the checkbox by a boolean
-        $request->merge([
-            'breadcrumbs'  => filter_var($request->get('breadcrumbs'), FILTER_VALIDATE_BOOLEAN),
-            'multilingual' => filter_var($request->get('multilingual'), FILTER_VALIDATE_BOOLEAN),
-            'rss'          => filter_var($request->get('rss'), FILTER_VALIDATE_BOOLEAN),
-        ]);
+        // we sanitize the entries
+        $request->replace(\Entry::sanitizeAll($request->all()));
+
+        // if the boolean field is not given, we set it to false
+        $request->merge(['breadcrumb' => $request->get('breadcrumb', false)]);
+        $request->merge(['multilingual' => $request->get('multilingual', false)]);
+        $request->merge(['rss' => $request->get('rss', false)]);
 
         // we get the inputs
         $inputs = $request->except('_token', '_method');
@@ -91,8 +99,11 @@ class SettingsController extends Controller
             $rules['app_slogan_en'] = 'string';
         }
 
-        // we check inputs validity
-        if(!$this->checkInputsValidity($inputs, $rules, $request)){
+        // we check the inputs validity
+        if (!Validation::check($inputs, $rules)) {
+            // we flash the request
+            $request->flash();
+
             return redirect()->back();
         }
 
@@ -117,10 +128,10 @@ class SettingsController extends Controller
                 // we optimize, resize and save the image
                 $file_name = \ImageManager::optimizeAndResize(
                     $logo_dark->getRealPath(),
-                    'logo_light',
+                    config('image.settings.logo.name.dark'),
                     $logo_dark->getClientOriginalExtension(),
-                    storage_path('app/config'),
-                    ['admin' => [40, 40], 'header' => [70, null], 'large' => [300, null]]
+                    config('image.logo.storage_path'),
+                    config('image.settings.logo.sizes')
                 );
                 // we add the image name to the inputs for saving
                 $inputs['logo_light'] = $file_name;
@@ -133,10 +144,10 @@ class SettingsController extends Controller
                 // we optimize, resize and save the image
                 $file_name = \ImageManager::optimizeAndResize(
                     $logo_dark->getRealPath(),
-                    'logo_dark',
+                    config('image.settings.logo.name.dark'),
                     $logo_dark->getClientOriginalExtension(),
-                    storage_path('app/config'),
-                    ['admin' => [40, 40], 'header' => [70, null], 'large' => [300, null]]
+                    config('image.logo.storage_path'),
+                    config('image.settings.logo.sizes')
                 );
                 // we add the image name to the inputs for saving
                 $inputs['logo_dark'] = $file_name;

@@ -225,7 +225,6 @@ class HomeController extends Controller
      */
     public function show()
     {
-
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.front.home.show.title');
         $this->seoMeta['meta_desc'] = trans('seo.front.home.show.description');

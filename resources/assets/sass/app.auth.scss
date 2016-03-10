@@ -18,33 +18,37 @@ html {
 
         .form_container {
 
-          .logo {
-            min-height: 340px;
-            padding: 10px;
-            @include border-radius(50%);
-            border: dashed 1px $gray-light;
+          .form_capsule {
+            width: 360px;
+            margin: 0 auto;
 
-            div {
-              @include border-radius(50%);
+            .logo {
+              height: 360px;
+              padding: 10px;
+              @include border-radius(7%);
+              border: dashed 1px $gray-light;
 
-              @extend .btn-primary;
+              div {
+                @include border-radius(7%);
+                @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
 
-              &:hover {
-                @include transition(0.2s ease);
+                &:hover {
+                  @include transition(0.2s ease);
+                }
               }
             }
-          }
 
-          h1 {
-            margin: 30px 0;
-          }
+            h1 {
+              margin: 30px 0;
+            }
 
-          .others_actions {
-            margin-top: 10px;
-          }
+            .others_actions {
+              margin-top: 10px;
+            }
 
-          .cancel {
-            margin-top: 15px;
+            .cancel {
+              margin-top: 15px;
+            }
           }
         }
       }
@@ -111,16 +115,22 @@ html {
                 display: inherit;
 
                 .form_capsule {
-                  max-width: 290px;
+                  width: 290px;
                   margin: 30px auto;
 
                   .logo {
-                    height: 260px;
-                    padding: 17px 0;
+                    height: 290px;
+                    border: none;
+                    padding: 0;
 
-                    img {
-                      width: 240px;
-                      height: 224px;
+                    div {
+                      padding: 15px;
+                      @include border-radius(5%);
+
+                      img {
+                        width: 260px;
+                        height: 260px;
+                      }
                     }
                   }
 

@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
+use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
+use CustomLog;
+use Exception;
 use Illuminate\Http\Request;
 use Modal;
 use Sentinel;
+use Validation;
 use Validator;
 
 class AuthController extends Controller
@@ -39,7 +44,7 @@ class AuthController extends Controller
         // data send to the view
         $data = [
             'seoMeta' => $this->seoMeta,
-            'css'     => url(elixir('css/app.login.css')),
+            'css'     => url(elixir('css/app.auth.css')),
         ];
 
         return view('pages.front.login')->with($data);
@@ -47,27 +52,22 @@ class AuthController extends Controller
 
     protected function login(Request $request)
     {
-        // we flash inputs
+        // we flash the request
         $request->flash();
 
-        // we replace the "on" or "off" value from the checkbox by a boolean
-        $request->merge([
-            'remember' => filter_var($request->get('remember'), FILTER_VALIDATE_BOOLEAN),
-        ]);
+        // we sanitize the entries
+        $request->replace(\Entry::sanitizeAll($request->all()));
 
-        // we analyse the given inputs
-        $errors = [];
-        $validator = Validator::make($request->all(), [
+        // we set the remember to false if we do not find it
+        $request->merge(['remember' => $request->get('remember', false)]);
+
+        // we check the inputs validity
+        $rules = [
             'email'    => 'required|email',
             'password' => 'required',
             'remember' => 'required|boolean',
-        ]);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
-            Modal::alert($errors, 'error');
+        ];
+        if (!Validation::check($request->all(), $rules)) {
 
             return redirect()->back();
         }
@@ -82,6 +82,7 @@ class AuthController extends Controller
                 return redirect()->back();
             }
 
+            // we notify the current user
             Modal::alert([
                 trans('auth.message.login.success', ['name' => $user->first_name . " " . $user->last_name]),
             ], 'success');
@@ -95,8 +96,12 @@ class AuthController extends Controller
                 // or redirect to home
                 return redirect(route('home'));
             }
-        } catch (\Cartalyst\Sentinel\Checkpoints\NotActivatedException $e) {
-            \Log::error($e);
+        } catch (NotActivatedException $e) {
+
+            // we log the error
+            CustomLog::error($e);
+
+            // we notify the current user
             Modal::alert([
                 trans('auth.message.activation.failure'),
                 trans('auth.message.activation.email.resend', [
@@ -106,14 +111,17 @@ class AuthController extends Controller
             ], 'error');
 
             return redirect()->back();
-        } catch (\Cartalyst\Sentinel\Checkpoints\ThrottlingException $e) {
+        } catch (ThrottlingException $e) {
+
             switch ($e->getType()) {
                 case 'ip':
+                    // we notify the current user
                     Modal::alert([
                         trans('auth.message.throttle.ip', ['seconds' => $e->getDelay()]),
                     ], 'error');
                     break;
                 default:
+                    // we notify the current user
                     Modal::alert([
                         $e->getMessage(),
                     ], 'error');
@@ -121,7 +129,9 @@ class AuthController extends Controller
             }
 
             return redirect()->back();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
+
+            // we notify the current user
             \Modal::alert([
                 trans('auth.message.login.error'),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
@@ -144,7 +154,12 @@ class AuthController extends Controller
             ], 'success');
 
             return redirect(route('home'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
+
+            // we log the error
+            CustomLog::error($e);
+
+            // we notify the current user
             Modal::alert([
                 trans('auth.message.logout.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),

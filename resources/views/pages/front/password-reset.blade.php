@@ -10,7 +10,7 @@
 
                 <div class="form_container v-center table-cell">
 
-                    <div class="form_capsule col-sm-offset-4 col-sm-4">
+                    <div class="form_capsule">
 
                         <form class="form-signin" role="form" method="POST" action="{{ route('password.update') }}">
 
@@ -24,7 +24,7 @@
                             @if(config('settings.logo_light'))
                                 <div class="logo display-table">
                                     <div class="text-center table-cell fill">
-                                        <img width="300" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" alt="Logo {{ config('settings.app_name_' . config('app.locale')) }}">
+                                        <img width="300" height="300" src="{{ \ImageManager::imagePath(config('image.settings.public_path'), config('image.settings.logo.name.light') . '.' . config('image.settings.logo.extension'), 'logo', 'large') }}" alt="{{ config('settings.app_name_' . config('app.locale')) }}">
                                     </div>
                                 </div>
                             @endif
@@ -59,10 +59,8 @@
 
                         </form>
 
-                        <a href="{{ route('login.index') }}" class="pull-right cancel" title="Retour">
-                            <button class="btn btn-default">
-                                <i class="fa fa-ban"></i> {{ trans('global.action.cancel') }}
-                            </button>
+                        <a href="{{ route('login.index') }}" class="pull-right cancel btn btn-default spin-on-click" title="Retour">
+                            <i class="fa fa-ban"></i> {{ trans('global.action.cancel') }}
                         </a>
                     </div>
                 </div>

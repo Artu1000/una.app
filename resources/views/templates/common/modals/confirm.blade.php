@@ -14,7 +14,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">{!! config('settings.error_icon') !!} {{ trans('global.action.cancel') }}</button>
-                <button type="button" id="modal-confirm-button" class="btn btn-success spin-on-click">{!! config('settings.success_icon') !!} {{ trans('global.action.confirm') }}</button>
+                <button type="button" id="modal-confirm-button" class="btn btn-success spin-on-click-without-action">{!! config('settings.success_icon') !!} {{ trans('global.action.confirm') }}</button>
             </div>
         </div>
     </div>

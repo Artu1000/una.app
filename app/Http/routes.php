@@ -148,7 +148,7 @@ Route::group($group, function () {
     Route::get(trans('routes.news.show'), ['as' => 'front.news.show', 'uses' => 'News\NewsController@show']);
 
     // leading team
-    Route::resource('/equipe-dirigeante', 'LeadingTeam\LeadingTeamController', ['names' => ['index' => 'front.leading_team']]);
+    Route::get(trans('routes.leading_team.index'), ['as' => 'front.leading_team', 'uses' => 'LeadingTeam\LeadingTeamController@index']);
 
     // palmares
     Route::resource('/palmares', 'Palmares\PalmaresController', ['names' => ['index' => 'front.palmares']]);

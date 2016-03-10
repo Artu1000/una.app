@@ -351,17 +351,6 @@ class PermissionsController extends Controller
 
     public function update($id, Request $request)
     {
-        // we check the current user permission
-        if (!Permission::hasPermission('permissions.update')) {
-            // we redirect the current user to the permissions list if he has the required permission
-            if (Sentinel::getUser()->hasAccess('permissions.view') && $id) {
-                return redirect()->route('permissions.edit', ['id' => $id]);
-            } else {
-                // or we redirect the current user to the home page
-                return redirect()->route('dashboard.index');
-            }
-        }
-
         // we get the role
         if (!$role = \Sentinel::findRoleById($id)) {
             // we flash the request
@@ -376,6 +365,17 @@ class PermissionsController extends Controller
             // we redirect the current user to the permissions list if he has the required permission
             if (Sentinel::getUser()->hasAccess('permissions.list')) {
                 return redirect()->route('permissions.index');
+            } else {
+                // or we redirect the current user to the home page
+                return redirect()->route('dashboard.index');
+            }
+        }
+
+        // we check the current user permission
+        if (!Permission::hasPermission('permissions.update')) {
+            // we redirect the current user to the permissions list if he has the required permission
+            if (Sentinel::getUser()->hasAccess('permissions.view')) {
+                return redirect()->route('permissions.edit', ['id' => $id]);
             } else {
                 // or we redirect the current user to the home page
                 return redirect()->route('dashboard.index');

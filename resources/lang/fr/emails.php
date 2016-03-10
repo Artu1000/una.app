@@ -12,7 +12,7 @@ return [
         "subject" => "Activation votre compte",
         "title"   => "Activez votre compte",
         "hello"   => "Bonjour :name,",
-        "content" => "Félicitations, votre compte personnel a bien été créé.<br/> Pour l'activer et vous y connecter, cliquez sur le bouton ci-dessous.",
+        "content" => "Félicitations, votre compte personnel a bien été créé.<br/> Pour l'activer, puis être en mesure de vous y connecter, cliquez sur le bouton ci-dessous.",
         "button"  => "J'active mon compte",
     ],
 

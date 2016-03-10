@@ -46,7 +46,7 @@ elixir(function (mix) {
         .sass('app.schedule.scss', 'public/css/app.schedule.css', {})
         .sass('app.calendar.scss', 'public/css/app.calendar.css', {})
         .sass('app.e-shop.scss', 'public/css/app.e-shop.css', {})
-        .sass('app.login.scss', 'public/css/app.login.css', {})
+        .sass('app.auth.scss', 'public/css/app.auth.css', {})
 
         // COMMON
         .sass('app.error.scss', 'public/css/app.error.css', {})
@@ -160,7 +160,7 @@ elixir(function (mix) {
             'public/css/app.schedule.css',
             'public/css/app.calendar.css',
             'public/css/app.e-shop.css',
-            'public/css/app.login.css',
+            'public/css/app.auth.css',
             'public/css/app.error.css',
             // css back
             'public/css/app.back.css',

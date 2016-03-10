@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\User\UserRepositoryInterface;
+use CustomLog;
 use Illuminate\Http\Request;
+use Mail;
 use Modal;
+use Reminder;
 use Sentinel;
-use Validator;
+use Validation;
 
 class PasswordController extends Controller
 {
@@ -28,7 +31,7 @@ class PasswordController extends Controller
         $data = [
             'seoMeta' => $this->seoMeta,
             'email'   => $request->get('email'),
-            'css'     => url(elixir('css/app.login.css')),
+            'css'     => url(elixir('css/app.auth.css')),
         ];
 
         return view('pages.front.password-forgotten')->with($data);
@@ -36,154 +39,154 @@ class PasswordController extends Controller
 
     protected function sendResetEmail(Request $request)
     {
-        // we flash inputs
-        $request->flash();
-
-        // we check the inputs
-        $errors = [];
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-        ]);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        if (count($errors)) {
-            // we notify the user
-            Modal::alert($errors, 'error');
-
-            return redirect()->back();
-        }
-
-        // we get the user from its email
-        $user = $this->repository->findBy('email', $request->get('email'));
-
-        // if a user is found
-        if ($user) {
-            // we create a sentinel reminder for the user
-            $reminder = \Reminder::create($user);
-
-            try {
-                // we send the email with the reminder token
-                \Mail::send('emails.password-reset', [
-                    'user'  => $user,
-                    'token' => $reminder->code,
-                ], function ($email) use ($user) {
-                    $email->from(config('mail.from.address'), config('mail.from.name'))
-                        ->to($user->email, $user->first_name . ' ' . $user->last_name)
-                        ->subject(config('mail.subject.prefix') . ' ' . trans('emails.password_reset.subject'));
-                });
-
-                // notify the user & redirect
-                Modal::alert([
-                    trans('auth.message.password_reset.email.success', ['email' => $user->email]),
-                ], 'success');
-
-                return redirect(route('login.index'));
-
-            } catch (\Exception $e) {
-                \Log::error($e);
-                // notify the user & redirect
-                Modal::alert([
-                    trans('auth.message.password_reset.email.failure'),
-                    trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
-                ], 'error');
-
-                return redirect()->back();
-            }
-        } else {
-            // notify the user & redirect
+        // we get the user
+        if (!$user = \Sentinel::findUserByCredentials($request->only('email'))) {
+            // we notify the current user
             Modal::alert([
                 trans('auth.message.find.failure', ['email' => $request->get('email')]),
             ], 'error');
 
             return redirect()->back();
         }
+
+        try {
+            // we create a sentinel reminder for the user
+            $reminder = Reminder::create($user);
+
+            // we send the email with the reminder token
+            Mail::send('emails.password-reset', [
+                'user'  => $user,
+                'token' => $reminder->code,
+            ], function ($email) use ($user) {
+                $email->from(config('mail.from.address'), config('mail.from.name'))
+                    ->to($user->email, $user->first_name . ' ' . $user->last_name)
+                    ->subject(config('mail.subject.prefix') . ' ' . trans('emails.password_reset.subject'));
+            });
+
+            // notify the user & redirect
+            Modal::alert([
+                trans('auth.message.password_reset.email.success', ['email' => $user->email]),
+            ], 'success');
+
+            return redirect(route('login.index'));
+
+        } catch (\Exception $e) {
+
+            // we log the error
+            CustomLog::error($e);
+
+            // notify the user & redirect
+            Modal::alert([
+                trans('auth.message.password_reset.email.failure'),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
+            ], 'error');
+
+            return redirect()->back();
+        }
+
     }
 
     public function show(Request $request)
     {
-        // we try to find the user from its email
-        if ($user = Sentinel::findByCredentials(['email' => $request->get('email')])) {
-            // we verify if the reminder token is valid
-            if (\Reminder::exists($user, $request->only('token'))) {
+        if (!$request->get('email')) {
+            // we notify the current user
+            Modal::alert([
+                trans('validation.required', ['attribute' => trans('validation.attributes.email')]),
+            ], 'error');
 
-                // SEO settings
-                $this->seoMeta['page_title'] = trans('seo.front.password.show.title');
-                $this->seoMeta['meta_desc'] = trans('seo.front.password.show.description');
-                $this->seoMeta['meta_keywords'] = trans('seo.front.password.show.keywords');
+            return redirect()->route('password.index');
+        }
 
-                // data send to the view
-                $data = [
-                    'email'    => $request->get('email'),
-                    'reminder' => $request->get('token'),
-                    'seoMeta'  => $this->seoMeta,
-                    'css'      => url(elixir('css/app.login.css')),
-                ];
+        // we get the user
+        if (!$user = Sentinel::findUserByCredentials($request->only('email'))) {
+            // we notify the current user
+            Modal::alert([
+                trans('auth.message.find.failure', ['email' => $request->get('email')]),
+            ], 'error');
 
-                return view('pages.front.password-reset')->with($data);
+            return redirect()->route('password.index');
+        }
+
+        // we verify that the reminder token is valid
+        if (!Reminder::exists($user, $request->only('token'))) {
+            // notify the user & redirect
+            Modal::alert([
+                trans('auth.message.password_reset.token.expired'),
+            ], 'error');
+
+            return redirect(route('password.index'));
+        }
+
+        // SEO settings
+        $this->seoMeta['page_title'] = trans('seo.front.password.show.title');
+        $this->seoMeta['meta_desc'] = trans('seo.front.password.show.description');
+        $this->seoMeta['meta_keywords'] = trans('seo.front.password.show.keywords');
+
+        // data send to the view
+        $data = [
+            'email'    => $request->get('email'),
+            'reminder' => $request->get('token'),
+            'seoMeta'  => $this->seoMeta,
+            'css'      => url(elixir('css/app.auth.css')),
+        ];
+
+        return view('pages.front.password-reset')->with($data);
+    }
+
+    public function update(Request $request)
+    {
+        if (!$request->get('_email')) {
+            // we notify the current user
+            Modal::alert([
+                trans('validation.required', ['attribute' => trans('validation.attributes.email')]),
+            ], 'error');
+
+            return redirect()->route('password.index');
+        }
+
+        // we get the user
+        if (!$user = Sentinel::findUserByCredentials(['email' => $request->get('_email')])) {
+            // we notify the current user
+            Modal::alert([
+                trans('auth.message.find.failure', ['email' => $request->get('_email')]),
+            ], 'error');
+
+            return redirect(route('password.index'));
+        }
+
+        // we check the inputs
+        $rules = [
+            'password' => 'required|min:' . config('password.min.length') . '|confirmed',
+        ];
+        if (!Validation::check($request->all(), $rules)) {
+            // we flash the request
+            $request->flash();
+
+            return redirect()->back();
+        }
+
+        try {
+            // we try to complete the password reset
+            if (Reminder::complete($user, $request->get('_reminder'), $request->get('password'))) {
+                // we notify the current user
+                Modal::alert([
+                    trans('auth.message.password_reset.success'),
+                ], 'success');
+
+                return redirect(route('login.index'));
             } else {
-                // notify the user & redirect
+                // we notify the current user
                 Modal::alert([
                     trans('auth.message.password_reset.token.expired'),
                 ], 'error');
 
                 return redirect(route('password.index'));
             }
-        } else {
-            // notify the user & redirect
-            Modal::alert([
-                trans('auth.message.find.failure', ['email' => $request->get('email')]),
-            ], 'error');
 
-            return redirect(route('password.index'));
-        }
-    }
-
-    public function update(Request $request)
-    {
-        // we check the inputs
-        $errors = [];
-        $validator = Validator::make($request->all(), [
-            'password' => 'required|min:6|confirmed',
-        ]);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        if (count($errors)) {
-            // we notify the user
-            Modal::alert($errors, 'error');
-
-            return redirect()->back();
-        }
-
-        // we try to find the user from its email
-        try {
-            if ($user = Sentinel::findByCredentials(['email' => $request->only('_email')])) {
-                // we try to complete the password reset
-                if ($reminder = \Reminder::complete($user, $request->only('_reminder'), $request->get('password'))) {
-                    Modal::alert([
-                        trans('auth.message.password_reset.success'),
-                    ], 'success');
-
-                    return redirect(route('login.index'));
-                } else {
-                    Modal::alert([
-                        trans('auth.message.password_reset.token.expired'),
-                    ], 'error');
-
-                    return redirect(route('password.index'));
-                }
-            } else {
-                Modal::alert([
-                    trans('auth.message.find.failure', ['email' => $request->get('email')]),
-                    trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
-                ], 'error');
-
-                return redirect(route('password.index'));
-
-            }
         } catch (\Exception $e) {
-            \Log::error($e);
+            // we log the error
+            CustomLog::error($e);
+
             // notify the user & redirect
             Modal::alert([
                 trans('auth.message.password_reset.failure'),

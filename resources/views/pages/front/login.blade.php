@@ -10,7 +10,7 @@
 
                 <div class="form_container v-center table-cell">
 
-                    <div class="form_capsule col-sm-offset-4 col-sm-4">
+                    <div class="form_capsule">
 
                         <form class="form-signin" role="form" method="POST" action="{{ route('login.login') }}">
 
@@ -21,7 +21,7 @@
                             @if(config('settings.logo_light'))
                                 <div class="logo display-table">
                                     <div class="text-center table-cell fill">
-                                        <img width="300" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" alt="Logo {{ config('settings.app_name_' . config('app.locale')) }}">
+                                        <img width="300" height="300" src="{{ \ImageManager::imagePath(config('image.settings.public_path'), config('image.settings.logo.name.light') . '.' . config('image.settings.logo.extension'), 'logo', 'large') }}" alt="{{ config('settings.app_name_' . config('app.locale')) }}">
                                     </div>
                                 </div>
                             @endif
@@ -64,14 +64,12 @@
                             {{-- forgotten password / create account --}}
                             <div class="form-group others_actions">
                                 <a href="{{ route('password.index', ['email' => old('email')]) }}"> {{ trans('auth.login.label.forgotten_password') }}</a>
-                                <a href="{{ route('account.create') }}" class="pull-right"> {{ trans('auth.login.label.create_account') }}</a>
+                                <a href="{{ route('account.create', ['email' => old('email')]) }}" class="pull-right"> {{ trans('auth.login.label.create_account') }}</a>
                             </div>
                         </form>
 
-                        <a href="{{ route('home') }}" class="pull-right cancel" title="Retour au site">
-                            <button class="btn btn-default">
-                                <i class="fa fa-undo"></i> {{ trans('auth.login.action.back') }}
-                            </button>
+                        <a href="{{ route('home') }}" class="pull-right cancel spin-on-click btn btn-default" title="Retour au site">
+                            <i class="fa fa-undo"></i> {{ trans('auth.login.action.back') }}
                         </a>
                     </div>
                 </div>

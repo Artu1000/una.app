@@ -1,41 +1,42 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use libphonenumber\PhoneNumberFormat;
 
 class SettingsTableSeeder extends Seeder
 {
     public function run()
     {
         // we remove all the files in the config folder
-        $files = glob(storage_path('app/config/*'));
+        $files = glob(storage_path('app/settings/*'));
         foreach ($files as $file) {
             if (is_file($file))
                 unlink($file);
         }
 
         // we create the folder if they doesn't exist
-        if (!is_dir($storage_path = storage_path('app/config'))) {
+        if (!is_dir($storage_path = storage_path('app/settings'))) {
             if (!is_dir($path = storage_path('app'))) {
                 mkdir($path);
             }
-            mkdir($path . '/config');
+            mkdir($path . '/settings');
         }
 
         $logo_dark = \ImageManager::optimizeAndResize(
-            './database/seeds/files/settings/logo-una-dark.png',
-            'logo_dark',
-            'png',
-            storage_path('app/config'),
-            ['admin' => [40, 40], 'header' => [70, null], 'large' => [300, null]],
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            config('image.settings.logo.name.dark'),
+            config('image.settings.logo.extension'),
+            config('image.settings.storage_path'),
+            config('image.settings.logo.sizes'),
             false
         );
 
         $logo_light = \ImageManager::optimizeAndResize(
-            './database/seeds/files/settings/logo-una-light.png',
-            'logo_light',
-            'png',
-            storage_path('app/config'),
-            ['admin' => [40, 40], 'header' => [70, null], 'large' => [300, null]],
+            database_path('seeds/files/settings/logo-una-light.png'),
+            config('image.settings.logo.name.light'),
+            config('image.settings.logo.extension'),
+            config('image.settings.storage_path'),
+            config('image.settings.logo.sizes'),
             false
         );
 
@@ -47,7 +48,7 @@ class SettingsTableSeeder extends Seeder
             'app_slogan_en'   => 'The biggest university rowing club from France.',
             'breadcrumbs'     => true,
             'multilingual'    => false,
-            'phone_number'    => '0954014810',
+            'phone_number'    => phone_format('0954014810', 'FR', PhoneNumberFormat::INTERNATIONAL),
             'contact_email'   => 'contact@una-club.fr',
             'support_email'   => 'support@una-club.fr',
             'address'         => '2 rue de la Houssinière',
@@ -68,7 +69,7 @@ class SettingsTableSeeder extends Seeder
         file_put_contents(storage_path('app/config/settings.json'), json_encode($inputs));
 
         // we place the default favicon
-        \File::copy('./database/seeds/files/settings/favicon.ico', './public/favicon.ico');
+        \File::copy(database_path('seeds/files/settings/favicon.ico'), public_path('favicon.ico'));
 
     }
 }

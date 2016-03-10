@@ -9,11 +9,11 @@
   "css/app.schedule.css": "css/app.schedule-eb2c21b5.css",
   "css/app.calendar.css": "css/app.calendar-c1932c7d.css",
   "css/app.e-shop.css": "css/app.e-shop-620c8f85.css",
-  "css/app.login.css": "css/app.login-59f4f0db.css",
+  "css/app.auth.css": "css/app.auth-c0d85182.css",
   "css/app.error.css": "css/app.error-86b69c55.css",
   "css/app.back.css": "css/app.back-839257ac.css",
-  "js/app.front.js": "js/app.front-57ee655e.js",
-  "js/app.home.js": "js/app.home-f9b5bcff.js",
-  "js/app.news-detail.js": "js/app.news-detail-1f424b5e.js",
-  "js/app.back.js": "js/app.back-995e17c2.js"
+  "js/app.front.js": "js/app.front-4a644b7d.js",
+  "js/app.home.js": "js/app.home-a97b9b7e.js",
+  "js/app.news-detail.js": "js/app.news-detail-cfb6f7a4.js",
+  "js/app.back.js": "js/app.back-4d149821.js"
 }

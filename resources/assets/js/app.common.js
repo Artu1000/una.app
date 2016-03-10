@@ -1,5 +1,4 @@
 $(function() {
-
     // Make link unclikable
     $('.unclickable').click(function(e){
         e.preventDefault();
@@ -63,16 +62,36 @@ $(function() {
 
     // replace button fontawesome icon by loading spinner on click
     // show spinner even if no font awesome icon is found
-    $('.spin-on-click').click(function(e){
+    function replaceFontAwesomeIconBySpinner($this) {
         // we get the html contained into the button
-        var html = $(this).html();
+        var html = $this.html();
         // we remove the fontawesome icon
         var begin = html.indexOf('<i');
         var end = html.indexOf('i>');
         var to_remove = html.substring(begin, end + 2);
         var cleaned_html = html.replace(to_remove, '');
         // we put the loading spinner
-        $(this).html(app.loading_spinner + ' ' + cleaned_html);
+        $this.html(app.loading_spinner + ' ' + cleaned_html);
+    }
+    $('.spin-on-click').click(function (e) {
+        // we prevent any action
+        e.preventDefault();
+        // we store this
+        var $this = $(this);
+        // we replace the fontawesome icon by a spinner
+        replaceFontAwesomeIconBySpinner($this);
+        // we execute the prevented action
+        if ($this.is("button[type=submit]")) {
+            $this.closest('form').submit();
+        } else if ($this.is("button")) {
+            window.location.href = $this.closest('a').attr('href');
+        } else if ($this.is("a")) {
+            window.location.href = $this.attr('href');
+        }
+    });
+    $('.spin-on-click-without-action').click(function (e) {
+        // we replace the fontawesome icon by a spinner
+        replaceFontAwesomeIconBySpinner($(this));
     });
 
     // node element with this class submits the closest form

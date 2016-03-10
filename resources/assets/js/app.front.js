@@ -195,7 +195,7 @@ var anchor = {
         }
     },
     listen: function () {
-        $('a:not([href^="#"])').click(function (event) {
+        $('a[href*="#"]:not([href="#"])').click(function (event) {
 
             // we prevent the redirection
             event.preventDefault();

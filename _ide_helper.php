@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.15 on 2016-02-27.
+ * Generated for Laravel 5.2.21 on 2016-03-08.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -3131,6 +3131,52 @@ namespace {
          */
         public static function findOrFail($id, $columns = array()){
             return \Illuminate\Database\Eloquent\Builder::findOrFail($id, $columns);
+        }
+        
+        /**
+         * Find a model by its primary key or return fresh model instance.
+         *
+         * @param mixed $id
+         * @param array $columns
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function findOrNew($id, $columns = array()){
+            return \Illuminate\Database\Eloquent\Builder::findOrNew($id, $columns);
+        }
+        
+        /**
+         * Get the first record matching the attributes or instantiate it.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function firstOrNew($attributes){
+            return \Illuminate\Database\Eloquent\Builder::firstOrNew($attributes);
+        }
+        
+        /**
+         * Get the first record matching the attributes or create it.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function firstOrCreate($attributes){
+            return \Illuminate\Database\Eloquent\Builder::firstOrCreate($attributes);
+        }
+        
+        /**
+         * Create or update a record matching the attributes, and fill it with values.
+         *
+         * @param array $attributes
+         * @param array $values
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function updateOrCreate($attributes, $values = array()){
+            return \Illuminate\Database\Eloquent\Builder::updateOrCreate($attributes, $values);
         }
         
         /**
@@ -7363,6 +7409,17 @@ namespace {
     class Queue extends \Illuminate\Support\Facades\Queue{
         
         /**
+         * Register an event listener for the before job event.
+         *
+         * @param mixed $callback
+         * @return void 
+         * @static 
+         */
+        public static function before($callback){
+            \Illuminate\Queue\QueueManager::before($callback);
+        }
+        
+        /**
          * Register an event listener for the after job event.
          *
          * @param mixed $callback
@@ -9447,6 +9504,18 @@ namespace {
         }
         
         /**
+         * Return the raw contents of a binary file.
+         *
+         * @param \SplFileInfo|string $file
+         * @param array $headers
+         * @return \Symfony\Component\HttpFoundation\BinaryFileResponse 
+         * @static 
+         */
+        public static function file($file, $headers = array()){
+            return \Illuminate\Routing\ResponseFactory::file($file, $headers);
+        }
+        
+        /**
          * Create a new redirect response to the given path.
          *
          * @param string $path
@@ -9668,6 +9737,27 @@ namespace {
         }
         
         /**
+         * Set the unmapped global resource parameters to singular.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function singularResourceParameters(){
+            \Illuminate\Routing\Router::singularResourceParameters();
+        }
+        
+        /**
+         * Set the global resource parameter mapping.
+         *
+         * @param array $parameters
+         * @return void 
+         * @static 
+         */
+        public static function resourceParameters($parameters = array()){
+            \Illuminate\Routing\Router::resourceParameters($parameters);
+        }
+        
+        /**
          * Register an array of resource controllers.
          *
          * @param array $resources
@@ -9833,6 +9923,34 @@ namespace {
          */
         public static function middlewareGroup($name, $middleware){
             return \Illuminate\Routing\Router::middlewareGroup($name, $middleware);
+        }
+        
+        /**
+         * Add a middleware to the beginning of a middleware group.
+         * 
+         * If the middleware is already in the group, it will not be added again.
+         *
+         * @param string $group
+         * @param string $middleware
+         * @return $this 
+         * @static 
+         */
+        public static function prependMiddlewareToGroup($group, $middleware){
+            return \Illuminate\Routing\Router::prependMiddlewareToGroup($group, $middleware);
+        }
+        
+        /**
+         * Add a middleware to the end of a middleware group.
+         * 
+         * If the middleware is already in the group, it will not be added again.
+         *
+         * @param string $group
+         * @param string $middleware
+         * @return $this 
+         * @static 
+         */
+        public static function pushMiddlewareToGroup($group, $middleware){
+            return \Illuminate\Routing\Router::pushMiddlewareToGroup($group, $middleware);
         }
         
         /**
@@ -13009,6 +13127,17 @@ namespace {
          */
         public static function hasPermission($permission){
             return \App\Helpers\PermissionHelper::hasPermission($permission);
+        }
+        
+        /**
+         * 
+         *
+         * @param array $permission
+         * @return bool 
+         * @static 
+         */
+        public static function hasPermissionJson($permission){
+            return \App\Helpers\PermissionHelper::hasPermissionJson($permission);
         }
         
     }

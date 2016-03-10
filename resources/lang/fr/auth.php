@@ -74,7 +74,7 @@ return [
         ],
         "activation"       => [
             "success" => "Félicitations <b>:name</b>, votre compte est activé. Vous pouvez maintenant vous y connecter.",
-            "failure" => "Votre compte n'est pas activé. Activez-le à partir du lien qui vous a été transmis par e-mail lors de votre inscription. ",
+            "failure" => "Votre compte n'est pas activé. Activez-le à partir du lien qui vous a été transmis par e-mail lors de votre inscription.",
             "error"   => "Une erreur est survenue pendant l'activation de votre compte.",
             "email"   => [
                 "success" => "Un e-mail vous permettant d'activer votre compte vous a été envoyé à l'adresse <b>:email</b>. Vous le recevrez dans quelques instants.",
