@@ -157,6 +157,7 @@ return [
         "status_id"             => "Statut",
         "board_id"              => "Instance",
         "active"                => "Active",
+        "content"               => "Contenu",
     ],
 
 ];

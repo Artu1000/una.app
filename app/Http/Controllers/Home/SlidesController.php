@@ -459,18 +459,18 @@ class SlidesController extends Controller
             'active' => 'required|boolean',
         ];
         if (is_array($errors = Validation::check($request->all(), $rules, true))) {
-            return response($errors, 401);
+            return response([
+                'active'  => $slide->active,
+                'message' => $errors,
+            ], 401);
         }
 
         try {
             $slide->active = $request->get('active');
             $slide->save();
 
-            // we get a fresh slide
-            $slide = $slide->fresh();
-
             return response([
-                'active'  => $slide->fresh()->active,
+                'active'  => $slide->active,
                 'message' => [
                     trans('home.message.slide.activation.success.label', ['action' => trans_choice('users.message.activation.success.action', $slide->active), 'slide' => $slide->title]),
                 ],
@@ -479,11 +479,8 @@ class SlidesController extends Controller
             // we log the error
             \CustomLog::error($e);
 
-            // we get a fresh slide
-            $slide = $slide->fresh();
-
             return response([
-                'active'  => $slide->active,
+                'active'  => $slide->fresh()->active,
                 'message' => [
                     trans('home.message.slide.activation.failure', ['slide' => $slide->title]),
                     trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),

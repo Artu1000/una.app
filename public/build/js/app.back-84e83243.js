@@ -19857,7 +19857,7 @@ $(function () {
             }).fail(function (data) {
                 // we show the error messages
                 if (data.responseJSON.message) {
-                    data.responseJSON.forEach(function (error) {
+                    data.responseJSON.message.forEach(function (error) {
                         $.notify({
                             // options
                             title: app.error_icon,

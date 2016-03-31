@@ -4,12 +4,22 @@ namespace App\Http\Controllers\News;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\News\NewsRepositoryInterface;
+use Carbon\Carbon;
+use CustomLog;
+use Entry;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use ImageManager;
+use Modal;
+use Permission;
+use Sentinel;
+use TableList;
+use Validation;
 
 class NewsController extends Controller
 {
-
+    
     /**
      * Create a new home controller instance.
      *
@@ -20,7 +30,7 @@ class NewsController extends Controller
         parent::__construct();
         $this->repository = $news;
     }
-
+    
     /**
      * @return $this
      */
@@ -32,21 +42,27 @@ class NewsController extends Controller
         Consultez les actualités du club Université Nantes Aviron !';
         $this->seoMeta['meta_keywords'] = 'actus, actualités, club, universite, nantes, aviron, sport, universitaire,
         etudiant, ramer';
-
+        
         // we get the category id
         $category = Input::get('category', null);
 
+//        dd(Carbon::now()->toDateTimeString());
+        
         // sort results by date
-        $query = $this->repository->where('active', true)->orderBy('released_at', 'desc');
-
+        $query = $this->repository
+            ->getModel()
+            ->where('active', true)
+            ->where('released_at', '<=', Carbon::now()->format('Y-m-d H:i:s'))
+            ->orderBy('released_at', 'desc');
+        
         // if a category is given, we filter the list
         if ($category) {
             $query->where('category_id', $category);
         }
-
+        
         // paginate the results
         $news_list = $query->paginate(10);
-
+        
         // we convert in html the markdown content of each news
         if ($news_list) {
             $parsedown = new \Parsedown();
@@ -54,7 +70,7 @@ class NewsController extends Controller
                 $n->content = isset($n->content) ? $parsedown->text($n->content) : null;
             }
         }
-
+        
         // prepare data for the view
         $data = [
             'seoMeta'          => $this->seoMeta,
@@ -62,33 +78,46 @@ class NewsController extends Controller
             'current_category' => $category,
             'css'              => url(elixir('css/app.news.css')),
         ];
-
+        
         // return the view with data
         return view('pages.front.news-list')->with($data);
     }
-
+    
     /**
      * @param $news_key
      * @return $this
      */
-    public function show($news_key)
+    public function show($id)
     {
         // we get the news from its unique key
-        $news = $this->repository->findBy('key', $news_key);
-
+        try {
+            $news = $this->repository
+                ->getModel()
+                ->where('id', $id)
+                ->where('active', true)
+                ->where('released_at', '<=', Carbon::now()->format('Y-m-d H:i:s'))
+                ->firstOrFail();
+        } catch (Exception $e) {
+            // we log the error
+            CustomLog::error($e);
+            
+            Modal::alert([
+                trans('news.message.find.failure', ['id' => $id]),
+            ], 'error');
+            
+            // we trigger a 404
+            abort(404);
+        }
+        
         // we parse the markdown content
         $parsedown = new \Parsedown();
         $news->content = isset($news->content) ? $parsedown->text($news->content) : null;
-
-        if (!$news) {
-            abort(404);
-        }
-
+        
         // SEO Meta settings
         $this->seoMeta['page_title'] = $news->meta_title ? $news->meta_title : $news->title;
         $this->seoMeta['meta_desc'] = $news->meta_desc ? $news->meta_desc : str_limit(strip_tags($news->content), 160);
         $this->seoMeta['meta_keywords'] = $news->meta_keywords;
-
+        
         // prepare data for the view
         $data = [
             'seoMeta' => $this->seoMeta,
@@ -96,11 +125,11 @@ class NewsController extends Controller
             'css'     => url(elixir('css/app.news.css')),
             'js'      => url(elixir('js/app.news-detail.js')),
         ];
-
+        
         // return the view with data
         return view('pages.front.news-detail')->with($data);
     }
-
+    
     /**
      * @param Request $request
      * @return $this
@@ -108,13 +137,13 @@ class NewsController extends Controller
     public function adminList(Request $request)
     {
         // we check the current user permission
-        if (!$this->requirePermission('news.list')) {
-            return redirect()->back();
+        if (!Permission::hasPermission('news.list')) {
+            return redirect()->route('dashboard.index');
         }
-
+        
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.back.news.list');
-
+        
         // we define the table list columns
         $columns = [
             [
@@ -136,12 +165,13 @@ class NewsController extends Controller
             [
                 'title'     => trans('news.page.label.content'),
                 'key'       => 'content',
-                'str_limit' => 150,
+                'str_limit' => 75,
             ],
             [
                 'title'   => trans('news.page.label.category'),
                 'key'     => 'category_id',
                 'config'  => 'news.category',
+                'trans'   => 'news.config.category',
                 'sort_by' => 'news.category_id',
                 'button'  => true,
             ],
@@ -149,43 +179,59 @@ class NewsController extends Controller
                 'title'           => trans('news.page.label.released_at'),
                 'key'             => 'released_at',
                 'sort_by'         => 'news.released_at',
-                'sort_by_default' => true,
+                'sort_by_default' => 'desc',
                 'date'            => 'd/m/Y H:i',
             ],
             [
                 'title'    => trans('news.page.label.activation'),
                 'key'      => 'active',
-                'activate' => 'news.activate',
+                'activate' => [
+                    'route'  => 'news.activate',
+                    'params' => [],
+                ],
             ],
         ];
-
+        
         // we set the routes used in the table list
         $routes = [
-            'index'   => 'news.list',
-            'create'  => 'news.create',
-            'edit'    => 'news.edit',
-            'destroy' => 'news.destroy',
+            'index'   => [
+                'route'  => 'news.list',
+                'params' => [],
+            ],
+            'create'  => [
+                'route'  => 'news.create',
+                'params' => [],
+            ],
+            'edit'    => [
+                'route'  => 'news.edit',
+                'params' => [],
+            ],
+            'destroy' => [
+                'route'  => 'news.destroy',
+                'params' => [],
+            ],
         ];
-
+        
         // we instantiate the query
         $query = $this->repository->getModel()->query();
-
+        
         // we prepare the confirm config
         $confirm_config = [
             'action'     => trans('news.page.action.delete'),
             'attributes' => ['title'],
         ];
-
+        
         // we prepare the search config
         $search_config = [
-            'title',
+            'key'      => trans('news.page.label.title'),
+            'database' => 'news.title',
         ];
-
+        
         // we enable the lines choice
         $enable_lines_choice = true;
-
+        
         // we format the data for the needs of the view
-        $tableListData = $this->prepareTableListData(
+        $tableListData = TableList::prepare(
             $query,
             $request,
             $columns,
@@ -194,40 +240,46 @@ class NewsController extends Controller
             $search_config,
             $enable_lines_choice
         );
-
+        
         // prepare data for the view
         $data = [
             'tableListData' => $tableListData,
             'seoMeta'       => $this->seoMeta,
         ];
-
+        
         // return the view with data
         return view('pages.back.news-list')->with($data);
     }
-
+    
     /**
      * @return $this
      */
     public function create()
     {
         // we check the current user permission
-        if (!$this->requirePermission('news.create')) {
-            return redirect()->back();
+        if (!Permission::hasPermission('news.create')) {
+            // we redirect the current user to the news list if he has the required permission
+            if (Sentinel::getUser()->hasAccess('news.list')) {
+                return redirect()->route('news.index');
+            } else {
+                // or we redirect the current user to the dashboard
+                return redirect()->route('dashboard.index');
+            }
         }
-
+        
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.back.news.create');
-
+        
         // prepare data for the view
         $data = [
             'seoMeta'    => $this->seoMeta,
             'categories' => config('news.category'),
         ];
-
+        
         // return the view with data
         return view('pages.back.news-edit')->with($data);
     }
-
+    
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -235,20 +287,32 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         // we check the current user permission
-        if (!$this->requirePermission('news.create')) {
+        if (!Permission::hasPermission('news.create')) {
+            // we redirect the current user to the news list if he has the required permission
+            if (Sentinel::getUser()->hasAccess('news.list')) {
+                return redirect()->route('news.index');
+            } else {
+                // or we redirect the current user to the home page
+                return redirect()->route('dashboard.index');
+            }
+        }
+        
+        // if the active field is not given, we set it to false
+        $request->merge(['active' => $request->get('active', false)]);
+        
+        // we sanitize the entries
+        $request->replace(Entry::sanitizeAll($request->all()));
+        
+        // we check if the current user has the permission to activate the news
+        if ($request->get('active') && !Permission::hasPermission('news.activate')) {
             return redirect()->back();
         }
-
-        // we convert the "on" value to a boolean value
-        $request->merge([
-            'active' => filter_var($request->get('active'), FILTER_VALIDATE_BOOLEAN),
-        ]);
-
+        
         // we convert the title into a slug
         $request->merge([
             'key' => str_slug($request->get('title')),
         ]);
-
+        
         // we convert the fr date to database format
         if ($request->get('released_at')) {
             $request->merge([
@@ -256,7 +320,7 @@ class NewsController extends Controller
                     ->format('Y-m-d H:i:s'),
             ]);
         }
-
+        
         // we check inputs validity
         $rules = [
             'category_id'      => 'required|in:' . implode(',', array_keys(config('news.category'))),
@@ -266,22 +330,26 @@ class NewsController extends Controller
             'meta_title'       => 'string',
             'meta_description' => 'string',
             'meta_keywords'    => 'string',
-            'content'          => 'string',
+            'content'          => 'string|min:1000',
             'released_at'      => 'required|date_format:Y-m-d H:i:s',
             'active'           => 'required|boolean',
         ];
-        if (!$this->checkInputsValidity($request->all(), $rules, $request)) {
+        // we check the inputs validity
+        if (!Validation::check($request->all(), $rules)) {
+            // we flash the request
+            $request->flashExcept('image');
+            
             return redirect()->back();
-        };
-
+        }
+        
         try {
             // we create the news
             $news = $this->repository->create($request->except('_token'));
-
+            
             // we store the image
             if ($img = $request->file('image')) {
                 // we optimize, resize and save the image
-                $file_name = \ImageManager::optimizeAndResize(
+                $file_name = ImageManager::optimizeAndResize(
                     $img->getRealPath(),
                     $news->imageName('image'),
                     $img->getClientOriginalExtension(),
@@ -292,28 +360,30 @@ class NewsController extends Controller
                 $news->image = $file_name;
                 $news->save();
             }
-
+            
             // we notify the current user
-            \Modal::alert([
-                trans('news.message.create.success'),
+            Modal::alert([
+                trans('news.message.create.success', ['news' => $news->title]),
             ], 'success');
-
+            
             return redirect(route('news.list'));
         } catch (\Exception $e) {
             // we flash the request
-            $request->flash();
-
-            // we log the error and we notify the current user
-            \Log::error($e);
-            \Modal::alert([
-                trans('news.message.update.failure'),
+            $request->flashExcept('image');
+            
+            // we log the error
+            CustomLog::error($e);
+            
+            // we notify the current user
+            Modal::alert([
+                trans('news.message.update.failure', ['news' => $request->get('title')]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
-
+            
             return redirect()->back();
         }
     }
-
+    
     /**
      * @param $id
      * @return $this|\Illuminate\Http\RedirectResponse
@@ -321,36 +391,42 @@ class NewsController extends Controller
     public function edit($id)
     {
         // we check the current user permission
-        if (!$this->requirePermission('news.view')) {
-            return redirect()->back();
+        if (!Permission::hasPermission('news.view')) {
+            // we redirect the current user to the news list if he has the required permission
+            if (Sentinel::getUser()->hasAccess('news.list')) {
+                return redirect()->route('news.index');
+            } else {
+                // or we redirect the current user to the home page
+                return redirect()->route('dashboard.index');
+            }
         }
-
+        
         // we get the news
-        $news = $this->repository->find($id);
-
-        // we check if the news exists
-        if (!$news) {
-            \Modal::alert([
+        try {
+            $news = $this->repository->find($id);
+        } catch (Exception $e) {
+            // we notify the current user
+            Modal::alert([
                 trans('news.message.find.failure', ['id' => $id]),
-                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
-
+        
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.back.news.edit');
-
+        
         // we convert the database date to the fr/en format
         if ($released_at = $news->released_at) {
             $news->released_at = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $released_at)->format('d/m/Y H:i');
         }
-
+        
         // we prepare the data for breadcrumbs
         $breadcrumbs_data = [
-            $news->title,
+            'news' => $news,
         ];
-
+        
         // prepare data for the view
         $data = [
             'seoMeta'          => $this->seoMeta,
@@ -358,41 +434,64 @@ class NewsController extends Controller
             'categories'       => config('news.category'),
             'breadcrumbs_data' => $breadcrumbs_data,
         ];
-
+        
         // return the view with data
         return view('pages.back.news-edit')->with($data);
     }
-
+    
     /**
+     * @param $îd
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return mixed
      */
-    public function update(Request $request)
+    public function update($id, Request $request)
     {
-        // we check the current user permission
-        if (!$this->requirePermission('news.update')) {
-            return redirect()->back();
-        }
-
-        // we get the user
-        if (!$news = $this->repository->find($request->get('_id'))) {
-            \Modal::alert([
-                trans('news.message.find.failure', ['id' => $request->get('_id')]),
+        // we get the news
+        try {
+            $news = $this->repository->find($id);
+        } catch (Exception $e) {
+            // we flash the request
+            $request->flashExcept('image');
+            
+            // we notify the current user
+            Modal::alert([
+                trans('news.message.find.failure', ['id' => $id]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
-
-        // we convert the "on" value to a boolean value
-        $request->merge([
-            'active' => filter_var($request->get('active'), FILTER_VALIDATE_BOOLEAN),
-        ]);
-
+        
+        // we check the current user permission
+        if (!Permission::hasPermission('news.update')) {
+            // we redirect the current user to the permissions list if he has the required permission
+            if (Sentinel::getUser()->hasAccess('news.view')) {
+                return redirect()->route('news.edit', ['id' => $id]);
+            } else {
+                // or we redirect the current user to the home page
+                return redirect()->route('dashboard.index');
+            }
+        }
+        
+        // if the active field is not given, we set it to false
+        $request->merge(['active' => $request->get('active', false)]);
+        
+        // we sanitize the entries
+        $request->replace(Entry::sanitizeAll($request->all()));
+        
+        // we check if the current user has the permission to activate the news
+        if ($request->get('active') && !Permission::hasPermission('news.activate')) {
+            // we flash the request
+            $request->flashExcept('image');
+            
+            return redirect()->back();
+        }
+        
         // we convert the title into a slug
         $request->merge([
             'key' => str_slug($request->get('title')),
         ]);
-
+        
         // we convert the fr date to database format
         if ($request->get('released_at')) {
             $request->merge([
@@ -400,9 +499,7 @@ class NewsController extends Controller
                     ->format('Y-m-d H:i:s'),
             ]);
         }
-
-        $inputs = $request->all();
-
+        
         // we check inputs validity
         $rules = [
             'category_id'      => 'required|in:' . implode(',', array_keys(config('news.category'))),
@@ -412,19 +509,26 @@ class NewsController extends Controller
             'meta_title'       => 'string',
             'meta_description' => 'string',
             'meta_keywords'    => 'string',
-            'content'          => 'string',
+            'content'          => 'string|min:1000',
             'released_at'      => 'required|date_format:Y-m-d H:i:s',
             'active'           => 'required|boolean',
         ];
-        if (!$this->checkInputsValidity($inputs, $rules, $request)) {
+        // we check the inputs validity
+        if (!Validation::check($request->all(), $rules)) {
+            // we flash the request
+            $request->flashExcept('image');
+            
             return redirect()->back();
         }
-
+        
         try {
+            // we update the news
+            $news->update($request->except('_token', 'image'));
+            
             // we store the image
             if ($img = $request->file('image')) {
                 // we optimize, resize and save the image
-                $file_name = \ImageManager::optimizeAndResize(
+                $file_name = ImageManager::optimizeAndResize(
                     $img->getRealPath(),
                     $news->imageName('image'),
                     $img->getClientOriginalExtension(),
@@ -432,139 +536,172 @@ class NewsController extends Controller
                     $news->availableSizes('image')
                 );
                 // we add the image name to the inputs for saving
-                $inputs['image'] = $file_name;
+                $news->image = $file_name;
+                $news->save();
             }
-
-            // we update the news
-            $news->update($inputs);
-
+            
             // we notify the current user
-            \Modal::alert([
-                trans('news.message.update.success'),
+            Modal::alert([
+                trans('news.message.update.success', ['news' => $news->title]),
             ], 'success');
-
+            
             return redirect()->back();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we flash the request
-            $request->flash();
-
-            // we log the error and we notify the current user
-            \Log::error($e);
-            \Modal::alert([
-                trans('news.message.update.failure'),
+            $request->flashExcept('image');
+            
+            // we log the error
+            CustomLog::error($e);
+            
+            // we notify the current user
+            Modal::alert([
+                trans('news.message.update.failure', ['news' => $news->title]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
-
+            
             return redirect()->back();
         }
     }
-
+    
     /**
+     * @param $id
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return mixed
      */
-    public function destroy(Request $request)
+    public function destroy($id, Request $request)
     {
-        // we check the current user permission
-        if (!$this->requirePermission('news.delete')) {
-            return redirect()->back();
-        }
-
-        // we get the partner
-        if (!$news = $this->repository->find($request->get('_id'))) {
-            \Modal::alert([
-                trans('news.message.find.failure'),
-            ], 'error');
-
-            return redirect()->back();
-        }
-
+        // we get the news
         try {
-            // we remove the partner logo
+            $news = $this->repository->find($id);
+        } catch (Exception $e) {
+            
+            // we notify the current user
+            Modal::alert([
+                trans('news.message.find.failure', ['id' => $id]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
+            ], 'error');
+            
+            return redirect()->back();
+        }
+        
+        // we check the current user permission
+        if (!Permission::hasPermission('news.delete')) {
+            // we redirect the current user to the permissions list if he has the required permission
+            if (Sentinel::getUser()->hasAccess('news.view')) {
+                return redirect()->route('news.edit', ['id' => $id]);
+            } else {
+                // or we redirect the current user to the home page
+                return redirect()->route('dashboard.index');
+            }
+        }
+        
+        try {
+            // we remove the news image
             if ($news->image) {
-                \ImageManager::remove(
+                ImageManager::remove(
                     $news->image,
                     $news->storagePath(),
                     $news->availableSizes('image')
                 );
             }
-
+            
             // we delete the role
             $news->delete();
-
-            \Modal::alert([
-                trans('news.message.delete.success', ['title' => $news->title]),
+            
+            Modal::alert([
+                trans('news.message.delete.success', ['news' => $news->title]),
             ], 'success');
-
+            
             return redirect()->back();
-        } catch (\Exception $e) {
-            \Log::error($e);
-            \Modal::alert([
-                trans('news.message.delete.failure', ['title' => $news->title]),
+        } catch (Exception $e) {
+            // we log the error
+            CustomLog::error($e);
+            
+            // we notify the current user
+            Modal::alert([
+                trans('news.message.delete.failure', ['news' => $news->title]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
     }
-
+    
     /**
+     * @param $id
      * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @return mixed
      */
-    public function activate(Request $request)
+    public function activate($id, Request $request)
     {
-        // we check the current user permission
-        $permission = 'news.update';
-        if (!\Sentinel::getUser()->hasAccess([$permission])) {
-            return response([
-                trans('permissions.message.access.denied') . " : <b>" .
-                trans('permissions.' . $permission) . "</b>",
-            ], 400);
-        }
+        // we get the news
+        try {
+            $news = $this->repository->find($id);
+        } catch (Exception $e) {
+            // we log the error
+            CustomLog::error($e);
 
-        // we get the model
-        if (!$news = $this->repository->find($request->get('id'))) {
+            // we notify the current user
             return response([
-                trans('news.message.find.failure', ['id' => $request->get('id')]),
+                'message' => [
+                    trans('news.message.find.failure', ['id' => $id]),
+                    trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
+                ],
             ], 401);
         }
 
-        // we convert the "on" value to the activation order to a boolean value
-        $request->merge([
-            'activation_order' => filter_var($request->get('activation_order'), FILTER_VALIDATE_BOOLEAN),
-        ]);
-
-        // we check the inputs validity
-        $errors = [];
-        $validator = \Validator::make($request->all(), [
-            'id'               => 'required|exists:news,id',
-            'activation_order' => 'required|boolean',
-        ]);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
+        // we check the current user permission
+        if ($permission_denied = Permission::hasPermissionJson('news.update')) {
             return response([
-                $errors,
-            ], 400);
+                'active'  => $news->active,
+                'message' => [$permission_denied],
+            ], 401);
         }
 
+        if ($permission_denied = Permission::hasPermissionJson('news.activate')) {
+            return response([
+                'active'  => $news->active,
+                'message' => [$permission_denied],
+            ], 401);
+        }
+        
+        // if the active field is not given, we set it to false
+        $request->merge(['active' => $request->get('active', false)]);
+        
+        // we sanitize the entries
+        $request->replace(Entry::sanitizeAll($request->all()));
+        
+        // we check inputs validity
+        $rules = [
+            'active' => 'required|boolean',
+        ];
+        if (is_array($errors = Validation::check($request->all(), $rules, true))) {
+            return response([
+                'active'  => $news->active,
+                'message' => $errors,
+            ], 401);
+        }
+        
         try {
-            $news->active = $request->activation_order;
+            $news->active = $request->get('active');
             $news->save();
-
+            
             return response([
-                trans('news.message.activation.success', ['title' => $news->title]),
+                'active'  => $news->active,
+                'message' => [
+                    trans('news.message.activation.success.label', ['action' => trans_choice('news.message.activation.success.action', $news->active), 'news' => $news->title]),
+                ],
             ], 200);
-        } catch (\Exception $e) {
-            \Log::error($e);
-
+        } catch (Exception $e) {
+            // we log the error
+            CustomLog::error($e);
+            
+            // we notify the current user
             return response([
-                trans('news.message.activation.failure', ['title' => $news->title]),
+                'active' => $news->fresh()->active,
+                'message' => trans('news.message.activation.failure', ['news' => $news->title]),
             ], 401);
         }
     }
-
+    
 }

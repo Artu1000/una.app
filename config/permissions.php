@@ -30,10 +30,10 @@ return [
     'home'               => false,
     'home.view'          => false,
     'home.update'        => false,
-    'home.slides.create'  => false,
-    'home.slides.view'    => false,
-    'home.slides.update'  => false,
-    'home.slides.delete'  => false,
+    'home.slides.create' => false,
+    'home.slides.view'   => false,
+    'home.slides.update' => false,
+    'home.slides.delete' => false,
 
     // news
     'news'               => false,
@@ -42,6 +42,7 @@ return [
     'news.view'          => false,
     'news.update'        => false,
     'news.delete'        => false,
+    'news.activate'      => false,
 
     // schedules
     'schedules'          => false,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use Activation;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Entry;
@@ -203,7 +204,7 @@ class UsersController extends Controller
         return view('pages.back.user-edit')->with($data);
     }
 
-    public function store($id, Request $request)
+    public function store(Request $request)
     {
         // we check the current user permission
         if (!Permission::hasPermission('users.create')) {
@@ -311,10 +312,10 @@ class UsersController extends Controller
             // if the order is to activate the user
             if ($request->get('active')) {
                 // we activate the user
-                if (!$activation = \Activation::completed($user)) {
-                    $activation = \Activation::create($user);
+                if (!$activation = Activation::completed($user)) {
+                    $activation = Activation::create($user);
                 }
-                \Activation::complete($user, $activation->code);
+                Activation::complete($user, $activation->code);
             }
 
             // we notify the current user
@@ -587,13 +588,13 @@ class UsersController extends Controller
                 // if the order is to activate the user
                 if ($request->get('active')) {
                     // we activate the user
-                    if (!$activation = \Activation::completed($user)) {
-                        $activation = \Activation::create($user);
+                    if (!$activation = Activation::completed($user)) {
+                        $activation = Activation::create($user);
                     }
-                    \Activation::complete($user, $activation->code);
+                    Activation::complete($user, $activation->code);
                 } else {
                     // or we deactivate him
-                    \Activation::remove($user);
+                    Activation::remove($user);
                 }
 
                 // we notify the current user
@@ -740,22 +741,25 @@ class UsersController extends Controller
             'active' => 'required|boolean',
         ];
         if (is_array($errors = Validation::check($request->all(), $rules, true))) {
-            return response($errors, 401);
+            return response([
+                'active' => Activation::completed($user) ? Activation::completed($user)->completed : Activation::completed($user),
+                'message' => $errors
+            ], 401);
         }
 
         try {
             // if the order is given to activate the user
             if ($request->get('active')) {
                 // we activate the user
-                if (!$activation = \Activation::completed($user)) {
-                    $activation = \Activation::create($user);
+                if (!$activation = Activation::completed($user)) {
+                    $activation = Activation::create($user);
                 }
-                \Activation::complete($user, $activation->code);
+                Activation::complete($user, $activation->code);
             } else {
-                \Activation::remove($user);
+                Activation::remove($user);
             }
 
-            $active = \Activation::completed($user) ? \Activation::completed($user)->completed : \Activation::completed($user);
+            $active = Activation::completed($user) ? Activation::completed($user)->completed : Activation::completed($user);
 
             return response([
                 'active'  => $active,
@@ -768,7 +772,7 @@ class UsersController extends Controller
             \CustomLog::error($e);
 
             return response([
-                'active'  => \Activation::completed($user) ? \Activation::completed($user)->completed : \Activation::completed($user),
+                'active'  => Activation::completed($user) ? Activation::completed($user)->completed : Activation::completed($user),
                 'message' => [
                     trans('users.message.activation.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
                     trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),

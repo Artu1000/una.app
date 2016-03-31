@@ -76,7 +76,7 @@ if (config('settings.breadcrumbs')) {
     });
     \Breadcrumbs::register('news.edit', function ($breadcrumbs, array $data) {
         $breadcrumbs->parent('news.list');
-        $breadcrumbs->push(trans('breadcrumbs.news.edit', ['news' => $data['news']->name]), '');
+        $breadcrumbs->push(trans('breadcrumbs.news.edit', ['news' => $data['news']->title]), '');
     });
 
     // partners

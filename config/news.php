@@ -1,22 +1,16 @@
 <?php
 
 $categories = [
-    1 => [
-        'key' => 'club',
-        'title' => 'Club'
-    ],
-    2 => [
-        'key' => 'sport',
-        'title' => 'Sport'
-    ]
+    1 => 'club',
+    2 => 'sport',
 ];
 
 $categories_keys = [];
 foreach ($categories as $id => $cat) {
-    $categories_keys[$cat['key']] = $id;
+    $categories_keys[$cat] = $id;
 }
 
 return [
-    'category' => $categories,
-    'category_key' => $categories_keys
+    'category'     => $categories,
+    'category_key' => $categories_keys,
 ];

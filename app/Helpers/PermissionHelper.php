@@ -15,8 +15,7 @@ class PermissionHelper
     {
         if (!Sentinel::getUser()->hasAccess($permission)) {
             Modal::alert([
-                trans('permissions.message.access.denied') . " : <b>" .
-                trans('permissions.' . $permission) . "</b>",
+                trans('permissions.message.access.denied', ['permission' => trans('permissions.' . $permission)]),
             ], 'error');
 
             return false;

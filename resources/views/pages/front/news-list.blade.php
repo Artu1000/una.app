@@ -19,14 +19,14 @@
                 <div class="categories">
                     <i class="fa fa-cubes"></i> Trier par catégorie :
                     @foreach(config('news.category') as $id => $cat)
-                        <a class="{{ $cat['key'] }}
+                        <a class="{{ $cat }}
                             @if($current_category == $id)
                                 selected
                             @endif"
-                           href="{{ route('front.news', ['category' => $id]) }}"
-                           title="{{ $cat['title'] }}">{{ $cat['title'] }}</a>
+                           href="{{ route('news.list', ['category' => $id]) }}"
+                           title="{{ trans('news.config.category.' . $cat) }}">{{ trans('news.config.category.' . $cat) }}</a>
                     @endforeach
-                    @if($current_category)<a href="{{ route('front.news') }}" title="Annuler filtre" class="text-danger"><i class="fa fa-times"></i> Annuler filtre</a>
+                    @if($current_category)<a href="{{ route('news.list') }}" title="Annuler filtre" class="text-danger"><i class="fa fa-times"></i> Annuler filtre</a>
                     @endif
                 </div>
 
@@ -35,28 +35,28 @@
                         @foreach($news_list as $news)
                             <tr class="news">
                                 <td class="img hidden-xs">
-                                    <a class="btn btn-default" href="{{ route('front.news.show', $news->key) }}" role="button" title="{{ $news->title }}">
+                                    <a class="btn btn-default" href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}" role="button" title="{{ $news->title }}">
                                         <img class="img-circle" width="150" height="150" src="{{ $news->imagePath($news->image, 'image', 'list') }}" alt="{{ $news->title }}">
                                     </a>
                                 </td>
                                 <td class="content">
                                     <h3>
-                                        <a href="{{ route('front.news.show', $news->key) }}" title="{{ $news->title }}"><i class="fa fa-newspaper-o"></i> {{ $news->title }}</a>
+                                        <a href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}"><i class="fa fa-newspaper-o"></i> {{ $news->title }}</a>
                                     </h3>
                                     <div class="date">
                                         <i class="fa fa-clock-o"></i> {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $news->released_at)->format('d/m/Y H:i') }}
                                     </div>
-                                    <div class="category {{ \config('news.category.' . $news->category_id . '.key') }}" >
-                                        <i class="fa fa-cube"></i> {{ \config('news.category.' . $news->category_id . '.title') }}
+                                    <div class="category {{ config('news.category.' . $news->category_id) }}" >
+                                        <i class="fa fa-cube"></i> {{ trans('news.config.category.' . config('news.category.' . $news->category_id)) }}
                                     </div>
                                     <div class="comments">
-                                        <i class="fa fa-comments"></i> <a href="{{ route('front.news.show', $news->key) }}#disqus_thread" title="Commentaires"></a>
+                                        <i class="fa fa-comments"></i> <a href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}#disqus_thread" title="Commentaires"></a>
                                     </div>
                                     <div class="sum_up">
                                         {{ str_limit(strip_tags($news->content), 250) }}
                                     </div>
                                     <div class="button mobile visible-xs">
-                                        <a href="{{ route('front.news.show', $news->key) }}" title="{{ $news->title }}">
+                                        <a href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}">
                                             <button class="btn pull-right" role="button">
                                                 <i class="fa fa-chevron-circle-right"></i> Lire plus
                                             </button>
@@ -64,7 +64,7 @@
                                     </div>
                                 </td>
                                 <td class="button hidden-xs">
-                                    <a href="{{ route('front.news.show', $news->key) }}" title="{{ $news->title }}">
+                                    <a href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}">
                                         <button class="btn" role="button">
                                             <i class="fa fa-chevron-circle-right"></i>
                                         </button>

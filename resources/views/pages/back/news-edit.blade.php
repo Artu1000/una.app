@@ -12,7 +12,7 @@
                 <h2>
                     <i class="fa fa-user"></i>
                     @if(isset($news))
-                        {{ trans('news.page.title.edit') }}
+                        {!! trans('news.page.title.edit', ['news' => $news->title]) !!}
                     @else
                         {{ trans('news.page.title.create') }}
                     @endif
@@ -20,7 +20,7 @@
 
                 <hr>
 
-                <form role="form" method="POST" action="@if(isset($news)){{ route('news.update') }} @else{{ route('news.store') }} @endif" enctype="multipart/form-data">
+                <form role="form" method="POST" action="@if(isset($news)){{ route('news.update', ['id' => $news->id]) }} @else{{ route('news.store') }} @endif" enctype="multipart/form-data">
 
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -74,7 +74,7 @@
                                                    @if(!isset($news) && old('category_id') == $id)checked
                                                    @elseif(isset($news) && isset($news->category_id) && $news->category_id === $id)checked
                                                    @endif>
-                                            {{ $category['title'] }}
+                                            {{ trans('news.config.category.' . $category) }}
                                         </label>
                                     @endforeach
                                 </div>
@@ -153,21 +153,24 @@
                                     <input id="input_released_at" type='text' class="form-control datetimepicker" name="released_at" value="{{ old('released_at') ? old('released_at') : (isset($news) && $news->released_at ? $news->released_at : \Carbon\Carbon::now()->format('d/m/Y H:i')) }}" placeholder="{{ trans('news.page.label.released_at') }}">
                                 </div>
                                 <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('global.info.datetime.format') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('news.page.info.release_date') }}</p>
                             </div>
 
                             {{-- activation --}}
-                            <label for="input_active">{{ trans('news.page.label.activation') }}</label>
-                            <div class="form-group">
-                                <div class="input-group swipe-group">
-                                    <span class="input-group-addon" for="input_active"><i class="fa fa-power-off"></i></span>
-                                <span class="form-control swipe-label" readonly="">
-                                    {{ trans('news.page.label.activation_placeholder') }}
-                                </span>
-                                    <input class="swipe" id="input_active" type="checkbox" name="active"
-                                           @if(old('active'))checked @elseif(isset($news) && $news->active)checked @endif>
-                                    <label class="swipe-btn" for="input_active"></label>
+                            @if(Sentinel::getUser()->hasAccess('news.activate'))
+                                <label for="input_active">{{ trans('news.page.label.activation') }}</label>
+                                <div class="form-group">
+                                    <div class="input-group swipe-group">
+                                        <span class="input-group-addon" for="input_active"><i class="fa fa-power-off"></i></span>
+                                    <span class="form-control swipe-label" readonly="">
+                                        {{ trans('news.page.label.activation_placeholder') }}
+                                    </span>
+                                        <input class="swipe" id="input_active" type="checkbox" name="active"
+                                               @if(old('active'))checked @elseif(isset($news) && $news->active)checked @endif>
+                                        <label class="swipe-btn" for="input_active"></label>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif()
 
                         </div>
                     </div>
