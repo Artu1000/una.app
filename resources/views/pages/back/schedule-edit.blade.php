@@ -20,7 +20,7 @@
 
                 <hr>
 
-                <form role="form" method="POST" action="@if(isset($schedule)){{ route('schedules.update') }} @else{{ route('schedules.store') }} @endif" enctype="multipart/form-data">
+                <form role="form" method="POST" action="@if(isset($schedule)){{ route('schedules.update', ['id' => $schedule->id]) }} @else{{ route('schedules.store') }} @endif" enctype="multipart/form-data">
 
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -28,7 +28,6 @@
                     {{-- add update inputs if we are in update mode --}}
                     @if(isset($schedule))
                         <input type="hidden" name="_method" value="PUT">
-                        <input type="hidden" name="_id" value="{{ $schedule->id }}">
                     @endif
 
                     {{-- schedule data --}}
@@ -48,7 +47,7 @@
                                                 @if(!isset($schedule) && old('day_id') == $id)selected
                                                 @elseif(isset($schedule) && isset($schedule->day_id) && $schedule->day_id === $id)selected
                                                 @endif>
-                                            {{ $day['title'] }}
+                                            {{ trans('schedules.config.day_of_week.' . $day) }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -84,7 +83,7 @@
                                                 @if(!isset($schedule) && old('public_category') == $id)selected
                                                 @elseif(isset($schedule) && isset($schedule->public_category) && $schedule->public_category === $id)selected
                                                 @endif>
-                                            {{ $public_category['title'] }}
+                                            {{ trans('schedules.config.category.' . $public_category) }}
                                         </option>
                                     @endforeach
                                 </select>

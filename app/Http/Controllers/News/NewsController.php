@@ -223,8 +223,10 @@ class NewsController extends Controller
         
         // we prepare the search config
         $search_config = [
-            'key'      => trans('news.page.label.title'),
-            'database' => 'news.title',
+            [
+                'key'      => trans('news.page.label.title'),
+                'database' => 'news.title',
+            ],
         ];
         
         // we enable the lines choice
@@ -565,10 +567,9 @@ class NewsController extends Controller
     
     /**
      * @param $id
-     * @param Request $request
      * @return mixed
      */
-    public function destroy($id, Request $request)
+    public function destroy($id)
     {
         // we get the news
         try {
@@ -587,8 +588,8 @@ class NewsController extends Controller
         // we check the current user permission
         if (!Permission::hasPermission('news.delete')) {
             // we redirect the current user to the permissions list if he has the required permission
-            if (Sentinel::getUser()->hasAccess('news.view')) {
-                return redirect()->route('news.edit', ['id' => $id]);
+            if (Sentinel::getUser()->hasAccess('news.list')) {
+                return redirect()->route('news.index');
             } else {
                 // or we redirect the current user to the home page
                 return redirect()->route('dashboard.index');
@@ -698,7 +699,7 @@ class NewsController extends Controller
             
             // we notify the current user
             return response([
-                'active' => $news->fresh()->active,
+                'active'  => $news->fresh()->active,
                 'message' => trans('news.message.activation.failure', ['news' => $news->title]),
             ], 401);
         }

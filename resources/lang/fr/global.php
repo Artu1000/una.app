@@ -35,6 +35,9 @@ return [
         "password" => [
             "length" => "6 catactères minimum. Nous recommandons un mélange de lettres majuscules et minuscules, de nombres et de caractères spéciaux.",
         ],
+        "time"     => [
+            "format" => "Format : hh:mm (exemple : 10:37).",
+        ],
         "date"     => [
             "format" => "Format : jj/mm/aaaa (exemple : 24/03/1985).",
         ],

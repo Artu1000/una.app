@@ -147,11 +147,20 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
             .content {
 
               h3 {
-                margin: 5px 0 0 0;
+                margin: 5px 0;
               }
 
-              .date {
-                margin-top: 2px;
+              .date, .category, .comments {
+                display: inline-block;
+              }
+
+              .category {
+                margin-left: 20px;
+              }
+
+              .comments {
+                color: #337ab7;
+                margin-left: 20px;
               }
 
               .sum_up {

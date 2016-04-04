@@ -402,11 +402,27 @@ class SlidesController extends Controller
 
         // we delete the role
         try {
+            // we remove the slide picto & background image
+            if ($slide->picto) {
+                \ImageManager::remove(
+                    $slide->picto,
+                    $slide->storagePath(),
+                    $slide->availableSizes('picto')
+                );
+            }
+            if ($slide->background_image) {
+                \ImageManager::remove(
+                    $slide->background_image,
+                    $slide->storagePath(),
+                    $slide->availableSizes('background_image')
+                );
+            }
+
             \Modal::alert([
                 trans('home.message.slide.delete.success', ['slide' => $slide->title]),
             ], 'success');
 
-            // we delete the role
+            // we delete the slide
             $slide->delete();
 
             // we sanitize the roles ranks

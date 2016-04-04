@@ -289,8 +289,8 @@
                             <label for="input_logo_light">{{ trans('settings.page.label.logo_light') }}</label>
                             @if(config('settings.logo_light'))
                                 <div class="form-group image">
-                                    <a class="img-thumbnail bg-dark" href="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" data-lity>
-                                        <img src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'admin']) }}" alt="{{ trans('settings.page.label.logo_light') }}">
+                                    <a class="img-thumbnail bg-dark" href="{{ \ImageManager::imagePath(config('image.settings.public_path'), config('image.settings.logo.name.light') . '.' . config('image.settings.logo.extension'), 'logo', 'large') }}" data-lity>
+                                        <img src="{{ \ImageManager::imagePath(config('image.settings.public_path'), config('image.settings.logo.name.light') . '.' . config('image.settings.logo.extension'), 'logo', 'admin') }}" alt="{{ trans('settings.page.label.logo_light') }}">
                                     </a>
                                 </div>
                             @endif
@@ -310,8 +310,8 @@
                             <label for="input_logo_dark">{{ trans('settings.page.label.logo_dark') }}</label>
                             @if(config('settings.logo_dark'))
                                 <div class="form-group image">
-                                    <a class="img-thumbnail" href="{{ route('image', ['filename' => config('settings.logo_dark'), 'storage_path' => storage_path('app/config'), 'size' => 'large']) }}" data-lity>
-                                        <img src="{{ route('image', ['filename' => config('settings.logo_dark'), 'storage_path' => storage_path('app/config'), 'size' => 'admin']) }}" alt="{{ trans('settings.page.label.logo_dark') }}">
+                                    <a class="img-thumbnail" href="{{ \ImageManager::imagePath(config('image.settings.public_path'), config('image.settings.logo.name.dark') . '.' . config('image.settings.logo.extension'), 'logo', 'large') }}" data-lity>
+                                        <img src="{{ \ImageManager::imagePath(config('image.settings.public_path'), config('image.settings.logo.name.dark') . '.' . config('image.settings.logo.extension'), 'logo', 'admin') }}" alt="{{ trans('settings.page.label.logo_dark') }}">
                                     </a>
                                 </div>
                             @endif

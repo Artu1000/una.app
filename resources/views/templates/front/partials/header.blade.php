@@ -17,7 +17,7 @@
                 <a class="navbar-brand" title="Retour à l'accueil" href="{{ route('home') }}">
                     <span class="logo">
                         @if(config('settings.logo_light'))
-                            <img width="70" src="{{ route('image', ['filename' => config('settings.logo_light'), 'storage_path' => storage_path('app/config'), 'size' => 'header']) }}" alt="Logo {{ config('settings.app_name_' . config('app.locale')) }}">
+                            <img width="70" src="{{ \ImageManager::imagePath(config('image.settings.public_path'), config('image.settings.logo.name.light') . '.' . config('image.settings.logo.extension'), 'logo', 'header') }}" alt="Logo {{ config('settings.app_name_' . config('app.locale')) }}">
                         @endif
                     </span>
                     <h1 @if(\Route::current()->getName() === 'home') class="active" @endif>

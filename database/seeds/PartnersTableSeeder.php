@@ -8,6 +8,21 @@ class PartnersTableSeeder extends Seeder
     {
         $partner_repo = app()->make(App\Repositories\Partner\PartnerRepositoryInterface::class);
 
+        // we remove all the files in the config folder
+        $files = glob(storage_path('app/partners/*'));
+        foreach ($files as $file) {
+            if (is_file($file))
+                unlink($file);
+        }
+
+        // we create the folder if it doesn't exist
+        if (!is_dir($storage_path = storage_path('app/partners'))) {
+            if (!is_dir($path = storage_path('app'))) {
+                mkdir($path);
+            }
+            mkdir($path . '/partners');
+        }
+
         // ville de nantes
         $slide = $partner_repo->create([
             'name'     => 'Ville de Nantes',
@@ -17,7 +32,7 @@ class PartnersTableSeeder extends Seeder
             'active'   => true,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/partners/logo-ville-nantes.png',
+            database_path('seeds/files/partners/logo-ville-nantes.png'),
             $slide->imageName('logo'),
             'png',
             $slide->storagePath(),
@@ -36,7 +51,7 @@ class PartnersTableSeeder extends Seeder
             'active'   => true,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/partners/logo-univ-nantes.png',
+            database_path('seeds/files/partners/logo-univ-nantes.png'),
             $slide->imageName('logo'),
             'png',
             $slide->storagePath(),
@@ -55,7 +70,7 @@ class PartnersTableSeeder extends Seeder
             'active'   => true,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/partners/logo-ffa.png',
+            database_path('seeds/files/partners/logo-ffa.png'),
             $slide->imageName('logo'),
             'png',
             $slide->storagePath(),
@@ -74,7 +89,7 @@ class PartnersTableSeeder extends Seeder
             'active'   => true,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/partners/logo-ffsu.png',
+            database_path('seeds/files/partners/logo-ffsu.png'),
             $slide->imageName('logo'),
             'png',
             $slide->storagePath(),

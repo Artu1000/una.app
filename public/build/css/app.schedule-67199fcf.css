@@ -8901,14 +8901,97 @@ html body #layout #cookie_bar {
             font-size: 40px;
             margin: 0 8px; }
     html body #layout #footer_layout #footer_color_fill {
-      height: 127px; } }
+      height: 128px; } }
+
+html body #layout #content.schedule .schedules .slot {
+  width: 35px;
+  height: 35px;
+  border-top: solid 2px transparent;
+  border-bottom: solid 2px transparent; }
+  html body #layout #content.schedule .schedules .slot.start {
+    border-top: 2px solid #F9F9F9; }
+  html body #layout #content.schedule .schedules .slot.stop {
+    border-bottom: 2px solid #F9F9F9; }
+  html body #layout #content.schedule .schedules .slot.suaps {
+    background-color: #1abc9c; }
+  html body #layout #content.schedule .schedules .slot.rowing_school {
+    background-color: #339dff; }
+  html body #layout #content.schedule .schedules .slot.competition {
+    background-color: #ea6153; }
+  html body #layout #content.schedule .schedules .slot.all_publics {
+    background-color: #a66bbe; }
+
+html body #layout #content.schedule .schedules .legend {
+  margin: 20px 0;
+  display: table; }
+  html body #layout #content.schedule .schedules .legend .line {
+    display: table-cell;
+    vertical-align: middle;
+    padding-right: 30px; }
+    html body #layout #content.schedule .schedules .legend .line .name {
+      padding-left: 5px; }
+
+html body #layout #content.schedule .schedules .day {
+  border-left: solid #fff 1px;
+  border-right: solid #fff 1px;
+  border-top: 0;
+  border-bottom: 0; }
+  html body #layout #content.schedule .schedules .day:first-of-type {
+    border-left: 0; }
+  html body #layout #content.schedule .schedules .day:last-of-type {
+    border-right: 0; }
+  html body #layout #content.schedule .schedules .day table {
+    width: 100%;
+    margin: 0; }
+
+html body #layout #content.schedule .schedules .informations {
+  margin-top: 60px; }
+
+/***********************************************************************************************************************
+ * EXTRA LARGE DEVICES DESKTOPS : 1920 & MORE
+ **********************************************************************************************************************/
+/***********************************************************************************************************************
+ * LARGE DEVICES DESKTOPS : 1919 <=> 1200 (LG)
+ **********************************************************************************************************************/
+/***********************************************************************************************************************
+ * MEDIUM DEVICES DESKTOPS : : 1199 <=> 992 (MD)
+ **********************************************************************************************************************/
+/***********************************************************************************************************************
+ * SMALL DEVICES TABLETS : 991 <=> 768 (SM)
+ **********************************************************************************************************************/
+@media screen and (max-width: 991px) and (min-width: 768px) {
+  html body #layout #content.schedule .schedules .legend .line {
+    padding-right: 0;
+    display: block;
+    margin-bottom: 5px; }
+    html body #layout #content.schedule .schedules .legend .line .slot {
+      width: 25px;
+      height: 25px; } }
 
 /***********************************************************************************************************************
  * EXTRA SMALL DEVICES : 767 & LESS (SM)
  **********************************************************************************************************************/
 @media screen and (max-width: 767px) {
-  html body #layout #content.registration .online a {
+  html body #layout #content.schedule .schedules .slot {
+    width: 5px;
+    height: 18px; }
+    html body #layout #content.schedule .schedules .slot.hour {
+      font-size: 10px;
+      width: 25px;
+      padding: 0; }
+    html body #layout #content.schedule .schedules .slot .day {
+      display: block;
+      visibility: hidden;
+      width: 10px;
+      margin: 0 auto; }
+    html body #layout #content.schedule .schedules .slot span.day:first-letter {
+      visibility: visible; }
+  html body #layout #content.schedule .schedules .legend .line {
+    padding-right: 0;
     display: block;
-    margin-bottom: 5px; } }
+    margin-bottom: 5px; }
+    html body #layout #content.schedule .schedules .legend .line .slot {
+      width: 20px;
+      height: 20px; } }
 
-/*# sourceMappingURL=app.registration.css.map */
+/*# sourceMappingURL=app.schedule.css.map */

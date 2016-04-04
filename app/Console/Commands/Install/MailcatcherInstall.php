@@ -18,12 +18,10 @@ class MailcatcherInstall extends Command
      *
      * @var string
      */
-    protected $description = 'Install mailcatcher if no installation is detected';
+    protected $description = '(Re)install mailcatcher automatically';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
+     * MailcatcherInstall constructor.
      */
     public function __construct()
     {
@@ -38,43 +36,24 @@ class MailcatcherInstall extends Command
     public function handle()
     {
         // we install / reinstall ruby
-        $this->info('Installing Ruby ...');
-        \Console::execWithOutput('sudo apt-get install ruby1.9.1-dev libsqlite3-dev', $this);
+        $this->line('▶ Installing Ruby ...');
+        \Console::execWithOutput('sudo apt-get install ruby1.9.1-dev libsqlite3-dev -y', $this);
         $this->info('✔ Ruby installation done' . PHP_EOL);
 
         // install mailcatcher
-        $this->line('Installing Mailcatcher ...');
-        \Console::execWithOutput('sudo gem install mailcatcher', $this);
+        $this->line('▶ Installing Mailcatcher ...');
+        \Console::execWithOutput('sudo gem install mailcatcher -y', $this);
         $this->info('✔ Mailcatcher installation done' . PHP_EOL);
 
-        $this->line('Executing Mailcatcher ...');
+        $this->line('▶ Executing Mailcatcher ...');
         \Console::execWithOutput('mailcatcher', $this);
         $this->info('✔ Mailcatcher is running' . PHP_EOL);
 
-        $this->line(' ');
+        // we add the auto start mailcatcher script
+        $this->line('▶ Writing autoload script ...');
 
-        // give configuration instructions
-        $this->line('Please execute the following command into another terminal :' . PHP_EOL);
-
-        $this->line('sudo vim /etc/init/mailcatcher.conf' . PHP_EOL);
-
-        $this->line('Then, copy the following content into the "mailcatcher.conf" file' . PHP_EOL);
-
-        $this->line('description "Mailcatcher"');
-        $this->line('start on runlevel [2345]');
-        $this->line('stop on runlevel [!2345]');
-        $this->line('respawn');
-        $this->line('exec /usr/bin/env $(which mailcatcher) --foreground --http-ip=0.0.0.0' . PHP_EOL);
-
-        $this->line('Finaly, make sure that your .env folder at the root of your project is configured with those values' . PHP_EOL);
-
-        $this->line('MAIL_DRIVER=smtp');
-        $this->line('MAIL_HOST=localhost');
-        $this->line('MAIL_PORT=1025');
-        $this->line('MAIL_USERNAME=null');
-        $this->line('MAIL_PASSWORD=null');
-        $this->line('MAIL_ENCRYPTION=null' . PHP_EOL);
-
-        $this->info('✔ Mailcatcher installation done' . PHP_EOL);
+        \Console::execWithOutput("echo 'description \"Mailcatcher\"\nstart on runlevel [2345]\nstop on runlevel [!2345]\nrespawn\nexec /usr/bin/env $(which mailcatcher) --foreground --http-ip=0.0.0.0' | sudo tee /etc/init/mailcatcher.conf", $this);
+        $this->info('✔ Autoload script written' . PHP_EOL);
     }
+
 }

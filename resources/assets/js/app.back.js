@@ -102,7 +102,7 @@ $(function () {
         });
     }
 
-    if ($('.yearpicker').length || $('.datepicker').length || $('.datetimepicker').length) {
+    if ($('.yearpicker').length || $('.datepicker').length || $('.datetimepicker').length || $('.timepicker').length) {
 
         // datetime / date / year picker
         var locale;
@@ -116,6 +116,15 @@ $(function () {
                 format = 'DD/MM/YYYY hh:mm A';
                 locale = 'en-gb';
                 break;
+        }
+
+        // we activate the timepicker
+        var timepicker = $('.timepicker');
+        if (timepicker.length) {
+            timepicker.datetimepicker({
+                locale: locale,
+                format: 'HH:mm'
+            });
         }
 
         // we activate the datepicker

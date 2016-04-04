@@ -82,11 +82,11 @@ $route = Route::group($group, function () {
 
     // schedules
     Route::get(LaravelLocalization::transRoute('routes.schedules.list'), ['as' => 'schedules.list', 'uses' => 'Schedule\ScheduleController@adminList']);
-    Route::get(LaravelLocalization::transRoute('routes.schedules.data_update'), ['as' => 'schedules.data.update', 'uses' => 'Schedule\ScheduleController@dataUpdate']);
     Route::get(LaravelLocalization::transRoute('routes.schedules.create'), ['as' => 'schedules.create', 'uses' => 'Schedule\ScheduleController@create']);
     Route::post(LaravelLocalization::transRoute('routes.schedules.store'), ['as' => 'schedules.store', 'uses' => 'Schedule\ScheduleController@store']);
     Route::get(LaravelLocalization::transRoute('routes.schedules.edit'), ['as' => 'schedules.edit', 'uses' => 'Schedule\ScheduleController@edit']);
     Route::put(LaravelLocalization::transRoute('routes.schedules.update'), ['as' => 'schedules.update', 'uses' => 'Schedule\ScheduleController@update']);
+    Route::put(LaravelLocalization::transRoute('routes.schedules.data_update'), ['as' => 'schedules.data.update', 'uses' => 'Schedule\ScheduleController@dataUpdate']);
     Route::delete(LaravelLocalization::transRoute('routes.schedules.destroy'), ['as' => 'schedules.destroy', 'uses' => 'Schedule\ScheduleController@destroy']);
     Route::post(LaravelLocalization::transRoute('routes.schedules.activate'), ['as' => 'schedules.activate', 'uses' => 'Schedule\ScheduleController@activate']);
 

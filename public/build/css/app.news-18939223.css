@@ -8901,140 +8901,101 @@ html body #layout #cookie_bar {
             font-size: 40px;
             margin: 0 8px; }
     html body #layout #footer_layout #footer_color_fill {
-      height: 127px; } }
+      height: 128px; } }
 
-html body #layout #content.e-shop .text-content .categories {
+#content.news-list .text-content .categories {
   margin: -30px 0 45px; }
-  html body #layout #content.e-shop .text-content .categories a:after {
+  #content.news-list .text-content .categories a:after {
     content: " - ";
     color: #000; }
-  html body #layout #content.e-shop .text-content .categories a:last-of-type:after {
+  #content.news-list .text-content .categories a:last-of-type:after {
     content: ""; }
-  html body #layout #content.e-shop .text-content .categories a.selected {
+  #content.news-list .text-content .categories a.selected {
     /* Lato (medium, normal) */
     font-family: "Lato Medium";
     font-weight: 400;
     font-style: normal; }
 
-html body #layout #content.e-shop .text-content tr.article h3 {
-  margin: 5px 0; }
-
-html body #layout #content.e-shop .text-content tr.article td {
-  vertical-align: middle;
+#content.news-list .text-content .table tbody tr.news td {
+  text-align: justify;
   border: 0;
   height: 220px; }
-  html body #layout #content.e-shop .text-content tr.article td.image {
-    padding-left: 40px; }
-    html body #layout #content.e-shop .text-content tr.article td.image a {
-      border-radius: 50%;
-      padding: 0;
-      background-color: transparent; }
-      html body #layout #content.e-shop .text-content tr.article td.image a:hover {
-        opacity: 0.7; }
-      html body #layout #content.e-shop .text-content tr.article td.image a img {
-        padding: 10px;
-        border-radius: 50%;
-        border: #5a5a5a dashed 1px; }
-  html body #layout #content.e-shop .text-content tr.article td .availability.in-stock {
-    color: #5cb85c; }
-  html body #layout #content.e-shop .text-content tr.article td .availability.on-order {
-    color: #f0ad4e; }
-  html body #layout #content.e-shop .text-content tr.article td .availability.depleted {
-    color: #d9534f; }
-  html body #layout #content.e-shop .text-content tr.article td .category {
-    margin-left: 15px; }
-  html body #layout #content.e-shop .text-content tr.article td .price {
-    /* Lato (medium, normal) */
-    font-family: "Lato Medium";
-    font-weight: 400;
-    font-style: normal;
-    font-size: 20px;
-    margin-left: 15px; }
-  html body #layout #content.e-shop .text-content tr.article td.size-container {
-    min-width: 80px; }
-  html body #layout #content.e-shop .text-content tr.article td .size {
-    border-radius: 50%;
-    width: 28px;
-    height: 28px;
-    /* Lato (medium, normal) */
-    font-family: "Lato Medium";
-    font-weight: 400;
-    font-style: normal;
-    line-height: 28px;
-    font-size: 10px;
-    display: inline-block;
-    margin: 3px 0; }
-    html body #layout #content.e-shop .text-content tr.article td .size.s {
-      background-color: #47CEC0; }
-    html body #layout #content.e-shop .text-content tr.article td .size.m {
-      background-color: #4EC2E7; }
-    html body #layout #content.e-shop .text-content tr.article td .size.l {
-      background-color: #5C9DED; }
-    html body #layout #content.e-shop .text-content tr.article td .size.xl {
-      background-color: #9398EC; }
-    html body #layout #content.e-shop .text-content tr.article td .size.xxl {
-      background-color: #CB93EE; }
-  html body #layout #content.e-shop .text-content tr.article td.action {
-    padding-right: 40px; }
-    html body #layout #content.e-shop .text-content tr.article td.action a {
-      border-radius: 50%;
-      border: solid 1px #ccc;
-      padding: 10px;
-      display: block; }
-      html body #layout #content.e-shop .text-content tr.article td.action a .add-to-command {
-        border-radius: 50%;
-        border: 0;
-        width: 40px;
-        height: 40px;
-        font-size: 25px;
-        line-height: 40px;
-        padding: 0;
-        -webkit-transform: rotate(-7deg);
-        transform: rotate(-7deg); }
-        html body #layout #content.e-shop .text-content tr.article td.action a .add-to-command:hover {
-          opacity: 0.7;
-          transition: opacity 0.2s ease; }
 
-/***********************************************************************************************************************
- * EXTRA LARGE DEVICES DESKTOPS : 1200 & MORE
- **********************************************************************************************************************/
-/***********************************************************************************************************************
- * LARGE DEVICES DESKTOPS : 1919 <=> 1200 (LG)
- **********************************************************************************************************************/
-/***********************************************************************************************************************
- * MEDIUM DEVICES DESKTOPS : : 1199 <=> 992 (MD)
- **********************************************************************************************************************/
-/***********************************************************************************************************************
- * SMALL DEVICES TABLETS : 991 <=> 768 (SM)
- **********************************************************************************************************************/
+#content.news-list .text-content .table tbody tr.news .img, #content.news-list .text-content .table tbody tr.news .content, #content.news-list .text-content .table tbody tr.news .button {
+  vertical-align: middle; }
+  #content.news-list .text-content .table tbody tr.news .img a, #content.news-list .text-content .table tbody tr.news .content a, #content.news-list .text-content .table tbody tr.news .button a {
+    padding: 0;
+    background-color: transparent; }
+    #content.news-list .text-content .table tbody tr.news .img a:hover, #content.news-list .text-content .table tbody tr.news .content a:hover, #content.news-list .text-content .table tbody tr.news .button a:hover {
+      opacity: 0.7;
+      transition: opacity 0.2s ease; }
+
+#content.news-list .text-content .table tbody tr.news .img {
+  padding-left: 40px; }
+  #content.news-list .text-content .table tbody tr.news .img a {
+    border-radius: 50%;
+    border: solid 1px #ccc; }
+    #content.news-list .text-content .table tbody tr.news .img a img {
+      padding: 10px; }
+
+#content.news-list .text-content .table tbody tr.news .content h3 {
+  margin: 5px 0; }
+
+#content.news-list .text-content .table tbody tr.news .content .date, #content.news-list .text-content .table tbody tr.news .content .category, #content.news-list .text-content .table tbody tr.news .content .comments {
+  display: inline-block; }
+
+#content.news-list .text-content .table tbody tr.news .content .category {
+  margin-left: 20px; }
+
+#content.news-list .text-content .table tbody tr.news .content .comments {
+  color: #337ab7;
+  margin-left: 20px; }
+
+#content.news-list .text-content .table tbody tr.news .content .sum_up {
+  margin-top: 8px; }
+
+#content.news-list .text-content .table tbody tr.news .button {
+  padding-right: 40px; }
+  #content.news-list .text-content .table tbody tr.news .button button {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    background-color: transparent;
+    border: solid 1px #ccc; }
+    #content.news-list .text-content .table tbody tr.news .button button i.fa {
+      font-size: 40px;
+      color: #337ab7; }
+
+#content.news-list .text-content .table tfoot tr.pagination-container td {
+  padding: 0;
+  border-top: 0; }
+
+#content.news-detail .text-content .container h2 {
+  margin-bottom: 10px; }
+
+#content.news-detail .text-content .container .date {
+  margin-bottom: 45px; }
+
+#content.news-detail .text-content .container .return button {
+  background-color: transparent;
+  border: solid 1px #ccc; }
+
 /***********************************************************************************************************************
  * EXTRA SMALL DEVICES : 767 & LESS (SM)
  **********************************************************************************************************************/
 @media screen and (max-width: 767px) {
-  html body #layout #content.e-shop .table tr.article td {
-    padding: 30px 10px; }
-    html body #layout #content.e-shop .table tr.article td.image {
-      padding: 0 0 0 5px;
-      width: 120px; }
-      html body #layout #content.e-shop .table tr.article td.image a {
-        display: block; }
-        html body #layout #content.e-shop .table tr.article td.image a img {
-          width: 130px;
-          height: 130px; }
-      html body #layout #content.e-shop .table tr.article td.image .price {
-        display: block;
-        margin: 5px 0 0; }
-    html body #layout #content.e-shop .table tr.article td.details h3 {
-      margin-bottom: 10px; }
-    html body #layout #content.e-shop .table tr.article td.details:last-of-type.action {
-      padding-right: 0;
-      margin-top: 5px; }
-    html body #layout #content.e-shop .table tr.article td.details .size-container, html body #layout #content.e-shop .table tr.article td.details .action {
-      margin-top: 10px; }
-      html body #layout #content.e-shop .table tr.article td.details .size-container .size, html body #layout #content.e-shop .table tr.article td.details .action .size {
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
-        font-size: 8px; } }
+  #content.news-list .text-content .table tr.news td.content {
+    padding: 30px 20px; }
+    #content.news-list .text-content .table tr.news td.content div.date, #content.news-list .text-content .table tr.news td.content div.category, #content.news-list .text-content .table tr.news td.content div.comments {
+      display: block;
+      margin: 0; }
+    #content.news-list .text-content .table tr.news td.content .button.mobile {
+      padding: 10px 0 0; }
+      #content.news-list .text-content .table tr.news td.content .button.mobile button {
+        border-radius: 6px;
+        width: auto;
+        height: auto; }
+        #content.news-list .text-content .table tr.news td.content .button.mobile button > i.fa {
+          font-size: 16px; } }
 
-/*# sourceMappingURL=app.e-shop.css.map */
+/*# sourceMappingURL=app.news.css.map */

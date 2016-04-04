@@ -7,12 +7,19 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         // we remove all the files in the storage user folder
-        $files = glob(storage_path('app/user/*'));
+        $files = glob(storage_path('app/users/*'));
         foreach($files as $file){
             if(is_file($file))
                 unlink($file);
         }
 
+        // we create the folder if it doesn't exist
+        if (!is_dir($storage_path = storage_path('app/users'))) {
+            if (!is_dir($path = storage_path('app'))) {
+                mkdir($path);
+            }
+            mkdir($path . '/users');
+        }
 
         // we create a user
         $user = Sentinel::register([
@@ -24,7 +31,6 @@ class UsersTableSeeder extends Seeder
             'board_id' => config('user.board_key.leading_board'),
             'password' => 'admin'
         ], true);
-
 
         // we attach the user to the admin role
         $admin = \Sentinel::findRoleBySlug('admin');

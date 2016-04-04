@@ -14,7 +14,7 @@ class SettingsTableSeeder extends Seeder
                 unlink($file);
         }
 
-        // we create the folder if they doesn't exist
+        // we create the folder if it doesn't exist
         if (!is_dir($storage_path = storage_path('app/settings'))) {
             if (!is_dir($path = storage_path('app'))) {
                 mkdir($path);
@@ -66,10 +66,9 @@ class SettingsTableSeeder extends Seeder
             'logo_dark'       => $logo_dark,
             'logo_light'      => $logo_light,
         ];
-        file_put_contents(storage_path('app/config/settings.json'), json_encode($inputs));
+        file_put_contents(storage_path('app/settings/settings.json'), json_encode($inputs));
 
         // we place the default favicon
-        \File::copy(database_path('seeds/files/settings/favicon.ico'), public_path('favicon.ico'));
-
+        File::copy(database_path('seeds/files/settings/favicon.ico'), public_path('favicon.ico'));
     }
 }

@@ -15,5 +15,5 @@ tests/_output/*
 composer.phar
 composer.lock
 
-tests/_output/*
-tests/_output/*
+# deployer
+deploy.php

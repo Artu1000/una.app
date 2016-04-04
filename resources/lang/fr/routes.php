@@ -81,8 +81,9 @@ return [
         "store"       => "admin/contenus/horaires/enregistrement",
         "edit"        => "admin/contenus/horaires/edition/{id}",
         "update"      => "admin/contenus/horaires/mise-a-jour/{id}",
-        "data_update" => "admin/contenus/horaires/donnees/mise-a-jour/{id}",
+        "data_update" => "admin/contenus/horaires/donnees/mise-a-jour",
         "destroy"     => "admin/contenus/horaires/suppression/{id}",
+        "activate"    => "admin/contenus/horaires/activation/{id}",
     ],
     "partners"     => [
         "index"    => "admin/contenus/partenaires",

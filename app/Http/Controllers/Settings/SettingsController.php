@@ -3,8 +3,14 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use CustomLog;
+use Entry;
+use Exception;
 use Illuminate\Http\Request;
+use libphonenumber\PhoneNumberFormat;
+use Modal;
 use Permission;
+use Sentinel;
 use Validation;
 
 class SettingsController extends Controller
@@ -56,7 +62,7 @@ class SettingsController extends Controller
         }
 
         // we sanitize the entries
-        $request->replace(\Entry::sanitizeAll($request->all()));
+        $request->replace(Entry::sanitizeAll($request->all()));
 
         // if the boolean field is not given, we set it to false
         $request->merge(['breadcrumb' => $request->get('breadcrumb', false)]);
@@ -114,7 +120,7 @@ class SettingsController extends Controller
                 $inputs['phone_number'] = $formatted_phone_number = phone_format(
                     $inputs['phone_number'],
                     'FR',
-                    \libphonenumber\PhoneNumberFormat::INTERNATIONAL
+                    PhoneNumberFormat::INTERNATIONAL
                 );
             }
 
@@ -156,21 +162,23 @@ class SettingsController extends Controller
             }
 
             // we update the json file
-            file_put_contents(storage_path('app/config/settings.json'), json_encode($inputs));
+            file_put_contents(storage_path('app/settings/settings.json'), json_encode($inputs));
 
             // we notify the current user
-            \Modal::alert([
+            Modal::alert([
                 trans('settings.message.update.success'),
             ], 'success');
 
             return redirect()->back();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we flash the request
             $request->flash();
 
-            // we log the error and we notify the current user
-            \Log::error($e);
-            \Modal::alert([
+            // we log the error
+            CustomLog::error($e);
+
+            // we notify the current user
+            Modal::alert([
                 trans('settings.message.update.failure'),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');

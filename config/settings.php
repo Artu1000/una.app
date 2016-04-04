@@ -1,7 +1,7 @@
 <?php
 
-if (is_file(storage_path('app/config/settings.json'))) {
-    $settings = json_decode(file_get_contents(storage_path('app/config/settings.json')));
+if (is_file(storage_path('app/settings/settings.json'))) {
+    $settings = json_decode(file_get_contents(storage_path('app/settings/settings.json')));
 }
 
 return [

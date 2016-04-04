@@ -8901,10 +8901,31 @@ html body #layout #cookie_bar {
             font-size: 40px;
             margin: 0 8px; }
     html body #layout #footer_layout #footer_color_fill {
-      height: 127px; } }
+      height: 128px; } }
 
-/***********************************************************************************************************************
- * EXTRA LARGE DEVICES DESKTOPS : 1920 & MORE
- **********************************************************************************************************************/
+@media (max-width: 550px) {
+  .big-container {
+    display: none; } }
 
-/*# sourceMappingURL=app.page.css.map */
+@media (min-width: 550px) {
+  .small-container {
+    display: none; } }
+
+/* Responsive iFrame */
+.responsive-iframe-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  min-height: 500px;
+  overflow: hidden; }
+
+.responsive-iframe-container iframe,
+.vresponsive-iframe-container object,
+.vresponsive-iframe-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+
+/*# sourceMappingURL=app.calendar.css.map */

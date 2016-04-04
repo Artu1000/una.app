@@ -8,6 +8,21 @@ class PagesTableSeeder extends Seeder
     {
         $page_repo = app(\App\Repositories\Page\PageRepositoryInterface::class);
 
+        // we remove all the files in the config folder
+        $files = glob(storage_path('app/pages/*'));
+        foreach ($files as $file) {
+            if (is_file($file))
+                unlink($file);
+        }
+
+        // we create the folder if it doesn't exist
+        if (!is_dir($storage_path = storage_path('app/pages'))) {
+            if (!is_dir($path = storage_path('app'))) {
+                mkdir($path);
+            }
+            mkdir($path . '/pages');
+        }
+
         $page_repo->createMultiple([
             [
                 'key' => 'historique',

@@ -1,12 +1,28 @@
 <?php
 
+use App\Repositories\News\NewsRepositoryInterface;
 use Illuminate\Database\Seeder;
 
 class NewsTableSeeder extends Seeder
 {
     public function run()
     {
-        $news_repo = app(\App\Repositories\News\NewsRepositoryInterface::class);
+        $news_repo = app(NewsRepositoryInterface::class);
+
+        // we remove all the files in the config folder
+        $files = glob(storage_path('app/news/*'));
+        foreach ($files as $file) {
+            if (is_file($file))
+                unlink($file);
+        }
+
+        // we create the folder if it doesn't exist
+        if (!is_dir($storage_path = storage_path('app/news'))) {
+            if (!is_dir($path = storage_path('app'))) {
+                mkdir($path);
+            }
+            mkdir($path . '/news');
+        }
 
         // we create the news
         $news = $news_repo->create([
@@ -24,7 +40,7 @@ class NewsTableSeeder extends Seeder
 
         // we optimize and resize the news image
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/news/news-po-una-september.jpg',
+            database_path('seeds/files/news/news-po-una-september.jpg'),
             $news->imageName('image'),
             'jpg',
             $news->storagePath(),

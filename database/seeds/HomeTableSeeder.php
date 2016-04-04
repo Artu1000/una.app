@@ -1,11 +1,21 @@
 <?php
 
+use App\Repositories\Slide\SlideRepositoryInterface;
 use Illuminate\Database\Seeder;
 
 class HomeTableSeeder extends Seeder
 {
     public function run()
     {
+        $slide_repo = app(SlideRepositoryInterface::class);
+
+        // we remove all the files in the config folder
+        $files = glob(storage_path('app/home/*'));
+        foreach ($files as $file) {
+            if (is_file($file))
+                unlink($file);
+        }
+
         // we create the folder if they doesn't exist
         if (!is_dir($storage_path = storage_path('app/home'))) {
             if (!is_dir($path = storage_path('app'))) {
@@ -20,11 +30,9 @@ class HomeTableSeeder extends Seeder
             'description' => "Créé en 1985, le club Université Nantes Aviron (UNA) est **LE club d'aviron des étudiants nantais**.\r\n\r\nConventionné avec plusieurs écoles supérieures nantaises, l'UNA est lié à l'Université de Nantes et gère l'activité aviron au sein de la structure, en complément des autres activités sportives proposées par le SUAPS (Service Universitaire des Activités Physiques et Sportives).\r\nBasé sur les rives de l'Erdre à Nantes, à proximité du pont de la Tortière et de la Faculté de Sciences, l'UNA est aujourd'hui **le plus grand club d'aviron universitaire de France**, avec près de 600 licenciés chaque année.\r\n\r\nOrienté vers la compétition, le club est toutefois ouvert à toutes les formes de pratiques et donne aussi la possibilité de suivre des formations spécifiques à l'encadrement de l'aviron.\r\nOutre son public d'étudiants, l'UNA favorise également l'encadrement pour un public de jeunes collegiens et de lycéens, au sein de l'Ecole d'Aviron (- de 18 ans). Le club accueille parallèlement un public de seniors loisir, pratiquant l'aviron dans un objectif plus récréatif.\r\n                   \r\nA l'UNA, il est **possible de s'entrainer sans limitation de nombre de séances par semaine**. La pratique de l'aviron vous est proposée toute l'année, vacances incluses. Pour cela, l'association met à la disposition de ses membres, un parc à bateaux recensant plus de 150 coques de toutes catégories, mais aussi une salle d'ergomètres (machines à ramer) et une salle de musculation pour les compétiteurs.\r\nEtant affilié à la Fédération Française d'Aviron (FFA), l'association donne la possibilité, en plus des activités proposées par la FFSU (Fédération Française des Sports Universitaires), de participer à toutes les activités civiles de la Fédération au travers de la licence fédérale incluse dans la cotisation. C'est ainsi que le club participe chaque année à des compétitions de tous niveaux en France et à l'étranger, aussi bien dans l'aviron fédéral que face aux autres universités et établissements de l'enseignement supérieur. Il est également l'organisateur depuis 1985 des [Regataïades Internationales de Nantes](http://regataiades.fr 'Regataïades Internationales de Nantes'), reconnues comme **la plus importante régate internationale d'aviron universitaire en France**.\r\n\r\nClub d'aviron universitaire à l'ambiance sportive et chaleureuse, l'UNA se base sur le modèle de ses confrères britanniques et americains pour contribuer au **développement du sport majestueux de glisse, de vitesse et d'endurance de force qu'est l'aviron**, auprès de la population étudiante française.\r\n\r\n<span class='text-info'><i class=\"fa fa-bullhorn\"></i> A noter :<span>\r\n1. Pour les universitaires, l'inscription à l'aviron doit s'effectuer **directement au club Université Nantes Aviron (UNA)** pour bénéficier de l'ensemble des créneaux d'encadrement (**ne pas s'inscrire via le SUAPS**).\r\n2. Des **tarifs préférenciels sont proposés pour tous les étudiants nantais**, sur présentation de justificatif. Des réductions plus avantageuses sont appliqués pour les membres de l'Université de Nantes (étudiants et salariés) ou d'écoles conventionnées avec l'UNA.",
             'video_link'  => 'https://youtu.be/PIUdOHcrleo',
         ];
-
         file_put_contents(storage_path('app/home/content.json'), json_encode($inputs));
 
-        $slide_repo = app(\App\Repositories\Slide\SlideRepositoryInterface::class);
-
+        // we seed the slides
         // una
         $slide = $slide_repo->create([
             'title'    => 'Club d\'aviron à Nantes',
@@ -33,7 +41,7 @@ class HomeTableSeeder extends Seeder
             'active'   => true,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/home/una_picto_club_300.png',
+            database_path('seeds/files/home/una_picto_club_300.png'),
             $slide->imageName('picto'),
             'png',
             $slide->storagePath(),
@@ -43,7 +51,7 @@ class HomeTableSeeder extends Seeder
         $slide->picto = $file_name;
         $slide->save();
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/home/una_bg_club_2560.jpg',
+            database_path('seeds/files/home/una_bg_club_2560.jpg'),
             $slide->imageName('background_image'),
             'jpg',
             $slide->storagePath(),
@@ -61,7 +69,7 @@ class HomeTableSeeder extends Seeder
             'active'   => true,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/home/una_picto_aviron_universitaire_300.png',
+            database_path('seeds/files/home/una_picto_aviron_universitaire_300.png'),
             $slide->imageName('picto'),
             'png',
             $slide->storagePath(),
@@ -71,7 +79,7 @@ class HomeTableSeeder extends Seeder
         $slide->picto = $file_name;
         $slide->save();
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/home/una_bg_aviron_universitaire_2560.jpg',
+            database_path('seeds/files/home/una_bg_aviron_universitaire_2560.jpg'),
             $slide->imageName('background_image'),
             'jpg',
             $slide->storagePath(),
@@ -89,7 +97,7 @@ class HomeTableSeeder extends Seeder
             'active'   => true,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/home/una_picto_aviron_competition_300.png',
+            database_path('seeds/files/home/una_picto_aviron_competition_300.png'),
             $slide->imageName('picto'),
             'png',
             $slide->storagePath(),
@@ -99,7 +107,7 @@ class HomeTableSeeder extends Seeder
         $slide->picto = $file_name;
         $slide->save();
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/home/una_bg_aviron_competition_2560.jpg',
+            database_path('seeds/files/home/una_bg_aviron_competition_2560.jpg'),
             $slide->imageName('background_image'),
             'jpg',
             $slide->storagePath(),
@@ -117,7 +125,7 @@ class HomeTableSeeder extends Seeder
             'active'   => true,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/home/una_picto_ecole_aviron_300.png',
+            database_path('seeds/files/home/una_picto_ecole_aviron_300.png'),
             $slide->imageName('picto'),
             'png',
             $slide->storagePath(),
@@ -127,7 +135,7 @@ class HomeTableSeeder extends Seeder
         $slide->picto = $file_name;
         $slide->save();
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/home/una_bg_ecole_aviron_2560.jpg',
+            database_path('seeds/files/home/una_bg_ecole_aviron_2560.jpg'),
             $slide->imageName('background_image'),
             'jpg',
             $slide->storagePath(),
@@ -145,7 +153,7 @@ class HomeTableSeeder extends Seeder
             'active'   => true,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/home/una_picto_aviron_feminin_300.png',
+            database_path('seeds/files/home/una_picto_aviron_feminin_300.png'),
             $slide->imageName('picto'),
             'png',
             $slide->storagePath(),
@@ -155,7 +163,7 @@ class HomeTableSeeder extends Seeder
         $slide->picto = $file_name;
         $slide->save();
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/home/una_bg_aviron_feminin_2560.jpg',
+            database_path('seeds/files/home/una_bg_aviron_feminin_2560.jpg'),
             $slide->imageName('background_image'),
             'jpg',
             $slide->storagePath(),
@@ -173,7 +181,7 @@ class HomeTableSeeder extends Seeder
             'active'   => true,
         ]);
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/home/una_picto_aviron_loisir_300.png',
+            database_path('seeds/files/home/una_picto_aviron_loisir_300.png'),
             $slide->imageName('picto'),
             'png',
             $slide->storagePath(),
@@ -183,7 +191,7 @@ class HomeTableSeeder extends Seeder
         $slide->picto = $file_name;
         $slide->save();
         $file_name = \ImageManager::optimizeAndResize(
-            './database/seeds/files/home/una_bg_aviron_loisir_2560.jpg',
+            database_path('seeds/files/home/una_bg_aviron_loisir_2560.jpg'),
             $slide->imageName('background_image'),
             'jpg',
             $slide->storagePath(),

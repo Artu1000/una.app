@@ -2,7 +2,8 @@
 
 return [
 
-    'settings' => [
+    // images configurations
+    'settings'  => [
         'logo'         => [
             'name'      => [
                 'dark'  => 'logo_dark',
@@ -18,7 +19,22 @@ return [
         'storage_path' => storage_path('app/settings'),
         'public_path'  => 'img/settings',
     ],
-
+    "schedules" => [
+        "background_image" => [
+            "name"  => "schedules_background_image",
+            'sizes' => [
+                'admin' => [40, 40],
+                '767'   => [767, 431],
+                '991'   => [991, 557],
+                '1199'  => [1199, 674],
+                '1919'  => [1919, 1079],
+                '2560'  => [2560, 1440],
+            ],
+        ],
+        "storage_path"     => storage_path('app/schedules'),
+        'public_path'      => 'img/schedules',
+    ],
+    
     /*
     |--------------------------------------------------------------------------
     | Image Driver
@@ -31,7 +47,7 @@ return [
     | Supported: "gd", "imagick"
     |
     */
-
-    'driver' => 'gd'
+    
+    'driver' => 'gd',
 
 ];

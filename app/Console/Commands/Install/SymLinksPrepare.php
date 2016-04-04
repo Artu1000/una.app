@@ -37,20 +37,21 @@ class SymLinksPrepare extends Command
      */
     public function handle()
     {
-        $this->line(' ');
-
-        $this->line('Preparing symlinks ...');
-
-        // we remove all the symlinks found into the public/img folder
-        $this->line('Removing existing symlinks ...');
+        // we remove all the symlinks found into the public folder
         $links = [];
+        foreach (scandir(public_path()) as $item) {
+            if (is_link($link = public_path($item))) {
+                $links[] = $link;
+                unlink($link);
+            }
+        }
         foreach (scandir(public_path('img')) as $item) {
             if (is_link($link = public_path('img/' . $item))) {
                 $links[] = $link;
                 unlink($link);
             }
         }
-        $this->info('✔ Existing symlinks removed :');
+        $this->info('► Existing symlinks removed :');
         foreach ($links as $link) {
             $this->line('- ' . $link);
         }
@@ -61,6 +62,11 @@ class SymLinksPrepare extends Command
             [
                 'storage' => config('image.settings.storage_path'),
                 'public'  => public_path(config('image.settings.public_path')),
+            ],
+            // schedules
+            [
+                'storage' => config('image.schedules.storage_path'),
+                'public'  => public_path(config('image.schedules.public_path')),
             ],
             // news
             [
@@ -100,22 +106,14 @@ class SymLinksPrepare extends Command
             ],
         ];
 
-        // we create the symlinks that are not already are operational
-        $links = [];
+        /// we create the symlinks that are not already are operational
+        $this->info('► New symlinks created :');
         foreach ($symlinks as $symlink) {
             if (!is_link($symlink['public'])) {
                 $command = 'ln -s ' . $symlink['storage'] . ' ' . $symlink['public'];
-                \Console::execWithOutput($command, $this);
-                $links[] = $symlink['public'];
+                exec($command);
+                $this->line('- ' . $symlink['public']);
             }
         }
-        if (!empty($links)) {
-            $this->info('✔ New symlinks created :');
-            foreach ($links as $link) {
-                $this->line('- ' . $link);
-            }
-        }
-
-        $this->info('✔ Symlinks are ready' . PHP_EOL);
     }
 }

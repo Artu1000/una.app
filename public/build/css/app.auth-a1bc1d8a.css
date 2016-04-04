@@ -8901,101 +8901,109 @@ html body #layout #cookie_bar {
             font-size: 40px;
             margin: 0 8px; }
     html body #layout #footer_layout #footer_color_fill {
-      height: 127px; } }
+      height: 128px; } }
 
-#content.news-list .text-content .categories {
-  margin: -30px 0 45px; }
-  #content.news-list .text-content .categories a:after {
-    content: " - ";
-    color: #000; }
-  #content.news-list .text-content .categories a:last-of-type:after {
-    content: ""; }
-  #content.news-list .text-content .categories a.selected {
-    /* Lato (medium, normal) */
-    font-family: "Lato Medium";
-    font-weight: 400;
-    font-style: normal; }
+html body #layout #content.login .form_container .form_capsule {
+  width: 360px;
+  margin: 0 auto; }
+  html body #layout #content.login .form_container .form_capsule .logo {
+    height: 360px;
+    padding: 10px;
+    border-radius: 7%;
+    border: dashed 1px #777777; }
+    html body #layout #content.login .form_container .form_capsule .logo div {
+      border-radius: 7%;
+      color: #fff;
+      background-color: #337ab7;
+      border-color: #2e6da4; }
+      html body #layout #content.login .form_container .form_capsule .logo div:focus, html body #layout #content.login .form_container .form_capsule .logo div.focus {
+        color: #fff;
+        background-color: #286090;
+        border-color: #122b40; }
+      html body #layout #content.login .form_container .form_capsule .logo div:hover {
+        color: #fff;
+        background-color: #286090;
+        border-color: #204d74; }
+      html body #layout #content.login .form_container .form_capsule .logo div:active, html body #layout #content.login .form_container .form_capsule .logo div.active,
+      .open > html body #layout #content.login .form_container .form_capsule .logo div.dropdown-toggle {
+        color: #fff;
+        background-color: #286090;
+        border-color: #204d74; }
+        html body #layout #content.login .form_container .form_capsule .logo div:active:hover, html body #layout #content.login .form_container .form_capsule .logo div:active:focus, html body #layout #content.login .form_container .form_capsule .logo div:active.focus, html body #layout #content.login .form_container .form_capsule .logo div.active:hover, html body #layout #content.login .form_container .form_capsule .logo div.active:focus, html body #layout #content.login .form_container .form_capsule .logo div.active.focus,
+        .open > html body #layout #content.login .form_container .form_capsule .logo div.dropdown-toggle:hover,
+        .open > html body #layout #content.login .form_container .form_capsule .logo div.dropdown-toggle:focus,
+        .open > html body #layout #content.login .form_container .form_capsule .logo div.dropdown-toggle.focus {
+          color: #fff;
+          background-color: #204d74;
+          border-color: #122b40; }
+      html body #layout #content.login .form_container .form_capsule .logo div:active, html body #layout #content.login .form_container .form_capsule .logo div.active,
+      .open > html body #layout #content.login .form_container .form_capsule .logo div.dropdown-toggle {
+        background-image: none; }
+      html body #layout #content.login .form_container .form_capsule .logo div.disabled:hover, html body #layout #content.login .form_container .form_capsule .logo div.disabled:focus, html body #layout #content.login .form_container .form_capsule .logo div.disabled.focus, html body #layout #content.login .form_container .form_capsule .logo div[disabled]:hover, html body #layout #content.login .form_container .form_capsule .logo div[disabled]:focus, html body #layout #content.login .form_container .form_capsule .logo div[disabled].focus,
+      fieldset[disabled] html body #layout #content.login .form_container .form_capsule .logo div:hover,
+      fieldset[disabled] html body #layout #content.login .form_container .form_capsule .logo div:focus,
+      fieldset[disabled] html body #layout #content.login .form_container .form_capsule .logo div.focus {
+        background-color: #337ab7;
+        border-color: #2e6da4; }
+      html body #layout #content.login .form_container .form_capsule .logo div .badge {
+        color: #337ab7;
+        background-color: #fff; }
+      html body #layout #content.login .form_container .form_capsule .logo div:hover {
+        transition: 0.2s ease; }
+  html body #layout #content.login .form_container .form_capsule h1 {
+    margin: 30px 0; }
+  html body #layout #content.login .form_container .form_capsule .others_actions {
+    margin-top: 10px; }
+  html body #layout #content.login .form_container .form_capsule .cancel {
+    margin-top: 15px; }
 
-#content.news-list .text-content .table tbody tr.news td {
-  text-align: justify;
-  border: 0;
-  height: 220px; }
-
-#content.news-list .text-content .table tbody tr.news .img, #content.news-list .text-content .table tbody tr.news .content, #content.news-list .text-content .table tbody tr.news .button {
-  vertical-align: middle; }
-  #content.news-list .text-content .table tbody tr.news .img a, #content.news-list .text-content .table tbody tr.news .content a, #content.news-list .text-content .table tbody tr.news .button a {
-    padding: 0;
-    background-color: transparent; }
-    #content.news-list .text-content .table tbody tr.news .img a:hover, #content.news-list .text-content .table tbody tr.news .content a:hover, #content.news-list .text-content .table tbody tr.news .button a:hover {
-      opacity: 0.7;
-      transition: opacity 0.2s ease; }
-
-#content.news-list .text-content .table tbody tr.news .img {
-  padding-left: 40px; }
-  #content.news-list .text-content .table tbody tr.news .img a {
-    border-radius: 50%;
-    border: solid 1px #ccc; }
-    #content.news-list .text-content .table tbody tr.news .img a img {
-      padding: 10px; }
-
-#content.news-list .text-content .table tbody tr.news .content h3 {
-  margin: 5px 0; }
-
-#content.news-list .text-content .table tbody tr.news .content .date, #content.news-list .text-content .table tbody tr.news .content .category, #content.news-list .text-content .table tbody tr.news .content .comments {
-  display: inline-block; }
-
-#content.news-list .text-content .table tbody tr.news .content .category {
-  margin-left: 20px; }
-
-#content.news-list .text-content .table tbody tr.news .content .comments {
-  color: #337ab7;
-  margin-left: 20px; }
-
-#content.news-list .text-content .table tbody tr.news .content .sum_up {
-  margin-top: 8px; }
-
-#content.news-list .text-content .table tbody tr.news .button {
-  padding-right: 40px; }
-  #content.news-list .text-content .table tbody tr.news .button button {
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    background-color: transparent;
-    border: solid 1px #ccc; }
-    #content.news-list .text-content .table tbody tr.news .button button i.fa {
-      font-size: 40px;
-      color: #337ab7; }
-
-#content.news-list .text-content .table tfoot tr.pagination-container td {
-  padding: 0;
-  border-top: 0; }
-
-#content.news-detail .text-content .container h2 {
-  margin-bottom: 10px; }
-
-#content.news-detail .text-content .container .date {
-  margin-bottom: 45px; }
-
-#content.news-detail .text-content .container .return button {
-  background-color: transparent;
-  border: solid 1px #ccc; }
-
+/***********************************************************************************************************************
+ * EXTRA LARGE DEVICES DESKTOPS : 1920 & MORE
+ **********************************************************************************************************************/
+/***********************************************************************************************************************
+ * LARGE DEVICES DESKTOPS : 1919 <=> 1200 (LG)
+ **********************************************************************************************************************/
+/***********************************************************************************************************************
+ * MEDIUM DEVICES DESKTOPS : : 1199 <=> 992 (MD)
+ **********************************************************************************************************************/
+/***********************************************************************************************************************
+ * SMALL DEVICES TABLETS : 991 <=> 768 (SM)
+ **********************************************************************************************************************/
 /***********************************************************************************************************************
  * EXTRA SMALL DEVICES : 767 & LESS (SM)
  **********************************************************************************************************************/
 @media screen and (max-width: 767px) {
-  #content.news-list .text-content .table tr.news td.content {
-    padding: 30px 20px; }
-    #content.news-list .text-content .table tr.news td.content div.date, #content.news-list .text-content .table tr.news td.content div.category, #content.news-list .text-content .table tr.news td.content div.comments {
-      display: block;
-      margin: 0; }
-    #content.news-list .text-content .table tr.news td.content .button.mobile {
-      padding: 10px 0 0; }
-      #content.news-list .text-content .table tr.news td.content .button.mobile button {
-        border-radius: 6px;
-        width: auto;
+  html body #layout #content.login {
+    height: auto; }
+    html body #layout #content.login .container {
+      height: auto; }
+      html body #layout #content.login .container div.display-table {
+        display: inherit;
         height: auto; }
-        #content.news-list .text-content .table tr.news td.content .button.mobile button > i.fa {
-          font-size: 16px; } }
+        html body #layout #content.login .container div.display-table .form_container {
+          display: inherit; }
+          html body #layout #content.login .container div.display-table .form_container .form_capsule {
+            width: 290px;
+            margin: 30px auto; }
+            html body #layout #content.login .container div.display-table .form_container .form_capsule .logo {
+              height: 290px;
+              border: none;
+              padding: 0; }
+              html body #layout #content.login .container div.display-table .form_container .form_capsule .logo div {
+                padding: 15px;
+                border-radius: 5%; }
+                html body #layout #content.login .container div.display-table .form_container .form_capsule .logo div img {
+                  width: 260px;
+                  height: 260px; }
+            html body #layout #content.login .container div.display-table .form_container .form_capsule h1 {
+              font-size: 29px; }
+            html body #layout #content.login .container div.display-table .form_container .form_capsule .others_actions {
+              margin: 20px 0; }
+              html body #layout #content.login .container div.display-table .form_container .form_capsule .others_actions a {
+                display: block;
+                float: none !important;
+                margin-top: 10px; }
+            html body #layout #content.login .container div.display-table .form_container .form_capsule .cancel {
+              float: none !important; } }
 
-/*# sourceMappingURL=app.news.css.map */
+/*# sourceMappingURL=app.auth.css.map */

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
@@ -42,6 +43,18 @@ abstract class Controller extends BaseController
             Javascript::put([
                 'modal_alert' => true,
             ]);
+        }
+
+        // we manage the Carbon locale
+        switch (config('app.locale')) {
+            case 'fr':
+                setlocale(LC_TIME, 'fr_FR.UTF-8');
+                Carbon::setLocale('fr');
+                break;
+            case 'en':
+                setlocale(LC_TIME, 'en_GB.UTF-8');
+                Carbon::setLocale('en');
+                break;
         }
     }
 }

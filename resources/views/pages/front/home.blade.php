@@ -39,58 +39,60 @@
             <ul class="glide__bullets"></ul>
         </div>
 
-        <div id="last_news" class="text-content">
-            <div class="container">
-                <h2><i class="fa fa-paper-plane"></i> {{ trans('home.page.title.last_news') }}</h2>
-                <hr>
-                <table class="table table-striped table-hover">
-                    <tbody>
-                        @foreach($last_news as $key => $news)
-                            <tr class="news">
-                                <td class="img hidden-xs">
-                                    <a class="btn btn-default" href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}" role="button" title="{{ $news->title }}">
-                                        <img class="img-circle" width="150" height="150" src="{{ $news->imagePath($news->image, 'image', 'list') }}" alt="{{ $news->title }}">
-                                    </a>
-                                </td>
-                                <td class="content">
-                                    <h3>
-                                        <a href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}"><i class="fa fa-newspaper-o"></i> {{ $news->title }}</a>
-                                    </h3>
-                                    <div class="date">
-                                        <i class="fa fa-clock-o"></i> {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $news->released_at)->format('d/m/Y H:i') }}
-                                    </div>
-                                    <div class="category {{ config('news.category.' . $news->category_id) }}" >
-                                        <i class="fa fa-cube"></i> {{ trans('news.config.category.' . config('news.category.' . $news->category_id)) }}
-                                    </div>
-                                    <div class="comments">
-                                        <i class="fa fa-comments"></i> <a href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}#disqus_thread" title="Commentaires"></a>
-                                    </div>
-                                    <div class="sum_up">
-                                        {{ str_limit(strip_tags($news->content), 250) }}
-                                    </div>
-                                </td>
-                                <td class="button hidden-xs">
-                                    <a href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}">
-                                        <button class="btn btn-default" role="button">
-                                            <i class="fa fa-chevron-circle-right"></i>
-                                        </button>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr class="news visible-xs">
-                                <td class="button mobile text-right">
-                                    <a href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}">
-                                        <button class="btn" role="button">
-                                            <i class="fa fa-chevron-circle-right"></i> {{ trans('global.action.more') }}
-                                        </button>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+        @if(!$last_news->isEmpty())
+            <div id="last_news" class="text-content">
+                <div class="container">
+                    <h2><i class="fa fa-paper-plane"></i> {{ trans('home.page.title.last_news') }}</h2>
+                    <hr>
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                            @foreach($last_news as $key => $news)
+                                <tr class="news">
+                                    <td class="img hidden-xs">
+                                        <a class="btn btn-default" href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}" role="button" title="{{ $news->title }}">
+                                            <img class="img-circle" width="150" height="150" src="{{ $news->imagePath($news->image, 'image', 'list') }}" alt="{{ $news->title }}">
+                                        </a>
+                                    </td>
+                                    <td class="content">
+                                        <h3>
+                                            <a href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}"><i class="fa fa-newspaper-o"></i> {{ $news->title }}</a>
+                                        </h3>
+                                        <div class="date">
+                                            <i class="fa fa-clock-o"></i> {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $news->released_at)->format('d/m/Y H:i') }}
+                                        </div>
+                                        <div class="category {{ config('news.category.' . $news->category_id) }}" >
+                                            <i class="fa fa-cube"></i> {{ trans('news.config.category.' . config('news.category.' . $news->category_id)) }}
+                                        </div>
+                                        <div class="comments">
+                                            <i class="fa fa-comments"></i> <a href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}#disqus_thread" title="Commentaires"></a>
+                                        </div>
+                                        <div class="sum_up">
+                                            {{ str_limit(strip_tags($news->content), 250) }}
+                                        </div>
+                                    </td>
+                                    <td class="button hidden-xs">
+                                        <a href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}">
+                                            <button class="btn btn-default" role="button">
+                                                <i class="fa fa-chevron-circle-right"></i>
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr class="news visible-xs">
+                                    <td class="button mobile text-right">
+                                        <a href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}">
+                                            <button class="btn" role="button">
+                                                <i class="fa fa-chevron-circle-right"></i> {{ trans('global.action.more') }}
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        @endif
 
         <div id="una-club" class="text-content">
             <div class="container">

@@ -18,7 +18,11 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\Install\ProjectInstall::class,
         \App\Console\Commands\Install\NpmInstall::class,
         \App\Console\Commands\Install\SymLinksPrepare::class,
+        \App\Console\Commands\Install\ProjectOptimize::class,
         \App\Console\Commands\Database\UsersAndRelatedTablesClean::class,
+        \App\Console\Commands\Database\DropDatabase::class,
+        \App\Console\Commands\Database\ResetDatabase::class,
+        \App\Console\Commands\Image\ImageGenerate::class,
         \App\Console\Commands\Image\ImageGenerate::class,
     ];
 

@@ -8901,31 +8901,85 @@ html body #layout #cookie_bar {
             font-size: 40px;
             margin: 0 8px; }
     html body #layout #footer_layout #footer_color_fill {
-      height: 127px; } }
+      height: 128px; } }
 
-@media (max-width: 550px) {
-  .big-container {
-    display: none; } }
+html body #layout #content.leading-team .team {
+  margin: 0 0 100px 0; }
+  html body #layout #content.leading-team .team:last-of-type {
+    margin: 0; }
+  html body #layout #content.leading-team .team .title {
+    margin: 0 0 15px;
+    padding: 0; }
+    html body #layout #content.leading-team .team .title .picto {
+      width: 40px; }
+      html body #layout #content.leading-team .team .title .picto div {
+        text-align: center;
+        height: 40px;
+        width: 40px; }
+      html body #layout #content.leading-team .team .title .picto i.fa {
+        font-size: 30px;
+        margin: 0;
+        padding: 0;
+        opacity: 0.5; }
+        html body #layout #content.leading-team .team .title .picto i.fa:hover {
+          -webkit-animation: spin 1s linear infinite;
+          animation: spin 1s linear infinite;
+          transition: 2s ease;
+          opacity: 1; }
+    html body #layout #content.leading-team .team .title h3 {
+      margin: 0;
+      padding: 0; }
+  html body #layout #content.leading-team .team .subtitle {
+    margin: 0 0 0 13px; }
+  html body #layout #content.leading-team .team .member {
+    display: inline-block;
+    margin: 15px;
+    padding: 0; }
+    html body #layout #content.leading-team .team .member:hover {
+      opacity: 0.7;
+      transition: 0.2s ease; }
+    html body #layout #content.leading-team .team .member h4, html body #layout #content.leading-team .team .member h5 {
+      margin: 0;
+      text-align: center;
+      width: 145px; }
+    html body #layout #content.leading-team .team .member h4 {
+      font-size: 18px;
+      height: 50px; }
+      html body #layout #content.leading-team .team .member h4 span {
+        padding: 5px 0 0; }
+    html body #layout #content.leading-team .team .member h5 {
+      padding: 0;
+      height: 35px; }
+      html body #layout #content.leading-team .team .member h5 span {
+        vertical-align: top; }
+  html body #layout #content.leading-team .team.student_leading_board i.fa:hover {
+    color: #2D3E4F; }
+  html body #layout #content.leading-team .team.leading_board i.fa:hover {
+    color: #75706B; }
+  html body #layout #content.leading-team .team.executive_committee i.fa:hover {
+    color: #503B2D; }
+  html body #layout #content.leading-team .team.employee i.fa:hover {
+    color: #652623; }
 
-@media (min-width: 550px) {
-  .small-container {
-    display: none; } }
+/***********************************************************************************************************************
+ * EXTRA LARGE DEVICES DESKTOPS : 1920 & MORE
+ **********************************************************************************************************************/
+/***********************************************************************************************************************
+ * LARGE DEVICES DESKTOPS : 1919 <=> 1200 (LG)
+ **********************************************************************************************************************/
+/***********************************************************************************************************************
+ * MEDIUM DEVICES DESKTOPS : : 1199 <=> 992 (MD)
+ **********************************************************************************************************************/
+/***********************************************************************************************************************
+ * SMALL DEVICES TABLETS : 991 <=> 768 (SM)
+ **********************************************************************************************************************/
+/***********************************************************************************************************************
+ * CUSTOM DEVICE SIZE : 767 & LESS (SM)
+ **********************************************************************************************************************/
+@media screen and (max-width: 767px) {
+  html body #layout #content.leading-team .text-content .container .team {
+    text-align: center; }
+    html body #layout #content.leading-team .text-content .container .team .title .picto, html body #layout #content.leading-team .text-content .container .team .title h3 {
+      display: inline-block; } }
 
-/* Responsive iFrame */
-.responsive-iframe-container {
-  position: relative;
-  padding-bottom: 56.25%;
-  padding-top: 30px;
-  min-height: 500px;
-  overflow: hidden; }
-
-.responsive-iframe-container iframe,
-.vresponsive-iframe-container object,
-.vresponsive-iframe-container embed {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%; }
-
-/*# sourceMappingURL=app.calendar.css.map */
+/*# sourceMappingURL=app.leading-team.css.map */

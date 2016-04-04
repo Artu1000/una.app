@@ -8,14 +8,27 @@ class EShopArticlesTableSeeder extends Seeder
     {
         $e_shop_article_repo = app(\App\Repositories\EShop\EShopArticleRepositoryInterface::class);
 
+        // we remove all the files in the config folder
+        $files = glob(storage_path('app/e-shop/*'));
+        foreach ($files as $file) {
+            if (is_file($file))
+                unlink($file);
+        }
+
+        // we create the folder if it doesn't exist
+        if (!is_dir($storage_path = storage_path('app/e-shop'))) {
+            if (!is_dir($path = storage_path('app'))) {
+                mkdir($path);
+            }
+            mkdir($path . '/e-shop');
+        }
+
         $e_shop_article_repo->createMultiple([
             [
                 'category_id' => config('e-shop.article_category_key.textile'),
                 'availability_type_id' => config('e-shop.availability_type_key.in-stock'),
                 'title' => 'Combinaison règlementaire',
-                'description' => 'Supplex noir - bandes blanches verticales tronc et cuisses -
-                logo UNA brodé poitrine gauche - logo "Ville de Nantes" sérigraphié cuisse droite -
-                "Université Nantes Aviron" sérigraphié dos - obligatoire pour la compétition',
+                'description' => 'Supplex noir - bandes blanches verticales tronc et cuisses - logo UNA brodé poitrine gauche - logo "Ville de Nantes" sérigraphié cuisse droite - "Université Nantes Aviron" sérigraphié dos - obligatoire pour la compétition',
                 'size_s' => 1,
                 'size_m' => 1,
                 'size_l' => 1,
@@ -27,8 +40,7 @@ class EShopArticlesTableSeeder extends Seeder
                 'category_id' => config('e-shop.article_category_key.textile'),
                 'availability_type_id' => config('e-shop.availability_type_key.depleted'),
                 'title' => 'Haut synthétique long',
-                'description' => 'Supplex noir - Bandes blanches verticales bras et tronc -
-                Logo UNA brodé poitrine gauche',
+                'description' => 'Supplex noir - Bandes blanches verticales bras et tronc - Logo UNA brodé poitrine gauche',
                 'size_s' => 1,
                 'size_m' => 1,
                 'size_l' => 1,
@@ -39,8 +51,7 @@ class EShopArticlesTableSeeder extends Seeder
                 'category_id' => config('e-shop.article_category_key.textile'),
                 'availability_type_id' => config('e-shop.availability_type_key.on-order'),
                 'title' => 'Gilet technique',
-                'description' => 'Polaire noir et conforto blanc - fermeture éclaire col -
-                logo UNA serigraphié poitrine gauche - "Université Nantes Aviron" sérigraphié dos - poche à clé dos',
+                'description' => 'Polaire noir et conforto blanc - fermeture éclaire col - logo UNA serigraphié poitrine gauche - "Université Nantes Aviron" sérigraphié dos - poche à clé dos',
                 'size_s' => 1,
                 'size_m' => 1,
                 'size_l' => 1,
@@ -87,25 +98,21 @@ class EShopArticlesTableSeeder extends Seeder
                 'category_id' => config('e-shop.article_category_key.goodies'),
                 'availability_type_id' => config('e-shop.availability_type_key.in-stock'),
                 'title' => 'Gobelet plastique sérigraphié',
-                'description' => 'Equipez-vous de votre gobelet réutilisable, votre nouveau partenaire soirée,
-                estampillé des logos du club Université Nantes Aviron (UNA) et des
-                Régataïades Internationales de Nantes',
+                'description' => 'Equipez-vous de votre gobelet réutilisable, votre nouveau partenaire soirée, estampillé des logos du club Université Nantes Aviron (UNA) et des Régataïades Internationales de Nantes',
                 'price' => 0.95
             ],
             [
                 'category_id' => config('e-shop.article_category_key.goodies'),
                 'availability_type_id' => config('e-shop.availability_type_key.in-stock'),
                 'title' => 'Tour de cou porte-gobelet',
-                'description' => 'Compagnon de toutes vos soirées, optez pour le tour de cou permettant de fixer
-                votre gobelet UNA / Régataïades lors de ses cours moments d\'inutilité',
+                'description' => 'Compagnon de toutes vos soirées, optez pour le tour de cou permettant de fixer votre gobelet UNA / Régataïades lors de ses cours moments d\'inutilité',
                 'price' => 0.95
             ],
             [
                 'category_id' => config('e-shop.article_category_key.goodies'),
                 'availability_type_id' => config('e-shop.availability_type_key.in-stock'),
                 'title' => 'Accroche ceinture porte-gobelet',
-                'description' => 'Compagnon de toutes vos soirées, optez pour l\'accroche ceinture permettant de fixer
-                votre gobelet UNA / Régataïades lors de ses cours moments d\'inutilité',
+                'description' => 'Compagnon de toutes vos soirées, optez pour l\'accroche ceinture permettant de fixer votre gobelet UNA / Régataïades lors de ses cours moments d\'inutilité',
                 'price' => 0.95
             ],
         ]);

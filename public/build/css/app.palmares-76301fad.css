@@ -8901,94 +8901,197 @@ html body #layout #cookie_bar {
             font-size: 40px;
             margin: 0 8px; }
     html body #layout #footer_layout #footer_color_fill {
-      height: 127px; } }
+      height: 128px; } }
 
-html body #layout #content.schedule .schedules .slot {
-  width: 35px;
-  height: 35px;
-  border-top: solid 2px transparent;
-  border-bottom: solid 2px transparent; }
-  html body #layout #content.schedule .schedules .slot.start {
-    border-top: 2px solid #F9F9F9; }
-  html body #layout #content.schedule .schedules .slot.stop {
-    border-bottom: 2px solid #F9F9F9; }
-  html body #layout #content.schedule .schedules .slot.suaps {
-    background-color: #1abc9c; }
-  html body #layout #content.schedule .schedules .slot.rowing-school {
-    background-color: #339dff; }
-  html body #layout #content.schedule .schedules .slot.competition {
-    background-color: #ea6153; }
-  html body #layout #content.schedule .schedules .slot.all-publics {
-    background-color: #a66bbe; }
-
-html body #layout #content.schedule .schedules .legend {
-  margin: 20px 0;
-  display: table; }
-  html body #layout #content.schedule .schedules .legend .line {
-    display: table-cell;
-    vertical-align: middle;
-    padding-right: 30px; }
-    html body #layout #content.schedule .schedules .legend .line .name {
-      padding-left: 5px; }
-
-html body #layout #content.schedule .schedules .day {
-  border: solid #fff 1px; }
-  html body #layout #content.schedule .schedules .day:first-of-type {
-    border-left: 0; }
-  html body #layout #content.schedule .schedules .day:last-of-type {
-    border-right: 0; }
-  html body #layout #content.schedule .schedules .day table {
-    width: 100%;
-    margin: 0; }
-
-html body #layout #content.schedule .schedules .informations {
-  margin-top: 60px; }
+html body #layout #content ul.timeline {
+  list-style: none;
+  padding: 20px 0 20px;
+  position: relative; }
+  html body #layout #content ul.timeline:before {
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 3px;
+    background-color: #eeeeee;
+    left: 50%;
+    margin-left: -1.5px; }
+  html body #layout #content ul.timeline li {
+    margin: 0 0 20px;
+    position: relative; }
+    html body #layout #content ul.timeline li:before {
+      content: " ";
+      display: table; }
+    html body #layout #content ul.timeline li:after {
+      content: " ";
+      display: table;
+      clear: both; }
+    html body #layout #content ul.timeline li .timeline-panel {
+      width: 46%;
+      float: left;
+      border: 1px solid #d4d4d4;
+      border-radius: 2px;
+      padding: 20px;
+      position: relative;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+      border-radius: 7px; }
+      html body #layout #content ul.timeline li .timeline-panel h3, html body #layout #content ul.timeline li .timeline-panel h4 {
+        margin: 0 0 0 10px; }
+      html body #layout #content ul.timeline li .timeline-panel.title-panel {
+        background-color: #eee; }
+        html body #layout #content ul.timeline li .timeline-panel.title-panel .logo div {
+          background-color: #fff;
+          border-radius: 50%;
+          width: 60px;
+          min-width: 60px;
+          height: 60px; }
+          html body #layout #content ul.timeline li .timeline-panel.title-panel .logo div img {
+            display: inline-block;
+            vertical-align: middle; }
+        html body #layout #content ul.timeline li .timeline-panel.title-panel:before {
+          position: absolute;
+          top: 26px;
+          right: -15px;
+          display: inline-block;
+          border-top: 15px solid transparent;
+          border-left: 15px solid #ccc;
+          border-right: 0 solid #ccc;
+          border-bottom: 15px solid transparent;
+          content: " "; }
+        html body #layout #content ul.timeline li .timeline-panel.title-panel:after {
+          position: absolute;
+          top: 27px;
+          right: -14px;
+          display: inline-block;
+          border-top: 14px solid transparent;
+          border-left: 14px solid #eee;
+          border-right: 0 solid #eee;
+          border-bottom: 14px solid transparent;
+          content: " "; }
+      html body #layout #content ul.timeline li .timeline-panel.result-panel h4 {
+        font-size: 16px;
+        /* Lato (medium, normal) */
+        font-family: "Lato Medium";
+        font-weight: 400;
+        font-style: normal;
+        margin-bottom: 10px; }
+      html body #layout #content ul.timeline li .timeline-panel.result-panel table {
+        margin: 0;
+        font-size: 12px; }
+        html body #layout #content ul.timeline li .timeline-panel.result-panel table tr td {
+          vertical-align: middle; }
+          html body #layout #content ul.timeline li .timeline-panel.result-panel table tr td.position {
+            min-width: 50px; }
+          html body #layout #content ul.timeline li .timeline-panel.result-panel table tr td.boat {
+            min-width: 65px; }
+          html body #layout #content ul.timeline li .timeline-panel.result-panel table tr td .medal {
+            background-color: #EEEEEE;
+            padding: 5px;
+            border-radius: 50%; }
+            html body #layout #content ul.timeline li .timeline-panel.result-panel table tr td .medal i.fa {
+              font-size: 16 16px; }
+              html body #layout #content ul.timeline li .timeline-panel.result-panel table tr td .medal i.fa.gold {
+                color: #F4C300; }
+              html body #layout #content ul.timeline li .timeline-panel.result-panel table tr td .medal i.fa.silver {
+                color: #818181; }
+              html body #layout #content ul.timeline li .timeline-panel.result-panel table tr td .medal i.fa.bronze {
+                color: #CD7F32; }
+    html body #layout #content ul.timeline li .timeline-badge {
+      color: #fff;
+      line-height: 50px;
+      text-align: center;
+      position: absolute;
+      margin-left: -25px;
+      z-index: 100;
+      background-color: #eee;
+      border-radius: 50%; }
+      html body #layout #content ul.timeline li .timeline-badge.red {
+        color: #DF0024; }
+      html body #layout #content ul.timeline li .timeline-badge.blue {
+        color: #0085C7; }
+      html body #layout #content ul.timeline li .timeline-badge.yellow {
+        color: #F4C300; }
+      html body #layout #content ul.timeline li .timeline-badge.green {
+        color: #009F3D; }
+      html body #layout #content ul.timeline li .timeline-badge.black {
+        color: #000; }
+    html body #layout #content ul.timeline li.timeline-inverted .timeline-panel {
+      float: right; }
+      html body #layout #content ul.timeline li.timeline-inverted .timeline-panel:before {
+        border-left-width: 0;
+        border-right-width: 15px;
+        left: -15px;
+        right: auto; }
+      html body #layout #content ul.timeline li.timeline-inverted .timeline-panel:after {
+        border-left-width: 0;
+        border-right-width: 14px;
+        left: -14px;
+        right: auto; }
 
 /***********************************************************************************************************************
  * EXTRA LARGE DEVICES DESKTOPS : 1920 & MORE
  **********************************************************************************************************************/
+@media screen and (min-width: 1920px) {
+  html body #layout #content ul.timeline li .timeline-badge {
+    width: 50px;
+    height: 50px;
+    left: 50%;
+    top: 16px; }
+    html body #layout #content ul.timeline li .timeline-badge i.fa {
+      font-size: 40px;
+      padding-top: 5px; } }
+
 /***********************************************************************************************************************
  * LARGE DEVICES DESKTOPS : 1919 <=> 1200 (LG)
  **********************************************************************************************************************/
+@media screen and (max-width: 1919px) and (min-width: 1200px) {
+  html body #layout #content ul.timeline li .timeline-badge {
+    width: 50px;
+    height: 50px;
+    left: 50%;
+    top: 16px; }
+    html body #layout #content ul.timeline li .timeline-badge i.fa {
+      font-size: 40px;
+      padding-top: 5px; } }
+
 /***********************************************************************************************************************
  * MEDIUM DEVICES DESKTOPS : : 1199 <=> 992 (MD)
  **********************************************************************************************************************/
+@media screen and (max-width: 1199px) and (min-width: 992px) {
+  html body #layout #content ul.timeline li .timeline-badge {
+    width: 40px;
+    height: 40px;
+    left: 50.6%;
+    top: 22px; }
+    html body #layout #content ul.timeline li .timeline-badge i.fa {
+      font-size: 30px;
+      padding-top: 5px; } }
+
 /***********************************************************************************************************************
  * SMALL DEVICES TABLETS : 991 <=> 768 (SM)
  **********************************************************************************************************************/
 @media screen and (max-width: 991px) and (min-width: 768px) {
-  html body #layout #content.schedule .schedules .legend .line {
-    padding-right: 0;
-    display: block;
-    margin-bottom: 5px; }
-    html body #layout #content.schedule .schedules .legend .line .slot {
-      width: 25px;
-      height: 25px; } }
+  html body #layout #content ul.timeline li .timeline-badge {
+    width: 25px;
+    height: 25px;
+    left: 52%;
+    top: 29px; }
+    html body #layout #content ul.timeline li .timeline-badge i.fa {
+      font-size: 20px;
+      padding-top: 2.5px; } }
 
 /***********************************************************************************************************************
  * EXTRA SMALL DEVICES : 767 & LESS (SM)
  **********************************************************************************************************************/
 @media screen and (max-width: 767px) {
-  html body #layout #content.schedule .schedules .slot {
-    width: 5px;
-    height: 18px; }
-    html body #layout #content.schedule .schedules .slot.hour {
-      font-size: 10px;
-      width: 25px;
-      padding: 0; }
-    html body #layout #content.schedule .schedules .slot .day {
-      display: block;
-      visibility: hidden;
-      width: 10px;
-      margin: 0 auto; }
-    html body #layout #content.schedule .schedules .slot span.day:first-letter {
-      visibility: visible; }
-  html body #layout #content.schedule .schedules .legend .line {
-    padding-right: 0;
-    display: block;
-    margin-bottom: 5px; }
-    html body #layout #content.schedule .schedules .legend .line .slot {
-      width: 20px;
-      height: 20px; } }
+  html body #layout #content ul.timeline:before {
+    display: none; }
+  html body #layout #content ul.timeline li .timeline-panel {
+    float: none;
+    width: 100%; }
+    html body #layout #content ul.timeline li .timeline-panel.title-panel:before, html body #layout #content ul.timeline li .timeline-panel.title-panel:after {
+      display: none; }
+    html body #layout #content ul.timeline li .timeline-panel.result-panel:last-of-type {
+      margin-bottom: 80px; } }
 
-/*# sourceMappingURL=app.schedule.css.map */
+/*# sourceMappingURL=app.palmares.css.map */

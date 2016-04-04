@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Install;
 
+use Console;
 use Illuminate\Console\Command;
 
 class StoragePrepare extends Command
@@ -21,9 +22,7 @@ class StoragePrepare extends Command
     protected $description = 'Prepare the storage folder to avoid errors on installation';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
+     * StoragePrepare constructor.
      */
     public function __construct()
     {
@@ -37,39 +36,39 @@ class StoragePrepare extends Command
      */
     public function handle()
     {
-        $this->line('Preparing storage folders ...');
-
         // we set the folder to verify
         $to_create = [
             storage_path(),
             storage_path('framework'),
             storage_path('framework/cache'),
-            storage_path('framework/meta'),
             storage_path('framework/sessions'),
             storage_path('framework/views'),
             storage_path('app'),
         ];
         // we execute the verification
         $created = [];
-        foreach($to_create as $folder){
-            if(!is_dir($folder)){
+        foreach ($to_create as $folder) {
+            if (!is_dir($folder)) {
                 mkdir($folder);
                 $created[] = $folder;
             }
         }
 
-        if(!empty($created)){
+        if (!empty($created)) {
             $this->info('✔ Storage folder prepared. Folders created :');
-            foreach($created as $folder){
-                $this->info('- ' . $folder);
+            foreach ($created as $folder) {
+                $this->line('- ' . $folder);
             }
         } else {
-            $this->info('✔ No folder were missing' . PHP_EOL);
+            $this->info('✔ No folder were missing');
         }
 
         // settings.json existence verification
         if (!is_file(storage_path('app/settings/settings.json'))) {
-            \Console::execWithOutput('php artisan db:seed --class=SettingsTableSeeder', $this);
+            Console::execWithOutput('php artisan db:seed --class=SettingsTableSeeder', $this);
         }
+
+        // we give the correct rights to the storage folder
+        exec('chmod -R g+w storage');
     }
 }
