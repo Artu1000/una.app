@@ -8,6 +8,7 @@ use Cartalyst\Sentinel\Laravel\SentinelServiceProvider;
 use Cviebrock\ImageValidator\ImageValidatorServiceProvider;
 use DaveJamesMiller\Breadcrumbs\ServiceProvider as BreadcrumbsServiceProvider;
 use Dimsav\Translatable\TranslatableServiceProvider;
+use Illuminate\Support\ServiceProvider;
 use Intervention\Image\ImageServiceProvider;
 use Laracasts\Generators\GeneratorsServiceProvider;
 use Laracasts\Utilities\JavaScript\JavaScriptServiceProvider;
