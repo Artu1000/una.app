@@ -17,3 +17,11 @@ composer.lock
 
 # deployer
 deploy.php
+
+#symlinks
+public/img/news
+public/img/partners
+public/img/schedules
+public/img/settings
+public/img/slides
+public/img/users

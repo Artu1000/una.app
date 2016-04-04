@@ -2,6 +2,9 @@
 
 namespace App\Console\Commands\Install;
 
+use App\Repositories\News\NewsRepositoryInterface;
+use App\Repositories\Partner\PartnerRepositoryInterface;
+use App\Repositories\Slide\SlideRepositoryInterface;
 use Illuminate\Console\Command;
 
 class SymLinksPrepare extends Command
@@ -21,9 +24,7 @@ class SymLinksPrepare extends Command
     protected $description = 'Prepare the symlinks that allow user to access to storage folders and files';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
+     * SymLinksPrepare constructor.
      */
     public function __construct()
     {
@@ -70,39 +71,23 @@ class SymLinksPrepare extends Command
             ],
             // news
             [
-                'storage' => app(\App\Repositories\News\NewsRepositoryInterface::class)
-                    ->getModel()
-                    ->storagePath(),
-                'public'  => app(\App\Repositories\News\NewsRepositoryInterface::class)
-                    ->getModel()
-                    ->publicPath(),
+                'storage' => app(NewsRepositoryInterface::class)->getModel()->storagePath(),
+                'public'  => app(NewsRepositoryInterface::class)->getModel()->publicPath(),
             ],
             // partners
             [
-                'storage' => app(\App\Repositories\Partner\PartnerRepositoryInterface::class)
-                    ->getModel()
-                    ->storagePath(),
-                'public'  => app(\App\Repositories\Partner\PartnerRepositoryInterface::class)
-                    ->getModel()
-                    ->publicPath(),
+                'storage' => app(PartnerRepositoryInterface::class)->getModel()->storagePath(),
+                'public'  => app(PartnerRepositoryInterface::class)->getModel()->publicPath(),
             ],
             // slides
             [
-                'storage' => app(\App\Repositories\Slide\SlideRepositoryInterface::class)
-                    ->getModel()
-                    ->storagePath(),
-                'public'  => app(\App\Repositories\Slide\SlideRepositoryInterface::class)
-                    ->getModel()
-                    ->publicPath(),
+                'storage' => app(SlideRepositoryInterface::class)->getModel()->storagePath(),
+                'public'  => app(SlideRepositoryInterface::class)->getModel()->publicPath(),
             ],
             // users
             [
-                'storage' => \Sentinel::getUserRepository()
-                    ->createModel()
-                    ->storagePath(),
-                'public'  => \Sentinel::getUserRepository()
-                    ->createModel()
-                    ->publicPath(),
+                'storage' => \Sentinel::getUserRepository()->createModel()->storagePath(),
+                'public'  => \Sentinel::getUserRepository()->createModel()->publicPath(),
             ],
         ];
 
