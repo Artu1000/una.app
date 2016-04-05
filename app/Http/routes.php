@@ -144,8 +144,8 @@ Route::group($group, function () {
     Route::get('/', ['as' => 'home', 'uses' => 'Home\HomeController@show']);
 
     // news
-    Route::get(trans('routes.news.index'), ['as' => 'front.news', 'uses' => 'News\NewsController@index']);
-    Route::get(trans('routes.news.show'), ['as' => 'front.news.show', 'uses' => 'News\NewsController@show']);
+    Route::get(trans('routes.news.index'), ['as' => 'news.index', 'uses' => 'News\NewsController@index']);
+    Route::get(trans('routes.news.show'), ['as' => 'news.show', 'uses' => 'News\NewsController@show']);
 
     // leading team
     Route::get(trans('routes.leading_team.index'), ['as' => 'front.leading_team', 'uses' => 'LeadingTeam\LeadingTeamController@index']);

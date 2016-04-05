@@ -3,6 +3,11 @@
 namespace App\Repositories\Sitemap;
 
 use App\Repositories\BaseRepository;
+use App\Repositories\News\NewsRepositoryInterface;
+use App\Repositories\Page\PageRepositoryInterface;
+use App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface;
+use App\Repositories\Schedule\ScheduleRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Carbon\Carbon;
 
 class SitemapRepository extends BaseRepository implements SitemapRepositoryInterface
@@ -19,14 +24,14 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
     {
         // we get all site pages
         $site_pages = $this->getSitePages();
-        // we only take the last mod colmun from the site pages
+        // we only take the last mod column from the site pages
         $dates = array_column($site_pages, 'last_mod');
         // we sort it
         sort($dates);
         // we get the website last modification date
         $lastmod = last($dates);
         // we get the base url from the website
-        $url = trim(url(), '/') . '/';
+        $url = route('home');
 
         $xml = [];
         $xml[] = '<?xml version="1.0" encoding="UTF-8"?' . '>';
@@ -59,22 +64,22 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
 
         // news
         $site_pages[] = [
-            'url'      => route('front.news'),
-            'last_mod' => app(\App\Repositories\News\NewsRepositoryInterface::class)
+            'url'      => route('news.index'),
+            'last_mod' => app(NewsRepositoryInterface::class)
                 ->orderBy('updated_at', 'desc')
                 ->first()
                 ->updated_at,
         ];
-        $news_list = app(\App\Repositories\News\NewsRepositoryInterface::class)->orderBy('updated_at', 'desc')->all();
+        $news_list = app(NewsRepositoryInterface::class)->orderBy('updated_at', 'desc')->all();
         foreach ($news_list as $news) {
             $site_pages[] = [
-                'url'      => route('front.news.show', $news->key),
+                'url'      => route('news.show', ['id' => $news->id, 'key' => $news->key]),
                 'last_mod' => $news->updated_at,
             ];
         }
 
         // pages
-        $pages_list = app(\App\Repositories\Page\PageRepositoryInterface::class)->orderBy('updated_at', 'desc')->all();
+        $pages_list = app(PageRepositoryInterface::class)->orderBy('updated_at', 'desc')->all();
         foreach ($pages_list as $page) {
             $site_pages[] = [
                 'url'      => route('front.page', $page->key),
@@ -83,20 +88,19 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
         }
 
         // palmares
-        $site_pages[] = [
-            'url'      => route('front.palmares'),
-            'last_mod' => app(\App\Repositories\Palmares\PalmaresEventRepositoryInterface::class)
-                ->orderBy('updated_at', 'desc')
-                ->first()
-                ->updated_at,
-        ];
+//        $site_pages[] = [
+//            'url'      => route('front.palmares'),
+//            'last_mod' => app(\App\Repositories\Palmares\PalmaresEventRepositoryInterface::class)
+//                ->orderBy('updated_at', 'desc')
+//                ->first()
+//                ->updated_at,
+//        ];
 
         // leading team
         $site_pages[] = [
             'url'      => route('front.leading_team'),
-            'last_mod' => app(\App\Repositories\User\UserRepositoryInterface::class)
+            'last_mod' => app(UserRepositoryInterface::class)
                 ->orderBy('updated_at', 'desc')
-                ->where('status', '<', config('user.status_key.association-member'))
                 ->first()
                 ->updated_at,
         ];
@@ -104,7 +108,7 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
         // registration
         $site_pages[] = [
             'url'      => route('front.registration'),
-            'last_mod' => app(\App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface::class)
+            'last_mod' => app(RegistrationPriceRepositoryInterface::class)
                 ->orderBy('updated_at', 'desc')
                 ->first()
                 ->updated_at,
@@ -113,7 +117,7 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
         // schedule
         $site_pages[] = [
             'url'      => route('front.schedule'),
-            'last_mod' => \app(\App\Repositories\Schedule\ScheduleRepositoryInterface::class)
+            'last_mod' => app(ScheduleRepositoryInterface::class)
                 ->orderBy('updated_at', 'desc')
                 ->first()
                 ->updated_at,
@@ -126,13 +130,13 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
         ];
 
         // e-shop
-        $site_pages[] = [
-            'url'      => route('front.e-shop'),
-            'last_mod' => app(\App\Repositories\EShop\EShopArticleRepositoryInterface::class)
-                ->orderBy('updated_at', 'desc')
-                ->first()
-                ->updated_at,
-        ];
+//        $site_pages[] = [
+//            'url'      => route('front.e-shop'),
+//            'last_mod' => app(\App\Repositories\EShop\EShopArticleRepositoryInterface::class)
+//                ->orderBy('updated_at', 'desc')
+//                ->first()
+//                ->updated_at,
+//        ];
 
         return $site_pages;
     }

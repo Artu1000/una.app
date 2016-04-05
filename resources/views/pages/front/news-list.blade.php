@@ -35,13 +35,13 @@
                         @foreach($news_list as $news)
                             <tr class="news">
                                 <td class="img hidden-xs">
-                                    <a class="btn btn-default" href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}" role="button" title="{{ $news->title }}">
+                                    <a class="btn btn-default" href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}" role="button" title="{{ $news->title }}">
                                         <img class="img-circle" width="150" height="150" src="{{ $news->imagePath($news->image, 'image', 'list') }}" alt="{{ $news->title }}">
                                     </a>
                                 </td>
                                 <td class="content">
                                     <h3>
-                                        <a href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}"><i class="fa fa-newspaper-o"></i> {{ $news->title }}</a>
+                                        <a href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}"><i class="fa fa-newspaper-o"></i> {{ $news->title }}</a>
                                     </h3>
                                     <div class="date">
                                         <i class="fa fa-clock-o"></i> {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $news->released_at)->format('d/m/Y H:i') }}
@@ -50,13 +50,13 @@
                                         <i class="fa fa-cube"></i> {{ trans('news.config.category.' . config('news.category.' . $news->category_id)) }}
                                     </div>
                                     <div class="comments">
-                                        <i class="fa fa-comments"></i> <a href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}#disqus_thread" title="Commentaires"></a>
+                                        <i class="fa fa-comments"></i> <a href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}#disqus_thread" title="Commentaires"></a>
                                     </div>
                                     <div class="sum_up">
                                         {{ str_limit(strip_tags($news->content), 250) }}
                                     </div>
                                     <div class="button mobile visible-xs">
-                                        <a href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}">
+                                        <a href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}">
                                             <button class="btn pull-right" role="button">
                                                 <i class="fa fa-chevron-circle-right"></i> Lire plus
                                             </button>
@@ -64,7 +64,7 @@
                                     </div>
                                 </td>
                                 <td class="button hidden-xs">
-                                    <a href="{{ route('front.news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}">
+                                    <a href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}">
                                         <button class="btn" role="button">
                                             <i class="fa fa-chevron-circle-right"></i>
                                         </button>

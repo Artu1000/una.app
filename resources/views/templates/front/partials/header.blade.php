@@ -32,10 +32,10 @@
 
                 <ul class="nav navbar-nav">
                     <li class="menu_tab
-                        @if(\Route::current()->getName() === 'front.news') active
-                        @elseif(\Route::current()->getName() === 'front.news.show') active
+                        @if(\Route::current()->getName() === 'news.index') active
+                        @elseif(\Route::current()->getName() === 'news.show') active
                         @endif">
-                        <a href="{{ URL::route('front.news') }}" title="Actualités">
+                        <a href="{{ route('news.index') }}" title="Actualités">
                             <i class="fa fa-paper-plane"></i> {{ trans('template.front.header.news') }}
                         </a>
                     </li>

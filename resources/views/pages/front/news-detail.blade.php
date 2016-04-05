@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="return">
-                    <a href="{{ route('front.news') }}">
+                    <a href="{{ route('news.index') }}">
                         <button class="btn btn-default"><i class="fa fa-chevron-circle-left"></i></button> <span>Retour</span>
                     </a>
                 </div>
