@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Repositories\Roles\RoleRepositoryInterface;
 use Illuminate\Http\Request;
+use JavaScript;
 use Permission;
 use Sentinel;
 use TableList;
@@ -21,7 +22,7 @@ class PermissionsController extends Controller
         parent::__construct();
 
         // we add js variables
-        \JavaScript::put([
+        JavaScript::put([
             'permissions_separator' => config('permissions.separator'),
         ]);
 

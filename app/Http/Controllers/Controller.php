@@ -40,7 +40,7 @@ abstract class Controller extends BaseController
 
         // load modal if an alert is waiting
         if (session()->get('alert')) {
-            Javascript::put([
+            JavaScript::put([
                 'modal_alert' => true,
             ]);
         }

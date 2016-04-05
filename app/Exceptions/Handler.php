@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use JavaScript;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -62,7 +63,7 @@ class Handler extends ExceptionHandler
     protected function renderHttpException(HttpException $e)
     {
         // load base JS
-        \JavaScript::put([
+        JavaScript::put([
             'base_url' => url('/'),
             'site_name' => config('settings.app_name_' . config('app.locale'))
         ]);

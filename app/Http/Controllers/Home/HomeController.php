@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\News\NewsRepositoryInterface;
 use App\Repositories\Slide\SlideRepositoryInterface;
 use Illuminate\Http\Request;
+use JavaScript;
 use Permission;
 use Sentinel;
 use TableList;
@@ -243,7 +244,7 @@ class HomeController extends Controller
 
         // we get the slides
         $slides = $this->slide->orderBy('position', 'asc')->where('active', true)->get();
-        \JavaScript::put([
+        JavaScript::put([
             'slides_count' => sizeof($slides),
         ]);
 

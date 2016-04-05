@@ -20,7 +20,7 @@ server('production', '51.254.205.240')
     ->user('deploy')
 //    ->password('password')
 //    ->identityFile('~/.ssh/id_rsa.pub', '~/.ssh/id_rsa', 'password')
-    ->env('deploy_path', 'var/www/una');
+    ->env('deploy_path', '/var/www/una');
 
 // project install script
 task('project:install', function () {
