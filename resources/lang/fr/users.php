@@ -76,6 +76,7 @@ return [
             "account"               => "Compte",
             "new_password"          => "Nouveau mot de passe",
             "password_confirm"      => "Confirmation du nouveau mot de passe",
+            "remove_photo"          => "Supprimer la photo",
         ],
     ],
 

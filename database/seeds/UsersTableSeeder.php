@@ -21,6 +21,7 @@ class UsersTableSeeder extends Seeder
             mkdir($path . '/users');
         }
 
+
         // we create a user
         $user = Sentinel::register([
             'last_name' => 'LORENT',
@@ -31,10 +32,21 @@ class UsersTableSeeder extends Seeder
             'board_id' => config('user.board_key.leading_board'),
             'password' => 'admin'
         ], true);
-
         // we attach the user to the admin role
         $admin = \Sentinel::findRoleBySlug('admin');
         $admin->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            $user->imageName('photo'),
+            config('image.settings.logo.extension'),
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
+
 
         // we create a user
         $user = Sentinel::register([
@@ -48,6 +60,17 @@ class UsersTableSeeder extends Seeder
         // we attach the user to the user role
         $user_role = Sentinel::findRoleBySlug('user');
         $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            $user->imageName('photo'),
+            config('image.settings.logo.extension'),
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
 
 
         // we create a user
@@ -61,6 +84,17 @@ class UsersTableSeeder extends Seeder
         ]);
         // we attach the user to the user role
         $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            $user->imageName('photo'),
+            config('image.settings.logo.extension'),
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
 
 
         // we create a user
@@ -73,6 +107,18 @@ class UsersTableSeeder extends Seeder
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            $user->imageName('photo'),
+            config('image.settings.logo.extension'),
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
+
 
         // we create a user
         $user = Sentinel::register([
@@ -84,6 +130,17 @@ class UsersTableSeeder extends Seeder
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            $user->imageName('photo'),
+            config('image.settings.logo.extension'),
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
 
 
         // we create a user
@@ -96,6 +153,17 @@ class UsersTableSeeder extends Seeder
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            $user->imageName('photo'),
+            config('image.settings.logo.extension'),
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
 
 
         // we create a user
@@ -108,6 +176,17 @@ class UsersTableSeeder extends Seeder
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            $user->imageName('photo'),
+            config('image.settings.logo.extension'),
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
 
 
         // we create a user
@@ -120,6 +199,17 @@ class UsersTableSeeder extends Seeder
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            $user->imageName('photo'),
+            config('image.settings.logo.extension'),
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
 
 
         // we create a user
@@ -132,6 +222,17 @@ class UsersTableSeeder extends Seeder
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            $user->imageName('photo'),
+            config('image.settings.logo.extension'),
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
 
 
         // we create a user
@@ -143,6 +244,17 @@ class UsersTableSeeder extends Seeder
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            $user->imageName('photo'),
+            config('image.settings.logo.extension'),
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
 
 
         // we create a user
@@ -154,6 +266,17 @@ class UsersTableSeeder extends Seeder
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            $user->imageName('photo'),
+            config('image.settings.logo.extension'),
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
 
 
         // we create a user
@@ -165,6 +288,17 @@ class UsersTableSeeder extends Seeder
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            $user->imageName('photo'),
+            config('image.settings.logo.extension'),
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
 
 
         // we create a user
@@ -176,6 +310,17 @@ class UsersTableSeeder extends Seeder
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            $user->imageName('photo'),
+            config('image.settings.logo.extension'),
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
 
 
         // we create a user
@@ -187,6 +332,17 @@ class UsersTableSeeder extends Seeder
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            $user->imageName('photo'),
+            config('image.settings.logo.extension'),
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
 
 
         // we create a user
@@ -198,6 +354,17 @@ class UsersTableSeeder extends Seeder
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            $user->imageName('photo'),
+            config('image.settings.logo.extension'),
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
 
 
         // we create a user
@@ -209,5 +376,16 @@ class UsersTableSeeder extends Seeder
             'password' => 'una'
         ]);
         $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/settings/logo-una-dark.png'),
+            $user->imageName('photo'),
+            config('image.settings.logo.extension'),
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
     }
 }

@@ -62,11 +62,11 @@
                                     <i class="fa fa-university"></i> {{ trans('template.front.header.history') }}
                                 </a>
                             </li>
-                            <li class="menu_tab @if(\Route::current()->getName() === 'front.palmares') active @endif">
-                                <a href="{{ route('front.palmares') }}" title="{{ trans('template.front.header.palmares') }}">
-                                    <i class="fa fa-trophy"></i> {{ trans('template.front.header.palmares') }}
-                                </a>
-                            </li>
+                            {{--<li class="menu_tab @if(\Route::current()->getName() === 'front.palmares') active @endif">--}}
+                                {{--<a href="{{ route('front.palmares') }}" title="{{ trans('template.front.header.palmares') }}">--}}
+                                    {{--<i class="fa fa-trophy"></i> {{ trans('template.front.header.palmares') }}--}}
+                                {{--</a>--}}
+                            {{--</li>--}}
                             <li class="divider"></li>
                             <li class="menu_tab @if(\Route::current()->getName() === 'front.leading_team') active @endif">
                                 <a href="{{ route('front.leading_team') }}" title="{{ trans('template.front.header.leading_team') }}">
@@ -112,11 +112,11 @@
                                     <i class="fa fa-calendar"></i> {{ trans('template.front.header.calendar') }}
                                 </a>
                             </li>
-                            <li class="menu_tab @if(\Route::current()->getName() === 'front.e-shop') active @endif">
-                                <a href="{{ route('front.e-shop') }}" title="Boutique">
-                                    <i class="fa fa-shopping-cart"></i> {{ trans('template.front.header.e_shop') }}
-                                </a>
-                            </li>
+                            {{--<li class="menu_tab @if(\Route::current()->getName() === 'front.e-shop') active @endif">--}}
+                                {{--<a href="{{ route('front.e-shop') }}" title="Boutique">--}}
+                                    {{--<i class="fa fa-shopping-cart"></i> {{ trans('template.front.header.e_shop') }}--}}
+                                {{--</a>--}}
+                            {{--</li>--}}
                         </ul>
                     </li>
                 </ul>
