@@ -28,6 +28,7 @@ class RssController extends Controller
     public function index()
     {
         $rss = $this->rss->buildRssFeed();
+
         return response($rss)->header('Content-type', 'application/rss+xml');
     }
 

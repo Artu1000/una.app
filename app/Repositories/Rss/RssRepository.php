@@ -26,13 +26,13 @@ class RssRepository extends BaseRepository implements RssRepositoryInterface
             ->title(config('settings.app_name_' . config('app.locale')))
             ->description("Le club Université Nantes Aviron est LE club d'aviron des étudiants nantais,
             mais demeure ouvert à tous les publics et tous les types de pratiques.")
-            ->url(url())
+            ->url(route('home'))
             ->language('fr')
             ->copyright('Copyright (c) ' . config('settings.app_name_' . config('app.locale')))
             ->lastBuildDate($now->timestamp)
             ->appendTo($feed);
 
-        $news_list = $this->model->Where('created_at', '<=', $now)
+        $news_list = $this->model->where('created_at', '<=', $now)
             ->orderBy('released_at', 'desc')
             ->take(20)
             ->get();
@@ -41,15 +41,15 @@ class RssRepository extends BaseRepository implements RssRepositoryInterface
             $item = new Item();
             $item->title($news->title)
                 ->description(str_limit(strip_tags($news->content), 250))
-                ->url(route('front.news.show', $news->key))
+                ->url(route('front.news.show', ['id' => $news->id, 'key' => $news->key]))
                 ->pubDate(Carbon::createFromFormat('Y-m-d H:i:s', $news->released_at)->timestamp)
-                ->guid(route('front.news.show', $news->key), true)
+                ->guid(route('front.news.show', ['id' => $news->id, 'key' => $news->key]), true)
                 ->appendTo($channel);
         }
 
         $feed = (string)$feed;
 
-        // Replace a couple items to make the feed more compliant
+        // replace a couple items to make the feed more compliant
         $feed = str_replace(
             '<rss version="2.0">',
             '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">',
