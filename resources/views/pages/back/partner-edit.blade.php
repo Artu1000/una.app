@@ -13,7 +13,7 @@
                     <i class="fa fa-user"></i>
 
                     @if(isset($partner))
-                        {{ trans('partners.page.title.edit') }}
+                        {!! trans('partners.page.title.edit', ['partner' => $partner->name]) !!}
                     @else
                         {{ trans('partners.page.title.create') }}
                     @endif
@@ -21,7 +21,7 @@
 
                 <hr>
 
-                <form role="form" method="POST" action="@if(isset($partner)){{ route('partners.update') }} @else{{ route('partners.store') }} @endif" enctype="multipart/form-data">
+                <form role="form" method="POST" action="@if(isset($partner)){{ route('partners.update', ['id' => $partner->id]) }} @else{{ route('partners.store') }} @endif" enctype="multipart/form-data">
 
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -29,7 +29,6 @@
                     {{-- add update inputs if we are in update mode --}}
                     @if(isset($partner))
                         <input type="hidden" name="_method" value="PUT">
-                        <input type="hidden" name="_id" value="{{ $partner->id }}">
                     @endif
 
                     {{-- personal data --}}
@@ -82,7 +81,7 @@
 
                             @if(isset($partner))
                             {{-- position --}}
-                            <label for="input_position">{{ trans('home.page.label.position') }}</label>
+                            <label for="input_position">{{ trans('partners.page.label.position') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_position"><i class="fa fa-sort-numeric-asc"></i></span>

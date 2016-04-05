@@ -4,7 +4,16 @@ namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Partner\PartnerRepositoryInterface;
+use CustomLog;
+use Entry;
+use Exception;
 use Illuminate\Http\Request;
+use ImageManager;
+use Modal;
+use Permission;
+use Sentinel;
+use TableList;
+use Validation;
 
 class PartnersController extends Controller
 {
@@ -26,8 +35,8 @@ class PartnersController extends Controller
     public function index(Request $request)
     {
         // we check the current user permission
-        if(!$this->requirePermission('partners.list')){
-            return redirect()->back();
+        if (!Permission::hasPermission('partners.list')) {
+            return redirect()->route('dashboard.index');
         }
 
         // SEO Meta settings
@@ -60,21 +69,36 @@ class PartnersController extends Controller
                 'title'           => trans('partners.page.label.position'),
                 'key'             => 'position',
                 'sort_by'         => 'partners.position',
-                'sort_by_default' => true,
+                'sort_by_default' => 'asc',
             ],
             [
-                'title'    => trans('partners.page.label.activation'),
+                'title'    => trans('schedules.page.label.activation'),
                 'key'      => 'active',
-                'activate' => 'partners.activate',
+                'activate' => [
+                    'route'  => 'partners.activate',
+                    'params' => [],
+                ],
             ],
         ];
 
         // we set the routes used in the table list
         $routes = [
-            'index'   => 'partners.index',
-            'create'  => 'partners.create',
-            'edit'    => 'partners.edit',
-            'destroy' => 'partners.destroy',
+            'index'   => [
+                'route'  => 'partners.index',
+                'params' => [],
+            ],
+            'create'  => [
+                'route'  => 'partners.create',
+                'params' => [],
+            ],
+            'edit'    => [
+                'route'  => 'partners.edit',
+                'params' => [],
+            ],
+            'destroy' => [
+                'route'  => 'partners.destroy',
+                'params' => [],
+            ],
         ];
 
         // we instantiate the query
@@ -88,14 +112,17 @@ class PartnersController extends Controller
 
         // we prepare the search config
         $search_config = [
-            'name',
+            [
+                'key'      => trans('partners.page.label.name'),
+                'database' => 'partners.name',
+            ],
         ];
 
         // we enable the lines choice
         $enable_lines_choice = true;
 
         // we format the data for the needs of the view
-        $tableListData = $this->prepareTableListData(
+        $tableListData = TableList::prepare(
             $query,
             $request,
             $columns,
@@ -115,11 +142,20 @@ class PartnersController extends Controller
         return view('pages.back.partners-list')->with($data);
     }
 
+    /**
+     * @return mixed
+     */
     public function create()
     {
         // we check the current user permission
-        if(!$this->requirePermission('partners.create')){
-            return redirect()->back();
+        if (!Permission::hasPermission('partners.create')) {
+            // we redirect the current user to the partners list if he has the required permission
+            if (Sentinel::getUser()->hasAccess('partners.list')) {
+                return redirect()->route('partners.index');
+            } else {
+                // or we redirect the current user to the dashboard
+                return redirect()->route('dashboard.index');
+            }
         }
 
         // SEO Meta settings
@@ -145,17 +181,28 @@ class PartnersController extends Controller
         return view('pages.back.partner-edit')->with($data);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function store(Request $request)
     {
         // we check the current user permission
-        if(!$this->requirePermission('partners.create')){
-            return redirect()->back();
+        if (!Permission::hasPermission('partners.create')) {
+            // we redirect the current user to the partners list if he has the required permission
+            if (Sentinel::getUser()->hasAccess('partners.list')) {
+                return redirect()->route('partners.index');
+            } else {
+                // or we redirect the current user to the home page
+                return redirect()->route('dashboard.index');
+            }
         }
 
-        // we convert the "on" value to a boolean value
-        $request->merge([
-            'active' => filter_var($request->get('active'), FILTER_VALIDATE_BOOLEAN),
-        ]);
+        // if the active field is not given, we set it to false
+        $request->merge(['active' => $request->get('active', false)]);
+
+        // we sanitize the entries
+        $request->replace(Entry::sanitizeAll($request->all()));
 
         // we set the validation rules
         $rules = [
@@ -170,12 +217,15 @@ class PartnersController extends Controller
             $rules['previous_partner_id'] = 'required|numeric|exists:slides,id';
         }
 
-        // we check inputs validity
-        if(!$this->checkInputsValidity($request->all(), $rules, $request)){
+        // we check the inputs validity
+        if (!Validation::check($request->all(), $rules)) {
+            // we flash the request
+            $request->flashExcept('logo');
+
             return redirect()->back();
         }
 
-        // we create the user
+        // we create the partner
         $partner = $this->repository->create($request->except('_token', 'previous_partner_id', 'logo'));
 
         try {
@@ -184,7 +234,6 @@ class PartnersController extends Controller
 
             // we store the photo
             if ($logo = $request->file('logo')) {
-
                 // we optimize, resize and save the image
                 $file_name = \ImageManager::optimizeAndResize(
                     $logo->getRealPath(),
@@ -205,24 +254,21 @@ class PartnersController extends Controller
             $this->repository->sanitizePositions();
 
             // we notify the current user
-            \Modal::alert([
-                trans('partners.message.create.success', ['name' => $partner->name]),
+            Modal::alert([
+                trans('partners.message.create.success', ['partner' => $partner->name]),
             ], 'success');
 
             return redirect(route('partners.index'));
         } catch (\Exception $e) {
             // we flash the request
-            $request->flash();
+            $request->flashExcept('logo');
 
-            // we delete the user if something went wrong after the user creation
-            if ($partner) {
-                $partner->delete();
-            }
+            // we log the error
+            CustomLog::error($e);
 
-            // we log the error and we notify the current user
-            \Log::error($e);
-            \Modal::alert([
-                trans('partners.message.create.failure', ['name' => $partner->name]),
+            // we notify the current user
+            Modal::alert([
+                trans('partners.message.create.failure', ['partner' => $partner->name]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
 
@@ -230,21 +276,31 @@ class PartnersController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function edit($id)
     {
         // we check the current user permission
-        if(!$this->requirePermission('partners.view')){
-            return redirect()->back();
+        if (!Permission::hasPermission('partners.view')) {
+            // we redirect the current user to the partners list if he has the required permission
+            if (Sentinel::getUser()->hasAccess('partners.list')) {
+                return redirect()->route('partners.index');
+            } else {
+                // or we redirect the current user to the home page
+                return redirect()->route('dashboard.index');
+            }
         }
 
         // we get the partner
-        $partner = $this->repository->find($id);
-
-        // we check if the role exists
-        if (!$partner) {
-            \Modal::alert([
-                trans('partners.message.find.failure'),
-                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
+        try {
+            $partner = $this->repository->find($id);
+        } catch (Exception $e) {
+            // we notify the current user
+            Modal::alert([
+                trans('partners.message.find.failure', ['id' => $id]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
             return redirect()->back();
@@ -264,7 +320,7 @@ class PartnersController extends Controller
 
         // we prepare the data for breadcrumbs
         $breadcrumbs_data = [
-            $partner->name,
+            'partner' => $partner,
         ];
 
         // prepare data for the view
@@ -279,42 +335,66 @@ class PartnersController extends Controller
         return view('pages.back.partner-edit')->with($data);
     }
 
-    public function update(Request $request)
+    /**
+     * @param $id
+     * @param Request $request
+     * @return mixed
+     */
+    public function update($id, Request $request)
     {
-        // we check the current user permission
-        if(!$this->requirePermission('partners.update')){
+        // we get the partner
+        try {
+            $partner = $this->repository->find($id);
+        } catch (Exception $e) {
+            // we notify the current user
+            Modal::alert([
+                trans('partners.message.find.failure', ['id' => $id]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
+            ], 'error');
+
             return redirect()->back();
         }
 
-        // we convert the "on" value to a boolean value
-        $request->merge([
-            'active' => filter_var($request->get('active'), FILTER_VALIDATE_BOOLEAN),
-        ]);
+        // we check the current user permission
+        if (!Permission::hasPermission('partners.update')) {
+            // we redirect the current user to the permissions list if he has the required permission
+            if (Sentinel::getUser()->hasAccess('partners.view')) {
+                return redirect()->route('partners.edit', ['id' => $id]);
+            } else {
+                // or we redirect the current user to the home page
+                return redirect()->route('dashboard.index');
+            }
+        }
+
+        // if the active field is not given, we set it to false
+        $request->merge(['active' => $request->get('active', false)]);
+
+        // we sanitize the entries
+        $request->replace(Entry::sanitizeAll($request->all()));
 
         // we set the validation rules
         $rules = [
-            '_id'    => 'numeric|exists:partners,id',
             'logo'   => 'image|mimes:png|image_size:*,>=100',
             'name'   => 'required|string',
             'url'    => 'url',
             'active' => 'required|boolean',
         ];
-        if ($request->get('previous_partner_id') === '0') {
+        if ($request->get('previous_partner_id') === 0) {
             $rules['previous_partner_id'] = 'numeric';
         } else {
             $rules['previous_partner_id'] = 'required|numeric|exists:slides,id';
         }
+        // we check the inputs validity
+        if (!Validation::check($request->all(), $rules)) {
+            // we flash the request
+            $request->flashExcept('logo');
 
-        // we check inputs validity
-        if(!$this->checkInputsValidity($request->all(), $rules, $request)){
             return redirect()->back();
         }
 
         try {
-            $partner = $this->repository->find($request->get('_id'));
-
-            // we get the inputs
-            $inputs = $request->except('_token', '_id');
+            // we update the schedule
+            $partner->update($request->except('_token', 'logo'));
 
             // we store the logo
             if ($logo = $request->file('logo')) {
@@ -327,25 +407,25 @@ class PartnersController extends Controller
                     $partner->availableSizes('logo')
                 );
                 // we add the image name to the inputs for saving
-                $inputs['logo'] = $file_name;
+                $partner->logo = $file_name;
+                $partner->save();
             }
 
-            // we update the partner
-            $partner->update($inputs);
-
             // we notify the current user
-            \Modal::alert([
+            Modal::alert([
                 trans('partners.message.update.success'),
             ], 'success');
 
             return redirect()->back();
         } catch (\Exception $e) {
             // we flash the request
-            $request->flash();
+            $request->flashExcept('logo');
 
-            // we log the error and we notify the current user
-            \Log::error($e);
-            \Modal::alert([
+            // we log the error
+            CustomLog::error($e);
+
+            // we notify the current user
+            Modal::alert([
                 trans('partners.message.update.failure'),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
@@ -354,17 +434,32 @@ class PartnersController extends Controller
         }
     }
 
-    public function destroy(Request $request)
+    /**
+     * @param $id
+     * @param Request $request
+     * @return mixed
+     */
+    public function destroy($id, Request $request)
     {
         // we check the current user permission
-        if(!$this->requirePermission('partners.delete')){
-            return redirect()->back();
+        if (!Permission::hasPermission('partners.delete')) {
+            // we redirect the current user to the partners list if he has the required permission
+            if (Sentinel::getUser()->hasAccess('partners.list')) {
+                return redirect()->route('partners.index');
+            } else {
+                // or we redirect the current user to the home page
+                return redirect()->route('dashboard.index');
+            }
         }
 
         // we get the partner
-        if (!$partner = $this->repository->find($request->get('_id'))) {
-            \Modal::alert([
-                trans('partners.message.find.failure'),
+        try {
+            $partner = $this->repository->find($id);
+        } catch (Exception $e) {
+            // we notify the current user
+            Modal::alert([
+                trans('partners.message.find.failure', ['id' => $id]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
             return redirect()->back();
@@ -373,12 +468,16 @@ class PartnersController extends Controller
         try {
             // we remove the partner logo
             if ($partner->logo) {
-                \ImageManager::remove(
+                ImageManager::remove(
                     $partner->logo,
                     $partner->storagePath(),
                     $partner->availableSizes('logo')
                 );
             }
+
+            Modal::alert([
+                trans('partners.message.delete.success', ['partner' => $partner->name]),
+            ], 'success');
 
             // we delete the role
             $partner->delete();
@@ -386,15 +485,14 @@ class PartnersController extends Controller
             // we sanitize the positions
             $this->repository->sanitizePositions();
 
-            \Modal::alert([
-                trans('partners.message.delete.success', ['name' => $partner->name]),
-            ], 'success');
-
             return redirect()->back();
         } catch (\Exception $e) {
-            \Log::error($e);
-            \Modal::alert([
-                trans('partners.message.delete.failure', ['name' => $partner->name]),
+            // we log the error
+            CustomLog::error($e);
+
+            // we notify the current user
+            Modal::alert([
+                trans('partners.message.delete.failure', ['partner' => $partner->name]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
@@ -402,57 +500,67 @@ class PartnersController extends Controller
         }
     }
 
-    public function activate(Request $request)
+    /**
+     * @param $id
+     * @param Request $request
+     * @return mixed
+     */
+    public function activate($id, Request $request)
     {
-        // we check the current user permission
-        $permission = 'partners.update';
-        if (!\Sentinel::getUser()->hasAccess([$permission])) {
+        // we get the partner
+        try {
+            $partner = $this->repository->find($id);
+        } catch (Exception $e) {
+            // we notify the current user
             return response([
-                trans('permissions.message.access.denied') . " : <b>" .
-                trans('permissions.' . $permission) . "</b>",
-            ], 400);
-        }
-
-        // we get the model
-        if (!$partner = $this->repository->find($request->get('id'))) {
-            return response([
-                trans('partners.message.find.failure', ['id' => $request->get('id')]),
+                'message' => [
+                    trans('partners.message.find.failure', ['id' => $id]),
+                    trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
+                ],
             ], 401);
         }
 
-        // we convert the "on" value to the activation order to a boolean value
-        $request->merge([
-            'activation_order' => filter_var($request->get('activation_order'), FILTER_VALIDATE_BOOLEAN),
-        ]);
-
-        // we check the inputs
-        $errors = [];
-        $validator = \Validator::make($request->all(), [
-            'id'               => 'required|exists:partners,id',
-            'activation_order' => 'required|boolean',
-        ]);
-        foreach ($validator->errors()->all() as $error) {
-            $errors[] = $error;
-        }
-        // if errors are found
-        if (count($errors)) {
+        // we check the current user permission
+        if ($permission_denied = Permission::hasPermissionJson('partners.update')) {
             return response([
-                $errors,
-            ], 400);
+                'active'  => $partner->active,
+                'message' => [$permission_denied],
+            ], 401);
+        }
+
+        // if the active field is not given, we set it to false
+        $request->merge(['active' => $request->get('active', false)]);
+
+        // we sanitize the entries
+        $request->replace(Entry::sanitizeAll($request->all()));
+
+        // we check the inputs validity
+        $rules = [
+            'active' => 'required|boolean',
+        ];
+        if (is_array($errors = Validation::check($request->all(), $rules, true))) {
+            return response([
+                'active'  => $partner->active,
+                'message' => $errors,
+            ], 401);
         }
 
         try {
-            $partner->active = $request->activation_order;
+            $partner->active = $request->get('active');
             $partner->save();
 
             return response([
-                trans('partners.message.activation.success', ['name' => $partner->name]),
+                'active'  => $partner->active,
+                'message' => [
+                    trans('partners.message.activation.success.label', ['action' => trans_choice('partners.message.activation.success.action', $partner->active), 'partner' => $partner->label]),
+                ],
             ], 200);
         } catch (\Exception $e) {
-            \Log::error($e);
+            // we log the error
+            CustomLog::error($e);
 
             return response([
-                trans('partners.message.activation.failure', ['name' => $partner->name]),
+                trans('patners.message.activation.failure', ['partner' => $partner->label]),
             ], 401);
         }
     }

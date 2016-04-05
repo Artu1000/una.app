@@ -181,13 +181,13 @@
                         @endif
 
                         {{-- partners --}}
-                        {{--@if(\Sentinel::getUser()->hasAccess('partners.list'))--}}
-                            {{--<li class="@if(\Route::current()->getName() === 'partners.index'--}}
-                            {{--|| \Route::current()->getName() === 'partners.create'--}}
-                            {{--|| \Route::current()->getName() === 'partners.edit')active @endif">--}}
-                                {{--<a class="spin-on-click" href="{{ route('partners.index') }}"><i class="fa fa-life-ring"></i> {{ trans('template.back.header.partners') }}</a>--}}
-                            {{--</li>--}}
-                        {{--@endif--}}
+                        @if(\Sentinel::getUser()->hasAccess('partners.list'))
+                            <li class="@if(\Route::current()->getName() === 'partners.index'
+                            || \Route::current()->getName() === 'partners.create'
+                            || \Route::current()->getName() === 'partners.edit')active @endif">
+                                <a class="spin-on-click" href="{{ route('partners.index') }}"><i class="fa fa-life-ring"></i> {{ trans('template.back.header.partners') }}</a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
 

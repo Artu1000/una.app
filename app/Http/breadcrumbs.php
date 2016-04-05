@@ -91,6 +91,6 @@ if (config('settings.breadcrumbs')) {
     \Breadcrumbs::register('partners.edit', function ($breadcrumbs, array $data) {
         $breadcrumbs->parent('partners.index');
 
-        $breadcrumbs->push(trans('breadcrumbs.news.edit', ['partner' => $data['partner']->name]), '');
+        $breadcrumbs->push(trans('breadcrumbs.partners.edit', ['partner' => $data['partner']->name]), '');
     });
 }

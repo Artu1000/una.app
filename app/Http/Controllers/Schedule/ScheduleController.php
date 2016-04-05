@@ -17,7 +17,7 @@ use Validation;
 
 class ScheduleController extends Controller
 {
-
+    
     /**
      * ScheduleController constructor.
      * @param ScheduleRepositoryInterface $schedule
@@ -27,7 +27,7 @@ class ScheduleController extends Controller
         parent::__construct();
         $this->repository = $schedule;
     }
-
+    
     /**
      * @return $this
      */
@@ -39,16 +39,16 @@ class ScheduleController extends Controller
         selon votre catéorie et votre type de pratique.';
         $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, sport, universitaire, horaires,
         séances, encadrement';
-
+        
         // we get the schedules from database
         $schedules = $this->repository->all();
-
+        
         // we prepare the start and end of day data
         list($hour, $minutes) = explode(':', config('schedule.day_start'));
         $start_of_day = Carbon::createFromTime($hour, $minutes, 00);
         list($hour, $minutes) = explode(':', config('schedule.day_stop'));
         $end_of_day = Carbon::createFromTime($hour, $minutes, 00);
-
+        
         // we format an hour array
         $hours = [];
         $hour = $start_of_day;
@@ -56,11 +56,11 @@ class ScheduleController extends Controller
             $hours[] = $hour->format('H:i');
             $hour->addMinutes(30);
         }
-
+        
         // we prepare empty arrays to format the columns and the schedule grid
         $columns = [];
         $formated_schedules = [];
-
+        
         // for each database schedule
         foreach ($schedules as $schedule) {
             $ii = 0;
@@ -68,12 +68,12 @@ class ScheduleController extends Controller
             foreach ($hours as $time) {
                 // for each day
                 foreach (config('schedule.day_of_week') as $id => $day) {
-
+                    
                     if ($schedule->time_start <= $time && $schedule->time_stop > $time && $schedule->day_id === $id) {
-
+                        
                         list($hour, $minutes) = explode(':', $time);
                         $carbon_time = Carbon::createFromTime($hour, $minutes, 00);
-
+                        
                         if ($schedule->start === $time) {
                             $formated_schedules[$time][$day][$schedule->public_category] = [
                                 'status'             => 'start',
@@ -100,17 +100,17 @@ class ScheduleController extends Controller
                 }
             }
         }
-
+        
         // we get the json schedules content
         $schedules = null;
         if (is_file(storage_path('app/schedules/content.json'))) {
             $schedules = json_decode(file_get_contents(storage_path('app/schedules/content.json')));
         }
-
+        
         // we parse the markdown content
         $parsedown = new \Parsedown();
         $description = isset($schedules->description) ? $parsedown->text($schedules->description) : null;
-
+        
         // prepare data for the view
         $data = [
             'seoMeta'          => $this->seoMeta,
@@ -123,11 +123,11 @@ class ScheduleController extends Controller
             'columns'          => $columns,
             'css'              => url(elixir('css/app.schedule.css')),
         ];
-
+        
         // return the view with data
         return view('pages.front.schedule')->with($data);
     }
-
+    
     /**
      * @param Request $request
      * @return $this
@@ -138,10 +138,10 @@ class ScheduleController extends Controller
         if (!Permission::hasPermission('schedules.list')) {
             return redirect()->route('dashboard.index');
         }
-
+        
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.back.schedules.list');
-
+        
         // we define the table list columns
         $columns = [
             [
@@ -179,7 +179,7 @@ class ScheduleController extends Controller
                 ],
             ],
         ];
-
+        
         // we set the routes used in the table list
         $routes = [
             'index'   => [
@@ -199,16 +199,16 @@ class ScheduleController extends Controller
                 'params' => [],
             ],
         ];
-
+        
         // we instantiate the query
         $query = $this->repository->getModel()->query();
-
+        
         // we prepare the confirm config
         $confirm_config = [
             'action'     => trans('schedules.page.action.delete'),
             'attributes' => ['label'],
         ];
-
+        
         // we prepare the search config
         $search_config = [
             [
@@ -216,10 +216,10 @@ class ScheduleController extends Controller
                 'database' => 'schedules.label',
             ],
         ];
-
+        
         // we enable the lines choice
         $enable_lines_choice = true;
-
+        
         // we format the data for the needs of the view
         $tableListData = TableList::prepare(
             $query,
@@ -230,13 +230,13 @@ class ScheduleController extends Controller
             $search_config,
             $enable_lines_choice
         );
-
+        
         // we get the json schedules content
         $schedules = null;
         if (is_file(storage_path('app/schedules/content.json'))) {
             $schedules = json_decode(file_get_contents(storage_path('app/schedules/content.json')));
         }
-
+        
         // prepare data for the view
         $data = [
             'seoMeta'          => $this->seoMeta,
@@ -245,11 +245,11 @@ class ScheduleController extends Controller
             'background_image' => isset($schedules->background_image) ? $schedules->background_image : null,
             'tableListData'    => $tableListData,
         ];
-
+        
         // return the view with data
         return view('pages.back.schedules-list')->with($data);
     }
-
+    
     /**
      * @return $this|\Illuminate\Http\RedirectResponse
      */
@@ -265,21 +265,21 @@ class ScheduleController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
+        
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.back.schedules.create');
-
+        
         // prepare data for the view
         $data = [
             'seoMeta'           => $this->seoMeta,
             'days'              => config('schedule.day_of_week'),
             'public_categories' => config('schedule.public_category'),
         ];
-
+        
         // return the view with data
         return view('pages.back.schedule-edit')->with($data);
     }
-
+    
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -288,7 +288,7 @@ class ScheduleController extends Controller
     {
         // we check the current user permission
         if (!Permission::hasPermission('schedules.create')) {
-            // we redirect the current user to the news list if he has the required permission
+            // we redirect the current user to the schedules list if he has the required permission
             if (Sentinel::getUser()->hasAccess('schedules.list')) {
                 return redirect()->route('schedules.index');
             } else {
@@ -296,13 +296,13 @@ class ScheduleController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
+        
         // if the active field is not given, we set it to false
         $request->merge(['active' => $request->get('active', false)]);
-
+        
         // we sanitize the entries
         $request->replace(Entry::sanitizeAll($request->all()));
-
+        
         // we set the label
         $request->merge([
             'label' => trans('schedules.config.day_of_week.' . config('schedule.day_of_week.' . $request->get('day_id'))) .
@@ -313,7 +313,7 @@ class ScheduleController extends Controller
                 ' - ' .
                 trans('schedules.config.category.' . config('schedule.public_category.' . $request->get('public_category'))),
         ]);
-
+        
         // we check inputs validity
         $rules = [
             'label'           => 'required|string',
@@ -327,39 +327,39 @@ class ScheduleController extends Controller
         if (!Validation::check($request->all(), $rules)) {
             // we flash the request
             $request->flash();
-
+            
             return redirect()->back();
         }
-
+        
         $schedule = null;
-
+        
         try {
             // we create the schedule
             $schedule = $this->repository->create($request->except('_token'));
-
+            
             // we notify the current user
             \Modal::alert([
                 trans('schedules.message.creation.success', ['schedule' => $schedule->label]),
             ], 'success');
-
+            
             return redirect(route('schedules.list'));
         } catch (\Exception $e) {
             // we flash the request
             $request->flash();
-
+            
             // we log the error
             CustomLog::error($e);
-
+            
             // we notify the current user
             Modal::alert([
                 trans('schedules.message.creation.failure', ['schedule' => $schedule->label]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
     }
-
+    
     /**
      * @param $id
      * @return $this|\Illuminate\Http\RedirectResponse
@@ -368,7 +368,7 @@ class ScheduleController extends Controller
     {
         // we check the current user permission
         if (!Permission::hasPermission('schedules.view')) {
-            // we redirect the current user to the news list if he has the required permission
+            // we redirect the current user to the schedules list if he has the required permission
             if (Sentinel::getUser()->hasAccess('schedules.list')) {
                 return redirect()->route('schedules.index');
             } else {
@@ -376,28 +376,38 @@ class ScheduleController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
-        // we get the news
-        $schedule = $this->repository->find($id);
-
+        
+        // we get the schedule
+        try {
+            $schedule = $this->repository->find($id);
+        } catch (Exception $e) {
+            // we notify the current user
+            Modal::alert([
+                trans('schedules.message.find.failure', ['id' => $id]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
+            ], 'error');
+            
+            return redirect()->back();
+        }
+        
         // we check if the news exists
         if (!$schedule) {
             \Modal::alert([
                 trans('schedules.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
-
+            
             return redirect()->back();
         }
-
+        
         // SEO Meta settings
         $this->seoMeta['page_title'] = trans('seo.back.schedules.edit');
-
+        
         // we prepare the data for breadcrumbs
         $breadcrumbs_data = [
             $schedule->label,
         ];
-
+        
         // prepare data for the view
         $data = [
             'seoMeta'           => $this->seoMeta,
@@ -406,11 +416,11 @@ class ScheduleController extends Controller
             'public_categories' => config('schedule.public_category'),
             'breadcrumbs_data'  => $breadcrumbs_data,
         ];
-
+        
         // return the view with data
         return view('pages.back.schedule-edit')->with($data);
     }
-
+    
     /**
      * @param $id
      * @param Request $request
@@ -424,16 +434,16 @@ class ScheduleController extends Controller
         } catch (Exception $e) {
             // we flash the request
             $request->flash();
-
+            
             // we notify the current user
             Modal::alert([
                 trans('schedules.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
-
+        
         // we check the current user permission
         if (!Permission::hasPermission('schedules.update')) {
             // we redirect the current user to the permissions list if he has the required permission
@@ -444,13 +454,13 @@ class ScheduleController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
+        
         // if the active field is not given, we set it to false
         $request->merge(['active' => $request->get('active', false)]);
-
+        
         // we sanitize the entries
         $request->replace(Entry::sanitizeAll($request->all()));
-
+        
         // we set the label
         $request->merge([
             'label' => trans('schedules.config.day_of_week.' . config('schedule.day_of_week.' . $request->get('day_id'))) .
@@ -461,7 +471,7 @@ class ScheduleController extends Controller
                 ' - ' .
                 trans('schedules.config.category.' . config('schedule.public_category.' . $request->get('public_category'))),
         ]);
-
+        
         // we check inputs validity
         $rules = [
             'label'           => 'required|string',
@@ -475,37 +485,37 @@ class ScheduleController extends Controller
         if (!Validation::check($request->all(), $rules)) {
             // we flash the request
             $request->flash();
-
+            
             return redirect()->back();
         }
-
+        
         try {
             // we update the schedule
-            $schedule->update($request->except('_id', '_token'));
-
+            $schedule->update($request->except('_token'));
+            
             // we notify the current user
             Modal::alert([
                 trans('schedules.message.update.success', ['schedule' => $schedule->label]),
             ], 'success');
-
+            
             return redirect(route('schedules.list'));
         } catch (Exception $e) {
             // we flash the request
             $request->flash();
-
+            
             // we log the error
             CustomLog::error($e);
-
+            
             // we notify the current user
             Modal::alert([
                 trans('schedules.message.update.failure', ['schedule' => $schedule->label]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
     }
-
+    
     /**
      * @param Request $request
      * @return mixed
@@ -522,19 +532,19 @@ class ScheduleController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
+        
         // we get the json schedules content
         $schedules = null;
         if (is_file(storage_path('app/schedules/content.json'))) {
             $schedules = json_decode(file_get_contents(storage_path('app/schedules/content.json')));
         }
-
+        
         // if the active field is not given, we set it to false
         $request->merge(['remove_background_image' => $request->get('remove_background_image', false)]);
-
+        
         // we sanitize the entries
         $request->replace(\Entry::sanitizeAll($request->all()));
-
+        
         // we check inputs validity
         $rules = [
             'title'                   => 'required|string',
@@ -546,13 +556,13 @@ class ScheduleController extends Controller
         if (!Validation::check($request->all(), $rules)) {
             // we flash the request
             $request->flashExcept('background_image');
-
+            
             return redirect()->back();
         }
-
+        
         try {
             $inputs = $request->except('_token', '_method', 'background_image');
-
+            
             // we store the background image file
             if ($background_image = $request->file('background_image')) {
                 // we optimize, resize and save the image
@@ -578,36 +588,36 @@ class ScheduleController extends Controller
             } else {
                 $inputs['background_image'] = isset($schedules->background_image) ? $schedules->background_image : null;
             }
-
+            
             // we store the content into a json file
             file_put_contents(
                 storage_path('app/schedules/content.json'),
                 json_encode($inputs)
             );
-
+            
             \Modal::alert([
                 trans('schedules.message.content_update.success', ['title' => $request->get('title')]),
             ], 'success');
-
+            
             return redirect()->back();
         } catch (\Exception $e) {
-
+            
             // we flash the request
             $request->flashExcept('background_image');
-
+            
             // we log the error
             \CustomLog::error($e);
-
+            
             // we notify the current user
             \Modal::alert([
                 trans('schedules.message.content_update.failure', ['title' => isset($schedules->title) ? $schedules->title : null]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
     }
-
+    
     /**
      * @param $id
      * @param Request $request
@@ -617,7 +627,7 @@ class ScheduleController extends Controller
     {
         // we check the current user permission
         if (!Permission::hasPermission('schedules.delete')) {
-            // we redirect the current user to the permissions list if he has the required permission
+            // we redirect the current user to the schedules list if he has the required permission
             if (Sentinel::getUser()->hasAccess('schedules.list')) {
                 return redirect()->route('schedules.index');
             } else {
@@ -625,46 +635,46 @@ class ScheduleController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
+        
         // we get the schedule
         try {
             $schedule = $this->repository->find($id);
         } catch (Exception $e) {
             // we flash the request
             $request->flash();
-
+            
             // we notify the current user
             Modal::alert([
                 trans('schedules.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
-
+        
         try {
             // we delete the role
             $schedule->delete();
-
+            
             \Modal::alert([
                 trans('schedules.message.delete.success', ['schedule' => $schedule->label]),
             ], 'success');
-
+            
             return redirect()->back();
         } catch (\Exception $e) {
             // we log the error
             CustomLog::error($e);
-
+            
             // we notify the current user
             Modal::alert([
                 trans('schedules.message.delete.failure', ['schedule' => $schedule->label]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
     }
-
+    
     /**
      * @param $id
      * @param Request $request
@@ -676,18 +686,15 @@ class ScheduleController extends Controller
         try {
             $schedule = $this->repository->find($id);
         } catch (Exception $e) {
-            // we flash the request
-            $request->flash();
-
             // we notify the current user
-            Modal::alert([
-                trans('schedules.message.find.failure', ['id' => $id]),
-                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
-            ], 'error');
-
-            return redirect()->back();
+            return response([
+                'message' => [
+                    trans('schedules.message.find.failure', ['id' => $id]),
+                    trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
+                ],
+            ], 401);
         }
-
+        
         // we check the current user permission
         if ($permission_denied = Permission::hasPermissionJson('schedules.update')) {
             return response([
@@ -695,13 +702,13 @@ class ScheduleController extends Controller
                 'message' => [$permission_denied],
             ], 401);
         }
-
+        
         // if the active field is not given, we set it to false
         $request->merge(['active' => $request->get('active', false)]);
-
+        
         // we sanitize the entries
         $request->replace(Entry::sanitizeAll($request->all()));
-
+        
         // we check the inputs validity
         $rules = [
             'active' => 'required|boolean',
@@ -712,11 +719,11 @@ class ScheduleController extends Controller
                 'message' => $errors,
             ], 401);
         }
-
+        
         try {
             $schedule->active = $request->get('active');
             $schedule->save();
-
+            
             return response([
                 'active'  => $schedule->active,
                 'message' => [
@@ -726,11 +733,11 @@ class ScheduleController extends Controller
         } catch (\Exception $e) {
             // we log the error
             CustomLog::error($e);
-
+            
             return response([
                 trans('schedules.message.activation.failure', ['schedule' => $schedule->label]),
             ], 401);
         }
     }
-
+    
 }

@@ -7,7 +7,7 @@ return [
         "title"  => [
             "management" => "Gestion des partenaires",
             "create"     => "Création d'un partenaire",
-            "edit"       => "Édition d'un partenaire",
+            "edit"       => "Édition du partenaire <b>:partner</b>",
             "list"       => "Liste des partenaires",
             "data"       => "Données du partenaire",
         ],
@@ -46,12 +46,15 @@ return [
             "failure" => "Le partenaire #:id n'existe pas.",
         ],
         "delete"     => [
-            "success" => "Le partenaire <b>:name</b> a bien été supprimé.",
-            "failure" => "Une erreur est survenue lors de la suppression du partenaire <b>:name</b>.",
+            "success" => "Le partenaire <b>:partner</b> a bien été supprimé.",
+            "failure" => "Une erreur est survenue lors de la suppression du partenaire <b>:partner</b>.",
         ],
         "activation" => [
-            "success" => "Le statut d'activation du partenaire <b>:name</b> a bien été mis à jour.",
-            "failure" => "Une erreur est survenue de la mise à jour du statut d'activation du partenaire <b>:name</b>",
+            "success" => [
+                "label"  => "Le partenaire <b>:partner</b> a bien été :action.",
+                "action" => "{0}désactivé|{1}activé",
+            ],
+            "failure" => "Une erreur est survenue de la mise à jour du statut d'activation du partenaire <b>:partner</b>",
         ],
     ],
 ];
