@@ -168,7 +168,9 @@ class ImageManagerHelper
 
         // we delete the main image file
         $path = $storage_path . '/' . $file_name . '.' . $extension;
-        unlink($path);
+        if (is_file($path)) {
+            unlink($path);
+        }
         // we check that the image file has really been deleted
         if (is_file($path)) {
             throw new \Exception('The source image removal went wrong. The file ' .

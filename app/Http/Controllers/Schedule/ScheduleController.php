@@ -19,9 +19,8 @@ class ScheduleController extends Controller
 {
 
     /**
-     * Create a new home controller instance.
-     *
-     * @return void
+     * ScheduleController constructor.
+     * @param ScheduleRepositoryInterface $schedule
      */
     public function __construct(ScheduleRepositoryInterface $schedule)
     {

@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Entry;
 use Illuminate\Http\Request;
+use ImageManager;
+use libphonenumber\PhoneNumberFormat;
 use Permission;
 use Sentinel;
 use TableList;
@@ -283,27 +285,35 @@ class UsersController extends Controller
                 $user->phone_number = phone_format(
                     $phone_number,
                     'FR',
-                    \libphonenumber\PhoneNumberFormat::INTERNATIONAL
+                    PhoneNumberFormat::INTERNATIONAL
                 );
                 $user->save();
             }
 
             // we store the photo
             if ($photo = $request->file('photo')) {
-
                 // we optimize, resize and save the image
-                $file_name = \ImageManager::optimizeAndResize(
+                $file_name = ImageManager::optimizeAndResize(
                     $photo->getRealPath(),
                     $user->imageName('photo'),
                     $photo->getClientOriginalExtension(),
                     $user->storagePath(),
                     $user->availableSizes('photo')
                 );
-
-                // we update the image name
-                $user->photo = $file_name;
-                $user->save();
+            } else {
+                // we set the una logo as the user image
+                $file_name = ImageManager::optimizeAndResize(
+                    database_path('seeds/files/settings/logo-una-dark.png'),
+                    $user->imageName('photo'),
+                    config('image.settings.logo.extension'),
+                    $user->storagePath(),
+                    $user->availableSizes('photo'),
+                    false
+                );
             }
+            // we update the image name
+            $user->photo = $file_name;
+            $user->save();
 
             // we attach the new role
             $role = \Sentinel::findRoleById($request->get('role'));
@@ -497,6 +507,9 @@ class UsersController extends Controller
             return redirect()->back();
         }
 
+        // if the remove_photo field is not given, we set it to false
+        $request->merge(['remove_photo' => $request->get('remove_photo', false)]);
+
         // we sanitize the entries
         $request->replace(\Entry::sanitizeAll($request->all()));
 
@@ -513,6 +526,7 @@ class UsersController extends Controller
         // we set the validation rules
         $rules = [
             'photo'        => 'image|mimes:jpg,jpeg,png|image_size:>=145,>=160',
+            'remove_photo' => 'required|boolean',
             'gender'       => 'in:' . implode(',', array_keys(config('user.gender'))),
             'last_name'    => 'required|string',
             'first_name'   => 'required|string',
@@ -552,7 +566,7 @@ class UsersController extends Controller
                     'phone_number' => phone_format(
                         $phone_number,
                         'FR',
-                        \libphonenumber\PhoneNumberFormat::INTERNATIONAL
+                        PhoneNumberFormat::INTERNATIONAL
                     ),
                 ]);
             }
@@ -560,14 +574,34 @@ class UsersController extends Controller
             // we store the photo
             if ($photo = $request->get('photo')) {
                 // we optimize, resize and save the image
-                $file_name = \ImageManager::optimizeAndResize(
+                $file_name = ImageManager::optimizeAndResize(
                     $photo->getRealPath(),
                     $user->imageName('photo'),
                     $photo->getClientOriginalExtension(),
                     $user->storagePath(),
                     $user->availableSizes('photo')
                 );
-                // we update the user photo file name
+                // we update the user
+                Sentinel::update($user, ['photo' => $file_name]);
+            } elseif (!$request->get('photo') || $request->get('remove_photo')) {
+                // we remove the background image
+                if (isset($user->photo)) {
+                    ImageManager::remove(
+                        $user->photo,
+                        $user->storagePath(),
+                        $user->availableSizes('photo')
+                    );
+                }
+                // we set the una logo as the user image
+                $file_name = ImageManager::optimizeAndResize(
+                    database_path('seeds/files/settings/logo-una-dark.png'),
+                    $user->imageName('photo'),
+                    config('image.settings.logo.extension'),
+                    $user->storagePath(),
+                    $user->availableSizes('photo'),
+                    false
+                );
+                // we update the user
                 Sentinel::update($user, ['photo' => $file_name]);
             }
 
@@ -671,7 +705,7 @@ class UsersController extends Controller
         try {
             // we remove the users photos
             if ($user->photo) {
-                \ImageManager::remove(
+                ImageManager::remove(
                     $user->photo,
                     $user->storagePath(),
                     $user->availableSizes('photo')
@@ -742,8 +776,8 @@ class UsersController extends Controller
         ];
         if (is_array($errors = Validation::check($request->all(), $rules, true))) {
             return response([
-                'active' => Activation::completed($user) ? Activation::completed($user)->completed : Activation::completed($user),
-                'message' => $errors
+                'active'  => Activation::completed($user) ? Activation::completed($user)->completed : Activation::completed($user),
+                'message' => $errors,
             ], 401);
         }
 

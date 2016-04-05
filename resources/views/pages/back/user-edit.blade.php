@@ -51,6 +51,7 @@
                                             <img src="{{ $user->imagePath($user->photo, 'photo', 'picture') }}" alt="{{ $user->first_name }} {{ $user->last_name }}">
                                         </a>
                                     </div>
+                                    <input type="checkbox" id="input_remove_photo" name="remove_photo"> <label for="input_remove_photo" class="quote">{{ trans('users.page.label.remove_photo') }}</label>
                                 @endif
                                 <div class="input-group">
                                     <span class="input-group-btn">
