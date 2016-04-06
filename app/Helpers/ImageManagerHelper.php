@@ -3,6 +3,10 @@
 namespace App\Helpers;
 
 use Approached\LaravelImageOptimizer\ImageOptimizer;
+use CustomLog;
+use Exception;
+use Image;
+use InvalidArgumentException;
 
 class ImageManagerHelper
 {
@@ -14,10 +18,13 @@ class ImageManagerHelper
      * @param array $sizes
      * @param bool $remove_src
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function optimizeAndResize(string $src_path, string $file_name, string $extension, string $storage_path, array $sizes, bool $remove_src = true)
     {
+        // wet low case of the extension
+        $extension = strtolower($extension);
+
         // we optimize the image
         if ($remove_src) {
             $this->optimizeAndRemoveSrc($src_path, $storage_path, $file_name, $extension);
@@ -40,12 +47,15 @@ class ImageManagerHelper
      */
     public function resize(string $file_name, string $extension, string $storage_path, array $sizes)
     {
+        // wet low case of the extension
+        $extension = strtolower($extension);
+
         // we resize the original image
         foreach ($sizes as $key => $size) {
 
             // we check that the size is not empty
             if (empty($size) && sizeof($size) !== 2) {
-                throw new \InvalidArgumentException(
+                throw new InvalidArgumentException(
                     'Incorrect size format. Each given size array must contain two line : width and height (one of them can be null)'
                 );
             }
@@ -54,7 +64,7 @@ class ImageManagerHelper
             $resized_file_name = $file_name . '_' . $key . '.' . $extension;
 
             // we get the optimized original image
-            $optimized_original_image = \Image::make($storage_path . '/' . $file_name . '.' . $extension);
+            $optimized_original_image = Image::make($storage_path . '/' . $file_name . '.' . $extension);
 
             // we resize the image
             switch (true) {
@@ -84,33 +94,36 @@ class ImageManagerHelper
      * @param string $dest_path
      * @param string $file_name
      * @param string $extension
-     * @throws \Exception
+     * @throws Exception
      */
     public function optimize(string $src_path, string $dest_path, string $file_name, string $extension)
     {
         if (!is_file($src_path)) {
-            throw new \InvalidArgumentException('The source image ' . $src_path . ' doesn\'t exists.');
+            throw new InvalidArgumentException('The source image ' . $src_path . ' does not exists.');
         }
+
+        // wet low case of the extension
+        $extension = strtolower($extension);
 
         // we optimize and overwrite the original image
         $opt = new ImageOptimizer();
         $opt->optimizeImage($src_path, $extension);
 
         // we save the optimized image
-        $optimized_image = \Image::make($src_path);
+        $optimized_image = Image::make($src_path);
 
-        // we save the optimized image on ine the dest folder
+        // we save the optimized image in the dest folder
         $optimized_image->save($dest_path . '/' . $file_name . '.' . $extension);
 
         // we check if the optimized image is lighter than the original
-        if (\Image::make($src_path)->filesize() < \Image::make($dest_path . '/' . $file_name . '.' . $extension)->filesize()) {
+        if (Image::make($src_path)->filesize() < Image::make($dest_path . '/' . $file_name . '.' . $extension)->filesize()) {
             // if not, we replace the optimized image by the original (renamed)
             copy($src_path, $dest_path . '/' . $file_name . '.' . $extension);
         }
 
         // if the file is found after optimization
         if (!is_file($dest_path . '/' . $file_name . '.' . $extension)) {
-            throw new \Exception('The image optimization went wrong. The file ' .
+            throw new Exception('The image optimization went wrong. The file ' .
                 $dest_path . '/' . $file_name . '.' . $extension . ' has not been found after treatment.');
         }
     }
@@ -120,13 +133,16 @@ class ImageManagerHelper
      * @param string $dest_path
      * @param string $file_name
      * @param string $extension
-     * @throws \Exception
+     * @throws Exception
      */
     public function optimizeAndRemoveSrc(string $src_path, string $dest_path, string $file_name, string $extension)
     {
         if (!is_file($src_path)) {
-            throw new \InvalidArgumentException('The source image ' . $src_path . ' doesn\'t exists.');
+            throw new InvalidArgumentException('The source image ' . $src_path . ' doesn\'t exists.');
         }
+
+        // wet low case of the extension
+        $extension = strtolower($extension);
 
         // we optimize the image
         $this->optimize($src_path, $dest_path, $file_name, $extension);
@@ -136,7 +152,7 @@ class ImageManagerHelper
 
         // we check that the source file has really been deleted
         if (is_file($src_path)) {
-            throw new \Exception('The source image removal went wrong. The file ' .
+            throw new Exception('The source image removal went wrong. The file ' .
                 $src_path . 'still exists after removal.');
         };
     }
@@ -145,7 +161,7 @@ class ImageManagerHelper
      * @param string $file_name
      * @param string $storage_path
      * @param array $sizes
-     * @throws \Exception
+     * @throws Exception
      */
     public function remove(string $file_name, string $storage_path, array $sizes)
     {
@@ -160,7 +176,7 @@ class ImageManagerHelper
                 unlink($path);
                 // we check that the image file has really been deleted
                 if (is_file($path)) {
-                    throw new \Exception('The source image removal went wrong. The file ' .
+                    throw new Exception('The source image removal went wrong. The file ' .
                         $path . 'still exists after removal.');
                 };
             }
@@ -173,7 +189,7 @@ class ImageManagerHelper
         }
         // we check that the image file has really been deleted
         if (is_file($path)) {
-            throw new \Exception('The source image removal went wrong. The file ' .
+            throw new Exception('The source image removal went wrong. The file ' .
                 $path . 'still exists after removal.');
         };
     }
@@ -198,9 +214,9 @@ class ImageManagerHelper
             list($name, $ext) = explode('.', $file_name);
 
             return url($public_path . '/' . $name . '_' . $size . '.' . $ext);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
 
             return 'error';
         }

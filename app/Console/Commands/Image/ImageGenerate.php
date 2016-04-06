@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Image;
 
 use Illuminate\Console\Command;
+use ImageManager;
 
 class ImageGenerate extends Command
 {
@@ -62,7 +63,7 @@ class ImageGenerate extends Command
                 // we get the image name and extension
                 list($file_name, $extension) = explode('.', $object->getAttribute($column));
 
-                \ImageManager::optimizeAndResize(
+                ImageManager::optimizeAndResize(
                     $object->storagePath() . '/' . $file_name . '.' . $extension,
                     $file_name,
                     $extension,
