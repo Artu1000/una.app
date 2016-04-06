@@ -12,15 +12,8 @@
   "css/app.auth.css": "css/app.auth-f99a468a.css",
   "css/app.error.css": "css/app.error-9d15668b.css",
   "css/app.back.css": "css/app.back-49b0d46a.css",
-<<<<<<< HEAD
-  "js/app.front.js": "js/app.front-3809459b.js",
-  "js/app.home.js": "js/app.home-5b0d7c5e.js",
-  "js/app.news-detail.js": "js/app.news-detail-5d869e2d.js",
+  "js/app.front.js": "js/app.front-66da6ffa.js",
+  "js/app.home.js": "js/app.home-3df6eb48.js",
+  "js/app.news-detail.js": "js/app.news-detail-9cc2d2d8.js",
   "js/app.back.js": "js/app.back-a22ea392.js"
-=======
-  "js/app.front.js": "js/app.front-b0f7db4c.js",
-  "js/app.home.js": "js/app.home-5bae0de3.js",
-  "js/app.news-detail.js": "js/app.news-detail-4881e722.js",
-  "js/app.back.js": "js/app.back-fedcb801.js"
->>>>>>> 1c88490ad19fc4b909b090bf1d803ecf5bc58d11
 }
