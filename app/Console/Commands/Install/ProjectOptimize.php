@@ -65,9 +65,9 @@ class ProjectOptimize extends Command
             exec('php artisan config:cache');
             $this->info('✔ artisan config:cache executed' . PHP_EOL);
 
-//            $this->line('▶ Executing artisan route:cache ...');
-//            exec('php artisan route:cache');
-//            $this->info('✔ artisan route:cache executed' . PHP_EOL);
+            $this->line('▶ Executing artisan route:cache ...');
+            exec('php artisan route:cache');
+            $this->info('✔ artisan route:cache executed' . PHP_EOL);
         } else {
             $this->line('▶ Executing artisan ide-helper:generate ...');
             exec('php artisan ide-helper:generate');
