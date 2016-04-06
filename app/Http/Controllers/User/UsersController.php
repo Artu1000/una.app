@@ -5,10 +5,13 @@ namespace App\Http\Controllers\User;
 use Activation;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use CustomLog;
 use Entry;
+use Exception;
 use Illuminate\Http\Request;
 use ImageManager;
 use libphonenumber\PhoneNumberFormat;
+use Modal;
 use Permission;
 use Sentinel;
 use TableList;
@@ -220,14 +223,14 @@ class UsersController extends Controller
         }
 
         // we check if the new user role is not higher than the role of the current user
-        $new_user_role = \Sentinel::findRoleById($request->get('role'));
-        $current_user_role = \Sentinel::getUser()->roles->first();
+        $new_user_role = Sentinel::findRoleById($request->get('role'));
+        $current_user_role = Sentinel::getUser()->roles->first();
         if ($new_user_role && $current_user_role && $new_user_role->position < $current_user_role->position) {
             // we flash the request
             $request->flashExcept('photo');
 
             // we notify the user
-            \Modal::alert([
+            Modal::alert([
                 trans('users.message.permission.denied', ['action' => trans('users.message.permission.action.create')]),
             ], 'error');
 
@@ -242,9 +245,9 @@ class UsersController extends Controller
             if ($birth_date = $request->get('birth_date')) {
                 $request->merge(['birth_date' => Carbon::createFromFormat('d/m/Y', $birth_date)->format('Y-m-d')]);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
         }
 
         // we check inputs validity
@@ -316,7 +319,7 @@ class UsersController extends Controller
             $user->save();
 
             // we attach the new role
-            $role = \Sentinel::findRoleById($request->get('role'));
+            $role = Sentinel::findRoleById($request->get('role'));
             $role->users()->attach($user);
 
             // if the order is to activate the user
@@ -329,20 +332,20 @@ class UsersController extends Controller
             }
 
             // we notify the current user
-            \Modal::alert([
+            Modal::alert([
                 trans('users.message.creation.success', ['name' => $user->first_name . ' ' . $user->last_name]),
             ], 'success');
 
             return redirect(route('users.index'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we flash the request
             $request->flashExcept('photo');
 
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
 
             // we notify the user
-            \Modal::alert([
+            Modal::alert([
                 trans('users.message.creation.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
@@ -371,7 +374,7 @@ class UsersController extends Controller
 
         // we get the user
         if (!$user = \Sentinel::findById($id)) {
-            \Modal::alert([
+            Modal::alert([
                 trans('users.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
@@ -389,7 +392,7 @@ class UsersController extends Controller
         $edited_user_role = $user->roles->first();
         $current_user_role = \Sentinel::getUser()->roles->first();
         if ($edited_user_role && $current_user_role && $edited_user_role->position < $current_user_role->position) {
-            \Modal::alert([
+            Modal::alert([
                 trans('users.message.permission.denied', ['action' => trans('users.message.permission.action.edit')]),
             ], 'error');
 
@@ -453,7 +456,7 @@ class UsersController extends Controller
     {
         // we get the user
         if (!$user = \Sentinel::findById($id)) {
-            \Modal::alert([
+            Modal::alert([
                 trans('users.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
@@ -485,7 +488,7 @@ class UsersController extends Controller
         $edited_user_role = $user->roles->first();
         $current_user_role = \Sentinel::getUser()->roles->first();
         if ($edited_user_role && $current_user_role && $edited_user_role->position < $current_user_role->position) {
-            \Modal::alert([
+            Modal::alert([
                 trans('users.message.permission.denied', ['action' => trans('users.message.permission.action.edit')]),
             ], 'error');
 
@@ -500,7 +503,7 @@ class UsersController extends Controller
             $request->flashExcept('photo');
 
             // we notify the user
-            \Modal::alert([
+            Modal::alert([
                 trans('users.message.permission.denied', ['action' => trans('users.message.permission.action.edit')]),
             ], 'error');
 
@@ -518,9 +521,9 @@ class UsersController extends Controller
             if ($birth_date = $request->get('birth_date')) {
                 $request->merge(['birth_date' => Carbon::createFromFormat('d/m/Y', $birth_date)->format('Y-m-d')]);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
         }
 
         // we set the validation rules
@@ -632,7 +635,7 @@ class UsersController extends Controller
                 }
 
                 // we notify the current user
-                \Modal::alert([
+                Modal::alert([
                     trans('users.message.update.success', ['name' => $user->first_name . ' ' . $user->last_name]),
                 ], 'success');
 
@@ -640,20 +643,20 @@ class UsersController extends Controller
             }
 
             // we notify the current user
-            \Modal::alert([
+            Modal::alert([
                 trans('users.message.account.success'),
             ], 'success');
 
             return redirect()->back();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we flash the request
             $request->flashExcept('photo');
 
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
 
             // we notify the current user
-            \Modal::alert([
+            Modal::alert([
                 trans('users.message.update.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
@@ -677,7 +680,7 @@ class UsersController extends Controller
 
         // we get the user
         if (!$user = \Sentinel::findById($id)) {
-            \Modal::alert([
+            Modal::alert([
                 trans('users.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
@@ -695,7 +698,7 @@ class UsersController extends Controller
         $edited_user_role = $user->roles->first();
         $current_user_role = \Sentinel::getUser()->roles->first();
         if ($edited_user_role && $current_user_role && $edited_user_role->position < $current_user_role->position) {
-            \Modal::alert([
+            Modal::alert([
                 trans('users.message.permission.denied', ['action' => trans('users.message.permission.action.delete')]),
             ], 'error');
 
@@ -715,17 +718,17 @@ class UsersController extends Controller
             // we delete the role
             $user->delete();
 
-            \Modal::alert([
+            Modal::alert([
                 trans('users.message.delete.success', ['name' => $user->first_name . ' ' . $user->last_name]),
             ], 'success');
 
             return redirect()->back();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
 
             // we notify the current user
-            \Modal::alert([
+            Modal::alert([
                 trans('users.message.delete.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
@@ -801,9 +804,9 @@ class UsersController extends Controller
                     trans('users.message.activation.success.label', ['action' => trans_choice('users.message.activation.success.action', $active), 'name' => $user->first_name . ' ' . $user->last_name]),
                 ],
             ], 200);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
 
             return response([
                 'active'  => Activation::completed($user) ? Activation::completed($user)->completed : Activation::completed($user),

@@ -326,7 +326,7 @@ class NewsController extends Controller
         // we check inputs validity
         $rules = [
             'category_id'      => 'required|in:' . implode(',', array_keys(config('news.category'))),
-            'image'            => 'image|mimes:jpg,jpeg,png|image_size:>=2560,>=1440',
+            'image'            => 'image|mimes:jpg,jpeg|image_size:>=2560,>=1440',
             'key'              => 'alpha_dash|unique:news,key',
             'title'            => 'required|string',
             'meta_title'       => 'string',
@@ -505,7 +505,7 @@ class NewsController extends Controller
         // we check inputs validity
         $rules = [
             'category_id'      => 'required|in:' . implode(',', array_keys(config('news.category'))),
-            'image'            => 'image|mimes:png|image_size:>=2560,>=1440',
+            'image'            => 'image|mimes:jpg,jpeg|image_size:>=2560,>=1440',
             'key'              => 'required|alpha_dash|unique:news,key,' . $request->get('_id'),
             'title'            => 'required|string',
             'meta_title'       => 'string',

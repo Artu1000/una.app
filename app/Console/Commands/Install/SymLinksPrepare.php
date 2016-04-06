@@ -100,5 +100,8 @@ class SymLinksPrepare extends Command
                 $this->line('- ' . $symlink['public']);
             }
         }
+
+        // we give the correct rights to the public folder
+        exec('sudo chgrp -R www-data ' . public_path());
     }
 }
