@@ -22,6 +22,11 @@ class EntryHelper
         // we prepare the return variable
         $return = null;
 
+        // we remove useless spaces
+        if($entry !== false){
+            $entry = trim($entry);
+        }
+
         // we sanitize the value
         switch (true) {
             case $entry === '':

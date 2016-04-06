@@ -211,7 +211,7 @@ class PartnersController extends Controller
             'url'    => 'url',
             'active' => 'required|boolean',
         ];
-        if ($request->get('previous_partner_id') === '0') {
+        if ($request->get('previous_partner_id') === 0) {
             $rules['previous_partner_id'] = 'numeric';
         } else {
             $rules['previous_partner_id'] = 'required|numeric|exists:slides,id';

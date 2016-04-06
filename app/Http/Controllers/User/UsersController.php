@@ -455,7 +455,7 @@ class UsersController extends Controller
     public function update($id, Request $request)
     {
         // we get the user
-        if (!$user = \Sentinel::findById($id)) {
+        if (!$user = Sentinel::findById($id)) {
             Modal::alert([
                 trans('users.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
@@ -486,7 +486,7 @@ class UsersController extends Controller
 
         // we check if the current user has a role position high enough to edit the user
         $edited_user_role = $user->roles->first();
-        $current_user_role = \Sentinel::getUser()->roles->first();
+        $current_user_role = Sentinel::getUser()->roles->first();
         if ($edited_user_role && $current_user_role && $edited_user_role->position < $current_user_role->position) {
             Modal::alert([
                 trans('users.message.permission.denied', ['action' => trans('users.message.permission.action.edit')]),
@@ -496,8 +496,8 @@ class UsersController extends Controller
         }
 
         // we check if the chosen role is not higher than the role of the current user
-        $new_user_role = \Sentinel::findRoleById($request->get('role'));
-        $current_user_role = \Sentinel::getUser()->roles->first();
+        $new_user_role = Sentinel::findRoleById($request->get('role'));
+        $current_user_role = Sentinel::getUser()->roles->first();
         if ($new_user_role && $current_user_role && $new_user_role->position < $current_user_role->position) {
             // we flash the request
             $request->flashExcept('photo');
