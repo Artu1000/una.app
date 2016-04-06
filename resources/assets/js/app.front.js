@@ -97,6 +97,7 @@ var gmap = {
         var mapOptions = {
             zoom: 14,
             center: latlng,
+            disableDefaultUI: true,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             draggable: draggable,
             scrollwheel: false

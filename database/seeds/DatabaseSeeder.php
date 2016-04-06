@@ -28,6 +28,10 @@ class DatabaseSeeder extends Seeder
 
         Model::reguard();
 
+        // we give the correct rights to the storage folder after the seed
+        exec('sudo chmod -R g+w ' . storage_path());
+        exec('sudo chgrp -R www-data ' . storage_path());
+
         $this->command->info('Seed successfull');
     }
 }

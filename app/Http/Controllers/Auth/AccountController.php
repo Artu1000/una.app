@@ -101,6 +101,9 @@ class AccountController extends Controller
                 return redirect(route('login.index'));
 
             } catch (\Exception $e) {
+                // we flash the request
+                $request->flash();
+
                 // we log the error
                 CustomLog::error($e);
 

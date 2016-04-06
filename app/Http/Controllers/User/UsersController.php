@@ -583,7 +583,7 @@ class UsersController extends Controller
                 );
                 // we update the user
                 Sentinel::update($user, ['photo' => $file_name]);
-            } elseif (!$request->get('photo') || $request->get('remove_photo')) {
+            } elseif ((!$request->get('photo') && !$user->photo) || $request->get('remove_photo')) {
                 // we remove the background image
                 if (isset($user->photo)) {
                     ImageManager::remove(
