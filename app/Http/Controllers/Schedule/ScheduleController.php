@@ -9,6 +9,7 @@ use CustomLog;
 use Entry;
 use Exception;
 use Illuminate\Http\Request;
+use ImageManager;
 use Modal;
 use Permission;
 use Sentinel;
@@ -566,11 +567,11 @@ class ScheduleController extends Controller
             // we store the background image file
             if ($background_image = $request->file('background_image')) {
                 // we optimize, resize and save the image
-                $file_name = \ImageManager::optimizeAndResize(
+                $file_name = ImageManager::optimizeAndResize(
                     $background_image->getRealPath(),
                     config('image.schedules.background_image.name'),
                     $background_image->getClientOriginalExtension(),
-                    config('image.schedules.background_image.storage_path'),
+                    config('image.schedules.storage_path'),
                     config('image.schedules.background_image.sizes')
                 );
                 // we set the file name
@@ -578,7 +579,7 @@ class ScheduleController extends Controller
             } elseif ($request->get('remove_background_image')) {
                 // we remove the background image
                 if (isset($schedules->background_image)) {
-                    \ImageManager::remove(
+                    ImageManager::remove(
                         $schedules->background_image,
                         config('image.schedules.storage_path'),
                         config('image.schedules.background_image.sizes')
