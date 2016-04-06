@@ -19,7 +19,7 @@
         "erusev/parsedown": "^1.6",
         "dimsav/laravel-translatable": "^5.4",
         "hirak/prestissimo": "^0.1.8",
-        "guzzlehttp/guzzle": "^6.1"
+        "guzzlehttp/guzzle": "^6.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
