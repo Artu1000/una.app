@@ -575,7 +575,7 @@ class UsersController extends Controller
             }
 
             // we store the photo
-            if ($photo = $request->get('photo')) {
+            if ($photo = $request->file('photo')) {
                 // we optimize, resize and save the image
                 $file_name = ImageManager::optimizeAndResize(
                     $photo->getRealPath(),
