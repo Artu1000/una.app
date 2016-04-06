@@ -72,6 +72,14 @@ class ProjectOptimize extends Command
             $this->line('▶ Executing artisan ide-helper:generate ...');
             exec('php artisan ide-helper:generate');
             $this->info('✔ artisan ide-helper:generate executed' . PHP_EOL);
+
+            $this->line('▶ Executing artisan ide-helper:models --nowrite ...');
+            exec('php artisan ide-helper:models --nowrite');
+            $this->info('✔ artisan ide-helper:models --nowrite executed' . PHP_EOL);
+
+            $this->line('▶ Executing artisan ide-helper:meta ...');
+            exec('php artisan ide-helper:meta');
+            $this->info('✔ artisan ide-helper:meta executed' . PHP_EOL);
         }
     }
 }

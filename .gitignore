@@ -18,9 +18,7 @@ composer.lock
 #ide-helper
 _ide_helper.php
 _ide_helper_models.php
-
-# deployer
-deploy.php
+.phpstorm.meta.php
 
 #symlinks
 public/img/news
@@ -29,3 +27,6 @@ public/img/schedules
 public/img/settings
 public/img/slides
 public/img/users
+
+# deployer
+deploy.php
