@@ -595,18 +595,19 @@ class UsersController extends Controller
                         $user->availableSizes('photo')
                     );
                 }
+                Sentinel::update($user, ['photo' => null]);
 
-                // we set the una logo as the user image
-                $file_name = ImageManager::optimizeAndResize(
-                    database_path('seeds/files/settings/logo-una-dark.png'),
-                    $user->imageName('photo'),
-                    config('image.settings.logo.extension'),
-                    $user->storagePath(),
-                    $user->availableSizes('photo'),
-                    false
-                );
-                // we update the user
-                Sentinel::update($user, ['photo' => $file_name]);
+//                // we set the una logo as the user image
+//                $file_name = ImageManager::optimizeAndResize(
+//                    database_path('seeds/files/settings/logo-una-dark.png'),
+//                    $user->imageName('photo'),
+//                    config('image.settings.logo.extension'),
+//                    $user->storagePath(),
+//                    $user->availableSizes('photo'),
+//                    false
+//                );
+//                // we update the user
+//                Sentinel::update($user, ['photo' => $file_name]);
             }
 
             // if we're updating the profile of another user
