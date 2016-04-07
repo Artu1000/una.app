@@ -11,10 +11,11 @@ return [
         ],
         "status" => [
             'president'                => "Président",
-            'student_president'        => "Président des étudiants",
+            'student_president'        => "Président étudiant",
             'vice_president'           => "Vice-président",
+            'student_vice_president'   => "Vice-président étudiant",
             'secretary_general'        => "Secrétaire général",
-            'student_secretary'        => "Secrétaire des étudiants",
+            'student_secretary'        => "Secrétaire étudiant",
             'treasurer'                => "Trésorier",
             'student_treasurer'        => "Trésorier étudiant",
             'sportive_commission'      => "Commission sportive",
