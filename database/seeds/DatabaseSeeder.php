@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         exec('sudo chmod -R g+w ' . storage_path('/framework/cache/'));
         exec('sudo chmod -R g+w ' . storage_path('/framework/sessions/'));
         exec('sudo chmod -R g+w ' . storage_path('/framework/views/'));
+        exec('sudo chmod -R g+w ' . database_path('/seeds/files/'));
         exec('sudo chgrp -R www-data ' . storage_path('app/'));
         exec('sudo chgrp -R www-data ' . storage_path('logs'));
         exec('sudo chgrp -R www-data ' . storage_path('/framework/cache/'));

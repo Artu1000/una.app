@@ -27,8 +27,8 @@
                             <h3 class="table-cell">{{ trans('users.config.board.' . $board) }}</h3>
                         </div>
                         <p class="subtitle quote">
-                        @if($id === config('user.board_key.leading_board'))Comprend également le président étudiant
-                        @elseif($id === config('user.board_key.executive_committee'))Comprend également les membres du Bureau étudiant et du Bureau
+                        @if($id === config('user.board_key.leading_board'))Comprend également le <b>président étudiant</b>
+                        @elseif($id === config('user.board_key.executive_committee'))Comprend également les membres du <b>Bureau étudiant</b> et du <b>Bureau</b>
                         @endif</p>
                         @foreach($team as $member)
                             @if($member->board_id === $id)

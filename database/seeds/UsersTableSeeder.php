@@ -8,8 +8,8 @@ class UsersTableSeeder extends Seeder
     {
         // we remove all the files in the storage user folder
         $files = glob(storage_path('app/users/*'));
-        foreach($files as $file){
-            if(is_file($file))
+        foreach ($files as $file) {
+            if (is_file($file))
                 unlink($file);
         }
 
@@ -21,25 +21,214 @@ class UsersTableSeeder extends Seeder
             mkdir($path . '/users');
         }
 
+        /**
+         * LEADING BOARD
+         */
 
         // we create a user
         $user = Sentinel::register([
-            'last_name' => 'LORENT',
+            'last_name'  => 'GIRARD',
+            'first_name' => 'Lionel',
+            'email'      => 'dlsba.girard@free.fr',
+            'status_id'  => config('user.status_key.president'),
+            'board_id'   => config('user.board_key.leading_board'),
+            'password'   => 'password',
+        ], true);
+        // we attach the user to the user role
+        $user_role = Sentinel::findRoleBySlug('user');
+        $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/users/users-default-avatar.png'),
+            $user->imageName('photo'),
+            'png',
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
+
+        // we create a user
+        $user = Sentinel::register([
+            'last_name'  => 'VARAINE',
+            'first_name' => 'David',
+            'email'      => 'davidvaraine@gmail.com',
+            'status_id'  => config('user.status_key.vice_president'),
+            'board_id'   => config('user.board_key.leading_board'),
+            'password'   => 'password',
+        ], true);
+        // we attach the user to the user role
+        $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/users/users-default-avatar.png'),
+            $user->imageName('photo'),
+            'png',
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
+
+        // we create a user
+        $user = Sentinel::register([
+            'last_name'  => 'DISCAZEAU',
+            'first_name' => 'Gérard',
+            'email'      => 'discazeaux.una@gmail.com',
+            'status_id'  => config('user.status_key.treasurer'),
+            'board_id'   => config('user.board_key.leading_board'),
+            'password'   => 'password',
+        ], true);
+        $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/users/users-default-avatar.png'),
+            $user->imageName('photo'),
+            'png',
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
+
+        // we create a user
+        $user = Sentinel::register([
+            'last_name'  => 'THERIOT',
+            'first_name' => 'David',
+            'email'      => 'david.theriot@free.fr',
+            'status_id'  => config('user.status_key.secretary_general'),
+            'board_id'   => config('user.board_key.leading_board'),
+            'password'   => 'password',
+        ], true);
+        $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/users/users-default-avatar.png'),
+            $user->imageName('photo'),
+            'png',
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
+
+        /**
+         * STUDENT LEADING BOARD
+         */
+
+        // we create a user
+        $user = Sentinel::register([
+            'last_name'  => 'PLANCHENAULT',
+            'first_name' => 'Thomas',
+            'email'      => 't.planchenault@gmail.com',
+            'status_id'  => config('user.status_key.student_president'),
+            'board_id'   => config('user.board_key.student_leading_board'),
+            'password'   => 'password',
+        ], true);
+        $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/users/users-default-avatar.png'),
+            $user->imageName('photo'),
+            'png',
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
+
+        // we create a user
+        $user = Sentinel::register([
+            'last_name'  => 'DIETER',
+            'first_name' => 'Lara',
+            'email'      => 'laradieter@hotmail.de',
+            'status_id'  => config('user.status_key.student_secretary'),
+            'board_id'   => config('user.board_key.student_leading_board'),
+            'password'   => 'password',
+        ], true);
+        $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/users/users-default-avatar.png'),
+            $user->imageName('photo'),
+            'png',
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
+
+        // we create a user
+        $user = Sentinel::register([
+            'last_name'  => 'ETIENVRE',
+            'first_name' => 'Marianne',
+            'email'      => 'marianne.etienvre@hotmail.fr',
+            'status_id'  => config('user.status_key.student_treasurer'),
+            'board_id'   => config('user.board_key.student_leading_board'),
+            'password'   => 'password',
+        ], true);
+        $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/users/users-default-avatar.png'),
+            $user->imageName('photo'),
+            'png',
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
+
+        // we create a user
+        $user = Sentinel::register([
+            'last_name'  => 'LEGOFF',
+            'first_name' => 'Benoit',
+            'email'      => 'legoff.b@gmail.com',
+            'status_id'  => config('user.status_key.student_vice_president'),
+            'board_id'   => config('user.board_key.student_leading_board'),
+            'password'   => 'password',
+        ], true);
+        $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/users/users-default-avatar.png'),
+            $user->imageName('photo'),
+            'png',
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
+
+        /**
+         * EXECUTIVE COMMITTEE
+         */
+
+        // we create a user
+        $user = Sentinel::register([
+            'last_name'  => 'LORENT',
             'first_name' => 'Arthur',
-            'photo' => '',
-            'email' => 'admin@admin.fr',
-            'status_id' => config('user.status_key.communication_commission'),
-            'board_id' => config('user.board_key.leading_board'),
-            'password' => 'admin'
+            'email'      => 'arthur.lorent@gmail.com',
+            'status_id'  => config('user.status_key.communication_commission'),
+            'board_id'   => config('user.board_key.executive_committee'),
+            'password'   => 'password',
         ], true);
         // we attach the user to the admin role
         $admin = \Sentinel::findRoleBySlug('admin');
         $admin->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/settings/logo-una-dark.png'),
+            database_path('seeds/files/users/users-default-avatar.png'),
             $user->imageName('photo'),
-            config('image.settings.logo.extension'),
+            'png',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -47,163 +236,21 @@ class UsersTableSeeder extends Seeder
         $user->photo = $file_name;
         $user->save();
 
-
         // we create a user
         $user = Sentinel::register([
-            'last_name' => 'GIRARD',
-            'first_name' => 'Lionel',
-            'email' => 'a',
-            'status_id' => config('user.status_key.president'),
-            'board_id' => config('user.board_key.leading_board'),
-            'password' => 'una'
-        ]);
-        // we attach the user to the user role
-        $user_role = Sentinel::findRoleBySlug('user');
-        $user_role->users()->attach($user);
-        // we set the una logo as the user image
-        $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/settings/logo-una-dark.png'),
-            $user->imageName('photo'),
-            config('image.settings.logo.extension'),
-            $user->storagePath(),
-            $user->availableSizes('photo'),
-            false
-        );
-        $user->photo = $file_name;
-        $user->save();
-
-
-        // we create a user
-        $user = Sentinel::register([
-            'last_name' => 'VARAINE',
-            'first_name' => 'David',
-            'email' => 'b',
-            'status_id' => config('user.status_key.vice_president'),
-            'board_id' => config('user.board_key.leading_board'),
-            'password' => 'una'
-        ]);
-        // we attach the user to the user role
-        $user_role->users()->attach($user);
-        // we set the una logo as the user image
-        $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/settings/logo-una-dark.png'),
-            $user->imageName('photo'),
-            config('image.settings.logo.extension'),
-            $user->storagePath(),
-            $user->availableSizes('photo'),
-            false
-        );
-        $user->photo = $file_name;
-        $user->save();
-
-
-        // we create a user
-        $user = Sentinel::register([
-            'last_name' => 'PLANCHENAULT',
-            'first_name' => 'Thomas',
-            'email' => 'c',
-            'status_id' => config('user.status_key.student_president'),
-            'board_id' => config('user.board_key.student_leading_board'),
-            'password' => 'una'
-        ]);
-        $user_role->users()->attach($user);
-        // we set the una logo as the user image
-        $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/settings/logo-una-dark.png'),
-            $user->imageName('photo'),
-            config('image.settings.logo.extension'),
-            $user->storagePath(),
-            $user->availableSizes('photo'),
-            false
-        );
-        $user->photo = $file_name;
-        $user->save();
-
-
-        // we create a user
-        $user = Sentinel::register([
-            'last_name' => 'DIETER',
-            'first_name' => 'Lara',
-            'email' => 'cc',
-            'status_id' => config('user.status_key.student_secretary'),
-            'board_id' => config('user.board_key.student_leading_board'),
-            'password' => 'una'
-        ]);
-        $user_role->users()->attach($user);
-        // we set the una logo as the user image
-        $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/settings/logo-una-dark.png'),
-            $user->imageName('photo'),
-            config('image.settings.logo.extension'),
-            $user->storagePath(),
-            $user->availableSizes('photo'),
-            false
-        );
-        $user->photo = $file_name;
-        $user->save();
-
-
-        // we create a user
-        $user = Sentinel::register([
-            'last_name' => 'DISCAZEAU',
-            'first_name' => 'Gérard',
-            'email' => 'd',
-            'status_id' => config('user.status_key.treasurer'),
-            'board_id' => config('user.board_key.leading_board'),
-            'password' => 'una'
-        ]);
-        $user_role->users()->attach($user);
-        // we set the una logo as the user image
-        $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/settings/logo-una-dark.png'),
-            $user->imageName('photo'),
-            config('image.settings.logo.extension'),
-            $user->storagePath(),
-            $user->availableSizes('photo'),
-            false
-        );
-        $user->photo = $file_name;
-        $user->save();
-
-
-        // we create a user
-        $user = Sentinel::register([
-            'last_name' => 'PLANTIER',
-            'first_name' => 'Christophe',
-            'email' => 'e',
-            'status_id' => config('user.status_key.secretary_general'),
-            'board_id' => config('user.board_key.leading_board'),
-            'password' => 'una'
-        ]);
-        $user_role->users()->attach($user);
-        // we set the una logo as the user image
-        $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/settings/logo-una-dark.png'),
-            $user->imageName('photo'),
-            config('image.settings.logo.extension'),
-            $user->storagePath(),
-            $user->availableSizes('photo'),
-            false
-        );
-        $user->photo = $file_name;
-        $user->save();
-
-
-        // we create a user
-        $user = Sentinel::register([
-            'last_name' => 'PROTT',
+            'last_name'  => 'PROTT',
             'first_name' => 'Thierry',
-            'email' => 'f',
-            'status_id' => config('user.status_key.sportive_commission'),
-            'board_id' => config('user.board_key.executive_committee'),
-            'password' => 'una'
-        ]);
+            'email'      => 'thprott@free.fr',
+            'status_id'  => config('user.status_key.sportive_commission'),
+            'board_id'   => config('user.board_key.executive_committee'),
+            'password'   => 'password',
+        ], true);
         $user_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/settings/logo-una-dark.png'),
+            database_path('seeds/files/users/users-default-avatar.png'),
             $user->imageName('photo'),
-            config('image.settings.logo.extension'),
+            'png',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -211,88 +258,21 @@ class UsersTableSeeder extends Seeder
         $user->photo = $file_name;
         $user->save();
 
-
         // we create a user
         $user = Sentinel::register([
-            'last_name' => 'ABRAHAMSON',
-            'first_name' => 'Jeff',
-            'email' => 'g',
-            'status_id' => config('user.status_key.leisure_commission'),
-            'board_id' => config('user.board_key.leading_board'),
-            'password' => 'una'
-        ]);
-        $user_role->users()->attach($user);
-        // we set the una logo as the user image
-        $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/settings/logo-una-dark.png'),
-            $user->imageName('photo'),
-            config('image.settings.logo.extension'),
-            $user->storagePath(),
-            $user->availableSizes('photo'),
-            false
-        );
-        $user->photo = $file_name;
-        $user->save();
-
-
-        // we create a user
-        $user = Sentinel::register([
-            'last_name' => 'LECIEUX',
-            'first_name' => 'Yann',
-            'email' => 'h',
-            'board_id' => config('user.board_key.leading_board'),
-            'password' => 'una'
-        ]);
-        $user_role->users()->attach($user);
-        // we set the una logo as the user image
-        $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/settings/logo-una-dark.png'),
-            $user->imageName('photo'),
-            config('image.settings.logo.extension'),
-            $user->storagePath(),
-            $user->availableSizes('photo'),
-            false
-        );
-        $user->photo = $file_name;
-        $user->save();
-
-
-        // we create a user
-        $user = Sentinel::register([
-            'last_name' => 'BOUZIDI',
-            'first_name' => 'Rabah',
-            'email' => 'i',
-            'board_id' => config('user.board_key.executive_committee'),
-            'password' => 'una'
-        ]);
-        $user_role->users()->attach($user);
-        // we set the una logo as the user image
-        $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/settings/logo-una-dark.png'),
-            $user->imageName('photo'),
-            config('image.settings.logo.extension'),
-            $user->storagePath(),
-            $user->availableSizes('photo'),
-            false
-        );
-        $user->photo = $file_name;
-        $user->save();
-
-
-        // we create a user
-        $user = Sentinel::register([
-            'last_name' => 'CORNUEL',
+            'last_name'  => 'ROUSSEAU',
             'first_name' => 'Benjamin',
-            'email' => 'j',
-            'board_id' => config('user.board_key.executive_committee'),
-            'password' => 'una'
-        ]);
+            'email'      => 'benjaminrousseau96@yahoo.fr',
+            'status_id'  => config('user.status_key.sportive_commission'),
+            'board_id'   => config('user.board_key.executive_committee'),
+            'password'   => 'password',
+        ], true);
         $user_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/settings/logo-una-dark.png'),
+            database_path('seeds/files/users/users-default-avatar.png'),
             $user->imageName('photo'),
-            config('image.settings.logo.extension'),
+            'png',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -300,21 +280,20 @@ class UsersTableSeeder extends Seeder
         $user->photo = $file_name;
         $user->save();
 
-
         // we create a user
         $user = Sentinel::register([
-            'last_name' => 'MARINGER',
-            'first_name' => 'Françoise',
-            'email' => 'k',
-            'board_id' => config('user.board_key.executive_committee'),
-            'password' => 'una'
-        ]);
+            'last_name'  => 'LECIEUX',
+            'first_name' => 'Yann',
+            'email'      => 'yann.lecieux@univ-nantes.fr',
+            'board_id'   => config('user.board_key.executive_committee'),
+            'password'   => 'password',
+        ], true);
         $user_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/settings/logo-una-dark.png'),
+            database_path('seeds/files/users/users-default-avatar.png'),
             $user->imageName('photo'),
-            config('image.settings.logo.extension'),
+            'png',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -322,21 +301,20 @@ class UsersTableSeeder extends Seeder
         $user->photo = $file_name;
         $user->save();
 
-
         // we create a user
         $user = Sentinel::register([
-            'last_name' => 'MOUGEL',
-            'first_name' => 'Jean-Bruno',
-            'email' => 'l',
-            'board_id' => config('user.board_key.executive_committee'),
-            'password' => 'una'
-        ]);
+            'last_name'  => 'BOUZIDI',
+            'first_name' => 'Rabah',
+            'email'      => 'rabah.bouzidi@univ-nantes.fr',
+            'board_id'   => config('user.board_key.executive_committee'),
+            'password'   => 'password',
+        ], true);
         $user_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/settings/logo-una-dark.png'),
+            database_path('seeds/files/users/users-default-avatar.png'),
             $user->imageName('photo'),
-            config('image.settings.logo.extension'),
+            'png',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -344,21 +322,20 @@ class UsersTableSeeder extends Seeder
         $user->photo = $file_name;
         $user->save();
 
-
         // we create a user
         $user = Sentinel::register([
-            'last_name' => 'TARDY',
-            'first_name' => 'Mickaël',
-            'email' => 'm',
-            'board_id' => config('user.board_key.executive_committee'),
-            'password' => 'una'
-        ]);
+            'last_name'  => 'ROBIN',
+            'first_name' => 'Pauline',
+            'email'      => 'pauline.robin@live.fr',
+            'board_id'   => config('user.board_key.executive_committee'),
+            'password'   => 'password',
+        ], true);
         $user_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/settings/logo-una-dark.png'),
+            database_path('seeds/files/users/users-default-avatar.png'),
             $user->imageName('photo'),
-            config('image.settings.logo.extension'),
+            'png',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -366,21 +343,45 @@ class UsersTableSeeder extends Seeder
         $user->photo = $file_name;
         $user->save();
 
+        // we create a user
+        $user = Sentinel::register([
+            'last_name'  => 'ROBIN DIOT',
+            'first_name' => 'Ainhoa',
+            'email'      => 'ainhoa.robin@gmail.com',
+            'board_id'   => config('user.board_key.executive_committee'),
+            'password'   => 'password',
+        ], true);
+        $user_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/users/users-default-avatar.png'),
+            $user->imageName('photo'),
+            'png',
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
+
+        /**
+         * EMPLOYEES
+         */
 
         // we create a user
         $user = Sentinel::register([
-            'last_name' => 'VESPERINI',
+            'last_name'  => 'VESPERINI',
             'first_name' => 'Laurent',
-            'email' => 'n',
-            'status_id' => config('user.status_key.employee'),
-            'password' => 'una'
-        ]);
+            'email'      => 'laurentvesperini@yahoo.fr',
+            'status_id'  => config('user.status_key.employee'),
+            'password'   => 'password',
+        ], true);
         $user_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/settings/logo-una-dark.png'),
+            database_path('seeds/files/users/users-default-avatar.png'),
             $user->imageName('photo'),
-            config('image.settings.logo.extension'),
+            'png',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false

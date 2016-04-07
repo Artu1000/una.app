@@ -306,9 +306,9 @@ class UsersController extends Controller
             } else {
                 // we set the una logo as the user image
                 $file_name = ImageManager::optimizeAndResize(
-                    database_path('seeds/files/settings/logo-una-dark.png'),
+                    database_path('seeds/files/users/users-default-avatar.png'),
                     $user->imageName('photo'),
-                    config('image.settings.logo.extension'),
+                    'png',
                     $user->storagePath(),
                     $user->availableSizes('photo'),
                     false
@@ -587,21 +587,11 @@ class UsersController extends Controller
                 // we update the user
                 Sentinel::update($user, ['photo' => $file_name]);
             } elseif ((!$request->get('photo') && !$user->photo) || $request->get('remove_photo')) {
-                // we remove the background image
-//                if (isset($user->photo)) {
-//                    ImageManager::remove(
-//                        $user->photo,
-//                        $user->storagePath(),
-//                        $user->availableSizes('photo')
-//                    );
-//                }
-//                Sentinel::update($user, ['photo' => null]);
-
                 // we set the una logo as the user image
                 $file_name = ImageManager::optimizeAndResize(
-                    database_path('seeds/files/settings/logo-una-dark.png'),
+                    database_path('seeds/files/users/users-default-avatar.png'),
                     $user->imageName('photo'),
-                    config('image.settings.logo.extension'),
+                    'png',
                     $user->storagePath(),
                     $user->availableSizes('photo'),
                     false

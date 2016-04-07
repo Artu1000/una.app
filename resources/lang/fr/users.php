@@ -7,7 +7,7 @@ return [
         "board"  => [
             "student_leading_board" => "Bureau des étudiants",
             "leading_board"         => "Bureau",
-            "executive_committee"   => "Commité Directeur",
+            "executive_committee"   => "Comité Directeur",
         ],
         "status" => [
             'president'                => "Président",
