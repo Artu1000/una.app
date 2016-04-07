@@ -165,6 +165,11 @@ class ImageManagerHelper
      */
     public function remove(string $file_name, string $storage_path, array $sizes)
     {
+
+        if (strpos($file_name, '.') === false) {
+            throw new InvalidArgumentException('The file name ' . $file_name . ' contains no extension.');
+        }
+
         // we get the file name and its extension
         list($file_name, $extension) = explode('.', $file_name);
 

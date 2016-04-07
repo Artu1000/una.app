@@ -595,6 +595,8 @@ class UsersController extends Controller
                         $user->availableSizes('photo')
                     );
                 }
+
+
                 // we set the una logo as the user image
                 $file_name = ImageManager::optimizeAndResize(
                     database_path('seeds/files/settings/logo-una-dark.png'),
@@ -609,7 +611,7 @@ class UsersController extends Controller
             }
 
             // if we're updating the profile of another user
-            if ($user->id !== \Sentinel::getUser()->id) {
+            if ($user->id !== Sentinel::getUser()->id) {
                 // we check is the user is attached to roles
                 $current_roles = $user->roles;
 
@@ -619,7 +621,7 @@ class UsersController extends Controller
                 }
 
                 // we attach the new role
-                $role = \Sentinel::findRoleById($request->get('role'));
+                $role = Sentinel::findRoleById($request->get('role'));
                 $role->users()->attach($user);
 
                 // if the order is to activate the user
