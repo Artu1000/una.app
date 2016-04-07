@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Install;
 
+use Console;
 use Illuminate\Console\Command;
 
 class NpmInstall extends Command
@@ -38,31 +39,31 @@ class NpmInstall extends Command
     public function handle()
     {
         $this->line('Deleting node_modules folder ...');
-        \Console::execWithOutput('rm -rf node_modules', $this);
+        Console::execWithOutput('rm -rf node_modules', $this);
         $this->info('✔ node_modules folder deleted' . PHP_EOL);
 
         $this->line('Disabling npm progress bar ...');
-        \Console::execWithOutput('npm set progress=false', $this);
+        Console::execWithOutput('npm set progress=false', $this);
         $this->info('✔ npm progress bar disabled' . PHP_EOL);
 
         $this->line('Processing npm cache clean ...');
-        \Console::execWithOutput('npm cache clean', $this);
+        Console::execWithOutput('npm cache clean', $this);
         $this->info('✔ npm cache clean done' . PHP_EOL);
 
         $this->line('Processing gulp install ...');
-        \Console::execWithOutput('npm install gulp --save-dev', $this);
+        Console::execWithOutput('npm install gulp --save-dev', $this);
         $this->info('✔ gulp installed' . PHP_EOL);
 
         $this->line('Processing laravel-elixir install ...');
-        \Console::execWithOutput('npm install laravel-elixir --save-dev', $this);
+        Console::execWithOutput('npm install laravel-elixir --save-dev', $this);
         $this->info('✔ laravel-elixir installed' . PHP_EOL);
 
         $this->line('Processing laravel-elixir-imagemin install ...');
-        \Console::execWithOutput('npm install laravel-elixir-imagemin --save-dev', $this);
+        Console::execWithOutput('npm install laravel-elixir-imagemin --save-dev', $this);
         $this->info('✔ laravel-elixir-imagemin installed' . PHP_EOL);
 
         $this->line('Processing npm rebuild node-sass ...');
-        \Console::execWithOutput('npm rebuild node-sass', $this);
+        Console::execWithOutput('npm rebuild node-sass', $this);
         $this->info('✔ npm node-sass rebuilt' . PHP_EOL);
     }
 }

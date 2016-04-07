@@ -596,7 +596,6 @@ class UsersController extends Controller
                     );
                 }
 
-
                 // we set the una logo as the user image
                 $file_name = ImageManager::optimizeAndResize(
                     database_path('seeds/files/settings/logo-una-dark.png'),

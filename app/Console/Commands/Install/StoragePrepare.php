@@ -76,9 +76,5 @@ class StoragePrepare extends Command
         if (!is_file(storage_path('app/settings/settings.json'))) {
             Console::execWithOutput('php artisan db:seed --class=SettingsTableSeeder', $this);
         }
-        
-        // we give the correct rights to the storage folder
-        exec('sudo chmod -R g+w ' . storage_path());
-        exec('sudo chgrp -R www-data ' . storage_path());
     }
 }

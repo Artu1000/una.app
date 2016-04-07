@@ -2,6 +2,15 @@
 
 namespace App\Console;
 
+use App\Console\Commands\Database\DropDatabase;
+use App\Console\Commands\Database\ResetDatabase;
+use App\Console\Commands\Database\UsersAndRelatedTablesClean;
+use App\Console\Commands\Image\ImageGenerate;
+use App\Console\Commands\Install\MailcatcherInstall;
+use App\Console\Commands\Install\NpmInstall;
+use App\Console\Commands\Install\ProjectOptimize;
+use App\Console\Commands\Install\StoragePrepare;
+use App\Console\Commands\Install\SymLinksPrepare;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,17 +22,15 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Console\Commands\Install\StoragePrepare::class,
-        \App\Console\Commands\Install\MailcatcherInstall::class,
-        \App\Console\Commands\Install\ProjectInstall::class,
-        \App\Console\Commands\Install\NpmInstall::class,
-        \App\Console\Commands\Install\SymLinksPrepare::class,
-        \App\Console\Commands\Install\ProjectOptimize::class,
-        \App\Console\Commands\Database\UsersAndRelatedTablesClean::class,
-        \App\Console\Commands\Database\DropDatabase::class,
-        \App\Console\Commands\Database\ResetDatabase::class,
-        \App\Console\Commands\Image\ImageGenerate::class,
-        \App\Console\Commands\Image\ImageGenerate::class,
+        StoragePrepare::class,
+        MailcatcherInstall::class,
+        NpmInstall::class,
+        SymLinksPrepare::class,
+        ProjectOptimize::class,
+        UsersAndRelatedTablesClean::class,
+        DropDatabase::class,
+        ResetDatabase::class,
+        ImageGenerate::class,
     ];
 
     /**
