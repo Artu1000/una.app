@@ -52,13 +52,13 @@
                                     <div class="comments">
                                         <i class="fa fa-comments"></i> <a href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}#disqus_thread" title="Commentaires"></a>
                                     </div>
-                                    <div class="sum_up">
+                                    <div class="sum_up hidden-xs">
                                         {{ str_limit(strip_tags($news->content), 250) }}
                                     </div>
                                     <div class="button mobile visible-xs">
                                         <a href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}">
-                                            <button class="btn pull-right" role="button">
-                                                <i class="fa fa-chevron-circle-right"></i> Lire plus
+                                            <button class="btn" role="button">
+                                                <i class="fa fa-chevron-circle-right"></i> {{ trans('global.action.more') }}
                                             </button>
                                         </a>
                                     </div>

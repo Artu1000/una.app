@@ -662,40 +662,26 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
           tr.news {
 
-            &:nth-of-type(3) {
+            td.content {
+              padding: 30px 20px;
 
-              td {
-                padding-top: 25px;
+              div.date, div.category, div.comments {
+                display: block;
+                margin: 0;
               }
-            }
 
-            &:nth-of-type(2) {
-              border-bottom: 1px solid #eeeeee;
+              .button.mobile {
+                padding: 10px 0 35px;
 
-              td {
-                padding-bottom: 35px;
-              }
-            }
+                button {
+                  @include border-radius(6px);
+                  height: auto;
+                  width: auto;
+                  //border-color: #aeb6cb;
 
-            td {
-              height: 0;
-            }
-
-            .img {
-              padding-left: 0;
-            }
-
-            .button.mobile {
-              padding: 10px 0 35px;
-
-              button {
-                @include border-radius(6px);
-                height: auto;
-                width: auto;
-                border-color: #aeb6cb;
-
-                & > i.fa {
-                  font-size: $font-size;
+                  i.fa {
+                    font-size: $font-size;
+                  }
                 }
               }
             }

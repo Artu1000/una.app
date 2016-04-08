@@ -1143,51 +1143,50 @@ html {
                   font-size: 15px;
                 }
 
-                &.active {
-
-                  a {
-                    background-color: #07141B !important;
-                    color: #fff;
-
-                    &:hover, &:focus {
-                      background-color: #07141B;
-                      color: #ffffff !important;
-                    }
-                  }
+                &.menu_tab.active, &.dropdown.open, &.dropdown.active {
+                   a {
+                     color: #fff;
+                     background-color: #07141B;
+                   }
                 }
 
-                &.open {
-                  background-color: #eeeeee;
-                  border-bottom: solid 1px #9d9d9d;
-                  margin: 0;
+                &.dropdown.open, &.dropdown.active {
 
-                  a {
-                    background-color: #07141B;
-                    color: #fff;
-
-                    &:hover, &:focus {
-                      background-color: #07141B;
-                    }
-                  }
-
-                  ul {
-                    margin: 0 !important;
+                  ul.dropdown-menu {
+                    margin: 0;
+                    background-color: #eeeeee;
+                    border-bottom: solid 1px #9d9d9d;
+                    border-radius: 0;
 
                     li {
-                      padding: 0 15px;
-                      border: none;
-                      margin: 0;
+
+                      &.menu_tab {
+                        padding: 0 15px;
+                        border: none;
+                        margin: 0;
+
+                        a {
+                          color: #000;
+                          background-color: transparent;
+                          font-size: 13px;
+                        }
+
+                        &.active {
+                          background-color: transparent;
+
+                          a {
+                            background-color: #07141B;
+                            color: #fff;
+                            opacity: 0.9;
+                          }
+                        }
+                      }
 
                       &.divider {
                         margin: 9px 30px;
                         background-color: #9d9d9d;
+                        border-color: #9d9d9d;
                         opacity: 0.3;
-                      }
-
-                      a {
-                        background-color: transparent;
-                        color: #000;
-                        font-size: 13px;
                       }
                     }
                   }

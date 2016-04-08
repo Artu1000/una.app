@@ -66,23 +66,21 @@
                                         <div class="comments">
                                             <i class="fa fa-comments"></i> <a href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}#disqus_thread" title="Commentaires"></a>
                                         </div>
-                                        <div class="sum_up">
+                                        <div class="sum_up hidden-xs">
                                             {{ str_limit(strip_tags($news->content), 250) }}
+                                        </div>
+                                        <div class="button mobile visible-xs">
+                                            <a href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}">
+                                                <button class="btn" role="button">
+                                                    <i class="fa fa-chevron-circle-right"></i> {{ trans('global.action.more') }}
+                                                </button>
+                                            </a>
                                         </div>
                                     </td>
                                     <td class="button hidden-xs">
                                         <a href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}">
-                                            <button class="btn btn-default" role="button">
-                                                <i class="fa fa-chevron-circle-right"></i>
-                                            </button>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr class="news visible-xs">
-                                    <td class="button mobile text-right">
-                                        <a href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}">
                                             <button class="btn" role="button">
-                                                <i class="fa fa-chevron-circle-right"></i> {{ trans('global.action.more') }}
+                                                <i class="fa fa-chevron-circle-right"></i>
                                             </button>
                                         </a>
                                     </td>
