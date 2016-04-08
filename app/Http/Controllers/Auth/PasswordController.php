@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Repositories\User\UserRepositoryInterface;
 use CustomLog;
+use Exception;
 use Illuminate\Http\Request;
 use Mail;
 use Modal;
@@ -41,6 +42,9 @@ class PasswordController extends Controller
     {
         // we get the user
         if (!$user = \Sentinel::findUserByCredentials($request->only('email'))) {
+            // we flash the request
+            $request->flash();
+
             // we notify the current user
             Modal::alert([
                 trans('auth.message.find.failure', ['email' => $request->get('email')]),
@@ -70,7 +74,10 @@ class PasswordController extends Controller
 
             return redirect(route('login.index'));
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
+
+            // we flash the request
+            $request->flash();
 
             // we log the error
             CustomLog::error($e);
