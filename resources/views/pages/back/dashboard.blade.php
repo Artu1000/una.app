@@ -4,7 +4,14 @@
 
     <div id="content" class="dashboard">
 
-        dashboard
+        <div class="text-content">
+
+            <div class="col-sm-12">
+
+                <p>Bienvenue dans votre interface d'administration.</p>
+
+            </div>
+        </div>
 
     </div>
 

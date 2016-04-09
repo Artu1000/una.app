@@ -70,126 +70,139 @@
             <ul class="nav navbar-nav side-nav">
 
                 {{-- dashboard --}}
-                <li class="@if(\Route::current()->getName() === 'dashboard.index')active @endif">
+                <li class="@if(Route::current()->getName() === 'dashboard.index')active @endif">
                     <a href="{{ route('dashboard.index') }}"><i class="fa fa-fw fa-dashboard"></i> {{ trans('template.back.header.dashboard') }}</a>
                 </li>
 
                 {{-- admin pannel --}}
-                <li class="@if(\Route::current()->getName() === 'settings.index'
-                || \Route::current()->getName() === 'permissions.index'
-                || \Route::current()->getName() === 'permissions.create'
-                || \Route::current()->getName() === 'permissions.edit'
-                || \Route::current()->getName() === 'users.index'
-                || \Route::current()->getName() === 'users.create'
-                || \Route::current()->getName() === 'users.edit')active @endif">
-                    <a href="#" data-toggle="collapse" data-target="#admin">
-                        <i class="fa fa-cogs"></i> {{ trans('template.back.header.admin') }}
-                        <i class="fa fa-fw fa-caret-down"></i>
-                    </a>
-                    <ul id="admin" class="collapse @if(\Route::current()->getName() === 'settings.index'
-                    || \Route::current()->getName() === 'permissions.index'
-                    || \Route::current()->getName() === 'permissions.create'
-                    || \Route::current()->getName() === 'permissions.edit'
-                    || \Route::current()->getName() === 'users.index'
-                    || \Route::current()->getName() === 'users.create'
-                    || \Route::current()->getName() === 'users.edit')in @endif">
+                @if(Sentinel::getUser()->hasAccess('settings.view')
+                || Sentinel::getUser()->hasAccess('permissions.list')
+                || Sentinel::getUser()->hasAccess('users.list'))
 
-                        {{-- settings --}}
-                        @if(\Sentinel::getUser()->hasAccess('settings.view'))
-                            <li class="@if(\Route::current()->getName() === 'settings.index')active @endif">
-                                <a class="spin-on-click" href="{{ route('settings.index') }}"><i class="fa fa-wrench"></i> {{ trans('template.back.header.settings') }}</a>
-                            </li>
-                        @endif
+                    <li class="@if(Route::current()->getName() === 'settings.index'
+                    || Route::current()->getName() === 'permissions.index'
+                    || Route::current()->getName() === 'permissions.create'
+                    || Route::current()->getName() === 'permissions.edit'
+                    || Route::current()->getName() === 'users.index'
+                    || Route::current()->getName() === 'users.create'
+                    || Route::current()->getName() === 'users.edit')active @endif">
+                        <a href="#" data-toggle="collapse" data-target="#admin">
+                            <i class="fa fa-cogs"></i> {{ trans('template.back.header.admin') }}
+                            <i class="fa fa-fw fa-caret-down"></i>
+                        </a>
+                        <ul id="admin" class="collapse @if(Route::current()->getName() === 'settings.index'
+                        || Route::current()->getName() === 'permissions.index'
+                        || Route::current()->getName() === 'permissions.create'
+                        || Route::current()->getName() === 'permissions.edit'
+                        || Route::current()->getName() === 'users.index'
+                        || Route::current()->getName() === 'users.create'
+                        || Route::current()->getName() === 'users.edit')in @endif">
 
-                        {{-- permissions --}}
-                        @if(\Sentinel::getUser()->hasAccess('permissions.list'))
-                            <li class="@if(\Route::current()->getName() === 'permissions.index'
-                                || \Route::current()->getName() === 'permissions.create'
-                                || \Route::current()->getName() === 'permissions.edit')active @endif">
-                                <a class="spin-on-click" href="{{ route('permissions.index') }}"><i class="fa fa-gavel"></i> {{ trans('template.back.header.permissions') }}</a>
-                            </li>
-                        @endif
+                            {{-- settings --}}
+                            @if(Sentinel::getUser()->hasAccess('settings.view'))
+                                <li class="@if(Route::current()->getName() === 'settings.index')active @endif">
+                                    <a class="spin-on-click" href="{{ route('settings.index') }}"><i class="fa fa-wrench"></i> {{ trans('template.back.header.settings') }}</a>
+                                </li>
+                            @endif
 
-                        {{-- users --}}
-                        @if(\Sentinel::getUser()->hasAccess('users.list'))
-                            <li class="@if(\Route::current()->getName() === 'users.index'
-                                || \Route::current()->getName() === 'users.create'
-                                || \Route::current()->getName() === 'users.edit')active @endif">
-                                <a class="spin-on-click" href="{{ route('users.index') }}"><i class="fa fa-users"></i> {{ trans('template.back.header.users') }}</a>
-                            </li>
-                        @endif
-                    </ul>
-                </li>
+                            {{-- permissions --}}
+                            @if(Sentinel::getUser()->hasAccess('permissions.list'))
+                                <li class="@if(\Route::current()->getName() === 'permissions.index'
+                                    || Route::current()->getName() === 'permissions.create'
+                                    || Route::current()->getName() === 'permissions.edit')active @endif">
+                                    <a class="spin-on-click" href="{{ route('permissions.index') }}"><i class="fa fa-gavel"></i> {{ trans('template.back.header.permissions') }}</a>
+                                </li>
+                            @endif
+
+                            {{-- users --}}
+                            @if(Sentinel::getUser()->hasAccess('users.list'))
+                                <li class="@if(\Route::current()->getName() === 'users.index'
+                                    || Route::current()->getName() === 'users.create'
+                                    || Route::current()->getName() === 'users.edit')active @endif">
+                                    <a class="spin-on-click" href="{{ route('users.index') }}"><i class="fa fa-users"></i> {{ trans('template.back.header.users') }}</a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+
+                @endif
 
                 <li class="divider"></li>
 
                 {{-- contents pannel --}}
-                <li class="@if(\Route::current()->getName() === 'home.edit'
-                || \Route::current()->getName() === 'slides.create'
-                || \Route::current()->getName() === 'slides.edit'
-                || \Route::current()->getName() === 'news.list'
-                || \Route::current()->getName() === 'news.create'
-                || \Route::current()->getName() === 'news.edit'
-                || \Route::current()->getName() === 'schedules.list'
-                || \Route::current()->getName() === 'schedules.create'
-                || \Route::current()->getName() === 'schedules.edit'
-                || \Route::current()->getName() === 'partners.index'
-                || \Route::current()->getName() === 'partners.create'
-                || \Route::current()->getName() === 'partners.edit')active @endif">
-                    <a href="#" data-toggle="collapse" data-target="#contents">
-                        <i class="fa fa-list-alt"></i> {{ trans('template.back.header.contents') }}
-                        <i class="fa fa-fw fa-caret-down"></i>
-                    </a>
-                    <ul id="contents" class="collapse @if(\Route::current()->getName() === 'home.edit'
-                    || \Route::current()->getName() === 'slides.create'
-                    || \Route::current()->getName() === 'slides.edit'
-                    || \Route::current()->getName() === 'news.list'
-                    || \Route::current()->getName() === 'news.create'
-                    || \Route::current()->getName() === 'news.edit'
-                    || \Route::current()->getName() === 'schedules.list'
-                    || \Route::current()->getName() === 'schedules.create'
-                    || \Route::current()->getName() === 'schedules.edit'
-                    || \Route::current()->getName() === 'partners.index'
-                    || \Route::current()->getName() === 'partners.create'
-                    || \Route::current()->getName() === 'partners.edit')in @endif">
+                @if(Sentinel::getUser()->hasAccess('home.update')
+                || Sentinel::getUser()->hasAccess('news.list')
+                || Sentinel::getUser()->hasAccess('schedules.list')
+                || Sentinel::getUser()->hasAccess('partners.list'))
 
-                        {{-- home --}}
-                        @if(\Sentinel::getUser()->hasAccess('home.update'))
-                            <li class="@if(\Route::current()->getName() === 'home.edit'
-                            || \Route::current()->getName() === 'slides.create'
-                            || \Route::current()->getName() === 'slides.edit')active @endif">
-                                <a class="spin-on-click" href="{{ route('home.edit') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.home') }}</a>
-                            </li>
-                        @endif
+                    <li class="@if(Route::current()->getName() === 'home.edit'
+                    || Route::current()->getName() === 'slides.create'
+                    || Route::current()->getName() === 'slides.edit'
+                    || Route::current()->getName() === 'news.list'
+                    || Route::current()->getName() === 'news.create'
+                    || Route::current()->getName() === 'news.edit'
+                    || Route::current()->getName() === 'schedules.list'
+                    || Route::current()->getName() === 'schedules.create'
+                    || Route::current()->getName() === 'schedules.edit'
+                    || Route::current()->getName() === 'partners.index'
+                    || Route::current()->getName() === 'partners.create'
+                    || Route::current()->getName() === 'partners.edit')active @endif">
+                        <a href="#" data-toggle="collapse" data-target="#contents">
+                            <i class="fa fa-list-alt"></i> {{ trans('template.back.header.contents') }}
+                            <i class="fa fa-fw fa-caret-down"></i>
+                        </a>
+                        <ul id="contents" class="collapse @if(\Route::current()->getName() === 'home.edit'
+                        || Route::current()->getName() === 'slides.create'
+                        || Route::current()->getName() === 'slides.edit'
+                        || Route::current()->getName() === 'news.list'
+                        || Route::current()->getName() === 'news.create'
+                        || Route::current()->getName() === 'news.edit'
+                        || Route::current()->getName() === 'schedules.list'
+                        || Route::current()->getName() === 'schedules.create'
+                        || Route::current()->getName() === 'schedules.edit'
+                        || Route::current()->getName() === 'partners.index'
+                        || Route::current()->getName() === 'partners.create'
+                        || Route::current()->getName() === 'partners.edit')in @endif">
 
-                        {{-- news --}}
-                        @if(\Sentinel::getUser()->hasAccess('news.list'))
-                            <li class="@if(\Route::current()->getName() === 'news.list'
-                            || \Route::current()->getName() === 'news.create'
-                            || \Route::current()->getName() === 'news.edit')active @endif">
-                                <a class="spin-on-click" href="{{ route('news.list') }}"><i class="fa fa-paper-plane"></i> {{ trans('template.back.header.news') }}</a>
-                            </li>
-                        @endif
+                            {{-- home --}}
+                            @if(Sentinel::getUser()->hasAccess('home.update'))
+                                <li class="@if(\Route::current()->getName() === 'home.edit'
+                                || Route::current()->getName() === 'slides.create'
+                                || Route::current()->getName() === 'slides.edit')active @endif">
+                                    <a class="spin-on-click" href="{{ route('home.edit') }}"><i class="fa fa-home"></i> {{ trans('template.back.header.home') }}</a>
+                                </li>
+                            @endif
 
-                        {{-- schedules --}}
-                        @if(\Sentinel::getUser()->hasAccess('schedules.list'))
-                            <li class="@if(\Route::current()->getName() === 'schedules.list'
-                            || \Route::current()->getName() === 'schedules.create'
-                            || \Route::current()->getName() === 'schedules.edit')active @endif">
-                                <a class="spin-on-click" href="{{ route('schedules.list') }}"><i class="fa fa-clock-o"></i> {{ trans('template.back.header.schedules') }}</a>
-                            </li>
-                        @endif
+                            {{-- news --}}
+                            @if(Sentinel::getUser()->hasAccess('news.list'))
+                                <li class="@if(\Route::current()->getName() === 'news.list'
+                                || Route::current()->getName() === 'news.create'
+                                || Route::current()->getName() === 'news.edit')active @endif">
+                                    <a class="spin-on-click" href="{{ route('news.list') }}"><i class="fa fa-paper-plane"></i> {{ trans('template.back.header.news') }}</a>
+                                </li>
+                            @endif
 
-                        {{-- partners --}}
-                        @if(\Sentinel::getUser()->hasAccess('partners.list'))
-                            <li class="@if(\Route::current()->getName() === 'partners.index'
-                            || \Route::current()->getName() === 'partners.create'
-                            || \Route::current()->getName() === 'partners.edit')active @endif">
-                                <a class="spin-on-click" href="{{ route('partners.index') }}"><i class="fa fa-life-ring"></i> {{ trans('template.back.header.partners') }}</a>
-                            </li>
-                        @endif
-                    </ul>
-                </li>
+                            {{-- schedules --}}
+                            @if(Sentinel::getUser()->hasAccess('schedules.list'))
+                                <li class="@if(\Route::current()->getName() === 'schedules.list'
+                                || Route::current()->getName() === 'schedules.create'
+                                || Route::current()->getName() === 'schedules.edit')active @endif">
+                                    <a class="spin-on-click" href="{{ route('schedules.list') }}"><i class="fa fa-clock-o"></i> {{ trans('template.back.header.schedules') }}</a>
+                                </li>
+                            @endif
+
+                            {{-- partners --}}
+                            @if(Sentinel::getUser()->hasAccess('partners.list'))
+                                <li class="@if(\Route::current()->getName() === 'partners.index'
+                                || Route::current()->getName() === 'partners.create'
+                                || Route::current()->getName() === 'partners.edit')active @endif">
+                                    <a class="spin-on-click" href="{{ route('partners.index') }}"><i class="fa fa-life-ring"></i> {{ trans('template.back.header.partners') }}</a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+
+                @endif
 
                 <li class="divider"></li>
 
