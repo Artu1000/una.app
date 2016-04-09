@@ -281,10 +281,10 @@ class UsersController extends Controller
 
         try {
             // we create the user
-            $user = \Sentinel::create($request->all());
+            $user = Sentinel::create($request->all());
 
             // we format the number into its international equivalent
-            if ($phone_number = $request->get('phone_number')) {
+            if ($phone_number = $request->get('phone_number', 'photo')) {
                 $user->phone_number = phone_format(
                     $phone_number,
                     'FR',
@@ -561,7 +561,7 @@ class UsersController extends Controller
 
         try {
             // we update the user
-            Sentinel::update($user, $request->except('password'));
+            Sentinel::update($user, $request->except('password', 'photo'));
 
             // we format the number into its international equivalent
             if ($phone_number = $request->get('phone_number')) {
@@ -598,6 +598,13 @@ class UsersController extends Controller
                 );
                 // we update the user
                 Sentinel::update($user, ['photo' => $file_name]);
+            }
+
+            // we update the user password
+            if ($password = $request->get('password')) {
+                Sentinel::update($user, [
+                    'password' => $password,
+                ]);
             }
 
             // if we're updating the profile of another user
