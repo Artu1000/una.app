@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Activation;
 use App\Http\Controllers\Controller;
 use CustomLog;
+use Exception;
 use Illuminate\Http\Request;
+use ImageManager;
 use Mail;
 use Modal;
 use Sentinel;
@@ -68,6 +71,18 @@ class AccountController extends Controller
         // we create the user
         if ($user = Sentinel::register($request->all())) {
 
+            // we set the una logo as the user image
+            $file_name = ImageManager::optimizeAndResize(
+                database_path('seeds/files/users/users-default-avatar.png'),
+                $user->imageName('photo'),
+                'png',
+                $user->storagePath(),
+                $user->availableSizes('photo'),
+                false
+            );
+            // we update the user
+            Sentinel::update($user, ['photo' => $file_name]);
+
             // we attach the user to the "User" role by default
             if (!$user_role = Sentinel::findRoleBySlug('user')) {
                 // if the user role is not found, we create it
@@ -79,7 +94,7 @@ class AccountController extends Controller
             $user_role->users()->attach($user);
 
             // we create an activation line
-            $activation = \Activation::create($user);
+            $activation = Activation::create($user);
 
             try {
                 // we send the email asking the account activation
@@ -138,8 +153,8 @@ class AccountController extends Controller
         }
 
         // we prepare the activation
-        if (!$activation = \Activation::exists($user)) {
-            $activation = \Activation::create($user);
+        if (!$activation = Activation::exists($user)) {
+            $activation = Activation::create($user);
         }
 
         try {
@@ -160,7 +175,7 @@ class AccountController extends Controller
 
             return redirect(route('login.index'));
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we flash the request
             $request->flash();
 
@@ -199,7 +214,7 @@ class AccountController extends Controller
 
         try {
             // we verify if the reminder token is valid
-            if (\Activation::complete($user, $request->get('token'))) {
+            if (Activation::complete($user, $request->get('token'))) {
                 Modal::alert([
                     trans('auth.message.activation.success', ['name' => $user->first_name . " " . $user->last_name]),
                 ], 'success');

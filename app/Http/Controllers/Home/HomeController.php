@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Repositories\News\NewsRepositoryInterface;
 use App\Repositories\Slide\SlideRepositoryInterface;
+use CustomLog;
 use Illuminate\Http\Request;
 use JavaScript;
+use Modal;
 use Permission;
 use Sentinel;
 use TableList;
@@ -201,7 +203,7 @@ class HomeController extends Controller
                 json_encode($request->except('_token', '_method'))
             );
 
-            \Modal::alert([
+            Modal::alert([
                 trans('home.message.update.success'),
             ], 'success');
 
@@ -209,10 +211,10 @@ class HomeController extends Controller
         } catch (\Exception $e) {
 
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
 
             // we notify the current user
-            \Modal::alert([
+            Modal::alert([
                 trans('home.message.update.failure'),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');

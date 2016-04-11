@@ -46,41 +46,44 @@ return [
 
     // back
     "back"  => [
-        "dashboard"   => [
+        "dashboard"    => [
             "index" => "Tableau de bord",
         ],
-        "settings"    => [
+        "settings"     => [
             "index" => "Gestion des paramètres du site",
         ],
-        "permissions" => [
+        "permissions"  => [
             "index"  => "Gestion des permissions utilisateurs",
             "edit"   => "Édition d'un rôle utilisateur",
             "create" => "Création d'un rôle utilisateur",
         ],
-        "users"       => [
+        "users"        => [
             "index"   => "Gestion des utilisateurs",
             "edit"    => "Édition d'un utlisateur",
             "create"  => "Création d'un rôle",
             "profile" => "Mon profil",
         ],
-        "home"        => [
+        "home"         => [
             "slides" => [
                 "create" => "Création d'une diapo",
                 "edit"   => "Édition d'une diapo",
             ],
-            "edit"  => "Édition de la page d'accueil",
+            "edit"   => "Édition de la page d'accueil",
         ],
-        "news"        => [
+        "news"         => [
             "list"   => "Gestion des actualités",
             "edit"   => "Édition d'une actualité",
             "create" => "Création d'une actualité",
         ],
-        "schedules"   => [
+        "schedules"    => [
             "list"   => "Gestion des créneaux horaire",
             "edit"   => "Édition d'un créneau horaire",
             "create" => "Création d'un créneau horaire",
         ],
-        "partners"    => [
+        "registration" => [
+            "page_edit" => "Édition de la page d'inscription",
+        ],
+        "partners"     => [
             "index"  => "Gestion des partenaires",
             "edit"   => "Édition d'un partenaire",
             "create" => "Création d'un partenaire",

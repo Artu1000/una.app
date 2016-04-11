@@ -85,6 +85,10 @@ return [
         "destroy"     => "admin/contenus/horaires/suppression/{id}",
         "activate"    => "admin/contenus/horaires/activation/{id}",
     ],
+    "registration" => [
+        "page_edit" => "admin/contenus/inscription",
+        "update"    => "admin/contenus/inscription/mise-a-jour",
+    ],
     "partners"     => [
         "index"    => "admin/contenus/partenaires",
         "create"   => "admin/contenus/partenaires/creation",

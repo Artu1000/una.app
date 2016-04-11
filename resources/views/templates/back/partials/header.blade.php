@@ -130,9 +130,10 @@
                 <li class="divider"></li>
 
                 {{-- contents pannel --}}
-                @if(Sentinel::getUser()->hasAccess('home.update')
+                @if(Sentinel::getUser()->hasAccess('home.view')
                 || Sentinel::getUser()->hasAccess('news.list')
                 || Sentinel::getUser()->hasAccess('schedules.list')
+                || Sentinel::getUser()->hasAccess('registration.page.view')
                 || Sentinel::getUser()->hasAccess('partners.list'))
 
                     <li class="@if(Route::current()->getName() === 'home.edit'
@@ -144,6 +145,7 @@
                     || Route::current()->getName() === 'schedules.list'
                     || Route::current()->getName() === 'schedules.create'
                     || Route::current()->getName() === 'schedules.edit'
+                    || Route::current()->getName() === 'registration.page_edit'
                     || Route::current()->getName() === 'partners.index'
                     || Route::current()->getName() === 'partners.create'
                     || Route::current()->getName() === 'partners.edit')active @endif">
@@ -165,7 +167,7 @@
                         || Route::current()->getName() === 'partners.edit')in @endif">
 
                             {{-- home --}}
-                            @if(Sentinel::getUser()->hasAccess('home.update'))
+                            @if(Sentinel::getUser()->hasAccess('home.view'))
                                 <li class="@if(\Route::current()->getName() === 'home.edit'
                                 || Route::current()->getName() === 'slides.create'
                                 || Route::current()->getName() === 'slides.edit')active @endif">
@@ -184,16 +186,26 @@
 
                             {{-- schedules --}}
                             @if(Sentinel::getUser()->hasAccess('schedules.list'))
-                                <li class="@if(\Route::current()->getName() === 'schedules.list'
+                                <li class="@if(Route::current()->getName() === 'schedules.list'
                                 || Route::current()->getName() === 'schedules.create'
                                 || Route::current()->getName() === 'schedules.edit')active @endif">
                                     <a class="spin-on-click" href="{{ route('schedules.list') }}"><i class="fa fa-clock-o"></i> {{ trans('template.back.header.schedules') }}</a>
                                 </li>
                             @endif
 
+                            {{-- registration --}}
+                            @if(Sentinel::getUser()->hasAccess('registration.page.view'))
+                                <li class="@if(
+                                    Route::current()->getName() === 'registration.page_edit'
+                                )active
+                                @endif">
+                                    <a class="spin-on-click" href="{{ route('registration.page_edit') }}"><i class="fa fa-sign-in"></i> {{ trans('template.back.header.registration') }}</a>
+                                </li>
+                            @endif
+
                             {{-- partners --}}
                             @if(Sentinel::getUser()->hasAccess('partners.list'))
-                                <li class="@if(\Route::current()->getName() === 'partners.index'
+                                <li class="@if(Route::current()->getName() === 'partners.index'
                                 || Route::current()->getName() === 'partners.create'
                                 || Route::current()->getName() === 'partners.edit')active @endif">
                                     <a class="spin-on-click" href="{{ route('partners.index') }}"><i class="fa fa-life-ring"></i> {{ trans('template.back.header.partners') }}</a>

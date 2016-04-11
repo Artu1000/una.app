@@ -63,7 +63,7 @@
                                     <span class="input-group-addon" for="input_password">
                                         <i class="fa fa-unlock-alt"></i>
                                     </span>
-                                    <input type="password" id="input_password" class="form-control" name="password" placeholder="{{ trans('auth.account_creation.label.password') }}">
+                                    <input type="password" id="input_password" class="form-control" name="password" value="{{ old('password') }}" placeholder="{{ trans('auth.account_creation.label.password') }}">
                                 </div>
                             </div>
 
@@ -72,7 +72,7 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_password_confirmation"><i class="fa fa-unlock-alt"></i></span>
-                                    <input id="input_password_confirmation" class="form-control" type="password" name="password_confirmation" placeholder="{{ trans('auth.account_creation.label.password_confirmation') }}">
+                                    <input id="input_password_confirmation" class="form-control" type="password" name="password_confirmation" value="{{ old('password_confirmation') }}" placeholder="{{ trans('auth.account_creation.label.password_confirmation') }}">
                                 </div>
                             </div>
 

@@ -90,6 +90,10 @@ $route = Route::group($group, function () {
     Route::delete(LaravelLocalization::transRoute('routes.schedules.destroy'), ['as' => 'schedules.destroy', 'uses' => 'Schedule\ScheduleController@destroy']);
     Route::post(LaravelLocalization::transRoute('routes.schedules.activate'), ['as' => 'schedules.activate', 'uses' => 'Schedule\ScheduleController@activate']);
 
+    // registration
+    Route::get(LaravelLocalization::transRoute('routes.registration.page_edit'), ['as' => 'registration.page_edit', 'uses' => 'Registration\RegistrationController@pageEdit']);
+    Route::put(LaravelLocalization::transRoute('routes.registration.page_update'), ['as' => 'registration.page_update', 'uses' => 'Registration\RegistrationController@pageUpdate']);
+
     // partners
     Route::get(LaravelLocalization::transRoute('routes.partners.index'), ['as' => 'partners.index', 'uses' => 'Partner\PartnersController@index']);
     Route::get(LaravelLocalization::transRoute('routes.partners.create'), ['as' => 'partners.create', 'uses' => 'Partner\PartnersController@create']);
@@ -156,7 +160,7 @@ Route::group($group, function () {
     // registration
     Route::resource('/inscription', 'Registration\RegistrationController', ['names' => ['index' => 'front.registration']]);
 
-    // registration
+    // calendar
     Route::resource('/calendrier', 'Calendar\CalendarController', ['names' => ['index' => 'front.calendar']]);
 
     // schedule

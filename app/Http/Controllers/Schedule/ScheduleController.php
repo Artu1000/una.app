@@ -544,7 +544,7 @@ class ScheduleController extends Controller
         $request->merge(['remove_background_image' => $request->get('remove_background_image', false)]);
         
         // we sanitize the entries
-        $request->replace(\Entry::sanitizeAll($request->all()));
+        $request->replace(Entry::sanitizeAll($request->all()));
         
         // we check inputs validity
         $rules = [
@@ -596,7 +596,7 @@ class ScheduleController extends Controller
                 json_encode($inputs)
             );
             
-            \Modal::alert([
+            Modal::alert([
                 trans('schedules.message.content_update.success', ['title' => $request->get('title')]),
             ], 'success');
             
@@ -607,10 +607,10 @@ class ScheduleController extends Controller
             $request->flashExcept('background_image');
             
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
             
             // we notify the current user
-            \Modal::alert([
+            Modal::alert([
                 trans('schedules.message.content_update.failure', ['title' => isset($schedules->title) ? $schedules->title : null]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');

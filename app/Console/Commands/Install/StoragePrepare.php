@@ -44,15 +44,16 @@ class StoragePrepare extends Command
             storage_path('framework/sessions'),
             storage_path('framework/views'),
             storage_path('app'),
-            storage_path('app/schedules'),
-            storage_path('app/news'),
-            storage_path('app/partners'),
             storage_path('app/settings'),
-            storage_path('app/e-shop'),
-            storage_path('app/pages'),
             storage_path('app/users'),
             storage_path('app/home'),
             storage_path('app/home/slides'),
+            storage_path('app/news'),
+            storage_path('app/schedules'),
+            storage_path('app/registration'),
+            storage_path('app/partners'),
+            storage_path('app/e-shop'),
+            storage_path('app/pages'),
         ];
         // we execute the verification
         $created = [];
