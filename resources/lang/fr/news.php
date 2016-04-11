@@ -20,6 +20,7 @@ return [
             "data"       => "Données de l'actualité",
             "seo"        => "Référencement de l'actualité",
             "release"    => "Diffusion de l'actualité",
+            "front_list" => "Les actualités du club Université Nantes Aviron (UNA)",
         ],
         "action" => [
             "create" => "Créer l'actualité",

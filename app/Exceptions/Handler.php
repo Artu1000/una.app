@@ -68,14 +68,14 @@ class Handler extends ExceptionHandler
             'site_name' => config('settings.app_name_' . config('app.locale'))
         ]);
 
-        $seoMeta = [
+        $seo_meta = [
             'page_title' => 'Erreur '.$e->getStatusCode(),
             'meta_desc' => $e->getMessage(),
             'meta_keywords' => ''
         ];
         $data = [
             'code' => $e->getStatusCode(),
-            'seoMeta' => $seoMeta,
+            'seo_meta' => $seo_meta,
             'css' => url(elixir('css/app.error.css'))
         ];
 

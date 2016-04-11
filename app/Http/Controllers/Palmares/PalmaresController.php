@@ -29,14 +29,14 @@ class PalmaresController extends Controller
         $palmares = $this->repository->eventsWithResultsSortedByCategory();
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = 'Palmares';
-        $this->seoMeta['meta_desc'] = 'Découvrez le palmares du club Université Nantes Aviron,
+        $this->seo_meta['page_title'] = 'Palmares';
+        $this->seo_meta['meta_desc'] = 'Découvrez le palmares du club Université Nantes Aviron,
         depuis sa création jusqu\'a aujourd\'hui...';
-        $this->seoMeta['meta_keywords'] = 'club, université, nantes, aviron, palmares, resultats';
+        $this->seo_meta['meta_keywords'] = 'club, université, nantes, aviron, palmares, resultats';
 
         // prepare data for the view
         $data = [
-            'seoMeta' => $this->seoMeta,
+            'seo_meta' => $this->seo_meta,
             'palmares' => $palmares,
             'css' => url(elixir('css/app.palmares.css'))
         ];

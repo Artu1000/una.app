@@ -3,18 +3,19 @@
 return [
     // actions
     "action"     => [
-        "add"      => "Ajouter",
-        "edit"     => "Éditer",
-        "show"     => "Voir le détail",
-        "delete"   => "Supprimer",
-        "confirm"  => "Confirmer",
-        "cancel"   => "Annuler",
-        "back"     => "Retour",
-        "browse"   => "Parcourir",
-        "activate" => "Activation",
-        "close"    => "Fermer",
-        "save"     => "Enregistrer les modifications",
-        "more"     => "Lire plus",
+        "add"         => "Ajouter",
+        "edit"        => "Éditer",
+        "show"        => "Voir le détail",
+        "delete"      => "Supprimer",
+        "confirm"     => "Confirmer",
+        "cancel"      => "Annuler",
+        "back"        => "Retour",
+        "browse"      => "Parcourir",
+        "activate"    => "Activation",
+        "close"       => "Fermer",
+        "save"        => "Enregistrer les modifications",
+        "more"        => "Lire plus",
+        "sort_by_cat" => "Trier par catégorie",
     ],
 
     // legend

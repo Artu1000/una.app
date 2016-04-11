@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use ImageManager;
 use Modal;
+use Parsedown;
 use Permission;
 use Sentinel;
 use TableList;
@@ -37,16 +38,18 @@ class NewsController extends Controller
     public function index()
     {
         // SEO Meta settings
-        $this->seoMeta['page_title'] = 'Actualités';
-        $this->seoMeta['meta_desc'] = 'Portes-ouvertes, stages, résultats de compétitions, événements sportifs...
-        Consultez les actualités du club Université Nantes Aviron !';
-        $this->seoMeta['meta_keywords'] = 'actus, actualités, club, universite, nantes, aviron, sport, universitaire,
-        etudiant, ramer';
+        $this->seo_meta['page_title'] = trans('seo.front.news.title');
+        $this->seo_meta['meta_desc'] = trans('seo.front.news.description');
+        $this->seo_meta['meta_keywords'] = trans('seo.front.news.keywords');
+
+        // og meta settings
+        $this->og_meta['og:title'] = trans('seo.front.news.title');
+        $this->og_meta['og:description'] = trans('seo.front.news.description');
+        $this->og_meta['og:type'] = 'article';
+        $this->og_meta['og:url'] = route('news.list');
         
         // we get the category id
         $category = Input::get('category', null);
-
-//        dd(Carbon::now()->toDateTimeString());
         
         // sort results by date
         $query = $this->repository
@@ -65,7 +68,7 @@ class NewsController extends Controller
         
         // we convert in html the markdown content of each news
         if ($news_list) {
-            $parsedown = new \Parsedown();
+            $parsedown = new Parsedown();
             foreach ($news_list as $n) {
                 $n->content = isset($n->content) ? $parsedown->text($n->content) : null;
             }
@@ -73,7 +76,8 @@ class NewsController extends Controller
         
         // prepare data for the view
         $data = [
-            'seoMeta'          => $this->seoMeta,
+            'seo_meta'         => $this->seo_meta,
+            'og_meta'          => $this->og_meta,
             'news_list'        => $news_list,
             'current_category' => $category,
             'css'              => url(elixir('css/app.news.css')),
@@ -110,20 +114,28 @@ class NewsController extends Controller
         }
         
         // we parse the markdown content
-        $parsedown = new \Parsedown();
+        $parsedown = new Parsedown();
         $news->content = isset($news->content) ? $parsedown->text($news->content) : null;
         
         // SEO Meta settings
-        $this->seoMeta['page_title'] = $news->meta_title ? $news->meta_title : $news->title;
-        $this->seoMeta['meta_desc'] = $news->meta_desc ? $news->meta_desc : str_limit(strip_tags($news->content), 160);
-        $this->seoMeta['meta_keywords'] = $news->meta_keywords;
+        $this->seo_meta['page_title'] = $news->meta_title ? $news->meta_title : $news->title;
+        $this->seo_meta['meta_desc'] = $news->meta_desc ? $news->meta_desc : str_limit(strip_tags($news->content), 160);
+        $this->seo_meta['meta_keywords'] = $news->meta_keywords;
+
+        // og meta settings
+        $this->og_meta['og:title'] = $news->meta_title ? $news->meta_title : $news->title;
+        $this->og_meta['og:description'] = $news->meta_desc ? $news->meta_desc : str_limit(strip_tags($news->content), 160);
+        $this->og_meta['og:type'] = 'article';
+        $this->og_meta['og:url'] = route('news.show', ['id' => $news->id, 'key' => $news->key]);
+        $this->og_meta['og:image'] = $news->imagePath($news->image, 'image');
         
         // prepare data for the view
         $data = [
-            'seoMeta' => $this->seoMeta,
-            'news'    => $news,
-            'css'     => url(elixir('css/app.news.css')),
-            'js'      => url(elixir('js/app.news-detail.js')),
+            'seo_meta' => $this->seo_meta,
+            'og_meta'  => $this->og_meta,
+            'news'     => $news,
+            'css'      => url(elixir('css/app.news.css')),
+            'js'       => url(elixir('js/app.news-detail.js')),
         ];
         
         // return the view with data
@@ -142,7 +154,7 @@ class NewsController extends Controller
         }
         
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.news.list');
+        $this->seo_meta['page_title'] = trans('seo.back.news.list');
         
         // we define the table list columns
         $columns = [
@@ -246,7 +258,7 @@ class NewsController extends Controller
         // prepare data for the view
         $data = [
             'tableListData' => $tableListData,
-            'seoMeta'       => $this->seoMeta,
+            'seo_meta'      => $this->seo_meta,
         ];
         
         // return the view with data
@@ -270,11 +282,11 @@ class NewsController extends Controller
         }
         
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.news.create');
+        $this->seo_meta['page_title'] = trans('seo.back.news.create');
         
         // prepare data for the view
         $data = [
-            'seoMeta'    => $this->seoMeta,
+            'seo_meta'   => $this->seo_meta,
             'categories' => config('news.category'),
         ];
         
@@ -318,7 +330,7 @@ class NewsController extends Controller
         // we convert the fr date to database format
         if ($request->get('released_at')) {
             $request->merge([
-                'released_at' => \Carbon\Carbon::createFromFormat('d/m/Y H:i', $request->get('released_at'))
+                'released_at' => Carbon::createFromFormat('d/m/Y H:i', $request->get('released_at'))
                     ->format('Y-m-d H:i:s'),
             ]);
         }
@@ -369,7 +381,7 @@ class NewsController extends Controller
             ], 'success');
             
             return redirect(route('news.list'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we flash the request
             $request->flashExcept('image');
             
@@ -417,11 +429,11 @@ class NewsController extends Controller
         }
         
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.news.edit');
+        $this->seo_meta['page_title'] = trans('seo.back.news.edit');
         
         // we convert the database date to the fr/en format
         if ($released_at = $news->released_at) {
-            $news->released_at = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $released_at)->format('d/m/Y H:i');
+            $news->released_at = Carbon::createFromFormat('Y-m-d H:i:s', $released_at)->format('d/m/Y H:i');
         }
         
         // we prepare the data for breadcrumbs
@@ -431,7 +443,7 @@ class NewsController extends Controller
         
         // prepare data for the view
         $data = [
-            'seoMeta'          => $this->seoMeta,
+            'seo_meta'         => $this->seo_meta,
             'news'             => $news,
             'categories'       => config('news.category'),
             'breadcrumbs_data' => $breadcrumbs_data,
@@ -497,7 +509,7 @@ class NewsController extends Controller
         // we convert the fr date to database format
         if ($request->get('released_at')) {
             $request->merge([
-                'released_at' => \Carbon\Carbon::createFromFormat('d/m/Y H:i', $request->get('released_at'))
+                'released_at' => Carbon::createFromFormat('d/m/Y H:i', $request->get('released_at'))
                     ->format('Y-m-d H:i:s'),
             ]);
         }

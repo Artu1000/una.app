@@ -32,13 +32,13 @@ class AccountController extends Controller
     public function createAccount(Request $request)
     {
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.front.account.create.title');
-        $this->seoMeta['meta_desc'] = trans('seo.front.account.create.description', ['site' => config('settings.app_name_' . config('app.locale'))]);
-        $this->seoMeta['meta_keywords'] = trans('seo.front.account.create.keywords');
+        $this->seo_meta['page_title'] = trans('seo.front.account.create.title');
+        $this->seo_meta['meta_desc'] = trans('seo.front.account.create.description', ['site' => config('settings.app_name_' . config('app.locale'))]);
+        $this->seo_meta['meta_keywords'] = trans('seo.front.account.create.keywords');
 
         // prepare data for the view
         $data = [
-            'seoMeta' => $this->seoMeta,
+            'seo_meta' => $this->seo_meta,
             'email'   => $request->get('email'),
             'css'     => url(elixir('css/app.auth.css')),
 

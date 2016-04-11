@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface;
 use CustomLog;
 use Entry;
+use Exception;
 use ImageManager;
 use Modal;
 use Permission;
@@ -27,25 +28,31 @@ class RegistrationController extends Controller
         parent::__construct();
         $this->repository = $price;
     }
-
+    
     /**
      * @return $this
      */
     public function index()
     {
         // SEO Meta settings
-        $this->seoMeta['page_title'] = 'Inscription';
-        $this->seoMeta['meta_desc'] = 'Tarifs, modalités, catégories, ... Récupérez toutes les informations nécessaire
-        afin de procéder à votre inscription au club Université Nantes Aviron (UNA)';
-        $this->seoMeta['meta_keywords'] = 'club, université, nantes, aviron, inscription, tarif, categorie, rameur';
+        $this->seo_meta['page_title'] = trans('seo.front.registration.title');
+        $this->seo_meta['meta_desc'] = trans('seo.front.registration.description');
+        $this->seo_meta['meta_keywords'] = trans('seo.front.registration.keywords');
+
+        // og meta settings
+        $this->og_meta['og:title'] = trans('seo.front.registration.title');
+        $this->og_meta['og:description'] = trans('seo.front.registration.description');
+        $this->og_meta['og:type'] = 'article';
+        $this->og_meta['og:url'] = route('registration.index');
 
         $prices = $this->repository->orderBy('price', 'asc')->get();
 
         // prepare data for the view
         $data = [
-            'seoMeta' => $this->seoMeta,
-            'prices'  => $prices,
-            'css'     => url(elixir('css/app.registration.css')),
+            'seo_meta' => $this->seo_meta,
+            'og_meta'  => $this->og_meta,
+            'prices'   => $prices,
+            'css'      => url(elixir('css/app.registration.css')),
         ];
 
         // return the view with data
@@ -63,7 +70,7 @@ class RegistrationController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.registration.page_edit');
+        $this->seo_meta['page_title'] = trans('seo.back.registration.page_edit');
 
         // we get the json home content
         $registration_page = null;
@@ -73,7 +80,7 @@ class RegistrationController extends Controller
 
         // prepare data for the view
         $data = [
-            'seoMeta'          => $this->seoMeta,
+            'seo_meta'         => $this->seo_meta,
             'title'            => isset($registration_page->title) ? $registration_page->title : null,
             'background_image' => isset($registration_page->background_image) ? $registration_page->background_image : null,
             'description'      => isset($registration_page->description) ? $registration_page->description : null,
@@ -168,7 +175,7 @@ class RegistrationController extends Controller
             ], 'success');
 
             return redirect()->back();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
 
             // we flash the request
             $request->flashExcept('background_image');

@@ -40,7 +40,7 @@ class UsersController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.users.index');
+        $this->seo_meta['page_title'] = trans('seo.back.users.index');
 
         // we define the table list columns
         $columns = [
@@ -174,13 +174,16 @@ class UsersController extends Controller
         // prepare data for the view
         $data = [
             'tableListData' => $tableListData,
-            'seoMeta'       => $this->seoMeta,
+            'seo_meta'       => $this->seo_meta,
         ];
 
         // return the view with data
         return view('pages.back.users-list')->with($data);
     }
 
+    /**
+     * @return mixed
+     */
     public function create()
     {
         // we check the current user permission
@@ -195,11 +198,11 @@ class UsersController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.users.create');
+        $this->seo_meta['page_title'] = trans('seo.back.users.create');
 
         // prepare data for the view
         $data = [
-            'seoMeta'  => $this->seoMeta,
+            'seo_meta'  => $this->seo_meta,
             'statuses' => config('user.status'),
             'boards'   => config('user.board'),
             'roles'    => \Sentinel::getRoleRepository()->orderBy('position', 'asc')->get(),
@@ -209,6 +212,10 @@ class UsersController extends Controller
         return view('pages.back.user-edit')->with($data);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function store(Request $request)
     {
         // we check the current user permission
@@ -359,6 +366,10 @@ class UsersController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function edit($id)
     {
         // we check the current user permission
@@ -400,7 +411,7 @@ class UsersController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.users.edit');
+        $this->seo_meta['page_title'] = trans('seo.back.users.edit');
 
         // we convert the database date to the fr/en format
         if ($birth_date = $user->birth_date) {
@@ -414,11 +425,11 @@ class UsersController extends Controller
 
         // prepare data for the view
         $data = [
-            'seoMeta'          => $this->seoMeta,
+            'seo_meta'          => $this->seo_meta,
             'user'             => $user,
             'statuses'         => config('user.status'),
             'boards'           => config('user.board'),
-            'roles'            => \Sentinel::getRoleRepository()->orderBy('position', 'asc')->get(),
+            'roles'            => Sentinel::getRoleRepository()->orderBy('position', 'asc')->get(),
             'breadcrumbs_data' => $breadcrumbs_data,
         ];
 
@@ -426,13 +437,16 @@ class UsersController extends Controller
         return view('pages.back.user-edit')->with($data);
     }
 
+    /**
+     * @return mixed
+     */
     public function profile()
     {
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.users.profile');
+        $this->seo_meta['page_title'] = trans('seo.back.users.profile');
 
         // we get the current user
-        $user = \Sentinel::getUser();
+        $user = Sentinel::getUser();
 
         // we convert the database date to the fr/en format
         if ($birth_date = $user->birth_date) {
@@ -441,17 +455,22 @@ class UsersController extends Controller
 
         // prepare data for the view
         $data = [
-            'seoMeta'  => $this->seoMeta,
+            'seo_meta'  => $this->seo_meta,
             'user'     => $user,
             'statuses' => config('user.status'),
             'boards'   => config('user.board'),
-            'roles'    => \Sentinel::getRoleRepository()->all(),
+            'roles'    => Sentinel::getRoleRepository()->all(),
         ];
 
         // return the view with data
         return view('pages.back.user-edit')->with($data);
     }
 
+    /**
+     * @param $id
+     * @param Request $request
+     * @return mixed
+     */
     public function update($id, Request $request)
     {
         // we get the user
@@ -664,6 +683,11 @@ class UsersController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @param Request $request
+     * @return mixed
+     */
     public function destroy($id, Request $request)
     {
         // we check the current user permission
@@ -695,7 +719,7 @@ class UsersController extends Controller
 
         // we check if the current user has a role position high enough to edit the user
         $edited_user_role = $user->roles->first();
-        $current_user_role = \Sentinel::getUser()->roles->first();
+        $current_user_role = Sentinel::getUser()->roles->first();
         if ($edited_user_role && $current_user_role && $edited_user_role->position < $current_user_role->position) {
             Modal::alert([
                 trans('users.message.permission.denied', ['action' => trans('users.message.permission.action.delete')]),
@@ -736,6 +760,11 @@ class UsersController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @param Request $request
+     * @return mixed
+     */
     public function activate($id, Request $request)
     {
         // we check the current user permission

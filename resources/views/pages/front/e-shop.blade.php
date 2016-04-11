@@ -22,10 +22,10 @@
                         @if($current_category == $id)
                                 selected
                             @endif"
-                           href="{{ route('front.e-shop', ['category' => $id]) }}"
+                           href="{{ route('e-shop.index', ['category' => $id]) }}"
                            title="{{ $cat['title'] }}">{{ $cat['title'] }}</a>
                     @endforeach
-                    @if($current_category)<a href="{{ route('front.e-shop') }}" title="Annuler filtre" class="text-danger"><i class="fa fa-times"></i> Annuler filtre</a>
+                    @if($current_category)<a href="{{ route('e-shop.index') }}" title="Annuler filtre" class="text-danger"><i class="fa fa-times"></i> Annuler filtre</a>
                     @endif
                 </div>
 
@@ -71,7 +71,7 @@
                                     @endif
                                 </div>
                                 <div class="visible-xs action">
-                                    <a href="{{ route('front.e-shop.add-to-cart', $article->id) }}" title="Ajouter au panier">
+                                    <a href="{{ route('e-shop.add-to-cart', $article->id) }}" title="Ajouter au panier">
                                         <button class="btn btn-info" role="button">
                                             <i class="fa fa-cart-plus"></i> Ajout au panier
                                         </button>
@@ -96,7 +96,7 @@
                                 @endif
                             </td>
                             <td class="action hidden-xs">
-                                <a href="{{ route('front.e-shop.add-to-cart', $article->id) }}" title="Ajouter au panier">
+                                <a href="{{ route('e-shop.add-to-cart', $article->id) }}" title="Ajouter au panier">
                                     <button class="btn btn-info add-to-command text-center" role="button">
                                         <i class="fa fa-cart-plus"></i>
                                     </button>

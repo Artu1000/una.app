@@ -25,15 +25,21 @@ class LeadingTeamController extends Controller
     public function index()
     {
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.front.leading_team.index');
-        $this->seoMeta['meta_desc'] = trans('seo.front.leading_team.description');
-        $this->seoMeta['meta_keywords'] = trans('seo.front.leading_team.keywords');
+        $this->seo_meta['page_title'] = trans('seo.front.leading_team.title');
+        $this->seo_meta['meta_desc'] = trans('seo.front.leading_team.description');
+        $this->seo_meta['meta_keywords'] = trans('seo.front.leading_team.keywords');
+
+        // og meta settings
+        $this->og_meta['og:title'] = trans('seo.front.leading_team.title');
+        $this->og_meta['og:description'] = trans('seo.front.leading_team.description');
+        $this->og_meta['og:type'] = 'article';
+        $this->og_meta['og:url'] = route('front.leading_team');
 
         // we get the activated members of the leading team and the employees
         $team = $this->repository->getModel()
             ->whereHas('activations', function ($query) {
                 $query->where('activations.completed', true);
-            })->where(function($query){
+            })->where(function ($query) {
                 $query->whereIn('board_id', config('user.board_key'));
                 $query->orWhere('status_id', config('user.status_key.employee'));
             })
@@ -42,9 +48,10 @@ class LeadingTeamController extends Controller
 
         // prepare data for the view
         $data = [
-            'seoMeta' => $this->seoMeta,
-            'team'    => $team,
-            'css'     => url(elixir('css/app.leading-team.css')),
+            'seo_meta' => $this->seo_meta,
+            'og_meta'  => $this->og_meta,
+            'team'     => $team,
+            'css'      => url(elixir('css/app.leading-team.css')),
         ];
 
         // return the view with data

@@ -38,7 +38,7 @@ class SlidesController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.home.slides.create');
+        $this->seo_meta['page_title'] = trans('seo.back.home.slides.create');
 
         // we get the slide list
         $slide_list = $this->repository->orderBy('position', 'asc')->get();
@@ -51,7 +51,7 @@ class SlidesController extends Controller
 
         // prepare data for the view
         $data = [
-            'seoMeta'    => $this->seoMeta,
+            'seo_meta'    => $this->seo_meta,
             'slide_list' => $slide_list,
         ];
 
@@ -202,7 +202,7 @@ class SlidesController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.home.slides.edit');
+        $this->seo_meta['page_title'] = trans('seo.back.home.slides.edit');
 
         // we get the slide list without the current
         $slide_list = $this->repository->orderBy('position', 'asc')->where('id', '<>', $id)->get();
@@ -226,7 +226,7 @@ class SlidesController extends Controller
 
         // prepare data for the view
         $data = [
-            'seoMeta'          => $this->seoMeta,
+            'seo_meta'          => $this->seo_meta,
             'slide'            => $slide,
             'previous_slide'   => $previous_slide,
             'slide_list'       => $slide_list,

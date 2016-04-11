@@ -23,6 +23,28 @@ return [
     "leading_team" => [
         "index" => "equipe-dirigeante",
     ],
+    "palmares"     => [
+        "index" => "palmares",
+    ],
+    "registration" => [
+        "index" => "inscription",
+    ],
+    "calendar"     => [
+        "index" => "calendrier",
+    ],
+    "e-shop"       => [
+        "index"       => "boutique-en-ligne",
+        "add-to-cart" => "boutique-en-ligne/ajout-au-panier",
+    ],
+    "page"         => [
+        "show" => 'page/{key}',
+    ],
+    "sitemap"      => [
+        "index" => "sitemap.xml",
+    ],
+    "rss"          => [
+        "index" => "rss",
+    ],
 
     // back
     // routes

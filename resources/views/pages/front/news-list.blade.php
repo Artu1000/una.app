@@ -12,12 +12,12 @@
         <div class="text-content">
             <div class="container">
 
-                <h2><i class="fa fa-paper-plane"></i> Les actualités du club Université Nantes Aviron (UNA)</h2>
+                <h2><i class="fa fa-paper-plane"></i> {{ trans('news.page.title.front_list') }}</h2>
 
                 <hr>
 
                 <div class="categories">
-                    <i class="fa fa-cubes"></i> Trier par catégorie :
+                    <i class="fa fa-cubes"></i> {{ trans('global.action.sort_by_cat') }} :
                     @foreach(config('news.category') as $id => $cat)
                         <a class="{{ $cat }}
                             @if($current_category == $id)

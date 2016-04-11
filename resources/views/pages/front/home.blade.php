@@ -19,7 +19,7 @@
                                     <div class="fill">
                                         <div class="fill">
                                             @if($slide->picto)
-                                                <img class="picto" src="{{ url($slide->imagePath($slide->picto)) }}" alt="{{ $slide->title }}">
+                                                <img class="picto" src="{{ $slide->imagePath($slide->picto) }}" alt="{{ $slide->title }}">
                                             @endif
                                             @if($slide->title)
                                                 <h2 class="title">{{ $slide->title }}</h2>
@@ -30,7 +30,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="background_responsive_img fill" data-background-image="{{ url($slide->imagePath($slide->background_image)) }}"></div>
+                                <div class="background_responsive_img fill" data-background-image="{{ $slide->imagePath($slide->background_image) }}"></div>
                             </section>
                         </li>
                     @endforeach

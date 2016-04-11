@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Calendar;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
 
 class CalendarController extends Controller
 {
@@ -21,18 +20,24 @@ class CalendarController extends Controller
     /**
      * @return $this
      */
-    public function index(){
-
+    public function index()
+    {
         // SEO Meta settings
-        $this->seoMeta['page_title'] = 'Calendrier';
-        $this->seoMeta['meta_desc'] = 'Découvrez tous les articles du club Université Nantes Aviron (UNA)
-        proposés à la vente.';
-        $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, sport, universitaire, etudiant, calendrier';
+        $this->seo_meta['page_title'] = trans('seo.front.calendar.title');
+        $this->seo_meta['meta_desc'] = trans('seo.front.calendar.description');
+        $this->seo_meta['meta_keywords'] = trans('seo.front.calendar.keywords');
+
+        // og meta settings
+        $this->og_meta['og:title'] = trans('seo.front.calendar.title');
+        $this->og_meta['og:description'] = trans('seo.front.calendar.description');
+        $this->og_meta['og:type'] = 'article';
+        $this->og_meta['og:url'] = route('calendar.index');
 
         // prepare data for the view
         $data = [
-            'seoMeta' => $this->seoMeta,
-            'css' => url(elixir('css/app.calendar.css'))
+            'seo_meta' => $this->seo_meta,
+            'og_meta'  => $this->og_meta,
+            'css'      => url(elixir('css/app.calendar.css')),
         ];
 
         // return the view with data

@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use CustomLog;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
+use InvalidArgumentException;
 
 abstract class _BaseModel extends Model
 {
@@ -46,8 +49,8 @@ abstract class _BaseModel extends Model
 
 
             return url($this->public_path . '/' . $name . '_' . $size . '.' . $ext);
-        } catch (\Exception $e) {
-            \Log::error($e);
+        } catch (Exception $e) {
+            CustomLog::error($e);
             return 'error';
         }
     }
@@ -96,7 +99,7 @@ abstract class _BaseModel extends Model
     public function imageName($key)
     {
         if (!array_key_exists($key, $this->sizes)) {
-            throw new \InvalidArgumentException('The key must be declared into the eloquent object sizes.');
+            throw new InvalidArgumentException('The key must be declared into the eloquent object sizes.');
         };
 
         return $this->id . '_' . $key;

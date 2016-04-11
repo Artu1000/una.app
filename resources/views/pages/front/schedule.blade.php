@@ -7,7 +7,7 @@
         {{-- background image --}}
             <div class="parallax_img">
                 @if($background_image)
-                    <div class="background_responsive_img fill" data-background-image="{{ \ImageManager::imagePath(config('image.schedules.public_path'), $background_image, 'background_image') }}"></div>
+                    <div class="background_responsive_img fill" data-background-image="{{ ImageManager::imagePath(config('image.schedules.public_path'), $background_image, 'background_image') }}"></div>
 
                 @endif
             </div>

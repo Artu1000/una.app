@@ -50,6 +50,7 @@ class StoragePrepare extends Command
             storage_path('app/home/slides'),
             storage_path('app/news'),
             storage_path('app/schedules'),
+            storage_path('app/pages'),
             storage_path('app/registration'),
             storage_path('app/partners'),
             storage_path('app/e-shop'),

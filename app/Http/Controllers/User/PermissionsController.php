@@ -4,10 +4,15 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Roles\RoleRepositoryInterface;
+use CustomLog;
+use Entry;
+use Exception;
 use Illuminate\Http\Request;
 use JavaScript;
+use Modal;
 use Permission;
 use Sentinel;
+use stdClass;
 use TableList;
 use Validation;
 
@@ -42,7 +47,7 @@ class PermissionsController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.permissions.index');
+        $this->seo_meta['page_title'] = trans('seo.back.permissions.index');
 
         // we define the table list columns
         $columns = [[
@@ -91,7 +96,7 @@ class PermissionsController extends Controller
         ];
 
         // we instantiate the query
-        $query = \Sentinel::getRoleRepository()->query();
+        $query = Sentinel::getRoleRepository()->query();
 
         // we group the results
         $query->groupBy('roles.id');
@@ -136,7 +141,7 @@ class PermissionsController extends Controller
         // prepare data for the view
         $data = [
             'tableListData' => $tableListData,
-            'seoMeta'       => $this->seoMeta,
+            'seo_meta'      => $this->seo_meta,
         ];
 
         // return the view with data
@@ -160,13 +165,13 @@ class PermissionsController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.permissions.create');
+        $this->seo_meta['page_title'] = trans('seo.back.permissions.create');
 
         // we get the role list without the current
-        $role_list = \Sentinel::getRoleRepository()->orderBy('position', 'asc')->get();
+        $role_list = Sentinel::getRoleRepository()->orderBy('position', 'asc')->get();
 
         // we prepare the master role status and we add at the beginning of the role list
-        $master_role = new \stdClass();
+        $master_role = new stdClass();
         $master_role->id = 0;
         $master_role->name = trans('permissions.page.label.master');
         $role_list->prepend($master_role);
@@ -174,7 +179,7 @@ class PermissionsController extends Controller
         // prepare data for the view
         $data = [
             'parent_role' => null,
-            'seoMeta'     => $this->seoMeta,
+            'seo_meta'    => $this->seo_meta,
             'role_list'   => $role_list,
         ];
 
@@ -200,7 +205,7 @@ class PermissionsController extends Controller
         }
 
         // we sanitize the entries
-        $request->replace(\Entry::sanitizeAll($request->all()));
+        $request->replace(Entry::sanitizeAll($request->all()));
 
         // we replace the permission slugs from the request params by the correct slugs
         $inputs = $this->repository->translatePermissionsSlugs($request->all());
@@ -250,25 +255,25 @@ class PermissionsController extends Controller
             }
 
             // we create the role
-            $role = \Sentinel::getRoleRepository()->createModel()->create($data);
+            $role = Sentinel::getRoleRepository()->createModel()->create($data);
 
             // we sanitize the roles positions
             $this->repository->sanitizePositions();
 
-            \Modal::alert([
+            Modal::alert([
                 trans('permissions.message.creation.success', ['name' => $role->name]),
             ], 'success');
 
             return redirect()->route('permissions.index');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we flash the request
             $request->flash();
 
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
 
             // we notify the user
-            \Modal::alert([
+            Modal::alert([
                 trans('permissions.message.creation.failure', ['name' => $request->get('name')]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
@@ -295,8 +300,8 @@ class PermissionsController extends Controller
         }
 
         // we get the role
-        if (!$role = \Sentinel::findRoleById($id)) {
-            \Modal::alert([
+        if (!$role = Sentinel::findRoleById($id)) {
+            Modal::alert([
                 trans('permissions.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
@@ -311,7 +316,7 @@ class PermissionsController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.permissions.edit', ['role' => $role->name]);
+        $this->seo_meta['page_title'] = trans('seo.back.permissions.edit', ['role' => $role->name]);
 
         // we prepare the data for breadcrumbs
         $breadcrumbs_data = [
@@ -319,10 +324,10 @@ class PermissionsController extends Controller
         ];
 
         // we get the list without the current entity
-        $role_list = \Sentinel::getRoleRepository()->orderBy('position', 'asc')->where('id', '<>', $role->id)->get();
+        $role_list = Sentinel::getRoleRepository()->orderBy('position', 'asc')->where('id', '<>', $role->id)->get();
 
         // we prepare the first entity and we add it at the beginning of the list
-        $master_role = new \stdClass();
+        $master_role = new stdClass();
         $master_role->id = 0;
         $master_role->name = trans('permissions.page.label.master');
         $role_list->prepend($master_role);
@@ -333,12 +338,12 @@ class PermissionsController extends Controller
             $parent_role = null;
         } else {
             // we get the parent role of the current role
-            $parent_role = \Sentinel::getRoleRepository()->where('position', ($role->position - 1))->firstOrFail();
+            $parent_role = Sentinel::getRoleRepository()->where('position', ($role->position - 1))->firstOrFail();
         }
 
         // prepare data for the view
         $data = [
-            'seoMeta'          => $this->seoMeta,
+            'seo_meta'         => $this->seo_meta,
             'role'             => $role,
             'parent_role'      => $parent_role,
             'role_list'        => $role_list,
@@ -350,15 +355,20 @@ class PermissionsController extends Controller
     }
 
 
+    /**
+     * @param $id
+     * @param Request $request
+     * @return mixed
+     */
     public function update($id, Request $request)
     {
         // we get the role
-        if (!$role = \Sentinel::findRoleById($id)) {
+        if (!$role = Sentinel::findRoleById($id)) {
             // we flash the request
             $request->flash();
 
             // we notify the user
-            \Modal::alert([
+            Modal::alert([
                 trans('permissions.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
@@ -387,12 +397,12 @@ class PermissionsController extends Controller
         $request->merge(['id' => $id]);
 
         // if we do not find a parent role id, we set it to 0
-        if(!$request->get('parent_role_id')){
+        if (!$request->get('parent_role_id')) {
             $request->merge(['parent_role_id' => 0]);
         }
 
         // we sanitize the entries
-        $request->replace(\Entry::sanitizeAll($request->all()));
+        $request->replace(Entry::sanitizeAll($request->all()));
 
         // we replace the permission slugs from the request params by the correct slugs
         $inputs = $this->repository->translatePermissionsSlugs($request->all());
@@ -406,14 +416,14 @@ class PermissionsController extends Controller
             'permissions.view',
             'permissions.update',
         ];
-        if ($role->id === \Sentinel::getUser()->roles->first()->id) {
+        if ($role->id === Sentinel::getUser()->roles->first()->id) {
             foreach ($to_check as $permission) {
                 if (!array_key_exists($permission, $request->all())) {
                     // we flash the request
                     $request->flash();
 
                     // we notify the user
-                    \Modal::alert([
+                    Modal::alert([
                         trans('permissions.message.update.denied'),
                         '<b>' . trans('permissions.permissions.list') . '</b>.',
                         '<b>' . trans('permissions.permissions.view') . '</b>.',
@@ -458,7 +468,7 @@ class PermissionsController extends Controller
             $new_position = $this->repository->updatePositions($request->get('parent_role_id'));
 
             // we update the role
-            $role = \Sentinel::findRoleById($id);
+            $role = Sentinel::findRoleById($id);
             if (config('settings.multilingual')) {
                 $role->translate('fr')->name = $request->get('name_fr');
                 $role->translate('en')->name = $request->get('name_en');
@@ -474,20 +484,20 @@ class PermissionsController extends Controller
             $this->repository->sanitizePositions();
 
             // we notify the user
-            \Modal::alert([
+            Modal::alert([
                 trans('permissions.message.update.success', ['name' => $role->name]),
             ], 'success');
 
             return redirect()->back();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we flash the request
             $request->flash();
 
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
 
             // we notify the current user
-            \Modal::alert([
+            Modal::alert([
                 trans('permissions.message.update.failure', ['name' => $role->name]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
@@ -515,8 +525,8 @@ class PermissionsController extends Controller
         }
 
         // we get the role
-        if (!$role = \Sentinel::findRoleById($id)) {
-            \Modal::alert([
+        if (!$role = Sentinel::findRoleById($id)) {
+            Modal::alert([
                 trans('permissions.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
@@ -531,9 +541,9 @@ class PermissionsController extends Controller
         }
 
         // we check that the role is not attached to the current user to avoid redirection problems
-        if ($role->id === \Sentinel::getUser()->roles->first()->id) {
+        if ($role->id === Sentinel::getUser()->roles->first()->id) {
             // we notify the user
-            \Modal::alert([
+            Modal::alert([
                 trans('permissions.message.delete.denied', ['name' => $role->name]),
             ], 'error');
 
@@ -543,7 +553,7 @@ class PermissionsController extends Controller
         // we delete the role
         try {
             // we notify the user
-            \Modal::alert([
+            Modal::alert([
                 trans('permissions.message.delete.success', ['name' => $role->name]),
             ], 'success');
 
@@ -554,12 +564,12 @@ class PermissionsController extends Controller
             $this->repository->sanitizePositions();
 
             return redirect()->back();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
 
             // we notify the current user
-            \Modal::alert([
+            Modal::alert([
                 trans('permissions.message.delete.failure', ['name' => $role->name]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');

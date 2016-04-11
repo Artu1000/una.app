@@ -38,10 +38,30 @@ return [
             ],
         ],
         "leading_team" => [
-            "index"       => "Équipe dirigeante",
+            "title"       => "Équipe dirigeante",
             "description" => "Découvrez l'équipe dirigeante du club Université Nantes Aviron (UNA).",
             "keywords"    => "club, universite, nantes, aviron, sport, universitaire, etudiant, equipe, dirigeante",
         ],
+        "news"         => [
+            "title"       => "Actualités",
+            "description" => "Portes-ouvertes, stages, résultats de compétitions, événements sportifs... Consultez les actualités du club Université Nantes Aviron !",
+            "keywords"    => "actus, actualités, club, universite, nantes, aviron, sport, universitaire, etudiant, ramer",
+        ],
+        "registration" => [
+            "title"       => "Inscription",
+            "description" => "Tarifs, modalités, catégories, ... Récupérez toutes les informations nécessaires afin de procéder à votre inscription au club Université Nantes Aviron (UNA)",
+            "keywords"    => "club, université, nantes, aviron, inscription, tarif, categorie, rameur",
+        ],
+        "schedules" => [
+            "title"       => "Horaires",
+            "description" => "Découvrez nos horaires d'encadrement de séances d'aviron, selon votre catéorie et votre type de pratique.",
+            "keywords"    => "club, universite, nantes, aviron, sport, universitaire, horaires, séances, encadrement",
+        ],
+        "calendar" => [
+            "title"       => "Calendrier",
+            "description" => "Régates, compétition universitaires ou fédérales, stages, Régataïades, ... Découvrez les dates de tous les événements qui rythment la vie du club.",
+            "keywords"    => "club, universite, nantes, aviron, sport, universitaire, etudiant, calendrier",
+        ]
     ],
 
     // back

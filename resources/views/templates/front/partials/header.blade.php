@@ -43,7 +43,7 @@
                     <li class="dropdown
                             @if(\Request::path() === 'page/historique') active
                             @elseif(\Route::current()->getName() === 'front.leading_team') active
-                            @elseif(\Route::current()->getName() === 'front.palmares') active
+                            @elseif(\Route::current()->getName() === 'palmares.index') active
                             @elseif(\Route::current()->getName() === 'front.leading_team') active
                             @elseif(\Request::path() === 'page/statuts') active
                             @elseif(\Request::path() === 'page/reglement-interieur') active
@@ -58,12 +58,12 @@
                                 </a>
                             </li>
                             <li class="menu_tab @if(\Request::path() === 'page/historique') active @endif">
-                                <a href="{{ route('front.page', 'historique') }}" title="{{ trans('template.front.header.history') }}">
+                                <a href="{{ route('page.show', 'historique') }}" title="{{ trans('template.front.header.history') }}">
                                     <i class="fa fa-university"></i> {{ trans('template.front.header.history') }}
                                 </a>
                             </li>
-                            {{--<li class="menu_tab @if(\Route::current()->getName() === 'front.palmares') active @endif">--}}
-                                {{--<a href="{{ route('front.palmares') }}" title="{{ trans('template.front.header.palmares') }}">--}}
+                            {{--<li class="menu_tab @if(\Route::current()->getName() === 'palmares.index') active @endif">--}}
+                                {{--<a href="{{ route('palmares.index') }}" title="{{ trans('template.front.header.palmares') }}">--}}
                                     {{--<i class="fa fa-trophy"></i> {{ trans('template.front.header.palmares') }}--}}
                                 {{--</a>--}}
                             {{--</li>--}}
@@ -74,12 +74,12 @@
                                 </a>
                             </li>
                             <li class="menu_tab @if(\Request::path() === 'page/statuts') active @endif">
-                                <a href="{{ route('front.page', 'statuts') }}" title="St{{ trans('template.front.header.statuses') }}">
+                                <a href="{{ route('page.show', 'statuts') }}" title="St{{ trans('template.front.header.statuses') }}">
                                     <i class="fa fa-compass"></i> {{ trans('template.front.header.statuses') }}
                                 </a>
                             </li>
                             <li class="menu_tab @if(\Request::path() === 'page/reglement-interieur') active @endif">
-                                <a href="{{ route('front.page', 'reglement-interieur') }}" title="{{ trans('template.front.header.rules') }}">
+                                <a href="{{ route('page.show', 'reglement-interieur') }}" title="{{ trans('template.front.header.rules') }}">
                                     <i class="fa fa-gavel"></i> {{ trans('template.front.header.rules') }}
                                 </a>
                             </li>
@@ -87,33 +87,33 @@
                     </li>
 
                     <li class="dropdown
-                            @if(\Route::current()->getName() === 'front.registration') active
-                            @elseif(\Route::current()->getName() === 'front.schedule') active
-                            @elseif(\Route::current()->getName() === 'front.calendar') active
-                            @elseif(\Route::current()->getName() === 'front.e-shop') active
+                            @if(\Route::current()->getName() === 'registration.index') active
+                            @elseif(\Route::current()->getName() === 'schedules.index') active
+                            @elseif(\Route::current()->getName() === 'calendar.index') active
+                            @elseif(\Route::current()->getName() === 'e-shop.index') active
                             @endif">
                         <a title="Infos" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <i class="fa fa-anchor"></i> {{ trans('template.front.header.rowing') }}<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li class="menu_tab @if(\Route::current()->getName() === 'front.registration') active @endif">
-                                <a href="{{ route('front.registration') }}" title="Inscription">
+                            <li class="menu_tab @if(\Route::current()->getName() === 'registration.index') active @endif">
+                                <a href="{{ route('registration.index') }}" title="Inscription">
                                     <i class="fa fa-sign-in"></i> {{ trans('template.front.header.registration') }}
                                 </a>
                             </li>
-                            <li class="menu_tab @if(\Route::current()->getName() === 'front.schedule') active @endif">
-                                <a href="{{ route('front.schedule') }}" title="Horaires">
+                            <li class="menu_tab @if(\Route::current()->getName() === 'schedules.index') active @endif">
+                                <a href="{{ route('schedules.index') }}" title="Horaires">
                                     <i class="fa fa-clock-o"></i> {{ trans('template.front.header.schedules') }}
                                 </a>
                             </li>
                             <li class="divider"></li>
-                            <li class="menu_tab @if(\Route::current()->getName() === 'front.calendar') active @endif">
-                                <a href="{{ route('front.calendar') }}" title="Calendrier">
+                            <li class="menu_tab @if(\Route::current()->getName() === 'calendar.index') active @endif">
+                                <a href="{{ route('calendar.index') }}" title="Calendrier">
                                     <i class="fa fa-calendar"></i> {{ trans('template.front.header.calendar') }}
                                 </a>
                             </li>
-                            {{--<li class="menu_tab @if(\Route::current()->getName() === 'front.e-shop') active @endif">--}}
-                                {{--<a href="{{ route('front.e-shop') }}" title="Boutique">--}}
+                            {{--<li class="menu_tab @if(\Route::current()->getName() === 'e-shop.index') active @endif">--}}
+                                {{--<a href="{{ route('e-shop.index') }}" title="Boutique">--}}
                                     {{--<i class="fa fa-shopping-cart"></i> {{ trans('template.front.header.e_shop') }}--}}
                                 {{--</a>--}}
                             {{--</li>--}}

@@ -9,6 +9,7 @@ use CustomLog;
 use Illuminate\Http\Request;
 use JavaScript;
 use Modal;
+use Parsedown;
 use Permission;
 use Sentinel;
 use TableList;
@@ -44,7 +45,7 @@ class HomeController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.home.edit');
+        $this->seo_meta['page_title'] = trans('seo.back.home.edit');
 
         // we define the slides table list columns
         $columns = [
@@ -151,7 +152,7 @@ class HomeController extends Controller
 
         // prepare data for the view
         $data = [
-            'seoMeta'       => $this->seoMeta,
+            'seo_meta'      => $this->seo_meta,
             'title'         => isset($home->title) ? $home->title : null,
             'description'   => isset($home->description) ? $home->description : null,
             'video_link'    => isset($home->video_link) ? $home->video_link : null,
@@ -229,16 +230,16 @@ class HomeController extends Controller
     public function show()
     {
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.front.home.show.title');
-        $this->seoMeta['meta_desc'] = trans('seo.front.home.show.description');
-        $this->seoMeta['meta_keywords'] = trans('seo.front.home.show.keywords');
+        $this->seo_meta['page_title'] = trans('seo.front.home.show.title');
+        $this->seo_meta['meta_desc'] = trans('seo.front.home.show.description');
+        $this->seo_meta['meta_keywords'] = trans('seo.front.home.show.keywords');
 
         // we get the two last news
         $last_news = $this->news->where('active', true)->orderBy('released_at', 'desc')->take(2)->get();
 
         // we convert in html the markdown content of each news
         if ($last_news) {
-            $parsedown = new \Parsedown();
+            $parsedown = new Parsedown();
             foreach ($last_news as $n) {
                 $n->content = isset($n->content) ? $parsedown->text($n->content) : null;
             }
@@ -257,12 +258,20 @@ class HomeController extends Controller
         }
 
         // we parse the markdown content
-        $parsedown = new \Parsedown();
+        $parsedown = new Parsedown();
         $description = isset($home->description) ? $parsedown->text($home->description) : null;
+
+        // og meta settings
+        $this->og_meta['og:title'] = trans('seo.front.home.show.title');
+        $this->og_meta['og:description'] = trans('seo.front.home.show.description');
+        $this->og_meta['og:url'] = route('home');
+        $this->og_meta['og:image'] = $slides[0]->imagePath($slides[0]->background_image, 'background_image', '767');
+        $this->og_meta['og:video'] = $home->video_link;
 
         // prepare data for the view
         $data = [
-            'seoMeta'     => $this->seoMeta,
+            'seo_meta'    => $this->seo_meta,
+            'og_meta'     => $this->og_meta,
             'slides'      => $slides,
             'last_news'   => $last_news,
             'title'       => isset($home->title) ? $home->title : null,

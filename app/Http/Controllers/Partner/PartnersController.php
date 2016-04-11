@@ -12,6 +12,7 @@ use ImageManager;
 use Modal;
 use Permission;
 use Sentinel;
+use stdClass;
 use TableList;
 use Validation;
 
@@ -40,7 +41,7 @@ class PartnersController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.partners.index');
+        $this->seo_meta['page_title'] = trans('seo.back.partners.index');
 
         // we define the table list columns
         $columns = [
@@ -135,7 +136,7 @@ class PartnersController extends Controller
         // prepare data for the view
         $data = [
             'tableListData' => $tableListData,
-            'seoMeta'       => $this->seoMeta,
+            'seo_meta'       => $this->seo_meta,
         ];
 
         // return the view with data
@@ -159,13 +160,13 @@ class PartnersController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.partners.create');
+        $this->seo_meta['page_title'] = trans('seo.back.partners.create');
 
         // we get the partner list
         $partner_list = $this->repository->orderBy('position', 'asc')->get();
 
         // we prepare the master role status and we add at the beginning of the role list
-        $first_slide = new \stdClass();
+        $first_slide = new stdClass();
         $first_slide->id = 0;
         $first_slide->name = trans('home.page.label.slide.first');
         $partner_list->prepend($first_slide);
@@ -173,7 +174,7 @@ class PartnersController extends Controller
 
         // prepare data for the view
         $data = [
-            'seoMeta'      => $this->seoMeta,
+            'seo_meta'      => $this->seo_meta,
             'partner_list' => $partner_list,
         ];
 
@@ -235,7 +236,7 @@ class PartnersController extends Controller
             // we store the photo
             if ($logo = $request->file('logo')) {
                 // we optimize, resize and save the image
-                $file_name = \ImageManager::optimizeAndResize(
+                $file_name = ImageManager::optimizeAndResize(
                     $logo->getRealPath(),
                     $partner->imageName('logo'),
                     $logo->getClientOriginalExtension(),
@@ -259,7 +260,7 @@ class PartnersController extends Controller
             ], 'success');
 
             return redirect(route('partners.index'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we flash the request
             $request->flashExcept('logo');
 
@@ -307,13 +308,13 @@ class PartnersController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.partners.edit');
+        $this->seo_meta['page_title'] = trans('seo.back.partners.edit');
 
         // we get the list without the current entity
         $partner_list = $this->repository->orderBy('position', 'asc')->where('id', '<>', $id)->get();
 
         // we prepare the first entity and we add it at the beginning of the list
-        $first_slide = new \stdClass();
+        $first_slide = new stdClass();
         $first_slide->id = 0;
         $first_slide->name = trans('home.page.label.slide.first');
         $partner_list->prepend($first_slide);
@@ -399,7 +400,7 @@ class PartnersController extends Controller
             // we store the logo
             if ($logo = $request->file('logo')) {
                 // we optimize, resize and save the image
-                $file_name = \ImageManager::optimizeAndResize(
+                $file_name = ImageManager::optimizeAndResize(
                     $logo->getRealPath(),
                     $partner->imageName('logo'),
                     $logo->getClientOriginalExtension(),
@@ -417,7 +418,7 @@ class PartnersController extends Controller
             ], 'success');
 
             return redirect()->back();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we flash the request
             $request->flashExcept('logo');
 
@@ -486,7 +487,7 @@ class PartnersController extends Controller
             $this->repository->sanitizePositions();
 
             return redirect()->back();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we log the error
             CustomLog::error($e);
 
@@ -555,7 +556,7 @@ class PartnersController extends Controller
                     trans('partners.message.activation.success.label', ['action' => trans_choice('partners.message.activation.success.action', $partner->active), 'partner' => $partner->label]),
                 ],
             ], 200);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we log the error
             CustomLog::error($e);
 

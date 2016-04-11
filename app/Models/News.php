@@ -6,7 +6,7 @@ class News extends _BaseModel
 {
 
     /**
-     * Partner constructor.
+     * News constructor.
      * @param array $attributes
      */
     public function __construct(array $attributes = [])

@@ -14,10 +14,23 @@ abstract class Controller extends BaseController
 
     protected $repository;
 
-    protected $seoMeta = [
+    // we set the default seo meta
+    protected $seo_meta = [
         'page_title'    => '',
         'meta_desc'     => '',
         'meta_keywords' => '',
+    ];
+
+    // we set the default og meta
+    protected $og_meta = [
+        'og:site_name'   => '',
+        'og:title'       => '',
+        'og:description' => '',
+        'og:type'        => '',
+        'og:url'         => '',
+        'og:image'       => '',
+        'og:video'       => '',
+        'og:locale'      => '',
     ];
 
     /**
@@ -45,15 +58,26 @@ abstract class Controller extends BaseController
             ]);
         }
 
-        // we manage the Carbon locale
+        // we set the og meta title
+        $this->og_meta['og:site_name'] = config('settings.app_name_' . config('app.locale'));
+
+        // we manage the locale dependencies
         switch (config('app.locale')) {
             case 'fr':
+                // server locale
                 setlocale(LC_TIME, 'fr_FR.UTF-8');
+                // carbon locale
                 Carbon::setLocale('fr');
+                // og locale
+                $this->og_meta['og:locale'] = 'fr_FR';
                 break;
             case 'en':
+                // server locale
                 setlocale(LC_TIME, 'en_GB.UTF-8');
+                // carbon locale
                 Carbon::setLocale('en');
+                // og locale
+                $this->og_meta['og:locale'] = 'en_GB';
                 break;
         }
     }

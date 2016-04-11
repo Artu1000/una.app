@@ -24,13 +24,13 @@ class PasswordController extends Controller
     protected function index(Request $request)
     {
         // SEO settings
-        $this->seoMeta['page_title'] = trans('seo.front.password.index.title');
-        $this->seoMeta['meta_desc'] = trans('seo.front.password.index.description');
-        $this->seoMeta['meta_keywords'] = trans('seo.front.password.index.keywords');
+        $this->seo_meta['page_title'] = trans('seo.front.password.index.title');
+        $this->seo_meta['meta_desc'] = trans('seo.front.password.index.description');
+        $this->seo_meta['meta_keywords'] = trans('seo.front.password.index.keywords');
 
         // data send to the view
         $data = [
-            'seoMeta' => $this->seoMeta,
+            'seo_meta' => $this->seo_meta,
             'email'   => $request->get('email'),
             'css'     => url(elixir('css/app.auth.css')),
         ];
@@ -125,15 +125,15 @@ class PasswordController extends Controller
         }
 
         // SEO settings
-        $this->seoMeta['page_title'] = trans('seo.front.password.show.title');
-        $this->seoMeta['meta_desc'] = trans('seo.front.password.show.description');
-        $this->seoMeta['meta_keywords'] = trans('seo.front.password.show.keywords');
+        $this->seo_meta['page_title'] = trans('seo.front.password.show.title');
+        $this->seo_meta['meta_desc'] = trans('seo.front.password.show.description');
+        $this->seo_meta['meta_keywords'] = trans('seo.front.password.show.keywords');
 
         // data send to the view
         $data = [
             'email'    => $request->get('email'),
             'reminder' => $request->get('token'),
-            'seoMeta'  => $this->seoMeta,
+            'seo_meta'  => $this->seo_meta,
             'css'      => url(elixir('css/app.auth.css')),
         ];
 

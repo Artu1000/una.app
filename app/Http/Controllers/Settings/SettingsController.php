@@ -7,6 +7,7 @@ use CustomLog;
 use Entry;
 use Exception;
 use Illuminate\Http\Request;
+use ImageManager;
 use libphonenumber\PhoneNumberFormat;
 use Modal;
 use Permission;
@@ -37,11 +38,11 @@ class SettingsController extends Controller
         }
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.settings.index');
+        $this->seo_meta['page_title'] = trans('seo.back.settings.index');
 
         // prepare data for the view
         $data = [
-            'seoMeta' => $this->seoMeta,
+            'seo_meta' => $this->seo_meta,
         ];
 
         // return the view with data
@@ -132,7 +133,7 @@ class SettingsController extends Controller
             // logo light treatment
             if ($logo_dark = $request->file('logo_light')) {
                 // we optimize, resize and save the image
-                $file_name = \ImageManager::optimizeAndResize(
+                $file_name = ImageManager::optimizeAndResize(
                     $logo_dark->getRealPath(),
                     config('image.settings.logo.name.dark'),
                     $logo_dark->getClientOriginalExtension(),
@@ -148,7 +149,7 @@ class SettingsController extends Controller
             // logo dark treatment
             if ($logo_dark = $request->file('logo_dark')) {
                 // we optimize, resize and save the image
-                $file_name = \ImageManager::optimizeAndResize(
+                $file_name = ImageManager::optimizeAndResize(
                     $logo_dark->getRealPath(),
                     config('image.settings.logo.name.dark'),
                     $logo_dark->getClientOriginalExtension(),

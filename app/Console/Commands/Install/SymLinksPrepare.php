@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Install;
 
 use App\Repositories\News\NewsRepositoryInterface;
+use App\Repositories\Page\PageRepositoryInterface;
 use App\Repositories\Partner\PartnerRepositoryInterface;
 use App\Repositories\Slide\SlideRepositoryInterface;
 use Illuminate\Console\Command;
@@ -78,6 +79,11 @@ class SymLinksPrepare extends Command
             [
                 'storage' => app(PartnerRepositoryInterface::class)->getModel()->storagePath(),
                 'public'  => app(PartnerRepositoryInterface::class)->getModel()->publicPath(),
+            ],
+            // pages
+            [
+                'storage' => app(PageRepositoryInterface::class)->getModel()->storagePath(),
+                'public'  => app(PageRepositoryInterface::class)->getModel()->publicPath(),
             ],
             // slides
             [

@@ -11,6 +11,7 @@ use Exception;
 use Illuminate\Http\Request;
 use ImageManager;
 use Modal;
+use Parsedown;
 use Permission;
 use Sentinel;
 use TableList;
@@ -34,13 +35,6 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        // SEO Meta settings
-        $this->seoMeta['page_title'] = 'Horaires';
-        $this->seoMeta['meta_desc'] = 'Découvrez nos horaires d\'encadrement de séances d\'aviron,
-        selon votre catéorie et votre type de pratique.';
-        $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, sport, universitaire, horaires,
-        séances, encadrement';
-        
         // we get the schedules from database
         $schedules = $this->repository->all();
         
@@ -109,12 +103,25 @@ class ScheduleController extends Controller
         }
         
         // we parse the markdown content
-        $parsedown = new \Parsedown();
+        $parsedown = new Parsedown();
         $description = isset($schedules->description) ? $parsedown->text($schedules->description) : null;
+
+        // SEO Meta settings
+        $this->seo_meta['page_title'] = trans('seo.front.schedules.title');
+        $this->seo_meta['meta_desc'] = trans('seo.front.schedules.description');
+        $this->seo_meta['meta_keywords'] = trans('seo.front.schedules.keywords');
+
+        // og meta settings
+        $this->og_meta['og:title'] = trans('seo.front.schedules.title');
+        $this->og_meta['og:description'] = trans('seo.front.schedules.description');
+        $this->og_meta['og:type'] = 'article';
+        $this->og_meta['og:url'] = route('schedules.index');
+        $this->og_meta['og:image'] = $schedules->background_image ? ImageManager::imagePath(config('image.schedules.public_path'), $schedules->background_image, 'background_image', '767') : null;
         
         // prepare data for the view
         $data = [
-            'seoMeta'          => $this->seoMeta,
+            'seo_meta'         => $this->seo_meta,
+            'og_meta'          => $this->og_meta,
             'title'            => isset($schedules->title) ? $schedules->title : null,
             'description'      => $description,
             'background_image' => isset($schedules->background_image) ? $schedules->background_image : null,
@@ -141,7 +148,7 @@ class ScheduleController extends Controller
         }
         
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.schedules.list');
+        $this->seo_meta['page_title'] = trans('seo.back.schedules.list');
         
         // we define the table list columns
         $columns = [
@@ -240,7 +247,7 @@ class ScheduleController extends Controller
         
         // prepare data for the view
         $data = [
-            'seoMeta'          => $this->seoMeta,
+            'seo_meta'         => $this->seo_meta,
             'title'            => isset($schedules->title) ? $schedules->title : null,
             'description'      => isset($schedules->description) ? $schedules->description : null,
             'background_image' => isset($schedules->background_image) ? $schedules->background_image : null,
@@ -268,11 +275,11 @@ class ScheduleController extends Controller
         }
         
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.schedules.create');
+        $this->seo_meta['page_title'] = trans('seo.back.schedules.create');
         
         // prepare data for the view
         $data = [
-            'seoMeta'           => $this->seoMeta,
+            'seo_meta'          => $this->seo_meta,
             'days'              => config('schedule.day_of_week'),
             'public_categories' => config('schedule.public_category'),
         ];
@@ -339,12 +346,12 @@ class ScheduleController extends Controller
             $schedule = $this->repository->create($request->except('_token'));
             
             // we notify the current user
-            \Modal::alert([
+            Modal::alert([
                 trans('schedules.message.creation.success', ['schedule' => $schedule->label]),
             ], 'success');
             
             return redirect(route('schedules.list'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we flash the request
             $request->flash();
             
@@ -393,7 +400,7 @@ class ScheduleController extends Controller
         
         // we check if the news exists
         if (!$schedule) {
-            \Modal::alert([
+            Modal::alert([
                 trans('schedules.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
@@ -402,7 +409,7 @@ class ScheduleController extends Controller
         }
         
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.schedules.edit');
+        $this->seo_meta['page_title'] = trans('seo.back.schedules.edit');
         
         // we prepare the data for breadcrumbs
         $breadcrumbs_data = [
@@ -411,7 +418,7 @@ class ScheduleController extends Controller
         
         // prepare data for the view
         $data = [
-            'seoMeta'           => $this->seoMeta,
+            'seo_meta'          => $this->seo_meta,
             'schedule'          => $schedule,
             'days'              => config('schedule.day_of_week'),
             'public_categories' => config('schedule.public_category'),
@@ -601,7 +608,7 @@ class ScheduleController extends Controller
             ], 'success');
             
             return redirect()->back();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             
             // we flash the request
             $request->flashExcept('background_image');
@@ -657,12 +664,12 @@ class ScheduleController extends Controller
             // we delete the role
             $schedule->delete();
             
-            \Modal::alert([
+            Modal::alert([
                 trans('schedules.message.delete.success', ['schedule' => $schedule->label]),
             ], 'success');
             
             return redirect()->back();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we log the error
             CustomLog::error($e);
             
@@ -731,7 +738,7 @@ class ScheduleController extends Controller
                     trans('schedules.message.activation.success.label', ['action' => trans_choice('schedules.message.activation.success.action', $schedule->active), 'schedule' => $schedule->label]),
                 ],
             ], 200);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we log the error
             CustomLog::error($e);
             

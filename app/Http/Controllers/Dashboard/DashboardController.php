@@ -22,11 +22,11 @@ class DashboardController extends Controller
     {
 
         // SEO Meta settings
-        $this->seoMeta['page_title'] = trans('seo.back.dashboard.index');
+        $this->seo_meta['page_title'] = trans('seo.back.dashboard.index');
 
         // prepare data for the view
         $data = [
-            'seoMeta' => $this->seoMeta,
+            'seo_meta' => $this->seo_meta,
         ];
 
         // return the view with data

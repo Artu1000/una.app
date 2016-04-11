@@ -82,14 +82,14 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
         $pages_list = app(PageRepositoryInterface::class)->orderBy('updated_at', 'desc')->all();
         foreach ($pages_list as $page) {
             $site_pages[] = [
-                'url'      => route('front.page', $page->key),
+                'url'      => route('page.show', $page->key),
                 'last_mod' => $page->updated_at,
             ];
         }
 
         // palmares
 //        $site_pages[] = [
-//            'url'      => route('front.palmares'),
+//            'url'      => route('palmares.index'),
 //            'last_mod' => app(\App\Repositories\Palmares\PalmaresEventRepositoryInterface::class)
 //                ->orderBy('updated_at', 'desc')
 //                ->first()
@@ -107,7 +107,7 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
 
         // registration
         $site_pages[] = [
-            'url'      => route('front.registration'),
+            'url'      => route('registration.index'),
             'last_mod' => app(RegistrationPriceRepositoryInterface::class)
                 ->orderBy('updated_at', 'desc')
                 ->first()
@@ -116,7 +116,7 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
 
         // schedule
         $site_pages[] = [
-            'url'      => route('front.schedule'),
+            'url'      => route('schedules.index'),
             'last_mod' => app(ScheduleRepositoryInterface::class)
                 ->orderBy('updated_at', 'desc')
                 ->first()
@@ -125,13 +125,13 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
 
         // calendar
         $site_pages[] = [
-            'url'      => route('front.calendar'),
+            'url'      => route('calendar.index'),
             'last_mod' => Carbon::now()->subDays(5),
         ];
 
         // e-shop
 //        $site_pages[] = [
-//            'url'      => route('front.e-shop'),
+//            'url'      => route('e-shop.index'),
 //            'last_mod' => app(\App\Repositories\EShop\EShopArticleRepositoryInterface::class)
 //                ->orderBy('updated_at', 'desc')
 //                ->first()

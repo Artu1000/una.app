@@ -155,26 +155,27 @@ Route::group($group, function () {
     Route::get(trans('routes.leading_team.index'), ['as' => 'front.leading_team', 'uses' => 'LeadingTeam\LeadingTeamController@index']);
 
     // palmares
-    Route::resource('/palmares', 'Palmares\PalmaresController', ['names' => ['index' => 'front.palmares']]);
+    Route::get(trans('routes.palmares.index'), ['as' => 'palmares.index', 'uses' => 'Palmares\PalmaresController@index']);
 
     // registration
-    Route::resource('/inscription', 'Registration\RegistrationController', ['names' => ['index' => 'front.registration']]);
+    Route::get(trans('routes.registration.index'), ['as' => 'registration.index', 'uses' => 'Registration\RegistrationController@index']);
 
     // calendar
-    Route::resource('/calendrier', 'Calendar\CalendarController', ['names' => ['index' => 'front.calendar']]);
+    Route::get(trans('routes.calendar.index'), ['as' => 'calendar.index', 'uses' => 'Calendar\CalendarController@index']);
 
     // schedule
-    Route::get(trans('routes.schedules.index'), ['as' => 'front.schedule', 'uses' => 'Schedule\ScheduleController@index']);
+    Route::get(trans('routes.schedules.index'), ['as' => 'schedules.index', 'uses' => 'Schedule\ScheduleController@index']);
 
-    // shop
-    Route::resource('/boutique-en-ligne', 'EShop\EShopController', ['names' => ['index' => 'front.e-shop', 'show' => 'front.e-shop.add-to-cart']]);
-
-    // sitemap
-    Route::get('sitemap.xml', 'Sitemap\SitemapController@index');
+    // e-shop
+    Route::get(trans('routes.e-shop.index'), ['as' => 'e-shop.index', 'uses' => 'EShop\EShopController@index']);
+    Route::post(trans('routes.e-shop.index'), ['as' => 'e-shop.add-to-cart', 'uses' => 'EShop\EShopController@addToCart']);
 
     // pages
-    Route::resource('page', 'Pages\PageController', ['names' => ['show' => 'front.page']]);
+    Route::get(trans('routes.page.show'), ['as' => 'page.show', 'uses' => 'Pages\PageController@show']);
+
+    // sitemap
+    Route::get(trans('routes.sitemap.index'), ['as' => 'sitemap.index', 'uses' => 'Sitemap\SitemapController@index']);
 
     // active rss according to the settings setup
-    if (config('settings.rss')) Route::get('rss', 'Rss\RssController@index');
+    if (config('settings.rss')) Route::get(trans('routes.rss.index'), ['as' => 'rss.index', 'uses' => 'Rss\RssController@index']);
 });

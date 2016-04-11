@@ -27,10 +27,10 @@ class EShopController extends Controller
     public function index()
     {
         // SEO Meta settings
-        $this->seoMeta['page_title'] = 'Boutique en ligne';
-        $this->seoMeta['meta_desc'] = 'Découvrez tous les articles du club Université Nantes Aviron (UNA)
+        $this->seo_meta['page_title'] = 'Boutique en ligne';
+        $this->seo_meta['meta_desc'] = 'Découvrez tous les articles du club Université Nantes Aviron (UNA)
         proposés à la vente.';
-        $this->seoMeta['meta_keywords'] = 'club, universite, nantes, aviron, sport, universitaire, etudiant,
+        $this->seo_meta['meta_keywords'] = 'club, universite, nantes, aviron, sport, universitaire, etudiant,
         boutique, ligne, shopping';
 
         // we get the category id
@@ -48,7 +48,7 @@ class EShopController extends Controller
 
         // prepare data for the view
         $data = [
-            'seoMeta' => $this->seoMeta,
+            'seo_meta' => $this->seo_meta,
             'articles' => $articles,
             'current_category' => $category,
             'css' => url(elixir('css/app.e-shop.css'))
@@ -58,7 +58,7 @@ class EShopController extends Controller
         return view('pages.front.e-shop')->with($data);
     }
 
-    public function show()
+    public function addToCart()
     {
         Modal::alert([
             "La fonctionnalité d'ajout au panier n'est pas disponible pour le moment. Merci de revenir ulterieurement."
