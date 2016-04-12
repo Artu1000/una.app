@@ -36,7 +36,7 @@ html {
               }
 
               &.selected {
-                @include lato-font('medium');
+                @include lato-normal();
               }
             }
           }
@@ -91,7 +91,7 @@ html {
               }
 
               .price {
-                @include lato-font('medium');
+                @include lato-normal();
                 font-size: 20px;
                 margin-left: 15px;
               }
@@ -104,7 +104,7 @@ html {
                 @include border-radius(50%);
                 width: 28px;
                 height: 28px;
-                @include lato-font('medium');
+                @include lato-normal();
                 line-height: 28px;
                 font-size: 10px;
                 display: inline-block;

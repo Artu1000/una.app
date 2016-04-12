@@ -35,7 +35,7 @@ html {
               color: #dedede;
 
               h1 {
-                @include lato-font('thin');
+                @include lato-thin();
                 display: inline-block;
                 font-size: 18px;
                 margin: 0;
@@ -192,13 +192,13 @@ html {
 
               .required_star {
                 color: $brand-danger;
-                @include lato-font('medium');
+                @include lato-normal();
                 font-size: $font-size;
               }
 
               .to_translate_star {
                 color: $brand-success;
-                @include lato-font('medium');
+                @include lato-normal();
                 font-size: $font-size;
               }
             }
@@ -215,7 +215,7 @@ html {
             }
 
             th {
-              @include lato-font('medium');
+              @include lato-normal();
             }
 
             .form-inline {
@@ -298,14 +298,14 @@ html {
             margin: 0 0 0 15px;
 
             label {
-              @include lato-font('light');
+              @include lato-light();
             }
 
             &.parent {
               margin: 15px 0 0 0;
 
               label {
-                @include lato-font('medium');
+                @include lato-normal();
               }
             }
 
@@ -331,7 +331,7 @@ html {
       font-size: 14px;
 
       b, strong {
-        @include lato-font('medium');
+        @include lato-normal();
       }
     }
 

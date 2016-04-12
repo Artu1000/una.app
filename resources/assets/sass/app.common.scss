@@ -5,6 +5,7 @@ $btn-default-border: #aeb6cb;
 $btn-default-color: #fff;
 $btn-default-bg: #aeb6cb;
 $breadcrumb-separator: "> ";
+$font-family-base: Lato, sans-serif;
 
 /***********************************************************************************************************************
  * PATH MODIFICATION
@@ -16,28 +17,67 @@ $lato-font-path: '/fonts/lato';
 /***********************************************************************************************************************
  * IMPORTS
  **********************************************************************************************************************/
-@import '../vendor/bootstrap-sass-official/assets/stylesheets/bootstrap';
+@import '../vendor/bootstrap-sass/assets/stylesheets/bootstrap';
 @import '../vendor/fontawesome/scss/font-awesome';
-@import '../vendor/lato-font/scss/public-api';
 
 /***********************************************************************************************************************
  * FONT DEFINITION
  **********************************************************************************************************************/
-@include lato-include-font('black');
-@include lato-include-font('medium');
-@include lato-include-font('light');
-@include lato-include-font('thin');
+@import '../vendor/lato-webfont/scss/lato-medium';
+@import '../vendor/lato-webfont/scss/lato-light';
+@import '../vendor/lato-webfont/scss/lato-thin';
 $font-size: 16px;
 $font-size-small: 14px;
 
 /***********************************************************************************************************************
  * MIXINS
  **********************************************************************************************************************/
+@mixin lato-thin($style: normal) {
+  font-family: Lato, sans-serif;
+  font-weight: 100;
+  font-style: $style;
+}
+
+@mixin lato-light($style: normal) {
+  font-family: Lato, sans-serif;
+  font-weight: 300;
+  font-style: $style;
+}
+
+@mixin lato-normal($style: normal) {
+  font-family: Lato, sans-serif;
+  font-weight: 400;
+  font-style: $style;
+}
+
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
   -moz-border-radius: $radius;
-  -ms-border-radius: $radius;
   border-radius: $radius;
+}
+
+@mixin border-top-left-radius($radius) {
+  -webkit-border-top-left-radius: $radius;
+  -moz-border-radius-topleft: $radius;
+  border-top-left-radius: $radius;
+}
+
+@mixin border-top-right-radius($radius) {
+  -webkit-border-top-right-radius: $radius;
+  -moz-border-radius-topright: $radius;
+  border-top-right-radius: $radius;
+}
+
+@mixin border-bottom-right-radius($radius) {
+  -webkit-border-bottom-right-radius: $radius;
+  -moz-border-radius-bottomright: $radius;
+  border-bottom-right-radius: $radius;
+}
+
+@mixin border-bottom-left-radius($radius) {
+  -webkit-border-bottom-left-radius: $radius;
+  -moz-border-radius-bottomleft: $radius;
+  border-bottom-left-radius: $radius;
 }
 
 @mixin spin($time) {
@@ -53,6 +93,18 @@ $font-size-small: 14px;
 }
 
 @-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-ms-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes spin {
   100% {
     -webkit-transform: rotate(360deg);
   }
@@ -186,7 +238,7 @@ html {
   height: 100%;
 
   body {
-    @include lato-font('light');
+    @include lato-light();
     font-size: $font-size;
     height: 100%;
 
@@ -195,7 +247,7 @@ html {
 
       h1, h2, h3, h4, h5, h6 {
         margin: 10px 0;
-        @include lato-font('thin');
+        @include lato-thin();
         color: #5a5a5a;
         text-align: left;
       }
@@ -213,7 +265,7 @@ html {
 
       p {
         font-size: $font-size;
-        @include lato-font('light');
+        @include lato-light();
       }
 
       p, ul, ol {
@@ -221,14 +273,14 @@ html {
       }
 
       .quote {
-        @include lato-font('light', italic);
+        @include lato-light(italic);
 
         &.help-block{
           color: $brand-primary;
         }
 
         b {
-          @include lato-font('medium', italic);
+          @include lato-normal(italic);
         }
       }
 
@@ -245,7 +297,7 @@ html {
       }
 
       .btn, a.btn {
-        @include lato-font('light');
+        @include lato-light();
       }
 
       .noscript {
@@ -280,7 +332,7 @@ html {
       }
 
       b, strong {
-        @include lato-font('medium');
+        @include lato-normal();
       }
 
       #content {
@@ -460,7 +512,7 @@ html {
 
           &.toggle {
             @extend .btn-default;
-            @include lato-font('light');
+            @include lato-light();
 
             &.active {
               @extend .btn-primary;
@@ -476,7 +528,7 @@ html {
 
       label {
         font-weight: normal;
-        @include lato-font('medium');
+        @include lato-normal();
 
         .required {
           padding: 0 2px 0 5px;

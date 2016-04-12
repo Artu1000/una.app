@@ -16,7 +16,7 @@ var paths = {
     jquery: './resources/assets/vendor/jquery/',
     jquery_easing: './resources/assets/vendor/jquery.easing/',
     glide: './resources/assets/vendor/glidejs/',
-    bootstrap: './resources/assets/vendor/bootstrap-sass-official/assets/',
+    bootstrap: './resources/assets/vendor/bootstrap-sass/assets/',
     datepicker: './resources/assets/vendor/eonasdan-bootstrap-datetimepicker/',
     moment: './resources/assets/vendor/moment/',
     lity: './resources/assets/vendor/lity/dist/',
@@ -24,7 +24,7 @@ var paths = {
     animate: './resources/assets/vendor/animate.css/',
     simplemde: './resources/assets/vendor/simplemde/dist/',
     fontawesome: './resources/assets/vendor/fontawesome/',
-    lato: './resources/assets/vendor/lato-font/',
+    lato: './resources/assets/vendor/lato-webfont/',
     js: './resources/assets/js/',
     img: './resources/assets/img/'
 };

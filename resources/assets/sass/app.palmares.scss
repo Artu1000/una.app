@@ -110,7 +110,7 @@ html{
 
                 h4 {
                   font-size: $font-size;
-                  @include lato-font('medium');
+                  @include lato-normal();
                   margin-bottom: 10px;
                 }
 

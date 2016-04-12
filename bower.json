@@ -17,15 +17,15 @@
     "Arthur LORENT"
   ],
   "dependencies": {
-    "bootstrap-sass-official": "~3.3.5",
     "fontawesome": "~4.4.0",
     "glidejs": "~2.0.3",
     "jquery.easing": "~1.3.1",
-    "lato-font": "~1.1.1",
     "lity": "~1.5.0",
     "simplemde": "~1.8.1",
     "remarkable-bootstrap-notify": "~3.1.3",
     "animate.css": "~3.5.1",
-    "eonasdan-bootstrap-datetimepicker": "~4.17.37"
+    "eonasdan-bootstrap-datetimepicker": "~4.17.37",
+    "bootstrap-sass": "^3.3.6",
+    "lato-webfont": "^1.1.2"
   }
 }

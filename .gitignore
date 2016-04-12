@@ -27,6 +27,3 @@ public/img/schedules
 public/img/settings
 public/img/slides
 public/img/users
-
-# deployer
-deploy.php

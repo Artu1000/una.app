@@ -66,14 +66,14 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
                   }
 
                   .title{
-                    @include lato-font('medium');
+                    @include lato-normal();
                     text-transform: uppercase;
                     color: #fff;
                     text-align: center;
                   }
 
                   .quote{
-                    @include lato-font('thin');
+                    @include lato-thin();
                   }
                 }
               }
