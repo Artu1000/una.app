@@ -94,15 +94,27 @@ class UsersController extends Controller
                     'attribute' => 'slug',
                 ],
             ],
-            [
-                'title'    => trans('users.page.label.active'),
-                'key'      => 'active',
-                'activate' => [
-                    'route'  => 'users.activate',
-                    'params' => [],
-                ],
+        ];
+        // we show the last connexion date for the admins
+        if (Sentinel::getUser()->roles->first()->slug === 'admin') {
+            // we add the activation field
+            $columns[] = [
+                'title'   => trans('users.page.label.last_login'),
+                'key'     => 'last_login',
+                'sort_by' => 'users.last_login',
+                'date'    => 'd/m/Y H:i',
+            ];
+        }
+        // we show the activation field
+        $columns[] = [
+            'title'    => trans('users.page.label.active'),
+            'key'      => 'active',
+            'activate' => [
+                'route'  => 'users.activate',
+                'params' => [],
             ],
         ];
+
 
         // we set the routes used in the table list
         $routes = [
@@ -174,7 +186,7 @@ class UsersController extends Controller
         // prepare data for the view
         $data = [
             'tableListData' => $tableListData,
-            'seo_meta'       => $this->seo_meta,
+            'seo_meta'      => $this->seo_meta,
         ];
 
         // return the view with data
@@ -202,7 +214,7 @@ class UsersController extends Controller
 
         // prepare data for the view
         $data = [
-            'seo_meta'  => $this->seo_meta,
+            'seo_meta' => $this->seo_meta,
             'statuses' => config('user.status'),
             'boards'   => config('user.board'),
             'roles'    => \Sentinel::getRoleRepository()->orderBy('position', 'asc')->get(),
@@ -425,7 +437,7 @@ class UsersController extends Controller
 
         // prepare data for the view
         $data = [
-            'seo_meta'          => $this->seo_meta,
+            'seo_meta'         => $this->seo_meta,
             'user'             => $user,
             'statuses'         => config('user.status'),
             'boards'           => config('user.board'),
@@ -455,7 +467,7 @@ class UsersController extends Controller
 
         // prepare data for the view
         $data = [
-            'seo_meta'  => $this->seo_meta,
+            'seo_meta' => $this->seo_meta,
             'user'     => $user,
             'statuses' => config('user.status'),
             'boards'   => config('user.board'),

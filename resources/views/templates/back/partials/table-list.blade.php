@@ -153,7 +153,7 @@
                             </button>
                         @endif
 
-                        {{-- show value(s) from relation --}}
+                    {{-- show values) from relation --}}
                     @elseif(
                         isset($column['key'])
                         && is_a($entity->getAttribute($column['key']), '\Illuminate\Database\Eloquent\Model')
@@ -166,7 +166,7 @@
                             @endif
                         @endforeach
 
-                        {{-- show value from collection --}}
+                    {{-- show value from collection --}}
                     @elseif(
                         isset($column['key'])
                         && is_a($entity->getAttribute($column['key']), '\Illuminate\Database\Eloquent\Collection')
@@ -320,65 +320,59 @@
                     isset($tableListData['routes']['destroy']) && !empty($tableListData['routes']['destroy'])
                 )
             )
-                <td class="actions text-right">
+                    <td class="actions text-right">
 
-                    {{-- show --}}
-                    @if(
-                        isset($tableListData['routes']['show'])
-                        && !empty($tableListData['routes']['show'])
-                        && !empty($tableListData['routes']['show']['route'])
-                    )
-                        <form role="form" class="form-inline" method="GET" action="{{ route($tableListData['routes']['show']['route'], array_merge(
+                        {{-- show --}}
+                        @if(
+                            isset($tableListData['routes']['show'])
+                            && !empty($tableListData['routes']['show'])
+                            && !empty($tableListData['routes']['show']['route'])
+                        )
+                            <form role="form" class="form-inline" method="GET" action="{{ route($tableListData['routes']['show']['route'], array_merge(
                             $tableListData['routes']['show']['params'],
                             ['id' => $entity->id]
                         )) }}">
-                            <a href="#" class="submit-form">
-                                <button class="btn btn-primary btn-rounded btn-sm spin-on-click" name="edit_{{ $entity->id }}">
+                                <button class="btn btn-primary btn-rounded btn-sm spin-on-click" type="submit" name="show_{{ $entity->id }}">
                                     <i class="fa fa-search" title="{{ trans('global.action.show') }}"></i>
                                 </button>
-                            </a>
-                        </form>
-                    @endif
+                            </form>
+                        @endif
 
-                    {{-- edit --}}
-                    @if(
-                        isset($tableListData['routes']['edit'])
-                        && !empty($tableListData['routes']['edit'])
-                        && !empty($tableListData['routes']['edit']['route'])
-                    )
-                        <form role="form" class="form-inline" method="GET" action="{{ route($tableListData['routes']['edit']['route'], array_merge(
+                        {{-- edit --}}
+                        @if(
+                            isset($tableListData['routes']['edit'])
+                            && !empty($tableListData['routes']['edit'])
+                            && !empty($tableListData['routes']['edit']['route'])
+                        )
+                            <form role="form" class="form-inline" method="GET" action="{{ route($tableListData['routes']['edit']['route'], array_merge(
                             $tableListData['routes']['edit']['params'],
                             ['id' => $entity->id]
                         )) }}">
-                            <a href="#" class="submit-form">
-                                <button class="btn btn-primary btn-rounded btn-sm spin-on-click" name="edit_{{ $entity->id }}">
+                                <button class="btn btn-primary btn-rounded btn-sm spin-on-click" type="submit" name="edit_{{ $entity->id }}">
                                     <i class="fa fa-pencil" title="{{ trans('global.action.edit') }}"></i>
                                 </button>
-                            </a>
-                        </form>
-                    @endif
+                            </form>
+                        @endif
 
-                    {{-- delete --}}
-                    @if(
-                        isset($tableListData['routes']['destroy'])
-                        && !empty($tableListData['routes']['destroy'])
-                        && !empty($tableListData['routes']['destroy']['route'])
-                    )
-                        <form role="form" id="delete_{{ $entity->id }}" class="form-inline" method="POST" action="{{ route($tableListData['routes']['destroy']['route'], array_merge(
+                        {{-- delete --}}
+                        @if(
+                            isset($tableListData['routes']['destroy'])
+                            && !empty($tableListData['routes']['destroy'])
+                            && !empty($tableListData['routes']['destroy']['route'])
+                        )
+                            <form role="form" id="delete_{{ $entity->id }}" class="form-inline" method="POST" action="{{ route($tableListData['routes']['destroy']['route'], array_merge(
                             $tableListData['routes']['edit']['params'],
                             ['id' => $entity->id]
                         )) }}">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="hidden" name="_id" value="{{ $entity->id }}">
-                            <a href="#" class="confirm" data-confirm="@foreach($confirm['attributes'] as $attribute){{ $entity->getAttribute($attribute) }} @endforeach">
-                                <button class="btn btn-danger btn-rounded btn-sm">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="_id" value="{{ $entity->id }}">
+                                <button class="btn btn-danger btn-rounded btn-sm confirm" type="submit" data-confirm="@foreach($confirm['attributes'] as $attribute){{ $entity->getAttribute($attribute) }} @endforeach">
                                     <i class="fa fa-times" title="{{ trans('global.action.delete') }}"></i>
                                 </button>
-                            </a>
-                        </form>
-                    @endif
-                </td>
+                            </form>
+                        @endif
+                    </td>
             @endif
         </tr>
     @endforeach
@@ -403,7 +397,6 @@
         <td colspan="{{ sizeof($tableListData['columns']) + 1 }}" class="no-padding">
 
             <div class="row">
-
                 @if(
                     isset($tableListData['routes']['create'])
                     && !empty($tableListData['routes']['create'])
@@ -416,13 +409,27 @@
                     </div>
                 @endif
 
-                <div class="col-sm-4 table-nav-infos text-center">
+                <div class="
+                @if(
+                    isset($tableListData['routes']['create'])
+                    && !empty($tableListData['routes']['create'])
+                    && !empty($tableListData['routes']['create']['route'])
+                )col-sm-4 text-center
+                @else col-sm-6 text-left
+                @endif table-nav-infos">
                     @if(isset($tableListData['nav_infos']) && !$tableListData['pagination']->isEmpty())
                         {!! $tableListData['nav_infos'] !!}
                     @endif
                 </div>
 
-                <div class="col-sm-4 text-right">
+                <div class="
+                @if(
+                    isset($tableListData['routes']['create'])
+                    && !empty($tableListData['routes']['create'])
+                    && !empty($tableListData['routes']['create']['route'])
+                )col-sm-4
+                @else col-sm-6
+                @endif text-right">
                     @if(is_a($tableListData['pagination'], '\Illuminate\Pagination\LengthAwarePaginator'))
                         {!! $tableListData['pagination']->render() !!}
                     @endif

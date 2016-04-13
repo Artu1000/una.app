@@ -72,7 +72,7 @@ $(function() {
         // we put the loading spinner
         $this.html(app.loading_spinner + ' ' + cleaned_html);
     }
-    $('.spin-on-click').click(function (e) {
+    $('.spin-on-click').one('click', function (e) {
         // we prevent any action
         e.preventDefault();
         // we store this
@@ -81,8 +81,10 @@ $(function() {
         replaceFontAwesomeIconBySpinner($this);
         // we execute the prevented action
         if ($this.is("button[type=submit]")) {
+            console.log('submit');
             $this.closest('form').submit();
         } else if ($this.is("button")) {
+            console.log('button');
             window.location.href = $this.closest('a').attr('href');
         } else if ($this.is("a")) {
             window.location.href = $this.attr('href');
