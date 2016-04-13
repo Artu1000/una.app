@@ -398,22 +398,12 @@ class ScheduleController extends Controller
             return redirect()->back();
         }
         
-        // we check if the news exists
-        if (!$schedule) {
-            Modal::alert([
-                trans('schedules.message.find.failure', ['id' => $id]),
-                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
-            ], 'error');
-            
-            return redirect()->back();
-        }
-        
         // SEO Meta settings
         $this->seo_meta['page_title'] = trans('seo.back.schedules.edit');
         
         // we prepare the data for breadcrumbs
         $breadcrumbs_data = [
-            $schedule->label,
+            'schedule' => $schedule,
         ];
         
         // prepare data for the view
@@ -505,8 +495,8 @@ class ScheduleController extends Controller
             Modal::alert([
                 trans('schedules.message.update.success', ['schedule' => $schedule->label]),
             ], 'success');
-            
-            return redirect(route('schedules.list'));
+
+            return redirect()->back();
         } catch (Exception $e) {
             // we flash the request
             $request->flash();

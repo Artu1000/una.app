@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Cartalyst\Sentinel\Users\EloquentUser as SentinelUser;
+use CustomLog;
 
 class User extends SentinelUser
 {
@@ -73,7 +74,8 @@ class User extends SentinelUser
 
             return url($this->public_path . '/' . $name . '_' . $size . '.' . $ext);
         } catch (\Exception $e) {
-            \Log::error($e);
+            // we log the error
+            CustomLog::error($e);
 
             return 'error';
         }

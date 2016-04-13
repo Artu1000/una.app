@@ -158,6 +158,8 @@ return [
         "board_id"              => "Instance",
         "active"                => "Active",
         "content"               => "Contenu",
+        "price"                 => "Tarif",
+        "label"                 => "Libellé",
     ],
 
 ];

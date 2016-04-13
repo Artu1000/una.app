@@ -112,7 +112,7 @@ return [
         ],
         "prices" => [
             "create"   => "admin/contenus/inscription/tarifs/creation",
-            "store"    => "admin/contenus/inscription/tarifs/enregistrement/{id}",
+            "store"    => "admin/contenus/inscription/tarifs/enregistrement",
             "edit"     => "admin/contenus/inscription/tarifs/edition/{id}",
             "update"   => "admin/contenus/inscription/tarifs/mise-a-jour/{id}",
             "destroy"  => "admin/contenus/inscription/tarifs/suppression/{id}",

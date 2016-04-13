@@ -9,7 +9,7 @@
             <div class="col-sm-12">
 
                 {{-- Title--}}
-                <h2><i class="fa fa-home"></i> {{ trans('registration.page.title.management') }}</h2>
+                <h2><i class="fa fa-eur" aria-hidden="true"></i> {{ trans('registration.page.title.management') }}</h2>
 
                 <hr>
 
@@ -32,7 +32,7 @@
                             <label for="input_title">{{ trans('registration.page.label.title') }}<span class="required">*</span></label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_title"><i class="fa fa-paragraph"></i></span>
+                                    <span class="input-group-addon" for="input_title"><i class="fa fa-tag"></i></span>
                                     <input id="input_title" class="form-control capitalize-first-letter" name="title" placeholder="{{ trans('registration.page.label.title') }}" value="{{ old('title') ? old('title') : $title }}">
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <input type="checkbox" id="input_remove_background_image" name="remove_background_image"> <label for="input_remove_background_image" class="quote">{{ trans('schedules.page.label.remove_background_image') }}</label>
+                                <input type="checkbox" id="input_remove_background_image" name="remove_background_image"> <label for="input_remove_background_image" class="quote small_font">{{ trans('schedules.page.label.remove_background_image') }}</label>
                             @endif
                             <div class="form-group">
                                 <div class="input-group">
@@ -80,7 +80,7 @@
                 {{-- registration prices --}}
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{ trans('registration.page.title.slides') }}</h3>
+                        <h3 class="panel-title">{{ trans('registration.page.title.price.list') }}</h3>
                     </div>
                     <div class="panel-body table-responsive">
 

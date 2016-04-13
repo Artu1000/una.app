@@ -1,37 +1,51 @@
 <?php
 
 return [
-    "admin"       => "Admin",
-    "dashboard"   => [
+    "admin"        => "Admin",
+    "dashboard"    => [
         "index" => "Tableau de bord",
     ],
-    "settings"    => [
+    "settings"     => [
         "index" => "Gestion des paramètres",
     ],
-    "permissions" => [
+    "permissions"  => [
         "index"  => "Gestion des permissions",
         "create" => "Création d'une permission",
         "edit"   => "Édition de la permission <b>:role</b>",
     ],
-    "users"       => [
+    "users"        => [
         "profile" => "Mon profil",
         "index"   => "Gestion des utilisateurs",
         "create"  => "Création d'un utilisateur",
         "edit"    => "Édition de l'utilisateur <b>:user</b>",
     ],
-    "home"        => [
+    "home"         => [
         "edit" => "Édition de la page d'accueil",
     ],
-    "slides"      => [
+    "slides"       => [
         "create" => "Création d'une diapo",
         "edit"   => "Édition de la diapo <b>:slide</b>",
     ],
-    "news"        => [
+    "news"         => [
         "list"   => "Gestion des actualités",
         "create" => "Création d'une actualité",
         "edit"   => "Édition de l'actualité <b>:news</b>",
     ],
-    "partners"    => [
+    "schedules"    => [
+        "list"   => "Gestion des créneaux horaires",
+        "create" => "Création d'un créneau horaire",
+        "edit"   => "Édition du créneau horaire <b>:schedule</b>",
+    ],
+    "registration" => [
+        "page"   => [
+            "edit" => "Gestion des tarifs d'inscription ",
+        ],
+        "prices" => [
+            "create" => "Création d'un tarif d'inscription",
+            "edit"   => "Édition du tarif d'inscription <b>:price</b>",
+        ],
+    ],
+    "partners"     => [
         "index"  => "Gestion des partenaires",
         "create" => "Création d'un partenaire",
         "edit"   => "Édition du partenaire <b>:partner</b>",

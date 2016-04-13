@@ -84,7 +84,7 @@
                             <label for="input_title" class="required">{{ trans('news.page.label.title') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_name"><i class="fa fa-font"></i></span>
+                                    <span class="input-group-addon" for="input_name"><i class="fa fa-tag"></i></span>
                                     <input id="input_title" class="form-control capitalize-first-letter" type="text" name="title" value="{{ old('title') ? old('title') : (isset($news) && $news->title ? $news->title : null) }}" placeholder="{{ trans('news.page.label.title') }}">
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                         </div>
                     </div>
 
-                    {{-- security data --}}
+                    {{-- seo data --}}
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">{{ trans('news.page.title.seo') }}</h3>
@@ -110,7 +110,7 @@
                             <label for="input_meta_title">{{ trans('news.page.label.meta_title') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_meta_title"><i class="fa fa-link"></i></span>
+                                    <span class="input-group-addon" for="input_meta_title"><i class="fa fa-tag"></i></span>
                                     <input id="input_meta_title" class="form-control" type="text" name="meta_title" value="{{ old('meta_title') ? old('meta_title') : (isset($news) && $news->meta_title ? $news->meta_title : null) }}" placeholder="{{ trans('news.page.label.meta_title') }}">
                                 </div>
                                 <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('news.page.info.meta_title') }}</p>
@@ -120,7 +120,7 @@
                             <label for="input_meta_description">{{ trans('news.page.label.meta_description') }}</label>
                             <div class="form-group textarea">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_meta_description"><i class="fa fa-code"></i></span>
+                                    <span class="input-group-addon" for="input_meta_description"><i class="fa fa-align-left" aria-hidden="true"></i></span>
                                     <textarea id="input_meta_description" class="form-control" name="meta_description" placeholder="{{ trans('news.page.label.meta_description') }}">{{ old('meta_description') ? old('meta_description') : (isset($news) && $news->meta_description ? $news->meta_description : null) }}</textarea>
                                 </div>
                                 <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('news.page.info.meta_description') }}</p>
@@ -130,7 +130,7 @@
                             <label for="input_meta_keywords">{{ trans('news.page.label.meta_keywords') }}</label>
                             <div class="form-group textarea">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_meta_keywords"><i class="fa fa-code"></i></span>
+                                    <span class="input-group-addon" for="input_meta_keywords"><i class="fa fa-key" aria-hidden="true"></i></span>
                                     <textarea id="input_meta_keywords" class="form-control" name="meta_keywords" placeholder="{{ trans('news.page.label.meta_keywords') }}">{{ old('meta_keywords') ? old('meta_keywords') : (isset($news) && $news->meta_keywords ? $news->meta_keywords : null) }}</textarea>
                                 </div>
                             </div>
@@ -149,7 +149,7 @@
                             <label class="required" for="input_released_at">{{ trans('news.page.label.released_at') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_released_at"><i class="fa fa-birthday-cake"></i></span>
+                                    <span class="input-group-addon" for="input_released_at"><i class="fa fa-calendar" aria-hidden="true"></i></span>
                                     <input id="input_released_at" type='text' class="form-control datetimepicker" name="released_at" value="{{ old('released_at') ? old('released_at') : (isset($news) && $news->released_at ? $news->released_at : \Carbon\Carbon::now()->format('d/m/Y H:i')) }}" placeholder="{{ trans('news.page.label.released_at') }}">
                                 </div>
                                 <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('global.info.datetime.format') }}</p>

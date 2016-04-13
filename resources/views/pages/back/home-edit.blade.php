@@ -32,7 +32,7 @@
                             <label for="input_title">{{ trans('home.page.label.title') }}<span class="required">*</span></label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_title"><i class="fa fa-paragraph"></i></span>
+                                    <span class="input-group-addon" for="input_title"><i class="fa fa-tag"></i></span>
                                     <input id="input_title" class="form-control capitalize-first-letter" name="title" placeholder="{{ trans('home.page.label.title') }}" value="{{ old('title') ? old('title') : $title }}">
                                 </div>
                             </div>

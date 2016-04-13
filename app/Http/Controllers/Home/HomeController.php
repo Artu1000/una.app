@@ -186,7 +186,7 @@ class HomeController extends Controller
         // we check inputs validity
         $rules = [
             'title'       => 'required|string',
-            'description' => 'string|min:1500',
+            'description' => 'required|string|min:1500',
             'video_link'  => 'url',
         ];
         // we check the inputs validity

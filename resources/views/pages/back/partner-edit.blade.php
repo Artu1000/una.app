@@ -42,7 +42,7 @@
                             <label for="input_name" class="required">{{ trans('partners.page.label.name') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_name"><i class="fa fa-font"></i></span>
+                                    <span class="input-group-addon" for="input_name"><i class="fa fa-tag"></i></span>
                                     <input id="input_name" class="form-control capitalize-first-letter" type="text" name="name" value="{{ old('name') ? old('name') : (isset($partner) && $partner->name ? $partner->name : null) }}" placeholder="{{ trans('partners.page.label.name') }}">
                                 </div>
                             </div>

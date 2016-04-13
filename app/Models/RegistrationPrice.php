@@ -19,7 +19,7 @@ class RegistrationPrice extends Model
      * @var string
      */
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     /**
@@ -30,6 +30,7 @@ class RegistrationPrice extends Model
     protected $fillable = [
         'label',
         'price',
+        'active',
     ];
 
     /**

@@ -284,6 +284,10 @@ html {
         }
       }
 
+      .small_font {
+        font-size: $font-size-small;
+      }
+
       .bg-dark {
         background-color: $gray-dark;
       }
@@ -539,6 +543,10 @@ html {
         .translated {
           color: $brand-success;
         }
+      }
+
+      .form-control {
+        @include lato-light();
       }
 
       .swipe-group {

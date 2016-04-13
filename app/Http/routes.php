@@ -96,9 +96,9 @@ $route = Route::group($group, function () {
     
     // registration prices
     Route::get(LaravelLocalization::transRoute('routes.registration.prices.create'), ['as' => 'registration.prices.create', 'uses' => 'Registration\RegistrationPriceController@create']);
-    Route::post(LaravelLocalization::transRoute('routes.registration.prices.store'), ['as' => 'registration.prices.store', 'uses' => 'Registration\RegistrationPrice@store']);
-    Route::get(LaravelLocalization::transRoute('routes.registration.prices.edit'), ['as' => 'registration.prices.edit', 'uses' => 'Registration\RegistrationPrice@edit']);
-    Route::put(LaravelLocalization::transRoute('routes.registration.prices.update'), ['as' => 'registration.prices.update', 'uses' => 'Registration\RegistrationPrice@update']);
+    Route::post(LaravelLocalization::transRoute('routes.registration.prices.store'), ['as' => 'registration.prices.store', 'uses' => 'Registration\RegistrationPriceController@store']);
+    Route::get(LaravelLocalization::transRoute('routes.registration.prices.edit'), ['as' => 'registration.prices.edit', 'uses' => 'Registration\RegistrationPriceController@edit']);
+    Route::put(LaravelLocalization::transRoute('routes.registration.prices.update'), ['as' => 'registration.prices.update', 'uses' => 'Registration\RegistrationPriceController@update']);
     Route::delete(LaravelLocalization::transRoute('routes.registration.prices.destroy'), ['as' => 'registration.prices.destroy', 'uses' => 'Registration\RegistrationPriceController@destroy']);
     Route::post(LaravelLocalization::transRoute('routes.registration.prices.activate'), ['as' => 'registration.prices.activate', 'uses' => 'Registration\RegistrationPriceController@activate']);
 

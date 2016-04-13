@@ -34,7 +34,7 @@ return [
             "contents"     => "Contenus",
             "news"         => "Actualités",
             "schedules"    => "Horaires",
-            "registration" => "Inscription",
+            "registration" => "Tarifs d'inscription",
             "home"         => "Page d'accueil",
             "partners"     => "Partenaires",
         ],

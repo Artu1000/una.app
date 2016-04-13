@@ -51,7 +51,6 @@ $(function() {
     // select all text on click on input
     $('input, textarea').on('focus', function(){
         this.select();
-
     });
 
     // open new window when clicking on the link

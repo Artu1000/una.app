@@ -136,7 +136,7 @@ class PartnersController extends Controller
         // prepare data for the view
         $data = [
             'tableListData' => $tableListData,
-            'seo_meta'       => $this->seo_meta,
+            'seo_meta'      => $this->seo_meta,
         ];
 
         // return the view with data
@@ -174,7 +174,7 @@ class PartnersController extends Controller
 
         // prepare data for the view
         $data = [
-            'seo_meta'      => $this->seo_meta,
+            'seo_meta'     => $this->seo_meta,
             'partner_list' => $partner_list,
         ];
 
@@ -326,7 +326,7 @@ class PartnersController extends Controller
 
         // prepare data for the view
         $data = [
-            'seoMeta'          => $this->seoMeta,
+            'seo_meta'         => $this->seo_meta,
             'partner'          => $partner,
             'partner_list'     => $partner_list,
             'breadcrumbs_data' => $breadcrumbs_data,

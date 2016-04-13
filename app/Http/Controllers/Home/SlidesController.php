@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Slide\SlideRepositoryInterface;
+use CustomLog;
 use Entry;
 use Exception;
 use Illuminate\Http\Request;
+use ImageManager;
+use Modal;
 use Permission;
 use Sentinel;
 use Validation;
@@ -114,7 +117,7 @@ class SlidesController extends Controller
             // we store the picto file
             if ($picto = $request->file('picto')) {
                 // we optimize, resize and save the image
-                $file_name = \ImageManager::optimizeAndResize(
+                $file_name = ImageManager::optimizeAndResize(
                     $picto->getRealPath(),
                     $slide->imageName('picto'),
                     $picto->getClientOriginalExtension(),
@@ -129,7 +132,7 @@ class SlidesController extends Controller
             // we store the background image file
             if ($background_image = $request->file('background_image')) {
                 // we optimize, resize and save the image
-                $file_name = \ImageManager::optimizeAndResize(
+                $file_name = ImageManager::optimizeAndResize(
                     $background_image->getRealPath(),
                     $slide->imageName('background_image'),
                     $background_image->getClientOriginalExtension(),
@@ -144,20 +147,20 @@ class SlidesController extends Controller
             // we sanitize the roles positions
             $this->repository->sanitizePositions();
 
-            \Modal::alert([
+            Modal::alert([
                 trans('home.message.slide.creation.success', ['slide' => $slide->name]),
             ], 'success');
 
             return redirect(route('home.edit'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we flash the request
             $request->flashExcept('picto', 'background_image');
 
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
 
             // we notify the current user
-            \Modal::alert([
+            Modal::alert([
                 trans('home.message.slide.creation.failure', ['slide' => $request->get('name')]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
@@ -184,10 +187,10 @@ class SlidesController extends Controller
             $slide = $this->repository->find($id);
         } catch (Exception $e) {
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
 
             // we notify the current user
-            \Modal::alert([
+            Modal::alert([
                 trans('home.message.slide.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
@@ -244,10 +247,10 @@ class SlidesController extends Controller
             $slide = $this->repository->find($id);
         } catch (Exception $e) {
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
 
             // we notify the current user
-            \Modal::alert([
+            Modal::alert([
                 trans('home.message.slide.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
@@ -315,7 +318,7 @@ class SlidesController extends Controller
             // we store the picto file
             if ($picto = $request->file('picto')) {
                 // we optimize, resize and save the image
-                $file_name = \ImageManager::optimizeAndResize(
+                $file_name = ImageManager::optimizeAndResize(
                     $picto->getRealPath(),
                     $slide->imageName('picto'),
                     $picto->getClientOriginalExtension(),
@@ -330,7 +333,7 @@ class SlidesController extends Controller
             // we store the background image file
             if ($background_image = $request->file('background_image')) {
                 // we optimize, resize and save the image
-                $file_name = \ImageManager::optimizeAndResize(
+                $file_name = ImageManager::optimizeAndResize(
                     $background_image->getRealPath(),
                     $slide->imageName('background_image'),
                     $background_image->getClientOriginalExtension(),
@@ -345,18 +348,20 @@ class SlidesController extends Controller
             // we sanitize the roles ranks
             $this->repository->sanitizePositions();
 
-            \Modal::alert([
+            Modal::alert([
                 trans('home.message.slide.update.success', ['slide' => $slide->name]),
             ], 'success');
 
             return redirect()->back();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // we flash the request
             $request->flashExcept('picto', 'background_image');
 
-            // we log the error and we notify the current user
-            \Log::error($e);
-            \Modal::alert([
+            // we log the error
+            CustomLog::error($e);
+
+            // we notify the current user
+            Modal::alert([
                 trans('home.message.slide.update.failure', ['slide' => $request->get('name')]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
@@ -383,10 +388,10 @@ class SlidesController extends Controller
             $slide = $this->repository->find($id);
         } catch (Exception $e) {
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
 
             // we notify the current user
-            \Modal::alert([
+            Modal::alert([
                 trans('home.message.slide.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
@@ -404,21 +409,21 @@ class SlidesController extends Controller
         try {
             // we remove the slide picto & background image
             if ($slide->picto) {
-                \ImageManager::remove(
+                ImageManager::remove(
                     $slide->picto,
                     $slide->storagePath(),
                     $slide->availableSizes('picto')
                 );
             }
             if ($slide->background_image) {
-                \ImageManager::remove(
+                ImageManager::remove(
                     $slide->background_image,
                     $slide->storagePath(),
                     $slide->availableSizes('background_image')
                 );
             }
 
-            \Modal::alert([
+            Modal::alert([
                 trans('home.message.slide.delete.success', ['slide' => $slide->title]),
             ], 'success');
 
@@ -429,9 +434,11 @@ class SlidesController extends Controller
             $this->repository->sanitizePositions();
 
             return redirect()->back();
-        } catch (\Exception $e) {
-            \Log::error($e);
-            \Modal::alert([
+        } catch (Exception $e) {
+            // we log the error
+            CustomLog::error($e);
+            
+            Modal::alert([
                 trans('permissions.message.delete.failure', ['title' => $slide->title]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
@@ -454,7 +461,7 @@ class SlidesController extends Controller
             $slide = $this->repository->find($id);
         } catch (Exception $e) {
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
 
             return response([
                 'message' => [
@@ -493,7 +500,7 @@ class SlidesController extends Controller
             ], 200);
         } catch (\Exception $e) {
             // we log the error
-            \CustomLog::error($e);
+            CustomLog::error($e);
 
             return response([
                 'active'  => $slide->fresh()->active,

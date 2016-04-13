@@ -56,7 +56,7 @@
                                 @endif
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_name_{{ config('app.locale') }}"><i class="fa fa-font"></i></span>
+                                    <span class="input-group-addon" for="input_name_{{ config('app.locale') }}"><i class="fa fa-tag"></i></span>
                                     @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                                         <input id="input_name_{{ $localeCode }}" class="form-control capitalize-first-letter translated_input {{ $localeCode }} @if($localeCode !== config('app.locale'))hidden @endif" type="text" name="name_{{ $localeCode }}" value="{{ !empty(old('name_' . $localeCode)) ? old('name_' . $localeCode) : (isset($role) && isset($role->translate($localeCode)->name) ? $role->translate($localeCode)->name : null) }}" placeholder="{{ trans('permissions.page.label.name') }}">
                                     @endforeach

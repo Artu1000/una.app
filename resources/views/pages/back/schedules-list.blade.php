@@ -29,7 +29,7 @@
                             <label for="input_title">{{ trans('home.page.label.title') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_title"><i class="fa fa-paragraph"></i></span>
+                                    <span class="input-group-addon" for="input_title"><i class="fa fa-tag"></i></span>
                                     <input id="input_title" class="form-control capitalize-first-letter" name="title" placeholder="{{ trans('home.page.label.title') }}" value="{{ old('title') ? old('title') : $title }}">
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <input type="checkbox" id="input_remove_background_image" name="remove_background_image"> <label for="input_remove_background_image" class="quote">{{ trans('schedules.page.label.remove_background_image') }}</label>
+                                <input type="checkbox" id="input_remove_background_image" name="remove_background_image"> <label for="input_remove_background_image" class="quote small_font">{{ trans('schedules.page.label.remove_background_image') }}</label>
                             @endif
                             <div class="form-group">
                                 <div class="input-group">

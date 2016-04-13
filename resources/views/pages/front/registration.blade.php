@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="pricing">
-                    <h3>{{ trans('registration.page.title.our_prices') }}</h3>
+                    <h3>{{ trans('registration.page.title.prices') }}</h3>
                     <table class="table table-striped table-hover">
                         @foreach($prices as $price)
                         <tr @if($price->price < 0)

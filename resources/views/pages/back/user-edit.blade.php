@@ -51,7 +51,7 @@
                                             <img src="{{ $user->imagePath($user->photo, 'photo', 'picture') }}" alt="{{ $user->first_name }} {{ $user->last_name }}">
                                         </a>
                                     </div>
-                                    <input type="checkbox" id="input_remove_photo" name="remove_photo"> <label for="input_remove_photo" class="quote">{{ trans('users.page.label.remove_photo') }}</label>
+                                    <input type="checkbox" id="input_remove_photo" name="remove_photo"> <label for="input_remove_photo" class="quote small_font">{{ trans('users.page.label.remove_photo') }}</label>
                                 @endif
                                 <div class="input-group">
                                     <span class="input-group-btn">
@@ -174,7 +174,7 @@
                                     <span class="input-group-addon" for="input_phone_number"><i class="fa fa-phone"></i></span>
                                     <input id="input_phone_number" class="form-control" type="tel" name="phone_number" value="{{ old('phone_number') ? old('phone_number') : (isset($user) && $user->phone_number ? $user->phone_number : null) }}" placeholder="{{ trans('users.page.label.phone_number') }}">
                                 </div>
-                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('users.page.label.phone_number') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('users.page.info.phone_number') }}</p>
                             </div>
 
                             {{-- email --}}

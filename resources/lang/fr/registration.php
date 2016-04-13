@@ -5,15 +5,15 @@ return [
     // views
     "page"    => [
         "title"  => [
-            "management"          => "Gestion de la page d'inscription",
+            "management"          => "Gestion des tarifs d'inscription",
             "content"             => "Contenu",
             "online_registration" => "Inscription en ligne",
-            "our_prices"          => "Nos tarifs",
-//            "prices"     => "Liste des tarifs",
+            "prices"              => "Nos tarifs",
             "price"               => [
-//                "create" => "Création d'une diapo",
-//                "edit"   => "Édition de la diapo <b>:slide</b>",
-//                "data"   => "Données de la diapo",
+                "list"   => "Liste des tarifs",
+                "create" => "Création d'un tarif",
+                "edit"   => "Édition du tarif <b>:price</b>",
+                "data"   => "Données du tarif",
             ],
         ],
         "action" => [
@@ -50,27 +50,27 @@ return [
             ],
         ],
         "price"   => [
-//            "create"     => [
-//                "success" => "La diapo a bien été créée.",
-//                "failure" => "Une erreur est survenue lors de la création de la diapo.",
-//            ],
-//            "update"     => [
-//                "success" => "La diapo a bien été mise à jour.",
-//                "failure" => "Une erreur est survenue lors de la mise à jour de la diapo.",
-//            ],
-            "find" => [
-                "failure" => "La tarif #:id n'existe pas.",
+            "creation"   => [
+                "success" => "Le tarif d'inscription <b>:price</b> a bien été créée.",
+                "failure" => "Une erreur est survenue lors de la création du tarif d'inscription <b>price</b>.",
             ],
-//            "delete"     => [
-//                "success" => "La diapo <b>:slide</b> a été supprimée avec succès.",
-//                "failure" => "Une erreur est survenue lors de la suppression de la diapo <b>:slide</b>.",
-//            ],
+            "update"     => [
+                "success" => "Le tarif d'inscription <b>:price</b> a bien été mis à jour.",
+                "failure" => "Une erreur est survenue lors de la mise à jour du tarif d'inscription <b>:price</b>.",
+            ],
+            "find"       => [
+                "failure" => "La tarif d'inscription #:id n'existe pas.",
+            ],
+            "delete"     => [
+                "success" => "La tarif d'inscription <b>:price</b> a été supprimée avec succès.",
+                "failure" => "Une erreur est survenue lors de la suppression du tarif d'inscription <b>:price</b>.",
+            ],
             "activation" => [
                 "success" => [
-                    "label"  => "Le tarif <b>:price</b> a bien été :action.",
+                    "label"  => "Le tarif d'inscription <b>:price</b> a bien été :action.",
                     "action" => "{0}désactivé|{1}activé",
                 ],
-                "failure" => "Une erreur est survenue de la mise à jour du statut d'activation du tarif <b>:price</b>",
+                "failure" => "Une erreur est survenue de la mise à jour du statut d'activation du tarif d'inscription <b>:price</b>",
             ],
         ],
     ],

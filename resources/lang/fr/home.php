@@ -55,12 +55,12 @@ return [
         ],
         "slide"  => [
             "create"     => [
-                "success" => "La diapo a bien été créée.",
-                "failure" => "Une erreur est survenue lors de la création de la diapo.",
+                "success" => "La diapo <b>:slide</b> a bien été créée.",
+                "failure" => "Une erreur est survenue lors de la création de la diapo <b>:slide</b>.",
             ],
             "update"     => [
-                "success" => "La diapo a bien été mise à jour.",
-                "failure" => "Une erreur est survenue lors de la mise à jour de la diapo.",
+                "success" => "La diapo <b>:slide</b> a bien été mise à jour.",
+                "failure" => "Une erreur est survenue lors de la mise à jour de la diapo <b>:slide</b>.",
             ],
             "find"       => [
                 "failure" => "La diapo #:id n'existe pas.",

@@ -12,7 +12,7 @@
                 <h2>
                     <i class="fa fa-clock-o"></i>
                     @if(isset($schedule))
-                        {{ trans('schedules.page.title.edit') }}
+                        {!! trans('schedules.page.title.edit', ['schedule' => $schedule->label]) !!}
                     @else
                         {{ trans('schedules.page.title.create') }}
                     @endif

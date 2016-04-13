@@ -26,7 +26,7 @@ return [
         "title"  => [
             "management" => "Gestion des créneaux horaires",
             "list"       => "Liste des créneaux horaires",
-            "edit"       => "Édition d'un créneau horaire",
+            "edit"       => "Édition du créneau horaire <b>:schedule</b>",
             "create"     => "Création d'un créneau horaire",
             "data"       => "Données",
             "release"    => "Diffusion",

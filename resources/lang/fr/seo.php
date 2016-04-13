@@ -101,8 +101,12 @@ return [
             "create" => "Création d'un créneau horaire",
         ],
         "registration" => [
-            "page" => [
+            "page"  => [
                 "edit" => "Édition de la page d'inscription",
+            ],
+            "price" => [
+                "create" => "Créer un tarif d'inscription",
+                "edit"   => "Édition d'un tarif d'inscription",
             ],
         ],
         "partners"     => [
