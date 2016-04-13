@@ -3,67 +3,71 @@
 return [
 
     // settings
-    "settings"                 => "Paramètres",
-    "settings.view"            => "Consulter les paramètres",
-    "settings.update"          => "Modifier les paramètres",
+    "settings"                   => "Paramètres",
+    "settings.view"              => "Consulter les paramètres",
+    "settings.update"            => "Modifier les paramètres",
 
     // permissions
-    "permissions"              => "Permissions utilisateur",
-    "permissions.list"         => "Consulter la liste des permissions utilisateur",
-    "permissions.view"         => "Consulter le détail d'une permission utilisateur",
-    "permissions.create"       => "Créer une permission utilisateur",
-    "permissions.update"       => "Modifier une permission utilisateur",
-    "permissions.delete"       => "Supprimer une permission utilisateur",
+    "permissions"                => "Permissions utilisateur",
+    "permissions.list"           => "Consulter la liste des permissions utilisateur",
+    "permissions.view"           => "Consulter le détail d'une permission utilisateur",
+    "permissions.create"         => "Créer une permission utilisateur",
+    "permissions.update"         => "Modifier une permission utilisateur",
+    "permissions.delete"         => "Supprimer une permission utilisateur",
 
     // users
-    "users"                    => "Utilisateurs",
-    "users.list"               => "Consulter la liste des utilisateurs",
-    "users.create"             => "Créer un utilisateur",
-    "users.view"               => "Consulter le détail d'un utilisateur",
-    "users.update"             => "Modifier un utilisateur",
-    "users.delete"             => "Supprimer un utlisateur",
+    "users"                      => "Utilisateurs",
+    "users.list"                 => "Consulter la liste des utilisateurs",
+    "users.create"               => "Créer un utilisateur",
+    "users.view"                 => "Consulter le détail d'un utilisateur",
+    "users.update"               => "Modifier un utilisateur",
+    "users.delete"               => "Supprimer un utlisateur",
 
     // home
-    "home"                     => "Page d'accueil",
-    "home.view"                => "Consulter le détail de la page d'accueil",
-    "home.update"              => "Modifier le contenu de la page d'accueil",
-    "home.slides.create"       => "Créer une diapo",
-    "home.slides.view"         => "Consulter le détail d'une diapo",
-    "home.slides.update"       => "Modifier une diapo",
-    "home.slides.delete"       => "Supprimer une diapo",
+    "home"                       => "Page d'accueil",
+    "home.view"                  => "Consulter le détail de la page d'accueil",
+    "home.update"                => "Modifier le contenu de la page d'accueil",
+    "home.slides.create"         => "Créer une diapo",
+    "home.slides.view"           => "Consulter le détail d'une diapo",
+    "home.slides.update"         => "Modifier une diapo",
+    "home.slides.delete"         => "Supprimer une diapo",
 
     // news
-    "news"                     => "Actualités",
-    "news.list"                => "Consulter la liste des actualités",
-    "news.create"              => "Créer une actualité",
-    "news.view"                => "Consulter le détail d'une actualité",
-    "news.update"              => "Modifier une actualité",
-    "news.delete"              => "Supprimer une actualité",
-    "news.activate"            => "Activer une actualité",
+    "news"                       => "Actualités",
+    "news.list"                  => "Consulter la liste des actualités",
+    "news.create"                => "Créer une actualité",
+    "news.view"                  => "Consulter le détail d'une actualité",
+    "news.update"                => "Modifier une actualité",
+    "news.delete"                => "Supprimer une actualité",
+    "news.activate"              => "Activer une actualité",
 
     // schedules
-    "schedules"                => "Horaires",
-    "schedules.list"           => "Consulter la liste des horaires",
-    "schedules.create"         => "Créer un horaire",
-    "schedules.view"           => "Consulter le détail d'un horaire",
-    "schedules.update"         => "Modifier un horaire",
-    "schedules.delete"         => "Supprimer un horaire",
+    "schedules"                  => "Horaires",
+    "schedules.list"             => "Consulter la liste des horaires",
+    "schedules.create"           => "Créer un horaire",
+    "schedules.view"             => "Consulter le détail d'un horaire",
+    "schedules.update"           => "Modifier un horaire",
+    "schedules.delete"           => "Supprimer un horaire",
 
     // registration
-    "registration"             => "Inscription",
-    "registration.page.view"   => "Consulter le détail de la page d'inscription",
-    "registration.page.update" => "modifier le contenu de la page d'inscription",
+    "registration"               => "Inscription",
+    "registration.page.view"     => "Consulter le détail de la page d'inscription",
+    "registration.page.update"   => "Modifier le contenu de la page d'inscription",
+    "registration.prices.create" => "Créer un tarif d'inscription",
+    "registration.prices.view"   => "Consulter le détail d'un tarif d'inscription",
+    "registration.prices.update" => "Modifier un tarif d'inscription",
+    "registration.prices.delete" => "Supprimer un tarif d'inscription",
 
     // partners
-    "partners"                 => "Partenaires",
-    "partners.list"            => "Consulter la liste des partenaires",
-    "partners.create"          => "Créer un partenaire",
-    "partners.view"            => "Consulter le détail d'un partenaire",
-    "partners.update"          => "Modifier un partenaire",
-    "partners.delete"          => "Supprimer un partenaire",
+    "partners"                   => "Partenaires",
+    "partners.list"              => "Consulter la liste des partenaires",
+    "partners.create"            => "Créer un partenaire",
+    "partners.view"              => "Consulter le détail d'un partenaire",
+    "partners.update"            => "Modifier un partenaire",
+    "partners.delete"            => "Supprimer un partenaire",
 
     // pages
-    "page"                     => [
+    "page"                       => [
         "title"  => [
             "management"  => "Gestion des rôles",
             "list"        => "Liste des rôles",
@@ -93,7 +97,7 @@ return [
     ],
 
     // messages
-    "message"                  => [
+    "message"                    => [
         "access"   => [
             "denied" => "Vous n'avez pas l'autorisation d'effectuer cette action : <b>:permission</b>",
         ],

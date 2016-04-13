@@ -92,6 +92,7 @@ html {
 
                       a {
                         padding: 10px 15px;
+                        @include lato-light();
 
                         &:hover {
                           background-color: #07141B;
@@ -513,7 +514,6 @@ html {
     min-height: 150px;
 
     .background_responsive_img {
-      //height: 700px;
       margin-top: -50px;
     }
   }

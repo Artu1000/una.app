@@ -34,6 +34,21 @@ return [
         "storage_path"     => storage_path('app/schedules'),
         'public_path'      => 'img/schedules',
     ],
+    "registration" => [
+        "background_image" => [
+            "name"  => "registration_background_image",
+            'sizes' => [
+                'admin' => [40, 40],
+                '767'   => [767, 431],
+                '991'   => [991, 557],
+                '1199'  => [1199, 674],
+                '1919'  => [1919, 1079],
+                '2560'  => [2560, 1440],
+            ],
+        ],
+        "storage_path"     => storage_path('app/registration'),
+        'public_path'      => 'img/registration',
+    ],
     
     /*
     |--------------------------------------------------------------------------

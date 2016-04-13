@@ -370,6 +370,7 @@ html {
       .table {
 
         td {
+          @include lato-light();
           vertical-align: middle;
 
           &.actions {

@@ -26,9 +26,6 @@ return [
     "palmares"     => [
         "index" => "palmares",
     ],
-    "registration" => [
-        "index" => "inscription",
-    ],
     "calendar"     => [
         "index" => "calendrier",
     ],
@@ -108,8 +105,19 @@ return [
         "activate"    => "admin/contenus/horaires/activation/{id}",
     ],
     "registration" => [
-        "page_edit" => "admin/contenus/inscription",
-        "update"    => "admin/contenus/inscription/mise-a-jour",
+        "index"  => "inscription",
+        "page"   => [
+            "edit"   => "admin/contenus/inscription",
+            "update" => "admin/contenus/inscription/mise-a-jour",
+        ],
+        "prices" => [
+            "create"   => "admin/contenus/inscription/tarifs/creation",
+            "store"    => "admin/contenus/inscription/tarifs/enregistrement/{id}",
+            "edit"     => "admin/contenus/inscription/tarifs/edition/{id}",
+            "update"   => "admin/contenus/inscription/tarifs/mise-a-jour/{id}",
+            "destroy"  => "admin/contenus/inscription/tarifs/suppression/{id}",
+            "activate" => "admin/contenus/inscription/tarifs/activation/{id}",
+        ],
     ],
     "partners"     => [
         "index"    => "admin/contenus/partenaires",

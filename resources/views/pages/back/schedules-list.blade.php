@@ -39,8 +39,8 @@
                             @if($background_image)
                                 <div class="form-group image">
                                     <div class="form-group">
-                                        <a class="img-thumbnail" href="{{ \ImageManager::imagePath(config('image.schedules.public_path'), $background_image, 'background_image', '767') }}" data-lity>
-                                            <img src="{{ \ImageManager::imagePath(config('image.schedules.public_path'), $background_image, 'background_image', 'admin') }}">
+                                        <a class="img-thumbnail" href="{{ ImageManager::imagePath(config('image.schedules.public_path'), $background_image, 'background_image', '767') }}" data-lity>
+                                            <img src="{{ ImageManager::imagePath(config('image.schedules.public_path'), $background_image, 'background_image', 'admin') }}">
                                         </a>
                                     </div>
                                 </div>

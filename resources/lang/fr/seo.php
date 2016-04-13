@@ -52,16 +52,16 @@ return [
             "description" => "Tarifs, modalités, catégories, ... Récupérez toutes les informations nécessaires afin de procéder à votre inscription au club Université Nantes Aviron (UNA)",
             "keywords"    => "club, université, nantes, aviron, inscription, tarif, categorie, rameur",
         ],
-        "schedules" => [
+        "schedules"    => [
             "title"       => "Horaires",
             "description" => "Découvrez nos horaires d'encadrement de séances d'aviron, selon votre catéorie et votre type de pratique.",
             "keywords"    => "club, universite, nantes, aviron, sport, universitaire, horaires, séances, encadrement",
         ],
-        "calendar" => [
+        "calendar"     => [
             "title"       => "Calendrier",
             "description" => "Régates, compétition universitaires ou fédérales, stages, Régataïades, ... Découvrez les dates de tous les événements qui rythment la vie du club.",
             "keywords"    => "club, universite, nantes, aviron, sport, universitaire, etudiant, calendrier",
-        ]
+        ],
     ],
 
     // back
@@ -101,7 +101,9 @@ return [
             "create" => "Création d'un créneau horaire",
         ],
         "registration" => [
-            "page_edit" => "Édition de la page d'inscription",
+            "page" => [
+                "edit" => "Édition de la page d'inscription",
+            ],
         ],
         "partners"     => [
             "index"  => "Gestion des partenaires",

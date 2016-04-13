@@ -145,7 +145,7 @@
                     || Route::current()->getName() === 'schedules.list'
                     || Route::current()->getName() === 'schedules.create'
                     || Route::current()->getName() === 'schedules.edit'
-                    || Route::current()->getName() === 'registration.page_edit'
+                    || Route::current()->getName() === 'registration.page.edit'
                     || Route::current()->getName() === 'partners.index'
                     || Route::current()->getName() === 'partners.create'
                     || Route::current()->getName() === 'partners.edit')active @endif">
@@ -196,10 +196,10 @@
                             {{-- registration --}}
                             @if(Sentinel::getUser()->hasAccess('registration.page.view'))
                                 <li class="@if(
-                                    Route::current()->getName() === 'registration.page_edit'
+                                    Route::current()->getName() === 'registration.page.edit'
                                 )active
                                 @endif">
-                                    <a class="spin-on-click" href="{{ route('registration.page_edit') }}"><i class="fa fa-sign-in"></i> {{ trans('template.back.header.registration') }}</a>
+                                    <a class="spin-on-click" href="{{ route('registration.page.edit') }}"><i class="fa fa-sign-in"></i> {{ trans('template.back.header.registration') }}</a>
                                 </li>
                             @endif
 

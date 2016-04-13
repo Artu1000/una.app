@@ -7,11 +7,13 @@ use App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface;
 use CustomLog;
 use Entry;
 use Exception;
+use Illuminate\Http\Request;
 use ImageManager;
 use Modal;
+use Parsedown;
 use Permission;
-use Request;
 use Sentinel;
+use TableList;
 use Validation;
 
 
@@ -45,14 +47,28 @@ class RegistrationController extends Controller
         $this->og_meta['og:type'] = 'article';
         $this->og_meta['og:url'] = route('registration.index');
 
-        $prices = $this->repository->orderBy('price', 'asc')->get();
+        // we get the registration prices
+        $prices = $this->repository->where('active', true)->orderBy('price', 'asc')->get();
+
+        // we get the json registration content
+        $registration_page = null;
+        if (is_file(storage_path('app/registration/content.json'))) {
+            $registration_page = json_decode(file_get_contents(storage_path('app/registration/content.json')));
+        }
+
+        // we parse the markdown content
+        $parsedown = new Parsedown();
+        $description = isset($registration_page->description) ? $parsedown->text($registration_page->description) : null;
 
         // prepare data for the view
         $data = [
-            'seo_meta' => $this->seo_meta,
-            'og_meta'  => $this->og_meta,
-            'prices'   => $prices,
-            'css'      => url(elixir('css/app.registration.css')),
+            'seo_meta'         => $this->seo_meta,
+            'og_meta'          => $this->og_meta,
+            'prices'           => $prices,
+            'title'            => isset($registration_page->title) ? $registration_page->title : null,
+            'background_image' => isset($registration_page->background_image) ? $registration_page->background_image : null,
+            'description'      => $description,
+            'css'              => url(elixir('css/app.registration.css')),
         ];
 
         // return the view with data
@@ -62,7 +78,7 @@ class RegistrationController extends Controller
     /**
      * @return mixed
      */
-    public function pageEdit()
+    public function pageEdit(Request $request)
     {
         // we check the current user permission
         if (!Permission::hasPermission('registration.page.view')) {
@@ -70,7 +86,81 @@ class RegistrationController extends Controller
         }
 
         // SEO Meta settings
-        $this->seo_meta['page_title'] = trans('seo.back.registration.page_edit');
+        $this->seo_meta['page_title'] = trans('seo.back.registration.page.edit');
+
+        // we define the table list columns
+        $columns = [
+            [
+                'title'   => trans('registration.page.label.price.label'),
+                'key'     => 'label',
+                'sort_by' => 'registration_prices.label',
+            ],
+            [
+                'title'           => trans('registration.page.label.price.price'),
+                'key'             => 'price',
+                'sort_by'         => 'registration_prices.price',
+                'sort_by_default' => 'asc',
+            ],
+            [
+                'title'    => trans('registration.page.label.price.activation'),
+                'key'      => 'active',
+                'activate' => [
+                    'route'  => 'registration.prices.activate',
+                    'params' => [],
+                ],
+            ],
+        ];
+
+        // we set the routes used in the table list
+        $routes = [
+            'index'   => [
+                'route'  => 'registration.page.edit',
+                'params' => [],
+            ],
+            'create'  => [
+                'route'  => 'registration.prices.create',
+                'params' => [],
+            ],
+            'edit'    => [
+                'route'  => 'registration.prices.edit',
+                'params' => [],
+            ],
+            'destroy' => [
+                'route'  => 'registration.prices.destroy',
+                'params' => [],
+            ],
+        ];
+
+        // we instantiate the query
+        $query = app(RegistrationPriceRepositoryInterface::class)->getModel()->query();
+
+        // we prepare the confirm config
+        $confirm_config = [
+            'action'     => trans('registration.page.action.price.delete'),
+            'attributes' => ['label'],
+        ];
+
+        // we prepare the search config
+        $search_config = [
+            [
+                'key'      => trans('registration.page.label.price.label'),
+                'database' => 'registration_prices.label',
+            ],
+        ];
+
+        // we enable the lines choice
+        $enable_lines_choice = true;
+
+        // we format the data for the needs of the view
+        $tableListData = TableList::prepare(
+            $query,
+            $request,
+            $columns,
+            $routes,
+            $confirm_config,
+            $search_config,
+            $enable_lines_choice
+        );
 
         // we get the json home content
         $registration_page = null;
@@ -84,7 +174,7 @@ class RegistrationController extends Controller
             'title'            => isset($registration_page->title) ? $registration_page->title : null,
             'background_image' => isset($registration_page->background_image) ? $registration_page->background_image : null,
             'description'      => isset($registration_page->description) ? $registration_page->description : null,
-//            'tableListData' => $tableListData,
+            'tableListData'    => $tableListData,
         ];
 
         // return the view with data
@@ -95,13 +185,13 @@ class RegistrationController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function pageStore(Request $request)
+    public function pageUpdate(Request $request)
     {
         // we check the current user permission
         if (!Permission::hasPermission('registration.page.update')) {
             // we redirect the current user to the registration page view if he has the required permission
             if (Sentinel::getUser()->hasAccess('registration.page.view')) {
-                return redirect()->route('registration.page_edit');
+                return redirect()->route('registration.page.edit');
             } else {
                 // or we redirect the current user to the home page
                 return redirect()->route('dashboard.index');
@@ -136,7 +226,7 @@ class RegistrationController extends Controller
         }
 
         try {
-            $inputs = $request->except('_token', '_method', 'background_image');
+            $inputs = $request->except('_token', '_method', 'background_image', 'remove_background_image');
 
             // we store the background image file
             if ($background_image = $request->file('background_image')) {
@@ -171,7 +261,7 @@ class RegistrationController extends Controller
             );
 
             Modal::alert([
-                trans('registration.message.content_update.success', ['title' => $request->get('title')]),
+                trans('registration.message.content.update.success', ['title' => $request->get('title')]),
             ], 'success');
 
             return redirect()->back();
@@ -185,7 +275,7 @@ class RegistrationController extends Controller
 
             // we notify the current user
             Modal::alert([
-                trans('registration.message.content_update.failure', ['title' => isset($registration->title) ? $registration->title : null]),
+                trans('registration.message.content.update.failure', ['title' => isset($registration->title) ? $registration->title : null]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
 
@@ -193,4 +283,68 @@ class RegistrationController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @param Request $request
+     * @return mixed
+     */
+    public function activate($id, Request $request)
+    {
+        // we get the schedule
+        try {
+            $price = $this->repository->find($id);
+        } catch (Exception $e) {
+            // we notify the current user
+            return response([
+                'message' => [
+                    trans('registration.message.price.find.failure', ['id' => $id]),
+                    trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
+                ],
+            ], 401);
+        }
+
+        // we check the current user permission
+        if ($permission_denied = Permission::hasPermissionJson('registration.prices.update')) {
+            return response([
+                'active'  => $price->active,
+                'message' => [$permission_denied],
+            ], 401);
+        }
+
+        // if the active field is not given, we set it to false
+        $request->merge(['active' => $request->get('active', false)]);
+
+        // we sanitize the entries
+        $request->replace(Entry::sanitizeAll($request->all()));
+
+        // we check the inputs validity
+        $rules = [
+            'active' => 'required|boolean',
+        ];
+        if (is_array($errors = Validation::check($request->all(), $rules, true))) {
+            return response([
+                'active'  => $price->active,
+                'message' => $errors,
+            ], 401);
+        }
+
+        try {
+            $price->active = $request->get('active');
+            $price->save();
+
+            return response([
+                'active'  => $price->active,
+                'message' => [
+                    trans('registration.message.price.activation.success.label', ['action' => trans_choice('registration.message.price.activation.success.action', $price->active), 'price' => $price->label]),
+                ],
+            ], 200);
+        } catch (Exception $e) {
+            // we log the error
+            CustomLog::error($e);
+
+            return response([
+                trans('registration.message.price.activation.failure', ['price' => $price->label]),
+            ], 401);
+        }
+    }
 }

@@ -25,7 +25,7 @@ class SchedulesTableSeeder extends Seeder
         }
 
         // we insert the schedules page content
-        $file_name = \ImageManager::optimizeAndResize(
+        $file_name = ImageManager::optimizeAndResize(
             database_path('seeds/files/schedules/una_schedules.jpg'),
             config('image.schedules.background_image.name'),
             'jpg',

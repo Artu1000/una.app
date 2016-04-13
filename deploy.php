@@ -35,15 +35,9 @@ task('symlinks:prepare', function () {
 })->desc('run php artisan symlinks:prepare');
 after('project:install', 'symlinks:prepare');
 
-// php7 restart
-//task('php-fpm:restart', function () {
-//    run('sudo service php7.0-fpm restart');
-//})->desc('Restart PHP7.0 service');
-//after('success', 'php-fpm:restart');
-
 // permissions upgrade
 task('auth:upgrade', function () {
-    run('sudo chmod -R g+w {{deploy_path}}/shared/; sudo chgrp -R www-data {{deploy_path}}/');
+    run('sudo chmod -R g+w {{deploy_path}}/shared/; sudo chmod -R g+w {{release_path}}/database/seeds/files/; sudo chgrp -R www-data {{deploy_path}}/');
 })->desc('give correct permissions the the shared folder');
 after('symlinks:prepare', 'auth:upgrade');
 
@@ -52,3 +46,9 @@ task('cron:install', function () {
     run('job="* * * * * php artisan schedule:run >> /dev/null 2>&1"; ct=$(crontab -l |grep -i -v "$job");(echo "$ct" ;echo "$job") |crontab -');
 })->desc('');
 after('auth:upgrade', 'cron:install');
+
+// php7 restart
+task('php-fpm:restart', function () {
+    run('sudo service php7.0-fpm restart');
+})->desc('Restart PHP7.0 service');
+after('success', 'php-fpm:restart');

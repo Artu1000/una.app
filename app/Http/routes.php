@@ -91,8 +91,16 @@ $route = Route::group($group, function () {
     Route::post(LaravelLocalization::transRoute('routes.schedules.activate'), ['as' => 'schedules.activate', 'uses' => 'Schedule\ScheduleController@activate']);
 
     // registration
-    Route::get(LaravelLocalization::transRoute('routes.registration.page_edit'), ['as' => 'registration.page_edit', 'uses' => 'Registration\RegistrationController@pageEdit']);
-    Route::put(LaravelLocalization::transRoute('routes.registration.page_update'), ['as' => 'registration.page_update', 'uses' => 'Registration\RegistrationController@pageUpdate']);
+    Route::get(LaravelLocalization::transRoute('routes.registration.page.edit'), ['as' => 'registration.page.edit', 'uses' => 'Registration\RegistrationController@pageEdit']);
+    Route::put(LaravelLocalization::transRoute('routes.registration.page.update'), ['as' => 'registration.page_update', 'uses' => 'Registration\RegistrationController@pageUpdate']);
+    
+    // registration prices
+    Route::get(LaravelLocalization::transRoute('routes.registration.prices.create'), ['as' => 'registration.prices.create', 'uses' => 'Registration\RegistrationPriceController@create']);
+    Route::post(LaravelLocalization::transRoute('routes.registration.prices.store'), ['as' => 'registration.prices.store', 'uses' => 'Registration\RegistrationPrice@store']);
+    Route::get(LaravelLocalization::transRoute('routes.registration.prices.edit'), ['as' => 'registration.prices.edit', 'uses' => 'Registration\RegistrationPrice@edit']);
+    Route::put(LaravelLocalization::transRoute('routes.registration.prices.update'), ['as' => 'registration.prices.update', 'uses' => 'Registration\RegistrationPrice@update']);
+    Route::delete(LaravelLocalization::transRoute('routes.registration.prices.destroy'), ['as' => 'registration.prices.destroy', 'uses' => 'Registration\RegistrationPriceController@destroy']);
+    Route::post(LaravelLocalization::transRoute('routes.registration.prices.activate'), ['as' => 'registration.prices.activate', 'uses' => 'Registration\RegistrationPriceController@activate']);
 
     // partners
     Route::get(LaravelLocalization::transRoute('routes.partners.index'), ['as' => 'partners.index', 'uses' => 'Partner\PartnersController@index']);

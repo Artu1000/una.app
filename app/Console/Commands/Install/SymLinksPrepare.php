@@ -70,6 +70,11 @@ class SymLinksPrepare extends Command
                 'storage' => config('image.schedules.storage_path'),
                 'public'  => public_path(config('image.schedules.public_path')),
             ],
+            // registration
+            [
+                'storage' => config('image.registration.storage_path'),
+                'public'  => public_path(config('image.registration.public_path')),
+            ],
             // news
             [
                 'storage' => app(NewsRepositoryInterface::class)->getModel()->storagePath(),

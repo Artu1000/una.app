@@ -13,7 +13,7 @@
 
                 <hr>
 
-                <form role="form" method="POST" action="{{ route('registration.page_update') }}">
+                <form role="form" method="POST" action="{{ route('registration.page_update') }}" enctype="multipart/form-data">
 
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -42,8 +42,8 @@
                             @if($background_image)
                                 <div class="form-group image">
                                     <div class="form-group">
-                                        <a class="img-thumbnail" href="{{ \ImageManager::imagePath(config('image.schedules.public_path'), $background_image, 'background_image', '767') }}" data-lity>
-                                            <img src="{{ \ImageManager::imagePath(config('image.schedules.public_path'), $background_image, 'background_image', 'admin') }}">
+                                        <a class="img-thumbnail" href="{{ ImageManager::imagePath(config('image.registration.public_path'), $background_image, 'background_image', '767') }}" data-lity>
+                                            <img src="{{ ImageManager::imagePath(config('image.registration.public_path'), $background_image, 'background_image', 'admin') }}">
                                         </a>
                                     </div>
                                 </div>
@@ -78,16 +78,16 @@
                 </form>
 
                 {{-- registration prices --}}
-                {{--<div class="panel panel-default">--}}
-                    {{--<div class="panel-heading">--}}
-                        {{--<h3 class="panel-title">{{ trans('registration.page.title.slides') }}</h3>--}}
-                    {{--</div>--}}
-                    {{--<div class="panel-body table-responsive">--}}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ trans('registration.page.title.slides') }}</h3>
+                    </div>
+                    <div class="panel-body table-responsive">
 
-                        {{--@include('templates.back.partials.table-list')--}}
+                        @include('templates.back.partials.table-list')
 
-                    {{--</div>--}}
-                {{--</div>--}}
+                    </div>
+                </div>
 
             </div>
         </div>
