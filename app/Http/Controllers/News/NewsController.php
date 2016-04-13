@@ -601,7 +601,7 @@ class NewsController extends Controller
         if (!Permission::hasPermission('news.delete')) {
             // we redirect the current user to the permissions list if he has the required permission
             if (Sentinel::getUser()->hasAccess('news.list')) {
-                return redirect()->route('news.index');
+                return redirect()->route('news.list');
             } else {
                 // or we redirect the current user to the home page
                 return redirect()->route('dashboard.index');
