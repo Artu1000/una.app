@@ -54,7 +54,7 @@ class SlidesController extends Controller
 
         // prepare data for the view
         $data = [
-            'seo_meta'    => $this->seo_meta,
+            'seo_meta'   => $this->seo_meta,
             'slide_list' => $slide_list,
         ];
 
@@ -84,6 +84,7 @@ class SlidesController extends Controller
         // we check inputs validity
         $rules = [
             'title'            => 'required|string',
+            'url'              => 'url',
             'quote'            => 'required|string|min:50|max:150',
             'picto'            => 'image|mimes:png|image_size:>=300,>=300',
             'background_image' => 'image|mimes:jpg,jpeg|image_size:>=2560,>=1440',
@@ -109,6 +110,7 @@ class SlidesController extends Controller
             // we create the role
             $slide = $this->repository->create([
                 'title'    => $request->get('title'),
+                'url'      => $request->get('url'),
                 'quote'    => $request->get('quote'),
                 'position' => $new_position,
                 'active'   => $request->get('active'),
@@ -229,7 +231,7 @@ class SlidesController extends Controller
 
         // prepare data for the view
         $data = [
-            'seo_meta'          => $this->seo_meta,
+            'seo_meta'         => $this->seo_meta,
             'slide'            => $slide,
             'previous_slide'   => $previous_slide,
             'slide_list'       => $slide_list,
@@ -285,6 +287,7 @@ class SlidesController extends Controller
         $rules = [
             '_id'              => 'numeric|exists:slides,id',
             'title'            => 'required|string',
+            'url'              => 'active_url',
             'quote'            => 'required|string|min:50|max:150',
             'picto'            => 'image|mimes:png|image_size:>=300,>=300',
             'background_image' => 'image|mimes:jpg,jpeg|image_size:>=2560,>=1440',
@@ -310,6 +313,7 @@ class SlidesController extends Controller
             // we update the slide
             $slide->update([
                 'title'    => $request->get('title'),
+                'url'      => $request->get('url'),
                 'quote'    => $request->get('quote'),
                 'position' => $new_position,
                 'active'   => $request->get('active'),

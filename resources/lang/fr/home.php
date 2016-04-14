@@ -43,6 +43,7 @@ return [
                 "previous_slide_placeholder" => "--- Choisir diapo précédente ---",
                 "first"                      => "Diapo d'accueil (pas de diapo précédente)",
                 "activation"                 => "Activation",
+                "url"                        => "Url",
             ],
         ],
     ],

@@ -19,10 +19,22 @@
                                     <div class="fill">
                                         <div class="fill">
                                             @if($slide->picto)
+                                                @if($slide->url)
+                                                    <a href="{{ $slide->url }}" title="{{ $slide->title }}">
+                                                @endif()
                                                 <img class="picto" src="{{ $slide->imagePath($slide->picto) }}" alt="{{ $slide->title }}">
+                                                @if($slide->url)
+                                                    </a>
+                                                @endif()
                                             @endif
                                             @if($slide->title)
+                                                @if($slide->url)
+                                                    <a href="{{ $slide->url }}" title="{{ $slide->title }}">
+                                                @endif()
                                                 <h2 class="title">{{ $slide->title }}</h2>
+                                                @if($slide->url)
+                                                    </a>
+                                                @endif()
                                             @endif
                                             @if($slide->quote)
                                                 <p class="quote" class="quote">{!! $slide->quote !!}</p>

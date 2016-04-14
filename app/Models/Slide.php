@@ -23,6 +23,7 @@ class Slide extends _BaseModel
             'quote',
             'picto',
             'background_image',
+            'url',
             'position',
             'active',
         ];

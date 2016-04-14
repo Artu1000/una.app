@@ -48,6 +48,15 @@
                                 </div>
                             </div>
 
+                            {{-- url --}}
+                            <label for="input_url" class="required">{{ trans('home.page.label.slide.url') }}</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" for="input_url"><i class="fa fa-link" aria-hidden="true"></i></span>
+                                    <input id="input_url" class="form-control" type="text" name="url" value="{{ old('url') ? old('url') : (isset($slide) && $slide->url ? $slide->url : null) }}" placeholder="{{ trans('home.page.label.slide.url') }}">
+                                </div>
+                            </div>
+
                             {{-- quote --}}
                             <label for="input_quote" class="required">{{ trans('home.page.label.slide.quote') }}<span class="required">*</span></label>
                             <div class="form-group textarea">
