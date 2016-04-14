@@ -16,7 +16,6 @@ class CreateRegistrationPricesTable extends Migration
             $table->increments('id');
             $table->string('label')->nullable();
             $table->integer('price')->nullable();
-            $table->boolean('active')->default(false);
 
             $table->timestamps();
             $table->engine = 'InnoDB';
