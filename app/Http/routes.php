@@ -186,4 +186,7 @@ Route::group($group, function () {
 
     // active rss according to the settings setup
     if (config('settings.rss')) Route::get(trans('routes.rss.index'), ['as' => 'rss.index', 'uses' => 'Rss\RssController@index']);
+
+    // proxies
+    Route::get(trans('routes.proxy.qr'), ['as' => 'proxy.qr', 'uses' => 'Proxy\ProxyController@qrCodeScanCapture']);
 });

@@ -55,6 +55,7 @@ class StoragePrepare extends Command
             storage_path('app/partners'),
             storage_path('app/e-shop'),
             storage_path('app/pages'),
+            storage_path('app/proxy'),
         ];
         // we execute the verification
         $created = [];

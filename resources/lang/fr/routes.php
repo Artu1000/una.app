@@ -42,6 +42,9 @@ return [
     "rss"          => [
         "index" => "rss",
     ],
+    "proxy"        => [
+        "qr" => "proxy/qr",
+    ],
 
     // back
     // routes
