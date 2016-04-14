@@ -546,7 +546,7 @@ class ScheduleController extends Controller
         // we check inputs validity
         $rules = [
             'title'                   => 'required|string',
-            'description'             => 'required|string|min:250',
+            'description'             => 'string',
             'background_image'        => 'image|mimes:jpg,jpeg|image_size:>=2560,>=1440',
             'remove_background_image' => 'required|boolean',
         ];

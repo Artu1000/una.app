@@ -28,7 +28,7 @@ return [
             "delete" => "Supprimer l'actualité",
         ],
         "info"   => [
-            "image"            => "Largeur min : 2560px - Hauteur min : 1440px - Format : jpg.",
+            "image"            => "Largeur min : 2560px - Hauteur min : 1440px - Format : jpg, jpeg, png.",
             "meta_title"       => "Si non renseigné, le titre de l'actualité sera utilisé.",
             "meta_description" => "Si non renseignée, le contenu de l'actualité sera utilisé.",
             "content"          => "Longueur optimale de l'article pour le référencement : 500 mots. Longueur minimale : 1000 caractères.",

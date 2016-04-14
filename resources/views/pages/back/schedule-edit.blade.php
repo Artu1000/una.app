@@ -25,6 +25,9 @@
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
+                    {{-- we include the form legend --}}
+                    @include('templates.back.partials.form-legend.required')
+
                     {{-- add update inputs if we are in update mode --}}
                     @if(isset($schedule))
                         <input type="hidden" name="_method" value="PUT">
@@ -38,7 +41,7 @@
                         <div class="panel-body">
 
                             {{-- day --}}
-                            <label for="input_day" class="required">{{ trans('schedules.page.label.day_id') }}</label>
+                            <label for="input_day" class="required">{{ trans('schedules.page.label.day_id') }}<span class="required">*</span></label>
                             <div class="form-group">
                                 <select class="form-control" name="day_id" id="input_day_id">
                                     <option value="" disabled selected>{{ trans('schedules.page.label.day_placeholder') }}</option>
@@ -54,7 +57,7 @@
                             </div>
 
                             {{-- time_start --}}
-                            <label for="input_time_start" class="required">{{ trans('schedules.page.label.time_start') }}</label>
+                            <label for="input_time_start" class="required">{{ trans('schedules.page.label.time_start') }}<span class="required">*</span></label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_time_start"><i class="fa fa-play"></i></span>
@@ -64,7 +67,7 @@
                             </div>
 
                             {{-- time_stop --}}
-                            <label for="input_time_stop" class="required">{{ trans('schedules.page.label.time_stop') }}</label>
+                            <label for="input_time_stop" class="required">{{ trans('schedules.page.label.time_stop') }}<span class="required">*</span></label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_time_stop"><i class="fa fa-stop"></i></span>
@@ -74,7 +77,7 @@
                             </div>
 
                             {{-- public category --}}
-                            <label for="input_public_category" class="required">{{ trans('schedules.page.label.public_category') }}</label>
+                            <label for="input_public_category" class="required">{{ trans('schedules.page.label.public_category') }}<span class="required">*</span></label>
                             <div class="form-group">
                                 <select class="form-control" name="public_category" id="input_public_category">
                                     <option value="" disabled selected>{{ trans('schedules.page.label.public_category_placeholder') }}</option>

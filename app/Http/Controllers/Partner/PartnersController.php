@@ -207,7 +207,7 @@ class PartnersController extends Controller
 
         // we set the validation rules
         $rules = [
-            'logo'   => 'image|mimes:png|image_size:*,>=100',
+            'logo'   => 'required|image|mimes:png|image_size:*,>=100',
             'name'   => 'required|string',
             'url'    => 'url',
             'active' => 'required|boolean',
@@ -375,7 +375,7 @@ class PartnersController extends Controller
 
         // we set the validation rules
         $rules = [
-            'logo'   => 'image|mimes:png|image_size:*,>=100',
+            'logo'   => 'required|image|mimes:png|image_size:*,>=100',
             'name'   => 'required|string',
             'url'    => 'url',
             'active' => 'required|boolean',

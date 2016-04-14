@@ -25,6 +25,9 @@
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
+                    {{-- we include the form legend --}}
+                    @include('templates.back.partials.form-legend.required')
+
                     {{-- add update inputs if we are in update mode --}}
                     @if(isset($news))
                         <input type="hidden" name="_method" value="PUT">
@@ -62,7 +65,7 @@
                             </div>
 
                             {{-- category --}}
-                            <label class="required">{{ trans('news.page.label.category') }}</label>
+                            <label>{{ trans('news.page.label.category') }}<span class="required">*</span></label>
                             <div class="form-group">
                                 <div class="btn-group" data-toggle="buttons">
                                     @foreach($categories as $id => $category)
@@ -80,8 +83,8 @@
                                 </div>
                             </div>
 
-                            {{-- name --}}
-                            <label for="input_title" class="required">{{ trans('news.page.label.title') }}</label>
+                            {{-- title --}}
+                            <label for="input_title">{{ trans('news.page.label.title') }}<span class="required">*</span></label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_name"><i class="fa fa-tag"></i></span>
@@ -146,7 +149,7 @@
                         <div class="panel-body">
 
                             {{-- release date --}}
-                            <label class="required" for="input_released_at">{{ trans('news.page.label.released_at') }}</label>
+                            <label for="input_released_at">{{ trans('news.page.label.released_at') }}<span class="required">*</span></label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_released_at"><i class="fa fa-calendar" aria-hidden="true"></i></span>
