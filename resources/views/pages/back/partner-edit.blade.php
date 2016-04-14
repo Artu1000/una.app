@@ -26,6 +26,9 @@
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
+                    {{-- we include the form legend --}}
+                    @include('templates.back.partials.form-legend.required')
+
                     {{-- add update inputs if we are in update mode --}}
                     @if(isset($partner))
                         <input type="hidden" name="_method" value="PUT">
@@ -39,7 +42,7 @@
                         <div class="panel-body">
 
                             {{-- name --}}
-                            <label for="input_name" class="required">{{ trans('partners.page.label.name') }}</label>
+                            <label for="input_name">{{ trans('partners.page.label.name') }}<span class="required">*</span></label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_name"><i class="fa fa-tag"></i></span>
@@ -48,7 +51,7 @@
                             </div>
 
                             {{-- logo --}}
-                            <label for="input_photo">{{ trans('partners.page.label.logo') }}</label>
+                            <label for="input_photo">{{ trans('partners.page.label.logo') }}<span class="required">*</span></label>
                             @if(isset($partner) && $partner->logo)
                                 <div class="form-group image">
                                     <div class="form-group">

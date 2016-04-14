@@ -19,6 +19,9 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="_method" value="PUT">
 
+                    {{-- we include the form legend --}}
+                    @include('templates.back.partials.form-legend.required')
+
                     {{-- schedules settings --}}
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -26,7 +29,8 @@
                         </div>
                         <div class="panel-body">
 
-                            <label for="input_title">{{ trans('home.page.label.title') }}</label>
+                            {{-- title --}}
+                            <label for="input_title">{{ trans('home.page.label.title') }}<span class="required">*</span></label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_title"><i class="fa fa-tag"></i></span>
