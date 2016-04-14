@@ -36,7 +36,7 @@
                                     <img width="145" height="160" src="{{ $member->imagePath($member->photo, 'photo', 'picture') }}" alt="{{ $member->last_name }} {{ $member->first_name }}">
                                     <h4 class="display-table">
                                     <span class="table-cell">
-                                        {{ $member->last_name }}<br>{{ $member->first_name }}
+                                        {{ $member->first_name }}<br/>{{ $member->last_name }}
                                     </span>
                                     </h4>
                                     <h5 class="display-table">
