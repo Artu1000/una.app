@@ -124,28 +124,26 @@ echo "${purple}→ php artisan storage:prepare${reset}"
 php artisan storage:prepare
 echo "${green}✔${reset} Storage folders prepared"
 
-# we prepare the symlinks
-if [ "$local" = true ]; then
+printf "\n"
+echo "${gray}=================================================${reset}"
+printf "\n"
 
-    printf "\n"
-    echo "${gray}=================================================${reset}"
-    printf "\n"
-
-    echo "${purple}▶${reset} Preparing app symlinks ..."
-    echo "${purple}→ php artisan symlinks:prepare${reset}"
-    php artisan symlinks:prepare
-    echo "${green}✔${reset} App symlinks created"
-fi
+echo "${purple}▶${reset} Preparing app symlinks ..."
+echo "${purple}→ php artisan symlinks:prepare${reset}"
+php artisan symlinks:prepare
+echo "${green}✔${reset} App symlinks created"
 
 printf "\n"
 echo "${gray}=================================================${reset}"
 printf "\n"
 
 # we generate an app key
-echo "${purple}▶${reset} Generating new application key ..."
-echo "${purple}→ php artisan key:generate${reset}"
-php artisan key:generate
-echo "${green}✔${reset} New application key generated"
+# only uncomment these lines if the project has a high security need
+# (unlog all users and invalidate all cached elements)
+#echo "${purple}▶${reset} Generating new application key ..."
+#echo "${purple}→ php artisan key:generate${reset}"
+#php artisan key:generate
+#echo "${green}✔${reset} New application key generated"
 
 # we install mailcatcher
 if [ "$local" = true ]; then

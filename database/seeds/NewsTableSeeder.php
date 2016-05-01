@@ -24,6 +24,22 @@ class NewsTableSeeder extends Seeder
             mkdir($path . '/news');
         }
 
+        // we insert the news page content
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/news/una_news.jpg'),
+            config('image.news.background_image.name'),
+            'jpg',
+            config('image.news.storage_path'),
+            config('image.news.background_image.sizes'),
+            false
+        );
+        $inputs = [
+            'title'            => 'Les actualités du club Université Nantes Aviron (UNA)',
+            'description'      => "### Vie du club & actualités sportives\r\n\r\nA partir de cette page, suivez les actualités du club Université Nantes Aviron (UNA).\r\nRésultats sportifs, annonces d'événements, compte-rendus de déplacements ou autres annonces diverses...\r\nNe perdez pas une miette de la vie du club !",
+            'background_image' => $file_name,
+        ];
+        file_put_contents(storage_path('app/news/content.json'), json_encode($inputs));
+
         // we create the news
         $news = $news_repo->create([
             'category_id'      => config('news.category_key.club'),

@@ -3,12 +3,12 @@
 namespace App\Exceptions;
 
 use Exception;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use JavaScript;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Foundation\Validation\ValidationException;
+use JavaScript;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 
 class Handler extends ExceptionHandler
@@ -64,19 +64,19 @@ class Handler extends ExceptionHandler
     {
         // load base JS
         JavaScript::put([
-            'base_url' => url('/'),
-            'site_name' => config('settings.app_name_' . config('app.locale'))
+            'base_url'  => url('/'),
+            'site_name' => config('settings.app_name_' . config('app.locale')),
         ]);
 
         $seo_meta = [
-            'page_title' => 'Erreur '.$e->getStatusCode(),
-            'meta_desc' => $e->getMessage(),
-            'meta_keywords' => ''
+            'page_title'    => 'Erreur ' . $e->getStatusCode(),
+            'meta_desc'     => $e->getMessage(),
+            'meta_keywords' => '',
         ];
         $data = [
-            'code' => $e->getStatusCode(),
+            'code'     => $e->getStatusCode(),
             'seo_meta' => $seo_meta,
-            'css' => url(elixir('css/app.error.css'))
+            'css'      => elixir('css/app.error.css'),
         ];
 
         return response()->view('templates.common.errors.errors', $data);

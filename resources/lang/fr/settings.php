@@ -43,7 +43,7 @@ return [
             "youtube"         => "Chaîne Youtube",
             "rss"             => [
                 "title" => "Flux RSS",
-                "news"  => "Actus",
+                "news"  => "Actualités",
             ],
             "favicon"         => "Favicon",
             "logo_light"      => "Logo clair",

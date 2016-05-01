@@ -51,7 +51,7 @@ return [
         ],
         'info'   => [
             "birth_date"   => "Format jj/mm/aaaa.",
-            "photo"        => "Formats acceptés : jpg, jpeg, png.",
+            "photo"        => "Largeur min : 140px - Hauteur min : 160px - Formats : jpg, jpg, png.",
             "phone_number" => "Numéro français uniquement.",
             "password"     => "Ne remplir que si vous souhaitez modifier le mot de passe actuel.",
         ],
@@ -73,6 +73,7 @@ return [
             "city"                  => "Ville",
             "country"               => "Pays",
             "role"                  => "Rôle",
+            "role_placeholder"      => "--- Sélectionnez un rôle ---",
             "active"                => "Activation",
             "account"               => "Compte",
             "new_password"          => "Nouveau mot de passe",

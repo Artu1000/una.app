@@ -32,8 +32,8 @@ class SlidesController extends Controller
         // we check the current user permission
         if (!Permission::hasPermission('home.slides.create')) {
             // we redirect the current user to the user list if he has the required permission
-            if (Sentinel::getUser()->hasAccess('home.view')) {
-                return redirect()->route('home.edit');
+            if (Sentinel::getUser()->hasAccess('home.page.view')) {
+                return redirect()->route('home.page.edit');
             } else {
                 // or we redirect the current user to the home page
                 return redirect()->route('dashboard.index');
@@ -59,7 +59,7 @@ class SlidesController extends Controller
         ];
 
         // return the view with data
-        return view('pages.back.slide-edit')->with($data);
+        return view('pages.back.home-slide-edit')->with($data);
     }
 
     public function store(Request $request)
@@ -67,8 +67,8 @@ class SlidesController extends Controller
         // we check the current user permission
         if (!Permission::hasPermission('home.slides.create')) {
             // we redirect the current user to the user list if he has the required permission
-            if (Sentinel::getUser()->hasAccess('home.view')) {
-                return redirect()->route('home.edit');
+            if (Sentinel::getUser()->hasAccess('home.page.view')) {
+                return redirect()->route('home.page.edit');
             } else {
                 // or we redirect the current user to the home page
                 return redirect()->route('dashboard.index');
@@ -153,7 +153,7 @@ class SlidesController extends Controller
                 trans('home.message.slide.creation.success', ['slide' => $slide->name]),
             ], 'success');
 
-            return redirect(route('home.edit'));
+            return redirect(route('home.page.edit'));
         } catch (Exception $e) {
             // we flash the request
             $request->flashExcept('picto', 'background_image');
@@ -176,8 +176,8 @@ class SlidesController extends Controller
         // we check the current user permission
         if (!Permission::hasPermission('home.slides.view')) {
             // we redirect the current user to the home edit page if he has the required permission
-            if (Sentinel::getUser()->hasAccess('home.view')) {
-                return redirect()->route('home.edit');
+            if (Sentinel::getUser()->hasAccess('home.page.view')) {
+                return redirect()->route('home.page.edit');
             } else {
                 // or we redirect the current user to the dashboard page
                 return redirect()->route('dashboard.index');
@@ -239,7 +239,7 @@ class SlidesController extends Controller
         ];
 
         // return the view with data
-        return view('pages.back.slide-edit')->with($data);
+        return view('pages.back.home-slide-edit')->with($data);
     }
 
     public function update($id, Request $request)
@@ -270,7 +270,7 @@ class SlidesController extends Controller
         if (!Permission::hasPermission('home.slides.update')) {
             // we redirect the current user to the user list if he has the required permission
             if (Sentinel::getUser()->hasAccess('home.slides.view')) {
-                return redirect()->route('slides.edit', ['id' => $id]);
+                return redirect()->route('home.slides.edit', ['id' => $id]);
             } else {
                 // or we redirect the current user to the home page
                 return redirect()->route('dashboard.index');
@@ -379,8 +379,8 @@ class SlidesController extends Controller
         // we check the current user permission
         if (!Permission::hasPermission('home.slides.delete')) {
             // we redirect the current user to the permissions list if he has the required permission
-            if (Sentinel::getUser()->hasAccess('home.view')) {
-                return redirect()->route('home.edit');
+            if (Sentinel::getUser()->hasAccess('home.page.view')) {
+                return redirect()->route('home.page.edit');
             } else {
                 // or we redirect the current user to the home page
                 return redirect()->route('dashboard.index');
@@ -401,8 +401,8 @@ class SlidesController extends Controller
             ], 'error');
 
             // we redirect the current user to the home edit page if he has the required permission
-            if (Sentinel::getUser()->hasAccess('home.view')) {
-                return redirect()->route('home.edit');
+            if (Sentinel::getUser()->hasAccess('home.page.view')) {
+                return redirect()->route('home.page.edit');
             } else {
                 // or we redirect the current user to the dashboard page
                 return redirect()->route('dashboard.index');
@@ -453,13 +453,6 @@ class SlidesController extends Controller
 
     public function activate($id, Request $request)
     {
-        // we check the current user permission
-        if ($permission_denied = Permission::hasPermissionJson('home.slides.update')) {
-            return response([
-                'message' => [$permission_denied],
-            ], 401);
-        }
-
         // we get the slide
         try {
             $slide = $this->repository->find($id);
@@ -472,6 +465,14 @@ class SlidesController extends Controller
                     trans('home.message.slide.find.failure', ['id' => $id]),
                     trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
                 ],
+            ], 401);
+        }
+
+        // we check the current user permission
+        if ($permission_denied = Permission::hasPermissionJson('home.slides.update')) {
+            return response([
+                'active'  => $slide->active,
+                'message' => [$permission_denied],
             ], 401);
         }
 

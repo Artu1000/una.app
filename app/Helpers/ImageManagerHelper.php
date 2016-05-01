@@ -22,9 +22,6 @@ class ImageManagerHelper
      */
     public function optimizeAndResize(string $src_path, string $file_name, string $extension, string $storage_path, array $sizes, bool $remove_src = true)
     {
-        // wet low case of the extension
-        $extension = strtolower($extension);
-
         // we optimize the image
         if ($remove_src) {
             $this->optimizeAndRemoveSrc($src_path, $storage_path, $file_name, $extension);
@@ -61,10 +58,10 @@ class ImageManagerHelper
             }
 
             // we set the resized file name
-            $resized_file_name = $file_name . '_' . $key . '.' . $extension;
+            $resized_file_name = str_slug($file_name . '-' . $key) . '.' . $extension;
 
             // we get the optimized original image
-            $optimized_original_image = Image::make($storage_path . '/' . $file_name . '.' . $extension);
+            $optimized_original_image = Image::make($storage_path . '/' . str_slug($file_name) . '.' . $extension);
 
             // we resize the image
             switch (true) {
@@ -105,6 +102,9 @@ class ImageManagerHelper
         // wet low case of the extension
         $extension = strtolower($extension);
 
+        // we slug the file name
+        $file_name = str_slug($file_name);
+
         // we optimize and overwrite the original image
         $opt = new ImageOptimizer();
         $opt->optimizeImage($src_path, $extension);
@@ -144,6 +144,9 @@ class ImageManagerHelper
         // wet low case of the extension
         $extension = strtolower($extension);
 
+        // we slug the file name
+        $file_name = str_slug($file_name);
+
         // we optimize the image
         $this->optimize($src_path, $dest_path, $file_name, $extension);
 
@@ -175,7 +178,7 @@ class ImageManagerHelper
 
         // we delete each resized image
         foreach ($sizes as $key => $size) {
-            $path = $storage_path . '/' . $file_name . '_' . $key . '.' . $extension;
+            $path = $storage_path . '/' . str_slug($file_name . '-' . $key) . '.' . $extension;
             // we tcheck if the path exists
             if (is_file($path)) {
                 unlink($path);
@@ -211,19 +214,19 @@ class ImageManagerHelper
         // if the key / size are not given
         if (!$key || !$size) {
             // we return the original image path
-            return url($public_path . '/' . $file_name);
+            return asset($public_path . '/' . $file_name);
         }
 
         try {
             // we return the sized image path
             list($name, $ext) = explode('.', $file_name);
 
-            return url($public_path . '/' . $name . '_' . $size . '.' . $ext);
+            return asset($public_path . '/' . str_slug($name . '-' . $size) . '.' . $ext);
         } catch (Exception $e) {
             // we log the error
             CustomLog::error($e);
 
-            return 'error';
+            return 'image-error';
         }
     }
 }

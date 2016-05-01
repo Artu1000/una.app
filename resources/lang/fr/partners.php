@@ -6,7 +6,7 @@ return [
     "page"    => [
         "title"  => [
             "management" => "Gestion des partenaires",
-            "create"     => "Création d'un partenaire",
+            "create"     => "Création d'un partenaire <b>:partner</b>",
             "edit"       => "Édition du partenaire <b>:partner</b>",
             "list"       => "Liste des partenaires",
             "data"       => "Données du partenaire",
@@ -35,12 +35,12 @@ return [
     // messages
     "message" => [
         "create"     => [
-            "success" => "Le partenaire a bien été créé.",
-            "failure" => "Une erreur est survenue lors de la création du partenaire.",
+            "success" => "Le partenaire <b>:partner</b> a bien été créé.",
+            "failure" => "Une erreur est survenue lors de la création du partenaire <b>:partner</b>.",
         ],
         "update"     => [
-            "success" => "Le partenaire a bien été mis à jour.",
-            "failure" => "Une erreur est survenue lors de la mise à jour du partenaire.",
+            "success" => "Le partenaire <b>:partner</b> a bien été mis à jour.",
+            "failure" => "Une erreur est survenue lors de la mise à jour du partenaire <b>:partner</b>.",
         ],
         "find"       => [
             "failure" => "Le partenaire #:id n'existe pas.",

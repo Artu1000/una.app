@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Modal;
 use Sentinel;
 use Validation;
-use Validator;
 
 class AuthController extends Controller
 {
@@ -44,7 +43,7 @@ class AuthController extends Controller
         // data send to the view
         $data = [
             'seo_meta' => $this->seo_meta,
-            'css'     => url(elixir('css/app.auth.css')),
+            'css'      => elixir('css/app.auth.css'),
         ];
 
         return view('pages.front.login')->with($data);

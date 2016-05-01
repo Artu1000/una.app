@@ -1,10 +1,10 @@
 {
   "css/app.front.css": "css/app.front-1833bbc6.css",
-  "css/app.home.css": "css/app.home-ce53d40a.css",
+  "css/app.home.css": "css/app.home-95000af9.css",
   "css/app.page.css": "css/app.page-1833bbc6.css",
   "css/app.palmares.css": "css/app.palmares-b3541161.css",
   "css/app.news.css": "css/app.news-eb51c7cf.css",
-  "css/app.leading-team.css": "css/app.leading-team-c22c8bba.css",
+  "css/app.leading-team.css": "css/app.leading-team-efd91160.css",
   "css/app.registration.css": "css/app.registration-4451d877.css",
   "css/app.schedule.css": "css/app.schedule-0262406b.css",
   "css/app.calendar.css": "css/app.calendar-604a5b7e.css",
@@ -12,8 +12,9 @@
   "css/app.auth.css": "css/app.auth-ad6adaf9.css",
   "css/app.error.css": "css/app.error-39abc2db.css",
   "css/app.back.css": "css/app.back-6f7584b6.css",
-  "js/app.front.js": "js/app.front-40770234.js",
-  "js/app.home.js": "js/app.home-e29d5c84.js",
-  "js/app.news-detail.js": "js/app.news-detail-389cd1b5.js",
+  "js/app.front.js": "js/app.front-e08b9ac7.js",
+  "js/app.home.js": "js/app.home-69438185.js",
+  "js/app.news-detail.js": "js/app.news-detail-713b40ba.js",
+  "js/app.leading-team.js": "js/app.leading-team-edef0dd0.js",
   "js/app.back.js": "js/app.back-f659c8a8.js"
 }

@@ -84,19 +84,26 @@ return [
             "profile" => "Mon profil",
         ],
         "home"         => [
+            "page" => [
+                "edit"   => "Édition de la page d'accueil",
+            ],
             "slides" => [
                 "create" => "Création d'une diapo",
                 "edit"   => "Édition d'une diapo",
             ],
-            "edit"   => "Édition de la page d'accueil",
         ],
         "news"         => [
+            "page"   => [
+                "edit" => "Édition de la page d'actualités",
+            ],
             "list"   => "Gestion des actualités",
             "edit"   => "Édition d'une actualité",
             "create" => "Création d'une actualité",
         ],
         "schedules"    => [
-            "list"   => "Gestion des créneaux horaire",
+            "page" => [
+                "edit"   => "Gestion des créneaux horaire",
+            ],
             "edit"   => "Édition d'un créneau horaire",
             "create" => "Création d'un créneau horaire",
         ],

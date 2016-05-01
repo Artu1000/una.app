@@ -207,7 +207,7 @@ class PartnersController extends Controller
 
         // we set the validation rules
         $rules = [
-            'logo'   => 'required|image|mimes:png|image_size:*,>=100',
+            'logo'   => 'image|mimes:png|image_size:*,>=100',
             'name'   => 'required|string',
             'url'    => 'url',
             'active' => 'required|boolean',
@@ -375,7 +375,7 @@ class PartnersController extends Controller
 
         // we set the validation rules
         $rules = [
-            'logo'   => 'required|image|mimes:png|image_size:*,>=100',
+            'logo'   => 'image|mimes:png|image_size:*,>=100',
             'name'   => 'required|string',
             'url'    => 'url',
             'active' => 'required|boolean',
@@ -414,7 +414,7 @@ class PartnersController extends Controller
 
             // we notify the current user
             Modal::alert([
-                trans('partners.message.update.success'),
+                trans('partners.message.update.success', ['partner' => $partner->name]),
             ], 'success');
 
             return redirect()->back();
@@ -440,7 +440,7 @@ class PartnersController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function destroy($id, Request $request)
+    public function destroy($id)
     {
         // we check the current user permission
         if (!Permission::hasPermission('partners.delete')) {
@@ -553,7 +553,7 @@ class PartnersController extends Controller
             return response([
                 'active'  => $partner->active,
                 'message' => [
-                    trans('partners.message.activation.success.label', ['action' => trans_choice('partners.message.activation.success.action', $partner->active), 'partner' => $partner->label]),
+                    trans('partners.message.activation.success.label', ['action' => trans_choice('partners.message.activation.success.action', $partner->active), 'partner' => $partner->name]),
                 ],
             ], 200);
         } catch (Exception $e) {

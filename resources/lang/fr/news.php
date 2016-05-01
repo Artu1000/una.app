@@ -14,9 +14,10 @@ return [
     "page"    => [
         "title"  => [
             "management" => "Gestion des actualités",
+            "content"    => "Contenu de la page",
             "create"     => "Création d'une actualité",
             "edit"       => "Édition de l'actualité <b>:news</b>",
-            "list"       => "Liste des actualité",
+            "list"       => "Liste des actualités",
             "data"       => "Données de l'actualité",
             "seo"        => "Référencement de l'actualité",
             "release"    => "Diffusion de l'actualité",
@@ -45,11 +46,18 @@ return [
             "released_at"            => "Date de diffusion",
             "activation"             => "Activation",
             "activation_placeholder" => "Statut",
+            "description"            => "Description",
         ],
     ],
 
     // messages
     "message" => [
+        "content" => [
+            "update" => [
+                "success" => "La page d'actualités a bien été mise à jour.",
+                "failure" => "Une erreur est survenue lors de la mise à jour de la page d'actualités.",
+            ],
+        ],
         "create"     => [
             "success" => "L'actualité <b>:news</b> a bien été créée.",
             "failure" => "Une erreur est survenue lors de la création de l'actualité <b>:news</b>.",

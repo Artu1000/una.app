@@ -129,7 +129,7 @@ class ScheduleController extends Controller
             'hours'            => $hours,
             'schedules'        => $formated_schedules,
             'columns'          => $columns,
-            'css'              => url(elixir('css/app.schedule.css')),
+            'css'              => elixir('css/app.schedule.css'),
         ];
         
         // return the view with data
@@ -140,15 +140,15 @@ class ScheduleController extends Controller
      * @param Request $request
      * @return $this
      */
-    public function adminList(Request $request)
+    public function pageEdit(Request $request)
     {
         // we check the current user permission
-        if (!Permission::hasPermission('schedules.list')) {
+        if (!Permission::hasPermission('schedules.page.view')) {
             return redirect()->route('dashboard.index');
         }
         
         // SEO Meta settings
-        $this->seo_meta['page_title'] = trans('seo.back.schedules.list');
+        $this->seo_meta['page_title'] = trans('seo.back.schedules.page.edit');
         
         // we define the table list columns
         $columns = [
@@ -191,7 +191,7 @@ class ScheduleController extends Controller
         // we set the routes used in the table list
         $routes = [
             'index'   => [
-                'route'  => 'schedules.list',
+                'route'  => 'schedules.page.edit',
                 'params' => [],
             ],
             'create'  => [
@@ -240,22 +240,124 @@ class ScheduleController extends Controller
         );
         
         // we get the json schedules content
-        $schedules = null;
+        $schedules_page = null;
         if (is_file(storage_path('app/schedules/content.json'))) {
-            $schedules = json_decode(file_get_contents(storage_path('app/schedules/content.json')));
+            $schedules_page = json_decode(file_get_contents(storage_path('app/schedules/content.json')));
         }
         
         // prepare data for the view
         $data = [
             'seo_meta'         => $this->seo_meta,
-            'title'            => isset($schedules->title) ? $schedules->title : null,
-            'description'      => isset($schedules->description) ? $schedules->description : null,
-            'background_image' => isset($schedules->background_image) ? $schedules->background_image : null,
+            'title'            => isset($schedules_page->title) ? $schedules_page->title : null,
+            'description'      => isset($schedules_page->description) ? $schedules_page->description : null,
+            'background_image' => isset($schedules_page->background_image) ? $schedules_page->background_image : null,
             'tableListData'    => $tableListData,
         ];
         
         // return the view with data
-        return view('pages.back.schedules-list')->with($data);
+        return view('pages.back.schedules-page-edit')->with($data);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function pageUpdate(Request $request)
+    {
+        // we check the current user permission
+        if (!Permission::hasPermission('schedules.page.update')) {
+            // we redirect the current user to the schedules list if he has the required permission
+            if (Sentinel::getUser()->hasAccess('schedules.page.view')) {
+                return redirect()->route('schedules.page.edit');
+            } else {
+                // or we redirect the current user to the home page
+                return redirect()->route('dashboard.index');
+            }
+        }
+
+        // we get the json schedules content
+        $schedules = null;
+        if (is_file(storage_path('app/schedules/content.json'))) {
+            $schedules = json_decode(file_get_contents(storage_path('app/schedules/content.json')));
+        }
+
+        // if the active field is not given, we set it to false
+        $request->merge(['remove_background_image' => $request->get('remove_background_image', false)]);
+
+        // we sanitize the entries
+        $request->replace(Entry::sanitizeAll($request->all()));
+
+        // we check inputs validity
+        $rules = [
+            'title'                   => 'required|string',
+            'description'             => 'string',
+            'background_image'        => 'image|mimes:jpg,jpeg|image_size:>=2560,>=1440',
+            'remove_background_image' => 'required|boolean',
+        ];
+        // we check the inputs validity
+        if (!Validation::check($request->all(), $rules)) {
+            // we flash the request
+            $request->flashExcept('background_image');
+
+            return redirect()->back();
+        }
+
+        try {
+            $inputs = $request->except('_token', '_method', 'background_image');
+
+            // we store the background image file
+            if ($background_image = $request->file('background_image')) {
+                // we optimize, resize and save the image
+                $file_name = ImageManager::optimizeAndResize(
+                    $background_image->getRealPath(),
+                    config('image.schedules.background_image.name'),
+                    $background_image->getClientOriginalExtension(),
+                    config('image.schedules.storage_path'),
+                    config('image.schedules.background_image.sizes')
+                );
+                // we set the file name
+                $inputs['background_image'] = $file_name;
+            } elseif ($request->get('remove_background_image')) {
+                // we remove the background image
+                if (isset($schedules->background_image)) {
+                    ImageManager::remove(
+                        $schedules->background_image,
+                        config('image.schedules.storage_path'),
+                        config('image.schedules.background_image.sizes')
+                    );
+                }
+                $inputs['background_image'] = null;
+            } else {
+                $inputs['background_image'] = isset($schedules->background_image) ? $schedules->background_image : null;
+            }
+
+            // we store the content into a json file
+            file_put_contents(
+                storage_path('app/schedules/content.json'),
+                json_encode($inputs)
+            );
+
+            Modal::alert([
+                trans('schedules.message.content_update.success', ['title' => $request->get('title')]),
+            ], 'success');
+
+            return redirect()->back();
+        } catch (Exception $e) {
+
+            // we flash the request
+            $request->flashExcept('background_image');
+
+            // we log the error
+            CustomLog::error($e);
+
+            // we notify the current user
+            Modal::alert([
+                trans('schedules.message.content_update.failure', ['title' => isset($schedules->title) ? $schedules->title : null]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
+            ], 'error');
+
+            return redirect()->back();
+        }
     }
     
     /**
@@ -266,8 +368,8 @@ class ScheduleController extends Controller
         // we check the current user permission
         if (!Permission::hasPermission('schedules.create')) {
             // we redirect the current user to the schedule list if he has the required permission
-            if (Sentinel::getUser()->hasAccess('schedules.list')) {
-                return redirect()->route('schedules.index');
+            if (Sentinel::getUser()->hasAccess('schedules.page.view')) {
+                return redirect()->route('schedules.page.edit');
             } else {
                 // or we redirect the current user to the dashboard
                 return redirect()->route('dashboard.index');
@@ -297,8 +399,8 @@ class ScheduleController extends Controller
         // we check the current user permission
         if (!Permission::hasPermission('schedules.create')) {
             // we redirect the current user to the schedules list if he has the required permission
-            if (Sentinel::getUser()->hasAccess('schedules.list')) {
-                return redirect()->route('schedules.index');
+            if (Sentinel::getUser()->hasAccess('schedules.page.view')) {
+                return redirect()->route('schedules.page.edit');
             } else {
                 // or we redirect the current user to the home page
                 return redirect()->route('dashboard.index');
@@ -350,7 +452,7 @@ class ScheduleController extends Controller
                 trans('schedules.message.creation.success', ['schedule' => $schedule->label]),
             ], 'success');
             
-            return redirect(route('schedules.list'));
+            return redirect(route('schedules.page.edit'));
         } catch (Exception $e) {
             // we flash the request
             $request->flash();
@@ -377,8 +479,8 @@ class ScheduleController extends Controller
         // we check the current user permission
         if (!Permission::hasPermission('schedules.view')) {
             // we redirect the current user to the schedules list if he has the required permission
-            if (Sentinel::getUser()->hasAccess('schedules.list')) {
-                return redirect()->route('schedules.index');
+            if (Sentinel::getUser()->hasAccess('schedules.page.view')) {
+                return redirect()->route('schedules.page.edit');
             } else {
                 // or we redirect the current user to the home page
                 return redirect()->route('dashboard.index');
@@ -515,108 +617,6 @@ class ScheduleController extends Controller
     }
     
     /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function dataUpdate(Request $request)
-    {
-        // we check the current user permission
-        if (!Permission::hasPermission('schedules.update')) {
-            // we redirect the current user to the schedules list if he has the required permission
-            if (Sentinel::getUser()->hasAccess('schedules.view')) {
-                return redirect()->route('schedules.edit');
-            } else {
-                // or we redirect the current user to the home page
-                return redirect()->route('dashboard.index');
-            }
-        }
-        
-        // we get the json schedules content
-        $schedules = null;
-        if (is_file(storage_path('app/schedules/content.json'))) {
-            $schedules = json_decode(file_get_contents(storage_path('app/schedules/content.json')));
-        }
-        
-        // if the active field is not given, we set it to false
-        $request->merge(['remove_background_image' => $request->get('remove_background_image', false)]);
-        
-        // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
-        
-        // we check inputs validity
-        $rules = [
-            'title'                   => 'required|string',
-            'description'             => 'string',
-            'background_image'        => 'image|mimes:jpg,jpeg|image_size:>=2560,>=1440',
-            'remove_background_image' => 'required|boolean',
-        ];
-        // we check the inputs validity
-        if (!Validation::check($request->all(), $rules)) {
-            // we flash the request
-            $request->flashExcept('background_image');
-            
-            return redirect()->back();
-        }
-        
-        try {
-            $inputs = $request->except('_token', '_method', 'background_image');
-            
-            // we store the background image file
-            if ($background_image = $request->file('background_image')) {
-                // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
-                    $background_image->getRealPath(),
-                    config('image.schedules.background_image.name'),
-                    $background_image->getClientOriginalExtension(),
-                    config('image.schedules.storage_path'),
-                    config('image.schedules.background_image.sizes')
-                );
-                // we set the file name
-                $inputs['background_image'] = $file_name;
-            } elseif ($request->get('remove_background_image')) {
-                // we remove the background image
-                if (isset($schedules->background_image)) {
-                    ImageManager::remove(
-                        $schedules->background_image,
-                        config('image.schedules.storage_path'),
-                        config('image.schedules.background_image.sizes')
-                    );
-                }
-                $inputs['background_image'] = null;
-            } else {
-                $inputs['background_image'] = isset($schedules->background_image) ? $schedules->background_image : null;
-            }
-            
-            // we store the content into a json file
-            file_put_contents(
-                storage_path('app/schedules/content.json'),
-                json_encode($inputs)
-            );
-            
-            Modal::alert([
-                trans('schedules.message.content_update.success', ['title' => $request->get('title')]),
-            ], 'success');
-            
-            return redirect()->back();
-        } catch (Exception $e) {
-            
-            // we flash the request
-            $request->flashExcept('background_image');
-            
-            // we log the error
-            CustomLog::error($e);
-            
-            // we notify the current user
-            Modal::alert([
-                trans('schedules.message.content_update.failure', ['title' => isset($schedules->title) ? $schedules->title : null]),
-                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
-            ], 'error');
-            
-            return redirect()->back();
-        }
-    }
-    
-    /**
      * @param $id
      * @param Request $request
      * @return mixed
@@ -626,8 +626,8 @@ class ScheduleController extends Controller
         // we check the current user permission
         if (!Permission::hasPermission('schedules.delete')) {
             // we redirect the current user to the schedules list if he has the required permission
-            if (Sentinel::getUser()->hasAccess('schedules.list')) {
-                return redirect()->route('schedules.index');
+            if (Sentinel::getUser()->hasAccess('schedules.page.view')) {
+                return redirect()->route('schedules.page.edit');
             } else {
                 // or we redirect the current user to the home page
                 return redirect()->route('dashboard.index');

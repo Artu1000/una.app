@@ -68,7 +68,7 @@ class RegistrationController extends Controller
             'title'            => isset($registration_page->title) ? $registration_page->title : null,
             'background_image' => isset($registration_page->background_image) ? $registration_page->background_image : null,
             'description'      => $description,
-            'css'              => url(elixir('css/app.registration.css')),
+            'css'              => elixir('css/app.registration.css'),
         ];
 
         // return the view with data

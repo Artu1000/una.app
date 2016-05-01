@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use Cartalyst\Sentinel\Users\EloquentUser as SentinelUser;
-use CustomLog;
+use ImageManager;
+use InvalidArgumentException;
 
 class User extends SentinelUser
 {
@@ -40,6 +41,7 @@ class User extends SentinelUser
         'photo' => [
             'admin'   => [40, 40],
             'picture' => [145, 160],
+            'zoom'    => [null, 300],
         ],
     ];
 
@@ -59,30 +61,18 @@ class User extends SentinelUser
 
     /**
      * @param $file_name
-     * @return string
+     * @param null $key
+     * @param null $size
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public function imagePath($file_name, $key = null, $size = null)
     {
-        // if the key / size are not given
-        if (!$key || !$size) {
-            // we return the original image path
-            return url($this->public_path . '/' . $file_name);
-        }
-        try {
-            // we return the sized image path
-            list($name, $ext) = explode('.', $file_name);
-
-            return url($this->public_path . '/' . $name . '_' . $size . '.' . $ext);
-        } catch (\Exception $e) {
-            // we log the error
-            CustomLog::error($e);
-
-            return 'error';
-        }
+        return ImageManager::imagePath($this->public_path, $file_name, $key, $size);
     }
 
     /**
-     * @return array
+     * @param $key
+     * @return mixed
      */
     public function availableSizes($key)
     {
@@ -91,7 +81,8 @@ class User extends SentinelUser
 
     /**
      * @param $key
-     * @return null
+     * @param $size
+     * @return mixed|null
      */
     public function size($key, $size)
     {
@@ -102,6 +93,9 @@ class User extends SentinelUser
         return null;
     }
 
+    /**
+     * @return mixed
+     */
     public function publicPath()
     {
         return public_path($this->public_path);
@@ -120,14 +114,15 @@ class User extends SentinelUser
     }
 
     /**
-     * @return string
+     * @param $key
+     * @return mixed
      */
     public function imageName($key)
     {
         if (!array_key_exists($key, $this->sizes)) {
-            throw new \InvalidArgumentException('The key must be declared into the eloquent object sizes.');
+            throw new InvalidArgumentException('The key must be declared into the eloquent object sizes.');
         };
 
-        return $this->id . '_' . $key;
+        return str_slug('universite-nantes-aviron-una-' . $this->id . '-' . $key);
     }
 }

@@ -25,6 +25,8 @@ class UsersTableSeeder extends Seeder
          * LEADING BOARD
          */
 
+        $moderator_role = Sentinel::findRoleBySlug('moderator');
+
         // we create a user
         $user = Sentinel::register([
             'last_name'  => 'GIRARD',
@@ -32,16 +34,15 @@ class UsersTableSeeder extends Seeder
             'email'      => 'dlsba.girard@free.fr',
             'status_id'  => config('user.status_key.president'),
             'board_id'   => config('user.board_key.leading_board'),
-            'password'   => 'password',
+            'password'   => str_random(),
         ], true);
         // we attach the user to the user role
-        $user_role = Sentinel::findRoleBySlug('user');
-        $user_role->users()->attach($user);
+        $moderator_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/users/users-default-avatar.png'),
+            database_path('seeds/files/users/girard.jpg'),
             $user->imageName('photo'),
-            'png',
+            'jpg',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -56,15 +57,15 @@ class UsersTableSeeder extends Seeder
             'email'      => 'davidvaraine@gmail.com',
             'status_id'  => config('user.status_key.vice_president'),
             'board_id'   => config('user.board_key.leading_board'),
-            'password'   => 'password',
+            'password'   => str_random(),
         ], true);
         // we attach the user to the user role
-        $user_role->users()->attach($user);
+        $moderator_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/users/users-default-avatar.png'),
+            database_path('seeds/files/users/varaine.jpg'),
             $user->imageName('photo'),
-            'png',
+            'jpg',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -79,9 +80,9 @@ class UsersTableSeeder extends Seeder
             'email'      => 'discazeaux.una@gmail.com',
             'status_id'  => config('user.status_key.treasurer'),
             'board_id'   => config('user.board_key.leading_board'),
-            'password'   => 'password',
+            'password'   => str_random(),
         ], true);
-        $user_role->users()->attach($user);
+        $moderator_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
             database_path('seeds/files/users/users-default-avatar.png'),
@@ -101,12 +102,12 @@ class UsersTableSeeder extends Seeder
             'email'      => 'david.theriot@free.fr',
             'status_id'  => config('user.status_key.secretary_general'),
             'board_id'   => config('user.board_key.leading_board'),
-            'password'   => 'password',
+            'password'   => str_random(),
         ], true);
-        $user_role->users()->attach($user);
+        $moderator_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/users/users-default-avatar.png'),
+            database_path('seeds/files/users/theriot.png'),
             $user->imageName('photo'),
             'png',
             $user->storagePath(),
@@ -127,14 +128,14 @@ class UsersTableSeeder extends Seeder
             'email'      => 't.planchenault@gmail.com',
             'status_id'  => config('user.status_key.student_president'),
             'board_id'   => config('user.board_key.student_leading_board'),
-            'password'   => 'password',
+            'password'   => str_random(),
         ], true);
-        $user_role->users()->attach($user);
+        $moderator_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/users/users-default-avatar.png'),
+            database_path('seeds/files/users/planchenault.jpg'),
             $user->imageName('photo'),
-            'png',
+            'jpg',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -149,14 +150,14 @@ class UsersTableSeeder extends Seeder
             'email'      => 'laradieter@hotmail.de',
             'status_id'  => config('user.status_key.student_secretary'),
             'board_id'   => config('user.board_key.student_leading_board'),
-            'password'   => 'password',
+            'password'   => str_random(),
         ], true);
-        $user_role->users()->attach($user);
+        $moderator_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/users/users-default-avatar.png'),
+            database_path('seeds/files/users/dieter.jpg'),
             $user->imageName('photo'),
-            'png',
+            'jpg',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -171,14 +172,14 @@ class UsersTableSeeder extends Seeder
             'email'      => 'marianne.etienvre@hotmail.fr',
             'status_id'  => config('user.status_key.student_treasurer'),
             'board_id'   => config('user.board_key.student_leading_board'),
-            'password'   => 'password',
+            'password'   => str_random(),
         ], true);
-        $user_role->users()->attach($user);
+        $moderator_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/users/users-default-avatar.png'),
+            database_path('seeds/files/users/etienvre.jpg'),
             $user->imageName('photo'),
-            'png',
+            'jpg',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -193,14 +194,14 @@ class UsersTableSeeder extends Seeder
             'email'      => 'legoff.b@gmail.com',
             'status_id'  => config('user.status_key.student_vice_president'),
             'board_id'   => config('user.board_key.student_leading_board'),
-            'password'   => 'password',
+            'password'   => str_random(),
         ], true);
-        $user_role->users()->attach($user);
+        $moderator_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/users/users-default-avatar.png'),
+            database_path('seeds/files/users/legoff.jpg'),
             $user->imageName('photo'),
-            'png',
+            'jpg',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -226,9 +227,9 @@ class UsersTableSeeder extends Seeder
         $admin->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/users/users-default-avatar.png'),
+            database_path('seeds/files/users/lorent.jpg'),
             $user->imageName('photo'),
-            'png',
+            'jpg',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -243,14 +244,14 @@ class UsersTableSeeder extends Seeder
             'email'      => 'thprott@free.fr',
             'status_id'  => config('user.status_key.sportive_commission'),
             'board_id'   => config('user.board_key.executive_committee'),
-            'password'   => 'password',
+            'password'   => str_random(),
         ], true);
-        $user_role->users()->attach($user);
+        $moderator_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/users/users-default-avatar.png'),
+            database_path('seeds/files/users/prott.jpg'),
             $user->imageName('photo'),
-            'png',
+            'jpg',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -265,14 +266,14 @@ class UsersTableSeeder extends Seeder
             'email'      => 'benjaminrousseau96@yahoo.fr',
             'status_id'  => config('user.status_key.sportive_commission'),
             'board_id'   => config('user.board_key.executive_committee'),
-            'password'   => 'password',
+            'password'   => str_random(),
         ], true);
-        $user_role->users()->attach($user);
+        $moderator_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/users/users-default-avatar.png'),
+            database_path('seeds/files/users/rousseau.jpg'),
             $user->imageName('photo'),
-            'png',
+            'jpg',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -286,14 +287,14 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Yann',
             'email'      => 'yann.lecieux@univ-nantes.fr',
             'board_id'   => config('user.board_key.executive_committee'),
-            'password'   => 'password',
+            'password'   => str_random(),
         ], true);
-        $user_role->users()->attach($user);
+        $moderator_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/users/users-default-avatar.png'),
+            database_path('seeds/files/users/lecieux.jpg'),
             $user->imageName('photo'),
-            'png',
+            'jpg',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -307,9 +308,9 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Rabah',
             'email'      => 'rabah.bouzidi@univ-nantes.fr',
             'board_id'   => config('user.board_key.executive_committee'),
-            'password'   => 'password',
+            'password'   => str_random(),
         ], true);
-        $user_role->users()->attach($user);
+        $moderator_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
             database_path('seeds/files/users/users-default-avatar.png'),
@@ -328,12 +329,12 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Pauline',
             'email'      => 'pauline.robin@live.fr',
             'board_id'   => config('user.board_key.executive_committee'),
-            'password'   => 'password',
+            'password'   => str_random(),
         ], true);
-        $user_role->users()->attach($user);
+        $moderator_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/users/users-default-avatar.png'),
+            database_path('seeds/files/users/robin.png'),
             $user->imageName('photo'),
             'png',
             $user->storagePath(),
@@ -349,14 +350,35 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Ainhoa',
             'email'      => 'ainhoa.robin@gmail.com',
             'board_id'   => config('user.board_key.executive_committee'),
-            'password'   => 'password',
+            'password'   => str_random(),
         ], true);
-        $user_role->users()->attach($user);
+        $moderator_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
-            database_path('seeds/files/users/users-default-avatar.png'),
+            database_path('seeds/files/users/robin-diot.jpg'),
             $user->imageName('photo'),
-            'png',
+            'jpg',
+            $user->storagePath(),
+            $user->availableSizes('photo'),
+            false
+        );
+        $user->photo = $file_name;
+        $user->save();
+
+        // we create a user
+        $user = Sentinel::register([
+            'last_name'  => 'VERNAY',
+            'first_name' => 'Solenn',
+            'email'      => 'vernaysolenn@orange.fr',
+            'board_id'   => config('user.board_key.executive_committee'),
+            'password'   => str_random(),
+        ], true);
+        $moderator_role->users()->attach($user);
+        // we set the una logo as the user image
+        $file_name = ImageManager::optimizeAndResize(
+            database_path('seeds/files/users/vernay.jpg'),
+            $user->imageName('photo'),
+            'jpg',
             $user->storagePath(),
             $user->availableSizes('photo'),
             false
@@ -374,9 +396,10 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Laurent',
             'email'      => 'laurentvesperini@yahoo.fr',
             'status_id'  => config('user.status_key.employee'),
-            'password'   => 'password',
+            'password'   => str_random(),
         ], true);
-        $user_role->users()->attach($user);
+        $coach_role = Sentinel::findRoleBySlug('coach');
+        $coach_role->users()->attach($user);
         // we set the una logo as the user image
         $file_name = ImageManager::optimizeAndResize(
             database_path('seeds/files/users/users-default-avatar.png'),

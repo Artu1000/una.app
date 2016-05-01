@@ -59,20 +59,23 @@ $route = Route::group($group, function () {
     Route::post(LaravelLocalization::transRoute('routes.users.activate'), ['as' => 'users.activate', 'uses' => 'User\UsersController@activate']);
     Route::get(LaravelLocalization::transRoute('routes.users.profile'), ['as' => 'users.profile', 'uses' => 'User\UsersController@profile']);
 
-    // home
-    Route::get(LaravelLocalization::transRoute('routes.home.edit'), ['as' => 'home.edit', 'uses' => 'Home\HomeController@edit']);
-    Route::put(LaravelLocalization::transRoute('routes.home.update'), ['as' => 'home.update', 'uses' => 'Home\HomeController@update']);
+    // home page
+    Route::get(LaravelLocalization::transRoute('routes.home.page.edit'), ['as' => 'home.page.edit', 'uses' => 'Home\HomeController@pageEdit']);
+    Route::put(LaravelLocalization::transRoute('routes.home.page.update'), ['as' => 'home.page.update', 'uses' => 'Home\HomeController@pageUpdate']);
 
     // slides
-    Route::get(LaravelLocalization::transRoute('routes.slides.create'), ['as' => 'slides.create', 'uses' => 'Home\SlidesController@create']);
-    Route::post(LaravelLocalization::transRoute('routes.slides.store'), ['as' => 'slides.store', 'uses' => 'Home\SlidesController@store']);
-    Route::get(LaravelLocalization::transRoute('routes.slides.edit'), ['as' => 'slides.edit', 'uses' => 'Home\SlidesController@edit']);
-    Route::put(LaravelLocalization::transRoute('routes.slides.update'), ['as' => 'slides.update', 'uses' => 'Home\SlidesController@update']);
-    Route::delete(LaravelLocalization::transRoute('routes.slides.destroy'), ['as' => 'slides.destroy', 'uses' => 'Home\SlidesController@destroy']);
-    Route::post(LaravelLocalization::transRoute('routes.slides.activate'), ['as' => 'slides.activate', 'uses' => 'Home\SlidesController@activate']);
+    Route::get(LaravelLocalization::transRoute('routes.home.slides.create'), ['as' => 'home.slides.create', 'uses' => 'Home\SlidesController@create']);
+    Route::post(LaravelLocalization::transRoute('routes.home.slides.store'), ['as' => 'home.slides.store', 'uses' => 'Home\SlidesController@store']);
+    Route::get(LaravelLocalization::transRoute('routes.home.slides.edit'), ['as' => 'home.slides.edit', 'uses' => 'Home\SlidesController@edit']);
+    Route::put(LaravelLocalization::transRoute('routes.home.slides.update'), ['as' => 'home.slides.update', 'uses' => 'Home\SlidesController@update']);
+    Route::delete(LaravelLocalization::transRoute('routes.home.slides.destroy'), ['as' => 'home.slides.destroy', 'uses' => 'Home\SlidesController@destroy']);
+    Route::post(LaravelLocalization::transRoute('routes.home.slides.activate'), ['as' => 'home.slides.activate', 'uses' => 'Home\SlidesController@activate']);
+
+    // news page
+    Route::get(LaravelLocalization::transRoute('routes.news.page.edit'), ['as' => 'news.page.edit', 'uses' => 'News\NewsController@pageEdit']);
+    Route::put(LaravelLocalization::transRoute('routes.news.page.update'), ['as' => 'news.page_update', 'uses' => 'News\NewsController@pageUpdate']);
 
     // news
-    Route::get(LaravelLocalization::transRoute('routes.news.list'), ['as' => 'news.list', 'uses' => 'News\NewsController@adminList']);
     Route::get(LaravelLocalization::transRoute('routes.news.create'), ['as' => 'news.create', 'uses' => 'News\NewsController@create']);
     Route::post(LaravelLocalization::transRoute('routes.news.store'), ['as' => 'news.store', 'uses' => 'News\NewsController@store']);
     Route::get(LaravelLocalization::transRoute('routes.news.edit'), ['as' => 'news.edit', 'uses' => 'News\NewsController@edit']);
@@ -80,17 +83,19 @@ $route = Route::group($group, function () {
     Route::delete(LaravelLocalization::transRoute('routes.news.destroy'), ['as' => 'news.destroy', 'uses' => 'News\NewsController@destroy']);
     Route::post(LaravelLocalization::transRoute('routes.news.activate'), ['as' => 'news.activate', 'uses' => 'News\NewsController@activate']);
 
+    // schedules page
+    Route::get(LaravelLocalization::transRoute('routes.schedules.page.edit'), ['as' => 'schedules.page.edit', 'uses' => 'Schedule\ScheduleController@pageEdit']);
+    Route::put(LaravelLocalization::transRoute('routes.schedules.page.update'), ['as' => 'schedules.page.update', 'uses' => 'Schedule\ScheduleController@pageUpdate']);
+
     // schedules
-    Route::get(LaravelLocalization::transRoute('routes.schedules.list'), ['as' => 'schedules.list', 'uses' => 'Schedule\ScheduleController@adminList']);
     Route::get(LaravelLocalization::transRoute('routes.schedules.create'), ['as' => 'schedules.create', 'uses' => 'Schedule\ScheduleController@create']);
     Route::post(LaravelLocalization::transRoute('routes.schedules.store'), ['as' => 'schedules.store', 'uses' => 'Schedule\ScheduleController@store']);
     Route::get(LaravelLocalization::transRoute('routes.schedules.edit'), ['as' => 'schedules.edit', 'uses' => 'Schedule\ScheduleController@edit']);
     Route::put(LaravelLocalization::transRoute('routes.schedules.update'), ['as' => 'schedules.update', 'uses' => 'Schedule\ScheduleController@update']);
-    Route::put(LaravelLocalization::transRoute('routes.schedules.data_update'), ['as' => 'schedules.data.update', 'uses' => 'Schedule\ScheduleController@dataUpdate']);
     Route::delete(LaravelLocalization::transRoute('routes.schedules.destroy'), ['as' => 'schedules.destroy', 'uses' => 'Schedule\ScheduleController@destroy']);
     Route::post(LaravelLocalization::transRoute('routes.schedules.activate'), ['as' => 'schedules.activate', 'uses' => 'Schedule\ScheduleController@activate']);
 
-    // registration
+    // registration page
     Route::get(LaravelLocalization::transRoute('routes.registration.page.edit'), ['as' => 'registration.page.edit', 'uses' => 'Registration\RegistrationController@pageEdit']);
     Route::put(LaravelLocalization::transRoute('routes.registration.page.update'), ['as' => 'registration.page_update', 'uses' => 'Registration\RegistrationController@pageUpdate']);
     

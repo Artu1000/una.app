@@ -4,7 +4,7 @@
 
     <div id="content" class="registration row">
 
-        {{-- parallax img --}}
+        {{-- background img --}}
         <div class="parallax_img">
             @if($background_image)
                 <div class="background_responsive_img fill" data-background-image="{{ ImageManager::imagePath(config('image.registration.public_path'), $background_image) }}"></div>
