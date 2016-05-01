@@ -37,16 +37,26 @@ class NewsController extends Controller
      */
     public function index()
     {
+        // we get the json content
+        $news_page = null;
+        if (is_file(storage_path('app/news/content.json'))) {
+            $news_page = json_decode(file_get_contents(storage_path('app/news/content.json')));
+        }
+
+        // we parse the markdown content
+        $parsedown = new Parsedown();
+        $description = isset($news_page->description) ? $parsedown->text($news_page->description) : null;
+
         // SEO Meta settings
         $this->seo_meta['page_title'] = trans('seo.front.news.title');
-        $this->seo_meta['meta_desc'] = trans('seo.front.news.description');
+        $this->seo_meta['meta_desc'] = $description ? trans('seo.front.news.description') : str_limit($description, 160);
         $this->seo_meta['meta_keywords'] = trans('seo.front.news.keywords');
 
         // og meta settings
         $this->og_meta['og:title'] = trans('seo.front.news.title');
-        $this->og_meta['og:description'] = trans('seo.front.news.description');
+        $this->og_meta['og:description'] = $description ? trans('seo.front.news.description') : str_limit($description, 160);
         $this->og_meta['og:type'] = 'article';
-        $this->og_meta['og:url'] = route('news.list');
+        $this->og_meta['og:url'] = route('news.page.edit');
         
         // we get the category id
         $category = Input::get('category', null);
@@ -80,7 +90,10 @@ class NewsController extends Controller
             'og_meta'          => $this->og_meta,
             'news_list'        => $news_list,
             'current_category' => $category,
-            'css'              => url(elixir('css/app.news.css')),
+            'title'            => isset($news_page->title) ? $news_page->title : null,
+            'background_image' => isset($news_page->background_image) ? $news_page->background_image : null,
+            'description'      => $description,
+            'css'              => elixir('css/app.news.css'),
         ];
         
         // return the view with data
@@ -127,15 +140,15 @@ class NewsController extends Controller
         $this->og_meta['og:description'] = $news->meta_desc ? $news->meta_desc : str_limit(strip_tags($news->content), 160);
         $this->og_meta['og:type'] = 'article';
         $this->og_meta['og:url'] = route('news.show', ['id' => $news->id, 'key' => $news->key]);
-        $this->og_meta['og:image'] = $news->imagePath($news->image, 'image');
+        $this->og_meta['og:image'] = $news->imagePath($news->image, 'image', '767');
         
         // prepare data for the view
         $data = [
             'seo_meta' => $this->seo_meta,
             'og_meta'  => $this->og_meta,
             'news'     => $news,
-            'css'      => url(elixir('css/app.news.css')),
-            'js'       => url(elixir('js/app.news-detail.js')),
+            'css'      => elixir('css/app.news.css'),
+            'js'       => elixir('js/app.news-detail.js'),
         ];
         
         // return the view with data
@@ -146,15 +159,15 @@ class NewsController extends Controller
      * @param Request $request
      * @return $this
      */
-    public function adminList(Request $request)
+    public function pageEdit(Request $request)
     {
         // we check the current user permission
-        if (!Permission::hasPermission('news.list')) {
+        if (!Permission::hasPermission('news.page.view')) {
             return redirect()->route('dashboard.index');
         }
         
         // SEO Meta settings
-        $this->seo_meta['page_title'] = trans('seo.back.news.list');
+        $this->seo_meta['page_title'] = trans('seo.back.news.page.edit');
         
         // we define the table list columns
         $columns = [
@@ -207,7 +220,7 @@ class NewsController extends Controller
         // we set the routes used in the table list
         $routes = [
             'index'   => [
-                'route'  => 'news.list',
+                'route'  => 'news.page.edit',
                 'params' => [],
             ],
             'create'  => [
@@ -254,15 +267,126 @@ class NewsController extends Controller
             $search_config,
             $enable_lines_choice
         );
+
+        // we get the json page content
+        $news_page = null;
+        if (is_file(storage_path('app/news/content.json'))) {
+            $news_page = json_decode(file_get_contents(storage_path('app/news/content.json')));
+        }
         
         // prepare data for the view
         $data = [
-            'tableListData' => $tableListData,
-            'seo_meta'      => $this->seo_meta,
+            'title'            => isset($news_page->title) ? $news_page->title : null,
+            'description'      => isset($news_page->description) ? $news_page->description : null,
+            'background_image' => isset($news_page->background_image) ? $news_page->background_image : null,
+            'tableListData'    => $tableListData,
+            'seo_meta'         => $this->seo_meta,
         ];
         
         // return the view with data
-        return view('pages.back.news-list')->with($data);
+        return view('pages.back.news-page-edit')->with($data);
+    }
+    
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function pageUpdate(Request $request)
+    {
+        // we check the current user permission
+        if (!Permission::hasPermission('news.page.update')) {
+            // we redirect the current user to the news page view if he has the required permission
+            if (Sentinel::getUser()->hasAccess('news.page.view')) {
+                return redirect()->route('news.page.edit');
+            } else {
+                // or we redirect the current user to the home page
+                return redirect()->route('dashboard.index');
+            }
+        }
+        
+        // we get the json news content
+        $news = null;
+        if (is_file(storage_path('app/news/content.json'))) {
+            $news = json_decode(file_get_contents(storage_path('app/news/content.json')));
+        }
+        
+        // if the active field is not given, we set it to false
+        $request->merge(['remove_background_image' => $request->get('remove_background_image', false)]);
+        
+        // we sanitize the entries
+        $request->replace(Entry::sanitizeAll($request->all()));
+        
+        // we check inputs validity
+        $rules = [
+            'title'                   => 'required|string',
+            'description'             => 'string',
+            'background_image'        => 'image|mimes:jpg,jpeg|image_size:>=2560,>=1440',
+            'remove_background_image' => 'required|boolean',
+        ];
+        // we check the inputs validity
+        if (!Validation::check($request->all(), $rules)) {
+            // we flash the request
+            $request->flashExcept('background_image');
+            
+            return redirect()->back();
+        }
+        
+        try {
+            $inputs = $request->except('_token', '_method', 'background_image', 'remove_background_image');
+            
+            // we store the background image file
+            if ($background_image = $request->file('background_image')) {
+                // we optimize, resize and save the image
+                $file_name = ImageManager::optimizeAndResize(
+                    $background_image->getRealPath(),
+                    config('image.news.background_image.name'),
+                    $background_image->getClientOriginalExtension(),
+                    config('image.news.storage_path'),
+                    config('image.news.background_image.sizes')
+                );
+                // we set the file name
+                $inputs['background_image'] = $file_name;
+            } elseif ($request->get('remove_background_image')) {
+                // we remove the background image
+                if (isset($news->background_image)) {
+                    ImageManager::remove(
+                        $news->background_image,
+                        config('image.news.storage_path'),
+                        config('image.news.background_image.sizes')
+                    );
+                }
+                $inputs['background_image'] = null;
+            } else {
+                $inputs['background_image'] = isset($news->background_image) ? $news->background_image : null;
+            }
+            
+            // we store the content into a json file
+            file_put_contents(
+                storage_path('app/news/content.json'),
+                json_encode($inputs)
+            );
+            
+            Modal::alert([
+                trans('news.message.content.update.success', ['title' => $request->get('title')]),
+            ], 'success');
+            
+            return redirect()->back();
+        } catch (Exception $e) {
+            
+            // we flash the request
+            $request->flashExcept('background_image');
+            
+            // we log the error
+            CustomLog::error($e);
+            
+            // we notify the current user
+            Modal::alert([
+                trans('news.message.content.update.failure', ['title' => isset($news->title) ? $news->title : null]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
+            ], 'error');
+            
+            return redirect()->back();
+        }
     }
     
     /**
@@ -272,9 +396,9 @@ class NewsController extends Controller
     {
         // we check the current user permission
         if (!Permission::hasPermission('news.create')) {
-            // we redirect the current user to the news list if he has the required permission
-            if (Sentinel::getUser()->hasAccess('news.list')) {
-                return redirect()->route('news.index');
+            // we redirect the current user to the news page edit if he has the required permission
+            if (Sentinel::getUser()->hasAccess('news.page.view')) {
+                return redirect()->route('news.page.edit');
             } else {
                 // or we redirect the current user to the dashboard
                 return redirect()->route('dashboard.index');
@@ -303,8 +427,8 @@ class NewsController extends Controller
         // we check the current user permission
         if (!Permission::hasPermission('news.create')) {
             // we redirect the current user to the news list if he has the required permission
-            if (Sentinel::getUser()->hasAccess('news.list')) {
-                return redirect()->route('news.index');
+            if (Sentinel::getUser()->hasAccess('news.page.view')) {
+                return redirect()->route('news.page.edit');
             } else {
                 // or we redirect the current user to the home page
                 return redirect()->route('dashboard.index');
@@ -380,7 +504,7 @@ class NewsController extends Controller
                 trans('news.message.create.success', ['news' => $news->title]),
             ], 'success');
             
-            return redirect(route('news.list'));
+            return redirect(route('news.page.edit'));
         } catch (Exception $e) {
             // we flash the request
             $request->flashExcept('image');
@@ -407,8 +531,8 @@ class NewsController extends Controller
         // we check the current user permission
         if (!Permission::hasPermission('news.view')) {
             // we redirect the current user to the news list if he has the required permission
-            if (Sentinel::getUser()->hasAccess('news.list')) {
-                return redirect()->route('news.index');
+            if (Sentinel::getUser()->hasAccess('news.page.view')) {
+                return redirect()->route('news.page.edit');
             } else {
                 // or we redirect the current user to the home page
                 return redirect()->route('dashboard.index');
@@ -600,8 +724,8 @@ class NewsController extends Controller
         // we check the current user permission
         if (!Permission::hasPermission('news.delete')) {
             // we redirect the current user to the permissions list if he has the required permission
-            if (Sentinel::getUser()->hasAccess('news.list')) {
-                return redirect()->route('news.list');
+            if (Sentinel::getUser()->hasAccess('news.page.view')) {
+                return redirect()->route('news.page.edit');
             } else {
                 // or we redirect the current user to the home page
                 return redirect()->route('dashboard.index');

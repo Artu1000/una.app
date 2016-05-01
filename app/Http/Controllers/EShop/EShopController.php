@@ -51,7 +51,7 @@ class EShopController extends Controller
             'seo_meta' => $this->seo_meta,
             'articles' => $articles,
             'current_category' => $category,
-            'css' => url(elixir('css/app.e-shop.css'))
+            'css' => elixir('css/app.e-shop.css')
         ];
 
         // return the view with data

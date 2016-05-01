@@ -25,8 +25,8 @@ return [
 
     // home
     "home"                       => "Page d'accueil",
-    "home.view"                  => "Consulter le détail de la page d'accueil",
-    "home.update"                => "Modifier le contenu de la page d'accueil",
+    "home.page.view"             => "Consulter le détail de la page d'accueil",
+    "home.page.update"           => "Modifier le contenu de la page d'accueil",
     "home.slides.create"         => "Créer une diapo",
     "home.slides.view"           => "Consulter le détail d'une diapo",
     "home.slides.update"         => "Modifier une diapo",
@@ -34,7 +34,8 @@ return [
 
     // news
     "news"                       => "Actualités",
-    "news.list"                  => "Consulter la liste des actualités",
+    "news.page.view"             => "Consulter le détail de la page d'actualités",
+    "news.page.update"           => "Modifer le contenu de la page d'actualités",
     "news.create"                => "Créer une actualité",
     "news.view"                  => "Consulter le détail d'une actualité",
     "news.update"                => "Modifier une actualité",
@@ -43,11 +44,12 @@ return [
 
     // schedules
     "schedules"                  => "Horaires",
-    "schedules.list"             => "Consulter la liste des horaires",
-    "schedules.create"           => "Créer un horaire",
-    "schedules.view"             => "Consulter le détail d'un horaire",
-    "schedules.update"           => "Modifier un horaire",
-    "schedules.delete"           => "Supprimer un horaire",
+    "schedules.page.view"        => "Consulter le détail de la page des créneaux horaires",
+    "schedules.page.update"      => "Modifier le contenu de la page des créneaux horaires",
+    "schedules.create"           => "Créer un créneau horaire",
+    "schedules.view"             => "Consulter le détail d'un créneau horaire",
+    "schedules.update"           => "Modifier un créneau horaire",
+    "schedules.delete"           => "Supprimer un créneau horaire",
 
     // registration
     "registration"               => "Inscription",

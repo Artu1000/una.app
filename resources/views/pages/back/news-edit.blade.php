@@ -183,14 +183,14 @@
                         <button class="btn btn-primary spin-on-click" type="submit">
                             <i class="fa fa-pencil-square"></i> {{ trans('news.page.action.update') }}
                         </button>
-                        <a href="{{ route('news.list') }}" class="btn btn-default spin-on-click" title="{{ trans('global.action.back') }}">
+                        <a href="{{ route('news.page.edit') }}" class="btn btn-default spin-on-click" title="{{ trans('global.action.back') }}">
                             <i class="fa fa-undo"></i> {{ trans('global.action.back') }}
                         </a>
                     @else
                         <button class="btn btn-success spin-on-click" type="submit">
                             <i class="fa fa-plus-circle"></i> {{ trans('news.page.action.create') }}
                         </button>
-                        <a href="{{ route('news.list') }}" class="btn btn-default spin-on-click" title="{{ trans('global.action.cancel') }}">
+                        <a href="{{ route('news.page.edit') }}" class="btn btn-default spin-on-click" title="{{ trans('global.action.cancel') }}">
                             <i class="fa fa-ban"></i> {{ trans('global.action.cancel') }}
                         </a>
                     @endif

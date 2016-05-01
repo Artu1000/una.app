@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use CustomLog;
-use Exception;
 use Illuminate\Database\Eloquent\Model;
+use ImageManager;
 use InvalidArgumentException;
 
 abstract class _BaseModel extends Model
@@ -33,30 +32,18 @@ abstract class _BaseModel extends Model
 
     /**
      * @param $file_name
-     * @return string
+     * @param null $key
+     * @param null $size
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
     public function imagePath($file_name, $key = null, $size = null)
     {
-        // if the key / size are not given
-        if (!$key || !$size) {
-            // we return the original image path
-            return url($this->public_path . '/' . $file_name);
-        }
-
-        try {
-            // we return the sized image path
-            list($name, $ext) = explode('.', $file_name);
-
-
-            return url($this->public_path . '/' . $name . '_' . $size . '.' . $ext);
-        } catch (Exception $e) {
-            CustomLog::error($e);
-            return 'error';
-        }
+        return ImageManager::imagePath($this->public_path, $file_name, $key, $size);
     }
 
     /**
-     * @return array
+     * @param $key
+     * @return mixed
      */
     public function availableSizes($key)
     {
@@ -65,6 +52,7 @@ abstract class _BaseModel extends Model
 
     /**
      * @param $key
+     * @param $size
      * @return null
      */
     public function size($key, $size)
@@ -76,6 +64,9 @@ abstract class _BaseModel extends Model
         return null;
     }
 
+    /**
+     * @return array
+     */
     public function publicPath()
     {
         return public_path($this->public_path);
@@ -94,7 +85,8 @@ abstract class _BaseModel extends Model
     }
 
     /**
-     * @return string
+     * @param $key
+     * @return mixed
      */
     public function imageName($key)
     {
@@ -102,6 +94,6 @@ abstract class _BaseModel extends Model
             throw new InvalidArgumentException('The key must be declared into the eloquent object sizes.');
         };
 
-        return $this->id . '_' . $key;
+        return str_slug('universite-nantes-aviron-una-' . $this->id . '-' . $key);
     }
 }

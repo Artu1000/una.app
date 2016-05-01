@@ -50,7 +50,7 @@ class PageController extends Controller
             'seo_meta' => $this->seo_meta,
             'og_meta'  => $this->og_meta,
             'page'     => $page,
-            'css'      => url(elixir('css/app.page.css')),
+            'css'      => elixir('css/app.page.css'),
         ];
 
         // return the view with data

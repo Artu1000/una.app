@@ -33,7 +33,9 @@
                         @foreach($team as $member)
                             @if($member->board_id === $id)
                                 <div class="member">
-                                    <img width="145" height="160" src="{{ $member->imagePath($member->photo, 'photo', 'picture') }}" alt="{{ $member->last_name }} {{ $member->first_name }}">
+                                    <a href="{{ $member->imagePath($member->photo, 'photo', 'zoom') }}" title="{{ $member->first_name }} {{ $member->last_name }}" data-lity>
+                                        <img width="145" height="160" src="{{ $member->imagePath($member->photo, 'photo', 'picture') }}" alt="{{ $member->last_name }} {{ $member->first_name }}">
+                                    </a>
                                     <h4 class="display-table">
                                     <span class="table-cell">
                                         {{ $member->first_name }}<br/>{{ $member->last_name }}
@@ -62,7 +64,9 @@
                     @foreach($team as $member)
                         @if($member->board_id === config('user.board_key.employee'))
                             <div class="member">
-                                <img width="145" height="160" src="{{ $member->imagePath($member->photo, 'photo', 'picture') }}" alt="{{ $member->last_name }} {{ $member->first_name }}">
+                                <a href="{{ $member->imagePath($member->photo, 'photo', 'zoom') }}" title="{{ $member->first_name }} {{ $member->last_name }}" data-lity>
+                                    <img width="145" height="160" src="{{ $member->imagePath($member->photo, 'photo', 'picture') }}" alt="{{ $member->last_name }} {{ $member->first_name }}">
+                                </a>
                                 <h4 class="display-table">
                                     <span class="table-cell">
                                         {{ $member->last_name }}<br>{{ $member->first_name }}

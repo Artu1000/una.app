@@ -31,8 +31,8 @@ class PasswordController extends Controller
         // data send to the view
         $data = [
             'seo_meta' => $this->seo_meta,
-            'email'   => $request->get('email'),
-            'css'     => url(elixir('css/app.auth.css')),
+            'email'    => $request->get('email'),
+            'css'      => elixir('css/app.auth.css'),
         ];
 
         return view('pages.front.password-forgotten')->with($data);
@@ -133,8 +133,8 @@ class PasswordController extends Controller
         $data = [
             'email'    => $request->get('email'),
             'reminder' => $request->get('token'),
-            'seo_meta'  => $this->seo_meta,
-            'css'      => url(elixir('css/app.auth.css')),
+            'seo_meta' => $this->seo_meta,
+            'css'      => elixir('css/app.auth.css'),
         ];
 
         return view('pages.front.password-reset')->with($data);

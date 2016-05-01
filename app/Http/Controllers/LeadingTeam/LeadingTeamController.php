@@ -51,7 +51,8 @@ class LeadingTeamController extends Controller
             'seo_meta' => $this->seo_meta,
             'og_meta'  => $this->og_meta,
             'team'     => $team,
-            'css'      => url(elixir('css/app.leading-team.css')),
+            'css'      => elixir('css/app.leading-team.css'),
+            'js'       => elixir('js/app.leading-team.js'),
         ];
 
         // return the view with data

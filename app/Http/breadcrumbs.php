@@ -52,44 +52,44 @@ if (config('settings.breadcrumbs')) {
     });
 
     // home
-    Breadcrumbs::register('home.edit', function ($breadcrumbs) {
+    Breadcrumbs::register('home.page.edit', function ($breadcrumbs) {
         $breadcrumbs->parent('home');
-        $breadcrumbs->push(trans('breadcrumbs.home.edit'), route('home.edit'));
+        $breadcrumbs->push(trans('breadcrumbs.home.page.edit'), route('home.page.edit'));
     });
-    Breadcrumbs::register('slides.create', function ($breadcrumbs) {
-        $breadcrumbs->parent('home.edit');
-        $breadcrumbs->push(trans('breadcrumbs.slides.create'), route('slides.create'));
+    Breadcrumbs::register('home.slides.create', function ($breadcrumbs) {
+        $breadcrumbs->parent('home.page.edit');
+        $breadcrumbs->push(trans('breadcrumbs.home.slides.create'), route('home.slides.create'));
     });
-    Breadcrumbs::register('slides.edit', function ($breadcrumbs, array $data) {
-        $breadcrumbs->parent('home.edit');
-        $breadcrumbs->push(trans('breadcrumbs.slides.edit', ['slide' => $data['slide']->title]), '');
+    Breadcrumbs::register('home.slides.edit', function ($breadcrumbs, array $data) {
+        $breadcrumbs->parent('home.page.edit');
+        $breadcrumbs->push(trans('breadcrumbs.home.slides.edit', ['slide' => $data['slide']->title]), '');
     });
 
     // news
-    Breadcrumbs::register('news.list', function ($breadcrumbs) {
+    Breadcrumbs::register('news.page.edit', function ($breadcrumbs) {
         $breadcrumbs->parent('home');
-        $breadcrumbs->push(trans('breadcrumbs.news.list'), route('news.list'));
+        $breadcrumbs->push(trans('breadcrumbs.news.page.edit'), route('news.page.edit'));
     });
     Breadcrumbs::register('news.create', function ($breadcrumbs) {
-        $breadcrumbs->parent('news.list');
+        $breadcrumbs->parent('news.page.edit');
         $breadcrumbs->push(trans('breadcrumbs.news.create'), route('news.create'));
     });
     Breadcrumbs::register('news.edit', function ($breadcrumbs, array $data) {
-        $breadcrumbs->parent('news.list');
+        $breadcrumbs->parent('news.page.edit');
         $breadcrumbs->push(trans('breadcrumbs.news.edit', ['news' => $data['news']->title]), '');
     });
 
     // schedules
-    Breadcrumbs::register('schedules.list', function ($breadcrumbs) {
+    Breadcrumbs::register('schedules.page.edit', function ($breadcrumbs) {
         $breadcrumbs->parent('home');
-        $breadcrumbs->push(trans('breadcrumbs.schedules.list'), route('schedules.list'));
+        $breadcrumbs->push(trans('breadcrumbs.schedules.page.edit'), route('schedules.page.edit'));
     });
     Breadcrumbs::register('schedules.create', function ($breadcrumbs) {
-        $breadcrumbs->parent('schedules.list');
+        $breadcrumbs->parent('schedules.page.edit');
         $breadcrumbs->push(trans('breadcrumbs.schedules.create'), route('schedules.create'));
     });
     Breadcrumbs::register('schedules.edit', function ($breadcrumbs, array $data) {
-        $breadcrumbs->parent('schedules.list');
+        $breadcrumbs->parent('schedules.page.edit');
         $breadcrumbs->push(trans('breadcrumbs.schedules.edit', ['schedule' => $data['schedule']->label]), '');
     });
 

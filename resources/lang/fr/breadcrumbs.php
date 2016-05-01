@@ -20,19 +20,25 @@ return [
         "edit"    => "Édition de l'utilisateur <b>:user</b>",
     ],
     "home"         => [
-        "edit" => "Édition de la page d'accueil",
-    ],
-    "slides"       => [
-        "create" => "Création d'une diapo",
-        "edit"   => "Édition de la diapo <b>:slide</b>",
+        "page"   => [
+            "edit" => "Édition de la page d'accueil",
+        ],
+        "slides" => [
+            "create" => "Création d'une diapo",
+            "edit"   => "Édition de la diapo <b>:slide</b>",
+        ],
     ],
     "news"         => [
-        "list"   => "Gestion des actualités",
+        "page"   => [
+            "edit" => "Gestion des actualités",
+        ],
         "create" => "Création d'une actualité",
         "edit"   => "Édition de l'actualité <b>:news</b>",
     ],
     "schedules"    => [
-        "list"   => "Gestion des créneaux horaires",
+        "page"   => [
+            "edit" => "Gestion des créneaux horaires",
+        ],
         "create" => "Création d'un créneau horaire",
         "edit"   => "Édition du créneau horaire <b>:schedule</b>",
     ],

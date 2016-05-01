@@ -59,13 +59,18 @@ elixir(function (mix) {
          ***************************************************************************************************************/
 
 
-        //combine home stylesheets
+        // combine home stylesheets
         .styles([
             paths.glide + 'dist/css/glide.core.css',
             paths.glide + 'dist/css/glide.theme.css',
-            paths.lity + 'lity.css',
             'public/css/app.home.css'
         ], 'public/css/app.home.css', './')
+
+        //combine leading team stylesheets
+        .styles([
+            paths.lity + 'lity.css',
+            'public/css/app.leading-team.css'
+        ], 'public/css/app.leading-team.css', './')
 
         // combine back stylesheets
         .styles([
@@ -116,7 +121,7 @@ elixir(function (mix) {
             paths.lity + 'lity.js',
             paths.js + 'app.home.js'
         ], 'public/js/app.home.js', './')
-        // // mix news detail js files
+        // mix news detail js files
         .scripts([
             paths.jquery + 'dist/jquery.js',
             paths.jquery_easing + 'js/jquery.easing.js',
@@ -126,6 +131,16 @@ elixir(function (mix) {
             paths.js + 'app.front.js',
             paths.js + 'app.news-detail.js'
         ], 'public/js/app.news-detail.js', './')
+        // mix leading team js files
+        .scripts([
+            paths.jquery + 'dist/jquery.js',
+            paths.jquery_easing + 'js/jquery.easing.js',
+            paths.bootstrap + 'javascripts/bootstrap.js',
+            paths.js + 'ie10-viewport-bug-workaround.js',
+            paths.lity + 'lity.js',
+            paths.js + 'app.common.js',
+            paths.js + 'app.front.js'
+        ], 'public/js/app.leading-team.js', './')
 
         // BACK
         .scripts([
@@ -168,6 +183,7 @@ elixir(function (mix) {
             'public/js/app.front.js',
             'public/js/app.home.js',
             'public/js/app.news-detail.js',
+            'public/js/app.leading-team.js',
             // js front
             'public/js/app.back.js'
         ]);

@@ -39,8 +39,8 @@ class AccountController extends Controller
         // prepare data for the view
         $data = [
             'seo_meta' => $this->seo_meta,
-            'email'   => $request->get('email'),
-            'css'     => url(elixir('css/app.auth.css')),
+            'email'    => $request->get('email'),
+            'css'      => elixir('css/app.auth.css'),
 
         ];
 

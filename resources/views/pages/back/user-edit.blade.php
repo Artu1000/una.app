@@ -47,7 +47,7 @@
                             <div class="form-group">
                                 @if(isset($user) && $user->photo)
                                     <div class="form-group">
-                                        <a href="{{ $user->imagePath($user->photo, 'photo', 'picture') }}" title="{{ $user->first_name }} {{ $user->last_name }}" data-lity>
+                                        <a href="{{ $user->imagePath($user->photo, 'photo', 'zoom') }}" title="{{ $user->first_name }} {{ $user->last_name }}" data-lity>
                                             <img src="{{ $user->imagePath($user->photo, 'photo', 'picture') }}" alt="{{ $user->first_name }} {{ $user->last_name }}">
                                         </a>
                                     </div>
@@ -129,7 +129,7 @@
                                 {{-- status --}}
                                 <label for="input_status_id">{{ trans('users.page.label.status_id') }} <span class="required">*</span></label></label>
                                 <div class="form-group">
-                                    <select class="form-control" name="status_id" id="input_status_id">
+                                    <select class="form-control" name="status_id" id="input_status_id" title="{{ trans('users.page.label.status_id_placeholder') }}">
                                         <option value="" disabled>{{ trans('users.page.label.status_id_placeholder') }}</option>
                                         @foreach($statuses as $id => $status)
                                             <option value="{{ $id }}"
@@ -144,7 +144,7 @@
                                 {{-- board --}}
                                 <label for="input_board_id">{{ trans('users.page.label.board_id') }}<span class="required">*</span></label></label>
                                 <div class="form-group">
-                                    <select class="form-control" name="board_id" id="input_board_id">
+                                    <select class="form-control" name="board_id" id="input_board_id" title="{{ trans('users.page.label.board_id_placeholder') }}">
                                         <option value="" disabled>{{ trans('users.page.label.board_id_placeholder') }}</option>
                                         <option value="" @if(is_null(old('board_id')) && !isset($user->board_id))selected @endif>{{ trans('users.page.label.no_board') }}</option>
                                         @foreach($boards as $id => $board)
@@ -238,20 +238,16 @@
                                 {{-- role --}}
                                 <label>{{ trans('users.page.label.role') }}<span class="required">*</span></label>
                                 <div class="form-group">
-                                    <div class="btn-group" data-toggle="buttons">
+                                    <select class="form-control" name="role" id="input_role_id" title="{{ trans('users.page.label.role_placeholder') }}">
+                                        <option value="" disabled>{{ trans('users.page.label.role_placeholder') }}</option>
                                         @foreach($roles as $role)
-                                            <label class="btn toggle
-                                            @if(!isset($user) && old('role') == $role->id)active
-                                            @elseif(isset($user) && isset($user->roles()->first()->id) && $user->roles()->first()->id === $role->id)active
-                                            @elseif(((isset($user) && !isset($user->roles()->first()->id)) || !isset($user)) && $role->slug == 'user')active
-                                            @endif">
-                                            <input type="radio" name="role" value="{{ $role->id }}" autocomplete="off"
-                                            @if(!isset($user) && old('role') == $role->id)checked
-                                            @elseif(isset($user) && isset($user->roles()->first()->id) && $user->roles()->first()->id === $role->id)checked
-                                            @elseif(((isset($user) && !isset($user->roles()->first()->id)) || !isset($user)) && $role->slug == 'user')checked
-                                            @endif>{{ $role->name }}</label>
+                                            <option value="{{ $role->id }}"
+                                                    @if(!isset($user) && old('role') == $role->id)selected
+                                                    @elseif(isset($user) && isset($user->roles()->first()->id) && $user->roles()->first()->id === $role->id)selected
+                                                    @elseif(((isset($user) && !isset($user->roles()->first()->id)) || !isset($user)) && $role->slug == 'user')selected
+                                                    @endif>{{ $role->name }}</option>
                                         @endforeach
-                                    </div>
+                                    </select>
                                 </div>
 
                                 {{-- activation --}}

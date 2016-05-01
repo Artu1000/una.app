@@ -48,10 +48,10 @@ class UsersController extends Controller
                 'title' => trans('users.page.label.photo'),
                 'key'   => 'photo',
                 'image' => [
-                    'storage_path' => \Sentinel::createModel()->storagePath(),
+                    'storage_path' => Sentinel::createModel()->storagePath(),
                     'size'         => [
                         'thumbnail' => 'admin',
-                        'detail'    => 'picture',
+                        'detail'    => 'zoom',
                     ],
                 ],
             ],
@@ -137,7 +137,7 @@ class UsersController extends Controller
         ];
 
         // we instantiate the query
-        $query = \Sentinel::getUserRepository()->where('users.id', '<>', \Sentinel::getUser()->id);
+        $query = Sentinel::getUserRepository()->where('users.id', '<>', Sentinel::getUser()->id);
 
         // we group the results
         $query->groupBy('users.id');
@@ -217,7 +217,7 @@ class UsersController extends Controller
             'seo_meta' => $this->seo_meta,
             'statuses' => config('user.status'),
             'boards'   => config('user.board'),
-            'roles'    => \Sentinel::getRoleRepository()->orderBy('position', 'asc')->get(),
+            'roles'    => Sentinel::getRoleRepository()->orderBy('position', 'asc')->get(),
         ];
 
         // return the view with data
@@ -396,7 +396,7 @@ class UsersController extends Controller
         }
 
         // we get the user
-        if (!$user = \Sentinel::findById($id)) {
+        if (!$user = Sentinel::findById($id)) {
             Modal::alert([
                 trans('users.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
@@ -413,7 +413,7 @@ class UsersController extends Controller
 
         // we check if the current user has a role position high enough to edit the user
         $edited_user_role = $user->roles->first();
-        $current_user_role = \Sentinel::getUser()->roles->first();
+        $current_user_role = Sentinel::getUser()->roles->first();
         if ($edited_user_role && $current_user_role && $edited_user_role->position < $current_user_role->position) {
             Modal::alert([
                 trans('users.message.permission.denied', ['action' => trans('users.message.permission.action.edit')]),
@@ -545,7 +545,7 @@ class UsersController extends Controller
         $request->merge(['remove_photo' => $request->get('remove_photo', false)]);
 
         // we sanitize the entries
-        $request->replace(\Entry::sanitizeAll($request->all()));
+        $request->replace(Entry::sanitizeAll($request->all()));
 
         try {
             // we convert the en/fr date to the database format
@@ -714,7 +714,7 @@ class UsersController extends Controller
         }
 
         // we get the user
-        if (!$user = \Sentinel::findById($id)) {
+        if (!$user = Sentinel::findById($id)) {
             Modal::alert([
                 trans('users.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
@@ -779,15 +779,8 @@ class UsersController extends Controller
      */
     public function activate($id, Request $request)
     {
-        // we check the current user permission
-        if ($permission_denied = Permission::hasPermissionJson('users.update')) {
-            return response([
-                'message' => [$permission_denied],
-            ], 401);
-        }
-
         // we get the user
-        if (!$user = \Sentinel::findById($id)) {
+        if (!$user = Sentinel::findById($id)) {
             return response([
                 'message' => [
                     trans('users.message.find.failure', ['id' => $id]),
@@ -796,17 +789,26 @@ class UsersController extends Controller
             ], 401);
         }
 
+        // we check the current user permission
+        if ($permission_denied = Permission::hasPermissionJson('users.update')) {
+            return response([
+                'active'  => Activation::completed($user) ? Activation::completed($user)->completed : Activation::completed($user),
+                'message' => [$permission_denied],
+            ], 401);
+        }
+
         // we check if the current user has a role position high enough to edit the user
         $edited_user_role = $user->roles->first();
-        $current_user_role = \Sentinel::getUser()->roles->first();
+        $current_user_role = Sentinel::getUser()->roles->first();
         if ($edited_user_role && $current_user_role && $edited_user_role->position < $current_user_role->position) {
             return response([
+                'active'  => Activation::completed($user) ? Activation::completed($user)->completed : Activation::completed($user),
                 trans('users.message.permission.denied', ['action' => trans('users.message.permission.action.edit')]),
             ], 401);
         }
 
         // we sanitize the entries
-        $request->replace(\Entry::sanitizeAll($request->all()));
+        $request->replace(Entry::sanitizeAll($request->all()));
 
         // we set the active value to false if we do not find it in the request params
         if (!$request->get('active')) {
@@ -828,7 +830,7 @@ class UsersController extends Controller
             // if the order is given to activate the user
             if ($request->get('active')) {
                 // we activate the user
-                if (!$activation = Activation::completed($user)) {
+                if (!$activation = Activation::exists($user)) {
                     $activation = Activation::create($user);
                 }
                 Activation::complete($user, $activation->code);

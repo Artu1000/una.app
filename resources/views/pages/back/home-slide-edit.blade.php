@@ -20,7 +20,7 @@
 
                 <hr>
 
-                <form role="form" method="POST" action="@if(isset($slide)){{ route('slides.update', ['id' => $slide->id]) }} @else{{ route('slides.store', ['id' => 0]) }} @endif" enctype="multipart/form-data">
+                <form role="form" method="POST" action="@if(isset($slide)){{ route('home.slides.update', ['id' => $slide->id]) }} @else{{ route('home.slides.store', ['id' => 0]) }} @endif" enctype="multipart/form-data">
 
                     {{-- crsf token --}}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -70,8 +70,8 @@
                             <label for="input_picto">{{ trans('home.page.label.slide.picto') }}</label>
                             @if(isset($slide) && $slide->picto)
                                 <div class="form-group image">
-                                    <a class="img-thumbnail bg-dark" href="{{ route('image', ['filename' => $slide->picto, 'storage_path' => $slide->storagePath(), 'size' => 'picto']) }}" data-lity>
-                                        <img width="40" height="40" src="{{ route('image', ['filename' => $slide->picto, 'storage_path' => $slide->storagePath(), 'size' => 'admin']) }}" alt="">
+                                    <a class="img-thumbnail bg-dark" href="{{ $slide->imagePath($slide->picto, 'picto', 'picto') }}" data-lity>
+                                        <img width="40" height="40" src="{{ $slide->imagePath($slide->picto, 'picto', 'picto') }}" alt="{{ $slide->title }}">
                                     </a>
                                 </div>
                             @endif
@@ -91,8 +91,8 @@
                             <label for="input_background_image">{{ trans('home.page.label.slide.background_image') }}</label>
                             @if(isset($slide) && $slide->background_image)
                                 <div class="form-group image">
-                                    <a class="img-thumbnail" href="{{ route('image', ['filename' => $slide->background_image, 'storage_path' => $slide->storagePath(), 'size' => '767']) }}" data-lity>
-                                        <img src="{{ route('image', ['filename' => $slide->background_image, 'storage_path' => $slide->storagePath(), 'size' => 'admin']) }}" alt="{{ $slide->first_name }} {{ $slide->last_name }}">
+                                    <a class="img-thumbnail" href="{{ $slide->imagePath($slide->background_image, 'background_image', '767') }}" data-lity>
+                                        <img src="{{ $slide->imagePath($slide->background_image, 'background_image', 'admin') }}" alt="{{ $slide->title }}">
                                     </a>
                                 </div>
                             @endif
@@ -160,14 +160,14 @@
                         <button class="btn btn-primary spin-on-click" type="submit">
                             <i class="fa fa-pencil-square"></i> {{ trans('home.page.action.slide.update') }}
                         </button>
-                        <a href="{{ route('home.edit') }}" class="btn btn-default spin-on-click" title="{{ trans('global.action.back') }}">
+                        <a href="{{ route('home.page.edit') }}" class="btn btn-default spin-on-click" title="{{ trans('global.action.back') }}">
                             <i class="fa fa-undo"></i> {{ trans('global.action.back') }}
                         </a>
                     @else
                         <button class="btn btn-success spin-on-click" type="submit">
                             <i class="fa fa-plus-circle"></i> {{ trans('home.page.action.slide.create') }}
                         </button>
-                        <a href="{{ route('home.edit') }}" class="btn btn-default spin-on-click" title="{{ trans('global.action.cancel') }}">
+                        <a href="{{ route('home.page.edit') }}" class="btn btn-default spin-on-click" title="{{ trans('global.action.cancel') }}">
                             <i class="fa fa-ban"></i> {{ trans('global.action.cancel') }}
                         </a>
                     @endif

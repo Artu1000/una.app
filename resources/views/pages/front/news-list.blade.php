@@ -4,15 +4,19 @@
 
     <div id="content" class="news-list row">
 
-        {{-- parallax img --}}
+        {{-- background img --}}
         <div class="parallax_img">
-            {{--<div class="background_responsive_img fill" data-background-image="{{ url('/') }}/img/news/una-news-list.jpg"></div>--}}
+            @if($background_image)
+                <div class="background_responsive_img fill" data-background-image="{{ ImageManager::imagePath(config('image.news.public_path'), $background_image) }}"></div>
+            @endif
         </div>
 
         <div class="text-content">
             <div class="container">
 
-                <h2><i class="fa fa-paper-plane"></i> {{ trans('news.page.title.front_list') }}</h2>
+                <h2><i class="fa fa-paper-plane"></i> {{ $title }}</h2>
+
+                {!! $description !!}
 
                 <hr>
 
@@ -23,10 +27,10 @@
                             @if($current_category == $id)
                                 selected
                             @endif"
-                           href="{{ route('news.list', ['category' => $id]) }}"
+                           href="{{ route('news.page.edit', ['category' => $id]) }}"
                            title="{{ trans('news.config.category.' . $cat) }}">{{ trans('news.config.category.' . $cat) }}</a>
                     @endforeach
-                    @if($current_category)<a href="{{ route('news.list') }}" title="Annuler filtre" class="text-danger"><i class="fa fa-times"></i> Annuler filtre</a>
+                    @if($current_category)<a href="{{ route('news.page.view') }}" title="Annuler filtre" class="text-danger"><i class="fa fa-times"></i> Annuler filtre</a>
                     @endif
                 </div>
 

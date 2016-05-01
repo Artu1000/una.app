@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\News\NewsRepositoryInterface;
 use App\Repositories\Slide\SlideRepositoryInterface;
 use CustomLog;
+use Entry;
 use Illuminate\Http\Request;
 use JavaScript;
 use Modal;
@@ -37,15 +38,15 @@ class HomeController extends Controller
      * @param Request $request
      * @return $this|\Illuminate\Http\RedirectResponse
      */
-    public function edit(Request $request)
+    public function pageEdit(Request $request)
     {
         // we check the current user permission
-        if (!Permission::hasPermission('home.view')) {
+        if (!Permission::hasPermission('home.page.view')) {
             return redirect()->route('dashboard.index');
         }
 
         // SEO Meta settings
-        $this->seo_meta['page_title'] = trans('seo.back.home.edit');
+        $this->seo_meta['page_title'] = trans('seo.back.home.page.edit');
 
         // we define the slides table list columns
         $columns = [
@@ -88,7 +89,7 @@ class HomeController extends Controller
                 'title'    => trans('home.page.label.slide.activation'),
                 'key'      => 'active',
                 'activate' => [
-                    'route'  => 'slides.activate',
+                    'route'  => 'home.slides.activate',
                     'params' => [],
                 ],
             ],
@@ -97,19 +98,19 @@ class HomeController extends Controller
         // we set the routes used in the table list
         $routes = [
             'index'   => [
-                'route'  => 'home.edit',
+                'route'  => 'home.page.edit',
                 'params' => [],
             ],
             'create'  => [
-                'route'  => 'slides.create',
+                'route'  => 'home.slides.create',
                 'params' => [],
             ],
             'edit'    => [
-                'route'  => 'slides.edit',
+                'route'  => 'home.slides.edit',
                 'params' => [],
             ],
             'destroy' => [
-                'route'  => 'slides.destroy',
+                'route'  => 'home.slides.destroy',
                 'params' => [],
             ],
         ];
@@ -160,20 +161,20 @@ class HomeController extends Controller
         ];
 
         // return the view with data
-        return view('pages.back.home-edit')->with($data);
+        return view('pages.back.home-page-edit')->with($data);
     }
 
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request)
+    public function pageUpdate(Request $request)
     {
         // we check the current user permission
-        if (!Permission::hasPermission('home.update')) {
+        if (!Permission::hasPermission('home.page.update')) {
             // we redirect the current user to the user list if he has the required permission
-            if (Sentinel::getUser()->hasAccess('home.view')) {
-                return redirect()->route('home.edit');
+            if (Sentinel::getUser()->hasAccess('home.page.view')) {
+                return redirect()->route('home.page.edit');
             } else {
                 // or we redirect the current user to the home page
                 return redirect()->route('dashboard.index');
@@ -181,7 +182,7 @@ class HomeController extends Controller
         }
 
         // we sanitize the entries
-        $request->replace(\Entry::sanitizeAll($request->all()));
+        $request->replace(Entry::sanitizeAll($request->all()));
 
         // we check inputs validity
         $rules = [
@@ -277,8 +278,8 @@ class HomeController extends Controller
             'title'       => isset($home->title) ? $home->title : null,
             'description' => $description,
             'video_link'  => isset($home->video_link) ? $home->video_link : null,
-            'css'         => url(elixir('css/app.home.css')),
-            'js'          => url(elixir('js/app.home.js')),
+            'css'         => elixir('css/app.home.css'),
+            'js'          => elixir('js/app.home.js'),
         ];
 
         // return the view with data
