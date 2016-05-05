@@ -61,6 +61,7 @@ elixir(function (mix) {
 
         // combine home stylesheets
         .styles([
+            paths.lity + 'lity.css',
             paths.glide + 'dist/css/glide.core.css',
             paths.glide + 'dist/css/glide.theme.css',
             'public/css/app.home.css'
