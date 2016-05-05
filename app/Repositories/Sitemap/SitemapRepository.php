@@ -114,10 +114,13 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
         // registration
         $site_pages[] = [
             'url'      => route('registration.index'),
-            'last_mod' => app(RegistrationPriceRepositoryInterface::class)
-                ->orderBy('updated_at', 'desc')
-                ->first()
-                ->updated_at,
+            'last_mod' => Carbon::createFromFormat(
+                'Y-m-d H:i:s',
+                app(RegistrationPriceRepositoryInterface::class)
+                    ->orderBy('updated_at', 'desc')
+                    ->first()
+                    ->updated_at
+            )->format('Y-m-d'),
         ];
 
         // schedule
