@@ -17,33 +17,41 @@ html {
 
       #content.error {
 
-        .logo {
-          min-height: 340px;
-          padding: 10px;
-          @include border-radius(50%);
-          border: dashed 1px $gray-light;
+        .form_container {
 
-          div {
-            @include border-radius(50%);
+          .form_capsule {
+            width: 360px;
+            margin: 0 auto;
+            text-align: center;
 
-            @extend .btn-primary;
+            .logo {
+              height: 360px;
+              padding: 10px;
+              @include border-radius(7%);
+              border: dashed 1px $gray-light;
 
-            &:hover {
-              @include transition(0.2s ease);
+              div {
+                @include border-radius(7%);
+                @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+
+                &:hover {
+                  @include transition(0.2s ease);
+                }
+              }
+            }
+
+            h1 {
+              margin: 30px 0;
+              font-size: 45px;
+              text-align: center;
+            }
+
+            h2 {
+              font-size: 30px;
+              margin: 0 0 30px;
+              text-align: center;
             }
           }
-        }
-
-        h1 {
-          margin: 30px 0 15px;
-          font-size: 45px;
-          text-align: center;
-        }
-
-        h2 {
-          font-size: 30px;
-          margin: 0 0 30px;
-          text-align: center;
         }
       }
     }
@@ -64,14 +72,43 @@ html {
       #layout {
 
         #content.error {
+          height: auto;
 
-          .logo {
-            height: 260px;
-            padding: 17px 0;
+          .container {
+            height: auto;
 
-            img {
-              width: 240px;
-              height: 224px;
+            div.display-table {
+              display: inherit;
+              height: auto;
+
+              .form_container {
+                display: inherit;
+
+                .form_capsule {
+                  width: 290px;
+                  margin: 30px auto;
+
+                  .logo {
+                    height: 290px;
+                    border: none;
+                    padding: 0;
+
+                    div {
+                      padding: 15px;
+                      @include border-radius(5%);
+
+                      img {
+                        width: 260px;
+                        height: 260px;
+                      }
+                    }
+                  }
+
+                  h1 {
+                    font-size: 29px;
+                  }
+                }
+              }
             }
           }
         }

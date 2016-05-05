@@ -9306,7 +9306,7 @@ html body #layout #cookie_bar {
 @media screen and (max-width: 767px) {
   #content.home div#carousel {
     margin-top: -20px;
-    min-height: 500px; }
+    min-height: 550px; }
     #content.home div#carousel .glide__wrapper .glide__track .glide__slide section .slide_content div div {
       width: 320px;
       padding: 0 15px; }

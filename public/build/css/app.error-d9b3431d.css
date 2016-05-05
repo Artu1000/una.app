@@ -2873,62 +2873,51 @@ fieldset[disabled] a.btn {
     color: #aeb6cb;
     background-color: #fff; }
 
-.btn-primary, html body #layout .btn-group .btn.toggle.active, html body #layout #content.error .logo div {
+.btn-primary, html body #layout .btn-group .btn.toggle.active {
   color: #fff;
   background-color: #337ab7;
   border-color: #2e6da4; }
-  .btn-primary:focus, html body #layout .btn-group .btn.toggle.active:focus, html body #layout #content.error .logo div:focus, .btn-primary.focus, html body #layout .btn-group .focus.btn.toggle.active, html body #layout #content.error .logo div.focus {
+  .btn-primary:focus, html body #layout .btn-group .btn.toggle.active:focus, .btn-primary.focus, html body #layout .btn-group .focus.btn.toggle.active {
     color: #fff;
     background-color: #286090;
     border-color: #122b40; }
-  .btn-primary:hover, html body #layout .btn-group .btn.toggle.active:hover, html body #layout #content.error .logo div:hover {
+  .btn-primary:hover, html body #layout .btn-group .btn.toggle.active:hover {
     color: #fff;
     background-color: #286090;
     border-color: #204d74; }
-  .btn-primary:active, html body #layout .btn-group .btn.toggle.active:active, html body #layout #content.error .logo div:active, .btn-primary.active, html body #layout .btn-group .active.btn.toggle, html body #layout #content.error .logo div.active,
+  .btn-primary:active, html body #layout .btn-group .btn.toggle.active:active, .btn-primary.active, html body #layout .btn-group .active.btn.toggle,
   .open > .btn-primary.dropdown-toggle, html body #layout .btn-group
-  .open > .dropdown-toggle.btn.toggle.active, html body #layout #content.error .logo
-  .open > div.dropdown-toggle {
+  .open > .dropdown-toggle.btn.toggle.active {
     color: #fff;
     background-color: #286090;
     border-color: #204d74; }
-    .btn-primary:active:hover, html body #layout .btn-group .btn.toggle.active:active:hover, html body #layout #content.error .logo div:active:hover, .btn-primary:active:focus, html body #layout .btn-group .btn.toggle.active:active:focus, html body #layout #content.error .logo div:active:focus, .btn-primary:active.focus, html body #layout .btn-group .btn.toggle.active:active.focus, html body #layout #content.error .logo div:active.focus, .btn-primary.active:hover, html body #layout .btn-group .active.btn.toggle:hover, html body #layout #content.error .logo div.active:hover, .btn-primary.active:focus, html body #layout .btn-group .active.btn.toggle:focus, html body #layout #content.error .logo div.active:focus, .btn-primary.active.focus, html body #layout .btn-group .active.focus.btn.toggle, html body #layout #content.error .logo div.active.focus,
+    .btn-primary:active:hover, html body #layout .btn-group .btn.toggle.active:active:hover, .btn-primary:active:focus, html body #layout .btn-group .btn.toggle.active:active:focus, .btn-primary:active.focus, html body #layout .btn-group .btn.toggle.active:active.focus, .btn-primary.active:hover, html body #layout .btn-group .active.btn.toggle:hover, .btn-primary.active:focus, html body #layout .btn-group .active.btn.toggle:focus, .btn-primary.active.focus, html body #layout .btn-group .active.focus.btn.toggle,
     .open > .btn-primary.dropdown-toggle:hover, html body #layout .btn-group
-    .open > .dropdown-toggle.btn.toggle.active:hover, html body #layout #content.error .logo
-    .open > div.dropdown-toggle:hover,
+    .open > .dropdown-toggle.btn.toggle.active:hover,
     .open > .btn-primary.dropdown-toggle:focus, html body #layout .btn-group
-    .open > .dropdown-toggle.btn.toggle.active:focus, html body #layout #content.error .logo
-    .open > div.dropdown-toggle:focus,
+    .open > .dropdown-toggle.btn.toggle.active:focus,
     .open > .btn-primary.dropdown-toggle.focus, html body #layout .btn-group
-    .open > .dropdown-toggle.focus.btn.toggle.active, html body #layout #content.error .logo
-    .open > div.dropdown-toggle.focus {
+    .open > .dropdown-toggle.focus.btn.toggle.active {
       color: #fff;
       background-color: #204d74;
       border-color: #122b40; }
-  .btn-primary:active, html body #layout .btn-group .btn.toggle.active:active, html body #layout #content.error .logo div:active, .btn-primary.active, html body #layout .btn-group .active.btn.toggle, html body #layout #content.error .logo div.active,
+  .btn-primary:active, html body #layout .btn-group .btn.toggle.active:active, .btn-primary.active, html body #layout .btn-group .active.btn.toggle,
   .open > .btn-primary.dropdown-toggle, html body #layout .btn-group
-  .open > .dropdown-toggle.btn.toggle.active, html body #layout #content.error .logo
-  .open > div.dropdown-toggle {
+  .open > .dropdown-toggle.btn.toggle.active {
     background-image: none; }
-  .btn-primary.disabled:hover, html body #layout .btn-group .disabled.btn.toggle.active:hover, html body #layout #content.error .logo div.disabled:hover, .btn-primary.disabled:focus, html body #layout .btn-group .disabled.btn.toggle.active:focus, html body #layout #content.error .logo div.disabled:focus, .btn-primary.disabled.focus, html body #layout .btn-group .disabled.focus.btn.toggle.active, html body #layout #content.error .logo div.disabled.focus, .btn-primary[disabled]:hover, html body #layout .btn-group [disabled].btn.toggle.active:hover, html body #layout #content.error .logo div[disabled]:hover, .btn-primary[disabled]:focus, html body #layout .btn-group [disabled].btn.toggle.active:focus, html body #layout #content.error .logo div[disabled]:focus, .btn-primary[disabled].focus, html body #layout .btn-group [disabled].focus.btn.toggle.active, html body #layout #content.error .logo div[disabled].focus,
+  .btn-primary.disabled:hover, html body #layout .btn-group .disabled.btn.toggle.active:hover, .btn-primary.disabled:focus, html body #layout .btn-group .disabled.btn.toggle.active:focus, .btn-primary.disabled.focus, html body #layout .btn-group .disabled.focus.btn.toggle.active, .btn-primary[disabled]:hover, html body #layout .btn-group [disabled].btn.toggle.active:hover, .btn-primary[disabled]:focus, html body #layout .btn-group [disabled].btn.toggle.active:focus, .btn-primary[disabled].focus, html body #layout .btn-group [disabled].focus.btn.toggle.active,
   fieldset[disabled] .btn-primary:hover,
   fieldset[disabled] html body #layout .btn-group .btn.toggle.active:hover, html body #layout .btn-group
   fieldset[disabled] .btn.toggle.active:hover,
-  fieldset[disabled] html body #layout #content.error .logo div:hover, html body #layout #content.error .logo
-  fieldset[disabled] div:hover,
   fieldset[disabled] .btn-primary:focus,
   fieldset[disabled] html body #layout .btn-group .btn.toggle.active:focus, html body #layout .btn-group
   fieldset[disabled] .btn.toggle.active:focus,
-  fieldset[disabled] html body #layout #content.error .logo div:focus, html body #layout #content.error .logo
-  fieldset[disabled] div:focus,
   fieldset[disabled] .btn-primary.focus,
   fieldset[disabled] html body #layout .btn-group .focus.btn.toggle.active, html body #layout .btn-group
-  fieldset[disabled] .focus.btn.toggle.active,
-  fieldset[disabled] html body #layout #content.error .logo div.focus, html body #layout #content.error .logo
-  fieldset[disabled] div.focus {
+  fieldset[disabled] .focus.btn.toggle.active {
     background-color: #337ab7;
     border-color: #2e6da4; }
-  .btn-primary .badge, html body #layout .btn-group .btn.toggle.active .badge, html body #layout #content.error .logo div .badge {
+  .btn-primary .badge, html body #layout .btn-group .btn.toggle.active .badge {
     color: #337ab7;
     background-color: #fff; }
 
@@ -8230,35 +8219,90 @@ html {
       padding: 0 15px;
       text-align: right; } }
 
-html body #layout #content.error .logo {
-  min-height: 340px;
-  padding: 10px;
-  border-radius: 50%;
-  border: dashed 1px #777777; }
-  html body #layout #content.error .logo div {
-    border-radius: 50%; }
-    html body #layout #content.error .logo div:hover {
-      transition: 0.2s ease; }
-
-html body #layout #content.error h1 {
-  margin: 30px 0 15px;
-  font-size: 45px;
+html body #layout #content.error .form_container .form_capsule {
+  width: 360px;
+  margin: 0 auto;
   text-align: center; }
-
-html body #layout #content.error h2 {
-  font-size: 30px;
-  margin: 0 0 30px;
-  text-align: center; }
+  html body #layout #content.error .form_container .form_capsule .logo {
+    height: 360px;
+    padding: 10px;
+    border-radius: 7%;
+    border: dashed 1px #777777; }
+    html body #layout #content.error .form_container .form_capsule .logo div {
+      border-radius: 7%;
+      color: #fff;
+      background-color: #337ab7;
+      border-color: #2e6da4; }
+      html body #layout #content.error .form_container .form_capsule .logo div:focus, html body #layout #content.error .form_container .form_capsule .logo div.focus {
+        color: #fff;
+        background-color: #286090;
+        border-color: #122b40; }
+      html body #layout #content.error .form_container .form_capsule .logo div:hover {
+        color: #fff;
+        background-color: #286090;
+        border-color: #204d74; }
+      html body #layout #content.error .form_container .form_capsule .logo div:active, html body #layout #content.error .form_container .form_capsule .logo div.active,
+      .open > html body #layout #content.error .form_container .form_capsule .logo div.dropdown-toggle {
+        color: #fff;
+        background-color: #286090;
+        border-color: #204d74; }
+        html body #layout #content.error .form_container .form_capsule .logo div:active:hover, html body #layout #content.error .form_container .form_capsule .logo div:active:focus, html body #layout #content.error .form_container .form_capsule .logo div:active.focus, html body #layout #content.error .form_container .form_capsule .logo div.active:hover, html body #layout #content.error .form_container .form_capsule .logo div.active:focus, html body #layout #content.error .form_container .form_capsule .logo div.active.focus,
+        .open > html body #layout #content.error .form_container .form_capsule .logo div.dropdown-toggle:hover,
+        .open > html body #layout #content.error .form_container .form_capsule .logo div.dropdown-toggle:focus,
+        .open > html body #layout #content.error .form_container .form_capsule .logo div.dropdown-toggle.focus {
+          color: #fff;
+          background-color: #204d74;
+          border-color: #122b40; }
+      html body #layout #content.error .form_container .form_capsule .logo div:active, html body #layout #content.error .form_container .form_capsule .logo div.active,
+      .open > html body #layout #content.error .form_container .form_capsule .logo div.dropdown-toggle {
+        background-image: none; }
+      html body #layout #content.error .form_container .form_capsule .logo div.disabled:hover, html body #layout #content.error .form_container .form_capsule .logo div.disabled:focus, html body #layout #content.error .form_container .form_capsule .logo div.disabled.focus, html body #layout #content.error .form_container .form_capsule .logo div[disabled]:hover, html body #layout #content.error .form_container .form_capsule .logo div[disabled]:focus, html body #layout #content.error .form_container .form_capsule .logo div[disabled].focus,
+      fieldset[disabled] html body #layout #content.error .form_container .form_capsule .logo div:hover,
+      fieldset[disabled] html body #layout #content.error .form_container .form_capsule .logo div:focus,
+      fieldset[disabled] html body #layout #content.error .form_container .form_capsule .logo div.focus {
+        background-color: #337ab7;
+        border-color: #2e6da4; }
+      html body #layout #content.error .form_container .form_capsule .logo div .badge {
+        color: #337ab7;
+        background-color: #fff; }
+      html body #layout #content.error .form_container .form_capsule .logo div:hover {
+        transition: 0.2s ease; }
+  html body #layout #content.error .form_container .form_capsule h1 {
+    margin: 30px 0;
+    font-size: 45px;
+    text-align: center; }
+  html body #layout #content.error .form_container .form_capsule h2 {
+    font-size: 30px;
+    margin: 0 0 30px;
+    text-align: center; }
 
 /***********************************************************************************************************************
  * EXTRA SMALL DEVICES : 767 & LESS (SM)
  **********************************************************************************************************************/
 @media screen and (max-width: 767px) {
-  html body #layout #content.error .logo {
-    height: 260px;
-    padding: 17px 0; }
-    html body #layout #content.error .logo img {
-      width: 240px;
-      height: 224px; } }
+  html body #layout #content.error {
+    height: auto; }
+    html body #layout #content.error .container {
+      height: auto; }
+      html body #layout #content.error .container div.display-table {
+        display: inherit;
+        height: auto; }
+        html body #layout #content.error .container div.display-table .form_container {
+          display: inherit; }
+          html body #layout #content.error .container div.display-table .form_container .form_capsule {
+            width: 290px;
+            margin: 30px auto; }
+            html body #layout #content.error .container div.display-table .form_container .form_capsule .logo {
+              height: 290px;
+              border: none;
+              padding: 0; }
+              html body #layout #content.error .container div.display-table .form_container .form_capsule .logo div {
+                padding: 15px;
+                border-radius: 5%; }
+                html body #layout #content.error .container div.display-table .form_container .form_capsule .logo div img {
+                  width: 260px;
+                  height: 260px; }
+            html body #layout #content.error .container div.display-table .form_container .form_capsule h1 {
+              font-size: 29px; } }
 
 /*# sourceMappingURL=app.error.css.map */
