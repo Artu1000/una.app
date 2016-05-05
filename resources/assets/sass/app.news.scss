@@ -79,21 +79,28 @@
 
             .content {
 
+              a.img {
+                @include border-radius(4px);
+                border: solid 1px #ccc;
+                margin-bottom: 12px;
+
+                img {
+                  @include border-radius(14px);
+                  padding: 10px;
+                }
+              }
+
               h3 {
                 margin: 5px 0;
               }
 
-              .date, .category, .comments {
+              .date, .category, .author, .comments {
                 display: inline-block;
-              }
-
-              .category {
-                margin-left: 20px;
+                margin-right: 15px;
               }
 
               .comments {
-                color: #337ab7;
-                margin-left: 20px;
+                color: $brand-primary;
               }
 
               .sum_up {
@@ -145,12 +152,20 @@
         margin-bottom: 10px;
       }
 
+      a {
+        @include lato-normal();
+      }
+
       .date {
         margin-bottom: 5px;
       }
 
       .category {
         margin-bottom: 50px;
+      }
+
+      .author {
+        padding-top: 50px;
       }
 
       .return {
@@ -184,11 +199,7 @@
 
           td.content {
             padding: 30px 20px;
-
-            div.date, div.category, div.comments {
-              display: block;
-              margin: 0;
-            }
+            text-align: left;
 
             .button.mobile {
               padding: 10px 0 0;
@@ -204,6 +215,20 @@
               }
             }
           }
+        }
+      }
+    }
+  }
+
+  #content.news-detail {
+
+    .text-content {
+
+      .container {
+
+        div.author {
+          float: none !important;
+          padding-top: 30px;
         }
       }
     }

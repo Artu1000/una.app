@@ -22,7 +22,7 @@ class SettingsTableSeeder extends Seeder
             mkdir($path . '/settings');
         }
 
-        $logo_dark = \ImageManager::optimizeAndResize(
+        $logo_dark = ImageManager::optimizeAndResize(
             database_path('seeds/files/settings/logo-una-dark.png'),
             config('image.settings.logo.name.dark'),
             config('image.settings.logo.extension'),
@@ -31,7 +31,7 @@ class SettingsTableSeeder extends Seeder
             false
         );
 
-        $logo_light = \ImageManager::optimizeAndResize(
+        $logo_light = ImageManager::optimizeAndResize(
             database_path('seeds/files/settings/logo-una-light.png'),
             config('image.settings.logo.name.light'),
             config('image.settings.logo.extension'),

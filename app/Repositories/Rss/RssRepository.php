@@ -32,7 +32,9 @@ class RssRepository extends BaseRepository implements RssRepositoryInterface
             ->lastBuildDate($now->timestamp)
             ->appendTo($feed);
 
-        $news_list = $this->model->where('created_at', '<=', $now)
+        $news_list = $this->model
+            ->where('released_at', '<=', $now)
+            ->where('active', true)
             ->orderBy('released_at', 'desc')
             ->take(20)
             ->get();

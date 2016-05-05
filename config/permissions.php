@@ -44,7 +44,8 @@ return [
     'news.update'                => false,
     'news.delete'                => false,
     'news.activate'              => false,
-    
+    'news.author'                => false,
+
     // schedules
     'schedules'                  => false,
     'schedules.page.view'        => false,

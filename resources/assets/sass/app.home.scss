@@ -146,21 +146,28 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
             .content {
 
+              a.img {
+                @include border-radius(4px);
+                border: solid 1px #ccc;
+                margin-bottom: 12px;
+
+                img {
+                  @include border-radius(14px);
+                  padding: 10px;
+                }
+              }
+
               h3 {
                 margin: 5px 0;
               }
 
-              .date, .category, .comments {
+              .date, .category, .author, .comments {
                 display: inline-block;
-              }
-
-              .category {
-                margin-left: 20px;
+                margin-right: 15px;
               }
 
               .comments {
-                color: #337ab7;
-                margin-left: 20px;
+                color: $brand-primary;
               }
 
               .sum_up {
@@ -216,6 +223,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
     div#carousel {
       margin-top: -100px;
+      min-height: 1100px;
 
       .glide__wrapper {
 
@@ -286,19 +294,6 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
                 margin: 5px 0;
               }
 
-              .date, .category, .comments {
-                display: inline-block;
-              }
-
-              .category {
-                margin-left: 20px;
-              }
-
-              .comments {
-                color: #337ab7;
-                margin-left: 20px;
-              }
-
               .sum_up {
                 margin-top: 8px;
               }
@@ -337,6 +332,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
     div#carousel {
       margin-top: -50px;
+      min-height: 900px;
 
       .glide__wrapper {
 
@@ -434,6 +430,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
     div#carousel {
       margin-top: -50px;
+      min-height: 750px;
 
       .glide__wrapper {
 
@@ -526,6 +523,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
     div#carousel {
       margin-top: -50px;
+      min-height: 600px;
 
       .glide__wrapper {
 
@@ -618,6 +616,7 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
     div#carousel {
       margin-top: -20px;
+      min-height: 500px;
 
       .glide__wrapper {
 
@@ -671,20 +670,19 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
             td.content {
               padding: 30px 20px;
+              text-align: left;
 
-              div.date, div.category, div.comments {
-                display: block;
-                margin: 0;
+              h3 {
+                margin-top: 0;
               }
 
               .button.mobile {
-                padding: 10px 0 35px;
+                padding: 10px 0 0 0;
 
                 button {
                   @include border-radius(6px);
                   height: auto;
                   width: auto;
-                  //border-color: #aeb6cb;
 
                   i.fa {
                     font-size: $font-size;

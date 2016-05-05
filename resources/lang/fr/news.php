@@ -47,12 +47,14 @@ return [
             "activation"             => "Activation",
             "activation_placeholder" => "Statut",
             "description"            => "Description",
+            "author_id"              => "Auteur",
+            "author_id_placeholder"  => "--- Sélectionnez un auteur ---",
         ],
     ],
 
     // messages
     "message" => [
-        "content" => [
+        "content"    => [
             "update" => [
                 "success" => "La page d'actualités a bien été mise à jour.",
                 "failure" => "Une erreur est survenue lors de la mise à jour de la page d'actualités.",

@@ -16,16 +16,20 @@
 
                 <h2><i class="fa fa-newspaper-o"></i> {!! $news->title !!}</h2>
                 <div class="date">
-                    <i class="fa fa-clock-o"></i> {{ trans('news.page.label.released_at') }} : {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $news->released_at)->format('d/m/Y H:i:s') }}
+                    <i class="fa fa-clock-o"></i> {{ trans('news.page.label.released_at') }} : {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $news->released_at)->format('d/m/Y H:i') }}
                 </div>
                 <div class="category">
-                    <i class="fa fa-cube"></i> {{ trans('news.page.label.category') }} : {{ trans('news.config.category.' . config('news.category.' . $news->category_id)) }}
+                    <i class="fa fa-cube"></i> {{ trans('news.page.label.category') }} : <b>{{ trans('news.config.category.' . config('news.category.' . $news->category_id)) }}</b>
                 </div>
 
                 <hr>
 
                 <div>
                     {!! $news->content !!}
+                </div>
+
+                <div class="author pull-right">
+                    <b>{{ trans('news.page.label.author_id') }}</b> : {{ $news->author->first_name . ' ' . $news->author->last_name }}
                 </div>
 
                 <div class="return">

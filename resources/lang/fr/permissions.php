@@ -41,6 +41,7 @@ return [
     "news.update"                => "Modifier une actualité",
     "news.delete"                => "Supprimer une actualité",
     "news.activate"              => "Activer une actualité",
+    "news.author"                => "Sélectionner l'auteur d'une actualité",
 
     // schedules
     "schedules"                  => "Horaires",

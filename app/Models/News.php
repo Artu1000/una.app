@@ -19,6 +19,7 @@ class News extends _BaseModel
 
         // we define the fillable attributes
         $this->fillable = [
+            'author_id',
             'category_id',
             'key',
             'title',
@@ -34,13 +35,14 @@ class News extends _BaseModel
         // we define the image(s) size(s)
         $this->sizes = [
             'image' => [
-                'admin' => [40, 40],
-                'list'  => [150, 150],
-                '767'   => [767, 431],
-                '991'   => [991, 557],
-                '1199'  => [1199, 674],
-                '1919'  => [1919, 1079],
-                '2560'  => [2560, 1440],
+                'admin'       => [40, 40],
+                'list'        => [150, 150],
+                'list_mobile' => [766, 200],
+                '767'         => [767, 431],
+                '991'         => [991, 557],
+                '1199'        => [1199, 674],
+                '1919'        => [1919, 1079],
+                '2560'        => [2560, 1440],
             ],
         ];
 
@@ -49,5 +51,10 @@ class News extends _BaseModel
 
         // we define the storage path to store files
         $this->storage_path = 'app/news';
+    }
+
+    public function author()
+    {
+        return $this->hasOne(User::class, 'id', 'author_id');
     }
 }

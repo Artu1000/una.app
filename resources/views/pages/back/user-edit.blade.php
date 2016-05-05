@@ -127,7 +127,7 @@
                             <div class="panel-body">
 
                                 {{-- status --}}
-                                <label for="input_status_id">{{ trans('users.page.label.status_id') }} <span class="required">*</span></label></label>
+                                <label for="input_status_id">{{ trans('users.page.label.status_id') }} <span class="required">*</span></label>
                                 <div class="form-group">
                                     <select class="form-control" name="status_id" id="input_status_id" title="{{ trans('users.page.label.status_id_placeholder') }}">
                                         <option value="" disabled>{{ trans('users.page.label.status_id_placeholder') }}</option>
@@ -142,7 +142,7 @@
                                 </div>
 
                                 {{-- board --}}
-                                <label for="input_board_id">{{ trans('users.page.label.board_id') }}<span class="required">*</span></label></label>
+                                <label for="input_board_id">{{ trans('users.page.label.board_id') }}<span class="required">*</span></label>
                                 <div class="form-group">
                                     <select class="form-control" name="board_id" id="input_board_id" title="{{ trans('users.page.label.board_id_placeholder') }}">
                                         <option value="" disabled>{{ trans('users.page.label.board_id_placeholder') }}</option>

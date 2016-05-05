@@ -23,7 +23,7 @@
 
                         <h1>{!! config('settings.info_icon') !!} {{ trans('errors.title') }}</h1>
                         <h2>
-                            {{ trans('errors.'.$code.'.title') }}<br/>
+                            {{ trans('errors.'.$code.'.title') }} :<br/>
                             {{ trans('errors.'.$code.'.message') }}
                         </h2>
 

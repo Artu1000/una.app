@@ -4,6 +4,7 @@ namespace App\Http\Controllers\News;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\News\NewsRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Carbon\Carbon;
 use CustomLog;
 use Entry;
@@ -199,6 +200,17 @@ class NewsController extends Controller
                 'trans'   => 'news.config.category',
                 'sort_by' => 'news.category_id',
                 'button'  => true,
+            ],
+            [
+                'title'    => trans('news.page.label.author_id'),
+                'key'      => 'author',
+                'sort_by'  => 'author.last_name',
+                'relation' => [
+                    'attributes' => [
+                        'last_name',
+                        'first_name',
+                    ],
+                ],
             ],
             [
                 'title'           => trans('news.page.label.released_at'),
@@ -411,6 +423,7 @@ class NewsController extends Controller
         // prepare data for the view
         $data = [
             'seo_meta'   => $this->seo_meta,
+            'users'      => app(UserRepositoryInterface::class)->all(),
             'categories' => config('news.category'),
         ];
         
@@ -458,9 +471,15 @@ class NewsController extends Controller
                     ->format('Y-m-d H:i:s'),
             ]);
         }
+
+        // we manage the author
+        if (!Sentinel::getUser()->hasAccess('news.author')) {
+            $request->merge(['author_id', Sentinel::getUser()->id]);
+        }
         
         // we check inputs validity
         $rules = [
+            'author_id'        => 'required|numeric|exists:users,id',
             'category_id'      => 'required|in:' . implode(',', array_keys(config('news.category'))),
             'image'            => 'image|mimes:jpg,jpeg,png|image_size:>=2560,>=1440',
             'key'              => 'alpha_dash|unique:news,key',
@@ -569,6 +588,7 @@ class NewsController extends Controller
         $data = [
             'seo_meta'         => $this->seo_meta,
             'news'             => $news,
+            'users'            => app(UserRepositoryInterface::class)->all(),
             'categories'       => config('news.category'),
             'breadcrumbs_data' => $breadcrumbs_data,
         ];
@@ -661,8 +681,14 @@ class NewsController extends Controller
         
         try {
             // we update the news
-            $news->update($request->except('_token', 'image'));
-            
+            $news->update($request->except('_token', 'image', 'author_id'));
+
+            // we set the author
+            if (Sentinel::getUser()->hasAccess('news.author') && $author_id = $request->get('author_id')) {
+                $news->author_id = $author_id;
+                $news->save();
+            }
+
             // we store the image
             if ($img = $request->file('image')) {
                 // we optimize, resize and save the image

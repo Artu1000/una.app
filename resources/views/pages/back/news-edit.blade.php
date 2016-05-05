@@ -175,6 +175,23 @@
                                 </div>
                             @endif()
 
+                            {{-- author --}}
+                            @if(Sentinel::getUser()->hasAccess('news.author'))
+                                <label for="input_author_id">{{ trans('news.page.label.author_id') }} <span class="required">*</span></label>
+                                <div class="form-group">
+                                    <select class="form-control" name="author_id" id="input_author_id" title="{{ trans('news.page.label.author_id_placeholder') }}">
+                                        <option value="" disabled>{{ trans('news.page.label.author_id_placeholder') }}</option>
+                                        @foreach($users as $user)
+                                            <option value="{{ $user->id }}"
+                                                    @if(old('author_id') == $user->id)selected
+                                                    @elseif(is_null(old('author_id')) && isset($news->author_id) && $news->author_id === $user->id)selected
+                                                    @elseif(!isset($news) && Sentinel::getUser()->id === $user->id)selected
+                                                    @endif>{{ $user->last_name . ' ' . $user->first_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @endif()
+
                         </div>
                     </div>
 

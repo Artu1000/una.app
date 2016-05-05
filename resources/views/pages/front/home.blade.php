@@ -66,6 +66,9 @@
                                         </a>
                                     </td>
                                     <td class="content">
+                                        <a class="img visible-xs" href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}" role="button" title="{{ $news->title }}">
+                                            <img width="100%" src="{{ $news->imagePath($news->image, 'image', 'list_mobile') }}" alt="{{ $news->title }}">
+                                        </a>
                                         <h3>
                                             <a href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}"><i class="fa fa-newspaper-o"></i> {{ $news->title }}</a>
                                         </h3>
@@ -74,6 +77,9 @@
                                         </div>
                                         <div class="category {{ config('news.category.' . $news->category_id) }}" >
                                             <i class="fa fa-cube"></i> {{ trans('news.config.category.' . config('news.category.' . $news->category_id)) }}
+                                        </div>
+                                        <div class="author">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{ $news->author->first_name . ' ' . $news->author->last_name }}
                                         </div>
                                         <div class="comments">
                                             <i class="fa fa-comments"></i> <a href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}#disqus_thread" title="Commentaires"></a>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Repositories\News\NewsRepositoryInterface;
 use App\Repositories\Slide\SlideRepositoryInterface;
+use Carbon\Carbon;
 use CustomLog;
 use Entry;
 use Illuminate\Http\Request;
@@ -236,7 +237,12 @@ class HomeController extends Controller
         $this->seo_meta['meta_keywords'] = trans('seo.front.home.show.keywords');
 
         // we get the two last news
-        $last_news = $this->news->where('active', true)->orderBy('released_at', 'desc')->take(2)->get();
+        $last_news = $this->news
+            ->where('released_at', '<=', Carbon::now()->format('Y-m-d H:i:s'))
+            ->where('active', true)
+            ->orderBy('released_at', 'desc')
+            ->take(2)
+            ->get();
 
         // we convert in html the markdown content of each news
         if ($last_news) {
