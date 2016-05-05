@@ -63,6 +63,9 @@ class SettingsController extends Controller
             }
         }
 
+        // we clear the cache
+        Artisan::call('config:clear');
+
         // we sanitize the entries
         $request->replace(Entry::sanitizeAll($request->all()));
 
@@ -166,17 +169,19 @@ class SettingsController extends Controller
             // we update the json file
             file_put_contents(storage_path('app/settings/settings.json'), json_encode($inputs));
 
-            // we clear and renew the config cache
-            Artisan::call('config:clear');
-            Artisan::call('config:cache');
-
             // we notify the current user
             Modal::alert([
                 trans('settings.message.update.success'),
             ], 'success');
 
+            // we renew the config cache
+            Artisan::call('config:cache');
+
             return redirect()->back();
         } catch (Exception $e) {
+            // we clear the cache
+            Artisan::call('config:clear');
+
             // we flash the request
             $request->flash();
 
@@ -188,6 +193,9 @@ class SettingsController extends Controller
                 trans('settings.message.update.failure'),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
+
+            // we renew the config cache
+            Artisan::call('config:cache');
 
             return redirect()->back();
         }
