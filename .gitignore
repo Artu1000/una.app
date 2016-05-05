@@ -3,7 +3,6 @@
 /vendor
 /public/css
 /public/js
-/public/favicon.ico
 /resources/assets/vendor
 /node_modules
 .env

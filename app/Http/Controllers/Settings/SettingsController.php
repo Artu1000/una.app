@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use Artisan;
 use CustomLog;
 use Entry;
 use Exception;
@@ -164,6 +165,10 @@ class SettingsController extends Controller
 
             // we update the json file
             file_put_contents(storage_path('app/settings/settings.json'), json_encode($inputs));
+
+            // we clear and renew the config cache
+            Artisan::call('config:clear');
+            Artisan::call('config:cache');
 
             // we notify the current user
             Modal::alert([
