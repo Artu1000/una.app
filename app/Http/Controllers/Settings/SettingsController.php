@@ -64,6 +64,7 @@ class SettingsController extends Controller
         }
 
         // we clear the cache
+        Artisan::call('cache:clear');
         Artisan::call('config:clear');
 
         // we sanitize the entries
@@ -179,8 +180,6 @@ class SettingsController extends Controller
 
             return redirect()->back();
         } catch (Exception $e) {
-            // we clear the cache
-            Artisan::call('config:clear');
 
             // we flash the request
             $request->flash();

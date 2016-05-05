@@ -231,6 +231,8 @@ class HomeController extends Controller
      */
     public function show()
     {
+//        dd(config('settings.google_analytics'));
+
         // SEO Meta settings
         $this->seo_meta['page_title'] = trans('seo.front.home.show.title');
         $this->seo_meta['meta_desc'] = trans('seo.front.home.show.description');
