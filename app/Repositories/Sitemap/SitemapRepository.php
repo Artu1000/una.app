@@ -65,16 +65,19 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
         // news
         $site_pages[] = [
             'url'      => route('news.index'),
-            'last_mod' => app(NewsRepositoryInterface::class)
-                ->orderBy('updated_at', 'desc')
-                ->first()
-                ->updated_at,
+            'last_mod' => Carbon::createFromFormat(
+                'Y-m-d H:i:s',
+                app(NewsRepositoryInterface::class)
+                    ->orderBy('updated_at', 'desc')
+                    ->first()
+                    ->updated_at
+            )->format('Y-m-d'),
         ];
         $news_list = app(NewsRepositoryInterface::class)->orderBy('updated_at', 'desc')->all();
         foreach ($news_list as $news) {
             $site_pages[] = [
                 'url'      => route('news.show', ['id' => $news->id, 'key' => $news->key]),
-                'last_mod' => $news->updated_at,
+                'last_mod' => Carbon::createFromFormat('Y-m-d H:i:s', $news->updated_at)->format('Y-m-d'),
             ];
         }
 
@@ -83,7 +86,7 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
         foreach ($pages_list as $page) {
             $site_pages[] = [
                 'url'      => route('page.show', $page->key),
-                'last_mod' => $page->updated_at,
+                'last_mod' => Carbon::createFromFormat('Y-m-d H:i:s', $news->updated_at)->format('Y-m-d'),
             ];
         }
 
@@ -99,10 +102,13 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
         // leading team
         $site_pages[] = [
             'url'      => route('front.leading_team'),
-            'last_mod' => app(UserRepositoryInterface::class)
-                ->orderBy('updated_at', 'desc')
-                ->first()
-                ->updated_at,
+            'last_mod' => Carbon::createFromFormat(
+                'Y-m-d H:i:s',
+                app(UserRepositoryInterface::class)
+                    ->orderBy('updated_at', 'desc')
+                    ->first()
+                    ->updated_at
+            )->format('Y-m-d'),
         ];
 
         // registration
@@ -117,16 +123,19 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
         // schedule
         $site_pages[] = [
             'url'      => route('schedules.index'),
-            'last_mod' => app(ScheduleRepositoryInterface::class)
-                ->orderBy('updated_at', 'desc')
-                ->first()
-                ->updated_at,
+            'last_mod' => Carbon::createFromFormat(
+                'Y-m-d H:i:s',
+                app(ScheduleRepositoryInterface::class)
+                    ->orderBy('updated_at', 'desc')
+                    ->first()
+                    ->updated_at
+            )->format('Y-m-d'),
         ];
 
         // calendar
         $site_pages[] = [
             'url'      => route('calendar.index'),
-            'last_mod' => Carbon::now()->subDays(5),
+            'last_mod' => Carbon::now()->subDays(5)->format('Y-m-d'),
         ];
 
         // e-shop
