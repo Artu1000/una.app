@@ -45,7 +45,7 @@ class RssRepository extends BaseRepository implements RssRepositoryInterface
 
             // we parse the markdown content
             $parsedown = new Parsedown();
-            $item->content = isset($item->content) ? $parsedown->text($item->content) : null;
+            $news->content = isset($news->content) ? $parsedown->text($news->content) : null;
 
             $item->title($news->title)
                 ->description(str_limit(strip_tags($news->content), 250))
