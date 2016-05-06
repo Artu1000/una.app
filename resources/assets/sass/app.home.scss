@@ -197,6 +197,10 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
 
     &#una-club{
 
+      a {
+        @include lato-normal();
+      }
+
       .video{
         background-color: #000;
         color: $brand-primary;

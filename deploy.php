@@ -85,7 +85,7 @@ after('app:down', 'project:install');
 // permissions upgrade
 task('auth:upgrade', function () {
     run('sudo chmod -R g+w {{deploy_path}}/shared/');
-    run('sudo chgrp -R www-data {{deploy_path}}/');
+    run('sudo chmod -R g+w {{release_path}}/database/seeds/files');
 })->desc('Set correct permissions the the shared directory');
 after('project:install', 'auth:upgrade');
 
