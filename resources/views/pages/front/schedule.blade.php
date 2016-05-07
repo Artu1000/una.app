@@ -2,15 +2,16 @@
 
 @section('content')
 
+    {{-- top background image --}}
+    @if($background_image)
+        <div class="top_background_image row">
+            <div class="background_responsive_img fill" data-background-image="{{ ImageManager::imagePath(config('image.schedules.public_path'), $background_image, 'background_image') }}"></div>
+        </div>
+    @else
+        <div class="no_top_background_image"></div>
+    @endif
+
     <div id="content" class="schedule row">
-
-        {{-- background image --}}
-            <div class="parallax_img">
-                @if($background_image)
-                    <div class="background_responsive_img fill" data-background-image="{{ ImageManager::imagePath(config('image.schedules.public_path'), $background_image, 'background_image') }}"></div>
-
-                @endif
-            </div>
 
         <div class="text-content">
             <div class="container">

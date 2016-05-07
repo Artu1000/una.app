@@ -2,12 +2,16 @@
 
 @section('content')
 
-    <div id="content" class="palmares row">
-
-        {{-- parallax img --}}
-        <div class="parallax_img">
-            <div class="background_responsive_img fill" data-background-image="{{ url('img/palmares/una-palmares.jpg') }}"></div>
+    {{-- top background img --}}
+    @if($background_image)
+        <div class="top_background_image row">
+            <div class="background_responsive_img fill" data-background-image="{{ ImageManager::imagePath(config('image.registration.public_path'), $background_image) }}"></div>
         </div>
+    @else
+        <div class="no_top_background_image"></div>
+    @endif
+
+    <div id="content" class="palmares row">
 
         <div class="text-content">
             <div class="container">

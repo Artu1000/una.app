@@ -2,14 +2,16 @@
 
 @section('content')
 
-    <div id="content" class="registration row">
-
-        {{-- background img --}}
-        <div class="parallax_img">
-            @if($background_image)
-                <div class="background_responsive_img fill" data-background-image="{{ ImageManager::imagePath(config('image.registration.public_path'), $background_image) }}"></div>
-            @endif
+    {{-- top background img --}}
+    @if($background_image)
+        <div class="top_background_image row">
+            <div class="background_responsive_img fill" data-background-image="{{ ImageManager::imagePath(config('image.registration.public_path'), $background_image) }}"></div>
         </div>
+    @else
+        <div class="no_top_background_image"></div>
+    @endif
+
+    <div id="content" class="registration row">
 
         <div class="text-content">
             <div class="container">

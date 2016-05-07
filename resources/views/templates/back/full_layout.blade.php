@@ -5,10 +5,11 @@
         @include('templates.back.partials.head')
     </head>
 
-    @include('templates.common.partials.javascript')
-
     {{-- body inclusion--}}
     <body id="top">
+
+        {{-- dynamic javascript inclusion --}}
+        @include('templates.common.partials.javascript')
 
         <div id="layout" class="container-fluid">
 

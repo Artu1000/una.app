@@ -2,15 +2,17 @@
 
 @section('content')
 
+    {{-- top background img --}}
+    @if($news->image)
+        <div class="top_background_image row">
+            <div class="background_responsive_img fill" data-background-image="{{ $news->imagePath($news->image, 'image') }}"></div>
+        </div>
+    @else
+        <div class="no_top_background_image"></div>
+    @endif
+
     <div id="content" class="news-detail row">
 
-        {{-- parallax img --}}
-        <div class="parallax_img">
-            @if($news->image)
-                <div class="background_responsive_img fill" data-background-image="{{ $news->imagePath($news->image, 'image') }}"></div>
-            @endif
-        </div>
-        
         <div class="text-content">
             <div class="container">
 
