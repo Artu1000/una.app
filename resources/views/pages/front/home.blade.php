@@ -82,7 +82,7 @@
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{ $news->author->first_name . ' ' . $news->author->last_name }}
                                         </div>
                                         <div class="comments">
-                                            <i class="fa fa-comments"></i> <a href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}#disqus_thread" title="Commentaires"></a>
+                                            <a href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}#disqus_thread" title="Commentaires"></a>
                                         </div>
                                         <div class="sum_up hidden-xs">
                                             {{ str_limit(strip_tags($news->content), 250) }}
