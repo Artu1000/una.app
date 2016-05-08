@@ -13235,13 +13235,5 @@ $(function () {
 
     // Cookie acceptation verification
     cookie.submit();
-
-    // mailto behaviour
-    $('#email_contact').click(function(e){
-        e.preventDefault();
-        if(app.contact_email){
-            window.location.href = 'mailto:' + app.contact_email;
-        }
-    });
 });
 //# sourceMappingURL=app.leading-team.js.map

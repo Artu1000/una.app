@@ -15,9 +15,7 @@
                         <i class="fa fa-phone-square"></i> {{ config('settings.phone_number') }}
                     </p>
                     <p>
-                        <a href="#" id="email_contact">
-                            <i class="fa fa-envelope"></i> {!! str_replace('@', '<i class="fa fa-at"></i>', config('settings.contact_email')) !!}
-                        </a>
+                        <i class="fa fa-envelope"></i> {!! str_replace('@', '<i class="fa fa-at"></i>', config('settings.contact_email')) !!}
                     </p>
                     <p>
                         <i class="fa fa-bus"></i> {{ config('settings.address') }} <span class="hidden-sm hidden-xs"> {{ config('settings.zip_code') }} {{ config('settings.city') }}</span>
