@@ -7,6 +7,7 @@
 {{-- meta --}}
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="content-language" content="fr-FR" />
 <meta name="author" content="Arthur LORENT" />
 
 {{-- seo meta --}}
