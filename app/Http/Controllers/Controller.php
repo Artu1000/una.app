@@ -49,7 +49,6 @@ abstract class Controller extends BaseController
             'info_icon'       => config('settings.info_icon'),
             'locale'          => config('app.locale'),
             'multilingual'    => config('settings.multilingual'),
-            'contact_email'   => config('settings.contact_email'),
         ]);
 
         // load modal if an alert is waiting
