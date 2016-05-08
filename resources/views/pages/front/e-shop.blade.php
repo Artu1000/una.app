@@ -37,7 +37,7 @@
                     @foreach($articles as $article)
                         <tr class="article">
                             <td class="image text-center">
-                                <a href="" title="{{ $article->title }}">
+                                <a href="#" title="{{ $article->title }}">
                                     <img width="150" height="150" src="http://dummyimage.com/150x150/000/fff" alt="{{ $article->title }}">
                                 </a>
                                 <span class="price visible-xs underline">{{ $article->price }}€</span>

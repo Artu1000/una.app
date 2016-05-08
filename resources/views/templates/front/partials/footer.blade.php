@@ -15,7 +15,7 @@
                         <i class="fa fa-phone-square"></i> {{ config('settings.phone_number') }}
                     </p>
                     <p>
-                        <a href="mailto:{{ config('settings.contact_email') }}">
+                        <a href="#" id="email_contact">
                             <i class="fa fa-envelope"></i> {!! str_replace('@', '<i class="fa fa-at"></i>', config('settings.contact_email')) !!}
                         </a>
                     </p>
