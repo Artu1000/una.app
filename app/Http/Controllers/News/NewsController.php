@@ -52,12 +52,6 @@ class NewsController extends Controller
         $this->seo_meta['page_title'] = trans('seo.front.news.title');
         $this->seo_meta['meta_desc'] = $description ? trans('seo.front.news.description') : str_limit($description, 160);
         $this->seo_meta['meta_keywords'] = trans('seo.front.news.keywords');
-
-        // og meta settings
-        $this->og_meta['og:title'] = trans('seo.front.news.title');
-        $this->og_meta['og:description'] = $description ? trans('seo.front.news.description') : str_limit($description, 160);
-        $this->og_meta['og:type'] = 'article';
-        $this->og_meta['og:url'] = route('news.page.edit');
         
         // we get the category id
         $category = Input::get('category', null);
@@ -84,7 +78,16 @@ class NewsController extends Controller
                 $n->content = isset($n->content) ? $parsedown->text($n->content) : null;
             }
         }
-        
+
+        // og meta settings
+        $this->og_meta['og:title'] = trans('seo.front.news.title');
+        $this->og_meta['og:description'] = $description ? trans('seo.front.news.description') : str_limit($description, 160);
+        $this->og_meta['og:type'] = 'article';
+        $this->og_meta['og:url'] = route('news.page.edit');
+        if(isset($news_page->background_image)){
+            $this->og_meta['og:image'] = ImageManager::imagePath(config('image.news.public_path'), $news_page->background_image, 'background_image', 767);
+        }
+
         // prepare data for the view
         $data = [
             'seo_meta'         => $this->seo_meta,
@@ -141,8 +144,10 @@ class NewsController extends Controller
         $this->og_meta['og:description'] = $news->meta_desc ? $news->meta_desc : str_limit(strip_tags($news->content), 160);
         $this->og_meta['og:type'] = 'article';
         $this->og_meta['og:url'] = route('news.show', ['id' => $news->id, 'key' => $news->key]);
-        $this->og_meta['og:image'] = $news->imagePath($news->image, 'image', '767');
-        
+        if($news->image){
+            $this->og_meta['og:image'] = $news->imagePath($news->image, 'image', '767');
+        }
+
         // prepare data for the view
         $data = [
             'seo_meta' => $this->seo_meta,

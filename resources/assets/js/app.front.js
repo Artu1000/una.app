@@ -137,7 +137,7 @@ var responsiveBackgroundImage = {
             }).join('.');
 
             // we add the responsive size
-            $(this).css('background-image', 'url(' + bg_img_url + '-' + responsiveBackgroundImage.responsive_width + '.jpg)');
+            $(this).css('background-image', 'url(' + bg_img_url + '-' + responsiveBackgroundImage.responsive_width + '.' + segments[segments.length - 1] + ')');
         });
     },
     process: function () {

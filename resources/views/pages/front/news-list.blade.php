@@ -41,14 +41,18 @@
                         @foreach($news_list as $news)
                             <tr class="news">
                                 <td class="img hidden-xs">
-                                    <a class="btn btn-default" href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}" role="button" title="{{ $news->title }}">
-                                        <img class="img-circle" width="150" height="150" src="{{ $news->imagePath($news->image, 'image', 'list') }}" alt="{{ $news->title }}">
-                                    </a>
+                                    @if($news->image)
+                                        <a class="btn btn-default" href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}" role="button" title="{{ $news->title }}">
+                                            <img class="img-circle" width="150" height="150" src="{{ $news->imagePath($news->image, 'image', 'list') }}" alt="{{ $news->title }}">
+                                        </a>
+                                    @endif
                                 </td>
                                 <td class="content">
-                                    <a class="img visible-xs" href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}" role="button" title="{{ $news->title }}">
-                                        <img width="100%" src="{{ $news->imagePath($news->image, 'image', 'list_mobile') }}" alt="{{ $news->title }}">
-                                    </a>
+                                    @if($news->image)
+                                        <a class="img visible-xs" href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}" role="button" title="{{ $news->title }}">
+                                            <img width="100%" src="{{ $news->imagePath($news->image, 'image', 'list_mobile') }}" alt="{{ $news->title }}">
+                                        </a>
+                                    @endif
                                     <h3>
                                         <a href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}"><i class="fa fa-newspaper-o"></i> {{ $news->title }}</a>
                                     </h3>
