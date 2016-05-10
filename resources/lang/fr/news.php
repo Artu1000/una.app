@@ -24,9 +24,10 @@ return [
             "front_list" => "Les actualités du club Université Nantes Aviron (UNA)",
         ],
         "action" => [
-            "create" => "Créer l'actualité",
-            "update" => "Éditer l'actualité",
-            "delete" => "Supprimer l'actualité",
+            "create"  => "Créer l'actualité",
+            "update"  => "Éditer l'actualité",
+            "delete"  => "Supprimer l'actualité",
+            "preview" => "Prévisualiser",
         ],
         "info"   => [
             "image"            => "Largeur min : 2560px - Hauteur min : 1440px - Format : jpg, jpeg, png.",
@@ -49,6 +50,7 @@ return [
             "description"            => "Description",
             "author_id"              => "Auteur",
             "author_id_placeholder"  => "--- Sélectionnez un auteur ---",
+            "preview"                => "Prévisualisation",
         ],
     ],
 

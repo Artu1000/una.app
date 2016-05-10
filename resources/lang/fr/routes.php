@@ -74,11 +74,11 @@ return [
         "activate" => "admin/utilisateurs/activation/{id}",
     ],
     "home"         => [
-        "page" => [
+        "page"   => [
             "edit"   => "admin/contenus/accueil/page",
             "update" => "admin/contenus/accueil/page/mise-a-jour",
         ],
-        "slides"       => [
+        "slides" => [
             "create"   => "admin/contenus/accueil/diapo/creation",
             "store"    => "admin/contenus/accueil/diapo/enregistrement/{id}",
             "edit"     => "admin/contenus/accueil/diapo/edition/{id}",
@@ -100,6 +100,7 @@ return [
         "update"   => "admin/contenus/actualites/mise-a-jour/{id}",
         "destroy"  => "admin/contenus/actualites/suppression/{id}",
         "activate" => "admin/contenus/actualites/activation/{id}",
+        "preview"  => "admin/contenus/actualites/previsualisation/{id}",
     ],
     "schedules"    => [
         "index"    => "horaires",

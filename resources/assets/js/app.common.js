@@ -56,7 +56,10 @@ $(function() {
     // open new window when clicking on the link
     $(".new_window").on("click", function (event) {
         event.preventDefault();
-        window.open(this.href);
+        // we get the closest a target
+        var target = $(this).closest('a').attr('href');
+        // we open the target in a new window
+        window.open(target);
     });
 
     // replace button fontawesome icon by loading spinner on click

@@ -82,6 +82,7 @@ $route = Route::group($group, function () {
     Route::put(LaravelLocalization::transRoute('routes.news.update'), ['as' => 'news.update', 'uses' => 'News\NewsController@update']);
     Route::delete(LaravelLocalization::transRoute('routes.news.destroy'), ['as' => 'news.destroy', 'uses' => 'News\NewsController@destroy']);
     Route::post(LaravelLocalization::transRoute('routes.news.activate'), ['as' => 'news.activate', 'uses' => 'News\NewsController@activate']);
+    Route::get(LaravelLocalization::transRoute('routes.news.preview'), ['as' => 'news.preview', 'uses' => 'News\NewsController@preview']);
 
     // schedules page
     Route::get(LaravelLocalization::transRoute('routes.schedules.page.edit'), ['as' => 'schedules.page.edit', 'uses' => 'Schedule\ScheduleController@pageEdit']);

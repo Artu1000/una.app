@@ -12,9 +12,9 @@
   "css/app.auth.css": "css/app.auth-e3c10f08.css",
   "css/app.error.css": "css/app.error-c917e4f6.css",
   "css/app.back.css": "css/app.back-a76d3262.css",
-  "js/app.front.js": "js/app.front-943421cc.js",
-  "js/app.home.js": "js/app.home-3f9ba0fd.js",
-  "js/app.news-detail.js": "js/app.news-detail-6f9373bc.js",
-  "js/app.leading-team.js": "js/app.leading-team-eaaa77ed.js",
-  "js/app.back.js": "js/app.back-f659c8a8.js"
+  "js/app.front.js": "js/app.front-ec011707.js",
+  "js/app.home.js": "js/app.home-0bc57e3c.js",
+  "js/app.news-detail.js": "js/app.news-detail-302dd237.js",
+  "js/app.leading-team.js": "js/app.leading-team-c93663ea.js",
+  "js/app.back.js": "js/app.back-f75de438.js"
 }

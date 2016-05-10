@@ -2,6 +2,9 @@
 
 namespace App\Helpers;
 
+use DB;
+use Log;
+
 class CustomLogHelper
 {
     /**
@@ -10,8 +13,8 @@ class CustomLogHelper
      */
     public function error($error)
     {
-        \Log::info('===================== ERROR =====================');
-        \Log::error($error . PHP_EOL);
+        Log::info('===================== ERROR =====================');
+        Log::error($error . PHP_EOL);
     }
 
     /**
@@ -23,8 +26,8 @@ class CustomLogHelper
             $method = !empty($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '';
             $uri = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
 
-            \Log::info('===================== HTTP =====================');
-            \Log::info(implode(' - ', [$method, $uri]) . PHP_EOL);
+            Log::info('===================== HTTP =====================');
+            Log::info(implode(' - ', [$method, $uri]) . PHP_EOL);
         }
     }
 
@@ -33,7 +36,7 @@ class CustomLogHelper
      */
     public function sqlRequests()
     {
-        \DB::listen(
+        DB::listen(
             function ($sql) {
                 // $sql is an object with the properties:
                 //  sql: The query
@@ -57,8 +60,8 @@ class CustomLogHelper
                 $query = str_replace(['%', '?'], ['%%', '%s'], $sql->sql);
                 $query = vsprintf($query, $sql->bindings);
 
-                \Log::info('===================== SQL =====================');
-                \Log::info(date('Y-m-d H:i:s') . ': ' . $query . PHP_EOL);
+                Log::info('===================== SQL =====================');
+                Log::info(date('Y-m-d H:i:s') . ': ' . $query . PHP_EOL);
             }
         );
     }

@@ -160,6 +160,71 @@ class NewsController extends Controller
         // return the view with data
         return view('pages.front.news-detail')->with($data);
     }
+
+    /**
+     * @param $news_key
+     * @return $this
+     */
+    public function preview($id)
+    {
+        // we check the current user permission
+        if (!Permission::hasPermission('news.preview')) {
+            // we redirect the current user to the news page edit if he has the required permission
+            if (Sentinel::getUser()->hasAccess('news.page.view')) {
+                return redirect()->route('news.page.edit');
+            } else {
+                // or we redirect the current user to the dashboard
+                return redirect()->route('dashboard.index');
+            }
+        }
+
+        // we get the news from its unique key
+        try {
+            $news = $this->repository
+                ->getModel()
+                ->where('id', $id)
+                ->firstOrFail();
+        } catch (Exception $e) {
+            // we log the error
+            CustomLog::error($e);
+
+            Modal::alert([
+                trans('news.message.find.failure', ['id' => $id]),
+            ], 'error');
+
+            return redirect()->back();
+        }
+
+        // we parse the markdown content
+        $parsedown = new Parsedown();
+        $news->content = isset($news->content) ? $parsedown->text($news->content) : null;
+
+        // SEO Meta settings
+        $this->seo_meta['page_title'] = $news->meta_title ? $news->meta_title : $news->title;
+        $this->seo_meta['meta_desc'] = $news->meta_desc ? $news->meta_desc : str_limit(strip_tags($news->content), 160);
+        $this->seo_meta['meta_keywords'] = $news->meta_keywords;
+
+        // og meta settings
+        $this->og_meta['og:title'] = $news->meta_title ? $news->meta_title : $news->title;
+        $this->og_meta['og:description'] = $news->meta_desc ? $news->meta_desc : str_limit(strip_tags($news->content), 160);
+        $this->og_meta['og:type'] = 'article';
+        $this->og_meta['og:url'] = route('news.show', ['id' => $news->id, 'key' => $news->key]);
+        if($news->image){
+            $this->og_meta['og:image'] = $news->imagePath($news->image, 'image', '767');
+        }
+
+        // prepare data for the view
+        $data = [
+            'seo_meta' => $this->seo_meta,
+            'og_meta'  => $this->og_meta,
+            'news'     => $news,
+            'css'      => elixir('css/app.news.css'),
+            'js'       => elixir('js/app.news-detail.js'),
+        ];
+
+        // return the view with data
+        return view('pages.front.news-detail')->with($data);
+    }
     
     /**
      * @param Request $request
@@ -224,13 +289,34 @@ class NewsController extends Controller
                 'sort_by_default' => 'desc',
                 'date'            => 'd/m/Y H:i',
             ],
-            [
-                'title'    => trans('news.page.label.activation'),
-                'key'      => 'active',
-                'activate' => [
-                    'route'  => 'news.activate',
-                    'params' => [],
+        ];
+        // we show the last connexion date for the admins
+        if (Sentinel::getUser()->hasAccess('news.preview')) {
+            // we add the activation field
+            $columns[] = [
+                'title'  => trans('news.page.label.preview'),
+                'link'   => [
+                    'label' => '<i class="fa fa-eye" aria-hidden="true"></i> ' . trans('news.page.action.preview'),
+                    'url'   => [
+                        'route'  => 'news.preview',
+                        'params' => [
+                            'key'       => 'id',
+                            'attribute' => 'id',
+                        ],
+                    ],
                 ],
+                'button' => [
+                    'class' => 'btn-primary new_window',
+                ],
+            ];
+        }
+        // we show the activation field
+        $columns[] = [
+            'title'    => trans('news.page.label.activation'),
+            'key'      => 'active',
+            'activate' => [
+                'route'  => 'news.activate',
+                'params' => [],
             ],
         ];
         

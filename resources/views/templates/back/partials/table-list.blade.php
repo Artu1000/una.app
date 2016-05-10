@@ -230,7 +230,7 @@
                             <img class="img-thumbnail @if(isset($image['class'])){{ $image['class'] }} @endif" src="{{ $entity->imagePath($entity->getAttribute($column['key']), $column['key'], $image['size']['thumbnail']) }}">
                         </a>
 
-                        {{-- show formatted date --}}
+                    {{-- show formatted date --}}
                     @elseif(
                         isset($column['date'])
                         && !empty($column['date'])
@@ -238,7 +238,7 @@
                     )
                         {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $entity->getAttribute($column['key']))->format($column['date']) }}
 
-                        {{-- show link --}}
+                    {{-- show link --}}
                     @elseif(
                         isset($column['link'])
                         && !empty($column['link'])
