@@ -22,6 +22,12 @@ class ImageManagerHelper
      */
     public function optimizeAndResize(string $src_path, string $file_name, string $extension, string $storage_path, array $sizes, bool $remove_src = true)
     {
+        // we low case of the extension
+        $extension = strtolower($extension);
+
+        // we version the image name
+        $file_name = $this->setImageVersion($file_name);
+
         // we optimize the image
         if ($remove_src) {
             $this->optimizeAndRemoveSrc($src_path, $storage_path, $file_name, $extension);
@@ -44,7 +50,7 @@ class ImageManagerHelper
      */
     public function resize(string $file_name, string $extension, string $storage_path, array $sizes)
     {
-        // wet low case of the extension
+        // we low case of the extension
         $extension = strtolower($extension);
 
         // we resize the original image
@@ -228,5 +234,17 @@ class ImageManagerHelper
 
             return 'image-error';
         }
+    }
+
+    /**
+     * @param string $file_name
+     * @return string
+     */
+    public function setImageVersion(string $file_name)
+    {
+        // we set the new versioned image name
+        $versioned_img_name = $file_name . '-' . mt_rand(1000000000, 9999999999);
+
+        return $versioned_img_name;
     }
 }

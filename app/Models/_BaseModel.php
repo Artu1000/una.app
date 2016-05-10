@@ -85,15 +85,15 @@ abstract class _BaseModel extends Model
     }
 
     /**
-     * @param $key
+     * @param $type
      * @return mixed
      */
-    public function imageName($key)
+    public function imageName($type)
     {
-        if (!array_key_exists($key, $this->sizes)) {
+        if (!array_key_exists($type, $this->sizes)) {
             throw new InvalidArgumentException('The key must be declared into the eloquent object sizes.');
         };
 
-        return str_slug('universite-nantes-aviron-una-' . $this->id . '-' . $key);
+        return str_slug('universite-nantes-aviron-una-' . $this->id . '-' . $type);
     }
 }

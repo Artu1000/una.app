@@ -1,4 +1,4 @@
-<!DOCTYPE html lang="fr">
+<!DOCTYPE html>
 
 {{-- head inclusion--}}
 <head>
