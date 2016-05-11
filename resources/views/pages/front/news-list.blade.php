@@ -30,7 +30,7 @@
                                 selected
                             @endif"
                            href="{{ route('news.index', ['category' => $id]) }}"
-                           title="{{ trans('news.config.category.' . $cat) }}">{{ trans('news.config.category.' . $cat) }}</a>
+                           title="{{ trans('news.config.category.' . $cat) }}" rel="nofollow">{{ trans('news.config.category.' . $cat) }}</a>
                     @endforeach
                     @if($current_category)<a href="{{ route('news.index') }}" title="Annuler filtre" class="text-danger"><i class="fa fa-times"></i> Annuler filtre</a>
                     @endif
