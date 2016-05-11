@@ -15,33 +15,30 @@
 
         <div class="text-content">
             <div class="container">
-                <h2><i class="fa fa-sign-in"></i> {{ $title }}</h2>
+                <h1><i class="fa fa-sign-in"></i> {{ $title }}</h1>
+
                 <hr>
 
-                <div class="online">
-                    <h3>{{ trans('registration.page.title.online_registration') }}</h3>
-                    <p>{{ trans('registration.page.label.online_registration') }}</p>
-                    <a href="http://prototype.una-club.fr/una-backoffice-site/#/registrator" title="{{ trans('registration.page.label.first_registration') }}">
-                        <button class="btn btn-info"><i class="fa fa-play"></i> {{ trans('registration.page.label.first_registration') }}</button>
-                    </a>
-                    <a href="http://prototype.una-club.fr/una-backoffice-site/" title="{{ trans('registration.page.label.renewal_registration') }}">
-                        <button class="btn btn-info"><i class="fa fa-repeat"></i> {{ trans('registration.page.label.renewal_registration') }}</button>
-                    </a>
-                </div>
+                <h2>{{ trans('registration.page.title.online_registration') }}</h2>
+                <p>{{ trans('registration.page.label.online_registration') }}</p>
+                <a href="http://prototype.una-club.fr/una-backoffice-site/#/registrator" title="{{ trans('registration.page.label.first_registration') }}">
+                    <button class="btn btn-info"><i class="fa fa-play"></i> {{ trans('registration.page.label.first_registration') }}</button>
+                </a>
+                <a href="http://prototype.una-club.fr/una-backoffice-site/" title="{{ trans('registration.page.label.renewal_registration') }}">
+                    <button class="btn btn-info"><i class="fa fa-repeat"></i> {{ trans('registration.page.label.renewal_registration') }}</button>
+                </a>
 
-                <div class="pricing">
-                    <h3>{{ trans('registration.page.title.prices') }}</h3>
-                    <table class="table table-striped table-hover">
-                        @foreach($prices as $price)
-                        <tr @if($price->price < 0)
-                                class="info"
-                            @endif>
-                            <td>{{ $price->label }}</td>
-                            <td class="text-right">{{ $price->price }} €</td>
-                        </tr>
-                        @endforeach
-                    </table>
-                </div>
+                <h2>{{ trans('registration.page.title.prices') }}</h2>
+                <table class="table table-striped table-hover">
+                    @foreach($prices as $price)
+                    <tr @if($price->price < 0)
+                            class="info"
+                        @endif>
+                        <td>{{ $price->label }}</td>
+                        <td class="text-right">{{ $price->price }} €</td>
+                    </tr>
+                    @endforeach
+                </table>
 
                 {!! $description !!}
 

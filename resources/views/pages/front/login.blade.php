@@ -21,7 +21,7 @@
                             @if(config('settings.logo_light'))
                                 <div class="logo display-table">
                                     <div class="text-center table-cell fill">
-                                        <img width="300" height="300" src="{{ ImageManager::imagePath(config('image.settings.public_path'), config('image.settings.logo.name.light') . '.' . config('image.settings.logo.extension'), 'logo', 'large') }}" alt="{{ config('settings.app_name_' . config('app.locale')) }}">
+                                        <img width="300" height="300" src="{{ ImageManager::imagePath(config('image.settings.public_path'), config('settings.logo_light'), 'logo', 'large') }}" alt="{{ config('settings.app_name_' . config('app.locale')) }}">
                                     </div>
                                 </div>
                             @endif

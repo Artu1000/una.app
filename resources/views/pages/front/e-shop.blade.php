@@ -15,7 +15,7 @@
 
         <div class="text-content">
             <div class="container">
-                <h2><i class="fa fa-shopping-cart"></i> La boutique en ligne du club Université Nantes Aviron (UNA)</h2>
+                <h1><i class="fa fa-shopping-cart"></i> La boutique en ligne du club Université Nantes Aviron (UNA)</h1>
 
                 <hr>
 

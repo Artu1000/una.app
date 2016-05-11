@@ -15,7 +15,7 @@
 
         <div class="text-content">
             <div class="container">
-                <h2>{!! $page->title !!}</h2>
+                <h1>{!! $page->title !!}</h1>
                 <hr>
                 <div>
                     {!! $page->content !!}

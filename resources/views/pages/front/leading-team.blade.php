@@ -15,7 +15,7 @@
 
         <div class="text-content">
             <div class="container">
-                <h2><i class="fa fa-cogs"></i> L'équipe dirigeante du club Université Nantes Aviron (UNA)</h2>
+                <h1><i class="fa fa-cogs"></i> L'équipe dirigeante du club Université Nantes Aviron (UNA)</h1>
                 <hr>
 
                 @foreach(config('user.board') as $id => $board)
@@ -26,7 +26,7 @@
                                     <i class="fa fa-cog text-info"></i>
                                 </div>
                             </div>
-                            <h3 class="table-cell">{{ trans('users.config.board.' . $board) }}</h3>
+                            <h2 class="table-cell">{{ trans('users.config.board.' . $board) }}</h2>
                         </div>
                         <p class="subtitle quote">
                         @if($id === config('user.board_key.leading_board'))Comprend également le <b>président étudiant</b>
@@ -61,7 +61,7 @@
                                 <i class="fa fa-cog employee"></i>
                             </div>
                         </div>
-                        <h3 class="table-cell">Salariés</h3>
+                        <h2 class="table-cell">Salariés</h2>
                     </div>
                     @foreach($team as $member)
                         @if($member->board_id === config('user.board_key.employee'))

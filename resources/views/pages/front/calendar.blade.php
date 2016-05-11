@@ -15,7 +15,7 @@
 
         <div class="text-content">
             <div class="container">
-                <h2><i class="fa fa-calendar"></i> Le calendrier du club Université Nantes Aviron (UNA)</h2>
+                <h1><i class="fa fa-calendar"></i> Le calendrier du club Université Nantes Aviron (UNA)</h1>
                 <hr>
 
                 <div class="embed-responsive embed-responsive-4by3 big-container">

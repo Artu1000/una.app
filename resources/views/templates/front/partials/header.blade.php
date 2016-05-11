@@ -17,13 +17,20 @@
                 <a class="navbar-brand" title="Retour à l'accueil" href="{{ route('home') }}">
                     <span class="logo">
                         @if(config('settings.logo_light'))
-                            <img width="70" src="{{ \ImageManager::imagePath(config('image.settings.public_path'), config('image.settings.logo.name.light') . '.' . config('image.settings.logo.extension'), 'logo', 'header') }}" alt="Logo {{ config('settings.app_name_' . config('app.locale')) }}">
+                            <img width="70" src="{{ ImageManager::imagePath(config('image.settings.public_path'), config('settings.logo_light'), 'logo', 'header') }}" alt="Logo {{ config('settings.app_name_' . config('app.locale')) }}">
                         @endif
                     </span>
-                    <h1 @if(\Route::current()->getName() === 'home') class="active" @endif>
-                        <span>Université</span>
-                        <span>Nantes Aviron</span>
-                    </h1>
+                    @if(Route::current()->getName() === 'home')
+                        <h1 class="active">
+                            <span>Université</span>
+                            <span>Nantes Aviron</span>
+                        </h1>
+                    @else
+                        <h2>
+                            <span>Université</span>
+                            <span>Nantes Aviron</span>
+                        </h2>
+                    @endif
                 </a>
 
             </div>
@@ -32,8 +39,8 @@
 
                 <ul class="nav navbar-nav">
                     <li class="menu_tab
-                        @if(\Route::current()->getName() === 'news.index') active
-                        @elseif(\Route::current()->getName() === 'news.show') active
+                        @if(Route::current()->getName() === 'news.index') active
+                        @elseif(Route::current()->getName() === 'news.show') active
                         @endif">
                         <a href="{{ route('news.index') }}" title="Actualités">
                             <i class="fa fa-paper-plane"></i> {{ trans('template.front.header.news') }}
@@ -41,12 +48,12 @@
                     </li>
 
                     <li class="dropdown
-                            @if(\Request::path() === 'page/historique') active
-                            @elseif(\Route::current()->getName() === 'front.leading_team') active
-                            @elseif(\Route::current()->getName() === 'palmares.index') active
-                            @elseif(\Route::current()->getName() === 'front.leading_team') active
-                            @elseif(\Request::path() === 'page/statuts') active
-                            @elseif(\Request::path() === 'page/reglement-interieur') active
+                            @if(Request::path() === 'page/historique') active
+                            @elseif(Route::current()->getName() === 'front.leading_team') active
+                            @elseif(Route::current()->getName() === 'palmares.index') active
+                            @elseif(Route::current()->getName() === 'front.leading_team') active
+                            @elseif(Request::path() === 'page/statuts') active
+                            @elseif(Request::path() === 'page/reglement-interieur') active
                             @endif">
                         <a title="Le club" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <i class="fa fa-bookmark"></i> {{ trans('template.front.header.club') }}<span class="caret"></span>
@@ -87,10 +94,10 @@
                     </li>
 
                     <li class="dropdown
-                            @if(\Route::current()->getName() === 'registration.index') active
-                            @elseif(\Route::current()->getName() === 'schedules.index') active
-                            @elseif(\Route::current()->getName() === 'calendar.index') active
-                            @elseif(\Route::current()->getName() === 'e-shop.index') active
+                            @if(Route::current()->getName() === 'registration.index') active
+                            @elseif(Route::current()->getName() === 'schedules.index') active
+                            @elseif(Route::current()->getName() === 'calendar.index') active
+                            @elseif(Route::current()->getName() === 'e-shop.index') active
                             @endif">
                         <a title="Infos" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <i class="fa fa-anchor"></i> {{ trans('template.front.header.rowing') }}<span class="caret"></span>

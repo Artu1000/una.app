@@ -15,7 +15,7 @@
 
         <div class="text-content">
             <div class="container">
-                <h2>{{ $title }}</h2>
+                <h1>{{ $title }}</h1>
                 <hr>
                 <div class="schedules">
 

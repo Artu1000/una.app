@@ -16,7 +16,7 @@
         <div class="text-content">
             <div class="container">
 
-                <h2><i class="glyphicon fa fa-trophy"></i> Le palmarès du club Université Nantes Aviron (UNA)</h2>
+                <h1><i class="glyphicon fa fa-trophy"></i> Le palmarès du club Université Nantes Aviron (UNA)</h1>
                 <hr>
 
                 <ul class="timeline">

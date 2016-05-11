@@ -16,7 +16,7 @@
         <div class="text-content">
             <div class="container">
 
-                <h2><i class="fa fa-paper-plane"></i> {{ $title }}</h2>
+                <h1><i class="fa fa-paper-plane"></i> {{ $title }}</h1>
 
                 {!! $description !!}
 
@@ -53,9 +53,9 @@
                                             <img width="100%" src="{{ $news->imagePath($news->image, 'image', 'list_mobile') }}" alt="{{ $news->title }}">
                                         </a>
                                     @endif
-                                    <h3>
+                                    <h2>
                                         <a href="{{ route('news.show', ['id' => $news->id, 'key' => $news->key]) }}" title="{{ $news->title }}"><i class="fa fa-newspaper-o"></i> {{ $news->title }}</a>
-                                    </h3>
+                                    </h2>
                                     <div class="date">
                                         <i class="fa fa-clock-o"></i> {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $news->released_at)->format('d/m/Y H:i') }}
                                     </div>

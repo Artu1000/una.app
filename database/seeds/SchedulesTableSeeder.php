@@ -35,7 +35,7 @@ class SchedulesTableSeeder extends Seeder
         );
         $inputs = [
             'title'            => 'Horaires et séances encadrées sur l\'eau',
-            'description'      => "#### <span class=\"text-primary\"><i class=\"fa fa-bullhorn\"></i> A noter :</span>\r\n- Il est important d'**être en tenue et prêt à ramer** lors du début d'un créneau d'encadrement, afin de profiter au maximum de l'amplitude horaire et de ne pas pénaliser ses équipiers.\r\n- La pratique en autonomie est **strictement interdite**, sauf dérogation nominative délivrée par le Comité Directeur, approuvée par l'équipe d'encadrement.\r\n- Les horaires des séances d'encadrement **évoluent en cours d'année**, merci de visiter régulièrement cette page.",
+            'description'      => "### <span class=\"text-primary\"><i class=\"fa fa-bullhorn\"></i> A noter :</span>\r\n- Il est important d'**être en tenue et prêt à ramer** lors du début d'un créneau d'encadrement, afin de profiter au maximum de l'amplitude horaire et de ne pas pénaliser ses équipiers.\r\n- La pratique en autonomie est **strictement interdite**, sauf dérogation nominative délivrée par le Comité Directeur, approuvée par l'équipe d'encadrement.\r\n- Les horaires des séances d'encadrement **évoluent en cours d'année**, merci de visiter régulièrement cette page.",
             'background_image' => $file_name,
         ];
         file_put_contents(storage_path('app/schedules/content.json'), json_encode($inputs));

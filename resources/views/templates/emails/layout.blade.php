@@ -149,7 +149,7 @@
                 <tr>
                     <td class="logo">
                         @if(config('settings.logo_light'))
-                            <img width="70" height="70" src="{{ \ImageManager::imagePath(config('image.settings.public_path'), config('image.settings.logo.name.light') . '.' . config('image.settings.logo.extension'), 'logo', 'header') }}">
+                            <img width="70" height="70" src="{{ ImageManager::imagePath(config('image.settings.public_path'), config('settings.logo_light'), 'logo', 'header') }}">
                         @endif
                     </td>
                     <td class="title">
@@ -221,7 +221,7 @@
                                 </td>
                                 <td class="logo text-center">
                                     @if(config('settings.logo_light'))
-                                        <img width="70" height="70" src="{{ \ImageManager::imagePath(config('image.settings.public_path'), config('image.settings.logo.name.light') . '.' . config('image.settings.logo.extension'), 'logo', 'header') }}">
+                                        <img width="70" height="70" src="{{ ImageManager::imagePath(config('image.settings.public_path'), config('settings.logo_light'), 'logo', 'header') }}">
                                     @endif
                                 </td>
                                 <td class="delimiter">
