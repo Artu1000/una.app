@@ -3,103 +3,103 @@
  * COMMON TO ALL SIZES OF DEVICES
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 /***********************************************************************************************************************
  * IMPORTS & VARIABLES
  **********************************************************************************************************************/
 @import 'app.front';
-$background_img_2560 : '/img/home/una_club_background_img.jpg';
-$background_img_1919 : '/img/home/una_club_background_img.jpg';
-$background_img_1199 : '/img/home/una_club_background_img.jpg';
-$background_img_991 : '/img/home/una_club_background_img.jpg';
-$background_img_767 : '/img/home/una_club_background_img.jpg';
+
+$background_img_2560: '/img/home/una_club_background_img.jpg';
+$background_img_1919: '/img/home/una_club_background_img.jpg';
+$background_img_1199: '/img/home/una_club_background_img.jpg';
+$background_img_991: '/img/home/una_club_background_img.jpg';
+$background_img_767: '/img/home/una_club_background_img.jpg';
 
 /***********************************************************************************************************************
  * GENERAL
  **********************************************************************************************************************/
-#content.home{
 
-  #carousel{
-    position: relative;
-    @include gradient-radial(#0D1417, #111822);
+#carousel {
+  position: relative;
+  @include gradient-radial(#0D1417, #111822);
 
-    .glide__wrapper{
-      width: 100%;
-      position: absolute;
+  .glide__wrapper {
+    width: 100%;
+    position: absolute;
 
-      .glide__track{
-        padding: 0;
+    .glide__track {
+      padding: 0;
+      margin: 0;
+
+      .glide__slide {
+        background-color: transparent;
         margin: 0;
 
-        .glide__slide{
-          background-color: transparent;
-          margin: 0;
+        section {
+          background-repeat: no-repeat;
+          background-position: center center;
+          position: relative;
 
-          section{
-            background-repeat: no-repeat;
-            background-position: center center;
-            position: relative;
+          .background_responsive_img, .slide_content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+          }
 
-            .background_responsive_img, .slide_content{
-              position: absolute;
-              top: 0;
-              left: 0;
+          .slide_content {
+            z-index: 1;
+
+            div {
+              display: table;
               width: 100%;
-            }
+              vertical-align: middle;
 
-            .slide_content{
-              z-index: 1;
-
-              div{
-                display: table;
-                width: 100%;
+              div {
+                display: table-cell;
                 vertical-align: middle;
+                color: #fff;
 
-                div{
-                  display: table-cell;
-                  vertical-align: middle;
+                .picto {
+                  @include border-radius(50%);
+                }
+
+                .title {
+                  @include lato-normal();
+                  text-transform: uppercase;
                   color: #fff;
+                  text-align: center;
+                }
 
-                  .picto{
-                    @include border-radius(50%);
-                  }
-
-                  .title{
-                    @include lato-normal();
-                    text-transform: uppercase;
-                    color: #fff;
-                    text-align: center;
-                  }
-
-                  .quote{
-                    @include lato-thin();
-                  }
+                .quote {
+                  @include lato-thin();
                 }
               }
             }
+          }
 
-            .background_responsive_img{
-              opacity: 0.3;
-              z-index: 0;
-              background-size: cover;
-              background-repeat: no-repeat;
-              background-position: center center;
-            }
+          .background_responsive_img {
+            opacity: 0.3;
+            z-index: 0;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
           }
         }
       }
     }
-
-    .glide__bullets{
-      padding: 0;
-      bottom: 5%;
-    }
   }
 
-  .text-content{
+  .glide__bullets {
+    padding: 0;
+    bottom: 5%;
+  }
+}
 
-    &#last_news{
+#content.home {
+
+  .text-content {
+
+    &#last_news {
       background-color: #F7F7F7;
 
       & .container hr {
@@ -195,13 +195,13 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
       }
     }
 
-    &#una-club{
+    &#una-club {
 
       a {
         @include lato-normal();
       }
 
-      .video{
+      .video {
         background-color: #000;
         color: $brand-primary;
       }
@@ -209,25 +209,18 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
   }
 }
 
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
  * EXTRA LARGE DEVICES DESKTOPS : 1920 & MORE
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (min-width: 1920px){
+@media screen and (min-width: 1920px) {
+  #carousel_container {
+    @include calc("height", "100% - 45px");
+    min-height: 1000px;
+    margin-top: -100px;
 
-  #content.home {
-
-    div#carousel {
-      margin-top: -100px;
-      min-height: 1100px;
+    #carousel {
 
       .glide__wrapper {
 
@@ -267,6 +260,9 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
     }
+  }
+
+  #content.home {
 
     .text-content {
 
@@ -321,9 +317,9 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
 
-      &#una-club{
+      &#una-club {
 
-        .video{
+        .video {
           height: 600px;
           margin-top: 30px;
           font-size: 250px;
@@ -333,25 +329,18 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
   }
 }
 
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
  * LARGE DEVICES DESKTOPS : 1919 <=> 1200 (LG)
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 1919px) and (min-width: 1200px) {
+  #carousel_container {
+    margin-top: -50px;
+    min-height: 800px;
+    @include calc("height", "100% - 70px");
 
-  #content.home {
-
-    div#carousel {
-      margin-top: -50px;
-      min-height: 900px;
+    #carousel {
 
       .glide__wrapper {
 
@@ -391,6 +380,9 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
     }
+  }
+
+  #content.home {
 
     .text-content {
 
@@ -434,9 +426,9 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
 
-      &#una-club{
+      &#una-club {
 
-        .video{
+        .video {
           height: 600px;
           margin-top: 30px;
           font-size: 250px;
@@ -446,25 +438,18 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
   }
 }
 
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
  * MEDIUM DEVICES DESKTOPS : : 1199 <=> 992 (MD)
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (max-width: 1199px) and (min-width: 992px){
+@media screen and (max-width: 1199px) and (min-width: 992px) {
+  #carousel_container {
+    margin-top: -50px;
+    min-height: 600px;
+    @include calc("height", "100% - 65px");
 
-  #content.home {
-
-    div#carousel {
-      margin-top: -50px;
-      min-height: 750px;
+    #carousel {
 
       .glide__wrapper {
 
@@ -504,6 +489,9 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
     }
+  }
+
+  #content.home {
 
     .text-content {
 
@@ -543,9 +531,9 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
 
-      &#una-club{
+      &#una-club {
 
-        .video{
+        .video {
           height: 500px;
           margin-top: 15px;
           font-size: 200px;
@@ -555,24 +543,18 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
   }
 }
 
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
  * SMALL DEVICES TABLETS : 991 <=> 768 (SM)
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (max-width: 991px) and (min-width: 768px){
+@media screen and (max-width: 991px) and (min-width: 768px) {
+  #carousel_container {
+    margin-top: -50px;
+    min-height: 575px;
+    @include calc("height", "100% - 54px");
 
-  #content.home {
-
-    div#carousel {
-      margin-top: -50px;
-      min-height: 600px;
+    #carousel {
 
       .glide__wrapper {
 
@@ -612,6 +594,9 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
     }
+  }
+
+  #content.home {
 
     .text-content {
 
@@ -651,9 +636,9 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
 
-      &#una-club{
+      &#una-club {
 
-        .video{
+        .video {
           height: 400px;
           margin-top: 0;
           font-size: 150px;
@@ -663,24 +648,18 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
   }
 }
 
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************************************
  * EXTRA SMALL DEVICES : 767 & LESS (SM)
  **********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-@media screen and (max-width: 767px){
+@media screen and (max-width: 767px) {
+  #carousel_container {
+    margin-top: -20px;
+    min-height: 550px;
+    @include calc("height", "100% - 58px");
 
-  #content.home {
-
-    div#carousel {
-      margin-top: -20px;
-      min-height: 550px;
+    #carousel {
 
       .glide__wrapper {
 
@@ -722,6 +701,9 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
     }
+  }
+
+  #content.home {
 
     .text-content {
 
@@ -773,9 +755,9 @@ $background_img_767 : '/img/home/una_club_background_img.jpg';
         }
       }
 
-      &#una-club{
+      &#una-club {
 
-        .video{
+        .video {
           height: 350px;
           margin-top: 0;
           font-size: 125px;

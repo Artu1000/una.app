@@ -19,9 +19,9 @@
                 <hr>
 
                 @foreach(config('user.board') as $id => $board)
-                    <div class="team {{ $board }}">
+                    <div class="team">
                         <div class="title display-table">
-                            <div class="picto table-cell">
+                            <div class="picto table-cell {{ $board }}">
                                 <div class="table-cell">
                                     <i class="fa fa-cog text-info"></i>
                                 </div>
@@ -54,9 +54,9 @@
                     </div>
                 @endforeach
 
-                <div class="team employee">
+                <div class="team">
                     <div class="title display-table">
-                        <div class="picto table-cell">
+                        <div class="picto table-cell employee">
                             <div class="table-cell">
                                 <i class="fa fa-cog employee"></i>
                             </div>
@@ -71,7 +71,7 @@
                                 </a>
                                 <h4 class="display-table">
                                     <span class="table-cell">
-                                        {{ $member->last_name }}<br>{{ $member->first_name }}
+                                        {{ $member->first_name }}<br/>{{ $member->last_name }}
                                     </span>
                                 </h4>
                                 <h5 class="display-table">

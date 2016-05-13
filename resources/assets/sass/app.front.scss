@@ -117,14 +117,12 @@ html {
   position: absolute;
   top: -1px;
   z-index: 99;
-  padding-bottom: 150px;
 }
 
 /***********************************************************************************************************************
  * TOP BACKGROUND IMAGE
  **********************************************************************************************************************/
 .top_background_image {
-  height: 100%;
 
   .background_responsive_img {
     background-size: cover;
@@ -349,11 +347,8 @@ html {
    * GENERAL
    ********************************************************************************************************************/
   .top_background_image {
-    min-height: 1100px;
-
-    .background_responsive_img {
-      margin-top: -100px;
-    }
+    @include calc("height", "100% - 45px");
+    margin-top: -100px;
   }
 
   .no_top_background_image {
@@ -519,11 +514,8 @@ html {
    * GENERAL
    ********************************************************************************************************************/
   .top_background_image {
-    min-height: 900px;
-
-    .background_responsive_img {
-      margin-top: -50px;
-    }
+    @include calc("height", "100% - 70px");
+    margin-top: -50px;
   }
 
   .no_top_background_image {
@@ -688,11 +680,8 @@ html {
    * GENERAL
    ********************************************************************************************************************/
   .top_background_image {
-    min-height: 750px;
-
-    .background_responsive_img {
-      margin-top: -50px;
-    }
+    @include calc("height", "100% - 65px");
+    margin-top: -50px;
   }
 
   .no_top_background_image {
@@ -863,11 +852,8 @@ html {
    * GENERAL
    ********************************************************************************************************************/
   .top_background_image {
-    min-height: 600px;
-
-    .background_responsive_img {
-      margin-top: -50px;
-    }
+    @include calc("height", "100% - 54px");
+    margin-top: -50px;
   }
 
   .no_top_background_image {
@@ -1066,11 +1052,8 @@ html {
    * GENERAL
    ********************************************************************************************************************/
   .top_background_image {
-    min-height: 550px;
-
-    .background_responsive_img {
-      margin-top: -20px;
-    }
+    @include calc("height", "100% - 58px");
+    margin-top: -20px;
   }
 
   .no_top_background_image {
@@ -1273,6 +1256,13 @@ html {
     body {
 
       #layout {
+
+        .btn {
+          @include border-radius($btn-border-radius-large);
+          padding: 10px 16px;
+          font-size: 18px;
+          line-height: 1.33333;
+        }
 
         #footer_layout {
           position: relative;

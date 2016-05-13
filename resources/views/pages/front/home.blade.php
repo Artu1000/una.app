@@ -2,9 +2,8 @@
 
 @section('content')
 
-    <div id="content" class="home row">
-
-        {{-- slideshow --}}
+    {{-- slideshow --}}
+    <div id="carousel_container" class="row">
         <div id="carousel" class="glide">
             <div class="glide__arrows">
                 <span class="glide__arrow prev" data-glide-dir="<">prev</span>
@@ -21,18 +20,18 @@
                                             @if($slide->picto)
                                                 @if($slide->url)
                                                     <a href="{{ $slide->url }}" title="{{ $slide->title }}">
-                                                @endif()
-                                                <img class="picto" src="{{ $slide->imagePath($slide->picto) }}" alt="{{ $slide->title }}">
-                                                @if($slide->url)
+                                                        @endif()
+                                                        <img class="picto" src="{{ $slide->imagePath($slide->picto) }}" alt="{{ $slide->title }}">
+                                                        @if($slide->url)
                                                     </a>
                                                 @endif()
                                             @endif
                                             @if($slide->title)
                                                 @if($slide->url)
                                                     <a href="{{ $slide->url }}" title="{{ $slide->title }}">
-                                                @endif()
-                                                <h2 class="title">{{ $slide->title }}</h2>
-                                                @if($slide->url)
+                                                        @endif()
+                                                        <h2 class="title">{{ $slide->title }}</h2>
+                                                        @if($slide->url)
                                                     </a>
                                                 @endif()
                                             @endif
@@ -50,6 +49,9 @@
             </div>
             <ul class="glide__bullets"></ul>
         </div>
+    </div>
+
+    <div id="content" class="home row">
 
         @if(!$last_news->isEmpty())
             <div id="last_news" class="text-content">

@@ -35,7 +35,7 @@
                             class="info"
                         @endif>
                         <td>{{ $price->label }}</td>
-                        <td class="text-right">{{ $price->price }} €</td>
+                        <td class="text-right">{{ $price->price }}&nbsp;€</td>
                     </tr>
                     @endforeach
                 </table>

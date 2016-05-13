@@ -224,8 +224,27 @@ html {
 
                 .title {
 
-                  .picto, h3 {
-                    display: inline-block;
+                  .picto {
+                    text-align: right;
+
+                    div {
+                      display: inline-block;
+                      line-height: 50px;
+                      padding-right: 5px;
+                    }
+                  }
+
+                  .picto.student_leading_board {
+                    width: 33%;
+                  }
+                  .picto.leading_board {
+                    width: 45%;
+                  }
+                  .picto.executive_committee {
+                    width: 36%;
+                  }
+                  .picto.employee {
+                    width: 44%;
                   }
                 }
               }
