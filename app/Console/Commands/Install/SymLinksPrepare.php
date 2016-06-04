@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Install;
 
+use App\Repositories\Media\PhotoRepositoryInterface;
 use App\Repositories\News\NewsRepositoryInterface;
 use App\Repositories\Page\PageRepositoryInterface;
 use App\Repositories\Partner\PartnerRepositoryInterface;
@@ -65,12 +66,12 @@ class SymLinksPrepare extends Command
                 'storage' => config('image.settings.storage_path'),
                 'public'  => public_path(config('image.settings.public_path')),
             ],
-            // schedules
+            // schedules page
             [
                 'storage' => config('image.schedules.storage_path'),
                 'public'  => public_path(config('image.schedules.public_path')),
             ],
-            // registration
+            // registration page
             [
                 'storage' => config('image.registration.storage_path'),
                 'public'  => public_path(config('image.registration.public_path')),
@@ -99,6 +100,11 @@ class SymLinksPrepare extends Command
             [
                 'storage' => \Sentinel::getUserRepository()->createModel()->storagePath(),
                 'public'  => \Sentinel::getUserRepository()->createModel()->publicPath(),
+            ],
+            // photos
+            [
+                'storage' => app(PhotoRepositoryInterface::class)->getModel()->storagePath(),
+                'public'  => app(PhotoRepositoryInterface::class)->getModel()->publicPath(),
             ],
         ];
 

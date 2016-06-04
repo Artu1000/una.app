@@ -38,12 +38,9 @@ class StoragePrepare extends Command
     {
         // we set the folder to verify
         $to_create = [
-            storage_path(),
-            storage_path('framework'),
             storage_path('framework/cache'),
             storage_path('framework/sessions'),
             storage_path('framework/views'),
-            storage_path('app'),
             storage_path('app/settings'),
             storage_path('app/users'),
             storage_path('app/home'),
@@ -56,12 +53,13 @@ class StoragePrepare extends Command
             storage_path('app/e-shop'),
             storage_path('app/pages'),
             storage_path('app/proxy'),
+            storage_path('app/photos'),
         ];
         // we execute the verification
         $created = [];
         foreach ($to_create as $folder) {
             if (!is_dir($folder)) {
-                mkdir($folder);
+                mkdir($folder, 0777, true);
                 $created[] = $folder;
             }
         }

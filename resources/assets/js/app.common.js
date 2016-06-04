@@ -103,4 +103,12 @@ $(function() {
         e.preventDefault();
         $(this).closest('form').submit();
     });
+
+    // we submit the form on select change detection
+    var autosubmit = $('select.autosubmit');
+    if (autosubmit.length) {
+        autosubmit.change(function () {
+            $(this).closest('form').submit();
+        });
+    }
 });

@@ -108,6 +108,18 @@ $route = Route::group($group, function () {
     Route::delete(LaravelLocalization::transRoute('routes.registration.prices.destroy'), ['as' => 'registration.prices.destroy', 'uses' => 'Registration\RegistrationPriceController@destroy']);
     Route::post(LaravelLocalization::transRoute('routes.registration.prices.activate'), ['as' => 'registration.prices.activate', 'uses' => 'Registration\RegistrationPriceController@activate']);
 
+    // photos page
+    Route::get(LaravelLocalization::transRoute('routes.photos.page.edit'), ['as' => 'photos.page.edit', 'uses' => 'Media\PhotosController@pageEdit']);
+    Route::put(LaravelLocalization::transRoute('routes.photos.page.update'), ['as' => 'photos.page_update', 'uses' => 'Media\PhotosController@pageUpdate']);
+
+    // photos
+    Route::get(LaravelLocalization::transRoute('routes.photos.create'), ['as' => 'photos.create', 'uses' => 'Media\PhotosController@create']);
+    Route::post(LaravelLocalization::transRoute('routes.photos.store'), ['as' => 'photos.store', 'uses' => 'Media\PhotosController@store']);
+    Route::get(LaravelLocalization::transRoute('routes.photos.edit'), ['as' => 'photos.edit', 'uses' => 'Media\PhotosController@edit']);
+    Route::put(LaravelLocalization::transRoute('routes.photos.update'), ['as' => 'photos.update', 'uses' => 'Media\PhotosController@update']);
+    Route::delete(LaravelLocalization::transRoute('routes.photos.destroy'), ['as' => 'photos.destroy', 'uses' => 'Media\PhotosController@destroy']);
+    Route::post(LaravelLocalization::transRoute('routes.photos.activate'), ['as' => 'photos.activate', 'uses' => 'Media\PhotosController@activate']);
+
     // partners
     Route::get(LaravelLocalization::transRoute('routes.partners.index'), ['as' => 'partners.index', 'uses' => 'Partner\PartnersController@index']);
     Route::get(LaravelLocalization::transRoute('routes.partners.create'), ['as' => 'partners.create', 'uses' => 'Partner\PartnersController@create']);
@@ -183,6 +195,9 @@ Route::group($group, function () {
     // e-shop
     Route::get(trans('routes.e-shop.index'), ['as' => 'e-shop.index', 'uses' => 'EShop\EShopController@index']);
     Route::post(trans('routes.e-shop.index'), ['as' => 'e-shop.add-to-cart', 'uses' => 'EShop\EShopController@addToCart']);
+
+    // photos
+    Route::get(trans('routes.photos.index'), ['as' => 'photos.index', 'uses' => 'Media\PhotosController@index']);
 
     // pages
     Route::get(trans('routes.page.show'), ['as' => 'page.show', 'uses' => 'Pages\PageController@show']);

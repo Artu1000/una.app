@@ -64,6 +64,15 @@ return [
     'registration.prices.view'   => false,
     'registration.prices.update' => false,
     'registration.prices.delete' => false,
+
+    // photos
+    'photos'                     => false,
+    'photos.page.view'           => false,
+    'photos.page.update'         => false,
+    'photos.create'              => false,
+    'photos.view'                => false,
+    'photos.update'              => false,
+    'photos.delete'              => false,
     
     // partners
     'partners'                   => false,

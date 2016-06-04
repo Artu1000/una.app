@@ -62,6 +62,15 @@ return [
     "registration.prices.update" => "Modifier un tarif d'inscription",
     "registration.prices.delete" => "Supprimer un tarif d'inscription",
 
+    // photos
+    "photos"                     => "Photos",
+    "photos.page.view"           => "Consulter le détail de la page d'albums photos",
+    "photos.page.update"         => "Modifier le contenu de la page d'albums photos",
+    "photos.create"              => "Créer un album photo",
+    "photos.view"                => "Consulter le détail d'un album photo",
+    "photos.update"              => "Modifier un album photo",
+    "photos.delete"              => "Supprimer un album photo",
+
     // partners
     "partners"                   => "Partenaires",
     "partners.list"              => "Consulter la liste des partenaires",

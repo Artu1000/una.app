@@ -308,12 +308,10 @@ $(function () {
         });
     }
 
-    // we submit the form on select change detection
-    var autosubmit = $('select.autosubmit');
-    if (autosubmit.length) {
-        autosubmit.change(function () {
-            $(this).closest('form').submit();
-        });
-    }
+    // collapse other menu elements when toggling a new one
+    $('[data-toggle="collapse"]').click(function () {
+        // we collapse all the other menu elements
+        $('.collapse').not(this).collapse('hide');
+    });
 });
 

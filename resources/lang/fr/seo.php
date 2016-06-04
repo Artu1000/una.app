@@ -62,6 +62,11 @@ return [
             "description" => "Régates, compétition universitaires ou fédérales, stages, Régataïades, ... Découvrez les dates de tous les événements qui rythment la vie du club.",
             "keywords"    => "club, universite, nantes, aviron, sport, universitaire, etudiant, calendrier",
         ],
+        "photos"     => [
+            "title"       => "Albums photos",
+            "description" => "Retrouvez toutes photos du club Université Nantes Aviron (UNA) triées par année.",
+            "keywords"    => "club, universite, nantes, aviron, sport, universitaire, etudiant, albums, photos",
+        ],
     ],
 
     // back
@@ -115,6 +120,13 @@ return [
                 "create" => "Créer un tarif d'inscription",
                 "edit"   => "Édition d'un tarif d'inscription",
             ],
+        ],
+        "photos" => [
+            "page"  => [
+                "edit" => "Édition de la page d'albums photos",
+            ],
+            "create" => "Création d'un album photos",
+            "edit"   => "Édition d'un album photos",
         ],
         "partners"     => [
             "index"  => "Gestion des partenaires",

@@ -123,6 +123,6 @@ class User extends SentinelUser
             throw new InvalidArgumentException('The key must be declared into the eloquent object sizes.');
         };
 
-        return str_slug('universite-nantes-aviron-una-' . $this->id . '-' . $key);
+        return str_slug(config('image.prefix') . $this->id . '-' . $key);
     }
 }

@@ -94,6 +94,6 @@ abstract class _BaseModel extends Model
             throw new InvalidArgumentException('The key must be declared into the eloquent object sizes.');
         };
 
-        return str_slug('universite-nantes-aviron-una-' . $this->id . '-' . $type);
+        return str_slug(config('image.prefix') . $this->id . '-' . $type);
     }
 }

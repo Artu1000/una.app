@@ -130,6 +130,19 @@ return [
             "activate" => "admin/contenus/inscription/tarifs/activation/{id}",
         ],
     ],
+    "photos"       => [
+        "index"    => "photos",
+        "page"     => [
+            "edit"   => "admin/contenus/photos/page",
+            "update" => "admin/contenus/photos/page/mise-a-jour",
+        ],
+        "create"   => "admin/contenus/photos/creation",
+        "store"    => "admin/contenus/photos/enregistrement",
+        "edit"     => "admin/contenus/photos/edition/{id}",
+        "update"   => "admin/contenus/photos/mise-a-jour/{id}",
+        "destroy"  => "admin/contenus/photos/suppression/{id}",
+        "activate" => "admin/contenus/photos/activation/{id}",
+    ],
     "partners"     => [
         "index"    => "admin/contenus/partenaires",
         "create"   => "admin/contenus/partenaires/creation",

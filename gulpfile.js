@@ -46,6 +46,7 @@ elixir(function (mix) {
         .sass('app.schedule.scss', 'public/css/app.schedule.css', {})
         .sass('app.calendar.scss', 'public/css/app.calendar.css', {})
         .sass('app.e-shop.scss', 'public/css/app.e-shop.css', {})
+        .sass('app.photos.scss', 'public/css/app.photos.css', {})
         .sass('app.auth.scss', 'public/css/app.auth.css', {})
 
         // COMMON
@@ -72,6 +73,12 @@ elixir(function (mix) {
             paths.lity + 'lity.css',
             'public/css/app.leading-team.css'
         ], 'public/css/app.leading-team.css', './')
+
+        //combine photos stylesheets
+        .styles([
+            paths.lity + 'lity.css',
+            'public/css/app.photos.css'
+        ], 'public/css/app.photos.css', './')
 
         // combine back stylesheets
         .styles([
@@ -116,10 +123,10 @@ elixir(function (mix) {
             paths.jquery_easing + 'js/jquery.easing.js',
             paths.bootstrap + 'javascripts/bootstrap.js',
             paths.js + 'ie10-viewport-bug-workaround.js',
-            paths.js + 'app.common.js',
-            paths.js + 'app.front.js',
             paths.glide + 'dist/glide.js',
             paths.lity + 'lity.js',
+            paths.js + 'app.common.js',
+            paths.js + 'app.front.js',
             paths.js + 'app.home.js'
         ], 'public/js/app.home.js', './')
         // mix news detail js files
@@ -142,6 +149,17 @@ elixir(function (mix) {
             paths.js + 'app.common.js',
             paths.js + 'app.front.js'
         ], 'public/js/app.leading-team.js', './')
+        // mix photos js files
+        .scripts([
+            paths.jquery + 'dist/jquery.js',
+            paths.jquery_easing + 'js/jquery.easing.js',
+            paths.bootstrap + 'javascripts/bootstrap.js',
+            paths.js + 'ie10-viewport-bug-workaround.js',
+            paths.lity + 'lity.js',
+            paths.js + 'app.common.js',
+            paths.js + 'app.front.js',
+            paths.js + 'app.photos.js'
+        ], 'public/js/app.photos.js', './')
 
         // BACK
         .scripts([
@@ -167,6 +185,8 @@ elixir(function (mix) {
         .version([
             // css front
             'public/css/app.front.css',
+            'public/css/app.auth.css',
+            'public/css/app.error.css',
             'public/css/app.home.css',
             'public/css/app.page.css',
             'public/css/app.palmares.css',
@@ -176,8 +196,7 @@ elixir(function (mix) {
             'public/css/app.schedule.css',
             'public/css/app.calendar.css',
             'public/css/app.e-shop.css',
-            'public/css/app.auth.css',
-            'public/css/app.error.css',
+            'public/css/app.photos.css',
             // css back
             'public/css/app.back.css',
             // js front
@@ -185,6 +204,7 @@ elixir(function (mix) {
             'public/js/app.home.js',
             'public/js/app.news-detail.js',
             'public/js/app.leading-team.js',
+            'public/js/app.photos.js',
             // js front
             'public/js/app.back.js'
         ]);

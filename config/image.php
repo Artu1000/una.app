@@ -1,13 +1,17 @@
 <?php
 
+$image_prefix = 'universite-nantes-aviron-una-';
+
 return [
+
+    "prefix" => $image_prefix,
 
     // images configurations
     "settings"     => [
         "logo"         => [
             "name"      => [
-                "dark"  => "universite-nantes-aviron-una-logo-dark",
-                'light' => "universite-nantes-aviron-una-logo-light",
+                "dark"  => $image_prefix . "logo-dark",
+                'light' => $image_prefix . "logo-light",
             ],
             "extension" => "png",
             "sizes"     => [
@@ -21,7 +25,7 @@ return [
     ],
     "news"         => [
         "background_image" => [
-            "name"  => "universite-nantes-aviron-una-news-background-image",
+            "name"  => $image_prefix . "news-background-image",
             "sizes" => [
                 "admin" => [40, 40],
                 "767"   => [767, 431],
@@ -36,7 +40,7 @@ return [
     ],
     "schedules"    => [
         "background_image" => [
-            "name"  => "universite-nantes-aviron-una-schedules-background-image",
+            "name"  => $image_prefix . "schedules-background-image",
             "sizes" => [
                 "admin" => [40, 40],
                 "767"   => [767, 431],
@@ -51,7 +55,7 @@ return [
     ],
     "registration" => [
         "background_image" => [
-            "name"  => "universite-nantes-aviron-una-registration-background-image",
+            "name"  => $image_prefix . "registration-background-image",
             "sizes" => [
                 "admin" => [40, 40],
                 "767"   => [767, 431],
@@ -63,6 +67,21 @@ return [
         ],
         "storage_path"     => storage_path('app/registration'),
         "public_path"      => "img/registration",
+    ],
+    "photos" => [
+        "background_image" => [
+            "name"  => $image_prefix . "photos-background-image",
+            "sizes" => [
+                "admin" => [40, 40],
+                "767"   => [767, 431],
+                "991"   => [991, 557],
+                "1199"  => [1199, 674],
+                "1919"  => [1919, 1079],
+                "2560"  => [2560, 1440],
+            ],
+        ],
+        "storage_path"     => storage_path('app/photos'),
+        "public_path"      => "img/photos",
     ],
     
     /*

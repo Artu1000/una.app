@@ -51,6 +51,13 @@ return [
             "edit"   => "Édition du tarif d'inscription <b>:price</b>",
         ],
     ],
+    "photos"       => [
+        "page"   => [
+            "edit" => "Gestion des albums photos",
+        ],
+        "create" => "Création d'un album photo",
+        "edit"   => "Édition de l'album photo <b>:album</b>",
+    ],
     "partners"     => [
         "index"  => "Gestion des partenaires",
         "create" => "Création d'un partenaire",

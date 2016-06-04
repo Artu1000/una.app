@@ -134,6 +134,7 @@
                 || Sentinel::getUser()->hasAccess('news.page.view')
                 || Sentinel::getUser()->hasAccess('schedules.page.view')
                 || Sentinel::getUser()->hasAccess('registration.page.view')
+                || Sentinel::getUser()->hasAccess('photos.page.view')
                 || Sentinel::getUser()->hasAccess('partners.list'))
 
                     <li class="@if(Route::current()->getName() === 'home.page.edit'
@@ -148,6 +149,9 @@
                     || Route::current()->getName() === 'registration.page.edit'
                     || Route::current()->getName() === 'registration.prices.create'
                     || Route::current()->getName() === 'registration.prices.edit'
+                    || Route::current()->getName() === 'photos.page.edit'
+                    || Route::current()->getName() === 'photos.create'
+                    || Route::current()->getName() === 'photos.edit'
                     || Route::current()->getName() === 'partners.index'
                     || Route::current()->getName() === 'partners.create'
                     || Route::current()->getName() === 'partners.edit')active @endif">
@@ -167,6 +171,9 @@
                         || Route::current()->getName() === 'registration.page.edit'
                         || Route::current()->getName() === 'registration.prices.create'
                         || Route::current()->getName() === 'registration.prices.edit'
+                        || Route::current()->getName() === 'photos.page.edit'
+                        || Route::current()->getName() === 'photos.create'
+                        || Route::current()->getName() === 'photos.edit'
                         || Route::current()->getName() === 'partners.index'
                         || Route::current()->getName() === 'partners.create'
                         || Route::current()->getName() === 'partners.edit')in @endif">
@@ -216,6 +223,18 @@
                                         active
                                     @endif">
                                     <a class="spin-on-click" href="{{ route('registration.page.edit') }}"><i class="fa fa-eur" aria-hidden="true"></i> {{ trans('template.back.header.registration') }}</a>
+                                </li>
+                            @endif
+
+                            {{-- photos --}}
+                            @if(Sentinel::getUser()->hasAccess('photos.page.view'))
+                                <li class="@if(
+                                    Route::current()->getName() === 'photos.page.edit'
+                                    || Route::current()->getName() === 'photos.create'
+                                    || Route::current()->getName() === 'photos.edit')
+                                        active
+                                    @endif">
+                                    <a class="spin-on-click" href="{{ route('photos.page.edit') }}"><i class="fa fa-picture-o" aria-hidden="true"></i> {{ trans('template.back.header.photos') }}</a>
                                 </li>
                             @endif
 

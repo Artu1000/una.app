@@ -46,11 +46,12 @@ class NewsController extends Controller
 
         // we parse the markdown content
         $parsedown = new Parsedown();
+        $title = isset($news_page->title) ? $news_page->title : null;
         $description = isset($news_page->description) ? $parsedown->text($news_page->description) : null;
 
         // SEO Meta settings
-        $this->seo_meta['page_title'] = trans('seo.front.news.title');
-        $this->seo_meta['meta_desc'] = $description ? trans('seo.front.news.description') : str_limit($description, 160);
+        $this->seo_meta['page_title'] = trans('seo.front.news.title') ? trans('seo.front.news.title') : $title;
+        $this->seo_meta['meta_desc'] = trans('seo.front.news.description') ? trans('seo.front.news.description') : str_limit($description, 160);
         $this->seo_meta['meta_keywords'] = trans('seo.front.news.keywords');
         
         // we get the category id
@@ -80,10 +81,10 @@ class NewsController extends Controller
         }
 
         // og meta settings
-        $this->og_meta['og:title'] = trans('seo.front.news.title');
-        $this->og_meta['og:description'] = $description ? trans('seo.front.news.description') : str_limit($description, 160);
+        $this->og_meta['og:title'] = trans('seo.front.news.title') ? trans('seo.front.news.title') : $title;
+        $this->og_meta['og:description'] = trans('seo.front.news.description') ? trans('seo.front.news.description') : str_limit($description, 160);
         $this->og_meta['og:type'] = 'article';
-        $this->og_meta['og:url'] = route('news.page.edit');
+        $this->og_meta['og:url'] = route('news.index');
         if(isset($news_page->background_image)){
             $this->og_meta['og:image'] = ImageManager::imagePath(config('image.news.public_path'), $news_page->background_image, 'background_image', 767);
         }

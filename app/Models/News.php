@@ -4,7 +4,6 @@ namespace App\Models;
 
 class News extends _BaseModel
 {
-
     /**
      * News constructor.
      * @param array $attributes

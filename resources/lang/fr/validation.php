@@ -160,6 +160,9 @@ return [
         "content"               => "Contenu",
         "price"                 => "Tarif",
         "label"                 => "Libellé",
+        "cover"                 => "Couverture",
+        "link"                  => "Lien",
+        "year"                  => "Année",
     ],
 
 ];

@@ -64,7 +64,7 @@
                                     <i class="fa fa-comments"></i> {{ trans('template.front.header.presentation') }}
                                 </a>
                             </li>
-                            <li class="menu_tab @if(\Request::path() === 'page/historique') active @endif">
+                            <li class="menu_tab @if(Request::path() === 'page/historique') active @endif">
                                 <a href="{{ route('page.show', 'historique') }}" title="{{ trans('template.front.header.history') }}">
                                     <i class="fa fa-university"></i> {{ trans('template.front.header.history') }}
                                 </a>
@@ -75,17 +75,17 @@
                                 {{--</a>--}}
                             {{--</li>--}}
                             <li class="divider"></li>
-                            <li class="menu_tab @if(\Route::current()->getName() === 'front.leading_team') active @endif">
+                            <li class="menu_tab @if(Route::current()->getName() === 'front.leading_team') active @endif">
                                 <a href="{{ route('front.leading_team') }}" title="{{ trans('template.front.header.leading_team') }}">
                                     <i class="fa fa-cogs"></i> {{ trans('template.front.header.leading_team') }}
                                 </a>
                             </li>
-                            <li class="menu_tab @if(\Request::path() === 'page/statuts') active @endif">
+                            <li class="menu_tab @if(Request::path() === 'page/statuts') active @endif">
                                 <a href="{{ route('page.show', 'statuts') }}" title="St{{ trans('template.front.header.statuses') }}">
                                     <i class="fa fa-compass"></i> {{ trans('template.front.header.statuses') }}
                                 </a>
                             </li>
-                            <li class="menu_tab @if(\Request::path() === 'page/reglement-interieur') active @endif">
+                            <li class="menu_tab @if(Request::path() === 'page/reglement-interieur') active @endif">
                                 <a href="{{ route('page.show', 'reglement-interieur') }}" title="{{ trans('template.front.header.rules') }}">
                                     <i class="fa fa-gavel"></i> {{ trans('template.front.header.rules') }}
                                 </a>
@@ -103,20 +103,25 @@
                             <i class="fa fa-anchor"></i> {{ trans('template.front.header.rowing') }}<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li class="menu_tab @if(\Route::current()->getName() === 'registration.index') active @endif">
+                            <li class="menu_tab @if(Route::current()->getName() === 'registration.index') active @endif">
                                 <a href="{{ route('registration.index') }}" title="Inscription">
                                     <i class="fa fa-sign-in"></i> {{ trans('template.front.header.registration') }}
                                 </a>
                             </li>
-                            <li class="menu_tab @if(\Route::current()->getName() === 'schedules.index') active @endif">
+                            <li class="menu_tab @if(Route::current()->getName() === 'schedules.index') active @endif">
                                 <a href="{{ route('schedules.index') }}" title="Horaires">
                                     <i class="fa fa-clock-o"></i> {{ trans('template.front.header.schedules') }}
                                 </a>
                             </li>
-                            <li class="divider"></li>
-                            <li class="menu_tab @if(\Route::current()->getName() === 'calendar.index') active @endif">
+                            <li class="menu_tab @if(Route::current()->getName() === 'calendar.index') active @endif">
                                 <a href="{{ route('calendar.index') }}" title="Calendrier">
                                     <i class="fa fa-calendar"></i> {{ trans('template.front.header.calendar') }}
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li class="menu_tab @if(Route::current()->getName() === 'photos.index') active @endif">
+                                <a href="{{ route('photos.index') }}" title="Calendrier">
+                                    <i class="fa fa-picture-o" aria-hidden="true"></i> {{ trans('template.front.header.photos') }}
                                 </a>
                             </li>
                             {{--<li class="menu_tab @if(\Route::current()->getName() === 'e-shop.index') active @endif">--}}
