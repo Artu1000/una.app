@@ -400,7 +400,7 @@ class PhotosController extends Controller
         
         // we check inputs validity
         $rules = [
-            'cover'  => 'required|image|mimes:jpg,jpeg,png|image_size:>=2560,>=1440',
+            'cover'  => 'required|image|mimes:jpg,jpeg,png|image_size:>=220,>=220',
             'title'  => 'required|string',
             'link'   => 'required|url',
             'year'   => 'required|date_format:Y',
@@ -554,7 +554,7 @@ class PhotosController extends Controller
         
         // we check inputs validity
         $rules = [
-            'cover'  => 'image|mimes:jpg,jpeg,png|image_size:>=2560,>=1440',
+            'cover'  => 'image|mimes:jpg,jpeg,png|image_size:>=220,>=220',
             'title'  => 'required|string',
             'link'   => 'required|url',
             'year'   => 'required|date_format:Y',
