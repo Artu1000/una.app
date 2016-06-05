@@ -3,6 +3,7 @@
 namespace App\Repositories\Sitemap;
 
 use App\Repositories\BaseRepository;
+use App\Repositories\Media\PhotoRepositoryInterface;
 use App\Repositories\News\NewsRepositoryInterface;
 use App\Repositories\Page\PageRepositoryInterface;
 use App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface;
@@ -123,7 +124,7 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
             )->format('Y-m-d'),
         ];
 
-        // schedule
+        // schedules
         $site_pages[] = [
             'url'      => route('schedules.index'),
             'last_mod' => Carbon::createFromFormat(
@@ -139,6 +140,18 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
         $site_pages[] = [
             'url'      => route('calendar.index'),
             'last_mod' => Carbon::now()->subDays(5)->format('Y-m-d'),
+        ];
+
+        // photos
+        $site_pages[] = [
+            'url'      => route('photos.index'),
+            'last_mod' => Carbon::createFromFormat(
+                'Y-m-d H:i:s',
+                app(PhotoRepositoryInterface::class)
+                    ->orderBy('updated_at', 'desc')
+                    ->first()
+                    ->updated_at
+            )->format('Y-m-d'),
         ];
 
         // e-shop

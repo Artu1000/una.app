@@ -1,3 +1,4 @@
+
 User-agent: *
 Disallow:
-Sitemap: http://univ-nantes-aviron.fr/sitemap.xml
+Sitemap: http://localhost/sitemap.xml

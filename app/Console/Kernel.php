@@ -6,6 +6,7 @@ use App\Console\Commands\Database\DropDatabase;
 use App\Console\Commands\Database\ResetDatabase;
 use App\Console\Commands\Database\UsersAndRelatedTablesClean;
 use App\Console\Commands\Image\ImageGenerate;
+use App\Console\Commands\Install\GenerateRobotTxt;
 use App\Console\Commands\Install\MailcatcherInstall;
 use App\Console\Commands\Install\NpmInstall;
 use App\Console\Commands\Install\ProjectOptimize;
@@ -31,6 +32,7 @@ class Kernel extends ConsoleKernel
         DropDatabase::class,
         ResetDatabase::class,
         ImageGenerate::class,
+        GenerateRobotTxt::class,
     ];
 
     /**

@@ -232,6 +232,16 @@ printf "\n"
 echo "${gray}=================================================${reset}"
 printf "\n"
 
+# robot.txt generation
+echo "${purple}▶${reset} Generating robot.txt file ..."
+echo "${purple}→ php artisan generate:robot.txt${reset}"
+php artisan generate:robot.txt
+echo "${green}✔${reset} Robot.txt file generated"
+
+printf "\n"
+echo "${gray}=================================================${reset}"
+printf "\n"
+
 # upgrade permissions
 echo "${purple}▶${reset} Upgrading permissions ..."
 echo "${purple}→ chmod -R g+w storage${reset}"
