@@ -551,7 +551,7 @@ class PhotosController extends Controller
         // we convert the fr date to database format
         if ($request->get('date')) {
             $request->merge([
-                'date' => Carbon::createFromFormat('m/d/Y', $request->get('date'))->format('Y-m-d'),
+                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->format('Y-m-d'),
             ]);
         }
         
