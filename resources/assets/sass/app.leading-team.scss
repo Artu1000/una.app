@@ -64,10 +64,17 @@ html {
             display: inline-block;
             margin: 15px;
             padding: 0;
+            background-color: $gray-lighter;
+            @include border-radius(7px);
 
             &:hover {
               opacity: 0.7;
               @include transition(0.2s ease);
+            }
+
+            img {
+              @include border-top-left-radius(7px);
+              @include border-top-right-radius(7px);
             }
 
             h4, h5 {
@@ -81,7 +88,7 @@ html {
               height: 50px;
 
               span {
-                padding: 5px 0 0;
+                padding: 10px 0 0 0;
               }
             }
 
@@ -90,7 +97,8 @@ html {
               height: 35px;
 
               span {
-                vertical-align: top;
+                vertical-align: middle;
+                padding: 0 5px 10px 5px;
               }
             }
           }
