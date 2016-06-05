@@ -73,6 +73,15 @@ return [
     'photos.view'                => false,
     'photos.update'              => false,
     'photos.delete'              => false,
+
+    // videos
+    'videos'                     => false,
+    'videos.page.view'           => false,
+    'videos.page.update'         => false,
+    'videos.create'              => false,
+    'videos.view'                => false,
+    'videos.update'              => false,
+    'videos.delete'              => false,
     
     // partners
     'partners'                   => false,

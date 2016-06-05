@@ -58,6 +58,13 @@ return [
         "create" => "Création d'un album photo",
         "edit"   => "Édition de l'album photo <b>:album</b>",
     ],
+    "videos"       => [
+        "page"   => [
+            "edit" => "Gestion des vidéos",
+        ],
+        "create" => "Création d'une vidéo",
+        "edit"   => "Édition de la vidéo <b>:video</b>",
+    ],
     "partners"     => [
         "index"  => "Gestion des partenaires",
         "create" => "Création d'un partenaire",

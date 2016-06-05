@@ -71,6 +71,15 @@ return [
     "photos.update"              => "Modifier un album photo",
     "photos.delete"              => "Supprimer un album photo",
 
+    // videos
+    "videos"                     => "Vidéos",
+    "videos.page.view"           => "Consulter le détail de la page de vidéos",
+    "videos.page.update"         => "Modifier le contenu de la page de vidéos",
+    "videos.create"              => "Créer une vidéo",
+    "videos.view"                => "Consulter le détail d'une vidéo",
+    "videos.update"              => "Modifier une vidéo",
+    "videos.delete"              => "Supprimer une vidéo",
+
     // partners
     "partners"                   => "Partenaires",
     "partners.list"              => "Consulter la liste des partenaires",

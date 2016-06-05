@@ -9,7 +9,10 @@
             <div class="col-sm-12">
 
                 {{-- Title--}}
-                <h2><i class="fa fa-paper-plane"></i> {{ trans('photos.page.title.management') }}</h2>
+                <h2>
+                    <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                    {{ trans('photos.page.title.management') }}
+                </h2>
 
                 <hr>
 

@@ -121,6 +121,20 @@ if (config('settings.breadcrumbs')) {
         $breadcrumbs->push(trans('breadcrumbs.photos.edit', ['album' => $data['photo']->title]), '');
     });
 
+    // videos
+    Breadcrumbs::register('videos.page.edit', function ($breadcrumbs) {
+        $breadcrumbs->parent('home');
+        $breadcrumbs->push(trans('breadcrumbs.videos.page.edit'), route('videos.page.edit'));
+    });
+    Breadcrumbs::register('videos.create', function ($breadcrumbs) {
+        $breadcrumbs->parent('videos.page.edit');
+        $breadcrumbs->push(trans('breadcrumbs.videos.create'), route('videos.create'));
+    });
+    Breadcrumbs::register('videos.edit', function ($breadcrumbs, array $data) {
+        $breadcrumbs->parent('videos.page.edit');
+        $breadcrumbs->push(trans('breadcrumbs.videos.edit', ['video' => $data['video']->title]), '');
+    });
+
     // partners
     Breadcrumbs::register('partners.index', function ($breadcrumbs) {
         $breadcrumbs->parent('home');

@@ -6,6 +6,8 @@ use App\Repositories\EShop\EShopArticleRepository;
 use App\Repositories\EShop\EShopArticleRepositoryInterface;
 use App\Repositories\Media\PhotoRepository;
 use App\Repositories\Media\PhotoRepositoryInterface;
+use App\Repositories\Media\VideoRepository;
+use App\Repositories\Media\VideoRepositoryInterface;
 use App\Repositories\News\NewsRepository;
 use App\Repositories\News\NewsRepositoryInterface;
 use App\Repositories\Page\PageRepository;
@@ -113,6 +115,11 @@ class RepositoryServiceProvider extends ServiceProvider
         // photo
         $this->app->bind(PhotoRepositoryInterface::class, function () {
             return new PhotoRepository();
+        });
+
+        // video
+        $this->app->bind(VideoRepositoryInterface::class, function () {
+            return new VideoRepository();
         });
     }
 }

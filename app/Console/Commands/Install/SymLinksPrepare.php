@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Install;
 
 use App\Repositories\Media\PhotoRepositoryInterface;
+use App\Repositories\Media\VideoRepositoryInterface;
 use App\Repositories\News\NewsRepositoryInterface;
 use App\Repositories\Page\PageRepositoryInterface;
 use App\Repositories\Partner\PartnerRepositoryInterface;
@@ -105,6 +106,11 @@ class SymLinksPrepare extends Command
             [
                 'storage' => app(PhotoRepositoryInterface::class)->getModel()->storagePath(),
                 'public'  => app(PhotoRepositoryInterface::class)->getModel()->publicPath(),
+            ],
+            // videos
+            [
+                'storage' => app(VideoRepositoryInterface::class)->getModel()->storagePath(),
+                'public'  => app(VideoRepositoryInterface::class)->getModel()->publicPath(),
             ],
         ];
 

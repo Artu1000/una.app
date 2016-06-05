@@ -20,7 +20,7 @@ return [
             "year"   => "Choisir une année",
         ],
         "info"   => [
-            "cover" => "Largeur min : 150px - Hauteur min : 150px - Format : jpg, jpeg, png.",
+            "cover" => "Largeur min : 220px - Hauteur min : 220px - Format : jpg, jpeg, png.",
             "link"  => "Lien de l'album Google Photo (doit être partagé au public).",
         ],
         "label"  => [
@@ -52,7 +52,7 @@ return [
             "failure" => "Une erreur est survenue lors de la mise à jour de l'album photos <b>:album</b>.",
         ],
         "find"       => [
-            "failure" => "L'album photos #:id n'existe pas.",
+            "failure" => "L'album photos <b>#:id</b> n'existe pas.",
         ],
         "delete"     => [
             "success" => "L'album photos <b>:album</b> a bien été supprimé.",

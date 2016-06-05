@@ -10,7 +10,7 @@
 
                 {{-- Title--}}
                 <h2>
-                    <i class="fa fa-user"></i>
+                    <i class="fa fa-file-image-o" aria-hidden="true"></i>
                     @if(isset($photo))
                         {!! trans('photos.page.title.edit', ['album' => $photo->title]) !!}
                     @else
@@ -83,16 +83,6 @@
                                 <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('photos.page.info.link') }}</p>
                             </div>
 
-                        </div>
-                    </div>
-
-                    {{-- release data --}}
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">{{ trans('photos.page.title.release') }}</h3>
-                        </div>
-                        <div class="panel-body">
-
                             {{-- date --}}
                             <label for="input_date">{{ trans('photos.page.label.date') }}<span class="required">*</span></label>
                             <div class="form-group">
@@ -102,6 +92,16 @@
                                 </div>
                                 <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('global.info.date.format') }}</p>
                             </div>
+
+                        </div>
+                    </div>
+
+                    {{-- release data --}}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ trans('photos.page.title.release') }}</h3>
+                        </div>
+                        <div class="panel-body">
 
                             {{-- activation --}}
                             <label for="input_active">{{ trans('photos.page.label.activation') }}</label>

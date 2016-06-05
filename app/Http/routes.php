@@ -120,6 +120,18 @@ $route = Route::group($group, function () {
     Route::delete(LaravelLocalization::transRoute('routes.photos.destroy'), ['as' => 'photos.destroy', 'uses' => 'Media\PhotosController@destroy']);
     Route::post(LaravelLocalization::transRoute('routes.photos.activate'), ['as' => 'photos.activate', 'uses' => 'Media\PhotosController@activate']);
 
+    // videos page
+    Route::get(LaravelLocalization::transRoute('routes.videos.page.edit'), ['as' => 'videos.page.edit', 'uses' => 'Media\VideosController@pageEdit']);
+    Route::put(LaravelLocalization::transRoute('routes.videos.page.update'), ['as' => 'videos.page_update', 'uses' => 'Media\VideosController@pageUpdate']);
+
+    // videos
+    Route::get(LaravelLocalization::transRoute('routes.videos.create'), ['as' => 'videos.create', 'uses' => 'Media\VideosController@create']);
+    Route::post(LaravelLocalization::transRoute('routes.videos.store'), ['as' => 'videos.store', 'uses' => 'Media\VideosController@store']);
+    Route::get(LaravelLocalization::transRoute('routes.videos.edit'), ['as' => 'videos.edit', 'uses' => 'Media\VideosController@edit']);
+    Route::put(LaravelLocalization::transRoute('routes.videos.update'), ['as' => 'videos.update', 'uses' => 'Media\VideosController@update']);
+    Route::delete(LaravelLocalization::transRoute('routes.videos.destroy'), ['as' => 'videos.destroy', 'uses' => 'Media\VideosController@destroy']);
+    Route::post(LaravelLocalization::transRoute('routes.videos.activate'), ['as' => 'videos.activate', 'uses' => 'Media\VideosController@activate']);
+
     // partners
     Route::get(LaravelLocalization::transRoute('routes.partners.index'), ['as' => 'partners.index', 'uses' => 'Partner\PartnersController@index']);
     Route::get(LaravelLocalization::transRoute('routes.partners.create'), ['as' => 'partners.create', 'uses' => 'Partner\PartnersController@create']);
@@ -198,6 +210,9 @@ Route::group($group, function () {
 
     // photos
     Route::get(trans('routes.photos.index'), ['as' => 'photos.index', 'uses' => 'Media\PhotosController@index']);
+
+    // videos
+    Route::get(trans('routes.videos.index'), ['as' => 'videos.index', 'uses' => 'Media\VideosController@index']);
 
     // pages
     Route::get(trans('routes.page.show'), ['as' => 'page.show', 'uses' => 'Pages\PageController@show']);

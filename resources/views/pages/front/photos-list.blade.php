@@ -5,7 +5,7 @@
     {{-- top background img --}}
     @if($background_image)
         <div class="top_background_image row">
-            <div class="background_responsive_img fill" data-background-image="{{ ImageManager::imagePath(config('image.news.public_path'), $background_image) }}"></div>
+            <div class="background_responsive_img fill" data-background-image="{{ ImageManager::imagePath(config('image.photos.public_path'), $background_image) }}"></div>
         </div>
     @else
         <div class="no_top_background_image"></div>

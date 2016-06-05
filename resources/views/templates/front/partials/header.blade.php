@@ -120,8 +120,13 @@
                             </li>
                             <li class="divider"></li>
                             <li class="menu_tab @if(Route::current()->getName() === 'photos.index') active @endif">
-                                <a href="{{ route('photos.index') }}" title="Calendrier">
+                                <a href="{{ route('photos.index') }}" title="{{ trans('template.front.header.photos') }}">
                                     <i class="fa fa-picture-o" aria-hidden="true"></i> {{ trans('template.front.header.photos') }}
+                                </a>
+                            </li>
+                            <li class="menu_tab @if(Route::current()->getName() === 'videos.index') active @endif">
+                                <a href="{{ route('videos.index') }}" title="{{ trans('template.front.header.videos') }}">
+                                    <i class="fa fa-video-camera" aria-hidden="true"></i> {{ trans('template.front.header.videos') }}
                                 </a>
                             </li>
                             {{--<li class="menu_tab @if(\Route::current()->getName() === 'e-shop.index') active @endif">--}}

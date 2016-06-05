@@ -143,6 +143,19 @@ return [
         "destroy"  => "admin/contenus/photos/suppression/{id}",
         "activate" => "admin/contenus/photos/activation/{id}",
     ],
+    "videos"       => [
+        "index"    => "videos",
+        "page"     => [
+            "edit"   => "admin/contenus/videos/page",
+            "update" => "admin/contenus/videos/page/mise-a-jour",
+        ],
+        "create"   => "admin/contenus/videos/creation",
+        "store"    => "admin/contenus/videos/enregistrement",
+        "edit"     => "admin/contenus/videos/edition/{id}",
+        "update"   => "admin/contenus/videos/mise-a-jour/{id}",
+        "destroy"  => "admin/contenus/videos/suppression/{id}",
+        "activate" => "admin/contenus/videos/activation/{id}",
+    ],
     "partners"     => [
         "index"    => "admin/contenus/partenaires",
         "create"   => "admin/contenus/partenaires/creation",

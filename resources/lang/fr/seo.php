@@ -64,8 +64,13 @@ return [
         ],
         "photos"     => [
             "title"       => "Albums photos",
-            "description" => "Retrouvez toutes photos du club Université Nantes Aviron (UNA) triées par année.",
+            "description" => "Retrouvez toutes les photos du club Université Nantes Aviron (UNA) triées par année.",
             "keywords"    => "club, universite, nantes, aviron, sport, universitaire, etudiant, albums, photos",
+        ],
+        "videos"     => [
+            "title"       => "Vidéos",
+            "description" => "Retrouvez toutes les vidéos du club Université Nantes Aviron (UNA) triées par année.",
+            "keywords"    => "club, universite, nantes, aviron, sport, universitaire, etudiant, vidéos",
         ],
     ],
 
@@ -127,6 +132,13 @@ return [
             ],
             "create" => "Création d'un album photos",
             "edit"   => "Édition d'un album photos",
+        ],
+        "videos" => [
+            "page"  => [
+                "edit" => "Édition de la page de vidéos",
+            ],
+            "create" => "Création d'une vidéo",
+            "edit"   => "Édition d'une vidéo",
         ],
         "partners"     => [
             "index"  => "Gestion des partenaires",

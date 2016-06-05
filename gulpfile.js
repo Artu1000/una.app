@@ -47,6 +47,7 @@ elixir(function (mix) {
         .sass('app.calendar.scss', 'public/css/app.calendar.css', {})
         .sass('app.e-shop.scss', 'public/css/app.e-shop.css', {})
         .sass('app.photos.scss', 'public/css/app.photos.css', {})
+        .sass('app.videos.scss', 'public/css/app.videos.css', {})
         .sass('app.auth.scss', 'public/css/app.auth.css', {})
 
         // COMMON
@@ -74,11 +75,11 @@ elixir(function (mix) {
             'public/css/app.leading-team.css'
         ], 'public/css/app.leading-team.css', './')
 
-        //combine photos stylesheets
+        //combine videos stylesheets
         .styles([
             paths.lity + 'lity.css',
-            'public/css/app.photos.css'
-        ], 'public/css/app.photos.css', './')
+            'public/css/app.videos.css'
+        ], 'public/css/app.videos.css', './')
 
         // combine back stylesheets
         .styles([
@@ -155,11 +156,21 @@ elixir(function (mix) {
             paths.jquery_easing + 'js/jquery.easing.js',
             paths.bootstrap + 'javascripts/bootstrap.js',
             paths.js + 'ie10-viewport-bug-workaround.js',
-            paths.lity + 'lity.js',
             paths.js + 'app.common.js',
             paths.js + 'app.front.js',
             paths.js + 'app.photos.js'
         ], 'public/js/app.photos.js', './')
+        // mix videos js files
+        .scripts([
+            paths.jquery + 'dist/jquery.js',
+            paths.jquery_easing + 'js/jquery.easing.js',
+            paths.bootstrap + 'javascripts/bootstrap.js',
+            paths.js + 'ie10-viewport-bug-workaround.js',
+            paths.lity + 'lity.js',
+            paths.js + 'app.common.js',
+            paths.js + 'app.front.js',
+            paths.js + 'app.videos.js'
+        ], 'public/js/app.videos.js', './')
 
         // BACK
         .scripts([
@@ -197,6 +208,7 @@ elixir(function (mix) {
             'public/css/app.calendar.css',
             'public/css/app.e-shop.css',
             'public/css/app.photos.css',
+            'public/css/app.videos.css',
             // css back
             'public/css/app.back.css',
             // js front
@@ -205,6 +217,7 @@ elixir(function (mix) {
             'public/js/app.news-detail.js',
             'public/js/app.leading-team.js',
             'public/js/app.photos.js',
+            'public/js/app.videos.js',
             // js front
             'public/js/app.back.js'
         ]);

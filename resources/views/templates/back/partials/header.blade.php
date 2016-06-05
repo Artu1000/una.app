@@ -135,6 +135,7 @@
                 || Sentinel::getUser()->hasAccess('schedules.page.view')
                 || Sentinel::getUser()->hasAccess('registration.page.view')
                 || Sentinel::getUser()->hasAccess('photos.page.view')
+                || Sentinel::getUser()->hasAccess('videos.page.view')
                 || Sentinel::getUser()->hasAccess('partners.list'))
 
                     <li class="@if(Route::current()->getName() === 'home.page.edit'
@@ -152,6 +153,9 @@
                     || Route::current()->getName() === 'photos.page.edit'
                     || Route::current()->getName() === 'photos.create'
                     || Route::current()->getName() === 'photos.edit'
+                    || Route::current()->getName() === 'videos.page.edit'
+                    || Route::current()->getName() === 'videos.create'
+                    || Route::current()->getName() === 'videos.edit'
                     || Route::current()->getName() === 'partners.index'
                     || Route::current()->getName() === 'partners.create'
                     || Route::current()->getName() === 'partners.edit')active @endif">
@@ -174,6 +178,9 @@
                         || Route::current()->getName() === 'photos.page.edit'
                         || Route::current()->getName() === 'photos.create'
                         || Route::current()->getName() === 'photos.edit'
+                        || Route::current()->getName() === 'videos.page.edit'
+                        || Route::current()->getName() === 'videos.create'
+                        || Route::current()->getName() === 'videos.edit'
                         || Route::current()->getName() === 'partners.index'
                         || Route::current()->getName() === 'partners.create'
                         || Route::current()->getName() === 'partners.edit')in @endif">
@@ -234,7 +241,19 @@
                                     || Route::current()->getName() === 'photos.edit')
                                         active
                                     @endif">
-                                    <a class="spin-on-click" href="{{ route('photos.page.edit') }}"><i class="fa fa-picture-o" aria-hidden="true"></i> {{ trans('template.back.header.photos') }}</a>
+                                    <a class="spin-on-click" href="{{ route('photos.page.edit') }}"><i class="fa fa-file-image-o" aria-hidden="true"></i> {{ trans('template.back.header.photos') }}</a>
+                                </li>
+                            @endif
+
+                            {{-- videos --}}
+                            @if(Sentinel::getUser()->hasAccess('videos.page.view'))
+                                <li class="@if(
+                                    Route::current()->getName() === 'videos.page.edit'
+                                    || Route::current()->getName() === 'videos.create'
+                                    || Route::current()->getName() === 'videos.edit')
+                                        active
+                                    @endif">
+                                    <a class="spin-on-click" href="{{ route('videos.page.edit') }}"><i class="fa fa-file-video-o" aria-hidden="true"></i> {{ trans('template.back.header.videos') }}</a>
                                 </li>
                             @endif
 
