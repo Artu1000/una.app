@@ -47,7 +47,7 @@
                             <img width="220" height="220" src="{{ $video->imagePath($video->cover, 'cover', 'front') }}" alt="{{ $video->title }}">
                             <h3>
                                 <span>
-                                    {{ str_limit($video->title, 50) }}
+                                    {{ str_limit($video->title, 60) }}
                                 </span>
                             </h3>
                         </a>

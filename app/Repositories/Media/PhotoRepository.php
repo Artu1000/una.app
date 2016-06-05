@@ -32,9 +32,7 @@ class PhotoRepository extends BaseRepository implements PhotoRepositoryInterface
             }
         }
         // we sort the array
-        array_sort($years, function ($year) {
-            return $year;
-        });
+        rsort($years, SORT_NUMERIC);
 
         return $years;
     }

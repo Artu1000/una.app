@@ -44,7 +44,7 @@
                             <img width="220" height="220" src="{{ $album->imagePath($album->cover, 'cover', 'front') }}" alt="{{ $album->title }}">
                             <h3>
                                 <span>
-                                    {{ str_limit($album->title, 50) }}
+                                    {{ str_limit($album->title, 60) }}
                                 </span>
                             </h3>
                         </a>
