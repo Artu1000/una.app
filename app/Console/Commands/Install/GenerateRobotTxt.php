@@ -39,7 +39,7 @@ class GenerateRobotTxt extends Command
         if(config('app.env') === 'production'){
             Console::execWithOutput("echo '\nUser-agent: *\nDisallow:\nSitemap: " . route('sitemap.index') . "' | sudo tee " . public_path('robots.txt'), $this);
         } else {
-            $this->line('The current environment is not a production environment. No robot.txt file has been generated.');
+            Console::execWithOutput("echo '\nUser-agent: *\nDisallow: /' | sudo tee " . public_path('robots.txt'), $this);
         }
     }
 
