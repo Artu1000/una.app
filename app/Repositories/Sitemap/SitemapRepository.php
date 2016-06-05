@@ -69,12 +69,16 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
             'last_mod' => Carbon::createFromFormat(
                 'Y-m-d H:i:s',
                 app(NewsRepositoryInterface::class)
+                    ->where('active', true)
                     ->orderBy('updated_at', 'desc')
                     ->first()
                     ->updated_at
             )->format('Y-m-d'),
         ];
-        $news_list = app(NewsRepositoryInterface::class)->orderBy('updated_at', 'desc')->all();
+        $news_list = app(NewsRepositoryInterface::class)
+            ->where('active', true)
+            ->orderBy('updated_at', 'desc')
+            ->all();
         foreach ($news_list as $news) {
             $site_pages[] = [
                 'url'      => route('news.show', ['id' => $news->id, 'key' => $news->key]),
@@ -83,7 +87,9 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
         }
 
         // pages
-        $pages_list = app(PageRepositoryInterface::class)->orderBy('updated_at', 'desc')->all();
+        $pages_list = app(PageRepositoryInterface::class)
+            ->orderBy('updated_at', 'desc')
+            ->all();
         foreach ($pages_list as $page) {
             $site_pages[] = [
                 'url'      => route('page.show', $page->key),
@@ -118,6 +124,7 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
             'last_mod' => Carbon::createFromFormat(
                 'Y-m-d H:i:s',
                 app(RegistrationPriceRepositoryInterface::class)
+                    ->orderBy('active', true)
                     ->orderBy('updated_at', 'desc')
                     ->first()
                     ->updated_at
@@ -130,6 +137,7 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
             'last_mod' => Carbon::createFromFormat(
                 'Y-m-d H:i:s',
                 app(ScheduleRepositoryInterface::class)
+                    ->orderBy('active', true)
                     ->orderBy('updated_at', 'desc')
                     ->first()
                     ->updated_at
