@@ -27,7 +27,7 @@ return [
             "cover"                  => "Couverture",
             "title"                  => "Titre",
             "link"                   => "Lien",
-            "year"                   => "Année",
+            "date"                   => "Date",
             "activation"             => "Activation",
             "activation_placeholder" => "Statut",
             "description"            => "Description",

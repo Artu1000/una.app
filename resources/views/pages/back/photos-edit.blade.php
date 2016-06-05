@@ -93,14 +93,14 @@
                         </div>
                         <div class="panel-body">
 
-                            {{-- year --}}
-                            <label for="input_year">{{ trans('photos.page.label.year') }}<span class="required">*</span></label>
+                            {{-- date --}}
+                            <label for="input_date">{{ trans('photos.page.label.date') }}<span class="required">*</span></label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_year"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                                    <input id="input_year" type='text' class="form-control yearpicker" name="year" value="{{ old('year') ? old('year') : (isset($photo) && $photo->year ? $photo->year : \Carbon\Carbon::now()->format('Y')) }}" placeholder="{{ trans('photos.page.label.year') }}">
+                                    <span class="input-group-addon" for="input_date"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                    <input id="input_date" type='text' class="form-control datepicker" name="date" value="{{ old('date') ? old('date') : (isset($photo) && $photo->date ? $photo->date : \Carbon\Carbon::now()->format('Y')) }}" placeholder="{{ trans('photos.page.label.date') }}">
                                 </div>
-                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('global.info.year.format') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('global.info.date.format') }}</p>
                             </div>
 
                             {{-- activation --}}

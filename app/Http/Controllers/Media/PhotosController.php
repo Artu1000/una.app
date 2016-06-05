@@ -91,9 +91,9 @@ class PhotosController extends Controller
 
         // sort results by year
         $photos_list = $this->repository->getModel()
-            ->where('year', $selected_year)
+            ->whereBetween('date', [$selected_year . '-01-01', $selected_year . '-12-31'])
             ->where('active', true)
-            ->orderBy('year', 'desc')
+            ->orderBy('date', 'desc')
             ->get();
 
         // prepare data for the view
@@ -152,11 +152,11 @@ class PhotosController extends Controller
                 'sort_by' => 'photos.link',
             ],
             [
-                'title'           => trans('photos.page.label.year'),
-                'key'             => 'year',
-                'sort_by'         => 'photos.year',
+                'title'           => trans('photos.page.label.date'),
+                'key'             => 'date',
+                'sort_by'         => 'photos.date',
                 'sort_by_default' => 'desc',
-                'year'            => 'Y',
+                'date'            => 'd/m/Y',
             ],
             [
                 'title'    => trans('photos.page.label.activation'),
@@ -392,9 +392,9 @@ class PhotosController extends Controller
         $request->replace(Entry::sanitizeAll($request->all()));
         
         // we convert the fr date to database format
-        if ($request->get('year')) {
+        if ($request->get('date')) {
             $request->merge([
-                'year' => Carbon::create($request->get('year'))->format('Y'),
+                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->format('Y-m-d'),
             ]);
         }
         
@@ -403,7 +403,7 @@ class PhotosController extends Controller
             'cover'  => 'required|image|mimes:jpg,jpeg,png|image_size:>=220,>=220',
             'title'  => 'required|string',
             'link'   => 'required|url',
-            'year'   => 'required|date_format:Y',
+            'date'   => 'required|date_format:Y-m-d',
             'active' => 'required|boolean',
         ];
         // we check the inputs validity
@@ -493,6 +493,9 @@ class PhotosController extends Controller
         $breadcrumbs_data = [
             'photo' => $photo,
         ];
+
+        // we format the date in correct format
+        $photo->date = Carbon::createFromFormat('Y-m-d', $photo->date)->format('d/m/Y');
         
         // prepare data for the view
         $data = [
@@ -546,9 +549,9 @@ class PhotosController extends Controller
         $request->replace(Entry::sanitizeAll($request->all()));
         
         // we convert the fr date to database format
-        if ($request->get('year')) {
+        if ($request->get('date')) {
             $request->merge([
-                'year' => Carbon::create($request->get('year'))->format('Y'),
+                'date' => Carbon::createFromFormat('m/d/Y', $request->get('date'))->format('Y-m-d'),
             ]);
         }
         
@@ -557,7 +560,7 @@ class PhotosController extends Controller
             'cover'  => 'image|mimes:jpg,jpeg,png|image_size:>=220,>=220',
             'title'  => 'required|string',
             'link'   => 'required|url',
-            'year'   => 'required|date_format:Y',
+            'date'   => 'required|date_format:Y-m-d',
             'active' => 'required|boolean',
         ];
         // we check the inputs validity

@@ -26,8 +26,9 @@ class PhotoRepository extends BaseRepository implements PhotoRepositoryInterface
         // we add each year found the years array
         $years = [];
         foreach ($photos as $photo) {
-            if (!in_array($photo->year, $years)) {
-                $years[] = $photo->year;
+            $photo_year = Carbon::createFromFormat('Y-m-d', $photo->date)->format('Y');
+            if (!in_array($photo_year, $years)) {
+                $years[] = $photo_year;
             }
         }
         // we sort the array

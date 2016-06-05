@@ -21,7 +21,7 @@ class Photo extends _BaseModel
             'link',
             'cover',
             'active',
-            'year',
+            'date',
         ];
 
         // we define the image(s) size(s)

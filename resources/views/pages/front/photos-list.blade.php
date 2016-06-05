@@ -27,7 +27,7 @@
 
                 <div class="years">
                     <form method="GET" action="{{ route('photos.index') }}">
-                        <i class="fa fa-calendar" aria-hidden="true"></i> {{ trans('photos.page.action.year') }} :
+                        <i class="fa fa-search" aria-hidden="true"></i> {{ trans('photos.page.action.year') }} :
                         <select class="form-control autosubmit" name="year" id="input_year" title="{{ trans('photos.page.label.year_placeholder') }}">
                             <option value="" disabled>{{ trans('photos.page.label.year_placeholder') }}</option>
                             @foreach($years as $year)
@@ -40,6 +40,7 @@
                 <div class="albums">
                     @foreach($photos_list as $album)
                         <a class="album new_window" href="{{ $album->link }}" title="{{ $album->title }}">
+                            <h4>{{ ucfirst(\Carbon\Carbon::createFromFormat('Y-m-d', $album->date)->formatLocalized('%A %d %B %Y')) }}</h4>
                             <img width="220" height="220" src="{{ $album->imagePath($album->cover, 'cover', 'front') }}" alt="{{ $album->title }}">
                             <h3>
                                 <span>
