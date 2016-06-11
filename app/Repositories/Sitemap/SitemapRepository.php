@@ -4,6 +4,7 @@ namespace App\Repositories\Sitemap;
 
 use App\Repositories\BaseRepository;
 use App\Repositories\Media\PhotoRepositoryInterface;
+use App\Repositories\Media\VideoRepositoryInterface;
 use App\Repositories\News\NewsRepositoryInterface;
 use App\Repositories\Page\PageRepositoryInterface;
 use App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface;
@@ -156,6 +157,18 @@ class SitemapRepository extends BaseRepository implements SitemapRepositoryInter
             'last_mod' => Carbon::createFromFormat(
                 'Y-m-d H:i:s',
                 app(PhotoRepositoryInterface::class)
+                    ->orderBy('updated_at', 'desc')
+                    ->first()
+                    ->updated_at
+            )->format('Y-m-d'),
+        ];
+
+        // videos
+        $site_pages[] = [
+            'url'      => route('videos.index'),
+            'last_mod' => Carbon::createFromFormat(
+                'Y-m-d H:i:s',
+                app(VideoRepositoryInterface::class)
                     ->orderBy('updated_at', 'desc')
                     ->first()
                     ->updated_at
