@@ -8,7 +8,27 @@ use Log;
 class CustomLogHelper
 {
     /**
-     * Make log error more readable
+     * Make info log more readable
+     * @param $info
+     */
+    public function info($info)
+    {
+        Log::info('===================== INFO =====================');
+        Log::info($info . PHP_EOL);
+    }
+
+    /**
+     * Make warning log more readable
+     * @param $info
+     */
+    public function warning($info)
+    {
+        Log::warning('===================== WARNING =====================');
+        Log::warning($info . PHP_EOL);
+    }
+
+    /**
+     * Make error log more readable
      * @param $error
      */
     public function error($error)

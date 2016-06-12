@@ -69,6 +69,12 @@ elixir(function (mix) {
             'public/css/app.home.css'
         ], 'public/css/app.home.css', './')
 
+        // combine news stylesheets
+        .styles([
+            paths.lity + 'lity.css',
+            'public/css/app.news.css'
+        ], 'public/css/app.news.css', './')
+
         //combine leading team stylesheets
         .styles([
             paths.lity + 'lity.css',
@@ -136,6 +142,7 @@ elixir(function (mix) {
             paths.jquery_easing + 'js/jquery.easing.js',
             paths.bootstrap + 'javascripts/bootstrap.js',
             paths.js + 'ie10-viewport-bug-workaround.js',
+            paths.lity + 'lity.js',
             paths.js + 'app.common.js',
             paths.js + 'app.front.js',
             paths.js + 'app.news-detail.js'

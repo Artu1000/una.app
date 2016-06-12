@@ -12,7 +12,7 @@
                 <h2>
                     <i class="fa fa-file-video-o" aria-hidden="true"></i>
                     @if(isset($video))
-                        {!! trans('videos.page.title.edit', ['album' => $video->title]) !!}
+                        {!! trans('videos.page.title.edit', ['video' => $video->title]) !!}
                     @else
                         {{ trans('videos.page.title.create') }}
                     @endif

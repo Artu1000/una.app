@@ -62,6 +62,16 @@
                                     <div class="category {{ config('news.category.' . $news->category_id) }}" >
                                         <i class="fa fa-cube"></i> {{ trans('news.config.category.' . config('news.category.' . $news->category_id)) }}
                                     </div>
+                                    @if($news->photo_album_id)
+                                        <div class="photo_album" >
+                                            <i class="fa fa-camera" aria-hidden="true"></i>
+                                        </div>
+                                    @endif
+                                    @if($news->video_id)
+                                        <div class="video" >
+                                            <i class="fa fa-video-camera" aria-hidden="true"></i>
+                                        </div>
+                                    @endif
                                     <div class="author">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{ $news->author->first_name . ' ' . $news->author->last_name }}
                                     </div>

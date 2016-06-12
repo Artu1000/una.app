@@ -20,6 +20,8 @@ class News extends _BaseModel
         $this->fillable = [
             'author_id',
             'category_id',
+            'photo_album_id',
+            'video_id',
             'key',
             'title',
             'image',
@@ -55,5 +57,15 @@ class News extends _BaseModel
     public function author()
     {
         return $this->hasOne(User::class, 'id', 'author_id');
+    }
+
+    public function photoAlbum()
+    {
+        return $this->hasOne(Photo::class, 'id', 'photo_album_id');
+    }
+
+    public function video()
+    {
+        return $this->hasOne(Video::class, 'id', 'video_id');
     }
 }

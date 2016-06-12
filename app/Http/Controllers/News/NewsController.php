@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\News;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Media\PhotoRepositoryInterface;
+use App\Repositories\Media\VideoRepositoryInterface;
 use App\Repositories\News\NewsRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
 use Carbon\Carbon;
@@ -85,7 +87,7 @@ class NewsController extends Controller
         $this->og_meta['og:description'] = trans('seo.front.news.description') ? trans('seo.front.news.description') : str_limit($description, 160);
         $this->og_meta['og:type'] = 'article';
         $this->og_meta['og:url'] = route('news.index');
-        if(isset($news_page->background_image)){
+        if (isset($news_page->background_image)) {
             $this->og_meta['og:image'] = ImageManager::imagePath(config('image.news.public_path'), $news_page->background_image, 'background_image', 767);
         }
 
@@ -145,7 +147,7 @@ class NewsController extends Controller
         $this->og_meta['og:description'] = $news->meta_desc ? $news->meta_desc : str_limit(strip_tags($news->content), 160);
         $this->og_meta['og:type'] = 'article';
         $this->og_meta['og:url'] = route('news.show', ['id' => $news->id, 'key' => $news->key]);
-        if($news->image){
+        if ($news->image) {
             $this->og_meta['og:image'] = $news->imagePath($news->image, 'image', '767');
         }
 
@@ -210,7 +212,7 @@ class NewsController extends Controller
         $this->og_meta['og:description'] = $news->meta_desc ? $news->meta_desc : str_limit(strip_tags($news->content), 160);
         $this->og_meta['og:type'] = 'article';
         $this->og_meta['og:url'] = route('news.show', ['id' => $news->id, 'key' => $news->key]);
-        if($news->image){
+        if ($news->image) {
             $this->og_meta['og:image'] = $news->imagePath($news->image, 'image', '767');
         }
 
@@ -511,10 +513,16 @@ class NewsController extends Controller
         
         // SEO Meta settings
         $this->seo_meta['page_title'] = trans('seo.back.news.create');
+
+        // we get the photos and videos albums
+        $photos_albums = app(PhotoRepositoryInterface::class)->getModel()->orderBy('date', 'desc')->get();
+        $videos = app(VideoRepositoryInterface::class)->getModel()->orderBy('date', 'desc')->get();
         
         // prepare data for the view
         $data = [
             'seo_meta'   => $this->seo_meta,
+            'photos'     => $photos_albums,
+            'videos'     => $videos,
             'users'      => app(UserRepositoryInterface::class)->all(),
             'categories' => config('news.category'),
         ];
@@ -573,6 +581,8 @@ class NewsController extends Controller
         $rules = [
             'author_id'        => 'required|numeric|exists:users,id',
             'category_id'      => 'required|in:' . implode(',', array_keys(config('news.category'))),
+            'photo_album_id'   => 'numeric|exists:photos,id',
+            'video_id'         => 'numeric|exists:videos,id',
             'image'            => 'image|mimes:jpg,jpeg,png|image_size:>=2560,>=1440',
             'key'              => 'alpha_dash|unique:news,key',
             'title'            => 'required|string',
@@ -593,7 +603,7 @@ class NewsController extends Controller
         
         try {
             // we create the news
-            $news = $this->repository->create($request->except('_token'));
+            $news = $this->repository->create($request->except('_token', 'image'));
             
             // we store the image
             if ($img = $request->file('image')) {
@@ -675,13 +685,19 @@ class NewsController extends Controller
         $breadcrumbs_data = [
             'news' => $news,
         ];
-        
+
+        // we get the photos and videos albums
+        $photos_albums = app(PhotoRepositoryInterface::class)->getModel()->orderBy('date', 'desc')->get();
+        $videos = app(VideoRepositoryInterface::class)->getModel()->orderBy('date', 'desc')->get();
+
         // prepare data for the view
         $data = [
             'seo_meta'         => $this->seo_meta,
             'news'             => $news,
             'users'            => app(UserRepositoryInterface::class)->all(),
             'categories'       => config('news.category'),
+            'photos'           => $photos_albums,
+            'videos'           => $videos,
             'breadcrumbs_data' => $breadcrumbs_data,
         ];
         
@@ -752,7 +768,10 @@ class NewsController extends Controller
         
         // we check inputs validity
         $rules = [
+            'author_id'        => 'numeric|exists:users,id',
             'category_id'      => 'required|in:' . implode(',', array_keys(config('news.category'))),
+            'photo_album_id'   => 'numeric|exists:photos,id',
+            'video_id'         => 'numeric|exists:videos,id',
             'image'            => 'image|mimes:jpg,jpeg,png|image_size:>=2560,>=1440',
             'key'              => 'required|alpha_dash|unique:news,key,' . $request->get('_id'),
             'title'            => 'required|string',

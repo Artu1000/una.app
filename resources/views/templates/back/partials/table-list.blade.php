@@ -236,7 +236,7 @@
                         && !empty($column['date'])
                         && !empty($entity->getAttribute($column['key']))
                     )
-                        {{ Carbon\Carbon::createFromFormat(($column['date'] === 'd/m/Y H:i:s' ? 'Y-m-d H:i:s' : 'Y-m-d'), $entity->getAttribute($column['key']))->format($column['date']) }}
+                        {{ Carbon\Carbon::createFromFormat($column['date'] === 'd/m/Y H:i:s' || $column['date'] === 'd/m/Y H:i' ? 'Y-m-d H:i:s' : 'Y-m-d', $entity->getAttribute($column['key']))->format($column['date']) }}
 
                     {{-- show link --}}
                     @elseif(

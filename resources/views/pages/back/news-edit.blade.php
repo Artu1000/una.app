@@ -102,6 +102,44 @@
                         </div>
                     </div>
 
+                    {{-- media --}}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ trans('news.page.title.media') }}</h3>
+                        </div>
+                        <div class="panel-body">
+
+                            {{-- photo --}}
+                            <label for="input_photo_album_id">{{ trans('news.page.label.photo_album_id') }}</label>
+                            <div class="form-group">
+                                <select class="form-control" name="photo_album_id" id="input_photo_album_id" title="{{ trans('news.page.label.photo_album_id_placeholder') }}">
+                                    <option value="">{{ trans('news.page.label.photo_album_id_placeholder') }}</option>
+                                    @foreach($photos as $photo_album)
+                                        <option value="{{ $photo_album->id }}"
+                                                @if(old('photo_album_id') == $photo_album->id)selected
+                                                @elseif(is_null(old('photo_album_id')) && isset($news->photo_album_id) && $news->photo_album_id === $photo_album->id)selected
+                                                @endif>{{ $photo_album->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            {{-- video --}}
+                            <label for="input_video_id">{{ trans('news.page.label.video_id') }}</label>
+                            <div class="form-group">
+                                <select class="form-control" name="video_id" id="input_video_id" title="{{ trans('news.page.label.video_id_placeholder') }}">
+                                    <option value="">{{ trans('news.page.label.video_id_placeholder') }}</option>
+                                    @foreach($videos as $video)
+                                        <option value="{{ $video->id }}"
+                                                @if(old('video_id') == $video->id)selected
+                                                @elseif(is_null(old('video_id')) && isset($news->video_id) && $news->video_id === $video->id)selected
+                                                @endif>{{ $video->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
                     {{-- seo data --}}
                     <div class="panel panel-default">
                         <div class="panel-heading">

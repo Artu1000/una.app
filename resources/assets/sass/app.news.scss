@@ -94,7 +94,7 @@
                 margin: 5px 0;
               }
 
-              .date, .category, .author, .comments {
+              .date, .category, .photo_album, .video, .author, .comments {
                 display: inline-block;
                 margin-right: 15px;
               }
@@ -148,7 +148,7 @@
 
     .container {
 
-      h2 {
+      h1 {
         margin-bottom: 10px;
       }
 
@@ -166,6 +166,49 @@
 
       .author {
         padding-top: 50px;
+      }
+
+      .media {
+        margin: 0 0 30px 0;
+
+        a {
+          display: inline-block;
+          @include border-radius(7px);
+          padding: 15px;
+          margin: 0 15px 0 0;
+
+          //background-color: $gray-lighter;
+
+          .image {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 5px 0 0;
+
+            img {
+              @include border-radius(4px);
+            }
+          }
+
+          .detail {
+            display: inline-block;
+            vertical-align: middle;
+
+            h3, h4{
+              font-size: $font-size;
+              margin: 0;
+            }
+
+            h3 {
+              @include lato-normal();
+              display: inline-block;
+            }
+          }
+
+          //&:hover {
+          //  @include opacity(0.7);
+          //  @include transition(opacity 0.2s ease);
+          //}
+        }
       }
 
       .return {
