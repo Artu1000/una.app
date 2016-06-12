@@ -35,22 +35,22 @@
                         <h2>{{ trans('news.page.title.media') }}</h2>
                         <div class="media">
                             @if($photo_album = $news->photoAlbum)
-                                <a class="photo_album new_window bg-info" href="{{ $photo_album->link }}" title="{{ $photo_album->title }}">
-                                    <div class="image">
+                                <a class="photo_album new_window bg-info display-table" href="{{ $photo_album->link }}" title="{{ $photo_album->title }}">
+                                    <div class="image table-cell">
                                         <img width="40" height="40" src="{{ $photo_album->imagePath($photo_album->cover, 'cover', 'front') }}" alt="{{ $photo_album->title }}">
                                     </div>
-                                    <div class="detail">
+                                    <div class="detail table-cell">
                                         <h3><i class="fa fa-camera" aria-hidden="true"></i> {{ trans('news.page.title.photo_album') }}</h3>
                                         <h4>{{ str_limit($photo_album->title, 60) }}</h4>
                                     </div>
                                 </a>
                             @endif
                             @if($video = $news->video)
-                                <a class="video bg-info" href="{{ $video->link }}" title="{{ $video->title }}" data-lity>
-                                    <div class="image">
+                                <a class="video bg-info display-table" href="{{ $video->link }}" title="{{ $video->title }}" data-lity>
+                                    <div class="image table-cell">
                                         <img width="40" height="40" src="{{ $video->imagePath($video->cover, 'cover', 'front') }}" alt="{{ $video->title }}">
                                     </div>
-                                    <div class="detail">
+                                    <div class="detail table-cell">
                                         <h3><i class="fa fa-video-camera" aria-hidden="true"></i> {{ trans('news.page.title.video') }}</h3>
                                         <h4>{{ str_limit($video->title, 60) }}</h4>
                                     </div>

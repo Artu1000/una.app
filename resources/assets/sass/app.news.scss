@@ -177,12 +177,7 @@
           padding: 15px;
           margin: 0 15px 0 0;
 
-          //background-color: $gray-lighter;
-
           .image {
-            display: inline-block;
-            vertical-align: middle;
-            margin: 0 5px 0 0;
 
             img {
               @include border-radius(4px);
@@ -190,8 +185,8 @@
           }
 
           .detail {
-            display: inline-block;
-            vertical-align: middle;
+            padding: 0 0 0 5px;
+            max-width: 100%;
 
             h3, h4{
               font-size: $font-size;
@@ -200,14 +195,14 @@
 
             h3 {
               @include lato-normal();
-              display: inline-block;
+              padding: 0 0 4px 0;
+            }
+
+            h4 {
+              max-height: 16px;
+              overflow: hidden;
             }
           }
-
-          //&:hover {
-          //  @include opacity(0.7);
-          //  @include transition(opacity 0.2s ease);
-          //}
         }
       }
 
@@ -268,6 +263,18 @@
     .text-content {
 
       .container {
+
+        .media {
+
+          a {
+            display: block;
+            margin: 0;
+
+            &:first-of-type {
+              margin: 0 0 15px 0;
+            }
+          }
+        }
 
         div.author {
           float: none !important;
