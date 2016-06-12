@@ -41,7 +41,8 @@
                                     </div>
                                     <div class="detail table-cell">
                                         <h3><i class="fa fa-camera" aria-hidden="true"></i> {{ trans('news.page.title.photo_album') }}</h3>
-                                        <h4>{{ str_limit($photo_album->title, 60) }}</h4>
+                                        <h4 class="hidden-xs">{{ str_limit($photo_album->title, 60) }}</h4>
+                                        <h4 class="visible-xs">{{ str_limit($photo_album->title, 20) }}</h4>
                                     </div>
                                 </a>
                             @endif
@@ -52,7 +53,8 @@
                                     </div>
                                     <div class="detail table-cell">
                                         <h3><i class="fa fa-video-camera" aria-hidden="true"></i> {{ trans('news.page.title.video') }}</h3>
-                                        <h4>{{ str_limit($video->title, 60) }}</h4>
+                                        <h4 class="hidden-xs">{{ str_limit($video->title, 60) }}</h4>
+                                        <h4 class="visible-xs">{{ str_limit($video->title, 20) }}</h4>
                                     </div>
                                 </a>
                             @endif
