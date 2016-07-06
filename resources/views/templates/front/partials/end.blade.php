@@ -3,6 +3,6 @@
 
 {{-- google analytics code insertion --}}
 @if($ga_code = config('settings.google_analytics'))
-    <script async defer>{!! $ga_code !!}</script>
+    {!! $ga_code !!}
 @endif
 
