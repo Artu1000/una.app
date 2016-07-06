@@ -86,7 +86,10 @@ after('app:down', 'project:install');
 task('auth:upgrade', function () {
     run('sudo chmod -R g+w {{deploy_path}}/shared/');
     run('sudo chown -R deploy:www-data {{deploy_path}}/shared/');
+    run('sudo chmod -R g+w {{release_path}}/bootstrap/cache');
+    run('sudo chown -R deploy:www-data {{release_path}}/bootstrap/cache');
     run('sudo chmod -R g+w {{release_path}}/database/seeds/files');
+    run('sudo chown -R deploy:www-data {{release_path}}/database/seeds/files');
 })->desc('Set correct permissions the the shared directory');
 after('project:install', 'auth:upgrade');
 

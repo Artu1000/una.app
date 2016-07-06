@@ -176,7 +176,10 @@ class SettingsController extends Controller
             ], 'success');
 
             // we renew the config cache
-            Artisan::call('config:cache');
+            if(config('app.env') !== 'local'){
+                Artisan::call('route:cache');
+                Artisan::call('config:cache');
+            }
 
             return redirect()->back();
         } catch (Exception $e) {
