@@ -21,6 +21,9 @@ function evalChildrenCheckboxes(elt) {
     $('input#' + permission_group).prop('checked', checked);
 }
 
+// we set the dropzone autodiscover on false
+Dropzone.autoDiscover = false;
+
 $(function () {
 
     // if we detect inputs language selectors
@@ -313,5 +316,231 @@ $(function () {
         // we collapse all the other menu elements
         $('.collapse').not(this).collapse('hide');
     });
+
+    // we manage the file dropzone behaviour
+    var dropzone = $('form#dropzone');
+    if (dropzone.length) {
+        // we set the uploaded and rejected files arrays
+        var uploaded_files = [];
+        var rejected_files = [];
+        var upload_process_status = false;
+        // we get the template html and remove it from the page
+        var previewNode = document.querySelector("#template");
+        previewNode.id = "";
+        var previewTemplate = previewNode.parentNode.innerHTML;
+        previewNode.parentNode.removeChild(previewNode);
+        // we instantiate the dropzone object
+        var myDropzone = new Dropzone('form#dropzone', {
+            paramName: dropzone.attr('data-param'),
+            maxFilesize: dropzone.attr('data-max-megabytes-size'),
+            thumbnailWidth: 40,
+            thumbnailHeight: 40,
+            parallelUploads: 20,
+            previewTemplate: previewTemplate,
+            autoQueue: false,
+            acceptedFiles: dropzone.attr('data-accepted-extensions'),
+            previewsContainer: "#previews",
+            dictInvalidFileType: app.invalid_file_type,
+            dictFileTooBig: app.file_too_big
+        });
+        // we update the total progress bar on load
+        myDropzone.on("totaluploadprogress", function (progress) {
+            // we complete the progress bar
+            $("#total-progress .progress-bar").css('width', progress + "%");
+        });
+        myDropzone.on("sending", function (file) {
+            // we show the total progress bar when upload starts
+            $("#total-progress").show();
+            // we disable the start button
+            $("#actions .start").attr("disabled", "disabled");
+            // we set the upload process status to true
+            upload_process_status = true;
+        });
+        // we hide the total progress bar when nothing's uploading anymore
+        myDropzone.on("queuecomplete", function (progress) {
+            if (upload_process_status === true) {
+                // we hide the total progress bar when upload is finished
+                $("#total-progress").hide();
+                // we reload the page with the uploaded and rejected files data
+                console.log('uploaded_files', JSON.stringify(uploaded_files));
+                var url = app.reload_route;
+                if (uploaded_files.length) {
+                    url += '?uploaded=' + JSON.stringify(uploaded_files);
+                }
+                console.log('rejected_files', JSON.stringify(rejected_files));
+                if (rejected_files.length) {
+                    if (!uploaded_files.length) {
+                        url += '?';
+                    } else {
+                        url += '&';
+                    }
+                    url += 'rejected=' + JSON.stringify(rejected_files);
+                }
+                location.href = url;
+            }
+            // we reset the upload process status to false
+            upload_process_status = false;
+        });
+        // we launch the files transfer
+        $("#actions .start").click(function () {
+            myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
+        });
+        // we remove all the selected files
+        $("#actions .cancel").click(function () {
+            myDropzone.removeAllFiles(true);
+        });
+        // when a file is added
+        myDropzone.on("addedfile", function (progress) {
+            // we show the previews zone
+            $('#previews').show();
+            // we enable the start button
+            $("#actions .start").removeAttr("disabled");
+        });
+        // when the previews zone is empty
+        myDropzone.on("reset", function (progress) {
+            // we hide the previews zone
+            $('#previews').hide();
+            // we disable the start button
+            $("#actions .start").attr("disabled", "disabled");
+        });
+        // when a file is uploaded with success
+        myDropzone.on("success", function (file, response) {
+            // we add the file to the uploaded ones
+            uploaded_files.push({
+                original_name: file.name,
+                stored_name: response
+            });
+            // we remove the file from the previews zone
+            myDropzone.removeFile(file);
+        });
+        // when an error occure during a file upload
+        myDropzone.on("error", function (file, response) {
+            if (upload_process_status === true) {
+                // we add the file to the rejected ones
+                rejected_files.push({
+                    name: file.name,
+                    message: response
+                });
+                // we remove the file from the previews zone
+                myDropzone.removeFile(file);
+            }
+        });
+        // we custom the dropzone design on dragover
+        myDropzone.on("dragover", function () {
+            dropzone.css('border-color', '#5BC0DE');
+        });
+        myDropzone.on("dragleave", function () {
+            dropzone.css('border-color', '#337AB7');
+        });
+    }
+
+    // we manage the input update on change
+    var inputs = $('input.submit-on-change');
+    if (inputs.length) {
+        // we prepare the update value function
+        function updateValue($this){
+            var form = $this.closest('form');
+            // we show the loading spinner
+            form.find('.input-change-icon').remove();
+            form.append('<span class="input-change-icon">' + app.loading_spinner + '</span>');
+            var value = null;
+            // we launch the ajax request
+            $.ajax({
+                method: form.attr('method'),
+                url: form.attr('action'),
+                data: {
+                    _token: form.find('input[name=_token]').val(),
+                    _method: form.find('input[name=_method]').val(),
+                    value: form.find('input.value').val(),
+                }
+            }).done(function (data) {
+                // we replace the loading spinner by a success icon
+                form.find('.input-change-icon').remove();
+                form.append('<span class="input-change-icon text-success">' + app.success_icon + '</i></span>');
+                // we show the success messages
+                if (data.message) {
+                    data.message.forEach(function (success) {
+                        $.notify({
+                            // options
+                            title: app.success_icon,
+                            message: success
+                        }, {
+                            // settings
+                            type: 'success',
+                            delay: 6000,
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            animate: {
+                                enter: 'animated bounceInDown',
+                                exit: 'animated bounceOutUp'
+                            }
+                        });
+                    });
+                }
+                // we set the value
+                value = data.value;
+            }).fail(function (data) {
+                // we show the error messages
+                if (data.responseJSON.message) {
+                    data.responseJSON.message.forEach(function (error) {
+                        $.notify({
+                            // options
+                            title: app.error_icon,
+                            message: error
+                        }, {
+                            // settings
+                            type: 'danger',
+                            delay: 6000,
+                            allow_dismiss: false,
+                            showProgressbar: true,
+                            animate: {
+                                enter: 'animated bounceInDown',
+                                exit: 'animated bounceOutUp'
+                            }
+                        });
+                    });
+                }
+                // we set the value
+                value = data.responseJSON.value;
+                // we replace the loading spinner by an error icon
+                form.find('.input-change-icon').remove();
+                form.append('<span class="input-change-icon text-danger">' + app.error_icon + '</span>');
+            }).always(function () {
+                // we fade out the icon
+                form.find('.input-change-icon').css({
+                    '-webkit-animation': 'fadeOut 10000ms',
+                    '-moz-animation': 'fadeOut 10000ms',
+                    '-ms-animation': 'fadeOut 10000ms',
+                    '-o-animation': 'fadeOut 10000ms',
+                    'animation': 'fadeOut 10000ms'
+                }).promise().done(function () {
+                    // keep invisible
+                    $(this).css('opacity', 0);
+                });
+                // we show the value
+                $this.val(value);
+            });
+        }
+        //setup before functions
+        var typing_timing = 500;
+        var typing_timer;
+        // we set the listeners on the inputs
+        inputs.each(function() {
+            // we store the object
+            var $this = $(this);
+            // on keyup, we lauch the countdown before saving
+            $this.on('keyup', function () {
+                clearTimeout(typing_timer);
+                typing_timer = setTimeout(function(){
+                    updateValue($this);
+                }, typing_timing);
+            });
+            // on keydown, we clear the countdown
+            $this.on('keydown', function () {
+                console.log('reset timeout', typing_timing);
+                clearTimeout(typing_timer);
+            });
+        });
+    }
 });
 

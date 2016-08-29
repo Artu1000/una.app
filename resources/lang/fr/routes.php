@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    
     // front
     // routes
     "login"        => [
@@ -45,7 +45,7 @@ return [
     "proxy"        => [
         "qr" => "proxy/qr",
     ],
-
+    
     // back
     // routes
     "dashboard"    => [
@@ -164,6 +164,20 @@ return [
         "update"   => "admin/contenus/partenaires/mise-a-jour/{id}",
         "destroy"  => "admin/contenus/partenaires/suppression/{id}",
         "activate" => "admin/contenus/partenaires/activation/{id}",
+    ],
+    "libraries"    => [
+        "images" => [
+            "index"   => "admin/bibliotheque/images",
+            "store"   => "admin/bibliotheque/images",
+            "update"  => "admin/bibliotheque/images/mise-a-jour/{id}",
+            "destroy" => "admin/bibliotheque/images/{id}",
+        ],
+        "files"  => [
+            "index"   => "admin/bibliotheque/fichiers",
+            "store"   => "admin/bibliotheque/fichiers",
+            "update"  => "admin/bibliotheque/fichiers/mise-a-jour/{id}",
+            "destroy" => "admin/bibliotheque/fichiers/{id}",
+        ],
     ],
     "logout"       => "admin/deconnexion",
 ];

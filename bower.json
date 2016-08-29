@@ -27,6 +27,7 @@
     "eonasdan-bootstrap-datetimepicker": "~4.17.37",
     "bootstrap-sass": "^3.3.6",
     "lato-webfont": "^1.1.2",
-    "font-awesome": "fontawesome#^4.6.1"
+    "font-awesome": "fontawesome#^4.6.1",
+    "dropzone": "^4.3.0"
   }
 }

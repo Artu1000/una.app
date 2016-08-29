@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use App\Repositories\EShop\EShopArticleRepository;
 use App\Repositories\EShop\EShopArticleRepositoryInterface;
+use App\Repositories\Libraries\LibraryFileRepository;
+use App\Repositories\Libraries\LibraryFileRepositoryInterface;
+use App\Repositories\Libraries\LibraryImageRepository;
+use App\Repositories\Libraries\LibraryImageRepositoryInterface;
 use App\Repositories\Media\PhotoRepository;
 use App\Repositories\Media\PhotoRepositoryInterface;
 use App\Repositories\Media\VideoRepository;
@@ -120,6 +124,16 @@ class RepositoryServiceProvider extends ServiceProvider
         // video
         $this->app->bind(VideoRepositoryInterface::class, function () {
             return new VideoRepository();
+        });
+    
+        // image library
+        $this->app->bind(LibraryImageRepositoryInterface::class, function () {
+            return new LibraryImageRepository();
+        });
+    
+        // file library
+        $this->app->bind(LibraryFileRepositoryInterface::class, function () {
+            return new LibraryFileRepository();
         });
     }
 }

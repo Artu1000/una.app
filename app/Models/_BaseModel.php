@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use FileManager;
 use Illuminate\Database\Eloquent\Model;
 use ImageManager;
 use InvalidArgumentException;
@@ -39,6 +40,15 @@ abstract class _BaseModel extends Model
     public function imagePath($file_name, $key = null, $size = null)
     {
         return ImageManager::imagePath($this->public_path, $file_name, $key, $size);
+    }
+    
+    /**
+     * @param string $file_name
+     * @return mixed
+     */
+    public function filePath(string $file_name)
+    {
+        return FileManager::filePath($this->public_path, $file_name);
     }
 
     /**
@@ -78,7 +88,7 @@ abstract class _BaseModel extends Model
     public function storagePath()
     {
         if (!is_dir($storage_path = storage_path($this->storage_path))) {
-            mkdir($storage_path);
+            mkdir($storage_path, 0777, true);
         }
 
         return $storage_path;
@@ -95,5 +105,14 @@ abstract class _BaseModel extends Model
         };
 
         return str_slug(config('image.prefix') . $this->id . '-' . $type);
+    }
+    
+    /**
+     * @param string|null $custom_name
+     * @return string
+     */
+    public function fileName(string $custom_name = null)
+    {
+        return str_slug(config('file.prefix') . $this->id . ($custom_name ? '-' . $custom_name : '-file'));
     }
 }

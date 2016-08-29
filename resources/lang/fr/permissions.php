@@ -1,12 +1,12 @@
 <?php
 
 return [
-
+    
     // settings
     "settings"                   => "Paramètres",
     "settings.view"              => "Consulter les paramètres",
     "settings.update"            => "Modifier les paramètres",
-
+    
     // permissions
     "permissions"                => "Permissions utilisateur",
     "permissions.list"           => "Consulter la liste des permissions utilisateur",
@@ -14,7 +14,7 @@ return [
     "permissions.create"         => "Créer une permission utilisateur",
     "permissions.update"         => "Modifier une permission utilisateur",
     "permissions.delete"         => "Supprimer une permission utilisateur",
-
+    
     // users
     "users"                      => "Utilisateurs",
     "users.list"                 => "Consulter la liste des utilisateurs",
@@ -22,7 +22,7 @@ return [
     "users.view"                 => "Consulter le détail d'un utilisateur",
     "users.update"               => "Modifier un utilisateur",
     "users.delete"               => "Supprimer un utlisateur",
-
+    
     // home
     "home"                       => "Page d'accueil",
     "home.page.view"             => "Consulter le détail de la page d'accueil",
@@ -31,7 +31,7 @@ return [
     "home.slides.view"           => "Consulter le détail d'une diapo",
     "home.slides.update"         => "Modifier une diapo",
     "home.slides.delete"         => "Supprimer une diapo",
-
+    
     // news
     "news"                       => "Actualités",
     "news.page.view"             => "Consulter le détail de la page d'actualités",
@@ -43,7 +43,7 @@ return [
     "news.activate"              => "Activer une actualité",
     "news.author"                => "Sélectionner l'auteur d'une actualité",
     "news.preview"               => "Prévisualiser une actualité",
-
+    
     // schedules
     "schedules"                  => "Horaires",
     "schedules.page.view"        => "Consulter le détail de la page des créneaux horaires",
@@ -52,7 +52,7 @@ return [
     "schedules.view"             => "Consulter le détail d'un créneau horaire",
     "schedules.update"           => "Modifier un créneau horaire",
     "schedules.delete"           => "Supprimer un créneau horaire",
-
+    
     // registration
     "registration"               => "Inscription",
     "registration.page.view"     => "Consulter le détail de la page d'inscription",
@@ -61,7 +61,7 @@ return [
     "registration.prices.view"   => "Consulter le détail d'un tarif d'inscription",
     "registration.prices.update" => "Modifier un tarif d'inscription",
     "registration.prices.delete" => "Supprimer un tarif d'inscription",
-
+    
     // photos
     "photos"                     => "Photos",
     "photos.page.view"           => "Consulter le détail de la page d'albums photos",
@@ -70,7 +70,7 @@ return [
     "photos.view"                => "Consulter le détail d'un album photo",
     "photos.update"              => "Modifier un album photo",
     "photos.delete"              => "Supprimer un album photo",
-
+    
     // videos
     "videos"                     => "Vidéos",
     "videos.page.view"           => "Consulter le détail de la page de vidéos",
@@ -79,7 +79,7 @@ return [
     "videos.view"                => "Consulter le détail d'une vidéo",
     "videos.update"              => "Modifier une vidéo",
     "videos.delete"              => "Supprimer une vidéo",
-
+    
     // partners
     "partners"                   => "Partenaires",
     "partners.list"              => "Consulter la liste des partenaires",
@@ -87,7 +87,18 @@ return [
     "partners.view"              => "Consulter le détail d'un partenaire",
     "partners.update"            => "Modifier un partenaire",
     "partners.delete"            => "Supprimer un partenaire",
-
+    
+    // libraries
+    'libraries'                  => "Bibliothèques",
+    'libraries.images.list'      => "Voir la bibliothèque d'images",
+    'libraries.images.create'    => "Ajouter des images à la bibliothèque",
+    'libraries.images.update'    => "Modifier une image de la bibliothèque",
+    'libraries.images.delete'    => "Supprimer des images de la bibliothèque",
+    'libraries.files.list'       => "Voir la bibliothèque de fichiers",
+    'libraries.files.create'     => "Ajouter des fichiers à la bibliothèque",
+    'libraries.files.update'     => "Modifier un fichier de la bibliothèque",
+    'libraries.files.delete'     => "Supprimer des fichiers de la bibliothèque",
+    
     // pages
     "page"                       => [
         "title"  => [
@@ -117,7 +128,7 @@ return [
             "updated_at"  => "Date de modification",
         ],
     ],
-
+    
     // messages
     "message"                    => [
         "access"   => [

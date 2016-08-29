@@ -38,12 +38,15 @@ class StoragePrepare extends Command
     {
         // we set the folder to verify
         $to_create = [
+            // public
+            public_path('libraries'),
+            // framework
             storage_path('framework/cache'),
             storage_path('framework/sessions'),
             storage_path('framework/views'),
+            // storage
             storage_path('app/settings'),
             storage_path('app/users'),
-            storage_path('app/home'),
             storage_path('app/home/slides'),
             storage_path('app/news'),
             storage_path('app/schedules'),
@@ -55,6 +58,8 @@ class StoragePrepare extends Command
             storage_path('app/proxy'),
             storage_path('app/photos'),
             storage_path('app/videos'),
+            storage_path('app/libraries/images'),
+            storage_path('app/libraries/files'),
         ];
         // we execute the verification
         $created = [];

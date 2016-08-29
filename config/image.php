@@ -4,6 +4,7 @@ $image_prefix = 'universite-nantes-aviron-una-';
 
 return [
 
+    // image prefix used
     "prefix"       => $image_prefix,
 
     // images configurations

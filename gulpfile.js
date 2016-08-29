@@ -1,5 +1,17 @@
 var elixir = require('laravel-elixir');
 require('laravel-elixir-imagemin');
+require('laravel-elixir-delete');
+var gulp  = require('gulp');
+var shell = require('gulp-shell');
+
+// elixir extensions
+elixir.extend('shell', function() {
+    gulp.task('command', shell.task([
+        'php artisan symlinks:prepare'
+        // other shell commands
+    ]));
+    return this.queueTask('command');
+});
 
 /*
  |--------------------------------------------------------------------------
@@ -25,15 +37,26 @@ var paths = {
     simplemde: './resources/assets/vendor/simplemde/dist/',
     fontawesome: './resources/assets/vendor/fontawesome/',
     lato: './resources/assets/vendor/lato-webfont/',
+    dropzone: './resources/assets/vendor/dropzone/dist/',
     js: './resources/assets/js/',
     img: './resources/assets/img/'
 };
 
 elixir(function (mix) {
-    /***************************************************************************************************************
-     * SASS
-     ***************************************************************************************************************/
     mix
+
+        // we begin by deleting all generated public folders
+        .delete([
+            'public/build',
+            'public/css',
+            'public/fonts',
+            'public/img',
+            'public/js'
+        ])
+
+        /***************************************************************************************************************
+         * SASS
+         ***************************************************************************************************************/
 
         // FRONT
         .sass('app.front.scss', 'public/css/app.front.css', {})
@@ -59,7 +82,6 @@ elixir(function (mix) {
         /***************************************************************************************************************
          * CSS
          ***************************************************************************************************************/
-
 
         // combine home stylesheets
         .styles([
@@ -93,6 +115,7 @@ elixir(function (mix) {
             paths.lity + 'lity.css',
             paths.animate + 'animate.css',
             paths.simplemde + 'simplemde.min.css',
+            paths.dropzone + 'dropzone.css',
             'public/css/app.back.css'
         ], 'public/css/app.back.css', './')
 
@@ -187,6 +210,7 @@ elixir(function (mix) {
             paths.moment + 'moment.js',
             paths.moment + 'locale/fr.js',
             paths.moment + 'locale/en-gb.js',
+            paths.dropzone + 'dropzone.js',
             paths.datepicker + 'src/js/bootstrap-datetimepicker.js',
             paths.js + 'ie10-viewport-bug-workaround.js',
             paths.lity + 'lity.js',
@@ -228,4 +252,9 @@ elixir(function (mix) {
             // js front
             'public/js/app.back.js'
         ]);
+
+        /***************************************************************************************************************
+         * SHELL COMMANDS
+         ***************************************************************************************************************/
+        // .shell();
 });

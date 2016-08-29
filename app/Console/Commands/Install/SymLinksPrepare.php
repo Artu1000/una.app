@@ -2,12 +2,15 @@
 
 namespace App\Console\Commands\Install;
 
+use App\Repositories\Libraries\LibraryFileRepositoryInterface;
+use App\Repositories\Libraries\LibraryImageRepositoryInterface;
 use App\Repositories\Media\PhotoRepositoryInterface;
 use App\Repositories\Media\VideoRepositoryInterface;
 use App\Repositories\News\NewsRepositoryInterface;
 use App\Repositories\Page\PageRepositoryInterface;
 use App\Repositories\Partner\PartnerRepositoryInterface;
 use App\Repositories\Slide\SlideRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Console\Command;
 
 class SymLinksPrepare extends Command
@@ -99,8 +102,8 @@ class SymLinksPrepare extends Command
             ],
             // users
             [
-                'storage' => \Sentinel::getUserRepository()->createModel()->storagePath(),
-                'public'  => \Sentinel::getUserRepository()->createModel()->publicPath(),
+                'storage' => app(UserRepositoryInterface::class)->getModel()->storagePath(),
+                'public'  => app(UserRepositoryInterface::class)->getModel()->publicPath(),
             ],
             // photos
             [
@@ -111,6 +114,16 @@ class SymLinksPrepare extends Command
             [
                 'storage' => app(VideoRepositoryInterface::class)->getModel()->storagePath(),
                 'public'  => app(VideoRepositoryInterface::class)->getModel()->publicPath(),
+            ],
+            // images library
+            [
+                'storage' => app(LibraryImageRepositoryInterface::class)->getModel()->storagePath(),
+                'public'  => app(LibraryImageRepositoryInterface::class)->getModel()->publicPath(),
+            ],
+            // files library
+            [
+                'storage' => app(LibraryFileRepositoryInterface::class)->getModel()->storagePath(),
+                'public'  => app(LibraryFileRepositoryInterface::class)->getModel()->publicPath(),
             ],
         ];
 

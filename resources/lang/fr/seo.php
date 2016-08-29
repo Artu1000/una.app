@@ -145,5 +145,13 @@ return [
             "edit"   => "Édition d'un partenaire",
             "create" => "Création d'un partenaire",
         ],
+        "libraries"     => [
+            "images" => [
+                "index" => "Gestion des images",
+            ],
+            "files" => [
+                "index" => "Gestion des fichiers",
+            ],
+        ],
     ],
 ];

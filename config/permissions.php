@@ -46,7 +46,7 @@ return [
     'news.activate'              => false,
     'news.author'                => false,
     'news.preview'               => false,
-
+    
     // schedules
     'schedules'                  => false,
     'schedules.page.view'        => false,
@@ -64,7 +64,7 @@ return [
     'registration.prices.view'   => false,
     'registration.prices.update' => false,
     'registration.prices.delete' => false,
-
+    
     // photos
     'photos'                     => false,
     'photos.page.view'           => false,
@@ -73,7 +73,7 @@ return [
     'photos.view'                => false,
     'photos.update'              => false,
     'photos.delete'              => false,
-
+    
     // videos
     'videos'                     => false,
     'videos.page.view'           => false,
@@ -90,5 +90,16 @@ return [
     'partners.view'              => false,
     'partners.update'            => false,
     'partners.delete'            => false,
+    
+    // libraries
+    'libraries'                  => false,
+    'libraries.images.list'      => false,
+    'libraries.images.create'    => false,
+    'libraries.images.update'    => false,
+    'libraries.images.delete'    => false,
+    'libraries.files.list'       => false,
+    'libraries.files.create'     => false,
+    'libraries.files.update'     => false,
+    'libraries.files.delete'     => false,
 
 ];

@@ -41,6 +41,11 @@ return [
             "photos"       => "Photos",
             "videos"       => "Vidéos",
             "partners"     => "Partenaires",
+            "libraries"  => [
+                "title"  => "Bibliothèques",
+                "images" => "Images",
+                "files"  => "Fichiers",
+            ],
         ],
     ],
 ];

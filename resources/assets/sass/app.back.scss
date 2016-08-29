@@ -345,6 +345,65 @@ html {
       width: 100%;
       height: 5px;
     }
+
+    // dropzone
+    #dropzone {
+      @include border-radius(5px);
+      border: dashed 2px $brand-primary;
+      background-color: $gray-lighter;
+      margin-bottom: 15px;
+
+      h3 {
+        text-align: center;
+        color: $brand-primary;
+      }
+    }
+
+    .fileupload-process {
+
+      #total-progress{
+        display: none;
+
+        .progress-bar {
+          width: 0%;
+        }
+      }
+    }
+
+    #previews {
+      display: none;
+      padding-top: 15px;
+
+      .table {
+        margin: 0;
+
+        .image, .file {
+          width: 66px;
+        }
+
+        .size {
+          width: 75px;
+        }
+
+        .loading_status {
+          min-width: 300px;
+          width: 300px;
+
+          .progress {
+            margin-bottom: 0;
+
+            .progress-bar {
+              width: 0%;
+            }
+          }
+        }
+
+        .actions {
+          min-width: 60px !important;
+          width: 60px;
+        }
+      }
+    }
   }
 }
 

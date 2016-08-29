@@ -973,7 +973,9 @@ class NewsController extends Controller
             // we notify the current user
             return response([
                 'active'  => $news->fresh()->active,
-                'message' => trans('news.message.activation.failure', ['news' => $news->title]),
+                'message' => [
+                    trans('news.message.activation.failure', ['news' => $news->title])
+                ],
             ], 401);
         }
     }

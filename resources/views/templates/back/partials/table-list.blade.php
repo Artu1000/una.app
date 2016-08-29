@@ -238,6 +238,16 @@
                     )
                         {{ Carbon\Carbon::createFromFormat($column['date'] === 'd/m/Y H:i:s' || $column['date'] === 'd/m/Y H:i' ? 'Y-m-d H:i:s' : 'Y-m-d', $entity->getAttribute($column['key']))->format($column['date']) }}
 
+                        {{-- show file --}}
+                    @elseif(
+                        isset($column['file'])
+                        && !empty($image = $column['file'])
+                        && !empty($entity->getAttribute($column['key']))
+                    )
+                        <a class="file" href="{{ $entity->filePath($entity->getAttribute($column['key'])) }}" data-lity>
+                            {!! config('file.icon.' . last(explode('.', $entity->getAttribute($column['key'])))) ? config('file.icon.' . last(explode('.', $entity->getAttribute($column['key'])))) : config('file.icon.default') !!}
+                        </a>
+
                     {{-- show link --}}
                     @elseif(
                         isset($column['link'])
@@ -279,7 +289,22 @@
                             @endif
                         </a>
 
-                        {{-- show value --}}
+                    {{-- show input --}}
+                    @elseif(
+                        isset($column['input'])
+                        && !empty($column['input']['type'])
+                        && !empty($column['input']['submit']['method'])
+                        && !empty($column['input']['submit']['route'])
+                    )
+                        <form role="form" class="form-inline" method="{{ $column['input']['submit']['method'] }}" action="{{ route($column['input']['submit']['route'], ['id' => $entity->id]) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            @if(isset($column['input']['submit']['update']) && $column['input']['submit']['update'] === true)
+                                <input type="hidden" name="_method" value="PUT">
+                            @endif
+                            <input class="form-control value {{ isset($column['input']['class']) ? $column['input']['class'] : '' }}" type="{{ $column['input']['type'] }}" name="value" value="{{ $entity->getAttribute($column['key']) }}" placeholder="{{ trans('libraries.images.page.label.alias_placeholder') }}">
+                        </form>
+
+                    {{-- show value --}}
                     @else
                         @if(
                             isset($column['button'])
@@ -287,21 +312,21 @@
                             && !empty($entity->getAttribute($column['key']))
                         )
                             <button class="btn {{ $column['key'] }}">
-                                @endif
-                                @if(
-                                    isset($column['key'])
-                                    && isset($column['str_limit'])
-                                    && is_numeric($column['str_limit'])
-                                )
-                                    {{ str_limit(strip_tags($entity->getAttribute($column['key'])), $column['str_limit']) }}
-                                @elseif(isset($column['key']))
-                                    {{ $entity->getAttribute($column['key']) }}
-                                @endif
-                                @if(
-                                    isset($column['button'])
-                                    && $column['button'] === true
-                                    && !empty($entity->getAttribute($column['key']))
-                                )
+                        @endif
+                        @if(
+                            isset($column['key'])
+                            && isset($column['str_limit'])
+                            && is_numeric($column['str_limit'])
+                        )
+                            {{ str_limit(strip_tags($entity->getAttribute($column['key'])), $column['str_limit']) }}
+                        @elseif(isset($column['key']))
+                            {{ $entity->getAttribute($column['key']) }}
+                        @endif
+                        @if(
+                            isset($column['button'])
+                            && $column['button'] === true
+                            && !empty($entity->getAttribute($column['key']))
+                        )
                             </button>
                         @endif
                     @endif
@@ -361,7 +386,7 @@
                             && !empty($tableListData['routes']['destroy']['route'])
                         )
                             <form role="form" id="delete_{{ $entity->id }}" class="form-inline" method="POST" action="{{ route($tableListData['routes']['destroy']['route'], array_merge(
-                            $tableListData['routes']['edit']['params'],
+                            $tableListData['routes']['destroy']['params'],
                             ['id' => $entity->id]
                         )) }}">
                                 <input type="hidden" name="_method" value="DELETE">

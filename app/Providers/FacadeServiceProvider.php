@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Helpers\ConsoleHelper;
 use App\Helpers\CustomLogHelper;
 use App\Helpers\EntryHelper;
+use App\Helpers\FileManagerHelper;
 use App\Helpers\ImageManagerHelper;
 use App\Helpers\ModalHelper;
 use App\Helpers\PermissionHelper;
@@ -37,9 +38,14 @@ class FacadeServiceProvider extends ServiceProvider
             return new ModalHelper();
         });
 
-        // image optimizer helper
+        // image manager helper
         App::bind('ImageManager', function () {
             return new ImageManagerHelper();
+        });
+    
+        // file manager helper
+        App::bind('FileManager', function () {
+            return new FileManagerHelper();
         });
 
         // console helper

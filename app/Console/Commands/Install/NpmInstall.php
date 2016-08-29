@@ -53,11 +53,19 @@ class NpmInstall extends Command
         $this->line('Processing gulp install ...');
         Console::execWithOutput('npm install gulp --save-dev', $this);
         $this->info('✔ gulp installed' . PHP_EOL);
+    
+        $this->line('Processing gulp-shell install ...');
+        Console::execWithOutput('npm install gulp-shell --save-dev', $this);
+        $this->info('✔ gulp-shell installed' . PHP_EOL);
 
         $this->line('Processing laravel-elixir install ...');
         Console::execWithOutput('npm install laravel-elixir --save-dev', $this);
         $this->info('✔ laravel-elixir installed' . PHP_EOL);
-
+    
+        $this->line('Processing laravel-elixir-delete install ...');
+        Console::execWithOutput('npm install laravel-elixir-delete --save-dev', $this);
+        $this->info('✔ laravel-elixir-delete installed' . PHP_EOL);
+    
         $this->line('Processing laravel-elixir-imagemin install ...');
         Console::execWithOutput('npm install laravel-elixir-imagemin --save-dev', $this);
         $this->info('✔ laravel-elixir-imagemin installed' . PHP_EOL);

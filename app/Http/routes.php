@@ -140,6 +140,18 @@ $route = Route::group($group, function () {
     Route::put(LaravelLocalization::transRoute('routes.partners.update'), ['as' => 'partners.update', 'uses' => 'Partner\PartnersController@update']);
     Route::delete(LaravelLocalization::transRoute('routes.partners.destroy'), ['as' => 'partners.destroy', 'uses' => 'Partner\PartnersController@destroy']);
     Route::post(LaravelLocalization::transRoute('routes.partners.activate'), ['as' => 'partners.activate', 'uses' => 'Partner\PartnersController@activate']);
+    
+    // images library
+    Route::get(LaravelLocalization::transRoute('routes.libraries.images.index'), ['as' => 'libraries.images.index', 'uses' => 'Libraries\ImagesController@index']);
+    Route::post(LaravelLocalization::transRoute('routes.libraries.images.store'), ['as' => 'libraries.images.store', 'uses' => 'Libraries\ImagesController@store']);
+    Route::put(LaravelLocalization::transRoute('routes.libraries.images.update'), ['as' => 'libraries.images.update', 'uses' => 'Libraries\ImagesController@update']);
+    Route::delete(LaravelLocalization::transRoute('routes.libraries.images.destroy'), ['as' => 'libraries.images.destroy', 'uses' => 'Libraries\ImagesController@destroy']);
+    
+    // files library
+    Route::get(LaravelLocalization::transRoute('routes.libraries.files.index'), ['as' => 'libraries.files.index', 'uses' => 'Libraries\FilesController@index']);
+    Route::post(LaravelLocalization::transRoute('routes.libraries.files.store'), ['as' => 'libraries.files.store', 'uses' => 'Libraries\FilesController@store']);
+    Route::put(LaravelLocalization::transRoute('routes.libraries.files.update'), ['as' => 'libraries.files.update', 'uses' => 'Libraries\FilesController@update']);
+    Route::delete(LaravelLocalization::transRoute('routes.libraries.files.destroy'), ['as' => 'libraries.files.destroy', 'uses' => 'Libraries\FilesController@destroy']);
 
     // logout
     Route::get(LaravelLocalization::transRoute('routes.logout'), ['as' => 'logout', 'uses' => 'Auth\AuthController@logout']);

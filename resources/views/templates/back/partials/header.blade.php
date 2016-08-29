@@ -270,10 +270,35 @@
                             @endif
                         </ul>
                     </li>
-
                 @endif
 
-                <li class="divider"></li>
+                {{-- libraries --}}
+                @if(Sentinel::getUser()->hasAccess('libraries.images.list')
+                || Sentinel::getUser()->hasAccess('libraries.files.list'))
+                    <li class="@if(Route::current()->getName() === 'libraries.images.index'
+                    || Route::current()->getName() === 'libraries.files.index')active @endif">
+                        <a href="#" data-toggle="collapse" data-target="#libraries">
+                            <i class="fa fa-files-o" aria-hidden="true"></i> {{ trans('template.back.header.libraries.title') }} <i class="fa fa-fw fa-caret-down"></i>
+                        </a>
+                        <ul id="libraries" class="collapse @if(Route::current()->getName() === 'libraries.images.index'
+                        || Route::current()->getName() === 'libraries.files.index')in @endif">
+
+                            {{-- images --}}
+                            @if(Sentinel::getUser()->hasAccess('libraries.images.list'))
+                                <li class="@if(Route::current()->getName() === 'libraries.images.index')active @endif">
+                                    <a class="spin-on-click" href="{{ route('libraries.images.index') }}"><i class="fa fa-file-image-o" aria-hidden="true"></i> {{ trans('template.back.header.libraries.images') }}</a>
+                                </li>
+                            @endif
+
+                            {{-- files --}}
+                            @if(Sentinel::getUser()->hasAccess('libraries.files.list'))
+                                <li class="@if(Route::current()->getName() === 'libraries.files.index')active @endif">
+                                    <a class="spin-on-click" href="{{ route('libraries.files.index') }}"><i class="fa fa-file" aria-hidden="true"></i> {{ trans('template.back.header.libraries.files') }}</a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+                @endif
 
                 {{-- back to front--}}
                 <li>
