@@ -20,6 +20,7 @@ _ide_helper_models.php
 .phpstorm.meta.php
 
 #public
+public/libraries
 public/robots.txt
 public/favicon.ico
 
@@ -33,26 +34,5 @@ public/img/users
 public/img/videos
 public/img/registration
 public/img/photos
-public/build/css/app.auth-61f40dbd.css
-public/build/css/app.back-dd558a7b.css
-public/build/css/app.calendar-01174486.css
-public/build/css/app.e-shop-898bef2b.css
-public/build/css/app.error-28d74a8a.css
-public/build/css/app.front-61b2b6fb.css
-public/build/css/app.home-5f053dbd.css
-public/build/css/app.leading-team-b92b0cad.css
-public/build/css/app.news-71003aaa.css
-public/build/css/app.page-76eeb151.css
-public/build/css/app.palmares-abb8e4cf.css
-public/build/css/app.photos-eed96b8b.css
-public/build/css/app.registration-aee63c2f.css
-public/build/css/app.schedule-00e7e164.css
-public/build/css/app.videos-afac4fc8.css
-public/build/js/app.back-1e50e7b5.js
-public/build/js/app.front-e362f671.js
-public/build/js/app.home-6f6c37ce.js
-public/build/js/app.leading-team-6dd00a62.js
-public/build/js/app.news-detail-59be86c6.js
-public/build/js/app.photos-3031adc3.js
-public/build/js/app.videos-e7799f4b.js
+
 tests/_envs/
