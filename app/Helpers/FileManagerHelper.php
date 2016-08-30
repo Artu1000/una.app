@@ -116,7 +116,7 @@ class FileManagerHelper
                         $html = str_replace($src, $files_library_repo->getModel()->imagePath($file->src), $html);
                     } catch (Exception $e) {
                         // we log the error
-                        CustomLog::info($e);
+                        CustomLog::info('No file alias has been found in this HTML content.');
                     }
                 }
             }
