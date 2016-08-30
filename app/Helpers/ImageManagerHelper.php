@@ -275,7 +275,7 @@ class ImageManagerHelper
                         $html = str_replace($src, $images_library_repo->getModel()->imagePath($image->src), $html);
                     } catch (Exception $e) {
                         // we log the error
-                        CustomLog::info('No image alias has been found in this HTML content.');
+//                        CustomLog::info('No image alias has been found in this HTML content.');
                     }
                 }
             }
