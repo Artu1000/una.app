@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use CustomLog;
 use Entry;
 use Exception;
+use FileManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use ImageManager;
@@ -136,6 +137,10 @@ class NewsController extends Controller
         // we parse the markdown content
         $parsedown = new Parsedown();
         $news->content = isset($news->content) ? $parsedown->text($news->content) : null;
+        // we replace the images aliases by real paths
+        $news->content = ImageManager::replaceLibraryImagesAliasesByRealPath($news->content);
+        // we replace the files aliases by real paths
+        $news->content = FileManager::replaceLibraryFilesAliasesByRealPath($news->content);
         
         // SEO Meta settings
         $this->seo_meta['page_title'] = $news->meta_title ? $news->meta_title : $news->title;
@@ -201,6 +206,10 @@ class NewsController extends Controller
         // we parse the markdown content
         $parsedown = new Parsedown();
         $news->content = isset($news->content) ? $parsedown->text($news->content) : null;
+        // we replace the images aliases by real paths
+        $news->content = ImageManager::replaceLibraryImagesAliasesByRealPath($news->content);
+        // we replace the files aliases by real paths
+        $news->content = FileManager::replaceLibraryFilesAliasesByRealPath($news->content);
 
         // SEO Meta settings
         $this->seo_meta['page_title'] = $news->meta_title ? $news->meta_title : $news->title;

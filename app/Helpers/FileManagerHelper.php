@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Repositories\Libraries\LibraryFileRepositoryInterface;
 use CustomLog;
 use Exception;
 use File;
@@ -87,5 +88,40 @@ class FileManagerHelper
         $versioned_file_name = $file_name . '-' . mt_rand(1000000000, 9999999999);
 
         return $versioned_file_name;
+    }
+    
+    /**
+     * @param string $html
+     * @return mixed|string
+     */
+    public function replaceLibraryFilesAliasesByRealPath(string $html)
+    {
+        // we get the library image repository
+        $files_library_repo = app(LibraryFileRepositoryInterface::class);
+        
+        // we get every img node
+        preg_match_all('/<a[^>]+>/i', $html, $results);
+        $files_attributes = [];
+        foreach ($results[0] as $key => $file_node) {
+            // we get the image node attributes
+            preg_match_all('/(href|title)=("[^"]*")/i', $file_node, $files_attributes[$file_node]);
+            foreach ($files_attributes as $file_attributes) {
+                // we get the image src value
+                $src = str_replace('"', '', array_first(array_last($file_attributes)));
+                // if the file doesn't exists
+                if (!is_file($files_library_repo->getModel()->imagePath($src))) {
+                    // we replace it by the image src
+                    try {
+                        $file = $files_library_repo->where('alias', $src)->first();
+                        $html = str_replace($src, $files_library_repo->getModel()->imagePath($file->src), $html);
+                    } catch (Exception $e) {
+                        // we log the error
+                        CustomLog::info($e);
+                    }
+                }
+            }
+        }
+        
+        return $html;
     }
 }

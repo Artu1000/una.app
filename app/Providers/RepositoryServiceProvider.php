@@ -20,6 +20,8 @@ use App\Repositories\Palmares\PalmaresEventRepositoryInterface;
 use App\Repositories\Palmares\PalmaresResultRepository;
 use App\Repositories\Palmares\PalmaresResultRepositoryInterface;
 use App\Repositories\Partner\PartnerRepository;
+use App\Repositories\QrCodeScan\QrCodeScanRepository;
+use App\Repositories\QrCodeScan\QrCodeScanRepositoryInterface;
 use App\Repositories\RegistrationPrice\RegistrationPriceRepository;
 use App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface;
 use App\Repositories\Roles\RoleRepository;
@@ -134,6 +136,11 @@ class RepositoryServiceProvider extends ServiceProvider
         // file library
         $this->app->bind(LibraryFileRepositoryInterface::class, function () {
             return new LibraryFileRepository();
+        });
+        
+        // qr code scans
+        $this->app->bind(QrCodeScanRepositoryInterface::class, function () {
+            return new QrCodeScanRepository();
         });
     }
 }

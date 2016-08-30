@@ -7,6 +7,7 @@ use App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface;
 use CustomLog;
 use Entry;
 use Exception;
+use FileManager;
 use Illuminate\Http\Request;
 use ImageManager;
 use Modal;
@@ -59,6 +60,10 @@ class RegistrationController extends Controller
         // we parse the markdown content
         $parsedown = new Parsedown();
         $description = isset($registration_page->description) ? $parsedown->text($registration_page->description) : null;
+        // we replace the images aliases by real paths
+        $description = ImageManager::replaceLibraryImagesAliasesByRealPath($description);
+        // we replace the files aliases by real paths
+        $description = FileManager::replaceLibraryFilesAliasesByRealPath($description);
 
         // prepare data for the view
         $data = [

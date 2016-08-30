@@ -5,11 +5,12 @@ return [
     // views
     "page"    => [
         "title"  => [
-            "management"          => "Gestion des tarifs d'inscription",
-            "content"             => "Contenu",
+            "management"        => "Gestion des tarifs d'inscription",
+            "content"           => "Contenu",
             "online_registration" => "Inscription en ligne",
-            "prices"              => "Nos tarifs",
-            "price"               => [
+//            "registration_form" => "Formulaire d'inscription",
+            "prices"            => "Nos tarifs",
+            "price"             => [
                 "list"   => "Liste des tarifs",
                 "create" => "Création d'un tarif",
                 "edit"   => "Édition du tarif <b>:price</b>",
@@ -27,13 +28,15 @@ return [
             "background_image" => "Largeur min : 2560px / Hauteur min : 1440px / Formats : jpg, jpeg.",
         ],
         "label"  => [
-            "title"                => "Titre",
-            "description"          => "Description",
-            "background_image"     => "Image",
-            "online_registration"  => "Réalisez votre inscription en ligne en cliquant sur le bouton correspondant à votre situation ci-dessous.",
+            "title"                      => "Titre",
+            "description"                => "Description",
+            "background_image"           => "Image",
+//            "registration_form"          => "Pour vous inscrire ou renouveler votre licence, téléchargez (ci-dessous) notre formulaire d'inscription.",
+            "online_registration" => "Réalisez votre inscription en ligne en cliquant sur le bouton correspondant à votre situation ci-dessous.",
             "first_registration"   => "Première inscription",
             "renewal_registration" => "Renouvellement",
-            "price"                => [
+            "registration_form_download" => "Télécharger le formulaire d'inscription",
+            "price"                      => [
                 "label"      => "Libellé",
                 "price"      => "Tarif",
                 "activation" => "Activation",

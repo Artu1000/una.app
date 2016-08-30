@@ -8,7 +8,9 @@ use App\Repositories\Slide\SlideRepositoryInterface;
 use Carbon\Carbon;
 use CustomLog;
 use Entry;
+use FileManager;
 use Illuminate\Http\Request;
+use ImageManager;
 use JavaScript;
 use Modal;
 use Parsedown;
@@ -231,8 +233,6 @@ class HomeController extends Controller
      */
     public function show()
     {
-//        dd(config('settings.google_analytics'));
-
         // SEO Meta settings
         $this->seo_meta['page_title'] = trans('seo.front.home.show.title');
         $this->seo_meta['meta_desc'] = trans('seo.front.home.show.description');
@@ -269,6 +269,10 @@ class HomeController extends Controller
         // we parse the markdown content
         $parsedown = new Parsedown();
         $description = isset($home->description) ? $parsedown->text($home->description) : null;
+        // we replace the images aliases by real paths
+        $description = ImageManager::replaceLibraryImagesAliasesByRealPath($description);
+        // we replace the files aliases by real paths
+        $description = FileManager::replaceLibraryFilesAliasesByRealPath($description);
 
         // og meta settings
         $this->og_meta['og:title'] = trans('seo.front.home.show.title');

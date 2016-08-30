@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Repositories\Libraries\LibraryImageRepositoryInterface;
 use Approached\LaravelImageOptimizer\ImageOptimizer;
 use CustomLog;
 use Exception;
@@ -246,5 +247,40 @@ class ImageManagerHelper
         $versioned_img_name = $file_name . '-' . mt_rand(1000000000, 9999999999);
 
         return $versioned_img_name;
+    }
+    
+    /**
+     * @param string $html
+     * @return mixed|string
+     */
+    public function replaceLibraryImagesAliasesByRealPath(string $html)
+    {
+        // we get the library image repository
+        $images_library_repo = app(LibraryImageRepositoryInterface::class);
+        
+        // we get every img node
+        preg_match_all('/<img[^>]+>/i', $html, $results);
+        $images_attributes = [];
+        foreach ($results[0] as $key => $image_node) {
+            // we get the image node attributes
+            preg_match_all('/(alt|title|src)=("[^"]*")/i', $image_node, $images_attributes[$image_node]);
+            foreach ($images_attributes as $image_attributes) {
+                // we get the image src value
+                $src = str_replace('"', '', array_first(array_last($image_attributes)));
+                // if the file doesn't exists
+                if (!is_file($images_library_repo->getModel()->imagePath($src))) {
+                    // we replace it by the image src
+                    try {
+                        $image = $images_library_repo->where('alias', $src)->first();
+                        $html = str_replace($src, $images_library_repo->getModel()->imagePath($image->src), $html);
+                    } catch (Exception $e) {
+                        // we log the error
+                        CustomLog::info($e);
+                    }
+                }
+            }
+        }
+        
+        return $html;
     }
 }

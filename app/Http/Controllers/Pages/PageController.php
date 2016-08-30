@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Pages;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Page\PageRepositoryInterface;
+use FileManager;
+use ImageManager;
 
 
 class PageController extends Controller
@@ -32,6 +34,11 @@ class PageController extends Controller
         if (!$page) {
             return abort(404);
         }
+    
+        // we replace the images aliases by real paths
+        $page->content = ImageManager::replaceLibraryImagesAliasesByRealPath($page->content);
+        // we replace the files aliases by real paths
+        $page->content = FileManager::replaceLibraryFilesAliasesByRealPath($page->content);
 
         // SEO Meta settings
         $this->seo_meta['page_title'] = strip_tags($page->title);
