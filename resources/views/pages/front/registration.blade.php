@@ -19,20 +19,20 @@
 
                 <hr>
 
-                <h2>{{ trans('registration.page.title.online_registration') }}</h2>
-                <p>{{ trans('registration.page.label.online_registration') }}</p>
-                <a href="http://prototype.una-club.fr/una-backoffice-site/#/registrator" title="{{ trans('registration.page.label.first_registration') }}">
-                    <button class="btn btn-info"><i class="fa fa-play"></i> {{ trans('registration.page.label.first_registration') }}</button>
-                </a>
-                <a href="http://prototype.una-club.fr/una-backoffice-site/" title="{{ trans('registration.page.label.renewal_registration') }}">
-                    <button class="btn btn-info"><i class="fa fa-repeat"></i> {{ trans('registration.page.label.renewal_registration') }}</button>
-                </a>
-
-                {{--<h2>{{ trans('registration.page.title.registration_form') }}</h2>--}}
-                {{--<p>{{ trans('registration.page.label.registration_form') }}</p>--}}
-                {{--<a download="formulaire-inscription-una-2016.pdf" target="_blank" href="{{ asset('files/registration/una-registration-form-2016.pdf') }}" title="{{ trans('registration.page.label.registration_form_download') }}">--}}
-                    {{--<button class="btn btn-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> {{ trans('registration.page.label.registration_form_download') }}</button>--}}
+                {{--<h2>{{ trans('registration.page.title.online_registration') }}</h2>--}}
+                {{--<p>{{ trans('registration.page.label.online_registration') }}</p>--}}
+                {{--<a href="http://prototype.una-club.fr/una-backoffice-site/#/registrator" title="{{ trans('registration.page.label.first_registration') }}">--}}
+                    {{--<button class="btn btn-info"><i class="fa fa-play"></i> {{ trans('registration.page.label.first_registration') }}</button>--}}
                 {{--</a>--}}
+                {{--<a href="http://prototype.una-club.fr/una-backoffice-site/" title="{{ trans('registration.page.label.renewal_registration') }}">--}}
+                    {{--<button class="btn btn-info"><i class="fa fa-repeat"></i> {{ trans('registration.page.label.renewal_registration') }}</button>--}}
+                {{--</a>--}}
+
+                <h2>{{ trans('registration.page.title.registration_form') }}</h2>
+                <p>{{ trans('registration.page.label.registration_form') }}</p>
+                <a download="formulaire-inscription-una-2016.pdf" target="_blank" href="{{ asset('files/registration/una-registration-form-2016.pdf') }}" title="{{ trans('registration.page.label.registration_form_download') }}">
+                    <button class="btn btn-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> {{ trans('registration.page.label.registration_form_download') }}</button>
+                </a>
 
                 <h2>{{ trans('registration.page.title.prices') }}</h2>
                 <table class="table table-striped table-hover">

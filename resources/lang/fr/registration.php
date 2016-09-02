@@ -8,7 +8,7 @@ return [
             "management"        => "Gestion des tarifs d'inscription",
             "content"           => "Contenu",
             "online_registration" => "Inscription en ligne",
-//            "registration_form" => "Formulaire d'inscription",
+            "registration_form" => "Formulaire d'inscription",
             "prices"            => "Nos tarifs",
             "price"             => [
                 "list"   => "Liste des tarifs",
@@ -31,7 +31,7 @@ return [
             "title"                      => "Titre",
             "description"                => "Description",
             "background_image"           => "Image",
-//            "registration_form"          => "Pour vous inscrire ou renouveler votre licence, téléchargez (ci-dessous) notre formulaire d'inscription.",
+            "registration_form"          => "Pour vous inscrire ou renouveler votre licence, téléchargez (ci-dessous) notre formulaire d'inscription et déposez-le rempli club, accompagné des pièces demandées.",
             "online_registration" => "Réalisez votre inscription en ligne en cliquant sur le bouton correspondant à votre situation ci-dessous.",
             "first_registration"   => "Première inscription",
             "renewal_registration" => "Renouvellement",
