@@ -40,6 +40,8 @@ class StoragePrepare extends Command
         $to_create = [
             // public
             public_path('libraries'),
+            public_path('img'),
+            public_path('files'),
             // framework
             storage_path('framework/cache'),
             storage_path('framework/sessions'),
@@ -51,7 +53,8 @@ class StoragePrepare extends Command
             storage_path('app/news'),
             storage_path('app/schedules'),
             storage_path('app/pages'),
-            storage_path('app/registration'),
+            storage_path('app/registration/img'),
+            storage_path('app/registration/files'),
             storage_path('app/partners'),
             storage_path('app/e-shop'),
             storage_path('app/pages'),

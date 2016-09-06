@@ -37,7 +37,7 @@ return [
             "home"         => "Page d'accueil",
             "news"         => "Actualités",
             "schedules"    => "Horaires",
-            "registration" => "Tarifs d'inscription",
+            "registration" => "Page d'inscription",
             "photos"       => "Photos",
             "videos"       => "Vidéos",
             "partners"     => "Partenaires",

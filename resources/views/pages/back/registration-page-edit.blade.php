@@ -39,7 +39,7 @@
                                 </div>
 
                                 {{-- background image --}}
-                                <label for="input_background_image">{{ trans('schedules.page.label.background_image') }}</label>
+                                <label for="input_background_image">{{ trans('registration.page.label.background_image') }}</label>
                                 @if($background_image)
                                     <div class="form-group image">
                                         <div class="form-group">
@@ -48,7 +48,7 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <input type="checkbox" id="input_remove_background_image" name="remove_background_image"> <label for="input_remove_background_image" class="quote small_font">{{ trans('schedules.page.label.remove_background_image') }}</label>
+                                    <input type="checkbox" id="input_remove_background_image" name="remove_background_image"> <label for="input_remove_background_image" class="quote small_font">{{ trans('registration.page.label.remove_background_image') }}</label>
                                 @endif
                                 <div class="form-group">
                                     <div class="input-group">
@@ -59,9 +59,33 @@
                                         </span>
                                         <input id="input_background_image" type="text" class="form-control" readonly="">
                                     </div>
-                                    <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('schedules.page.info.background_image') }}</p>
+                                    <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('registration.page.info.background_image') }}</p>
                                 </div>
 
+                                {{-- registration form file --}}
+                                <label for="input_registration_form_file">{{ trans('registration.page.label.registration_form_file') }}</label>
+                                @if($registration_form_file)
+                                    <div class="form-group image">
+                                        <div class="form-group">
+                                            <a class="img-thumbnail" href="{{ FileManager::filePath(config('file.registration.storage_path'), $registration_form_file) }}" data-lity>
+                                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endif
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <span class="btn btn-primary btn-file">
+                                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i> {{ trans('global.action.browse') }} <input type="file" name="registration_form_file">
+                                            </span>
+                                        </span>
+                                        <input id="input_registration_form_file" type="text" class="form-control" readonly="">
+                                    </div>
+                                    <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('registration.page.info.registration_form_file') }}</p>
+                                </div>
+
+                                {{-- description --}}
                                 <label for="input_description">{{ trans('registration.page.label.description') }}</label>
                                 <div class="form-group textarea">
                                     <textarea id="input_description" class="form-control markdown" name="description" placeholder="{{ trans('registration.page.label.description') }}">{{ old('description') ? old('description') : $description }}</textarea>

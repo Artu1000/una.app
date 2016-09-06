@@ -1,12 +1,13 @@
 var elixir = require('laravel-elixir');
 require('laravel-elixir-imagemin');
 require('laravel-elixir-delete');
-var gulp  = require('gulp');
+var gulp = require('gulp');
 var shell = require('gulp-shell');
 
 // elixir extensions
-elixir.extend('shell', function() {
+elixir.extend('shell', function () {
     gulp.task('command', shell.task([
+        'php artisan storage:prepare',
         'php artisan symlinks:prepare'
         // other shell commands
     ]));
@@ -45,14 +46,15 @@ var paths = {
 elixir(function (mix) {
     mix
 
-        // we begin by deleting all generated public folders
+    // we begin by deleting all generated public folders
         .delete([
             'public/build',
             'public/css',
             'public/files',
             'public/fonts',
             'public/img',
-            'public/js'
+            'public/js',
+            'public/libraries'
         ])
 
         /***************************************************************************************************************
@@ -153,7 +155,7 @@ elixir(function (mix) {
             paths.js + 'app.common.js',
             paths.js + 'app.front.js'
         ], 'public/js/app.front.js', './')
-         // mix home js files
+        // mix home js files
         .scripts([
             paths.jquery + 'dist/jquery.js',
             paths.jquery_easing + 'js/jquery.easing.js',
@@ -257,10 +259,10 @@ elixir(function (mix) {
             'public/js/app.videos.js',
             // js front
             'public/js/app.back.js'
-        ]);
+        ])
 
-        /***************************************************************************************************************
-         * SHELL COMMANDS
-         ***************************************************************************************************************/
-        // .shell();
+    /***************************************************************************************************************
+     * SHELL COMMANDS
+     ***************************************************************************************************************/
+    .shell();
 });

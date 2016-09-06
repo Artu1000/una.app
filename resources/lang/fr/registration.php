@@ -5,12 +5,12 @@ return [
     // views
     "page"    => [
         "title"  => [
-            "management"        => "Gestion des tarifs d'inscription",
-            "content"           => "Contenu",
+            "management"          => "Gestion de la page d'inscription",
+            "content"             => "Contenu",
             "online_registration" => "Inscription en ligne",
-            "registration_form" => "Formulaire d'inscription",
-            "prices"            => "Nos tarifs",
-            "price"             => [
+            "registration_form"   => "Formulaire d'inscription",
+            "prices"              => "Nos tarifs",
+            "price"               => [
                 "list"   => "Liste des tarifs",
                 "create" => "Création d'un tarif",
                 "edit"   => "Édition du tarif <b>:price</b>",
@@ -25,16 +25,19 @@ return [
             ],
         ],
         "info"   => [
-            "background_image" => "Largeur min : 2560px / Hauteur min : 1440px / Formats : jpg, jpeg.",
+            "background_image"       => "Largeur min : 2560px / Hauteur min : 1440px / Formats : jpg, jpeg.",
+            "registration_form_file" => "Format : pdf.",
         ],
         "label"  => [
             "title"                      => "Titre",
             "description"                => "Description",
-            "background_image"           => "Image",
+            "background_image"           => "Image de fond",
+            "remove_background_image"    => "Supprimer l'image de fond",
             "registration_form"          => "Pour vous inscrire ou renouveler votre licence, téléchargez (ci-dessous) notre formulaire d'inscription et déposez-le rempli club, accompagné des pièces demandées.",
-            "online_registration" => "Réalisez votre inscription en ligne en cliquant sur le bouton correspondant à votre situation ci-dessous.",
-            "first_registration"   => "Première inscription",
-            "renewal_registration" => "Renouvellement",
+            "online_registration"        => "Réalisez votre inscription en ligne en cliquant sur le bouton correspondant à votre situation ci-dessous.",
+            "first_registration"         => "Première inscription",
+            "renewal_registration"       => "Renouvellement",
+            "registration_form_file"     => "Formulaire d'inscription (fichier)",
             "registration_form_download" => "Télécharger le formulaire d'inscription",
             "price"                      => [
                 "label"      => "Libellé",

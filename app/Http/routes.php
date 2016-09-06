@@ -237,4 +237,7 @@ Route::group($group, function () {
 
     // proxies
     Route::get(trans('routes.proxy.qr'), ['as' => 'proxy.qr', 'uses' => 'Proxy\ProxyController@qrCodeScanCapture']);
+    
+    // file download
+    Route::get('download/file', ['as' => 'file.download', 'uses' => 'File\FileController@download']);
 });

@@ -58,6 +58,12 @@ class SymLinksPrepare extends Command
                 unlink($link);
             }
         }
+        foreach (scandir(public_path('files')) as $item) {
+            if (is_link($link = public_path('files/' . $item))) {
+                $links[] = $link;
+                unlink($link);
+            }
+        }
         $this->info('► Existing symlinks removed :');
         foreach ($links as $link) {
             $this->line('- ' . $link);
@@ -75,10 +81,14 @@ class SymLinksPrepare extends Command
                 'storage' => config('image.schedules.storage_path'),
                 'public'  => public_path(config('image.schedules.public_path')),
             ],
-            // registration page
+             // registration page
             [
                 'storage' => config('image.registration.storage_path'),
                 'public'  => public_path(config('image.registration.public_path')),
+            ],
+            [
+                'storage' => config('file.registration.storage_path'),
+                'public'  => public_path(config('file.registration.public_path')),
             ],
             // news
             [

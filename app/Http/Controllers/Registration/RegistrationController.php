@@ -20,7 +20,7 @@ use Validation;
 
 class RegistrationController extends Controller
 {
-
+    
     /**
      * Create a new home controller instance.
      *
@@ -41,22 +41,22 @@ class RegistrationController extends Controller
         $this->seo_meta['page_title'] = trans('seo.front.registration.title');
         $this->seo_meta['meta_desc'] = trans('seo.front.registration.description');
         $this->seo_meta['meta_keywords'] = trans('seo.front.registration.keywords');
-
+        
         // og meta settings
         $this->og_meta['og:title'] = trans('seo.front.registration.title');
         $this->og_meta['og:description'] = trans('seo.front.registration.description');
         $this->og_meta['og:type'] = 'article';
         $this->og_meta['og:url'] = route('registration.index');
-
+        
         // we get the registration prices
         $prices = $this->repository->where('active', true)->orderBy('price', 'asc')->get();
-
+        
         // we get the json registration content
         $registration_page = null;
         if (is_file(storage_path('app/registration/content.json'))) {
             $registration_page = json_decode(file_get_contents(storage_path('app/registration/content.json')));
         }
-
+        
         // we parse the markdown content
         $parsedown = new Parsedown();
         $description = isset($registration_page->description) ? $parsedown->text($registration_page->description) : null;
@@ -64,22 +64,23 @@ class RegistrationController extends Controller
         $description = ImageManager::replaceLibraryImagesAliasesByRealPath($description);
         // we replace the files aliases by real paths
         $description = FileManager::replaceLibraryFilesAliasesByRealPath($description);
-
+        
         // prepare data for the view
         $data = [
-            'seo_meta'         => $this->seo_meta,
-            'og_meta'          => $this->og_meta,
-            'prices'           => $prices,
-            'title'            => isset($registration_page->title) ? $registration_page->title : null,
-            'background_image' => isset($registration_page->background_image) ? $registration_page->background_image : null,
-            'description'      => $description,
-            'css'              => elixir('css/app.registration.css'),
+            'seo_meta'               => $this->seo_meta,
+            'og_meta'                => $this->og_meta,
+            'prices'                 => $prices,
+            'title'                  => isset($registration_page->title) ? $registration_page->title : null,
+            'registration_form_file' => isset($registration_page->registration_form_file) ? $registration_page->registration_form_file : null,
+            'background_image'       => isset($registration_page->background_image) ? $registration_page->background_image : null,
+            'description'            => $description,
+            'css'                    => elixir('css/app.registration.css'),
         ];
-
+        
         // return the view with data
         return view('pages.front.registration')->with($data);
     }
-
+    
     /**
      * @return mixed
      */
@@ -89,10 +90,10 @@ class RegistrationController extends Controller
         if (!Permission::hasPermission('registration.page.view')) {
             return redirect()->route('dashboard.index');
         }
-
+        
         // SEO Meta settings
         $this->seo_meta['page_title'] = trans('seo.back.registration.page.edit');
-
+        
         // we define the table list columns
         $columns = [
             [
@@ -115,7 +116,7 @@ class RegistrationController extends Controller
                 ],
             ],
         ];
-
+        
         // we set the routes used in the table list
         $routes = [
             'index'   => [
@@ -135,16 +136,16 @@ class RegistrationController extends Controller
                 'params' => [],
             ],
         ];
-
+        
         // we instantiate the query
         $query = app(RegistrationPriceRepositoryInterface::class)->getModel()->query();
-
+        
         // we prepare the confirm config
         $confirm_config = [
             'action'     => trans('registration.page.action.price.delete'),
             'attributes' => ['label'],
         ];
-
+        
         // we prepare the search config
         $search_config = [
             [
@@ -152,10 +153,10 @@ class RegistrationController extends Controller
                 'database' => 'registration_prices.label',
             ],
         ];
-
+        
         // we enable the lines choice
         $enable_lines_choice = true;
-
+        
         // we format the data for the needs of the view
         $tableListData = TableList::prepare(
             $query,
@@ -166,26 +167,27 @@ class RegistrationController extends Controller
             $search_config,
             $enable_lines_choice
         );
-
+        
         // we get the json home content
         $registration_page = null;
         if (is_file(storage_path('app/registration/content.json'))) {
             $registration_page = json_decode(file_get_contents(storage_path('app/registration/content.json')));
         }
-
+        
         // prepare data for the view
         $data = [
-            'seo_meta'         => $this->seo_meta,
-            'title'            => isset($registration_page->title) ? $registration_page->title : null,
-            'background_image' => isset($registration_page->background_image) ? $registration_page->background_image : null,
-            'description'      => isset($registration_page->description) ? $registration_page->description : null,
-            'tableListData'    => $tableListData,
+            'seo_meta'               => $this->seo_meta,
+            'title'                  => isset($registration_page->title) ? $registration_page->title : null,
+            'background_image'       => isset($registration_page->background_image) ? $registration_page->background_image : null,
+            'registration_form_file' => isset($registration_page->registration_form_file) ? $registration_page->registration_form_file : null,
+            'description'            => isset($registration_page->description) ? $registration_page->description : null,
+            'tableListData'          => $tableListData,
         ];
-
+        
         // return the view with data
         return view('pages.back.registration-page-edit')->with($data);
     }
-
+    
     /**
      * @param Request $request
      * @return mixed
@@ -202,39 +204,48 @@ class RegistrationController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
+        
         // we get the json registration content
         $registration = null;
         if (is_file(storage_path('app/registration/content.json'))) {
             $registration = json_decode(file_get_contents(storage_path('app/registration/content.json')));
         }
-
+        
         // if the active field is not given, we set it to false
         $request->merge(['remove_background_image' => $request->get('remove_background_image', false)]);
-
+        
         // we sanitize the entries
         $request->replace(Entry::sanitizeAll($request->all()));
-
+        
         // we check inputs validity
         $rules = [
             'title'                   => 'required|string',
             'description'             => 'string',
             'background_image'        => 'image|mimes:jpg,jpeg|image_size:>=2560,>=1440',
             'remove_background_image' => 'required|boolean',
+            'registration_form_file'  => 'mimes:pdf',
         ];
         // we check the inputs validity
         if (!Validation::check($request->all(), $rules)) {
             // we flash the request
-            $request->flashExcept('background_image');
-
+            $request->flashExcept('background_image', 'registration_form_file');
+            
             return redirect()->back();
         }
-
-        try {
+        
+//        try {
             $inputs = $request->except('_token', '_method', 'background_image', 'remove_background_image');
-
+            
             // we store the background image file
             if ($background_image = $request->file('background_image')) {
+                // we remove the background image
+                if($registration->background_image){
+                    ImageManager::remove(
+                        $registration->background_image,
+                        config('image.registration.storage_path'),
+                        config('image.registration.background_image.sizes')
+                    );
+                }
                 // we optimize, resize and save the image
                 $file_name = ImageManager::optimizeAndResize(
                     $background_image->getRealPath(),
@@ -258,36 +269,58 @@ class RegistrationController extends Controller
             } else {
                 $inputs['background_image'] = isset($registration->background_image) ? $registration->background_image : null;
             }
-
+            
+            // we store the registration form file
+            if ($registration_form_file = $request->file('registration_form_file')) {
+                // we remove the registration form file
+                if($registration->registration_form_file){
+                    FileManager::remove(
+                        $registration->registration_form_file,
+                        config('file.registration.storage_path')
+                    );
+                }
+                // we save the registration form file
+                $file_name = FileManager::storeAndRename(
+                    $registration_form_file->getRealPath(),
+                    config('file.registration.registration_form_file.name'),
+                    $registration_form_file->getClientOriginalExtension(),
+                    config('file.registration.storage_path')
+                );
+                // we set the file name
+                $inputs['registration_form_file'] = $file_name;
+            } else {
+                $inputs['registration_form_file'] = isset($registration->registration_form_file) ? $registration->registration_form_file : null;
+            }
+            
             // we store the content into a json file
             file_put_contents(
                 storage_path('app/registration/content.json'),
                 json_encode($inputs)
             );
-
+            
             Modal::alert([
                 trans('registration.message.content.update.success', ['title' => $request->get('title')]),
             ], 'success');
-
+            
             return redirect()->back();
-        } catch (Exception $e) {
-
-            // we flash the request
-            $request->flashExcept('background_image');
-
-            // we log the error
-            CustomLog::error($e);
-
-            // we notify the current user
-            Modal::alert([
-                trans('registration.message.content.update.failure', ['title' => isset($registration->title) ? $registration->title : null]),
-                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
-            ], 'error');
-
-            return redirect()->back();
-        }
+//        } catch (Exception $e) {
+//
+//            // we flash the request
+//            $request->flashExcept('background_image', 'registration_form_file');
+//
+//            // we log the error
+//            CustomLog::error($e);
+//
+//            // we notify the current user
+//            Modal::alert([
+//                trans('registration.message.content.update.failure', ['title' => isset($registration->title) ? $registration->title : null]),
+//                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
+//            ], 'error');
+//
+//            return redirect()->back();
+//        }
     }
-
+    
     /**
      * @param $id
      * @param Request $request
@@ -307,7 +340,7 @@ class RegistrationController extends Controller
                 ],
             ], 401);
         }
-
+        
         // we check the current user permission
         if ($permission_denied = Permission::hasPermissionJson('registration.prices.update')) {
             return response([
@@ -315,13 +348,13 @@ class RegistrationController extends Controller
                 'message' => [$permission_denied],
             ], 401);
         }
-
+        
         // if the active field is not given, we set it to false
         $request->merge(['active' => $request->get('active', false)]);
-
+        
         // we sanitize the entries
         $request->replace(Entry::sanitizeAll($request->all()));
-
+        
         // we check the inputs validity
         $rules = [
             'active' => 'required|boolean',
@@ -332,11 +365,11 @@ class RegistrationController extends Controller
                 'message' => $errors,
             ], 401);
         }
-
+        
         try {
             $price->active = $request->get('active');
             $price->save();
-
+            
             return response([
                 'active'  => $price->active,
                 'message' => [
@@ -346,7 +379,7 @@ class RegistrationController extends Controller
         } catch (Exception $e) {
             // we log the error
             CustomLog::error($e);
-
+            
             return response([
                 trans('registration.message.price.activation.failure', ['price' => $price->label]),
             ], 401);

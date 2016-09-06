@@ -10,7 +10,7 @@ use InvalidArgumentException;
 
 class FileManagerHelper
 {
-
+    
     /**
      * @param string $src_path
      * @param string $file_name
@@ -23,10 +23,10 @@ class FileManagerHelper
     {
         // we low case of the extension
         $extension = strtolower($extension);
-
+        
         // we version the image name
         $file_name = $this->setFileVersion($file_name);
-
+        
         // we store the file
         $dest_path = $storage_path . '/' . $file_name . '.' . $extension;
         if ($remove_src) {
@@ -34,11 +34,11 @@ class FileManagerHelper
         } else {
             File::copy($src_path, $dest_path);
         }
-
+        
         // we return the file name
         return $file_name . '.' . $extension;
     }
-
+    
     /**
      * @param string $file_name
      * @param string $storage_path
@@ -48,17 +48,17 @@ class FileManagerHelper
     {
         // if the file exists
         $path = $storage_path . '/' . $file_name;
-        if(is_file($path)){
+        if (is_file($path)) {
             // we detect the file extension
             if (strpos($file_name, '.') === false) {
                 throw new InvalidArgumentException('The file name ' . $file_name . ' contains no extension.');
             }
-    
+            
             // we delete the file
             if (is_file($path)) {
                 unlink($path);
             }
-    
+            
             // we check that the file has really been deleted
             if (is_file($path)) {
                 throw new Exception('The source file removal went wrong. The file ' . $path . 'still exists.');
@@ -67,7 +67,7 @@ class FileManagerHelper
             CustomLog::info('The file ' . $path . ' does not exists.');
         }
     }
-
+    
     /**
      * @param string $public_path
      * @param string $file_name
@@ -77,7 +77,7 @@ class FileManagerHelper
     {
         return asset($public_path . '/' . $file_name);
     }
-
+    
     /**
      * @param string $file_name
      * @return string
@@ -86,7 +86,7 @@ class FileManagerHelper
     {
         // we set the new versioned image name
         $versioned_file_name = $file_name . '-' . mt_rand(1000000000, 9999999999);
-
+        
         return $versioned_file_name;
     }
     
@@ -123,5 +123,17 @@ class FileManagerHelper
         }
         
         return $html;
+    }
+    
+    /**
+     * @param string $storage_path
+     * @param string $file_name
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function download(string $storage_path, string $file_name)
+    {
+        return route('file.download', [
+            'path' => $storage_path . '/' . $file_name,
+        ]);
     }
 }

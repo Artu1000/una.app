@@ -20,7 +20,6 @@ _ide_helper_models.php
 .phpstorm.meta.php
 
 #public
-public/files
 public/libraries
 public/robots.txt
 public/favicon.ico
@@ -35,5 +34,6 @@ public/img/users
 public/img/videos
 public/img/registration
 public/img/photos
+public/files/registration
 
 tests/_envs/

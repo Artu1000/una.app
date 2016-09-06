@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
-
+    
     /**
      * Create a new home controller instance.
      *
@@ -17,31 +17,23 @@ class FileController extends Controller
     {
         parent::__construct();
     }
-
+    
     /**
      * @return $this
      */
     public function index()
     {
-
+        //
     }
-
-    public function image(Request $request)
+    
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function download(Request $request)
     {
-        if (!empty($size = $request->get('size'))) {
-            list($name, $extension) = explode('.', $request->get('filename'));
-            $filename = $name . '_' . $size . '.' . $extension;
-        } else {
-            $filename = $request->get('filename');
-        }
-
-        // we set the image path
-        $path = $request->get('storage_path') . '/' . $filename;
-
-        // we get the image content
-        $img = \Image::make($path);
-
-        // we return it
-        return $img->response();
+        return response()->download(
+            $request->path
+        );
     }
 }

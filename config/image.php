@@ -66,7 +66,7 @@ return [
                 "2560"  => [2560, 1440],
             ],
         ],
-        "storage_path"     => storage_path('app/registration'),
+        "storage_path"     => storage_path('app/registration/img'),
         "public_path"      => "img/registration",
     ],
     "photos"       => [
