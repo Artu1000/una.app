@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\RegistrationPrice;
+namespace App\Repositories\Registration;
 
 use App\Models\RegistrationPrice;
 use App\Repositories\BaseRepository;

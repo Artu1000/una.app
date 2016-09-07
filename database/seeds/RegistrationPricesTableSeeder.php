@@ -1,6 +1,6 @@
 <?php
 
-use App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface;
+use App\Repositories\Registration\RegistrationPriceRepositoryInterface;
 use Illuminate\Database\Seeder;
 
 class RegistrationPricesTableSeeder extends Seeder

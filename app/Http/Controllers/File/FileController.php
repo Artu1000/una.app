@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\File;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Registration\RegistrationFormDownloadRepositoryInterface;
 use Illuminate\Http\Request;
 
 class FileController extends Controller
@@ -32,6 +33,11 @@ class FileController extends Controller
      */
     public function download(Request $request)
     {
+        // we register the download
+        if(strpos($request->path, 'registration-form') !== false){
+            app(RegistrationFormDownloadRepositoryInterface::class)->create([]);
+        }
+        
         return response()->download(
             $request->path
         );

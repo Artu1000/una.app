@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\Repositories\Libraries\LibraryFileRepositoryInterface;
+use App\Repositories\Registration\RegistrationFormDownloadRepositoryInterface;
 use CustomLog;
 use Exception;
 use File;

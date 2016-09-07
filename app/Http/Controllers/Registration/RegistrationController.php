@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Registration;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface;
+use App\Repositories\Registration\RegistrationPriceRepositoryInterface;
 use CustomLog;
 use Entry;
 use Exception;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\RegistrationPrice;
+namespace App\Repositories\Registration;
 
 interface RegistrationPriceRepositoryInterface
 {

@@ -67,7 +67,7 @@
                                 @if($registration_form_file)
                                     <div class="form-group image">
                                         <div class="form-group">
-                                            <a class="img-thumbnail" href="{{ FileManager::filePath(config('file.registration.storage_path'), $registration_form_file) }}" data-lity>
+                                            <a class="img-thumbnail" href="{{ FileManager::filePath(config('file.registration.public_path'), $registration_form_file) }}" data-lity>
                                                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                             </a>
                                         </div>

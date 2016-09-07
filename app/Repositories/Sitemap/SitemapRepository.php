@@ -7,7 +7,7 @@ use App\Repositories\Media\PhotoRepositoryInterface;
 use App\Repositories\Media\VideoRepositoryInterface;
 use App\Repositories\News\NewsRepositoryInterface;
 use App\Repositories\Page\PageRepositoryInterface;
-use App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface;
+use App\Repositories\Registration\RegistrationPriceRepositoryInterface;
 use App\Repositories\Schedule\ScheduleRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
 use Carbon\Carbon;

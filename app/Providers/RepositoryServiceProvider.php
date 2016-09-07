@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\RegistrationFormDownload;
 use App\Repositories\EShop\EShopArticleRepository;
 use App\Repositories\EShop\EShopArticleRepositoryInterface;
 use App\Repositories\Libraries\LibraryFileRepository;
@@ -22,8 +23,9 @@ use App\Repositories\Palmares\PalmaresResultRepositoryInterface;
 use App\Repositories\Partner\PartnerRepository;
 use App\Repositories\QrCodeScan\QrCodeScanRepository;
 use App\Repositories\QrCodeScan\QrCodeScanRepositoryInterface;
-use App\Repositories\RegistrationPrice\RegistrationPriceRepository;
-use App\Repositories\RegistrationPrice\RegistrationPriceRepositoryInterface;
+use App\Repositories\Registration\RegistrationFormDownloadRepositoryInterface;
+use App\Repositories\Registration\RegistrationPriceRepository;
+use App\Repositories\Registration\RegistrationPriceRepositoryInterface;
 use App\Repositories\Roles\RoleRepository;
 use App\Repositories\Rss\RssRepository;
 use App\Repositories\Rss\RssRepositoryInterface;
@@ -91,6 +93,11 @@ class RepositoryServiceProvider extends ServiceProvider
         // registration prices
         $this->app->bind(RegistrationPriceRepositoryInterface::class, function () {
             return new RegistrationPriceRepository();
+        });
+    
+        // registration form download
+        $this->app->bind(RegistrationFormDownloadRepositoryInterface::class, function () {
+            return new RegistrationFormDownload();
         });
 
         // schedule
