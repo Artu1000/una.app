@@ -1,7 +1,10 @@
 <?php
 
 return [
-    "qr_code_scans" => [
+    "registration_form_downloads" => [
+        "title" => "Téléchargements de la fiche d'inscription",
+    ],
+    "qr_code_scans"               => [
         "title"        => "Scans de QR code (affiches et flyers UNA)",
         "all"          => "Tous",
         "last_month"   => "Le mois dernier",

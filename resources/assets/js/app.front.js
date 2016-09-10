@@ -62,7 +62,7 @@ var cookie = {
 var gmap = {
     active: false,
     screenOnMap: false,
-    url: 'https://maps.googleapis.com/maps/api/js?v=3.exp&',
+    url: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDv9mOiinDWcfaVIH-kskvBvHCiutVnK64&',
     analyseScrollPos: function () {
         // if map canvas is found
         var scrollPos = $(document).scrollTop().valueOf();
