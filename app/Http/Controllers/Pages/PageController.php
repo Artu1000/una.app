@@ -10,7 +10,6 @@ use Exception;
 use FileManager;
 use Illuminate\Http\Request;
 use ImageManager;
-use LaravelLocalization;
 use Modal;
 use Permission;
 use Sentinel;
@@ -167,7 +166,7 @@ class PageController extends Controller
             
             // we check if the ths slug is correctly translated
             if ($page->slug !== $slug) {
-                return redirect()->route('pages.show', ['slug' => $page->slug]);
+                return redirect()->route('page.show', ['slug' => $page->slug]);
             }
             
         } catch (Exception $e) {
@@ -191,7 +190,7 @@ class PageController extends Controller
         $this->og_meta['og:title'] = $page->meta_title ? $page->meta_title : strip_tags($page->title);
         $this->og_meta['og:description'] = $page->meta_description ? $page->meta_description : str_limit(strip_tags($page->content), 160);
         $this->og_meta['og:type'] = 'article';
-        $this->og_meta['og:url'] = route('pages.show', ['slug ' => $page->slug]);
+        $this->og_meta['og:url'] = route('page.show', ['slug ' => $page->slug]);
         if ($page->image) {
             $this->og_meta['og:image'] = $page->imagePath($page->image, 'image', '767');
         }
@@ -258,10 +257,10 @@ class PageController extends Controller
         
         // we sanitize the entries
         $request->replace(Entry::sanitizeAll($request->all()));
-        
-        // we convert the title into a slug
+    
+        // we slugify the slug
         $request->merge([
-            'slug' => str_slug(strip_tags($request->get('title'))),
+            'slug' => str_slug(strip_tags($request->slug)),
         ]);
     
         // we set the validity rules
@@ -290,12 +289,14 @@ class PageController extends Controller
             ]);
             
             // we update the fields
-            $page->slug = $request->get('slug');
-            $page->title = $request->get('title');
-            $page->content = $request->get('content');
-            $page->meta_title = $request->get('meta_title');
-            $page->meta_description = $request->get('meta_description');
-            $page->meta_keywords = $request->get('meta_keywords');
+            if(Sentinel::getUser()->hasAccess('pages.slug')){
+                $page->slug = $request->slug;
+            }
+            $page->title = $request->title;
+            $page->content = $request->content;
+            $page->meta_title = $request->meta_title;
+            $page->meta_description = $request->meta_description;
+            $page->meta_keywords = $request->meta_keywords;
             
             // we store the image
             if ($img = $request->file('image')) {
@@ -329,7 +330,7 @@ class PageController extends Controller
             
             // we notify the current user
             Modal::alert([
-                trans('pages.message.create.failure', ['page' => $request->get('title')]),
+                trans('pages.message.create.failure', ['page' => $request->title]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
             
@@ -426,9 +427,9 @@ class PageController extends Controller
         // we sanitize the entries
         $request->replace(Entry::sanitizeAll($request->all()));
         
-        // we convert the title into a slug
+        // we slugify the slug
         $request->merge([
-            'slug' => str_slug(strip_tags($request->get('title'))),
+            'slug' => str_slug(strip_tags($request->slug)),
         ]);
         
         // we set the validity rules
@@ -453,13 +454,15 @@ class PageController extends Controller
         
         try {
             // we update the fields
+            if(Sentinel::getUser()->hasAccess('pages.slug')){
+                $page->slug = $request->slug;
+            }
+            $page->title = $request->title;
+            $page->content = $request->content;
+            $page->meta_title = $request->meta_title;
+            $page->meta_description = $request->meta_description;
+            $page->meta_keywords = $request->meta_keywords;
             $page->active = $request->active;
-            $page->slug = $request->get('slug');
-            $page->title = $request->get('title');
-            $page->content = $request->get('content');
-            $page->meta_title = $request->get('meta_title');
-            $page->meta_description = $request->get('meta_description');
-            $page->meta_keywords = $request->get('meta_keywords');
             
             // we store the image
             if ($img = $request->file('image')) {
@@ -628,7 +631,7 @@ class PageController extends Controller
         }
         
         try {
-            $page->active = $request->get('active');
+            $page->active = $request->active;
             $page->save();
             
             return response([

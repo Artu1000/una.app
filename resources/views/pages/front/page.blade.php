@@ -5,7 +5,7 @@
     {{-- top background img --}}
     @if($page->image)
         <div class="top_background_image row">
-            <div class="background_responsive_img fill" data-background-image="{{ $page->image }}"></div>
+            <div class="background_responsive_img fill" data-background-image="{{ $page->imagePath($page->image) }}"></div>
         </div>
     @else
         <div class="no_top_background_image"></div>

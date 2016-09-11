@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Composers\Modal\ModalComposer;
+use App\Composers\Pages\PagesComposer;
+use App\Composers\Partner\PartnerComposer;
 use Illuminate\Support\ServiceProvider;
 
 class ComposerServiceProvider extends ServiceProvider
@@ -13,8 +16,9 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('templates.front.partials.partners', 'App\Composers\Partner\PartnerComposer');
-        view()->composer('*', 'App\Composers\Modal\ModalComposer');
+        view()->composer('templates.front.partials.header', PagesComposer::class);
+        view()->composer('templates.front.partials.partners', PartnerComposer::class);
+        view()->composer('*', ModalComposer::class);
     }
 
     /**

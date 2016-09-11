@@ -236,7 +236,7 @@ Route::group($group, function () {
     Route::get(trans('routes.videos.index'), ['as' => 'videos.index', 'uses' => 'Media\VideosController@index']);
 
     // pages
-    Route::get(trans('routes.page.show'), ['as' => 'page.show', 'uses' => 'Pages\PageController@show']);
+    Route::get(trans('routes.pages.show'), ['as' => 'page.show', 'uses' => 'Pages\PageController@show']);
 
     // sitemap
     Route::get(trans('routes.sitemap.index'), ['as' => 'sitemap.index', 'uses' => 'Sitemap\SitemapController@index']);

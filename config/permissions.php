@@ -66,13 +66,14 @@ return [
     'registration.prices.delete' => false,
     
     // page
-    'pages'                   => false,
-    'pages.list'              => false,
-    'pages.create'            => false,
-    'pages.view'              => false,
-    'pages.update'            => false,
-    'pages.delete'            => false,
-    'pages.activate'          => false,
+    'pages'                      => false,
+    'pages.list'                 => false,
+    'pages.create'               => false,
+    'pages.view'                 => false,
+    'pages.update'               => false,
+    'pages.slug'                 => false,
+    'pages.delete'               => false,
+    'pages.activate'             => false,
     
     // photos
     'photos'                     => false,

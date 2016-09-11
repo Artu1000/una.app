@@ -64,11 +64,13 @@
                                     <i class="fa fa-comments"></i> {{ trans('template.front.header.presentation') }}
                                 </a>
                             </li>
-                            <li class="menu_tab @if(Request::path() === 'page/historique') active @endif">
-                                <a href="{{ route('page.show', 'historique') }}" title="{{ trans('template.front.header.history') }}">
-                                    <i class="fa fa-university"></i> {{ trans('template.front.header.history') }}
-                                </a>
-                            </li>
+                            @if($history)
+                                <li class="menu_tab @if(Request::path() === route('page.show', ['slug' => $history->slug])) active @endif">
+                                    <a href="{{ route('page.show', ['slug' => $history->slug]) }}" title="{{ trans('template.front.header.history') }}">
+                                        <i class="fa fa-university"></i> {{ trans('template.front.header.history') }}
+                                    </a>
+                                </li>
+                            @endif
                             {{--<li class="menu_tab @if(\Route::current()->getName() === 'palmares.index') active @endif">--}}
                                 {{--<a href="{{ route('palmares.index') }}" title="{{ trans('template.front.header.palmares') }}">--}}
                                     {{--<i class="fa fa-trophy"></i> {{ trans('template.front.header.palmares') }}--}}
@@ -80,16 +82,20 @@
                                     <i class="fa fa-cogs"></i> {{ trans('template.front.header.leading_team') }}
                                 </a>
                             </li>
-                            <li class="menu_tab @if(Request::path() === 'page/statuts') active @endif">
-                                <a href="{{ route('page.show', 'statuts') }}" title="St{{ trans('template.front.header.statuses') }}">
-                                    <i class="fa fa-compass"></i> {{ trans('template.front.header.statuses') }}
-                                </a>
-                            </li>
-                            <li class="menu_tab @if(Request::path() === 'page/reglement-interieur') active @endif">
-                                <a href="{{ route('page.show', 'reglement-interieur') }}" title="{{ trans('template.front.header.rules') }}">
-                                    <i class="fa fa-gavel"></i> {{ trans('template.front.header.rules') }}
-                                </a>
-                            </li>
+                            @if($statuses)
+                                <li class="menu_tab @if(Request::path() === route('page.show', ['slug' => $statuses->slug])) active @endif">
+                                    <a href="{{ route('page.show', ['slug' => $statuses->slug]) }}" title="{{ trans('template.front.header.history') }}">
+                                        <i class="fa fa-compass"></i> {{ trans('template.front.header.statuses') }}
+                                    </a>
+                                </li>
+                            @endif
+                            @if($rules)
+                                <li class="menu_tab @if(Request::path() === route('page.show', ['slug' => $statuses->slug])) active @endif">
+                                    <a href="{{ route('page.show', ['slug' => $statuses->slug]) }}" title="{{ trans('template.front.header.history') }}">
+                                        <i class="fa fa-gavel"></i> {{ trans('template.front.header.rules') }}
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     </li>
 

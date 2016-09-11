@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    
     // pages
     "page"    => [
         "title"  => [
@@ -14,9 +14,9 @@ return [
             "release"    => "Diffusion de la page",
         ],
         "action" => [
-            "create"  => "Créer la page",
-            "update"  => "Éditer la page",
-            "delete"  => "Supprimer la page",
+            "create" => "Créer la page",
+            "update" => "Éditer la page",
+            "delete" => "Supprimer la page",
         ],
         "info"   => [
             "image"            => "Largeur min : 2560px - Hauteur min : 1440px - Format : jpg, jpeg, png.",
@@ -38,7 +38,7 @@ return [
             "activation_placeholder" => "Statut",
         ],
     ],
-
+    
     // messages
     "message" => [
         "create"     => [
@@ -52,7 +52,7 @@ return [
         "find"       => [
             "failure" => "La page <b>#:id</b> n'existe pas.",
         ],
-        "delete" => [
+        "delete"     => [
             "success" => "La page <b>:page</b> a bien été supprimée.",
             "failure" => "Une erreur est survenue lors de la suppression de la page <b>:page</b>.",
         ],

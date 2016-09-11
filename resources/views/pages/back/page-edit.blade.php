@@ -73,7 +73,7 @@
                             </div>
 
                             {{-- title --}}
-                            <label for="input_title" class="show_locale">{{ trans('pages.page.label.title') }}<span class="required">*</span></label>
+                            <label for="input_title">{{ trans('pages.page.label.title') }}<span class="required">*</span></label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_title"><i class="fa fa-tag"></i></span>
@@ -81,8 +81,19 @@
                                 </div>
                             </div>
 
+                            @if(Sentinel::getUser()->hasAccess('pages.slug'))
+                                {{-- slug --}}
+                                <label for="input_slug">{{ trans('pages.page.label.slug') }}<span class="required">*</span></label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" for="input_slug"><i class="fa fa-key" aria-hidden="true"></i></span>
+                                        <input id="input_slug" class="form-control" type="text" name="slug" value="{{ !empty(old('slug' )) ? old('slug') : (isset($page) && isset($page->slug) ? $page->slug : null) }}" placeholder="{{ trans('pages.page.label.slug') }}">
+                                    </div>
+                                </div>
+                            @endif
+
                             {{-- content --}}
-                            <label for="input_content" class="show_locale">{{ trans('pages.page.label.content') }}</label>
+                            <label for="input_content">{{ trans('pages.page.label.content') }}</label>
                             <div class="form-group textarea">
                                 <textarea id="input_content" class="form-control capitalize-first-letter markdown" name="content" placeholder="{{ trans('pages.page.label.content') }}">{{ old('content') ? old('content') : (isset($page) && $page->content ? $page->content : null) }}</textarea>
                                 <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('pages.page.info.content') }}</p>
@@ -99,7 +110,7 @@
                         <div class="panel-body">
 
                             {{-- meta title --}}
-                            <label for="input_meta_title" class="show_locale">{{ trans('pages.page.label.meta_title') }}</label>
+                            <label for="input_meta_title">{{ trans('pages.page.label.meta_title') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_meta_title"><i class="fa fa-tag"></i></span>
@@ -109,7 +120,7 @@
                             </div>
 
                             {{-- meta description --}}
-                            <label for="input_meta_description" class="show_locale">{{ trans('pages.page.label.meta_description') }}</label>
+                            <label for="input_meta_description">{{ trans('pages.page.label.meta_description') }}</label>
                             <div class="form-group textarea">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_meta_description"><i class="fa fa-align-left" aria-hidden="true"></i></span>
@@ -119,7 +130,7 @@
                             </div>
 
                             {{-- meta keywords --}}
-                            <label for="input_meta_keywords" class="show_locale">{{ trans('pages.page.label.meta_keywords') }}</label>
+                            <label for="input_meta_keywords">{{ trans('pages.page.label.meta_keywords') }}</label>
                             <div class="form-group textarea">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_meta_keywords"><i class="fa fa-key" aria-hidden="true"></i></span>
