@@ -4,6 +4,7 @@ namespace App\Http\Controllers\File;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Registration\RegistrationFormDownloadRepositoryInterface;
+use CustomLog;
 use Exception;
 use Illuminate\Http\Request;
 use Modal;
@@ -47,6 +48,9 @@ class FileController extends Controller
                 $request->path
             );
         } catch(Exception $e) {
+            // we log the error
+            CustomLog::error($e);
+            
             // we notify the current user
             Modal::alert([
                 trans('global.file.download.error'),
