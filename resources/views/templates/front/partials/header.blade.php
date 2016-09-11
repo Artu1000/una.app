@@ -90,8 +90,8 @@
                                 </li>
                             @endif
                             @if($rules)
-                                <li class="menu_tab @if(Request::path() === route('page.show', ['slug' => $statuses->slug])) active @endif">
-                                    <a href="{{ route('page.show', ['slug' => $statuses->slug]) }}" title="{{ trans('template.front.header.history') }}">
+                                <li class="menu_tab @if(Request::path() === route('page.show', ['slug' => $rules->slug])) active @endif">
+                                    <a href="{{ route('page.show', ['slug' => $rules->slug]) }}" title="{{ trans('template.front.header.history') }}">
                                         <i class="fa fa-gavel"></i> {{ trans('template.front.header.rules') }}
                                     </a>
                                 </li>
