@@ -11,6 +11,7 @@ use FileManager;
 use Illuminate\Http\Request;
 use ImageManager;
 use Modal;
+use Parsedown;
 use Permission;
 use Sentinel;
 use TableList;
@@ -175,7 +176,10 @@ class PageController extends Controller
             
             return abort(404);
         }
-        
+    
+        // we parse the markdown content
+        $parsedown = new Parsedown();
+        $page->content = isset($page->content) ? $parsedown->text($page->content) : null;
         // we replace the images aliases by real paths
         $page->content = ImageManager::replaceLibraryImagesAliasesByRealPath($page->content);
         // we replace the files aliases by real paths
