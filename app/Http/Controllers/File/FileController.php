@@ -51,7 +51,7 @@ class FileController extends Controller
             Modal::alert([
                 trans('global.file.download.error'),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
-            ], 'success');
+            ], 'error');
             
             // we delete the download count
             $registration_form_download->delete();
