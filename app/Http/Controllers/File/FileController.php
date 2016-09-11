@@ -4,7 +4,9 @@ namespace App\Http\Controllers\File;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Registration\RegistrationFormDownloadRepositoryInterface;
+use Exception;
 use Illuminate\Http\Request;
+use Modal;
 
 class FileController extends Controller
 {
@@ -33,13 +35,28 @@ class FileController extends Controller
      */
     public function download(Request $request)
     {
+        $registration_form_download = null;
+        
         // we register the download
         if(strpos($request->path, 'registration-form') !== false){
-            app(RegistrationFormDownloadRepositoryInterface::class)->create([]);
+            $registration_form_download = app(RegistrationFormDownloadRepositoryInterface::class)->create([]);
         }
         
-        return response()->download(
-            $request->path
-        );
+        try {
+            return response()->download(
+                $request->path
+            );
+        } catch(Exception $e) {
+            // we notify the current user
+            Modal::alert([
+                trans('global.file.download.error'),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
+            ], 'success');
+            
+            // we delete the download count
+            $registration_form_download->delete();
+            
+            return redirect()->back();
+        }
     }
 }

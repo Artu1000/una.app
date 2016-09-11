@@ -17,20 +17,20 @@ return [
         "more"        => "Lire plus",
         "sort_by_cat" => "Trier par catégorie",
     ],
-
+    
     // legend
     "legend"     => [
         "title"     => "Légende",
         "required"  => "Champs obligatoires.",
         "translate" => "Champs à traduire dans différentes langues à l'aide des onglets ci-dessous.",
     ],
-
+    
     // label
     "label"      => [
         "created_at" => "Date de création",
         "updated_at" => "Date de modification",
     ],
-
+    
     // infos
     "info"       => [
         "password" => [
@@ -49,7 +49,7 @@ return [
             "format" => "Format : aaaa (exemple : 1990).",
         ],
     ],
-
+    
     // messages
     "message"    => [
         "global"     => [
@@ -66,7 +66,7 @@ return [
             ],
         ],
     ],
-
+    
     // modals
     'modal'      => [
         'confirm' => [
@@ -81,7 +81,14 @@ return [
             ],
         ],
     ],
-
+    
+    // file
+    "file"       => [
+        "download" => [
+            "error" => "Le téléchargement du fichier a échoué.",
+        ],
+    ],
+    
     // table list
     "table_list" => [
         "placeholder" => [
