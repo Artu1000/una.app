@@ -38,10 +38,11 @@ return [
             "news"         => "Actualités",
             "schedules"    => "Horaires",
             "registration" => "Page d'inscription",
+            "pages"        => "Pages",
             "photos"       => "Photos",
             "videos"       => "Vidéos",
             "partners"     => "Partenaires",
-            "libraries"  => [
+            "libraries"    => [
                 "title"  => "Bibliothèques",
                 "images" => "Images",
                 "files"  => "Fichiers",

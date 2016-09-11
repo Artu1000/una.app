@@ -106,6 +106,20 @@ if (config('settings.breadcrumbs')) {
         $breadcrumbs->parent('registration.page.edit');
         $breadcrumbs->push(trans('breadcrumbs.registration.prices.edit', ['price' => $data['price']->label]), '');
     });
+    
+    // pages
+    Breadcrumbs::register('pages.index', function ($breadcrumbs) {
+        $breadcrumbs->parent('home');
+        $breadcrumbs->push(trans('breadcrumbs.pages.index'), route('pages.index'));
+    });
+    Breadcrumbs::register('pages.create', function ($breadcrumbs) {
+        $breadcrumbs->parent('pages.index');
+        $breadcrumbs->push(trans('breadcrumbs.pages.create'), '');
+    });
+    Breadcrumbs::register('pages.edit', function ($breadcrumbs, array $data) {
+        $breadcrumbs->parent('pages.index');
+        $breadcrumbs->push(trans('breadcrumbs.pages.edit', ['page' => $data['page']->title]), '');
+    });
 
     // photos
     Breadcrumbs::register('photos.page.edit', function ($breadcrumbs) {

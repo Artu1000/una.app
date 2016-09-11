@@ -107,7 +107,16 @@ $route = Route::group($group, function () {
     Route::put(LaravelLocalization::transRoute('routes.registration.prices.update'), ['as' => 'registration.prices.update', 'uses' => 'Registration\RegistrationPriceController@update']);
     Route::delete(LaravelLocalization::transRoute('routes.registration.prices.destroy'), ['as' => 'registration.prices.destroy', 'uses' => 'Registration\RegistrationPriceController@destroy']);
     Route::post(LaravelLocalization::transRoute('routes.registration.prices.activate'), ['as' => 'registration.prices.activate', 'uses' => 'Registration\RegistrationPriceController@activate']);
-
+    
+    // pages
+    Route::get(LaravelLocalization::transRoute('routes.pages.index'), ['as' => 'pages.index', 'uses' => 'Pages\PageController@index']);
+    Route::get(LaravelLocalization::transRoute('routes.pages.create'), ['as' => 'pages.create', 'uses' => 'Pages\PageController@create']);
+    Route::post(LaravelLocalization::transRoute('routes.pages.store'), ['as' => 'pages.store', 'uses' => 'Pages\PageController@store']);
+    Route::get(LaravelLocalization::transRoute('routes.pages.edit'), ['as' => 'pages.edit', 'uses' => 'Pages\PageController@edit']);
+    Route::put(LaravelLocalization::transRoute('routes.pages.update'), ['as' => 'pages.update', 'uses' => 'Pages\PageController@update']);
+    Route::delete(LaravelLocalization::transRoute('routes.pages.destroy'), ['as' => 'pages.destroy', 'uses' => 'Pages\PageController@destroy']);
+    Route::post(LaravelLocalization::transRoute('routes.pages.activate'), ['as' => 'pages.activate', 'uses' => 'Pages\PageController@activate']);
+    
     // photos page
     Route::get(LaravelLocalization::transRoute('routes.photos.page.edit'), ['as' => 'photos.page.edit', 'uses' => 'Media\PhotosController@pageEdit']);
     Route::put(LaravelLocalization::transRoute('routes.photos.page.update'), ['as' => 'photos.page_update', 'uses' => 'Media\PhotosController@pageUpdate']);

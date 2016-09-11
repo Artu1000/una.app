@@ -1,9 +1,6 @@
 <?php
 
 return [
-    
-    // front
-    // routes
     "login"        => [
         "index" => "espace-connexion",
         "login" => "espace-connexion/connexion",
@@ -33,9 +30,6 @@ return [
         "index"       => "boutique-en-ligne",
         "add-to-cart" => "boutique-en-ligne/ajout-au-panier",
     ],
-    "page"         => [
-        "show" => 'page/{key}',
-    ],
     "sitemap"      => [
         "index" => "sitemap.xml",
     ],
@@ -45,9 +39,6 @@ return [
     "proxy"        => [
         "qr" => "proxy/qr",
     ],
-    
-    // back
-    // routes
     "dashboard"    => [
         "index" => "admin/tableau-de-bord",
     ],
@@ -129,6 +120,16 @@ return [
             "destroy"  => "admin/contenus/inscription/tarifs/suppression/{id}",
             "activate" => "admin/contenus/inscription/tarifs/activation/{id}",
         ],
+    ],
+    "pages"     => [
+        "show"     => 'page/{slug}',
+        "index"    => "admin/contenus/pages",
+        "create"   => "admin/contenus/pages/creation",
+        "store"    => "admin/contenus/pages/enregistrement",
+        "edit"     => "admin/contenus/pages/edition/{id}",
+        "update"   => "admin/contenus/pages/mise-a-jour/{id}",
+        "destroy"  => "admin/contenus/pages/suppression/{id}",
+        "activate" => "admin/contenus/pages/activation/{id}",
     ],
     "photos"       => [
         "index"    => "photos",

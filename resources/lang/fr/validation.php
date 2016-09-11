@@ -77,7 +77,7 @@ return [
     "unique"               => "La valeur du champ <b>:attribute</b> est déjà utilisée.",
     "url"                  => "Le format de l'URL de <b>:attribute</b> n'est pas valide.",
 
-    "image_size"   => "Le fichier <b>:attribute</b> doit être :width de large et :height de haut.",
+    "image_size"   => "L'image <b>:attribute</b> doit être :width de large et :height de haut.",
     'image_aspect' => 'Le ratio de <b>:attribute</b> doit être de :aspect',
 
     /*

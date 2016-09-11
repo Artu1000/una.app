@@ -16,7 +16,7 @@ return [
                 "description" => 'Bienvenue sur le site du club Université Nantes Aviron, le plus grand club d\'aviron universitaire de France, ouvert à tous les publics !',
                 "keywords"    => "club, universite, nantes, aviron, sport, universitaire, etudiant, ramer",
             ],
-
+        
         ],
         "account"      => [
             "create" => [
@@ -62,18 +62,18 @@ return [
             "description" => "Régates, compétition universitaires ou fédérales, stages, Régataïades, ... Découvrez les dates de tous les événements qui rythment la vie du club.",
             "keywords"    => "club, universite, nantes, aviron, sport, universitaire, etudiant, calendrier",
         ],
-        "photos"     => [
+        "photos"       => [
             "title"       => "Albums photos",
             "description" => "Retrouvez toutes les photos du club Université Nantes Aviron (UNA) triées par année.",
             "keywords"    => "club, universite, nantes, aviron, sport, universitaire, etudiant, albums, photos",
         ],
-        "videos"     => [
+        "videos"       => [
             "title"       => "Vidéos",
             "description" => "Retrouvez toutes les vidéos du club Université Nantes Aviron (UNA) triées par année.",
             "keywords"    => "club, universite, nantes, aviron, sport, universitaire, etudiant, vidéos",
         ],
     ],
-
+    
     // back
     "back"  => [
         "dashboard"    => [
@@ -94,8 +94,8 @@ return [
             "profile" => "Mon profil",
         ],
         "home"         => [
-            "page" => [
-                "edit"   => "Édition de la page d'accueil",
+            "page"   => [
+                "edit" => "Édition de la page d'accueil",
             ],
             "slides" => [
                 "create" => "Création d'une diapo",
@@ -111,8 +111,8 @@ return [
             "create" => "Création d'une actualité",
         ],
         "schedules"    => [
-            "page" => [
-                "edit"   => "Gestion des créneaux horaire",
+            "page"   => [
+                "edit" => "Gestion des créneaux horaire",
             ],
             "edit"   => "Édition d'un créneau horaire",
             "create" => "Création d'un créneau horaire",
@@ -126,15 +126,20 @@ return [
                 "edit"   => "Édition d'un tarif d'inscription",
             ],
         ],
-        "photos" => [
-            "page"  => [
+        "pages"        => [
+            "index"  => "Gestion des pages",
+            "create" => "Création d'une page",
+            "edit"   => "Édition de la page :page",
+        ],
+        "photos"       => [
+            "page"   => [
                 "edit" => "Édition de la page d'albums photos",
             ],
             "create" => "Création d'un album photos",
             "edit"   => "Édition d'un album photos",
         ],
-        "videos" => [
-            "page"  => [
+        "videos"       => [
+            "page"   => [
                 "edit" => "Édition de la page de vidéos",
             ],
             "create" => "Création d'une vidéo",
@@ -145,11 +150,11 @@ return [
             "edit"   => "Édition d'un partenaire",
             "create" => "Création d'un partenaire",
         ],
-        "libraries"     => [
+        "libraries"    => [
             "images" => [
                 "index" => "Gestion des images",
             ],
-            "files" => [
+            "files"  => [
                 "index" => "Gestion des fichiers",
             ],
         ],

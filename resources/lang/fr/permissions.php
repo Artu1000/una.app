@@ -62,6 +62,15 @@ return [
     "registration.prices.update" => "Modifier un tarif d'inscription",
     "registration.prices.delete" => "Supprimer un tarif d'inscription",
     
+    // pages
+    "pages"                   => "Pages",
+    "pages.list"              => "Consulter la liste des pages",
+    "pages.create"            => "Créer une page",
+    "pages.view"              => "Consulter le détail d'une page",
+    "pages.update"            => "Modifier une page",
+    "pages.delete"            => "Supprimer une page",
+    "pages.activate"          => "Activer une page",
+    
     // photos
     "photos"                     => "Photos",
     "photos.page.view"           => "Consulter le détail de la page d'albums photos",

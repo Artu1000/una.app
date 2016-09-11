@@ -51,6 +51,11 @@ return [
             "edit"   => "Édition du tarif d'inscription <b>:price</b>",
         ],
     ],
+    "pages"        => [
+        "index"  => "Gestion des pages",
+        "create" => "Création d'une page",
+        "edit"   => "Édition de la page <b>:page</b>",
+    ],
     "photos"       => [
         "page"   => [
             "edit" => "Gestion des albums photos",
