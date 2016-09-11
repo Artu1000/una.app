@@ -18,7 +18,8 @@
         "davejamesmiller/laravel-breadcrumbs": "^3.0",
         "erusev/parsedown": "^1.6",
         "dimsav/laravel-translatable": "^5.4",
-        "guzzlehttp/guzzle": "^6.2"
+        "guzzlehttp/guzzle": "^6.2",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -27,8 +28,7 @@
         "codeception/codeception": "^2.1",
         "captbaritone/mailcatcher-codeception-module": "1.*",
         "barryvdh/laravel-ide-helper": "^2.1",
-        "laracasts/generators": "^1.1",
-        "doctrine/dbal": "^2.5"
+        "laracasts/generators": "^1.1"
     },
     "autoload": {
         "classmap": [
