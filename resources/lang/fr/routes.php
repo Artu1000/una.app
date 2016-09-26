@@ -41,6 +41,7 @@ return [
     ],
     "dashboard"    => [
         "index" => "admin/tableau-de-bord",
+        "stats" => "admin/tableau-de-bord/statistiques",
     ],
     "settings"     => [
         "index"  => "admin/parametres",
@@ -121,7 +122,7 @@ return [
             "activate" => "admin/contenus/inscription/tarifs/activation/{id}",
         ],
     ],
-    "pages"     => [
+    "pages"        => [
         "show"     => 'page/{slug}',
         "index"    => "admin/contenus/pages",
         "create"   => "admin/contenus/pages/creation",

@@ -23,6 +23,10 @@ return [
     "users.update"               => "Modifier un utilisateur",
     "users.delete"               => "Supprimer un utlisateur",
     
+    // dashboard
+    "dashboard"                  => "Tableau de bord",
+    "dashboard.statistics"       => "Consulter les statistiques de visites du site",
+    
     // home
     "home"                       => "Page d'accueil",
     "home.page.view"             => "Consulter le détail de la page d'accueil",

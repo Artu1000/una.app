@@ -1,11 +1,16 @@
 # Laravel
-/storage
 /vendor
 /public/css
 /public/js
 /resources/assets/vendor
 /node_modules
 .env
+
+# storage
+storage/app/*
+!storage/app/google-analytics
+storage/framework/*
+storage/logs/*
 
 # testing
 tests/_output/*

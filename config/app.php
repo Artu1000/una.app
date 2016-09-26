@@ -203,6 +203,7 @@ return [
         'Image'               => Intervention\Image\Facades\Image::class,
         'LaravelLocalization' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
         'Breadcrumbs'         => DaveJamesMiller\Breadcrumbs\Facade::class,
+        'Analytics'           => Spatie\Analytics\AnalyticsFacade::class,
         // created
         'Modal'               => App\Facades\ModalHelperFacade::class,
         'ImageManager'        => App\Facades\ImageManagerHelperFacade::class,

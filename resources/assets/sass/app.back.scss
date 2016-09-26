@@ -24,6 +24,7 @@ html {
         }
       }
 
+      // header
       header {
 
         .navbar {
@@ -252,6 +253,24 @@ html {
               display: inline-table;
             }
           }
+
+          // dashboard
+          &.dashboard {
+
+            #period_form {
+              margin: 30px 0;
+            }
+
+            .graph {
+              width: 100%;
+              min-height: 450px;
+              padding: 30px;
+            }
+
+            .loader {
+              @extend .graph;
+            }
+          }
         }
       }
 
@@ -260,6 +279,7 @@ html {
         .panel-heading {
 
           h3 {
+            color: #fff;
             margin: 0;
           }
         }

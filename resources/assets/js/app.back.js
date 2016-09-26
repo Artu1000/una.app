@@ -438,7 +438,7 @@ $(function () {
     var inputs = $('input.submit-on-change');
     if (inputs.length) {
         // we prepare the update value function
-        function updateValue($this){
+        function updateValue($this) {
             var form = $this.closest('form');
             // we show the loading spinner
             form.find('.input-change-icon').remove();
@@ -521,17 +521,18 @@ $(function () {
                 $this.val(value);
             });
         }
+
         //setup before functions
         var typing_timing = 500;
         var typing_timer;
         // we set the listeners on the inputs
-        inputs.each(function() {
+        inputs.each(function () {
             // we store the object
             var $this = $(this);
             // on keyup, we lauch the countdown before saving
             $this.on('keyup', function () {
                 clearTimeout(typing_timer);
-                typing_timer = setTimeout(function(){
+                typing_timer = setTimeout(function () {
                     updateValue($this);
                 }, typing_timing);
             });
@@ -542,5 +543,211 @@ $(function () {
             });
         });
     }
+
+    // we manage the predefined periods
+    $('#pre_defined_period').change(function () {
+        var selected_period = app.pre_formatted_periods[$(this).val()];
+        $('#start_date').val(selected_period['start_date']);
+        $('#end_date').val(selected_period['end_date']);
+    });
+
+
+    var google_charts = {
+        loaded: false,
+        url: 'https://www.gstatic.com/charts/loader.js',
+        data: null,
+        callScript: function () {
+            window.drawCharts = function () {
+                google_charts.drawCharts();
+            };
+            $.ajax({
+                url: google_charts.url,
+                dataType: 'script'
+            }).done(function () {
+                google.charts.load('current', {packages: ['corechart', 'table'], language: app.locale});
+                google.charts.setOnLoadCallback(drawCharts);
+                google_charts.loaded = true;
+                console.log('google script loaded');
+            });
+        },
+        drawTopBrowsersChart: function(data){
+            var top_browsers_data_table = new google.visualization.DataTable();
+            top_browsers_data_table.addColumn('string', 'Element');
+            top_browsers_data_table.addColumn('number', 'Percentage');
+            var formatted_top_browsers_data = [];
+            $.each(data['top_browsers'], function(key, item){
+                formatted_top_browsers_data.push([
+                    item.browser,
+                    item.sessions
+                ]);
+            });
+            top_browsers_data_table.addRows(formatted_top_browsers_data);
+            // instantiate and draw the chart.
+            var options = {
+                // pieHole: 0.4,
+            };
+            var top_browsers_chart = new google.visualization.PieChart(document.getElementById('top_browsers'));
+            top_browsers_chart.draw(top_browsers_data_table, options);
+        },
+        drawTopReferrersChart: function(data){
+            var top_referrers_data_table = new google.visualization.DataTable();
+            top_referrers_data_table.addColumn('string', 'Element');
+            top_referrers_data_table.addColumn('number', 'Percentage');
+            var formatted_top_referrers_data = [];
+            $.each(data['top_referrers'], function(key, item){
+                formatted_top_referrers_data.push([
+                    item.url,
+                    item.pageViews
+                ]);
+            });
+            top_referrers_data_table.addRows(formatted_top_referrers_data);
+            // instantiate and draw the chart.
+            var options = {
+                // pieHole: 0.4,
+            };
+            var top_referrers_chart = new google.visualization.PieChart(document.getElementById('top_referrers'));
+            top_referrers_chart.draw(top_referrers_data_table, options);
+        },
+        drawMostVisitedPagesChart: function(data){
+            var most_visited_pages_data_table = new google.visualization.DataTable();
+            most_visited_pages_data_table.addColumn('string', app.trans.pages);
+            most_visited_pages_data_table.addColumn('string', app.trans.url);
+            most_visited_pages_data_table.addColumn('number', app.trans.views);
+            var formatted_most_visited_pages_data = [];
+            $.each(data['most_visited_pages'], function(key, item){
+                formatted_most_visited_pages_data.push([
+                    item.pageTitle,
+                    item.url,
+                    item.pageViews
+                ]);
+            });
+            most_visited_pages_data_table.addRows(formatted_most_visited_pages_data);
+            // instantiate and draw the chart.
+            var options = {
+                showRowNumber: true,
+                width: '100%',
+                height: '100%'
+            };
+            var most_visited_pages_chart = new google.visualization.Table(document.getElementById('most_visited_pages'));
+            most_visited_pages_chart.draw(most_visited_pages_data_table, options);
+        },
+        drawVisitorsChart: function(data){
+            var visitors_data_table = new google.visualization.DataTable();
+            visitors_data_table.addColumn('string', 'Date');
+            visitors_data_table.addColumn('number', app.trans.visitors);
+            visitors_data_table.addColumn('number', app.trans.page_views);
+            var formatted_visitors_data = [];
+            $.each(data['visitors_and_page_views'], function(key, item){
+                formatted_visitors_data.push([
+                    item.date,
+                    item.visitors,
+                    item.page_views
+                ]);
+            });
+            visitors_data_table.addRows(formatted_visitors_data);
+            // instantiate and draw the chart.
+            var options = {
+                width: '100%',
+                height: '100%',
+            };
+            var visitors_chart = new google.visualization.AreaChart(document.getElementById('visitors'));
+            visitors_chart.draw(visitors_data_table, options);
+        },
+        drawOtherStatsChart: function(data){
+            var other_stats_data_table = new google.visualization.DataTable();
+            other_stats_data_table.addColumn('string', 'Date');
+            other_stats_data_table.addColumn('number', app.trans.other_stats);
+            other_stats_data_table.addColumn('number', app.trans.page_views);
+            var formatted_other_stats_data = [];
+            $.each(data['other_stats'], function(key, item){
+                formatted_other_stats_data.push([
+                    item.date,
+                    item.form_downloads,
+                    item.qr_code_scans
+                ]);
+            });
+            other_stats_data_table.addRows(formatted_other_stats_data);
+            // instantiate and draw the chart.
+            var options = {
+                // width: '100%',
+                // height: '100%',
+            };
+            var other_stats_chart = new google.visualization.ColumnChart(document.getElementById('other_stats'));
+            other_stats_chart.draw(other_stats_data_table, options);
+        },
+        drawCharts: function () {
+            if (!google_charts.loaded) {
+                google_charts.callScript();
+            } else {
+                google_charts.drawVisitorsChart(google_charts.data);
+                google_charts.drawMostVisitedPagesChart(google_charts.data);
+                google_charts.drawTopBrowsersChart(google_charts.data);
+                google_charts.drawTopReferrersChart(google_charts.data);
+                google_charts.drawOtherStatsChart(google_charts.data);
+            }
+        }
+    };
+
+    $(window).resize(function(){
+        google_charts.drawCharts();
+    });
+
+    var $form = $('#period_form');
+    $('#period_form button[type=submit]').click(function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        // we get the html contained into the button
+        var html = $this.html();
+        // we remove the fontawesome icon
+        var begin = html.indexOf('<i');
+        var end = html.indexOf('i>');
+        var previous_icon = html.substring(begin, end + 2);
+        var cleaned_html = html.replace(previous_icon, '');
+        // we put the loading spinner
+        $this.html(app.loading_spinner + ' ' + cleaned_html);
+        $.ajax({
+            method: $form.attr('method'),
+            url: $form.attr('action'),
+            data: {
+                start_date: $('#start_date').val(),
+                end_date: $('#end_date').val(),
+            }
+        }).done(function (data) {
+            $('.chart').removeClass('hidden');
+            // we draw the charts
+            google_charts.data = data;
+            google_charts.drawCharts();
+            // we get the html contained into the button
+            var html = $this.html();
+            // we remove the fontawesome spinner icon
+            var begin = html.indexOf('<i');
+            var end = html.indexOf('i>');
+            var to_remove = html.substring(begin, end + 2);
+            var cleaned_html = html.replace(to_remove, '');
+            // we put the loading spinner
+            $this.html(previous_icon + ' ' + cleaned_html);
+        }).fail(function (data) {
+            // we show the error messages
+            if (data.responseJSON.message) {
+                data.responseJSON.message.forEach(function (error) {
+                    $.notify({
+                        // options
+                        title: app.error_icon,
+                        message: error
+                    }, {
+                        // settings
+                        type: 'danger',
+                        delay: 6000,
+                        allow_dismiss: false,
+                        showProgressbar: true,
+                        animate: {
+                            enter: 'animated bounceInDown',
+                            exit: 'animated bounceOutUp'
+                        }
+                    });
+                });
+            }
+        });
+    });
 });
 

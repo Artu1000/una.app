@@ -14,6 +14,7 @@ use Laracasts\Generators\GeneratorsServiceProvider;
 use Laracasts\Utilities\JavaScript\JavaScriptServiceProvider;
 use Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider;
 use Propaganistas\LaravelPhone\LaravelPhoneServiceProvider;
+use Spatie\Analytics\AnalyticsServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -77,5 +78,9 @@ class AppServiceProvider extends ServiceProvider
         // laravel model translatable
         // https://github.com/dimsav/laravel-translatable
         $this->app->register(TranslatableServiceProvider::class);
+    
+        // laravel google analytics
+        // https://github.com/spatie/laravel-analytics
+        $this->app->register(AnalyticsServiceProvider::class);
     }
 }

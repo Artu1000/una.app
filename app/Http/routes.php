@@ -36,6 +36,7 @@ $route = Route::group($group, function () {
 
     // dashboard
     Route::get(LaravelLocalization::transRoute('routes.dashboard.index'), ['as' => 'dashboard.index', 'uses' => 'Dashboard\DashboardController@index']);
+    Route::get(LaravelLocalization::transRoute('routes.dashboard.stats'), ['as' => 'dashboard.stats', 'uses' => 'Dashboard\DashboardController@getStatistics']);
 
     // settings
     Route::get(LaravelLocalization::transRoute('routes.settings.index'), ['as' => 'settings.index', 'uses' => 'Settings\SettingsController@index']);

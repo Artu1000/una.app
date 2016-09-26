@@ -3,28 +3,31 @@
 return [
     
     // separator
-    'separator'                  => '0',
+    'separator'          => '0',
     
     // configuration
-    'settings'                   => false,
-    'settings.view'              => false,
-    'settings.update'            => false,
+    'settings'           => false,
+    'settings.view'      => false,
+    'settings.update'    => false,
     
     // permissions
-    'permissions'                => false,
-    'permissions.list'           => false,
-    'permissions.create'         => false,
-    'permissions.view'           => false,
-    'permissions.update'         => false,
-    'permissions.delete'         => false,
+    'permissions'        => false,
+    'permissions.list'   => false,
+    'permissions.create' => false,
+    'permissions.view'   => false,
+    'permissions.update' => false,
+    'permissions.delete' => false,
     
     // user
-    'users'                      => false,
-    'users.list'                 => false,
-    'users.create'               => false,
-    'users.view'                 => false,
-    'users.update'               => false,
-    'users.delete'               => false,
+    'users'              => false,
+    'users.list'         => false,
+    'users.create'       => false,
+    'users.view'         => false,
+    'users.update'       => false,
+    'users.delete'       => false,
+    
+    'dashboard'                  => false,
+    'dashboard.statistics'       => false,
     
     // home
     'home'                       => false,

@@ -19,7 +19,8 @@
         "erusev/parsedown": "^1.6",
         "dimsav/laravel-translatable": "^5.4",
         "guzzlehttp/guzzle": "^6.2",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "spatie/laravel-analytics": "^2.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
