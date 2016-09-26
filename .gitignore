@@ -9,6 +9,7 @@
 # storage
 storage/app/*
 !storage/app/google-analytics
+storage/app/google-analytics/google-cache
 storage/framework/*
 storage/logs/*
 
