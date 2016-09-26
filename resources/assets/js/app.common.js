@@ -84,10 +84,8 @@ $(function() {
         replaceFontAwesomeIconBySpinner($this);
         // we execute the prevented action
         if ($this.is("button[type=submit]")) {
-            console.log('submit');
             $this.closest('form').submit();
         } else if ($this.is("button")) {
-            console.log('button');
             window.location.href = $this.closest('a').attr('href');
         } else if ($this.is("a")) {
             window.location.href = $this.attr('href');

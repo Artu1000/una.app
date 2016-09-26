@@ -256,8 +256,6 @@ class DashboardController extends Controller
         // prepare data for the view
         $data = [
             'seo_meta'              => $this->seo_meta,
-//            'registration_form_downloads' => $registration_form_downloads,
-//            'qr_code_scans'               => $qr_code_scans,
             'pre_formatted_periods' => $pre_formatted_periods,
         ];
         
@@ -273,7 +271,7 @@ class DashboardController extends Controller
     {
         // we check the current user permission
         if ($permission_denied = Permission::hasPermissionJson('dashboard.statistics')) {
-            return response([
+            return response()->json([
                 'message' => [$permission_denied],
             ], 401);
         }
