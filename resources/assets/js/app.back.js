@@ -655,8 +655,8 @@ $(function () {
             drawOtherStatsChart: function (data) {
                 var other_stats_data_table = new google.visualization.DataTable();
                 other_stats_data_table.addColumn('string', 'Date');
-                other_stats_data_table.addColumn('number', app.trans.other_stats);
-                other_stats_data_table.addColumn('number', app.trans.page_views);
+                other_stats_data_table.addColumn('number', app.trans.form_downloads);
+                other_stats_data_table.addColumn('number', app.trans.qr_code_scans);
                 var formatted_other_stats_data = [];
                 $.each(data['other_stats'], function (key, item) {
                     formatted_other_stats_data.push([
@@ -712,6 +712,7 @@ $(function () {
                     end_date: $('#end_date').val(),
                 }
             }).done(function (data) {
+                console.log(data);
                 $('.chart').removeClass('hidden');
                 // we draw the charts
                 google_charts.data = data;

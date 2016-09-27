@@ -38,3 +38,6 @@
 @if($ga_code = config('settings.google_analytics'))
     {!! $ga_code !!}
 @endif
+
+{{-- dynamic javascript inclusion --}}
+@include('templates.common.partials.javascript')

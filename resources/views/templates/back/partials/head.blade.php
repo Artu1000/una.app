@@ -17,3 +17,6 @@
 
 {{-- minified versionned css --}}
 <link href="{{ $css or elixir('css/app.back.css') }}" rel="stylesheet">
+
+{{-- dynamic javascript inclusion --}}
+@include('templates.common.partials.javascript')

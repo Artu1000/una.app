@@ -46,11 +46,13 @@ return [
             "title" => "Téléchargements fiche inscription / Scans QR code",
         ],
         "label"               => [
-            "visitors"   => "Visiteurs",
-            "page_views" => "Pages vues",
-            "pages"      => "Pages",
-            "url"        => "Url",
-            "views"      => "Vues",
+            "visitors"       => "Visiteurs",
+            "page_views"     => "Pages vues",
+            "pages"          => "Pages",
+            "url"            => "Url",
+            "views"          => "Vues",
+            "form_downloads" => "Téléchargements fiche inscription",
+            "qr_code_scans"  => "Scans QR code",
         ],
     ],
     

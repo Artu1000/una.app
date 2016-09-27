@@ -8,9 +8,6 @@
     {{-- body inclusion--}}
     <body id="top">
 
-        {{-- dynamic javascript inclusion --}}
-        @include('templates.common.partials.javascript')
-
         <div id="layout" class="container-fluid">
 
             {{-- no script specifications --}}

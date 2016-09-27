@@ -264,7 +264,10 @@ html {
             .graph {
               width: 100%;
               min-height: 450px;
-              padding: 30px;
+
+              &.padding {
+                padding: 30px;
+              }
             }
 
             .loader {

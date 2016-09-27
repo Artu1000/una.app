@@ -384,6 +384,37 @@
                                     <span class="input-group-addon" for="input_google_analytics"><i class="fa fa-code"></i></span>
                                     <textarea id="input_google_analytics" class="form-control" name="google_analytics" placeholder="{{ trans('settings.page.label.ga_code') }}">{{ old('google_analytics') ? old('google_analytics') : config('settings.google_analytics') }}</textarea>
                                 </div>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {!! trans('settings.page.info.ga_code') !!}</p>
+                            </div>
+
+                            {{-- info icon --}}
+                            <label for="input_ga_view_id">{{ trans('settings.page.label.ga_view_id') }}</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" for="input_ga_view_id">{!! config('settings.ga_view_id') !!}</span>
+                                    <input id="input_ga_view_id" class="form-control" type="text" name="ga_view_id" placeholder="{{ trans('settings.page.label.ga_view_id') }}" value="{{ old('ga_view_id') ? old('ga_view_id') : config('settings.ga_view_id') }}">
+                                </div>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {!! trans('settings.page.info.ga_view_id') !!}</p>
+                            </div>
+
+                            <label for="input_ga_credentials_json">{{ trans('settings.page.label.ga_credentials_json') }}</label>
+                            @if(config('settings.ga_credentials_json'))
+                                <div class="form-group image">
+                                    <a class="img-thumbnail" href="{{ ImageManager::imagePath(config('image.settings.public_path'), config('settings.ga_credentials_json'), 'logo', 'large') }}" data-lity>
+                                        <img src="{{ ImageManager::imagePath(config('image.settings.public_path'), config('settings.ga_credentials_json'), 'logo', 'admin') }}" alt="{{ trans('settings.page.label.ga_credentials_json') }}">
+                                    </a>
+                                </div>
+                            @endif
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <span class="btn btn-primary btn-file">
+                                            <i class="fa fa-picture-o"></i> {{ trans('global.action.browse') }} <input type="file" name="ga_credentials_json">
+                                        </span>
+                                    </span>
+                                    <input id="input_ga_credentials_json" type="text" class="form-control" readonly="">
+                                </div>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {!! trans('settings.page.info.ga_view_id') !!}</p>
                             </div>
 
                         </div>

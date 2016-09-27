@@ -93,7 +93,7 @@
                                 <div class="panel-heading">
                                     <h3 class="panel-title">{{ trans('dashboard.statistics.most_visited_pages.title') }}</h3>
                                 </div>
-                                <div id="most_visited_pages" class="graph">
+                                <div id="most_visited_pages" class="graph padding">
                                     <div class="loader display-table">
                                         <div class="table-cell text-center">
                                             {!! config('settings.loading_spinner') !!}
