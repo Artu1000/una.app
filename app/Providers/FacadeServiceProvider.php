@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Helpers\ConsoleHelper;
 use App\Helpers\CustomLogHelper;
 use App\Helpers\EntryHelper;
+use App\Helpers\EnvHelper;
 use App\Helpers\FileManagerHelper;
 use App\Helpers\ImageManagerHelper;
 use App\Helpers\ModalHelper;
@@ -76,6 +77,11 @@ class FacadeServiceProvider extends ServiceProvider
         // custom log helper
         App::bind('CustomLog', function () {
             return new CustomLogHelper();
+        });
+    
+        // env helper
+        App::bind('Env', function () {
+            return new EnvHelper();
         });
     }
 }

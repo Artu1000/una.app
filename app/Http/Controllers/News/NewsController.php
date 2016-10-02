@@ -451,6 +451,14 @@ class NewsController extends Controller
             
             // we store the background image file
             if ($background_image = $request->file('background_image')) {
+                // if we find a previous recorded image, we remove it
+                if (isset($news->background_image)) {
+                    ImageManager::remove(
+                        $news->background_image,
+                        config('image.news.storage_path'),
+                        config('image.news.background_image.sizes')
+                    );
+                }
                 // we optimize, resize and save the image
                 $file_name = ImageManager::optimizeAndResize(
                     $background_image->getRealPath(),
@@ -811,6 +819,14 @@ class NewsController extends Controller
 
             // we store the image
             if ($img = $request->file('image')) {
+                // if we find a previous recorded image, we remove it
+                if (isset($news->image)) {
+                    ImageManager::remove(
+                        $news->image,
+                        $news->storagePath(),
+                        $news->availableSizes('image')
+                    );
+                }
                 // we optimize, resize and save the image
                 $file_name = ImageManager::optimizeAndResize(
                     $img->getRealPath(),

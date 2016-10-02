@@ -214,6 +214,7 @@ return [
         'TableList'           => App\Facades\TableListHelperFacade::class,
         'Entry'               => App\Facades\EntryHelperFacade::class,
         'CustomLog'           => App\Facades\CustomLogHelperFacade::class,
+        'Env'                 => App\Facades\EnvHelperFacade::class,
     ],
 
 ];

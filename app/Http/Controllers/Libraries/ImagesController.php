@@ -199,7 +199,8 @@ class ImagesController extends Controller
             if ($img = $request->file('image')) {
                 
                 $image = $this->repository->create([
-                    'src' => $img->getRealPath(),
+                    'src'   => $img->getRealPath(),
+                    'alias' => $img->getRealPath(),
                 ]);
                 
                 // we optimize, resize and save the image
@@ -212,11 +213,12 @@ class ImagesController extends Controller
                 );
                 // we update the model with the image name
                 $image->src = $file_name;
+                $image->alias = str_slug(pathinfo($img->getClientOriginalName(), PATHINFO_FILENAME));
                 // we save the entity
                 $image->save();
+                
+                return response($image->src, 200);
             }
-            
-            return response($image->src, 200);
         } catch (Exception $e) {
             // we log the error
             CustomLog::error($e);

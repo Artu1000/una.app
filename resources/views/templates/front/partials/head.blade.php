@@ -35,8 +35,8 @@
 <link href="{{ $css or elixir('css/app.front.css') }}" rel="stylesheet" />
 
 {{-- google analytics code insertion --}}
-@if($ga_code = config('settings.google_analytics'))
-    {!! $ga_code !!}
+@if($google_analytics_script = config('settings.google_analytics_script'))
+    {!! $google_analytics_script !!}
 @endif
 
 {{-- dynamic javascript inclusion --}}

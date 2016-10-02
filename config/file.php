@@ -24,5 +24,11 @@ return [
         "storage_path"           => storage_path('app/registration/files'),
         "public_path"            => "files/registration",
     ],
+    "settings"     => [
+        "google_analytics_credentials_json" => [
+            "name" => "google-analytics-credentials",
+        ],
+        "storage_path"                      => storage_path('app/settings'),
+    ],
 
 ];

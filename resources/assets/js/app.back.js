@@ -528,7 +528,7 @@ $(function () {
             // we store the object
             var $this = $(this);
             // on keyup, we lauch the countdown before saving
-            $this.on('keyup', function () {
+            $this.on('input propertychange paste', function () {
                 clearTimeout(typing_timer);
                 typing_timer = setTimeout(function () {
                     updateValue($this);

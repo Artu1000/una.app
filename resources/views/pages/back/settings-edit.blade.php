@@ -377,31 +377,32 @@
                         </div>
                         <div class="panel-body">
 
-                            {{-- google analytics code --}}
-                            <label for="input_google_analytics">{{ trans('settings.page.label.ga_code') }}</label>
+                            {{-- google analytics script --}}
+                            <label for="input_google_analytics_script">{{ trans('settings.page.label.google_analytics_script') }}</label>
                             <div class="form-group textarea">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_google_analytics"><i class="fa fa-code"></i></span>
-                                    <textarea id="input_google_analytics" class="form-control" name="google_analytics" placeholder="{{ trans('settings.page.label.ga_code') }}">{{ old('google_analytics') ? old('google_analytics') : config('settings.google_analytics') }}</textarea>
+                                    <span class="input-group-addon" for="input_google_analytics_script"><i class="fa fa-code"></i></span>
+                                    <textarea id="input_google_analytics_script" class="form-control" name="google_analytics_script" placeholder="{{ trans('settings.page.label.google_analytics_script') }}">{{ old('google_analytics_script') ? old('google_analytics_script') : config('settings.google_analytics_script') }}</textarea>
                                 </div>
-                                <p class="help-block quote">{!! config('settings.info_icon') !!} {!! trans('settings.page.info.ga_code') !!}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {!! trans('settings.page.info.google_analytics_script') !!}</p>
                             </div>
 
-                            {{-- info icon --}}
-                            <label for="input_ga_view_id">{{ trans('settings.page.label.ga_view_id') }}</label>
+                            {{-- google analytics view id --}}
+                            <label for="input_google_analytics_view_id">{{ trans('settings.page.label.google_analytics_view_id') }}</label>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-addon" for="input_ga_view_id">{!! config('settings.ga_view_id') !!}</span>
-                                    <input id="input_ga_view_id" class="form-control" type="text" name="ga_view_id" placeholder="{{ trans('settings.page.label.ga_view_id') }}" value="{{ old('ga_view_id') ? old('ga_view_id') : config('settings.ga_view_id') }}">
+                                    <span class="input-group-addon" for="input_google_analytics_view_id"><i class="fa fa-key" aria-hidden="true"></i></span>
+                                    <input id="input_google_analytics_view_id" class="form-control" type="text" name="google_analytics_view_id" placeholder="{{ trans('settings.page.label.google_analytics_view_id') }}" value="{{ old('google_analytics_view_id') ? old('google_analytics_view_id') : env('ANALYTICS_VIEW_ID') }}">
                                 </div>
-                                <p class="help-block quote">{!! config('settings.info_icon') !!} {!! trans('settings.page.info.ga_view_id') !!}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {!! trans('settings.page.info.google_analytics_view_id') !!}</p>
                             </div>
 
-                            <label for="input_ga_credentials_json">{{ trans('settings.page.label.ga_credentials_json') }}</label>
-                            @if(config('settings.ga_credentials_json'))
-                                <div class="form-group image">
-                                    <a class="img-thumbnail" href="{{ ImageManager::imagePath(config('image.settings.public_path'), config('settings.ga_credentials_json'), 'logo', 'large') }}" data-lity>
-                                        <img src="{{ ImageManager::imagePath(config('image.settings.public_path'), config('settings.ga_credentials_json'), 'logo', 'admin') }}" alt="{{ trans('settings.page.label.ga_credentials_json') }}">
+                            {{-- google analytics credentials json --}}
+                            <label for="input_google_analytics_credentials_json">{{ trans('settings.page.label.google_analytics_credentials_json') }}</label>
+                            @if(env('ANALYTICS_CREDENTIALS_JSON'))
+                                <div class="form-group">
+                                    <a href="{{ FileManager::download(config('file.settings.storage_path'), env('ANALYTICS_CREDENTIALS_JSON')) }}">
+                                        <i class="fa fa-file-code-o" aria-hidden="true"></i> {{ env('ANALYTICS_CREDENTIALS_JSON') }}
                                     </a>
                                 </div>
                             @endif
@@ -409,12 +410,12 @@
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <span class="btn btn-primary btn-file">
-                                            <i class="fa fa-picture-o"></i> {{ trans('global.action.browse') }} <input type="file" name="ga_credentials_json">
+                                            <i class="fa fa-picture-o"></i> {{ trans('global.action.browse') }} <input type="file" name="google_analytics_credentials_json">
                                         </span>
                                     </span>
-                                    <input id="input_ga_credentials_json" type="text" class="form-control" readonly="">
+                                    <input id="input_google_analytics_credentials_json" type="text" class="form-control" readonly="">
                                 </div>
-                                <p class="help-block quote">{!! config('settings.info_icon') !!} {!! trans('settings.page.info.ga_view_id') !!}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {!! trans('settings.page.info.google_analytics_credentials_json') !!}</p>
                             </div>
 
                         </div>

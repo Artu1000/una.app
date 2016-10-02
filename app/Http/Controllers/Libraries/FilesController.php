@@ -195,7 +195,10 @@ class FilesController extends Controller
             // we store the file
             if ($file = $request->file('file')) {
                 // we create the file
-                $db_file = $this->repository->create([]);
+                $db_file = $this->repository->create([
+                    'src'   => $file->getRealPath(),
+                    'alias' => $file->getRealPath(),
+                ]);
                 // we store the file
                 $file_name = FileManager::storeAndRename(
                     $file->getRealPath(),
@@ -205,10 +208,11 @@ class FilesController extends Controller
                 );
                 // we update the file source
                 $db_file->src = $file_name;
+                $db_file->alias = str_slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
                 $db_file->save();
+                
+                return response($db_file->src, 200);
             }
-            
-            return response($db_file->src, 200);
         } catch (Exception $e) {
             // we log the error
             CustomLog::error($e);
