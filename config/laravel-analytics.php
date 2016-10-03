@@ -12,7 +12,7 @@ return [
      * to learn how to get this file.
      */
 //    'service_account_credentials_json' => storage_path('app/google-analytics/service-account-credentials.json'),
-    'service_account_credentials_json' => config('file.settings.storage_path') . '/' . env('ANALYTICS_CREDENTIALS_JSON'),
+    'service_account_credentials_json' => storage_path('app/settings/' . env('ANALYTICS_CREDENTIALS_JSON')),
 
     /*
      * The amount of minutes the Google API responses will be cached.
