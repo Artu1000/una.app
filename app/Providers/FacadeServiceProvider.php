@@ -69,11 +69,6 @@ class FacadeServiceProvider extends ServiceProvider
             return new TableListHelper();
         });
 
-        // entry helper
-        App::bind('Entry', function () {
-            return new EntryHelper();
-        });
-
         // custom log helper
         App::bind('CustomLog', function () {
             return new CustomLogHelper();

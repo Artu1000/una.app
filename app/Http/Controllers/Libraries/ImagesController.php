@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Libraries;
 use App\Http\Controllers\Controller;
 use App\Models\LibraryImage;
 use CustomLog;
-use Entry;
 use Exception;
 use Illuminate\Http\Request;
 use ImageManager;
+use InputSanitizer;
 use JavaScript;
 use Lang;
 use Modal;
@@ -263,7 +263,7 @@ class ImagesController extends Controller
         $request->merge(['value' => str_slug($request->value)]);
         
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
         
         // we check the inputs validity
         $rules = [

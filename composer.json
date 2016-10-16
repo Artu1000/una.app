@@ -20,7 +20,8 @@
         "dimsav/laravel-translatable": "^5.4",
         "guzzlehttp/guzzle": "^6.2",
         "doctrine/dbal": "^2.5",
-        "spatie/laravel-analytics": "^2.2"
+        "spatie/laravel-analytics": "^2.2",
+        "acid-solutions/input-sanitizer": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

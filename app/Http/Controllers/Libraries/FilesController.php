@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Libraries;
 use App\Http\Controllers\Controller;
 use App\Models\LibraryFile;
 use CustomLog;
-use Entry;
 use Exception;
 use FileManager;
 use Illuminate\Http\Request;
+use InputSanitizer;
 use JavaScript;
 use Lang;
 use Modal;
@@ -257,7 +257,7 @@ class FilesController extends Controller
         $request->merge(['value' => str_slug($request->value)]);
         
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
         
         // we check the inputs validity
         $rules = [

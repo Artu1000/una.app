@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use AcidSolutions\InputSanitizer\Laravel\InputSanitizerServiceProvider;
 use Approached\LaravelImageOptimizer\ServiceProvider as LaravelImageOptimizerServiceProvider;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Cartalyst\Sentinel\Laravel\SentinelServiceProvider;
@@ -82,5 +83,9 @@ class AppServiceProvider extends ServiceProvider
         // laravel google analytics
         // https://github.com/spatie/laravel-analytics
         $this->app->register(AnalyticsServiceProvider::class);
+        
+        // laravel input sanitizer
+        // https://github.com/ACID-Solutions/input-sanitizer
+        $this->app->register(InputSanitizerServiceProvider::class);
     }
 }

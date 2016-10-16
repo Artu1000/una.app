@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Partner;
 use App\Http\Controllers\Controller;
 use App\Repositories\Partner\PartnerRepositoryInterface;
 use CustomLog;
-use Entry;
 use Exception;
 use Illuminate\Http\Request;
 use ImageManager;
+use InputSanitizer;
 use Modal;
 use Permission;
 use Sentinel;
@@ -203,7 +203,7 @@ class PartnersController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
 
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
 
         // we set the validation rules
         $rules = [
@@ -371,7 +371,7 @@ class PartnersController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
 
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
 
         // we set the validation rules
         $rules = [
@@ -533,7 +533,7 @@ class PartnersController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
 
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
 
         // we check the inputs validity
         $rules = [

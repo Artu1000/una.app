@@ -24,15 +24,15 @@
                             <select class="form-control" id="pre_defined_period">
                                 <option value="" disabled="disabled">{{ trans('dashboard.statistics.pre_defined_periods.placeholder') }}</option>
                                 @foreach($pre_formatted_periods as $key => $pre_formatted_period)
-                                    <option value="{{ $key }}" @if($key === 'yesterday')selected='selected' @endif>{{ trans('dashboard.statistics.pre_defined_periods.' . $key) }}</option>
+                                    <option value="{{ $key }}">{{ trans('dashboard.statistics.pre_defined_periods.' . $key) }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
-                            <input id="start_date" class="datetimepicker form-control" name="period_start" type="text" value="{{ $pre_formatted_periods['yesterday']['start_date'] }}" placeholder="{{ trans('dashboard.pre_defined_periods.start') }}">
+                            <input id="start_date" class="datetimepicker form-control" name="period_start" type="text" value="{{ array_first($pre_formatted_periods)['start_date'] }}" placeholder="{{ trans('dashboard.pre_defined_periods.start') }}">
                         </div>
                         <div class="form-group">
-                            <input id="end_date" class="datetimepicker form-control" name="period_stop" type="text" value="{{ $pre_formatted_periods['yesterday']['end_date'] }}" placeholder="{{ trans('dashboard.pre_defined_periods.stop') }}">
+                            <input id="end_date" class="datetimepicker form-control" name="period_stop" type="text" value="{{ array_first($pre_formatted_periods)['end_date'] }}" placeholder="{{ trans('dashboard.pre_defined_periods.stop') }}">
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-bar-chart" aria-hidden="true"></i> {{ trans('dashboard.actions.validate_period') }}</button>

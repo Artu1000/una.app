@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Media\VideoRepositoryInterface;
 use Carbon\Carbon;
 use CustomLog;
-use Entry;
 use Exception;
 use Illuminate\Http\Request;
 use ImageManager;
+use InputSanitizer;
 use Modal;
 use Parsedown;
 use Permission;
@@ -61,7 +61,7 @@ class VideosController extends Controller
         }
 
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
 
         // we convert the fr date to database format
         if ($request->get('year')) {
@@ -265,7 +265,7 @@ class VideosController extends Controller
         $request->merge(['remove_background_image' => $request->get('remove_background_image', false)]);
         
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
         
         // we check inputs validity
         $rules = [
@@ -389,7 +389,7 @@ class VideosController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
         
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
         
         // we convert the fr date to database format
         if ($request->get('date')) {
@@ -546,7 +546,7 @@ class VideosController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
         
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
         
         // we convert the fr date to database format
         if ($request->get('date')) {
@@ -711,7 +711,7 @@ class VideosController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
         
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
         
         // we check inputs validity
         $rules = [

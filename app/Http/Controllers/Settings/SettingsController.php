@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use Artisan;
 use CustomLog;
-use Entry;
 use Env;
 use Exception;
 use FileManager;
 use Illuminate\Http\Request;
 use ImageManager;
+use InputSanitizer;
 use libphonenumber\PhoneNumberFormat;
 use Modal;
 use Permission;
@@ -70,7 +70,7 @@ class SettingsController extends Controller
         Artisan::call('config:clear');
         
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
         
         // if the boolean field is not given, we set it to false
         $request->merge(['breadcrumb' => $request->get('breadcrumb', false)]);

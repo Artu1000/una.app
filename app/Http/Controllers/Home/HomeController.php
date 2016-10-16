@@ -7,10 +7,10 @@ use App\Repositories\News\NewsRepositoryInterface;
 use App\Repositories\Slide\SlideRepositoryInterface;
 use Carbon\Carbon;
 use CustomLog;
-use Entry;
 use FileManager;
 use Illuminate\Http\Request;
 use ImageManager;
+use InputSanitizer;
 use JavaScript;
 use Modal;
 use Parsedown;
@@ -185,7 +185,7 @@ class HomeController extends Controller
         }
 
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
 
         // we check inputs validity
         $rules = [

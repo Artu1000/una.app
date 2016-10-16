@@ -9,12 +9,12 @@ use App\Repositories\News\NewsRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
 use Carbon\Carbon;
 use CustomLog;
-use Entry;
 use Exception;
 use FileManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use ImageManager;
+use InputSanitizer;
 use Modal;
 use Parsedown;
 use Permission;
@@ -429,7 +429,7 @@ class NewsController extends Controller
         $request->merge(['remove_background_image' => $request->get('remove_background_image', false)]);
         
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
         
         // we check inputs validity
         $rules = [
@@ -569,7 +569,7 @@ class NewsController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
         
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
         
         // we check if the current user has the permission to activate the news
         if ($request->get('active') && !Permission::hasPermission('news.activate')) {
@@ -760,7 +760,7 @@ class NewsController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
         
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
         
         // we check if the current user has the permission to activate the news
         if ($request->get('active') && !Permission::hasPermission('news.activate')) {
@@ -968,7 +968,7 @@ class NewsController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
         
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
         
         // we check inputs validity
         $rules = [

@@ -8,8 +8,8 @@ use App\Repositories\QrCodeScan\QrCodeScanRepositoryInterface;
 use App\Repositories\Registration\RegistrationFormDownloadRepositoryInterface;
 use Carbon\Carbon;
 use DateTime;
-use Entry;
 use Illuminate\Http\Request;
+use InputSanitizer;
 use JavaScript;
 use Permission;
 use Spatie\Analytics\Period;
@@ -37,13 +37,6 @@ class DashboardController extends Controller
         
         $now = Carbon::now();
         $pre_formatted_periods = [];
-        // yesterday
-        $referrer_start = clone $now;
-        $referrer_end = clone $now;
-        $pre_formatted_periods['yesterday'] = [
-            'start_date' => $referrer_start->subDays(1)->startOfDay()->format('d/m/Y H:i'),
-            'end_date'   => $referrer_end->subDays(1)->endOfDay()->format('d/m/Y H:i'),
-        ];
         // 7 last days
         $referrer_start = clone $now;
         $referrer_end = clone $now;
@@ -158,7 +151,7 @@ class DashboardController extends Controller
         ]);
         
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
         
         // we check inputs validity
         $rules = [

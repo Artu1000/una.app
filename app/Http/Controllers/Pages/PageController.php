@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Pages;
 use App\Http\Controllers\Controller;
 use App\Repositories\Page\PageRepositoryInterface;
 use CustomLog;
-use Entry;
 use Exception;
 use FileManager;
 use Illuminate\Http\Request;
 use ImageManager;
+use InputSanitizer;
 use Modal;
 use Parsedown;
 use Permission;
@@ -260,7 +260,7 @@ class PageController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
         
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
     
         // we slugify the slug
         $request->merge([
@@ -429,7 +429,7 @@ class PageController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
         
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
         
         // we slugify the slug
         $request->merge([
@@ -621,7 +621,7 @@ class PageController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
         
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
         
         // we check inputs validity
         $rules = [

@@ -8,6 +8,7 @@ use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
 use CustomLog;
 use Exception;
 use Illuminate\Http\Request;
+use InputSanitizer;
 use Modal;
 use Sentinel;
 use Validation;
@@ -55,7 +56,7 @@ class AuthController extends Controller
         $request->flash();
 
         // we sanitize the entries
-        $request->replace(\Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
 
         // we set the remember to false if we do not find it
         $request->merge(['remember' => $request->get('remember', false)]);

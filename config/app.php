@@ -204,6 +204,7 @@ return [
         'LaravelLocalization' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
         'Breadcrumbs'         => DaveJamesMiller\Breadcrumbs\Facade::class,
         'Analytics'           => Spatie\Analytics\AnalyticsFacade::class,
+        'InputSanitizer'      => AcidSolutions\InputSanitizer\Laravel\Facades\InputSanitizer::class,
         // created
         'Modal'               => App\Facades\ModalHelperFacade::class,
         'ImageManager'        => App\Facades\ImageManagerHelperFacade::class,
@@ -212,7 +213,6 @@ return [
         'Permission'          => App\Facades\PermissionHelperFacade::class,
         'Validation'          => App\Facades\ValidationHelperFacade::class,
         'TableList'           => App\Facades\TableListHelperFacade::class,
-        'Entry'               => App\Facades\EntryHelperFacade::class,
         'CustomLog'           => App\Facades\CustomLogHelperFacade::class,
         'Env'                 => App\Facades\EnvHelperFacade::class,
     ],

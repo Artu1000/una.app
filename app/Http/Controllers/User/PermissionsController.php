@@ -5,9 +5,9 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Repositories\Roles\RoleRepositoryInterface;
 use CustomLog;
-use Entry;
 use Exception;
 use Illuminate\Http\Request;
+use InputSanitizer;
 use JavaScript;
 use Modal;
 use Permission;
@@ -205,7 +205,7 @@ class PermissionsController extends Controller
         }
 
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
 
         // we replace the permission slugs from the request params by the correct slugs
         $inputs = $this->repository->translatePermissionsSlugs($request->all());
@@ -402,7 +402,7 @@ class PermissionsController extends Controller
         }
 
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
 
         // we replace the permission slugs from the request params by the correct slugs
         $inputs = $this->repository->translatePermissionsSlugs($request->all());

@@ -12,8 +12,8 @@ $servers = [
         'host'             => 'vps241083.ovh.net',
         'user'             => 'deploy',
         'path'             => '/var/www/preprod',
-        'http_user'        => 'www-data',
-        'http_group'       => 'www-data',
+        'http_user'        => 'deploy',
+        'http_group'       => 'deploy',
         'private_identity' => '~/.ssh/id_rsa',
         'public_identity'  => '~/.ssh/id_rsa.pub',
         'branch'           => 'master',
@@ -24,8 +24,8 @@ $servers = [
         'host'             => 'vps241083.ovh.net',
         'user'             => 'deploy',
         'path'             => '/var/www/prod/univ-nantes-aviron',
-        'http_user'        => 'www-data',
-        'http_group'       => 'www-data',
+        'http_user'        => 'deploy',
+        'http_group'       => 'deploy',
         'private_identity' => '~/.ssh/id_rsa',
         'public_identity'  => '~/.ssh/id_rsa.pub',
         'branch'           => 'master',
@@ -70,40 +70,40 @@ foreach ($servers as $server_env => $server) {
 // configure tasks
 ///////////////////////////////////////////////////////////////////////////////
 
-// put the current app in maintenance mode
-task('app:down', function () {
-    run('php {{deploy_path}}/current/artisan down');
-})->desc('Put the app in maintenance mode');
-before('deploy:symlink', 'app:down');
+//// put the current app in maintenance mode
+//task('app:down', function () {
+//    run('php {{deploy_path}}/current/artisan down');
+//})->desc('Put the app in maintenance mode');
+//before('deploy:symlink', 'app:down');
 
 // project install script
 task('project:install', function () {
     run('cd {{release_path}} && ./project_install.sh');
 })->desc('Run install script from the root of the project');
-after('app:down', 'project:install');
+before('deploy:symlink', 'project:install');
 
 // permissions upgrade
-task('auth:upgrade', function () {
-    run('sudo chmod -R g+w {{deploy_path}}/shared/');
-    run('sudo chown -R deploy:www-data {{deploy_path}}/shared/');
-    run('sudo chmod -R g+w {{release_path}}/bootstrap/cache');
-    run('sudo chown -R deploy:www-data {{release_path}}/bootstrap/cache');
-    run('sudo chmod -R g+w {{release_path}}/database/seeds/files');
-    run('sudo chown -R deploy:www-data {{release_path}}/database/seeds/files');
-})->desc('Set correct permissions the the shared directory');
-after('project:install', 'auth:upgrade');
+//task('auth:upgrade', function () {
+//    run('sudo chmod -R g+w {{deploy_path}}/shared/');
+//    run('sudo chown -R deploy:www-data {{deploy_path}}/shared/');
+//    run('sudo chmod -R g+w {{release_path}}/bootstrap/cache');
+//    run('sudo chown -R deploy:www-data {{release_path}}/bootstrap/cache');
+//    run('sudo chmod -R g+w {{release_path}}/database/seeds/files');
+//    run('sudo chown -R deploy:www-data {{release_path}}/database/seeds/files');
+//})->desc('Set correct permissions the the shared directory');
+//after('project:install', 'auth:upgrade');
 
 // laravel cron install
 task('cron:install', function () {
     run('job="* * * * * php artisan schedule:run >> /dev/null 2>&1"; ct=$(crontab -l |grep -i -v "$job");(echo "$ct" ;echo "$job") |crontab -');
 })->desc('Add the laravel cron to the others on the server');
-after('auth:upgrade', 'cron:install');
+after('project:install', 'cron:install');
 
 // put the previous version of app in live mode (in case of rollback)
-task('app:up', function () {
-    run('php {{deploy_path}}/current/artisan up');
-})->desc('Put the app in live mode');
-after('auth:upgrade', 'app:up');
+//task('app:up', function () {
+//    run('php {{deploy_path}}/current/artisan up');
+//})->desc('Put the app in live mode');
+//after('auth:upgrade', 'app:up');
 
 // restart nginx and php
 task('server:restart', function () {

@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Repositories\Slide\SlideRepositoryInterface;
 use CustomLog;
-use Entry;
 use Exception;
 use Illuminate\Http\Request;
 use ImageManager;
+use InputSanitizer;
 use Modal;
 use Permission;
 use Sentinel;
@@ -79,7 +79,7 @@ class SlidesController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
 
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
 
         // we check inputs validity
         $rules = [
@@ -281,7 +281,7 @@ class SlidesController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
 
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
 
         // we set the verification rules
         $rules = [
@@ -480,7 +480,7 @@ class SlidesController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
 
         // we sanitize the entries
-        $request->replace(\Entry::sanitizeAll($request->all()));
+        $request->replace(\InputSanitizer::sanitize($request->all()));
 
         // we check inputs validity
         $rules = [

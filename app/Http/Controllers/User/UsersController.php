@@ -6,10 +6,10 @@ use Activation;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use CustomLog;
-use Entry;
 use Exception;
 use Illuminate\Http\Request;
 use ImageManager;
+use InputSanitizer;
 use libphonenumber\PhoneNumberFormat;
 use Modal;
 use Permission;
@@ -19,7 +19,7 @@ use Validation;
 
 class UsersController extends Controller
 {
-
+    
     /**
      * UsersController constructor.
      */
@@ -27,7 +27,7 @@ class UsersController extends Controller
     {
         parent::__construct();
     }
-
+    
     /**
      * @param Request $request
      * @return $this|\Illuminate\Http\RedirectResponse
@@ -38,10 +38,10 @@ class UsersController extends Controller
         if (!Permission::hasPermission('users.list')) {
             return redirect()->route('dashboard.index');
         }
-
+        
         // SEO Meta settings
         $this->seo_meta['page_title'] = trans('seo.back.users.index');
-
+        
         // we define the table list columns
         $columns = [
             [
@@ -114,8 +114,8 @@ class UsersController extends Controller
                 'params' => [],
             ],
         ];
-
-
+        
+        
         // we set the routes used in the table list
         $routes = [
             'index'   => [
@@ -135,28 +135,28 @@ class UsersController extends Controller
                 'params' => [],
             ],
         ];
-
+        
         // we instantiate the query
         $query = Sentinel::getUserRepository()->where('users.id', '<>', Sentinel::getUser()->id);
-
+        
         // we group the results
         $query->groupBy('users.id');
-
+        
         // we select the data we want to show
         $query->select('users.*');
         $query->selectRaw('if(activations.completed, true, false) as active');
-
+        
         // we execute the table joins
         $query->leftJoin('role_users', 'role_users.user_id', '=', 'users.id');
         $query->leftJoin('roles', 'roles.id', '=', 'role_users.role_id');
         $query->leftJoin('activations', 'activations.user_id', '=', 'users.id');
-
+        
         // we prepare the confirm config
         $confirm_config = [
             'action'     => trans('users.page.action.delete'),
             'attributes' => ['first_name', 'last_name'],
         ];
-
+        
         // we prepare the search config
         $search_config = [
             [
@@ -168,10 +168,10 @@ class UsersController extends Controller
                 'database' => 'users.last_name',
             ],
         ];
-
+        
         // we enable the lines choice
         $enable_lines_choice = true;
-
+        
         // we format the data for the needs of the view
         $tableListData = TableList::prepare(
             $query,
@@ -182,17 +182,17 @@ class UsersController extends Controller
             $search_config,
             $enable_lines_choice
         );
-
+        
         // prepare data for the view
         $data = [
             'tableListData' => $tableListData,
             'seo_meta'      => $this->seo_meta,
         ];
-
+        
         // return the view with data
         return view('pages.back.users-list')->with($data);
     }
-
+    
     /**
      * @return mixed
      */
@@ -208,10 +208,10 @@ class UsersController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
+        
         // SEO Meta settings
         $this->seo_meta['page_title'] = trans('seo.back.users.create');
-
+        
         // prepare data for the view
         $data = [
             'seo_meta' => $this->seo_meta,
@@ -219,11 +219,11 @@ class UsersController extends Controller
             'boards'   => config('user.board'),
             'roles'    => Sentinel::getRoleRepository()->orderBy('position', 'asc')->get(),
         ];
-
+        
         // return the view with data
         return view('pages.back.user-edit')->with($data);
     }
-
+    
     /**
      * @param Request $request
      * @return mixed
@@ -240,25 +240,25 @@ class UsersController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
+        
         // we check if the new user role is not higher than the role of the current user
         $new_user_role = Sentinel::findRoleById($request->get('role'));
         $current_user_role = Sentinel::getUser()->roles->first();
         if ($new_user_role && $current_user_role && $new_user_role->position < $current_user_role->position) {
             // we flash the request
             $request->flashExcept('photo');
-
+            
             // we notify the user
             Modal::alert([
                 trans('users.message.permission.denied', ['action' => trans('users.message.permission.action.create')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
-
+        
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
-
+        $request->replace(InputSanitizer::sanitize($request->all()));
+        
         try {
             // we convert the en/fr date to the database format
             if ($birth_date = $request->get('birth_date')) {
@@ -268,7 +268,7 @@ class UsersController extends Controller
             // we log the error
             CustomLog::error($e);
         }
-
+        
         // we check inputs validity
         $rules = [
             'photo'        => 'image|mimes:jpg,jpeg,png|image_size:>=145,>=160',
@@ -291,17 +291,17 @@ class UsersController extends Controller
         if (!Validation::check($request->all(), $rules)) {
             // we flash the request
             $request->flashExcept('photo');
-
+            
             return redirect()->back();
         }
-
+        
         // we create the user variable
         $user = null;
-
+        
         try {
             // we create the user
             $user = Sentinel::create($request->all());
-
+            
             // we format the number into its international equivalent
             if ($phone_number = $request->get('phone_number', 'photo')) {
                 $user->phone_number = phone_format(
@@ -311,7 +311,7 @@ class UsersController extends Controller
                 );
                 $user->save();
             }
-
+            
             // we store the photo
             if ($photo = $request->file('photo')) {
                 // we optimize, resize and save the image
@@ -336,11 +336,11 @@ class UsersController extends Controller
             // we update the image name
             $user->photo = $file_name;
             $user->save();
-
+            
             // we attach the new role
             $role = Sentinel::findRoleById($request->get('role'));
             $role->users()->attach($user);
-
+            
             // if the order is to activate the user
             if ($request->get('active')) {
                 // we activate the user
@@ -349,35 +349,35 @@ class UsersController extends Controller
                 }
                 Activation::complete($user, $activation->code);
             }
-
+            
             // we notify the current user
             Modal::alert([
                 trans('users.message.creation.success', ['name' => $user->first_name . ' ' . $user->last_name]),
             ], 'success');
-
+            
             return redirect(route('users.index'));
         } catch (Exception $e) {
             // we flash the request
             $request->flashExcept('photo');
-
+            
             // we log the error
             CustomLog::error($e);
-
+            
             // we notify the user
             Modal::alert([
                 trans('users.message.creation.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
-
+            
             // we delete the user if something went wrong after the user creation
             if ($user) {
                 $user->delete();
             }
-
+            
             return redirect()->back();
         }
     }
-
+    
     /**
      * @param $id
      * @return mixed
@@ -394,14 +394,14 @@ class UsersController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
+        
         // we get the user
         if (!$user = Sentinel::findById($id)) {
             Modal::alert([
                 trans('users.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
-
+            
             // we redirect the current user to the countries list if he has the required permission
             if (Sentinel::getUser()->hasAccess('users.list')) {
                 return redirect()->route('users.index');
@@ -410,7 +410,7 @@ class UsersController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
+        
         // we check if the current user has a role position high enough to edit the user
         $edited_user_role = $user->roles->first();
         $current_user_role = Sentinel::getUser()->roles->first();
@@ -418,23 +418,23 @@ class UsersController extends Controller
             Modal::alert([
                 trans('users.message.permission.denied', ['action' => trans('users.message.permission.action.edit')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
-
+        
         // SEO Meta settings
         $this->seo_meta['page_title'] = trans('seo.back.users.edit');
-
+        
         // we convert the database date to the fr/en format
         if ($birth_date = $user->birth_date) {
             $user->birth_date = Carbon::createFromFormat('Y-m-d', $birth_date)->format('d/m/Y');
         }
-
+        
         // we prepare the data for breadcrumbs
         $breadcrumbs_data = [
             'user' => $user,
         ];
-
+        
         // prepare data for the view
         $data = [
             'seo_meta'         => $this->seo_meta,
@@ -444,11 +444,11 @@ class UsersController extends Controller
             'roles'            => Sentinel::getRoleRepository()->orderBy('position', 'asc')->get(),
             'breadcrumbs_data' => $breadcrumbs_data,
         ];
-
+        
         // return the view with data
         return view('pages.back.user-edit')->with($data);
     }
-
+    
     /**
      * @return mixed
      */
@@ -456,15 +456,15 @@ class UsersController extends Controller
     {
         // SEO Meta settings
         $this->seo_meta['page_title'] = trans('seo.back.users.profile');
-
+        
         // we get the current user
         $user = Sentinel::getUser();
-
+        
         // we convert the database date to the fr/en format
         if ($birth_date = $user->birth_date) {
             $user->birth_date = Carbon::createFromFormat('Y-m-d', $birth_date)->format('d/m/Y');
         }
-
+        
         // prepare data for the view
         $data = [
             'seo_meta' => $this->seo_meta,
@@ -473,11 +473,11 @@ class UsersController extends Controller
             'boards'   => config('user.board'),
             'roles'    => Sentinel::getRoleRepository()->all(),
         ];
-
+        
         // return the view with data
         return view('pages.back.user-edit')->with($data);
     }
-
+    
     /**
      * @param $id
      * @param Request $request
@@ -491,7 +491,7 @@ class UsersController extends Controller
                 trans('users.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
-
+            
             // we redirect the current user to the users list if he has the required permission
             if (Sentinel::getUser()->hasAccess('users.list')) {
                 return redirect()->route('users.index');
@@ -500,7 +500,7 @@ class UsersController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
+        
         // if the updated user is not the current user
         if ($user->id !== Sentinel::getUser()->id) {
             // we check the current user permission
@@ -514,7 +514,7 @@ class UsersController extends Controller
                 }
             }
         }
-
+        
         // we check if the current user has a role position high enough to edit the user
         $edited_user_role = $user->roles->first();
         $current_user_role = Sentinel::getUser()->roles->first();
@@ -522,31 +522,31 @@ class UsersController extends Controller
             Modal::alert([
                 trans('users.message.permission.denied', ['action' => trans('users.message.permission.action.edit')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
-
+        
         // we check if the chosen role is not higher than the role of the current user
         $new_user_role = Sentinel::findRoleById($request->get('role'));
         $current_user_role = Sentinel::getUser()->roles->first();
         if ($new_user_role && $current_user_role && $new_user_role->position < $current_user_role->position) {
             // we flash the request
             $request->flashExcept('photo');
-
+            
             // we notify the user
             Modal::alert([
                 trans('users.message.permission.denied', ['action' => trans('users.message.permission.action.edit')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
-
+        
         // if the remove_photo field is not given, we set it to false
         $request->merge(['remove_photo' => $request->get('remove_photo', false)]);
-
+        
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
-
+        $request->replace(InputSanitizer::sanitize($request->all()));
+        
         try {
             // we convert the en/fr date to the database format
             if ($birth_date = $request->get('birth_date')) {
@@ -556,7 +556,7 @@ class UsersController extends Controller
             // we log the error
             CustomLog::error($e);
         }
-
+        
         // we set the validation rules
         $rules = [
             'photo'        => 'image|mimes:jpg,jpeg,png|image_size:>=145,>=160',
@@ -586,14 +586,14 @@ class UsersController extends Controller
         if (!Validation::check($request->all(), $rules)) {
             // we flash the request
             $request->flashExcept('photo');
-
+            
             return redirect()->back();
         }
-
+        
         try {
             // we update the user
             Sentinel::update($user, $request->except('password', 'photo'));
-
+            
             // we format the number into its international equivalent
             if ($phone_number = $request->get('phone_number')) {
                 Sentinel::update($user, [
@@ -604,7 +604,7 @@ class UsersController extends Controller
                     ),
                 ]);
             }
-
+            
             // we store the photo
             if ($photo = $request->file('photo')) {
                 // we optimize, resize and save the image
@@ -630,28 +630,28 @@ class UsersController extends Controller
                 // we update the user
                 Sentinel::update($user, ['photo' => $file_name]);
             }
-
+            
             // we update the user password
             if ($password = $request->get('password')) {
                 Sentinel::update($user, [
                     'password' => $password,
                 ]);
             }
-
+            
             // if we're updating the profile of another user
             if ($user->id !== Sentinel::getUser()->id) {
                 // we check is the user is attached to roles
                 $current_roles = $user->roles;
-
+                
                 // we detach each roles found
                 foreach ($current_roles as $role) {
                     $role->users()->detach($user);
                 }
-
+                
                 // we attach the new role
                 $role = Sentinel::findRoleById($request->get('role'));
                 $role->users()->attach($user);
-
+                
                 // if the order is to activate the user
                 if ($request->get('active')) {
                     // we activate the user
@@ -663,38 +663,38 @@ class UsersController extends Controller
                     // or we deactivate him
                     Activation::remove($user);
                 }
-
+                
                 // we notify the current user
                 Modal::alert([
                     trans('users.message.update.success', ['name' => $user->first_name . ' ' . $user->last_name]),
                 ], 'success');
-
+                
                 return redirect()->back();
             }
-
+            
             // we notify the current user
             Modal::alert([
                 trans('users.message.account.success'),
             ], 'success');
-
+            
             return redirect()->back();
         } catch (Exception $e) {
             // we flash the request
             $request->flashExcept('photo');
-
+            
             // we log the error
             CustomLog::error($e);
-
+            
             // we notify the current user
             Modal::alert([
                 trans('users.message.update.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
     }
-
+    
     /**
      * @param $id
      * @param Request $request
@@ -712,14 +712,14 @@ class UsersController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
+        
         // we get the user
         if (!$user = Sentinel::findById($id)) {
             Modal::alert([
                 trans('users.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
-
+            
             // we redirect the current user to the users list if he has the required permission
             if (Sentinel::getUser()->hasAccess('users.list')) {
                 return redirect()->route('users.index');
@@ -728,7 +728,7 @@ class UsersController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
+        
         // we check if the current user has a role position high enough to edit the user
         $edited_user_role = $user->roles->first();
         $current_user_role = Sentinel::getUser()->roles->first();
@@ -736,10 +736,10 @@ class UsersController extends Controller
             Modal::alert([
                 trans('users.message.permission.denied', ['action' => trans('users.message.permission.action.delete')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
-
+        
         try {
             // we remove the users photos
             if ($user->photo) {
@@ -749,29 +749,29 @@ class UsersController extends Controller
                     $user->availableSizes('photo')
                 );
             }
-
+            
             // we delete the role
             $user->delete();
-
+            
             Modal::alert([
                 trans('users.message.delete.success', ['name' => $user->first_name . ' ' . $user->last_name]),
             ], 'success');
-
+            
             return redirect()->back();
         } catch (Exception $e) {
             // we log the error
             CustomLog::error($e);
-
+            
             // we notify the current user
             Modal::alert([
                 trans('users.message.delete.failure', ['name' => $user->first_name . ' ' . $user->last_name]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
     }
-
+    
     /**
      * @param $id
      * @param Request $request
@@ -788,7 +788,7 @@ class UsersController extends Controller
                 ],
             ], 401);
         }
-
+        
         // we check the current user permission
         if ($permission_denied = Permission::hasPermissionJson('users.update')) {
             return response([
@@ -796,25 +796,25 @@ class UsersController extends Controller
                 'message' => [$permission_denied],
             ], 401);
         }
-
+        
         // we check if the current user has a role position high enough to edit the user
         $edited_user_role = $user->roles->first();
         $current_user_role = Sentinel::getUser()->roles->first();
         if ($edited_user_role && $current_user_role && $edited_user_role->position < $current_user_role->position) {
             return response([
-                'active'  => Activation::completed($user) ? Activation::completed($user)->completed : Activation::completed($user),
+                'active' => Activation::completed($user) ? Activation::completed($user)->completed : Activation::completed($user),
                 trans('users.message.permission.denied', ['action' => trans('users.message.permission.action.edit')]),
             ], 401);
         }
-
+        
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
-
+        $request->replace(InputSanitizer::sanitize($request->all()));
+        
         // we set the active value to false if we do not find it in the request params
         if (!$request->get('active')) {
             $request->merge(['active' => false]);
         }
-
+        
         // we check the inputs validity
         $rules = [
             'active' => 'required|boolean',
@@ -825,7 +825,7 @@ class UsersController extends Controller
                 'message' => $errors,
             ], 401);
         }
-
+        
         try {
             // if the order is given to activate the user
             if ($request->get('active')) {
@@ -837,9 +837,9 @@ class UsersController extends Controller
             } else {
                 Activation::remove($user);
             }
-
+            
             $active = Activation::completed($user) ? Activation::completed($user)->completed : Activation::completed($user);
-
+            
             return response([
                 'active'  => $active,
                 'message' => [
@@ -849,7 +849,7 @@ class UsersController extends Controller
         } catch (Exception $e) {
             // we log the error
             CustomLog::error($e);
-
+            
             return response([
                 'active'  => Activation::completed($user) ? Activation::completed($user)->completed : Activation::completed($user),
                 'message' => [

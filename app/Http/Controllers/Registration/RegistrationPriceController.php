@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Registration;
 use App\Http\Controllers\Controller;
 use App\Repositories\Registration\RegistrationPriceRepositoryInterface;
 use CustomLog;
-use Entry;
 use Exception;
 use Illuminate\Http\Request;
+use InputSanitizer;
 use Modal;
 use Permission;
 use Sentinel;
@@ -77,7 +77,7 @@ class RegistrationPriceController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
 
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
 
         // we check inputs validity
         $rules = [
@@ -207,7 +207,7 @@ class RegistrationPriceController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
 
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
 
         // we check inputs validity
         $rules = [
@@ -339,7 +339,7 @@ class RegistrationPriceController extends Controller
         $request->merge(['active' => $request->get('active', false)]);
 
         // we sanitize the entries
-        $request->replace(Entry::sanitizeAll($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->all()));
 
         // we check the inputs validity
         $rules = [
