@@ -12,7 +12,7 @@ class GenerateRobotTxt extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:robot.txt';
+    protected $signature = 'robot:txt:generate';
 
     /**
      * The console command description.

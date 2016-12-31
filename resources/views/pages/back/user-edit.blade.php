@@ -11,9 +11,9 @@
                 {{-- Title--}}
                 <h2>
                     <i class="fa fa-user"></i>
-                    @if(isset($user) && (\Sentinel::getUser()->id === $user->id))
+                    @if(isset($user) && (Sentinel::getUser()->id === $user->id))
                         {{ trans('users.page.title.profile') }}
-                    @elseif(isset($user) && !(\Sentinel::getUser()->id === $user->id))
+                    @elseif(isset($user) && !(Sentinel::getUser()->id === $user->id))
                         {!! trans('users.page.title.edit', ['user' => $user->first_name . ' ' . $user->last_name]) !!}
                     @else
                         {{ trans('users.page.title.create') }}
@@ -117,7 +117,7 @@
                     </div>
 
                     {{-- don't show for personnal account edition --}}
-                    @if(!isset($user) || !(\Sentinel::getUser()->id === $user->id))
+                    @if(!isset($user) || Sentinel::getUser()->id !== $user->id || $user->roles()->first()->slug === 'admin')
 
                         {{-- club informations --}}
                         <div class="panel panel-default">
@@ -233,7 +233,7 @@
                         <div class="panel-body">
 
                             {{-- don't show for personnal account edition --}}
-                            @if(!isset($user) || !(\Sentinel::getUser()->id === $user->id))
+                            @if(!isset($user) || !(Sentinel::getUser()->id === $user->id))
 
                                 {{-- role --}}
                                 <label>{{ trans('users.page.label.role') }}<span class="required">*</span></label>
@@ -260,7 +260,7 @@
                                     </span>
                                         <input class="swipe" id="input_active" type="checkbox" name="active"
                                             @if(old('active'))checked
-                                            @elseif(is_null(old('active')) && isset($user) && \Activation::completed($user))checked
+                                            @elseif(is_null(old('active')) && isset($user) && Activation::completed($user))checked
                                             @elseif(is_null(old('active')) && !isset($user))checked
                                             @endif>
                                         <label class="swipe-btn" for="input_active"></label>
@@ -299,11 +299,11 @@
                     </div>
 
                     {{-- submit login --}}
-                    @if(isset($user) && (\Sentinel::getUser()->id === $user->id))
+                    @if(isset($user) && (Sentinel::getUser()->id === $user->id))
                         <button class="btn btn-primary spin-on-click" type="submit">
                             <i class="fa fa-floppy-o"></i> {{ trans('global.action.save') }}
                         </button>
-                    @elseif(isset($user) && !(\Sentinel::getUser()->id === $user->id))
+                    @elseif(isset($user) && !(Sentinel::getUser()->id === $user->id))
                         <button class="btn btn-primary spin-on-click" type="submit">
                             <i class="fa fa-pencil-square"></i> {{ trans('users.page.action.update') }}
                         </button>
