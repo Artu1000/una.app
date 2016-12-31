@@ -12,6 +12,7 @@ use App\Console\Commands\Install\NpmInstall;
 use App\Console\Commands\Install\ProjectOptimize;
 use App\Console\Commands\Install\StoragePrepare;
 use App\Console\Commands\Install\SymLinksPrepare;
+use App\Console\Commands\Install\YarnInstall;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -25,7 +26,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         StoragePrepare::class,
         MailcatcherInstall::class,
-        NpmInstall::class,
+        YarnInstall::class,
         SymLinksPrepare::class,
         ProjectOptimize::class,
         UsersAndRelatedTablesClean::class,

@@ -311,10 +311,16 @@ $(function () {
         });
     }
 
-    // collapse other menu elements when toggling a new one
-    $('[data-toggle="collapse"]').click(function () {
-        // we collapse all the other menu elements
-        $('.collapse').not(this).collapse('hide');
+    // we handle the menu click events
+    $(document).on('click', function (e) {
+        // click into the header zone and not on the mobile menu toggle
+        if ($(e.target).closest('header').length && !$(e.target).is('.navbar-toggle')) {
+            // click on collapsible element (but not navbar-collapse element)
+            if ($(e.target).closest('[data-toggle="collapse"]').length) {
+                // we collapse all the opened collapsible elements (but not the navbar-collapse element)
+                $('.collapse.in').not($('.navbar-collapse')).collapse('hide');
+            }
+        }
     });
 
     // we manage the file dropzone behaviour

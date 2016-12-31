@@ -1,18 +1,30 @@
-var elixir = require('laravel-elixir');
-require('laravel-elixir-imagemin');
-require('laravel-elixir-delete');
-var gulp = require('gulp');
-var shell = require('gulp-shell');
+// imports
+const elixir = require('laravel-elixir');
+const gulp = require('gulp');
+const shell = require('gulp-shell');
+const imagemin = require('gulp-image');
+require('laravel-elixir-remove');
 
-// elixir extensions
+// shell elixir extensions
 elixir.extend('shell', function () {
-    gulp.task('command', shell.task([
-        'php artisan storage:prepare',
-        'php artisan symlinks:prepare'
-        // other shell commands
-    ]));
-    return this.queueTask('command');
+    new elixir.Task('command', function () {
+        return gulp.src('')
+            .pipe(shell('php artisan storage:prepare'))
+            .pipe(shell('php artisan symlinks:prepare'));
+    });
 });
+
+// imagemin elixir extensions
+elixir.extend('imagemin', function (src, dest) {
+    new elixir.Task('imagemin', function () {
+        return gulp.src(src)
+            .pipe(imagemin())
+            .pipe(gulp.dest(dest));
+    });
+});
+
+// production variable
+const production = elixir.config.production;
 
 /*
  |--------------------------------------------------------------------------
@@ -44,10 +56,14 @@ var paths = {
 };
 
 elixir(function (mix) {
-    mix
 
-    // we begin by deleting all generated public folders
-        .delete([
+    /***************************************************************************************************************
+     * FILE REMOVAL
+     ***************************************************************************************************************/
+    // if for production
+    if (production) {
+        // we remove all generated public folders
+        mix.remove([
             'public/build',
             'public/css',
             'public/files',
@@ -55,108 +71,77 @@ elixir(function (mix) {
             'public/img',
             'public/js',
             'public/libraries'
-        ])
+        ]);
+    }
 
         /***************************************************************************************************************
          * SASS
          ***************************************************************************************************************/
 
         // FRONT
-        .sass('app.front.scss', 'public/css/app.front.css', {})
-        .sass('app.home.scss', 'public/css/app.home.css', {})
-        .sass('app.page.scss', 'public/css/app.page.css', {})
-        .sass('app.palmares.scss', 'public/css/app.palmares.css', {})
-        .sass('app.news.scss', 'public/css/app.news.css', {})
-        .sass('app.leading-team.scss', 'public/css/app.leading-team.css', {})
-        .sass('app.registration.scss', 'public/css/app.registration.css', {})
-        .sass('app.schedule.scss', 'public/css/app.schedule.css', {})
-        .sass('app.calendar.scss', 'public/css/app.calendar.css', {})
-        .sass('app.e-shop.scss', 'public/css/app.e-shop.css', {})
-        .sass('app.photos.scss', 'public/css/app.photos.css', {})
-        .sass('app.videos.scss', 'public/css/app.videos.css', {})
-        .sass('app.auth.scss', 'public/css/app.auth.css', {})
+        mix.sass('app.front.scss', 'public/css/app.front.css');
+        mix.sass('app.home.scss', 'public/css/app.home.css');
+        mix.sass('app.page.scss', 'public/css/app.page.css');
+        // mix.sass('app.palmares.scss', 'public/css/app.palmares.css');
+        mix.sass('app.news.scss', 'public/css/app.news.css');
+        mix.sass('app.leading-team.scss', 'public/css/app.leading-team.css');
+        mix.sass('app.registration.scss', 'public/css/app.registration.css');
+        mix.sass('app.schedule.scss', 'public/css/app.schedule.css');
+        mix.sass('app.calendar.scss', 'public/css/app.calendar.css');
+        mix.sass('app.e-shop.scss', 'public/css/app.e-shop.css');
+        mix.sass('app.photos.scss', 'public/css/app.photos.css');
+        mix.sass('app.videos.scss', 'public/css/app.videos.css');
+        mix.sass('app.auth.scss', 'public/css/app.auth.css');
 
         // COMMON
-        .sass('app.error.scss', 'public/css/app.error.css', {})
+        mix.sass('app.error.scss', 'public/css/app.error.css');
 
         // BACK
-        .sass('app.back.scss', 'public/css/app.back.css', {})
-
-        /***************************************************************************************************************
-         * CSS
-         ***************************************************************************************************************/
-
-        // combine home stylesheets
-        .styles([
-            paths.lity + 'lity.css',
-            paths.glide + 'dist/css/glide.core.css',
-            paths.glide + 'dist/css/glide.theme.css',
-            'public/css/app.home.css'
-        ], 'public/css/app.home.css', './')
-
-        // combine news stylesheets
-        .styles([
-            paths.lity + 'lity.css',
-            'public/css/app.news.css'
-        ], 'public/css/app.news.css', './')
-
-        //combine leading team stylesheets
-        .styles([
-            paths.lity + 'lity.css',
-            'public/css/app.leading-team.css'
-        ], 'public/css/app.leading-team.css', './')
-
-        //combine videos stylesheets
-        .styles([
-            paths.lity + 'lity.css',
-            'public/css/app.videos.css'
-        ], 'public/css/app.videos.css', './')
-
-        // combine back stylesheets
-        .styles([
-            //paths.datepicker + 'css/bootstrap-datepicker3.css',
-            paths.lity + 'lity.css',
-            paths.animate + 'animate.css',
-            paths.simplemde + 'simplemde.min.css',
-            paths.dropzone + 'dropzone.css',
-            'public/css/app.back.css'
-        ], 'public/css/app.back.css', './')
+        mix.sass('app.back.scss', 'public/css/app.back.css');
 
         /***************************************************************************************************************
          * IMAGES
          ***************************************************************************************************************/
-        // minify images
-        .imagemin('**', 'public/img/')
+        const img_src = './resources/assets/img/';
+        const img_dest = './public/img/';
+        // if for production
+        if (production) {
+            // we minify images
+            mix.imagemin(img_src + '**', img_dest);
+        } else {
+            // we copy the images
+            mix.copy(img_src, img_dest);
+        }
 
         /***************************************************************************************************************
          * FILES
          ***************************************************************************************************************/
-        .copy('resources/assets/files/**', 'public/files')
+        mix.copy('resources/assets/files/**', 'public/files');
 
         /***************************************************************************************************************
          * FONTS
          ***************************************************************************************************************/
         // // copy glyphicon fonts into public folder
-        .copy(paths.bootstrap + 'fonts/bootstrap/**', 'public/fonts/bootstrap')
+        mix.copy(paths.bootstrap + 'fonts/bootstrap/**', 'public/fonts/bootstrap');
         // // copy fontawesome fonts into public folder
-        .copy(paths.fontawesome + 'fonts/**', 'public/fonts/fontawesome')
+        mix.copy(paths.fontawesome + 'fonts/**', 'public/fonts/fontawesome');
         // // copy lato fonts into public folder
-        .copy(paths.lato + 'fonts/**', 'public/fonts/lato')
+        mix.copy(paths.lato + 'fonts/**', 'public/fonts/lato');
 
         /***************************************************************************************************************
          * JS
          ***************************************************************************************************************/
         // FRONT
-        .scripts([
+        mix.scripts([
             paths.jquery + 'dist/jquery.js',
             paths.jquery_easing + 'js/jquery.easing.js',
             paths.bootstrap + 'javascripts/bootstrap.js',
             paths.js + 'ie10-viewport-bug-workaround.js',
             paths.js + 'app.common.js',
             paths.js + 'app.front.js'
-        ], 'public/js/app.front.js', './')
+        ], 'public/js/app.front.js', './');
         // mix home js files
-        .scripts([
+        mix.scripts([
             paths.jquery + 'dist/jquery.js',
             paths.jquery_easing + 'js/jquery.easing.js',
             paths.bootstrap + 'javascripts/bootstrap.js',
@@ -166,9 +151,9 @@ elixir(function (mix) {
             paths.js + 'app.common.js',
             paths.js + 'app.front.js',
             paths.js + 'app.home.js'
-        ], 'public/js/app.home.js', './')
+        ], 'public/js/app.home.js', './');
         // mix news detail js files
-        .scripts([
+        mix.scripts([
             paths.jquery + 'dist/jquery.js',
             paths.jquery_easing + 'js/jquery.easing.js',
             paths.bootstrap + 'javascripts/bootstrap.js',
@@ -177,9 +162,9 @@ elixir(function (mix) {
             paths.js + 'app.common.js',
             paths.js + 'app.front.js',
             paths.js + 'app.news-detail.js'
-        ], 'public/js/app.news-detail.js', './')
+        ], 'public/js/app.news-detail.js', './');
         // mix leading team js files
-        .scripts([
+        mix.scripts([
             paths.jquery + 'dist/jquery.js',
             paths.jquery_easing + 'js/jquery.easing.js',
             paths.bootstrap + 'javascripts/bootstrap.js',
@@ -187,9 +172,9 @@ elixir(function (mix) {
             paths.lity + 'lity.js',
             paths.js + 'app.common.js',
             paths.js + 'app.front.js'
-        ], 'public/js/app.leading-team.js', './')
+        ], 'public/js/app.leading-team.js', './');
         // mix photos js files
-        .scripts([
+        mix.scripts([
             paths.jquery + 'dist/jquery.js',
             paths.jquery_easing + 'js/jquery.easing.js',
             paths.bootstrap + 'javascripts/bootstrap.js',
@@ -197,9 +182,9 @@ elixir(function (mix) {
             paths.js + 'app.common.js',
             paths.js + 'app.front.js',
             paths.js + 'app.photos.js'
-        ], 'public/js/app.photos.js', './')
+        ], 'public/js/app.photos.js', './');
         // mix videos js files
-        .scripts([
+        mix.scripts([
             paths.jquery + 'dist/jquery.js',
             paths.jquery_easing + 'js/jquery.easing.js',
             paths.bootstrap + 'javascripts/bootstrap.js',
@@ -208,10 +193,10 @@ elixir(function (mix) {
             paths.js + 'app.common.js',
             paths.js + 'app.front.js',
             paths.js + 'app.videos.js'
-        ], 'public/js/app.videos.js', './')
+        ], 'public/js/app.videos.js', './');
 
         // BACK
-        .scripts([
+        mix.scripts([
             paths.jquery + 'dist/jquery.js',
             paths.jquery_easing + 'js/jquery.easing.js',
             paths.bootstrap + 'javascripts/bootstrap.js',
@@ -226,20 +211,20 @@ elixir(function (mix) {
             paths.simplemde + 'simplemde.min.js',
             paths.js + 'app.common.js',
             paths.js + 'app.back.js'
-        ], 'public/js/app.back.js', './')
+        ], 'public/js/app.back.js', './');
 
         /***************************************************************************************************************
          * VERSIONS
          ***************************************************************************************************************/
         // version all files
-        .version([
+        mix.version([
             // css front
             'public/css/app.front.css',
             'public/css/app.auth.css',
             'public/css/app.error.css',
             'public/css/app.home.css',
             'public/css/app.page.css',
-            'public/css/app.palmares.css',
+            // 'public/css/app.palmares.css',
             'public/css/app.news.css',
             'public/css/app.leading-team.css',
             'public/css/app.registration.css',
@@ -259,10 +244,14 @@ elixir(function (mix) {
             'public/js/app.videos.js',
             // js front
             'public/js/app.back.js'
-        ])
+        ]);
 
     /***************************************************************************************************************
      * SHELL COMMANDS
      ***************************************************************************************************************/
-    .shell();
+    // if for production
+    if (production) {
+        // we execute some shell commands
+        mix.shell();
+    }
 });

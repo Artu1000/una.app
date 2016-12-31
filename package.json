@@ -2,10 +2,9 @@
   "private": true,
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-image": "^2.7.2",
     "gulp-shell": "^0.5.2",
-    "laravel-elixir": "^2.3.13",
-    "laravel-elixir-artisan-serve": "^1.0.6",
-    "laravel-elixir-delete": "^1.0.1",
-    "laravel-elixir-imagemin": "^0.1.6"
+    "laravel-elixir": "^6.0.0-15",
+    "laravel-elixir-remove": "^0.2.1"
   }
 }
