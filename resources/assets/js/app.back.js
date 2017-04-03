@@ -461,49 +461,13 @@ $(function () {
                 // we replace the loading spinner by a success icon
                 form.find('.input-change-icon').remove();
                 form.append('<span class="input-change-icon text-success">' + app.success_icon + '</i></span>');
-                // we show the success messages
-                if (data.message) {
-                    data.message.forEach(function (success) {
-                        $.notify({
-                            // options
-                            title: app.success_icon,
-                            message: success
-                        }, {
-                            // settings
-                            type: 'success',
-                            delay: 6000,
-                            allow_dismiss: false,
-                            showProgressbar: true,
-                            animate: {
-                                enter: 'animated bounceInDown',
-                                exit: 'animated bounceOutUp'
-                            }
-                        });
-                    });
-                }
+                // we notify the current user
+                notify(data, 'success');
                 // we set the value
                 value = data.value;
             }).fail(function (data) {
-                // we show the error messages
-                if (data.responseJSON.message) {
-                    data.responseJSON.message.forEach(function (error) {
-                        $.notify({
-                            // options
-                            title: app.error_icon,
-                            message: error
-                        }, {
-                            // settings
-                            type: 'danger',
-                            delay: 6000,
-                            allow_dismiss: false,
-                            showProgressbar: true,
-                            animate: {
-                                enter: 'animated bounceInDown',
-                                exit: 'animated bounceOutUp'
-                            }
-                        });
-                    });
-                }
+                // we notify the current user
+                notify(data.responseJSON, 'error');
                 // we set the value
                 value = data.responseJSON.value;
                 // we replace the loading spinner by an error icon
@@ -526,8 +490,8 @@ $(function () {
             });
         }
 
-        //setup before functions
-        var typing_timing = 500;
+        // setup before functions
+        var typing_timing = 1000;
         var typing_timer;
         // we set the listeners on the inputs
         inputs.each(function () {
