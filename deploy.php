@@ -1,5 +1,7 @@
 <?php
 
+namespace Deployer;
+
 require 'recipe/laravel.php';
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -7,7 +9,7 @@ require 'recipe/laravel.php';
 ///////////////////////////////////////////////////////////////////////////////
 
 $servers = [
-    'preprod-1' => [
+    'preprod' => [
         'stage'            => ['preprod', 'everywhere'],
         'host'             => 'vps241083.ovh.net',
         'user'             => 'deploy',
@@ -16,10 +18,11 @@ $servers = [
         'http_group'       => 'deploy',
         'private_identity' => '~/.ssh/id_rsa',
         'public_identity'  => '~/.ssh/id_rsa.pub',
+        'repository'       => 'git@github.com:Okipa/una.app.git',
         'branch'           => 'master',
         'composer_options' => 'install --no-dev --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction',
     ],
-    'prod-1'    => [
+    'prod'    => [
         'stage'            => ['production', 'everywhere'],
         'host'             => 'vps241083.ovh.net',
         'user'             => 'deploy',
@@ -28,6 +31,7 @@ $servers = [
         'http_group'       => 'deploy',
         'private_identity' => '~/.ssh/id_rsa',
         'public_identity'  => '~/.ssh/id_rsa.pub',
+        'repository'       => 'git@github.com:Okipa/una.app.git',
         'branch'           => 'master',
         'composer_options' => 'install --no-dev --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction',
     ],
@@ -38,7 +42,6 @@ $servers = [
 ///////////////////////////////////////////////////////////////////////////////
 
 // set configurations
-set('repository', 'git@github.com:Okipa/una.app.git');
 set('shared_files', ['.env']);
 set('shared_dirs', [
     'storage/app',
@@ -50,6 +53,8 @@ set('shared_dirs', [
 set('writable_dirs', ['bootstrap/cache', 'storage']);
 set('keep_releases', 5);
 set('default_stage', 'preprod');
+set('ssh_type', 'native');
+set('ssh_multiplexing', true);
 
 // configure servers
 foreach ($servers as $server_env => $server) {
@@ -57,11 +62,12 @@ foreach ($servers as $server_env => $server) {
         server($server_env, $server['host'])
             ->user($server['user'])
             ->identityFile($server['public_identity'], $server['private_identity'], null)
-            ->env('deploy_path', $server['path'])
-            ->env('http_user', $server['http_user'])
-            ->env('http_group', $server['http_group'])
-            ->env('composer_options', $server['composer_options'])
-            ->env('branch', $server['branch'])
+            ->set('repository', $server['repository'])
+            ->set('deploy_path', $server['path'])
+            ->set('http_user', $server['http_user'])
+            ->set('http_group', $server['http_group'])
+            ->set('composer_options', $server['composer_options'])
+            ->set('branch', $server['branch'])
             ->stage($server['stage']);
     }
 }
@@ -78,7 +84,7 @@ before('deploy:symlink', 'project:install');
 
 // laravel cron install
 task('cron:install', function () {
-    run('job="* * * * * php artisan schedule:run >> /dev/null 2>&1"; ct=$(crontab -l |grep -i -v "$job");(echo "$ct" ;echo "$job") |crontab -');
+    run('job="* * * * * php {{deploy_path}}/current/artisan schedule:run >> /dev/null 2>&1"; ct=$(crontab -l |grep -i -v "$job");(echo "$ct" ;echo "$job") |crontab -');
 })->desc('Add the laravel cron to the others on the server');
 after('project:install', 'cron:install');
 
