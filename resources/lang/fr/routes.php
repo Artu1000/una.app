@@ -44,8 +44,9 @@ return [
         "stats" => "admin/tableau-de-bord/statistiques",
     ],
     "settings"     => [
-        "index"  => "admin/parametres",
-        "update" => "admin/parametres/mise-a-jour",
+        "index"                                      => "admin/parametres",
+        "update"                                     => "admin/parametres/mise-a-jour",
+        "download_google_analytics_credentials_json" => "admin/parametres/telechargement-google-analytics-credentials-json",
     ],
     "permissions"  => [
         "index"   => "admin/permissions",

@@ -23,7 +23,7 @@
                     <h2>{{ trans('registration.page.title.registration_form') }}</h2>
                     <p>{{ trans('registration.page.label.registration_form') }}</p>
 
-                    <a href="{{ FileManager::download(config('file.registration.public_path'), $registration_form_file) }}" title="{{ trans('registration.page.label.registration_form_download') }}">
+                    <a href="{{ FileManager::download(FileManager::filePath(config('file.registration.public_path'), $registration_form_file)) }}" title="{{ trans('registration.page.label.registration_form_download') }}">
                         <button class="btn btn-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> {{ trans('registration.page.label.registration_form_download') }}</button>
                     </a>
                 @endif

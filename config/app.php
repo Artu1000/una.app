@@ -29,7 +29,7 @@ return [
     |
     */
     
-    'url'      => env('APP_URL', 'http://localhost'),
+    'url'             => env('APP_URL', 'http://localhost'),
     
     /*
     |--------------------------------------------------------------------------
@@ -43,7 +43,7 @@ return [
     */
 
 //    'timezone' => 'UTC',
-    'timezone' => 'Europe/Paris',
+    'timezone'        => 'Europe/Paris',
     
     /*
     |--------------------------------------------------------------------------
@@ -55,9 +55,9 @@ return [
     | to any of the locales which will be supported by the application.
     |
     */
-    
+
 //    'locale' => 'en',
-    'locale' => 'fr',
+    'locale'          => 'fr',
     
     /*
     |--------------------------------------------------------------------------
@@ -69,7 +69,7 @@ return [
     | the language folders that are provided through your application.
     |
     */
-    
+
 //    'fallback_locale' => 'en',
     'fallback_locale' => 'fr',
     
@@ -206,6 +206,7 @@ return [
         'Breadcrumbs'         => DaveJamesMiller\Breadcrumbs\Facade::class,
         'Analytics'           => Spatie\Analytics\AnalyticsFacade::class,
         'InputSanitizer'      => AcidSolutions\InputSanitizer\Laravel\Facades\InputSanitizer::class,
+        'Markdown'            => AlfredoRamos\ParsedownExtra\Facades\ParsedownExtra::class,
         // created
         'Modal'               => App\Facades\ModalHelperFacade::class,
         'ImageManager'        => App\Facades\ImageManagerHelperFacade::class,
@@ -215,7 +216,6 @@ return [
         'Validation'          => App\Facades\ValidationHelperFacade::class,
         'TableList'           => App\Facades\TableListHelperFacade::class,
         'CustomLog'           => App\Facades\CustomLogHelperFacade::class,
-        'Env'                 => App\Facades\EnvHelperFacade::class,
     ],
 
 ];

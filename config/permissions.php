@@ -26,6 +26,7 @@ return [
     'users.update'       => false,
     'users.delete'       => false,
     
+    // dashboard
     'dashboard'                  => false,
     'dashboard.statistics'       => false,
     

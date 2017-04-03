@@ -10,8 +10,8 @@ use FileManager;
 use Illuminate\Http\Request;
 use ImageManager;
 use InputSanitizer;
+use Markdown;
 use Modal;
-use Parsedown;
 use Permission;
 use Sentinel;
 use TableList;
@@ -47,9 +47,8 @@ class RegistrationController extends Controller
         }
         
         // we parse the markdown content
-        $parsedown = new Parsedown();
         $description = isset($registration_page->description)
-            ? $parsedown->text($registration_page->description)
+            ? Markdown::parse($registration_page->description)
             : null;
         // we replace the images aliases by real paths
         $description = ImageManager::replaceLibraryImagesAliasesByRealPath($description);
@@ -297,7 +296,7 @@ class RegistrationController extends Controller
             // we store the registration form file
             if ($registration_form_file = $request->file('registration_form_file')) {
                 // we remove the registration form file
-                if ($registration->registration_form_file) {
+                if (isset($registration->registration_form_file)) {
                     FileManager::remove(
                         $registration->registration_form_file,
                         config('file.registration.storage_path')

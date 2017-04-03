@@ -15,8 +15,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use ImageManager;
 use InputSanitizer;
+use Markdown;
 use Modal;
-use Parsedown;
 use Permission;
 use Sentinel;
 use TableList;
@@ -48,9 +48,8 @@ class NewsController extends Controller
         }
         
         // we parse the markdown content
-        $parsedown = new Parsedown();
         $title = isset($news_page->title) ? $news_page->title : null;
-        $description = isset($news_page->description) ? $parsedown->text($news_page->description) : null;
+        $description = isset($news_page->description) ? Markdown::parse($news_page->description) : null;
         
         // SEO Meta settings
         $this->seo_meta['page_title'] = trans('seo.front.news.title') ? trans('seo.front.news.title') : $title;
@@ -77,9 +76,8 @@ class NewsController extends Controller
         
         // we convert in html the markdown content of each news
         if ($news_list) {
-            $parsedown = new Parsedown();
             foreach ($news_list as $n) {
-                $n->content = isset($n->content) ? $parsedown->text($n->content) : null;
+                $n->content = isset($n->content) ? Markdown::parse($n->content) : null;
             }
         }
         
@@ -143,12 +141,14 @@ class NewsController extends Controller
         }
         
         // we parse the markdown content
-        $parsedown = new Parsedown();
-        $news->content = isset($news->content) ? $parsedown->text($news->content) : null;
+        $news->content = isset($news->content) ? Markdown::parse($news->content) : null;
+        
         // we replace the images aliases by real paths
-        $news->content = ImageManager::replaceLibraryImagesAliasesByRealPath($news->content);
+//        $news->content = ImageManager::replaceLibraryImagesAliasesByRealPath($news->content);
         // we replace the files aliases by real paths
         $news->content = FileManager::replaceLibraryFilesAliasesByRealPath($news->content);
+    
+//        dd($news->content);
         
         // SEO Meta settings
         $this->seo_meta['page_title'] = $news->meta_title ? $news->meta_title : $news->title;
@@ -220,8 +220,7 @@ class NewsController extends Controller
         }
         
         // we parse the markdown content
-        $parsedown = new Parsedown();
-        $news->content = isset($news->content) ? $parsedown->text($news->content) : null;
+        $news->content = isset($news->content) ? Markdown::parse($news->content) : null;
         // we replace the images aliases by real paths
         $news->content = ImageManager::replaceLibraryImagesAliasesByRealPath($news->content);
         // we replace the files aliases by real paths
@@ -607,7 +606,7 @@ class NewsController extends Controller
         
         // we manage the author
         if (!Sentinel::getUser()->hasAccess('news.author')) {
-            $request->merge(['author_id', Sentinel::getUser()->id]);
+            $request->merge(['author_id' => Sentinel::getUser()->id]);
         }
         
         // we check inputs validity

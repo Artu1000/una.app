@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    
     /*
     |--------------------------------------------------------------------------
     | Validation Language Lines
@@ -12,7 +12,7 @@ return [
     | such as the size rules. Feel free to tweak each of these messages.
     |
     */
-
+    
     "accepted"             => "Le champ <b>:attribute</b> doit être accepté.",
     "active_url"           => "Le champ <b>:attribute</b> n'est pas une URL valide.",
     "after"                => "Le champ <b>:attribute</b> doit être une date postérieure au <b>:date</b>.",
@@ -76,10 +76,10 @@ return [
     "timezone"             => "Le champ <b>:attribute</b> doit être un fuseau horaire valide.",
     "unique"               => "La valeur du champ <b>:attribute</b> est déjà utilisée.",
     "url"                  => "Le format de l'URL de <b>:attribute</b> n'est pas valide.",
-
+    
     "image_size"   => "L'image <b>:attribute</b> doit être :width de large et :height de haut.",
     'image_aspect' => 'Le ratio de <b>:attribute</b> doit être de :aspect',
-
+    
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -90,13 +90,13 @@ return [
     | specify a specific custom language line for a given attribute rule.
     |
     */
-
+    
     "custom" => [
         "attribute-name" => [
             "rule-name" => "custom-message",
         ],
     ],
-
+    
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes
@@ -107,7 +107,7 @@ return [
     | of "email". This simply helps us make messages a little cleaner.
     |
     */
-
+    
     "attributes" => [
         "name"                  => "Nom",
         "name_fr"               => "Nom (FR)",
@@ -163,6 +163,7 @@ return [
         "cover"                 => "Couverture",
         "link"                  => "Lien",
         "year"                  => "Année",
+        "author_id"             => "Auteur",
     ],
 
 ];

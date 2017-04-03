@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use Artisan;
 use CustomLog;
-use Env;
 use Exception;
 use FileManager;
 use Illuminate\Http\Request;
@@ -31,7 +30,7 @@ class SettingsController extends Controller
     }
     
     /**
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -64,51 +63,58 @@ class SettingsController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-        
+    
         // we clear the cache
-        Artisan::call('cache:clear');
         Artisan::call('config:clear');
         
         // we sanitize the entries
-        $request->replace(InputSanitizer::sanitize($request->all()));
+        $request->replace(InputSanitizer::sanitize($request->except('phone_number')));
         
         // if the boolean field is not given, we set it to false
         $request->merge(['breadcrumb' => $request->get('breadcrumb', false)]);
         $request->merge(['multilingual' => $request->get('multilingual', false)]);
         $request->merge(['rss' => $request->get('rss', false)]);
+        $request->merge(['image_optimization' => $request->get('image_optimization', false)]);
         
         // we get the inputs
         $inputs = $request->except('_token', '_method');
+    
+        // we get the phone accepted formats
+        $accepted_phone_formats = [];
+        foreach (config('laravellocalization.supportedLocales') as $locale) {
+            $accepted_phone_formats[] = array_last(explode('_', $locale['regional']));
+        }
         
         // we set the rules according to the multilingual config
         $rules = [
-            'app_name_fr'              => 'required|string',
-            'app_slogan_fr'            => 'string',
-            'breadcrumbs'              => 'boolean',
-            'multilingual'             => 'boolean',
-            'phone_number'             => 'phone:FR',
-            'contact_email'            => 'required|email',
-            'support_email'            => 'required|email',
-            'address'                  => 'string',
-            'zip_code'                 => 'digits:5',
-            'city'                     => 'string',
-            'facebook'                 => 'url',
-            'twitter'                  => 'url',
-            'google_plus'              => 'url',
-            'youtube'                  => 'url',
-            'linkedin'                 => 'url',
-            'pinterest'                => 'url',
-            'rss'                      => 'boolean',
-            'favicon'                  => 'mimes:ico|image_size:16,16',
-            'logo_light'               => 'image|mimes:png|image_size:>=300,*',
-            'logo_dark'                => 'image|mimes:png|image_size:>=300,*',
-            'loading_spinner'          => 'string',
-            'success_icon'             => 'string',
-            'error_icon'               => 'string',
-            'info_icon'                => 'string',
-            'google_analytics_script'  => 'string',
-            'google_analytics_view_id' => 'numeric',
-            'google_analytics_json'    => 'mimes:json',
+            'app_name_fr'                       => 'required|string',
+            'app_slogan_fr'                     => 'string',
+            'breadcrumbs'                       => 'required|boolean',
+            'multilingual'                      => 'required|boolean',
+            'phone_number'                      => 'phone:' . implode(',', $accepted_phone_formats),
+            'contact_email'                     => 'required|email',
+            'support_email'                     => 'required|email',
+            'address'                           => 'string',
+            'zip_code'                          => 'digits:5',
+            'city'                              => 'string',
+            'facebook'                          => 'url',
+            'twitter'                           => 'url',
+            'google_plus'                       => 'url',
+            'youtube'                           => 'url',
+            'linkedin'                          => 'url',
+            'pinterest'                         => 'url',
+            'rss'                               => 'required|boolean',
+            'favicon'                           => 'mimes:ico|image_size:16,16',
+            'logo_light'                        => 'image|mimes:png|image_size:>=300,*',
+            'logo_dark'                         => 'image|mimes:png|image_size:>=300,*',
+            'loading_spinner'                   => 'string',
+            'success_icon'                      => 'string',
+            'error_icon'                        => 'string',
+            'info_icon'                         => 'string',
+            'image_optimization'                => 'required|boolean',
+            'google_analytics'                  => 'string',
+            'google_analytics_view_id'          => 'numeric',
+            'google_analytics_credentials_json' => 'mimetypes:text/plain,application/json',
         ];
         if (config('settings.multilingual')) {
             $rules['app_name_en'] = 'required|string';
@@ -186,30 +192,27 @@ class SettingsController extends Controller
             } elseif (config('settings.logo_dark')) {
                 $inputs['logo_dark'] = config('settings.logo_dark');
             }
-            
-            // we create or replace the google analytics view id in the env file
-            Env::createOrReplace('ANALYTICS_VIEW_ID', $inputs['google_analytics_view_id']);
-            unset($inputs['google_analytics_view_id']);
-            
+    
             // google analytics credential json treatment
             if ($google_analytics_credentials_json = $request->file('google_analytics_credentials_json')) {
+        
                 // if a previous version of the file is found, we delete it
-                if ($current_google_analytics_credentials_json = env('ANALYTICS_CREDENTIALS_JSON')) {
+                if ($current_google_analytics_credentials_json = config('settings.google_analytics_credentials_json')) {
                     FileManager::remove(
                         $current_google_analytics_credentials_json,
-                        config('file.settings.storage_path')
+                        config('file.google_analytics.storage_path')
                     );
                 }
+        
                 // we save the file
                 $file_name = FileManager::storeAndRename(
                     $google_analytics_credentials_json->getRealPath(),
-                    config('file.settings.google_analytics_credentials_json.name'),
+                    config('file.google_analytics.credentials_json.name'),
                     $google_analytics_credentials_json->getClientOriginalExtension(),
-                    config('file.settings.storage_path')
+                    config('file.google_analytics.storage_path')
                 );
-                // we create or replace the google analytics credential json path in the env file
-                Env::createOrReplace('ANALYTICS_CREDENTIALS_JSON', $file_name);
-                unset($inputs['google_analytics_credentials_json']);
+                // we set the analytics credentials json file
+                $inputs['google_analytics_credentials_json'] = $file_name;
             }
             
             // we update the json file
@@ -219,10 +222,9 @@ class SettingsController extends Controller
             Modal::alert([
                 trans('settings.message.update.success'),
             ], 'success');
-            
-            // we renew the config cache
-            if (config('app.env') !== 'local') {
-                Artisan::call('route:cache');
+    
+            // we renew the config cache (if the app is not in a local mode)
+            if (app()->environment() !== 'local') {
                 Artisan::call('config:cache');
             }
             
@@ -230,7 +232,12 @@ class SettingsController extends Controller
         } catch (Exception $e) {
             
             // we flash the request
-            $request->flash();
+            $request->flashExcept(
+                'favicon',
+                'logo_light',
+                'logo_dark',
+                'google_analytics_credentials_json'
+            );
             
             // we log the error
             CustomLog::error($e);
@@ -243,6 +250,44 @@ class SettingsController extends Controller
             
             // we renew the config cache
             Artisan::call('config:cache');
+            
+            return redirect()->back();
+        }
+    }
+    
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function downloadGoogleAnalyticsCredentialsJsonFile(Request $request)
+    {
+        // we check the current user permission
+        if (!Permission::hasPermission('settings.update')) {
+            // we redirect the current user to the settings view if he has the required permission
+            if (Sentinel::getUser()->hasAccess('settings.view')) {
+                return redirect()->route('settings.view');
+            } else {
+                // or we redirect the current user to the home page
+                return redirect()->route('dashboard.index');
+            }
+        }
+    
+        // we sanitize the entries
+        $request->replace(InputSanitizer::sanitize($request->all()));
+        
+        try {
+            return response()->download(
+                config('laravel-analytics.service_account_credentials_json')
+            );
+        } catch (Exception $e) {
+            // we log the error
+            CustomLog::error($e);
+            
+            // we notify the current user
+            Modal::alert([
+                trans('settings.message.service_account_credentials_json.downlad.failure'),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
+            ], 'error');
             
             return redirect()->back();
         }

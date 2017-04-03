@@ -62,6 +62,9 @@ abstract class Controller extends BaseController
             'info_icon'       => config('settings.info_icon'),
             'locale'          => config('app.locale'),
             'multilingual'    => config('settings.multilingual'),
+            'routes' => [
+                'download' => route('file.download')
+            ]
         ]);
         
         // we set the app developer

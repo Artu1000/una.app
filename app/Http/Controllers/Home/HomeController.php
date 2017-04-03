@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use ImageManager;
 use InputSanitizer;
 use JavaScript;
+use Markdown;
 use Modal;
 use Parsedown;
 use Permission;
@@ -243,9 +244,8 @@ class HomeController extends Controller
         
         // we convert in html the markdown content of each news
         if ($last_news) {
-            $parsedown = new Parsedown();
             foreach ($last_news as $n) {
-                $n->content = isset($n->content) ? $parsedown->text($n->content) : null;
+                $n->content = isset($n->content) ? Markdown::parse($n->content) : null;
             }
         }
         
@@ -268,8 +268,7 @@ class HomeController extends Controller
         }
         
         // we parse the markdown content
-        $parsedown = new Parsedown();
-        $description = isset($home->description) ? $parsedown->text($home->description) : null;
+        $description = isset($home->description) ? Markdown::parse($home->description) : null;
         // we replace the images aliases by real paths
         $description = ImageManager::replaceLibraryImagesAliasesByRealPath($description);
         // we replace the files aliases by real paths

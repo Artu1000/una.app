@@ -8,6 +8,7 @@ use CustomLog;
 use Exception;
 use Illuminate\Http\Request;
 use Modal;
+use Route;
 
 class FileController extends Controller
 {
@@ -36,17 +37,19 @@ class FileController extends Controller
      */
     public function download(Request $request)
     {
-        $registration_form_download = null;
-        
         // we register the download
+        $registration_form_download = null;
         if(strpos($request->path, 'registration-form') !== false){
             $registration_form_download = app(RegistrationFormDownloadRepositoryInterface::class)->create([]);
         }
         
+        // we transform absolute path in relative path
+        $path = str_replace(url('/') .  '/', '', $request->path);
+        
         try {
-            return response()->download(
-                $request->path
-            );
+            // we trigger the download of the the file
+            // attention : must be a relative path
+            return response()->download($path);
         } catch(Exception $e) {
             // we log the error
             CustomLog::error($e);
@@ -58,7 +61,7 @@ class FileController extends Controller
             ], 'error');
             
             // we delete the download count
-            $registration_form_download->delete();
+            if($registration_form_download) $registration_form_download->delete();
             
             return redirect()->back();
         }

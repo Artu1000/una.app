@@ -17,6 +17,8 @@ return [
         "text"    => "<i class=\"fa fa-file-text-o\" aria-hidden=\"true\"></i>",
         "default" => "<i class=\"fa fa-file-o\" aria-hidden=\"true\"></i>",
     ],
+    
+    // registration
     "registration" => [
         "registration_form_file" => [
             "name" => $file_prefix . "registration-form",
@@ -24,11 +26,13 @@ return [
         "storage_path"           => storage_path('app/registration/files'),
         "public_path"            => "files/registration",
     ],
-    "settings"     => [
-        "google_analytics_credentials_json" => [
+    
+    // google_analytics upload configurations
+    "google_analytics" => [
+        "credentials_json" => [
             "name" => "google-analytics-credentials",
         ],
-        "storage_path"                      => storage_path('app/settings'),
+        "storage_path"     => storage_path('app/laravel-google-analytics'),
     ],
 
 ];

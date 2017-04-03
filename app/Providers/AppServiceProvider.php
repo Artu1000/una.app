@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use AcidSolutions\InputSanitizer\Laravel\InputSanitizerServiceProvider;
+use AlfredoRamos\ParsedownExtra\ParsedownExtraServiceProvider;
 use Approached\LaravelImageOptimizer\ServiceProvider as LaravelImageOptimizerServiceProvider;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Cartalyst\Sentinel\Laravel\SentinelServiceProvider;
@@ -87,5 +88,8 @@ class AppServiceProvider extends ServiceProvider
         // laravel input sanitizer
         // https://github.com/ACID-Solutions/input-sanitizer
         $this->app->register(InputSanitizerServiceProvider::class);
+        
+        // laravel parsedown
+        $this->app->register(ParsedownExtraServiceProvider::class);
     }
 }

@@ -32,6 +32,9 @@ class RolesTableSeeder extends Seeder
                 // users
                 'users.list'                 => true,
                 'users.view'                 => true,
+                // dashboard
+                'dashboard'                  => true,
+                'dashboard.statistics'       => true,
                 // home
                 'home.page.view'             => true,
                 'home.slides.view'           => true,
@@ -40,6 +43,7 @@ class RolesTableSeeder extends Seeder
                 'news.create'                => true,
                 'news.view'                  => true,
                 'news.update'                => true,
+                'news.preview'               => true,
                 // schedules
                 'schedules'                  => true,
                 'schedules.page.view'        => true,
@@ -53,9 +57,38 @@ class RolesTableSeeder extends Seeder
                 'registration.prices.view'   => true,
                 'registration.prices.update' => true,
                 'registration.prices.delete' => true,
+                // page
+                'pages'                      => true,
+                'pages.list'                 => true,
+                'pages.view'                 => true,
+                'pages.update'               => true,
+                // photos
+                'photos'                     => true,
+                'photos.page.view'           => true,
+                'photos.create'              => true,
+                'photos.view'                => true,
+                'photos.update'              => true,
+                'photos.delete'              => true,
+                // videos
+                'videos'                     => true,
+                'videos.page.view'           => true,
+                'videos.create'              => true,
+                'videos.view'                => true,
+                'videos.update'              => true,
+                'videos.delete'              => true,
                 // partners
                 'partners.list'              => true,
                 'partners.view'              => true,
+                // libraries
+                'libraries'                  => true,
+                'libraries.images.list'      => true,
+                'libraries.images.create'    => true,
+                'libraries.images.update'    => true,
+                'libraries.images.delete'    => true,
+                'libraries.files.list'       => true,
+                'libraries.files.create'     => true,
+                'libraries.files.update'     => true,
+                'libraries.files.delete'     => true,
             ],
         ]);
         // we translate the translatable fields
@@ -72,6 +105,9 @@ class RolesTableSeeder extends Seeder
                 // users
                 'users.list'                 => true,
                 'users.view'                 => true,
+                // dashboard
+                'dashboard'                  => true,
+                'dashboard.statistics'       => true,
                 // home
                 'home.page.view'             => true,
                 'home.slides.view'           => true,
@@ -80,6 +116,7 @@ class RolesTableSeeder extends Seeder
                 'news.create'                => true,
                 'news.view'                  => true,
                 'news.update'                => true,
+                'news.preview'               => true,
                 // schedules
                 'schedules'                  => true,
                 'schedules.page.view'        => true,
@@ -93,9 +130,38 @@ class RolesTableSeeder extends Seeder
                 'registration.prices.view'   => true,
                 'registration.prices.update' => true,
                 'registration.prices.delete' => true,
+                // page
+                'pages'                      => true,
+                'pages.list'                 => true,
+                'pages.view'                 => true,
+                'pages.update'               => true,
+                // photos
+                'photos'                     => true,
+                'photos.page.view'           => true,
+                'photos.create'              => true,
+                'photos.view'                => true,
+                'photos.update'              => true,
+                'photos.delete'              => true,
+                // videos
+                'videos'                     => true,
+                'videos.page.view'           => true,
+                'videos.create'              => true,
+                'videos.view'                => true,
+                'videos.update'              => true,
+                'videos.delete'              => true,
                 // partners
                 'partners.list'              => true,
                 'partners.view'              => true,
+                // libraries
+                'libraries'                  => true,
+                'libraries.images.list'      => true,
+                'libraries.images.create'    => true,
+                'libraries.images.update'    => true,
+                'libraries.images.delete'    => true,
+                'libraries.files.list'       => true,
+                'libraries.files.create'     => true,
+                'libraries.files.update'     => true,
+                'libraries.files.delete'     => true,
             ],
         ]);
         // we translate the translatable fields

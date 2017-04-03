@@ -24,8 +24,8 @@ return [
             "error_icon"                        => "Laisser vide pour réinitialiser à l'icône définie par défaut.",
             "info_icon"                         => "Laisser vide pour réinitialiser à l'icône définie par défaut.",
             "google_analytics_script"           => "Insérer le code avec les balises <b>« script »</b>",
-            "google_analytics_view_id"          => "A récupérer sur le compte <u><a href='https://analytics.google.com'>Google Analytics</a></u> du site.",
-            "google_analytics_credentials_json" => "A récupérer dans la <u><a href='https://console.developers.google.com/apis/library'>Google API Console</a></u>.",
+            "google_analytics_view_id"          => "A récupérer sur le compte <u><a target='blank' href='https://analytics.google.com'>Google Analytics</a></u> du site.",
+            "google_analytics_credentials_json" => "A récupérer dans la <u><a target='blank' href='https://console.developers.google.com/apis/library'>Google API Console</a></u>.",
         ],
         "label"  => [
             "app_name"                          => "Nom du site",
@@ -55,6 +55,7 @@ return [
             "success_icon"                      => "Icône de succès",
             "error_icon"                        => "Icône d'erreur",
             "info_icon"                         => "Icône d'information",
+            "image_optimization"                => "Optimisation des images",
             "google_analytics_script"           => "Script de suivi Google Analytics",
             "google_analytics_view_id"          => "Google Analytics View ID",
             "google_analytics_credentials_json" => "Google analytics credentials JSON",

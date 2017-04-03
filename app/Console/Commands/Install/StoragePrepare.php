@@ -63,7 +63,7 @@ class StoragePrepare extends Command
             storage_path('app/videos'),
             storage_path('app/libraries/images'),
             storage_path('app/libraries/files'),
-            storage_path('app/google-analytics'),
+            storage_path('app/laravel-google-analytics'),
         ];
         // we execute the verification
         $created = [];

@@ -5,7 +5,7 @@ namespace App\Repositories\Rss;
 use App\Models\News;
 use App\Repositories\BaseRepository;
 use Carbon\Carbon;
-use Parsedown;
+use Markdown;
 use Suin\RSSWriter\Channel;
 use Suin\RSSWriter\Feed;
 use Suin\RSSWriter\Item;
@@ -44,8 +44,7 @@ class RssRepository extends BaseRepository implements RssRepositoryInterface
             $item = new Item();
 
             // we parse the markdown content
-            $parsedown = new Parsedown();
-            $news->content = isset($news->content) ? $parsedown->text($news->content) : null;
+            $news->content = isset($news->content) ? Markdown::parse($news->content) : null;
 
             $item->title($news->title)
                 ->description(str_limit(strip_tags($news->content), 250))

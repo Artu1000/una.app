@@ -10,8 +10,8 @@ use Exception;
 use Illuminate\Http\Request;
 use ImageManager;
 use InputSanitizer;
+use Markdown;
 use Modal;
-use Parsedown;
 use Permission;
 use Sentinel;
 use TableList;
@@ -103,8 +103,7 @@ class ScheduleController extends Controller
         }
         
         // we parse the markdown content
-        $parsedown = new Parsedown();
-        $description = isset($schedules->description) ? $parsedown->text($schedules->description) : null;
+        $description = isset($schedules->description) ? Markdown::parse($schedules->description) : null;
         $background_image = $schedules->background_image ? ImageManager::imagePath(config('image.schedules.public_path'), $schedules->background_image, 'background_image', '767') : null;
         
         // SEO Meta settings

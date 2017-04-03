@@ -42,6 +42,7 @@ $route = Route::group($group, function () {
     // settings
     Route::get(LaravelLocalization::transRoute('routes.settings.index'), ['as' => 'settings.index', 'uses' => 'Settings\SettingsController@index']);
     Route::put(LaravelLocalization::transRoute('routes.settings.update'), ['as' => 'settings.update', 'uses' => 'Settings\SettingsController@update']);
+    Route::get(LaravelLocalization::transRoute('routes.settings.download_google_analytics_credentials_json'), ['as' => 'settings.download_google_analytics_credentials_json', 'uses' => 'Settings\SettingsController@downloadGoogleAnalyticsCredentialsJsonFile']);
 
     // permissions
     Route::get(LaravelLocalization::transRoute('routes.permissions.index'), ['as' => 'permissions.index', 'uses' => 'User\PermissionsController@index']);

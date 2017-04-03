@@ -44,28 +44,29 @@ class SymLinksPrepare extends Command
      */
     public function handle()
     {
-        // we remove all the symlinks found into the public folder
-        $links = [];
-        foreach (scandir(public_path()) as $item) {
-            if (is_link($link = public_path($item))) {
-                $links[] = $link;
-                unlink($link);
+        // we get all the symlinks found into the public folder
+        function ScanSymlinksRecursive($dir, &$symlinks = [])
+        {
+            $items = scandir($dir);
+            foreach ($items as $key => $item) {
+                $path = realpath($dir . DIRECTORY_SEPARATOR . $item);
+                if (is_dir($path) && $item != "." && $item != "..") {
+                    if (is_link($dir . '/' . $item)) {
+                        $symlinks[] = $dir . '/' . $item;
+                    }
+                    ScanSymlinksRecursive($path, $symlinks);
+                }
             }
+        
+            return $symlinks;
         }
-        foreach (scandir(public_path('img')) as $item) {
-            if (is_link($link = public_path('img/' . $item))) {
-                $links[] = $link;
-                unlink($link);
-            }
-        }
-        foreach (scandir(public_path('files')) as $item) {
-            if (is_link($link = public_path('files/' . $item))) {
-                $links[] = $link;
-                unlink($link);
-            }
-        }
+    
+        $current_symlinks = ScanSymlinksRecursive(public_path());
+    
+        // we remove all the found symlinks
         $this->info('► Existing symlinks removed :');
-        foreach ($links as $link) {
+        foreach ($current_symlinks as $link) {
+            unlink($link);
             $this->line('- ' . $link);
         }
 

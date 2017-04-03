@@ -10,8 +10,8 @@ use Exception;
 use Illuminate\Http\Request;
 use ImageManager;
 use InputSanitizer;
+use Markdown;
 use Modal;
-use Parsedown;
 use Permission;
 use Sentinel;
 use TableList;
@@ -42,9 +42,8 @@ class VideosController extends Controller
         }
         
         // we parse the markdown content
-        $parsedown = new Parsedown();
         $title = isset($page->title) ? $page->title : null;
-        $description = isset($page->description) ? $parsedown->text($page->description) : null;
+        $description = isset($page->description) ? Markdown::parse($page->description) : null;
         $background_image = $page->background_image ? ImageManager::imagePath(config('image.photos.public_path'), $page->background_image, 'background_image', 767) : null;
         
         // SEO Meta settings

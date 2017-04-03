@@ -16,12 +16,12 @@
         "mcamara/laravel-localization": "^1.2",
         "cviebrock/image-validator": "^2.0",
         "davejamesmiller/laravel-breadcrumbs": "^3.0",
-        "erusev/parsedown": "^1.6",
         "dimsav/laravel-translatable": "^5.4",
         "guzzlehttp/guzzle": "^6.2",
         "doctrine/dbal": "^2.5",
         "spatie/laravel-analytics": "^2.2",
-        "acid-solutions/input-sanitizer": "^1.0"
+        "acid-solutions/input-sanitizer": "^1.0",
+        "alfredo-ramos/parsedown-extra-laravel": "0.4.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

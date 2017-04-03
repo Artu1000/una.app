@@ -149,6 +149,6 @@ class FileManagerHelper
      */
     public function download(string $public_path)
     {
-        return route('files.download', ['path' => $public_path]);
+        return route('file.download', ['path' => $public_path]);
     }
 }

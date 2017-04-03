@@ -377,6 +377,22 @@
                         </div>
                         <div class="panel-body">
 
+                            {{-- image optimization --}}
+                            <label for="input_image_optimization">{{ trans('settings.page.label.image_optimization') }}</label>
+                            <div class="form-group">
+                                <div class="input-group swipe-group">
+                                    <span class="input-group-addon" for="input_image_optimization"><i class="fa fa-compress" aria-hidden="true"></i></span>
+                                    <span class="form-control swipe-label" readonly="">
+                                        {{ trans('global.action.activate') }}
+                                    </span>
+                                    <input class="swipe" id="input_image_optimization" type="checkbox" name="image_optimization"
+                                           @if(old('image_optimization')) checked
+                                           @elseif(config('settings.image_optimization')) checked
+                                            @endif>
+                                    <label class="swipe-btn" for="input_image_optimization"></label>
+                                </div>
+                            </div>
+
                             {{-- google analytics script --}}
                             <label for="input_google_analytics_script">{{ trans('settings.page.label.google_analytics_script') }}</label>
                             <div class="form-group textarea">
@@ -392,17 +408,17 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_google_analytics_view_id"><i class="fa fa-key" aria-hidden="true"></i></span>
-                                    <input id="input_google_analytics_view_id" class="form-control" type="text" name="google_analytics_view_id" placeholder="{{ trans('settings.page.label.google_analytics_view_id') }}" value="{{ old('google_analytics_view_id') ? old('google_analytics_view_id') : env('ANALYTICS_VIEW_ID') }}">
+                                    <input id="input_google_analytics_view_id" class="form-control" type="text" name="google_analytics_view_id" placeholder="{{ trans('settings.page.label.google_analytics_view_id') }}" value="{{ old('google_analytics_view_id') ? old('google_analytics_view_id') : config('settings.google_analytics_view_id') }}">
                                 </div>
                                 <p class="help-block quote">{!! config('settings.info_icon') !!} {!! trans('settings.page.info.google_analytics_view_id') !!}</p>
                             </div>
 
                             {{-- google analytics credentials json --}}
                             <label for="input_google_analytics_credentials_json">{{ trans('settings.page.label.google_analytics_credentials_json') }}</label>
-                            @if(env('ANALYTICS_CREDENTIALS_JSON'))
+                            @if(config('settings.google_analytics_credentials_json'))
                                 <div class="form-group">
-                                    <a href="{{ FileManager::download(config('file.settings.storage_path'), env('ANALYTICS_CREDENTIALS_JSON')) }}">
-                                        <i class="fa fa-file-code-o" aria-hidden="true"></i> {{ env('ANALYTICS_CREDENTIALS_JSON') }}
+                                    <a href="{{ route('settings.download_google_analytics_credentials_json') }}">
+                                        <i class="fa fa-file-code-o"  aria-hidden="true"></i> {{ config('settings.google_analytics_credentials_json') }}
                                     </a>
                                 </div>
                             @endif
@@ -410,14 +426,13 @@
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <span class="btn btn-primary btn-file">
-                                            <i class="fa fa-picture-o"></i> {{ trans('global.action.browse') }} <input type="file" name="google_analytics_credentials_json">
+                                            <i class="fa fa-picture-o" aria-hidden="true"></i> {{ trans('global.action.browse') }} <input type="file" name="google_analytics_credentials_json">
                                         </span>
                                     </span>
                                     <input id="input_google_analytics_credentials_json" type="text" class="form-control" readonly="">
                                 </div>
                                 <p class="help-block quote">{!! config('settings.info_icon') !!} {!! trans('settings.page.info.google_analytics_credentials_json') !!}</p>
                             </div>
-
                         </div>
                     </div>
 

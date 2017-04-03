@@ -123,4 +123,11 @@ $(function() {
             $(this).closest('form').submit();
         });
     }
+
+    // we trigger the file download on click
+    $('a.download').click(function(e){
+        e.preventDefault();
+        // we trigger the file download
+        location.href = app.routes.download + '?path=' + $(this).attr('href');
+    })
 });

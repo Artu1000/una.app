@@ -10,8 +10,8 @@ use FileManager;
 use Illuminate\Http\Request;
 use ImageManager;
 use InputSanitizer;
+use Markdown;
 use Modal;
-use Parsedown;
 use Permission;
 use Sentinel;
 use TableList;
@@ -178,8 +178,7 @@ class PageController extends Controller
         }
         
         // we parse the markdown content
-        $parsedown = new Parsedown();
-        $page->content = isset($page->content) ? $parsedown->text($page->content) : null;
+        $page->content = isset($page->content) ? Markdown::parse($page->content) : null;
         // we replace the images aliases by real paths
         $page->content = ImageManager::replaceLibraryImagesAliasesByRealPath($page->content);
         // we replace the files aliases by real paths
