@@ -10,7 +10,7 @@ require 'recipe/laravel.php';
 
 $servers = [
     'preprod' => [
-        'stage'            => ['preprod', 'everywhere'],
+        'stage'            => ['preprod', 'all'],
         'host'             => 'vps241083.ovh.net',
         'user'             => 'deploy',
         'path'             => '/var/www/preprod',
@@ -23,7 +23,7 @@ $servers = [
         'composer_options' => 'install --no-dev --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction',
     ],
     'prod'    => [
-        'stage'            => ['production', 'everywhere'],
+        'stage'            => ['production', 'all'],
         'host'             => 'vps241083.ovh.net',
         'user'             => 'deploy',
         'path'             => '/var/www/prod/univ-nantes-aviron',
