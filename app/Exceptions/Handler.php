@@ -7,7 +7,9 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Foundation\Validation\ValidationException;
+use Illuminate\Session\TokenMismatchException;
 use JavaScript;
+use Modal;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 
@@ -45,41 +47,83 @@ class Handler extends ExceptionHandler
      * @param  \Exception $e
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $e)
+    public function render($request, Exception $exception)
     {
-        if ($this->isHttpException($e)) {
-            return $this->renderHttpException($e);
-        } else {
-            return parent::render($request, $e);
+        if ($this->isHttpException($exception)) {
+            return $this->renderHttpException($exception);
         }
+    
+        // token mismatch exception handling
+        if ($exception instanceof TokenMismatchException) {
+            $this->renderTokenMismatchException($request, $exception);
+        }
+        
+        return parent::render($request, $exception);
+        
     }
-
+    
     /**
-     * Render the given HttpException.
+     * Special treatment for the TokenMismatchException.
      *
-     * @param  \Symfony\Component\HttpKernel\Exception\HttpException $e
+     * @param                        $request
+     * @param TokenMismatchException $exception
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function renderTokenMismatchException($request, TokenMismatchException $exception)
+    {
+        // we notify the current user
+        Modal::alert([
+            trans('errors.token_mismatch'),
+        ], 'error');
+        
+        // we redirect the user
+        return redirect()->back()->withInput($request->all());
+    }
+    
+    /**
+     * Special treatment for the HttpExceptions.
+     *
+     * @param  \Symfony\Component\HttpKernel\Exception\HttpException $exception
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function renderHttpException(HttpException $e)
+    protected function renderHttpException(HttpException $exception)
     {
         // load base JS
         JavaScript::put([
             'base_url'  => url('/'),
             'site_name' => config('settings.app_name_' . config('app.locale')),
         ]);
-
-        $seo_meta = [
-            'page_title'    => 'Erreur ' . $e->getStatusCode(),
-            'meta_desc'     => $e->getMessage(),
-            'meta_keywords' => '',
-        ];
+        
+        $meta_title = trans('errors.' . $exception->getStatusCode() . '.title');
+        $meta_description = trans('errors.' . $exception->getStatusCode() . '.message');
+        $meta_keywords = null;
+        
+        // SEO Meta settings
+        $seo_meta['page_title'] = $meta_title;
+        $seo_meta['description'] = $meta_description;
+        $seo_meta['keywords'] = $meta_keywords;
+        
+        // og meta settings
+        $og_meta['og:title'] = $meta_title;
+        $og_meta['og:description'] = $meta_description;
+        $og_meta['og:type'] = 'article';
+        
+        // twitter meta settings
+        $twitter_meta['twitter:title'] = $meta_title;
+        $twitter_meta['twitter:description'] = $meta_description;
+        
         $data = [
-            'code'     => $e->getStatusCode(),
-            'seo_meta' => $seo_meta,
-            'css'      => elixir('css/app.error.css'),
+            'code'         => $exception->getStatusCode(),
+            'seo_meta'     => $seo_meta,
+            'og_meta'      => $og_meta,
+            'twitter_meta' => $twitter_meta,
+            'css'          => elixir('css/app.error.css'),
         ];
-
-        return response()->view('templates.common.errors.errors', $data);
+        
+        return response()->view('templates.common.errors.errors', $data)
+            ->setStatusCode($exception->getStatusCode());
     }
 
 }

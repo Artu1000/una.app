@@ -315,7 +315,7 @@ class UsersController extends Controller
             // we store the photo
             if ($photo = $request->file('photo')) {
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $photo->getRealPath(),
                     $user->imageName('photo'),
                     $photo->getClientOriginalExtension(),
@@ -324,7 +324,7 @@ class UsersController extends Controller
                 );
             } else {
                 // we set the una logo as the user image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     database_path('seeds/files/users/users-default-avatar.png'),
                     $user->imageName('photo'),
                     'png',
@@ -608,7 +608,7 @@ class UsersController extends Controller
             // we store the photo
             if ($photo = $request->file('photo')) {
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $photo->getRealPath(),
                     $user->imageName('photo'),
                     $photo->getClientOriginalExtension(),
@@ -619,7 +619,7 @@ class UsersController extends Controller
                 Sentinel::update($user, ['photo' => $file_name]);
             } elseif ((!$request->get('photo') && !$user->photo) || $request->get('remove_photo')) {
                 // we set the una logo as the user image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     database_path('seeds/files/users/users-default-avatar.png'),
                     $user->imageName('photo'),
                     'png',

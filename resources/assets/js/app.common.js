@@ -1,3 +1,29 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************************************
+ * FUNCTIONS
+ **********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// replace button fontawesome icon by loading spinner on click
+// show spinner even if no font awesome icon is found
+function replaceFontAwesomeIconBySpinner($this) {
+    // we get the html contained into the button
+    var html = $this.html();
+    // we remove the fontawesome icon
+    var begin = html.indexOf('<i');
+    var end = html.indexOf('i>');
+    var to_remove = html.substring(begin, end + 2);
+    var cleaned_html = html.replace(to_remove, '');
+    // we put the loading spinner
+    $this.html(app.loading_spinner + ' ' + cleaned_html);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************************************
+ * ON DOCUMENT READY
+ **********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 $(function() {
     // Make link unclikable
     $('.unclickable').click(function(e){
@@ -62,19 +88,7 @@ $(function() {
         window.open(target);
     });
 
-    // replace button fontawesome icon by loading spinner on click
-    // show spinner even if no font awesome icon is found
-    function replaceFontAwesomeIconBySpinner($this) {
-        // we get the html contained into the button
-        var html = $this.html();
-        // we remove the fontawesome icon
-        var begin = html.indexOf('<i');
-        var end = html.indexOf('i>');
-        var to_remove = html.substring(begin, end + 2);
-        var cleaned_html = html.replace(to_remove, '');
-        // we put the loading spinner
-        $this.html(app.loading_spinner + ' ' + cleaned_html);
-    }
+    // make a spinner appear on click
     $('.spin-on-click').one('click', function (e) {
         // we prevent any action
         e.preventDefault();

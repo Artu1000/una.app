@@ -204,7 +204,7 @@ class ImagesController extends Controller
                 ]);
                 
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $img->getRealPath(),
                     $image->imageName('image'),
                     $img->getClientOriginalExtension(),

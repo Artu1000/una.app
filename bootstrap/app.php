@@ -43,6 +43,32 @@ $app->singleton(
 
 /*
 |--------------------------------------------------------------------------
+| Set app settings
+|--------------------------------------------------------------------------
+|
+| We return the app settings that are contained into the settings.json.
+| These settings must be used in the settings config file ONLY in order
+| to be cached. They will NOT be available when the config will be cached.
+|
+*/
+
+// if no config cache is detected
+if (!is_file(base_path('bootstrap/cache/config.php'))) {
+    // if no function settings is define before
+    if (!function_exists('settings')) {
+        // we set the settings function
+        function settings()
+        {
+            // we get the settings values in the settings.json file
+            if (is_file(storage_path('app/settings/settings.json'))) {
+                return json_decode(file_get_contents(storage_path('app/settings/settings.json')));
+            }
+        }
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
 | Return The Application
 |--------------------------------------------------------------------------
 |

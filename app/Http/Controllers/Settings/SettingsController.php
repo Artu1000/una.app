@@ -150,7 +150,7 @@ class SettingsController extends Controller
                     );
                 }
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $logo_light->getRealPath(),
                     config('image.settings.logo.name.light'),
                     $logo_light->getClientOriginalExtension(),
@@ -174,7 +174,7 @@ class SettingsController extends Controller
                     );
                 }
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $logo_dark->getRealPath(),
                     config('image.settings.logo.name.dark'),
                     $logo_dark->getClientOriginalExtension(),

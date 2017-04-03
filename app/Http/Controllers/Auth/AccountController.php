@@ -72,7 +72,7 @@ class AccountController extends Controller
         if ($user = Sentinel::register($request->all())) {
 
             // we set the una logo as the user image
-            $file_name = ImageManager::optimizeAndResize(
+            $file_name = ImageManager::storeResizeAndRename(
                 database_path('seeds/files/users/users-default-avatar.png'),
                 $user->imageName('photo'),
                 'png',

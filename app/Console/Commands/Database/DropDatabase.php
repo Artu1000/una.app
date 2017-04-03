@@ -5,6 +5,7 @@ namespace App\Console\Commands\Database;
 use DB;
 use Eloquent;
 use Illuminate\Console\Command;
+use Schema;
 
 class DropDatabase extends Command
 {
@@ -56,7 +57,7 @@ class DropDatabase extends Command
 
             // we drop the list of tables
             foreach ($tables as $table) {
-                \Schema::drop($table);
+                Schema::drop($table);
                 $this->info('✔ Table ' . $table . ' has been dropped.');
             }
 

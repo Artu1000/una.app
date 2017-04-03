@@ -33,21 +33,10 @@ class RegistrationController extends Controller
     }
     
     /**
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        // SEO Meta settings
-        $this->seo_meta['page_title'] = trans('seo.front.registration.title');
-        $this->seo_meta['meta_desc'] = trans('seo.front.registration.description');
-        $this->seo_meta['meta_keywords'] = trans('seo.front.registration.keywords');
-        
-        // og meta settings
-        $this->og_meta['og:title'] = trans('seo.front.registration.title');
-        $this->og_meta['og:description'] = trans('seo.front.registration.description');
-        $this->og_meta['og:type'] = 'article';
-        $this->og_meta['og:url'] = route('registration.index');
-        
         // we get the registration prices
         $prices = $this->repository->where('active', true)->orderBy('price', 'asc')->get();
         
@@ -59,20 +48,49 @@ class RegistrationController extends Controller
         
         // we parse the markdown content
         $parsedown = new Parsedown();
-        $description = isset($registration_page->description) ? $parsedown->text($registration_page->description) : null;
+        $description = isset($registration_page->description)
+            ? $parsedown->text($registration_page->description)
+            : null;
         // we replace the images aliases by real paths
         $description = ImageManager::replaceLibraryImagesAliasesByRealPath($description);
         // we replace the files aliases by real paths
         $description = FileManager::replaceLibraryFilesAliasesByRealPath($description);
+    
+        // we get the background image
+        $background_image = $registration_page->background_image
+            ? ImageManager::imagePath(config('image.registration.public_path'), $registration_page->background_image, 'background_image', '767')
+            : null;
+    
+        // SEO Meta settings
+        $this->seo_meta['page_title'] = trans('seo.front.registration.title');
+        $this->seo_meta['meta_desc'] = trans('seo.front.registration.description');
+        $this->seo_meta['meta_keywords'] = trans('seo.front.registration.keywords');
+    
+        // og meta settings
+        $this->og_meta['og:title'] = trans('seo.front.registration.title');
+        $this->og_meta['og:description'] = trans('seo.front.registration.description');
+        $this->og_meta['og:type'] = 'article';
+        $this->og_meta['og:url'] = route('registration.index');
+        $this->og_meta['og:image'] = $background_image;
+    
+        // twitter meta settings
+        $this->twitter_meta['twitter:title'] = trans('seo.front.registration.title');
+        $this->twitter_meta['twitter:description'] = trans('seo.front.registration.description');
+        $this->twitter_meta['twitter:image'] = $background_image;
         
         // prepare data for the view
         $data = [
             'seo_meta'               => $this->seo_meta,
             'og_meta'                => $this->og_meta,
+            'twitter_meta'           => $this->twitter_meta,
             'prices'                 => $prices,
             'title'                  => isset($registration_page->title) ? $registration_page->title : null,
-            'registration_form_file' => isset($registration_page->registration_form_file) ? $registration_page->registration_form_file : null,
-            'background_image'       => isset($registration_page->background_image) ? $registration_page->background_image : null,
+            'registration_form_file' => isset($registration_page->registration_form_file)
+                ? $registration_page->registration_form_file
+                : null,
+            'background_image'       => isset($registration_page->background_image)
+                ? $registration_page->background_image
+                : null,
             'description'            => $description,
             'css'                    => elixir('css/app.registration.css'),
         ];
@@ -178,8 +196,12 @@ class RegistrationController extends Controller
         $data = [
             'seo_meta'               => $this->seo_meta,
             'title'                  => isset($registration_page->title) ? $registration_page->title : null,
-            'background_image'       => isset($registration_page->background_image) ? $registration_page->background_image : null,
-            'registration_form_file' => isset($registration_page->registration_form_file) ? $registration_page->registration_form_file : null,
+            'background_image'       => isset($registration_page->background_image)
+                ? $registration_page->background_image
+                : null,
+            'registration_form_file' => isset($registration_page->registration_form_file)
+                ? $registration_page->registration_form_file
+                : null,
             'description'            => isset($registration_page->description) ? $registration_page->description : null,
             'tableListData'          => $tableListData,
         ];
@@ -233,13 +255,13 @@ class RegistrationController extends Controller
             return redirect()->back();
         }
         
-//        try {
+        try {
             $inputs = $request->except('_token', '_method', 'background_image', 'remove_background_image');
             
             // we store the background image file
             if ($background_image = $request->file('background_image')) {
                 // we remove the background image
-                if($registration->background_image){
+                if ($registration->background_image) {
                     ImageManager::remove(
                         $registration->background_image,
                         config('image.registration.storage_path'),
@@ -247,7 +269,7 @@ class RegistrationController extends Controller
                     );
                 }
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $background_image->getRealPath(),
                     config('image.registration.background_image.name'),
                     $background_image->getClientOriginalExtension(),
@@ -267,13 +289,15 @@ class RegistrationController extends Controller
                 }
                 $inputs['background_image'] = null;
             } else {
-                $inputs['background_image'] = isset($registration->background_image) ? $registration->background_image : null;
+                $inputs['background_image'] = isset($registration->background_image)
+                    ? $registration->background_image
+                    : null;
             }
             
             // we store the registration form file
             if ($registration_form_file = $request->file('registration_form_file')) {
                 // we remove the registration form file
-                if($registration->registration_form_file){
+                if ($registration->registration_form_file) {
                     FileManager::remove(
                         $registration->registration_form_file,
                         config('file.registration.storage_path')
@@ -289,7 +313,9 @@ class RegistrationController extends Controller
                 // we set the file name
                 $inputs['registration_form_file'] = $file_name;
             } else {
-                $inputs['registration_form_file'] = isset($registration->registration_form_file) ? $registration->registration_form_file : null;
+                $inputs['registration_form_file'] = isset($registration->registration_form_file)
+                    ? $registration->registration_form_file
+                    : null;
             }
             
             // we store the content into a json file
@@ -303,22 +329,24 @@ class RegistrationController extends Controller
             ], 'success');
             
             return redirect()->back();
-//        } catch (Exception $e) {
-//
-//            // we flash the request
-//            $request->flashExcept('background_image', 'registration_form_file');
-//
-//            // we log the error
-//            CustomLog::error($e);
-//
-//            // we notify the current user
-//            Modal::alert([
-//                trans('registration.message.content.update.failure', ['title' => isset($registration->title) ? $registration->title : null]),
-//                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
-//            ], 'error');
-//
-//            return redirect()->back();
-//        }
+        } catch (Exception $e) {
+            
+            // we flash the request
+            $request->flashExcept('background_image', 'registration_form_file');
+            
+            // we log the error
+            CustomLog::error($e);
+            
+            // we notify the current user
+            Modal::alert([
+                trans('registration.message.content.update.failure', [
+                    'title' => isset($registration->title) ? $registration->title : null,
+                ]),
+                trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
+            ], 'error');
+            
+            return redirect()->back();
+        }
     }
     
     /**
@@ -336,7 +364,9 @@ class RegistrationController extends Controller
             return response([
                 'message' => [
                     trans('registration.message.price.find.failure', ['id' => $id]),
-                    trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
+                    trans('global.message.global.failure.contact.support', [
+                        'email' => config('settings.support_email'),
+                    ]),
                 ],
             ], 401);
         }
@@ -373,7 +403,12 @@ class RegistrationController extends Controller
             return response([
                 'active'  => $price->active,
                 'message' => [
-                    trans('registration.message.price.activation.success.label', ['action' => trans_choice('registration.message.price.activation.success.action', $price->active), 'price' => $price->label]),
+                    trans('registration.message.price.activation.success.label', [
+                        'action'   => trans_choice(
+                            'registration.message.price.activation.success.action',
+                            $price->active
+                        ), 'price' => $price->label,
+                    ]),
                 ],
             ], 200);
         } catch (Exception $e) {

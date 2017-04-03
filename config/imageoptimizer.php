@@ -1,34 +1,71 @@
 <?php
 
-return array(
+return [
 
     /*
      |--------------------------------------------------------------------------
-     | Optipng path
+     | Options for image transforming
      |--------------------------------------------------------------------------
      |
-     | You can check easy with follow command in a shell:
+     | Bin path you can check easy with follow command in a shell:
      | which optipng
      |
      */
-    'optipng_path' => '/usr/bin/optipng',
+    'options' => [
+        'ignore_errors' => false,
+
+        'optipng_bin' => '/usr/bin/optipng',
+        'optipng_options' => ['-i0', '-o7', '-strip all', '-quiet'],
+//        'optipng_options' => ['-i0', '-o2', '-quiet'],
+
+//        'pngquant_bin'     => env('PNGQUANT', '/usr/bin/pngquant'),
+//        'pngquant_options' => ['--force'],
+
+//        'pngcrush_bin' => '/usr/bin/pngcrush',
+//        'pngcrush_options' => ['-reduce', '-q', '-ow'],
+
+//        'pngout_bin' => '/usr/bin/pngout',
+//        'pngout_options' => ['-s3', '-q', '-y'],
+
+        'gifsicle_bin'     => env('GIFSICLE', '/usr/bin/gifsicle'),
+        'gifsicle_options' => ['-b', '-O5'],
+
+        'jpegoptim_bin'     => env('JPEGOPTIM','/usr/bin/jpegoptim'),
+        'jpegoptim_options' => ['--strip-all', '--all-progressive', '--quiet'],
+//        'jpegoptim_options' => ['--strip-all'],
+
+//        'jpegtran_bin' => '/usr/bin/jpegtran',
+//        'jpegtran_options' => ['-optimize', '-progressive'],
+
+//        'advpng_bin' => '/usr/bin/advpng',
+//        'advpng_options' => ['-z', '-4', '-q'],
+    ],
+
+
     /*
      |--------------------------------------------------------------------------
-     | Jpegoptim path
+     | Transformer for image
      |--------------------------------------------------------------------------
      |
-     | You can check easy with follow command in a shell:
-     | which jpegoptim
+     | You can choice which tranformer you will use
      |
      */
-    'jpegoptim_path' => '/usr/bin/jpegoptim',
+    'transform_handler' => [
+        'png'  => 'optipng',
+//        'png'  => 'pngquant',
+        'jpg'  => 'jpegoptim',
+        'jpeg' => 'jpegoptim',
+        'gif'  => 'gifsicle',
+    ],
+
     /*
      |--------------------------------------------------------------------------
-     | Ignore errors
+     | Log file
      |--------------------------------------------------------------------------
      |
-     | This feature is only devolpment helpful
+     | Only for image optimize errors
      |
      */
-    'ignore_errors' => false,
-);
+    'log_file' => storage_path().'/logs/image_optimize.log',
+
+];

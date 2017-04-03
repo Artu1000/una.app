@@ -154,7 +154,7 @@ class PageController extends Controller
     
     /**
      * @param $slug
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($slug)
     {
@@ -176,7 +176,7 @@ class PageController extends Controller
             
             return abort(404);
         }
-    
+        
         // we parse the markdown content
         $parsedown = new Parsedown();
         $page->content = isset($page->content) ? $parsedown->text($page->content) : null;
@@ -199,12 +199,20 @@ class PageController extends Controller
             $this->og_meta['og:image'] = $page->imagePath($page->image, 'image', '767');
         }
         
+        // twitter meta settings
+        $this->twitter_meta['twitter:title'] = $page->meta_title ? $page->meta_title : strip_tags($page->title);
+        $this->twitter_meta['twitter:description'] = $page->meta_description ? $page->meta_description : str_limit(strip_tags($page->content), 160);
+        if ($page->image) {
+            $this->twitter_meta['twitter:image'] = $page->imagePath($page->image, 'image', '767');
+        }
+        
         // prepare data for the view
         $data = [
-            'seo_meta' => $this->seo_meta,
-            'og_meta'  => $this->og_meta,
-            'page'     => $page,
-            'css'      => elixir('css/app.page.css'),
+            'seo_meta'     => $this->seo_meta,
+            'og_meta'      => $this->og_meta,
+            'twitter_meta' => $this->twitter_meta,
+            'page'         => $page,
+            'css'          => elixir('css/app.page.css'),
         ];
         
         // return the view with data
@@ -212,7 +220,7 @@ class PageController extends Controller
     }
     
     /**
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -261,12 +269,12 @@ class PageController extends Controller
         
         // we sanitize the entries
         $request->replace(InputSanitizer::sanitize($request->all()));
-    
+        
         // we slugify the slug
         $request->merge([
             'slug' => str_slug(strip_tags($request->slug)),
         ]);
-    
+        
         // we set the validity rules
         $rules = [
             'image'            => 'image|mimes:jpg,jpeg,png|image_size:>=2560,>=1440',
@@ -293,11 +301,11 @@ class PageController extends Controller
             ]);
             
             // we update the fields
-            if(Sentinel::getUser()->hasAccess('pages.slug')){
+            if (Sentinel::getUser()->hasAccess('pages.slug')) {
                 $page->slug = $request->slug;
             }
             $page->title = $request->title;
-            $page->content = $request->content;
+            $page->content = $request->get('content');
             $page->meta_title = $request->meta_title;
             $page->meta_description = $request->meta_description;
             $page->meta_keywords = $request->meta_keywords;
@@ -305,7 +313,7 @@ class PageController extends Controller
             // we store the image
             if ($img = $request->file('image')) {
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $img->getRealPath(),
                     $page->imageName('image'),
                     $img->getClientOriginalExtension(),
@@ -458,11 +466,11 @@ class PageController extends Controller
         
         try {
             // we update the fields
-            if(Sentinel::getUser()->hasAccess('pages.slug')){
+            if (Sentinel::getUser()->hasAccess('pages.slug')) {
                 $page->slug = $request->slug;
             }
             $page->title = $request->title;
-            $page->content = $request->content;
+            $page->content = $request->get('content');
             $page->meta_title = $request->meta_title;
             $page->meta_description = $request->meta_description;
             $page->meta_keywords = $request->meta_keywords;
@@ -479,7 +487,7 @@ class PageController extends Controller
                     );
                 }
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $img->getRealPath(),
                     $page->imageName('image'),
                     $img->getClientOriginalExtension(),

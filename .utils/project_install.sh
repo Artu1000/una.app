@@ -18,75 +18,88 @@ echo '/_/   /_/   \____/_/ /\___/\___/\__/  /_/_/ /_/____/\__/\__,_/_/_/'
 echo '                /___/'
 echo "${gray}"
 
+# .env file detection
+if [ ! -f .env ]; then
+    echo "${red}✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗${reset}"
+    echo "The ${purple}.env${reset} file is required and has not been found in the project root."
+    echo "${purple}▶${reset} Please copy the ${purple}.env-example${reset} file and set your own ${purple}.env${reset} projet file."
+    echo "${red}✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗${reset}"
+    exit
+fi
+
 printf "\n"
 echo "${gray}=================================================${reset}"
 printf "\n"
 
 # environment detection
 echo "${purple}▶${reset} Detecting current environment ..."
-local=false
-if grep -q APP_ENV=local ".env"; then
-    local=true
-    echo "${green}✔${reset} Environment detected : ${purple}Local${reset}"
-else
-    echo "${green}✔${reset} Environment detected : ${purple}Other than local (production / preprod / staging / ...)${reset}"
-fi
+ENV=$(grep "ENV=" .env | cut -d'=' -f 2)
+echo "${green}✔${reset} Environment detected : ${purple}$ENV${reset}"
 
 printf "\n"
 echo "${gray}=================================================${reset}"
 printf "\n"
 
-# composer install / update
-echo "${purple}▶${reset} Installing and updating composer dependencies ...${reset}"
-if [ "$local" = true ]; then
-    echo "${purple}→ composer self-update${reset}"
-    sudo composer self-update
-    echo "${purple}→ dump-autoload -o${reset}"
-    composer dump-autoload -o
+# if local environment
+if [ $ENV = "local" ]; then
+    echo "${gray}Running ${purple}local${reset} ${gray}installation process ...${reset}"
 
-    if [ -d vendor ]; then
-        echo "${gray}vendor directory detected : running composer update${reset}"
-        echo "${purple}→ composer update --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction${reset}"
-        composer update --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction
+    # composer install / update
+    echo "${purple}▶${reset} Installing / updating composer dependencies ...${reset}"
+    if [ $ENV = "local" ]; then
+        echo "${purple}→ composer self-update${reset}"
+        sudo composer self-update
+        echo "${purple}→ dump-autoload -o${reset}"
+        composer dump-autoload -o
+
+        if [ -d vendor ]; then
+            echo "${gray}vendor directory detected${reset}"
+            echo "${purple}→ composer update --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction${reset}"
+            composer update --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction
+            echo "${green}✔${reset} Composer dependencies updated${reset}"
+        else
+            echo "${gray}vendor directory not detected${reset}"
+            echo "${purple}→ composer install --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction${reset}"
+            composer install --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction
+            echo "${green}✔${reset} Composer dependencies installed${reset}"
+        fi
     else
-        echo "${gray}vendor directory not detected : running composer install${reset}"
-        echo "${purple}→ composer install --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction${reset}"
-        composer install --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction
+        echo "${purple}→ dump-autoload -o${reset}"
+        composer dump-autoload -o
+        if [ -d vendor ]; then
+            echo "${gray}vendor directory detected : running composer update${reset}"
+            echo "${purple}→ composer update --no-dev --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction${reset}"
+            composer update --no-dev --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction
+        else
+            echo "${gray}vendor directory not detected : running composer install${reset}"
+            echo "${purple}→ composer install --no-dev --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction${reset}"
+            composer install --no-dev --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction
+        fi
+        echo "${green}✔${reset} Composer dependencies (without require-dev) installed and updated${reset}"
     fi
-    echo "${green}✔${reset} Composer dependencies (including require-dev) installed and updated${reset}"
-else
-    echo "${purple}→ dump-autoload -o${reset}"
-    composer dump-autoload -o
-    if [ -d vendor ]; then
-        echo "${gray}vendor directory detected : running composer update${reset}"
-        echo "${purple}→ composer update --no-dev --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction${reset}"
-        composer update --no-dev --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction
+
+    printf "\n"
+    echo "${gray}=================================================${reset}"
+    printf "\n"
+
+    # bower install / update
+    echo "${purple}▶${reset} Installing / updating bower dependencies ..."
+    if [ -d resources/assets/vendor ]; then
+        echo "${gray}bower vendor directory detected${reset}"
+        echo "${purple}→ bower update${reset}"
+        bower update
+        echo "${green}✔${reset} Bower dependencies updated"
     else
-        echo "${gray}vendor directory not detected : running composer install${reset}"
-        echo "${purple}→ composer install --no-dev --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction${reset}"
-        composer install --no-dev --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction
+        echo "${gray}bower vendor directory not detected${reset}"
+        echo "${purple}→ bower install${reset}"
+        bower install
+        echo "${green}✔${reset} Bower dependencies installed"
     fi
-    echo "${green}✔${reset} Composer dependencies (without require-dev) installed and updated${reset}"
-fi
 
-printf "\n"
-echo "${gray}=================================================${reset}"
-printf "\n"
+    printf "\n"
+    echo "${gray}=================================================${reset}"
+    printf "\n"
 
-# bower install / update
-echo "${purple}▶${reset} Installing and updating bower dependencies ..."
-echo "${purple}→ bower install${reset}"
-bower install
-echo "${purple}→ bower update${reset}"
-bower update
-echo "${green}✔${reset} Bower dependencies installed and updated"
-
-printf "\n"
-echo "${gray}=================================================${reset}"
-printf "\n"
-
-# if local
-if [ "$local" = true ]; then
     # generating app key
     echo "${purple}▶${reset} Generating app key ...${reset}"
     echo "${purple}→ php artisan key:generate${reset}"
@@ -99,7 +112,7 @@ if [ "$local" = true ]; then
 
     # packages install
     echo "${purple}▶${reset} Installing packages ...${reset}"
-    echo "${purple}→ bash .utils/packages_install.sh{reset}"
+    echo "${purple}→ bash .utils/packages_install.sh${reset}"
     bash .utils/packages_install.sh
     echo "${green}✔${reset} Packages installed"
 
@@ -122,16 +135,6 @@ if [ "$local" = true ]; then
         yarn install
         echo "${green}✔${reset} Node dependencies installation done"
     fi
-
-    printf "\n"
-    echo "${gray}=================================================${reset}"
-    printf "\n"
-
-    # css / js dependencies generation
-    echo "${purple}▶${reset} Generating css and js dependencies ..."
-    echo "${purple}→ gulp --production${reset}"
-    gulp --production
-    echo "${green}✔${reset} css and js dependencies generated"
 
     printf "\n"
     echo "${gray}=================================================${reset}"
@@ -167,6 +170,8 @@ if [ "$local" = true ]; then
         echo "${green}✔${reset} Project migrations done"
     fi
 else
+    echo "${gray}Running ${purple}${ENV}${reset} ${gray}installation process ...${reset}"
+
     # we prepare the storage folders
     echo "${purple}▶${reset} Preparing storage folders ..."
     echo "${purple}→ php artisan storage:prepare${reset}"
@@ -206,11 +211,11 @@ printf "\n"
 echo "${gray}=================================================${reset}"
 printf "\n"
 
-# robot.txt generation
-echo "${purple}▶${reset}  Generating robot.txt file ..."
-echo "${purple}→ php artisan robot:txt:generate${reset}"
-php artisan robot:txt:generate
-echo "${green}✔${reset} Robot.txt file generated"
+# robots.txt generation
+echo "${purple}▶${reset}  Generating robots.txt file ..."
+echo "${purple}→ php artisan robots:txt:generate${reset}"
+php artisan robots:txt:generate
+echo "${green}✔${reset} Robots.txt file generated"
 
 printf "\n"
 echo "${gray}=================================================${reset}"

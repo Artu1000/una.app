@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="{{ config('app.locale') }}">
 
     {{-- head inclusion--}}
     <head>
@@ -33,6 +34,9 @@
 
             {{-- footer inclusion --}}
             @include('templates.front.partials.footer')
+
+            {{-- cookies notification --}}
+            @include('templates.front.partials.cookies_notification')
 
             {{-- alerts management --}}
             @if(isset($alert) && !empty($alert))

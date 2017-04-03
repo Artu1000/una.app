@@ -19,7 +19,7 @@ use Validation;
 
 class PhotosController extends Controller
 {
-
+    
     /**
      * PhotosController constructor.
      * @param PhotoRepositoryInterface $photo
@@ -31,7 +31,7 @@ class PhotosController extends Controller
     }
     
     /**
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -40,36 +40,40 @@ class PhotosController extends Controller
         if (is_file(storage_path('app/photos/content.json'))) {
             $page = json_decode(file_get_contents(storage_path('app/photos/content.json')));
         }
-
+        
         // we parse the markdown content
         $parsedown = new Parsedown();
         $title = isset($page->title) ? $page->title : null;
         $description = isset($page->description) ? $parsedown->text($page->description) : null;
-
+        $background_image = $page->background_image ? ImageManager::imagePath(config('image.photos.public_path'), $page->background_image, 'background_image', 767) : null;
+        
         // SEO Meta settings
         $this->seo_meta['page_title'] = trans('seo.front.photos.title') ? trans('seo.front.photos.title') : $title;
         $this->seo_meta['meta_desc'] = trans('seo.front.photos.description') ? trans('seo.front.photos.description') : str_limit($description, 160);
         $this->seo_meta['meta_keywords'] = trans('seo.front.photos.keywords');
-
+        
         // og meta settings
         $this->og_meta['og:title'] = trans('seo.front.photos.title') ? trans('seo.front.photos.title') : $title;
         $this->og_meta['og:description'] = trans('seo.front.photos.description') ? trans('seo.front.photos.description') : str_limit($description, 160);
         $this->og_meta['og:type'] = 'article';
         $this->og_meta['og:url'] = route('photos.index');
-        if (isset($page->background_image)) {
-            $this->og_meta['og:image'] = ImageManager::imagePath(config('image.photos.public_path'), $page->background_image, 'background_image', 767);
-        }
-
+        $this->og_meta['og:image'] = $background_image;
+        
+        // twitter meta settings
+        $this->twitter_meta['twitter:title'] = trans('seo.front.photos.title') ? trans('seo.front.photos.title') : $title;
+        $this->twitter_meta['twitter:description'] = trans('seo.front.photos.description') ? trans('seo.front.photos.description') : str_limit($description, 160);
+        $this->twitter_meta['twitter:image'] = $background_image;
+        
         // we sanitize the entries
         $request->replace(InputSanitizer::sanitize($request->all()));
-
+        
         // we convert the fr date to database format
         if ($request->get('year')) {
             $request->merge([
                 'year' => Carbon::create($request->get('year'))->format('Y'),
             ]);
         }
-
+        
         // we check inputs validity
         $rules = [
             'year' => 'date_format:Y',
@@ -78,28 +82,29 @@ class PhotosController extends Controller
         if (!Validation::check($request->all(), $rules)) {
             return redirect()->back();
         }
-
+        
         // we get the availables years
         $years = $this->repository->getAvailableYears();
-
+        
         // we set the year
         if ($request->year) {
             $selected_year = $request->year;
         } else {
             $selected_year = array_first($years);
         }
-
+        
         // sort results by year
         $photos_list = $this->repository->getModel()
             ->whereBetween('date', [$selected_year . '-01-01', $selected_year . '-12-31'])
             ->where('active', true)
             ->orderBy('date', 'desc')
             ->get();
-
+        
         // prepare data for the view
         $data = [
             'seo_meta'         => $this->seo_meta,
             'og_meta'          => $this->og_meta,
+            'twitter_meta'     => $this->twitter_meta,
             'photos_list'      => $photos_list,
             'title'            => isset($page->title) ? $page->title : null,
             'background_image' => isset($page->background_image) ? $page->background_image : null,
@@ -116,7 +121,7 @@ class PhotosController extends Controller
     
     /**
      * @param Request $request
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function pageEdit(Request $request)
     {
@@ -218,7 +223,7 @@ class PhotosController extends Controller
             $search_config,
             $enable_lines_choice
         );
-
+        
         // we get the json page content
         $page = null;
         if (is_file(storage_path('app/photos/content.json'))) {
@@ -288,7 +293,7 @@ class PhotosController extends Controller
             // we store the background image file
             if ($background_image = $request->file('background_image')) {
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $background_image->getRealPath(),
                     config('image.photos.background_image.name'),
                     $background_image->getClientOriginalExtension(),
@@ -341,7 +346,7 @@ class PhotosController extends Controller
     }
     
     /**
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -421,7 +426,7 @@ class PhotosController extends Controller
             // we store the image
             if ($img = $request->file('cover')) {
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $img->getRealPath(),
                     $photo->imageName('cover'),
                     $img->getClientOriginalExtension(),
@@ -442,23 +447,23 @@ class PhotosController extends Controller
         } catch (Exception $e) {
             // we flash the request
             $request->flashExcept('cover');
-
+            
             // we log the error
             CustomLog::error($e);
-
+            
             // we notify the current user
             Modal::alert([
                 trans('photos.message.create.failure', ['album' => $request->title]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email'),]),
             ], 'error');
-
+            
             return redirect()->back();
         }
     }
     
     /**
      * @param $id
-     * @return $this|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
@@ -493,7 +498,7 @@ class PhotosController extends Controller
         $breadcrumbs_data = [
             'photo' => $photo,
         ];
-
+        
         // we format the date in correct format
         $photo->date = Carbon::createFromFormat('Y-m-d', $photo->date)->format('d/m/Y');
         
@@ -574,11 +579,11 @@ class PhotosController extends Controller
         try {
             // we update the photo
             $photo->update($request->except('_token', 'cover'));
-
+            
             // we store the image
             if ($img = $request->file('cover')) {
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $img->getRealPath(),
                     $photo->imageName('cover'),
                     $img->getClientOriginalExtension(),
@@ -689,7 +694,7 @@ class PhotosController extends Controller
         } catch (Exception $e) {
             // we log the error
             CustomLog::error($e);
-
+            
             // we notify the current user
             return response([
                 'message' => [
@@ -698,7 +703,7 @@ class PhotosController extends Controller
                 ],
             ], 401);
         }
-
+        
         // we check the current user permission
         if ($permission_denied = Permission::hasPermissionJson('photos.update')) {
             return response([

@@ -2,8 +2,8 @@
   "private": true,
   "devDependencies": {
     "gulp": "^3.9.1",
-    "gulp-image": "^2.7.2",
-    "gulp-shell": "^0.5.2",
+    "gulp-image": "^2.7.6",
+    "gulp-shell": "^0.6.3",
     "laravel-elixir": "^6.0.0-15",
     "laravel-elixir-remove": "^0.2.1"
   }

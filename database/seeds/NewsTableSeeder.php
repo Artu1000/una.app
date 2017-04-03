@@ -26,7 +26,7 @@ class NewsTableSeeder extends Seeder
         }
 
         // we insert the news page content
-        $file_name = ImageManager::optimizeAndResize(
+        $file_name = ImageManager::storeResizeAndRename(
             database_path('seeds/files/news/una_news.jpg'),
             config('image.news.background_image.name'),
             'jpg',
@@ -55,7 +55,7 @@ class NewsTableSeeder extends Seeder
             'active'           => false,
         ]);
         // we optimize and resize the news image
-        $file_name = \ImageManager::optimizeAndResize(
+        $file_name = \ImageManager::storeResizeAndRename(
             database_path('seeds/files/news/news_po_una_september.jpg'),
             $news->imageName('image'),
             'jpg',
@@ -80,7 +80,7 @@ class NewsTableSeeder extends Seeder
             'active'           => true,
         ]);
         // we optimize and resize the news image
-        $file_name = \ImageManager::optimizeAndResize(
+        $file_name = \ImageManager::storeResizeAndRename(
             database_path('seeds/files/news/news_una_new_website.jpg'),
             $news->imageName('image'),
             'jpg',

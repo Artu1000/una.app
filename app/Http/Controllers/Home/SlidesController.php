@@ -119,7 +119,7 @@ class SlidesController extends Controller
             // we store the picto file
             if ($picto = $request->file('picto')) {
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $picto->getRealPath(),
                     $slide->imageName('picto'),
                     $picto->getClientOriginalExtension(),
@@ -134,7 +134,7 @@ class SlidesController extends Controller
             // we store the background image file
             if ($background_image = $request->file('background_image')) {
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $background_image->getRealPath(),
                     $slide->imageName('background_image'),
                     $background_image->getClientOriginalExtension(),
@@ -322,7 +322,7 @@ class SlidesController extends Controller
             // we store the picto file
             if ($picto = $request->file('picto')) {
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $picto->getRealPath(),
                     $slide->imageName('picto'),
                     $picto->getClientOriginalExtension(),
@@ -337,7 +337,7 @@ class SlidesController extends Controller
             // we store the background image file
             if ($background_image = $request->file('background_image')) {
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $background_image->getRealPath(),
                     $slide->imageName('background_image'),
                     $background_image->getClientOriginalExtension(),

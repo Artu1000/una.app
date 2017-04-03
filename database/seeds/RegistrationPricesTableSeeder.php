@@ -25,7 +25,7 @@ class RegistrationPricesTableSeeder extends Seeder
         }
     
         // we insert the schedules page content
-        $file_name = ImageManager::optimizeAndResize(
+        $file_name = ImageManager::storeResizeAndRename(
             database_path('seeds/files/registration/una_registration.jpg'),
             config('image.registration.background_image.name'),
             'jpg',

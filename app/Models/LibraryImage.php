@@ -26,7 +26,7 @@ class LibraryImage extends _BaseModel
         $this->storage_path = 'app/libraries/images';
 
         $this->sizes = [
-            'image' => [
+            'src' => [
                 'admin' => [40, 40],
             ],
         ];

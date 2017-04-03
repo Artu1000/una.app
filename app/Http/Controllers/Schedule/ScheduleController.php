@@ -105,23 +105,30 @@ class ScheduleController extends Controller
         // we parse the markdown content
         $parsedown = new Parsedown();
         $description = isset($schedules->description) ? $parsedown->text($schedules->description) : null;
-
+        $background_image = $schedules->background_image ? ImageManager::imagePath(config('image.schedules.public_path'), $schedules->background_image, 'background_image', '767') : null;
+        
         // SEO Meta settings
         $this->seo_meta['page_title'] = trans('seo.front.schedules.title');
         $this->seo_meta['meta_desc'] = trans('seo.front.schedules.description');
         $this->seo_meta['meta_keywords'] = trans('seo.front.schedules.keywords');
-
+        
         // og meta settings
         $this->og_meta['og:title'] = trans('seo.front.schedules.title');
         $this->og_meta['og:description'] = trans('seo.front.schedules.description');
         $this->og_meta['og:type'] = 'article';
         $this->og_meta['og:url'] = route('schedules.index');
-        $this->og_meta['og:image'] = $schedules->background_image ? ImageManager::imagePath(config('image.schedules.public_path'), $schedules->background_image, 'background_image', '767') : null;
+        $this->og_meta['og:image'] = $background_image;
+        
+        // twitter meta settings
+        $this->twitter_meta['twitter:title'] = trans('seo.front.schedules.title');
+        $this->twitter_meta['twitter:description'] = trans('seo.front.schedules.description');
+        $this->twitter_meta['twitter:image'] = $background_image;
         
         // prepare data for the view
         $data = [
             'seo_meta'         => $this->seo_meta,
             'og_meta'          => $this->og_meta,
+            'twitter_meta'     => $this->twitter_meta,
             'title'            => isset($schedules->title) ? $schedules->title : null,
             'description'      => $description,
             'background_image' => isset($schedules->background_image) ? $schedules->background_image : null,
@@ -257,7 +264,7 @@ class ScheduleController extends Controller
         // return the view with data
         return view('pages.back.schedules-page-edit')->with($data);
     }
-
+    
     /**
      * @param Request $request
      * @return mixed
@@ -274,19 +281,19 @@ class ScheduleController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
+        
         // we get the json schedules content
         $schedules = null;
         if (is_file(storage_path('app/schedules/content.json'))) {
             $schedules = json_decode(file_get_contents(storage_path('app/schedules/content.json')));
         }
-
+        
         // if the active field is not given, we set it to false
         $request->merge(['remove_background_image' => $request->get('remove_background_image', false)]);
-
+        
         // we sanitize the entries
         $request->replace(InputSanitizer::sanitize($request->all()));
-
+        
         // we check inputs validity
         $rules = [
             'title'                   => 'required|string',
@@ -298,17 +305,17 @@ class ScheduleController extends Controller
         if (!Validation::check($request->all(), $rules)) {
             // we flash the request
             $request->flashExcept('background_image');
-
+            
             return redirect()->back();
         }
-
+        
         try {
             $inputs = $request->except('_token', '_method', 'background_image');
-
+            
             // we store the background image file
             if ($background_image = $request->file('background_image')) {
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $background_image->getRealPath(),
                     config('image.schedules.background_image.name'),
                     $background_image->getClientOriginalExtension(),
@@ -330,32 +337,32 @@ class ScheduleController extends Controller
             } else {
                 $inputs['background_image'] = isset($schedules->background_image) ? $schedules->background_image : null;
             }
-
+            
             // we store the content into a json file
             file_put_contents(
                 storage_path('app/schedules/content.json'),
                 json_encode($inputs)
             );
-
+            
             Modal::alert([
                 trans('schedules.message.content_update.success', ['title' => $request->get('title')]),
             ], 'success');
-
+            
             return redirect()->back();
         } catch (Exception $e) {
-
+            
             // we flash the request
             $request->flashExcept('background_image');
-
+            
             // we log the error
             CustomLog::error($e);
-
+            
             // we notify the current user
             Modal::alert([
                 trans('schedules.message.content_update.failure', ['title' => isset($schedules->title) ? $schedules->title : null]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
     }
@@ -597,7 +604,7 @@ class ScheduleController extends Controller
             Modal::alert([
                 trans('schedules.message.update.success', ['schedule' => $schedule->label]),
             ], 'success');
-
+            
             return redirect()->back();
         } catch (Exception $e) {
             // we flash the request

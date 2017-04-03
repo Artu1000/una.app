@@ -16,7 +16,6 @@ return [
                 "description" => 'Bienvenue sur le site du club Université Nantes Aviron, le plus grand club d\'aviron universitaire de France, ouvert à tous les publics !',
                 "keywords"    => "club, universite, nantes, aviron, sport, universitaire, etudiant, ramer",
             ],
-        
         ],
         "account"      => [
             "create" => [

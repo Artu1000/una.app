@@ -3,21 +3,23 @@
 namespace App\Repositories;
 
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseRepository implements BaseRepositoryInterface
 {
     /**
      * The repository model
      *
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var Model
      */
     protected $model;
 
     /**
      * The query builder
      *
-     * @var \Illuminate\Database\Eloquent\Builder
+     * @var Builder
      */
     protected $query;
 
@@ -81,7 +83,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Get the repository model to access to its methods
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function getModel()
     {
@@ -91,7 +93,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Get all the model records in the database
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
     public function all()
     {
@@ -116,8 +118,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * Create a new model record in the database
      *
      * @param array $data
-     *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function create(array $data)
     {
@@ -130,8 +131,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * Create one or more new model records in the database
      *
      * @param array $data
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
     public function createMultiple(array $data)
     {
@@ -161,7 +161,6 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * Delete the specified model record from the database
      *
      * @param $id
-     *
      * @return bool|null
      * @throws \Exception
      */
@@ -176,7 +175,6 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * Delete multiple records
      *
      * @param array $ids
-     *
      * @return int
      */
     public function deleteMultipleById(array $ids)
@@ -187,7 +185,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Get the first specified model record from the database
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function first()
     {
@@ -201,7 +199,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Get all the specified model records in the database
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
     public function get()
     {
@@ -216,8 +214,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * Get the specified model record from the database
      *
      * @param $id
-     *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function find($id)
     {
@@ -232,19 +229,17 @@ abstract class BaseRepository implements BaseRepositoryInterface
      *
      * @param $attribute
      * @param $value
-     * @param array $columns
      * @return mixed
      */
     public function findBy($attribute, $value)
     {
-        return $this->model->where($attribute, '=', $value)->first();
+        return $this->model->where($attribute, '=', $value)->firstOrFail();
     }
 
     /**
      * Set the query limit
      *
      * @param int $limit
-     *
      * @return $this
      */
     public function take($limit)
@@ -257,8 +252,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Set the query skip
      *
-     * @param int $skip
-     *
+     * @param $start
      * @return $this
      */
     public function skip($start)
@@ -285,10 +279,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Update the specified model record in the database
      *
-     * @param       $id
+     * @param $id
      * @param array $data
-     *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function updateById($id, array $data)
     {
@@ -322,7 +315,6 @@ abstract class BaseRepository implements BaseRepositoryInterface
      *
      * @param string $column
      * @param mixed $values
-     *
      * @return $this
      */
     public function whereIn($column, $values)
@@ -337,7 +329,6 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * Set Eloquent relationships to eager load
      *
      * @param $relations
-     *
      * @return $this
      */
     public function with($relations)
@@ -384,7 +375,6 @@ abstract class BaseRepository implements BaseRepositoryInterface
         foreach ($this->wheres as $where) {
             $this->query->where($where['column'], $where['operator'], $where['value']);
         }
-
         foreach ($this->whereIns as $whereIn) {
             $this->query->whereIn($whereIn['column'], $whereIn['values']);
         }
@@ -427,8 +417,11 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         $this->wheres = [];
         $this->whereIns = [];
-        $this->scopes = [];
+        $this->orderBys = [];
         $this->take = null;
+        $this->skip = null;
+        $this->paginate = null;
+        $this->scopes = [];
 
         return $this;
     }

@@ -12,6 +12,7 @@ CustomLog::sqlRequests();
 /***********************************************************************************************************************
  * IMAGES
  **********************************************************************************************************************/
+
 Route::get('file', [
     'uses' => 'File\FileController@image',
     'as'   => 'image',
@@ -20,7 +21,7 @@ Route::get('file', [
 /***********************************************************************************************************************
  * BACKEND ROUTES
  **********************************************************************************************************************/
-//$group = [];
+
 if (config('settings.multilingual')) {
     $group = [
         'prefix'     => LaravelLocalization::setLocale(),
@@ -171,6 +172,7 @@ $route = Route::group($group, function () {
 /***********************************************************************************************************************
  * FRONTEND ROUTES
  **********************************************************************************************************************/
+
 // guest routes
 // we define the middlewares to apply according to the config
 $group = config('settings.multilingual') ? [
@@ -196,7 +198,7 @@ Route::group($group, function () {
     Route::put(LaravelLocalization::transRoute('routes.password.update'), ['as' => 'password.update', 'uses' => 'Auth\PasswordController@update']);
 });
 
-//public routes
+// public routes
 // we define the middlewares to apply according to the config
 $group = config('settings.multilingual') ? [
     'prefix'     => LaravelLocalization::setLocale(),
@@ -235,10 +237,10 @@ Route::group($group, function () {
 
     // videos
     Route::get(trans('routes.videos.index'), ['as' => 'videos.index', 'uses' => 'Media\VideosController@index']);
-
+    
     // pages
     Route::get(trans('routes.pages.show'), ['as' => 'page.show', 'uses' => 'Pages\PageController@show']);
-
+    
     // sitemap
     Route::get(trans('routes.sitemap.index'), ['as' => 'sitemap.index', 'uses' => 'Sitemap\SitemapController@index']);
 

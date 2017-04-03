@@ -16,7 +16,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('templates.front.partials.header', PagesComposer::class);
+        view()->composer('templates.front.full_layout', PagesComposer::class);
         view()->composer('templates.front.partials.partners', PartnerComposer::class);
         view()->composer('*', ModalComposer::class);
     }

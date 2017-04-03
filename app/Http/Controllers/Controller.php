@@ -11,28 +11,41 @@ use JavaScript;
 abstract class Controller extends BaseController
 {
     use DispatchesJobs, ValidatesRequests;
-
+    
     protected $repository;
-
+    
     // we set the default seo meta
     protected $seo_meta = [
-        'page_title'    => '',
-        'meta_desc'     => '',
-        'meta_keywords' => '',
+        'page_title'    => null,
+        'meta_desc'     => null,
+        'meta_keywords' => null,
+        'author'        => null,
+        'publisher'     => null,
+        'copyright'     => null,
     ];
-
+    
     // we set the default og meta
     protected $og_meta = [
-        'og:site_name'   => '',
-        'og:title'       => '',
-        'og:description' => '',
-        'og:type'        => '',
-        'og:url'         => '',
-        'og:image'       => '',
-        'og:video'       => '',
-        'og:locale'      => '',
+        'og:site_name'   => null, // site name
+        'og:title'       => null, // page title
+        'og:description' => null, // page description
+        'og:type'        => 'website', // page type : website / article
+        'og:url'         => null, // page url
+        'og:image'       => null, // image url
+        'og:video'       => null, // video url
+        'og:locale'      => null, // page locale
     ];
-
+    
+    // we set the default twitter meta
+    protected $twitter_meta = [
+        'twitter:card'        => 'summary', // twitter card type : summary / summary_large_image
+        'twitter:site'        => '@UNAClub', // site twitter page - example : @genius
+        'twitter:creator'     => '@ArthurLorent', // creator twitter page - example : @genius
+        'twitter:title'       => null, // page title
+        'twitter:description' => null, // page description
+        'twitter:image'       => null, // link to an image
+    ];
+    
     /**
      * Controller constructor.
      */
@@ -50,35 +63,26 @@ abstract class Controller extends BaseController
             'locale'          => config('app.locale'),
             'multilingual'    => config('settings.multilingual'),
         ]);
-
-        // load modal if an alert is waiting
-        if (session()->get('alert')) {
-            JavaScript::put([
-                'modal_alert' => true,
-            ]);
-        }
-
+        
+        // we set the app developer
+        $this->seo_meta['author'] = 'Arthur LORENT';
+        
+        // we set the publisher meta
+        $this->seo_meta['publisher'] = config('settings.app_name_' . config('app.locale'));
+        
+        // we set the copyright meta
+        $this->seo_meta['copyright'] = config('settings.app_name_' . config('app.locale'));
+        
         // we set the og meta title
         $this->og_meta['og:site_name'] = config('settings.app_name_' . config('app.locale'));
-
-        // we manage the locale dependencies
-        switch (config('app.locale')) {
-            case 'fr':
-                // server locale
-                setlocale(LC_TIME, 'fr_FR.UTF-8');
-                // carbon locale
-                Carbon::setLocale('fr');
-                // og locale
-                $this->og_meta['og:locale'] = 'fr_FR';
-                break;
-            case 'en':
-                // server locale
-                setlocale(LC_TIME, 'en_GB.UTF-8');
-                // carbon locale
-                Carbon::setLocale('en');
-                // og locale
-                $this->og_meta['og:locale'] = 'en_GB';
-                break;
-        }
+        
+        // we set the og locale
+        $this->og_meta['og:locale'] = config('laravellocalization.supportedLocales.' . config('app.locale') . '.regional');
+        
+        // we set the server locale
+        setlocale(LC_TIME, config('laravellocalization.supportedLocales.' . config('app.locale') . '.regional') . '.UTF-8');
+        
+        // we set the carbon locale
+        Carbon::setLocale(config('app.locale'));
     }
 }

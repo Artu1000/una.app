@@ -7,7 +7,7 @@ use App\Repositories\User\UserRepositoryInterface;
 
 class LeadingTeamController extends Controller
 {
-
+    
     /**
      * Create a new home controller instance.
      *
@@ -18,9 +18,9 @@ class LeadingTeamController extends Controller
         parent::__construct();
         $this->repository = $user;
     }
-
+    
     /**
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -28,13 +28,17 @@ class LeadingTeamController extends Controller
         $this->seo_meta['page_title'] = trans('seo.front.leading_team.title');
         $this->seo_meta['meta_desc'] = trans('seo.front.leading_team.description');
         $this->seo_meta['meta_keywords'] = trans('seo.front.leading_team.keywords');
-
+        
         // og meta settings
         $this->og_meta['og:title'] = trans('seo.front.leading_team.title');
         $this->og_meta['og:description'] = trans('seo.front.leading_team.description');
         $this->og_meta['og:type'] = 'article';
         $this->og_meta['og:url'] = route('front.leading_team');
-
+        
+        // twitter meta settings
+        $this->twitter_meta['twitter:title'] = trans('seo.front.leading_team.title');
+        $this->twitter_meta['twitter:description'] = trans('seo.front.leading_team.description');
+        
         // we get the activated members of the leading team and the employees
         $team = $this->repository->getModel()
             ->whereHas('activations', function ($query) {
@@ -45,18 +49,19 @@ class LeadingTeamController extends Controller
             })
             ->orderBy('status_id', 'asc')
             ->get();
-
+        
         // prepare data for the view
         $data = [
-            'seo_meta' => $this->seo_meta,
-            'og_meta'  => $this->og_meta,
-            'team'     => $team,
-            'css'      => elixir('css/app.leading-team.css'),
-            'js'       => elixir('js/app.leading-team.js'),
+            'seo_meta'     => $this->seo_meta,
+            'og_meta'      => $this->og_meta,
+            'twitter_meta' => $this->twitter_meta,
+            'team'         => $team,
+            'css'          => elixir('css/app.leading-team.css'),
+            'js'           => elixir('js/app.leading-team.js'),
         ];
-
+        
         // return the view with data
         return view('pages.front.leading-team')->with($data);
     }
-
+    
 }

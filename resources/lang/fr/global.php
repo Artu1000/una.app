@@ -31,6 +31,18 @@ return [
         "updated_at" => "Date de modification",
     ],
     
+    // rss
+    "rss"                  => [
+        "flux" => "Flux RSS des actualités du site :app",
+    ],
+    
+    // cookie notification
+    "cookies_notification" => [
+        "announce" => "Je comprends que le site <b>:app</b> utilise des cookies afin d'améliorer mon expérience utilisateur.",
+        "more"     => "En savoir plus",
+        "accept"   => "J'ai compris",
+    ],
+    
     // infos
     "info"       => [
         "password" => [

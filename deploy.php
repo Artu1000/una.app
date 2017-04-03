@@ -72,7 +72,7 @@ foreach ($servers as $server_env => $server) {
 
 // project install script
 task('project:install', function () {
-    run('cd {{release_path}} && ./project_install.sh');
+    run('cd {{release_path}} && bash .utils/project_install.sh');
 })->desc('Run install script from the root of the project');
 before('deploy:symlink', 'project:install');
 

@@ -37,7 +37,7 @@ class NewsController extends Controller
     }
     
     /**
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -46,12 +46,12 @@ class NewsController extends Controller
         if (is_file(storage_path('app/news/content.json'))) {
             $news_page = json_decode(file_get_contents(storage_path('app/news/content.json')));
         }
-
+        
         // we parse the markdown content
         $parsedown = new Parsedown();
         $title = isset($news_page->title) ? $news_page->title : null;
         $description = isset($news_page->description) ? $parsedown->text($news_page->description) : null;
-
+        
         // SEO Meta settings
         $this->seo_meta['page_title'] = trans('seo.front.news.title') ? trans('seo.front.news.title') : $title;
         $this->seo_meta['meta_desc'] = trans('seo.front.news.description') ? trans('seo.front.news.description') : str_limit($description, 160);
@@ -82,7 +82,7 @@ class NewsController extends Controller
                 $n->content = isset($n->content) ? $parsedown->text($n->content) : null;
             }
         }
-
+        
         // og meta settings
         $this->og_meta['og:title'] = trans('seo.front.news.title') ? trans('seo.front.news.title') : $title;
         $this->og_meta['og:description'] = trans('seo.front.news.description') ? trans('seo.front.news.description') : str_limit($description, 160);
@@ -91,11 +91,19 @@ class NewsController extends Controller
         if (isset($news_page->background_image)) {
             $this->og_meta['og:image'] = ImageManager::imagePath(config('image.news.public_path'), $news_page->background_image, 'background_image', 767);
         }
-
+    
+        // twitter meta settings
+        $this->twitter_meta['twitter:title'] = trans('seo.front.news.title') ? trans('seo.front.news.title') : $title;
+        $this->twitter_meta['twitter:description'] = trans('seo.front.news.description') ? trans('seo.front.news.description') : str_limit($description, 160);
+        if (isset($news_page->background_image)) {
+            $this->twitter_meta['twitter:image'] = ImageManager::imagePath(config('image.news.public_path'), $news_page->background_image, 'background_image', 767);
+        }
+        
         // prepare data for the view
         $data = [
             'seo_meta'         => $this->seo_meta,
             'og_meta'          => $this->og_meta,
+            'twitter_meta'     => $this->twitter_meta,
             'news_list'        => $news_list,
             'current_category' => $category,
             'title'            => isset($news_page->title) ? $news_page->title : null,
@@ -110,7 +118,7 @@ class NewsController extends Controller
     
     /**
      * @param $news_key
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
     {
@@ -146,7 +154,7 @@ class NewsController extends Controller
         $this->seo_meta['page_title'] = $news->meta_title ? $news->meta_title : $news->title;
         $this->seo_meta['meta_desc'] = $news->meta_desc ? $news->meta_desc : str_limit(strip_tags($news->content), 160);
         $this->seo_meta['meta_keywords'] = $news->meta_keywords;
-
+        
         // og meta settings
         $this->og_meta['og:title'] = $news->meta_title ? $news->meta_title : $news->title;
         $this->og_meta['og:description'] = $news->meta_desc ? $news->meta_desc : str_limit(strip_tags($news->content), 160);
@@ -155,23 +163,31 @@ class NewsController extends Controller
         if ($news->image) {
             $this->og_meta['og:image'] = $news->imagePath($news->image, 'image', '767');
         }
-
+        
+        // twitter meta settings
+        $this->twitter_meta['twitter:title'] = $news->meta_title ? $news->meta_title : $news->title;
+        $this->twitter_meta['twitter:description'] = $news->meta_desc ? $news->meta_desc : str_limit(strip_tags($news->content), 160);
+        if ($news->image) {
+            $this->twitter_meta['twitter:image'] = $news->imagePath($news->image, 'image', '767');
+        }
+        
         // prepare data for the view
         $data = [
-            'seo_meta' => $this->seo_meta,
-            'og_meta'  => $this->og_meta,
-            'news'     => $news,
-            'css'      => elixir('css/app.news.css'),
-            'js'       => elixir('js/app.news-detail.js'),
+            'seo_meta'     => $this->seo_meta,
+            'og_meta'      => $this->og_meta,
+            'twitter_meta' => $this->twitter_meta,
+            'news'         => $news,
+            'css'          => elixir('css/app.news.css'),
+            'js'           => elixir('js/app.news-detail.js'),
         ];
         
         // return the view with data
         return view('pages.front.news-detail')->with($data);
     }
-
+    
     /**
      * @param $news_key
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function preview($id)
     {
@@ -185,7 +201,7 @@ class NewsController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
+        
         // we get the news from its unique key
         try {
             $news = $this->repository
@@ -195,14 +211,14 @@ class NewsController extends Controller
         } catch (Exception $e) {
             // we log the error
             CustomLog::error($e);
-
+            
             Modal::alert([
                 trans('news.message.find.failure', ['id' => $id]),
             ], 'error');
-
+            
             return redirect()->back();
         }
-
+        
         // we parse the markdown content
         $parsedown = new Parsedown();
         $news->content = isset($news->content) ? $parsedown->text($news->content) : null;
@@ -210,12 +226,12 @@ class NewsController extends Controller
         $news->content = ImageManager::replaceLibraryImagesAliasesByRealPath($news->content);
         // we replace the files aliases by real paths
         $news->content = FileManager::replaceLibraryFilesAliasesByRealPath($news->content);
-
+        
         // SEO Meta settings
         $this->seo_meta['page_title'] = $news->meta_title ? $news->meta_title : $news->title;
         $this->seo_meta['meta_desc'] = $news->meta_desc ? $news->meta_desc : str_limit(strip_tags($news->content), 160);
         $this->seo_meta['meta_keywords'] = $news->meta_keywords;
-
+        
         // og meta settings
         $this->og_meta['og:title'] = $news->meta_title ? $news->meta_title : $news->title;
         $this->og_meta['og:description'] = $news->meta_desc ? $news->meta_desc : str_limit(strip_tags($news->content), 160);
@@ -224,7 +240,7 @@ class NewsController extends Controller
         if ($news->image) {
             $this->og_meta['og:image'] = $news->imagePath($news->image, 'image', '767');
         }
-
+        
         // prepare data for the view
         $data = [
             'seo_meta' => $this->seo_meta,
@@ -233,14 +249,14 @@ class NewsController extends Controller
             'css'      => elixir('css/app.news.css'),
             'js'       => elixir('js/app.news-detail.js'),
         ];
-
+        
         // return the view with data
         return view('pages.front.news-detail')->with($data);
     }
     
     /**
      * @param Request $request
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function pageEdit(Request $request)
     {
@@ -382,7 +398,7 @@ class NewsController extends Controller
             $search_config,
             $enable_lines_choice
         );
-
+        
         // we get the json page content
         $news_page = null;
         if (is_file(storage_path('app/news/content.json'))) {
@@ -460,7 +476,7 @@ class NewsController extends Controller
                     );
                 }
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $background_image->getRealPath(),
                     config('image.news.background_image.name'),
                     $background_image->getClientOriginalExtension(),
@@ -513,7 +529,7 @@ class NewsController extends Controller
     }
     
     /**
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -530,7 +546,7 @@ class NewsController extends Controller
         
         // SEO Meta settings
         $this->seo_meta['page_title'] = trans('seo.back.news.create');
-
+        
         // we get the photos and videos albums
         $photos_albums = app(PhotoRepositoryInterface::class)->getModel()->orderBy('date', 'desc')->get();
         $videos = app(VideoRepositoryInterface::class)->getModel()->orderBy('date', 'desc')->get();
@@ -588,7 +604,7 @@ class NewsController extends Controller
                     ->format('Y-m-d H:i:s'),
             ]);
         }
-
+        
         // we manage the author
         if (!Sentinel::getUser()->hasAccess('news.author')) {
             $request->merge(['author_id', Sentinel::getUser()->id]);
@@ -625,7 +641,7 @@ class NewsController extends Controller
             // we store the image
             if ($img = $request->file('image')) {
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $img->getRealPath(),
                     $news->imageName('image'),
                     $img->getClientOriginalExtension(),
@@ -662,7 +678,7 @@ class NewsController extends Controller
     
     /**
      * @param $id
-     * @return $this|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
@@ -702,11 +718,11 @@ class NewsController extends Controller
         $breadcrumbs_data = [
             'news' => $news,
         ];
-
+        
         // we get the photos and videos albums
         $photos_albums = app(PhotoRepositoryInterface::class)->getModel()->orderBy('date', 'desc')->get();
         $videos = app(VideoRepositoryInterface::class)->getModel()->orderBy('date', 'desc')->get();
-
+        
         // prepare data for the view
         $data = [
             'seo_meta'         => $this->seo_meta,
@@ -810,13 +826,13 @@ class NewsController extends Controller
         try {
             // we update the news
             $news->update($request->except('_token', 'image', 'author_id'));
-
+            
             // we set the author
             if (Sentinel::getUser()->hasAccess('news.author') && $author_id = $request->get('author_id')) {
                 $news->author_id = $author_id;
                 $news->save();
             }
-
+            
             // we store the image
             if ($img = $request->file('image')) {
                 // if we find a previous recorded image, we remove it
@@ -828,7 +844,7 @@ class NewsController extends Controller
                     );
                 }
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $img->getRealPath(),
                     $news->imageName('image'),
                     $img->getClientOriginalExtension(),
@@ -939,7 +955,7 @@ class NewsController extends Controller
         } catch (Exception $e) {
             // we log the error
             CustomLog::error($e);
-
+            
             // we notify the current user
             return response([
                 'message' => [
@@ -948,7 +964,7 @@ class NewsController extends Controller
                 ],
             ], 401);
         }
-
+        
         // we check the current user permission
         if ($permission_denied = Permission::hasPermissionJson('news.update')) {
             return response([
@@ -956,7 +972,7 @@ class NewsController extends Controller
                 'message' => [$permission_denied],
             ], 401);
         }
-
+        
         if ($permission_denied = Permission::hasPermissionJson('news.activate')) {
             return response([
                 'active'  => $news->active,
@@ -999,7 +1015,7 @@ class NewsController extends Controller
             return response([
                 'active'  => $news->fresh()->active,
                 'message' => [
-                    trans('news.message.activation.failure', ['news' => $news->title])
+                    trans('news.message.activation.failure', ['news' => $news->title]),
                 ],
             ], 401);
         }

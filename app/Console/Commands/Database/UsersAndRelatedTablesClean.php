@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands\Database;
 
+use Activation;
 use Illuminate\Console\Command;
+use Reminder;
 
 class UsersAndRelatedTablesClean extends Command
 {
@@ -21,9 +23,7 @@ class UsersAndRelatedTablesClean extends Command
     protected $description = 'Clean the users and related tables from expired lines (reminders, activations, ...)';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
+     * UsersAndRelatedTablesClean constructor.
      */
     public function __construct()
     {
@@ -40,10 +40,10 @@ class UsersAndRelatedTablesClean extends Command
 
         $this->line('Cleaning activations and reminders tables from expired lines ...');
 
-        \Activation::removeExpired();
+        Activation::removeExpired();
         $this->info('✔ Activations table cleaned.');
 
-        \Reminder::removeExpired();
+        Reminder::removeExpired();
         $this->info('✔ Reminders table cleaned.');
     }
 }

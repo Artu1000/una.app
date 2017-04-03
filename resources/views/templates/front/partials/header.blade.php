@@ -64,7 +64,7 @@
                                     <i class="fa fa-comments"></i> {{ trans('template.front.header.presentation') }}
                                 </a>
                             </li>
-                            @if($history)
+                            @if(isset($history) && $history instanceof App\Models\Page)
                                 <li class="menu_tab @if(Request::path() === route('page.show', ['slug' => $history->slug])) active @endif">
                                     <a href="{{ route('page.show', ['slug' => $history->slug]) }}" title="{{ trans('template.front.header.history') }}">
                                         <i class="fa fa-university"></i> {{ trans('template.front.header.history') }}
@@ -82,14 +82,14 @@
                                     <i class="fa fa-cogs"></i> {{ trans('template.front.header.leading_team') }}
                                 </a>
                             </li>
-                            @if($statuses)
+                            @if(isset($statuses) && $statuses instanceof App\Models\Page)
                                 <li class="menu_tab @if(Request::path() === route('page.show', ['slug' => $statuses->slug])) active @endif">
                                     <a href="{{ route('page.show', ['slug' => $statuses->slug]) }}" title="{{ trans('template.front.header.history') }}">
                                         <i class="fa fa-compass"></i> {{ trans('template.front.header.statuses') }}
                                     </a>
                                 </li>
                             @endif
-                            @if($rules)
+                            @if(isset($rules) && $rules instanceof App\Models\Page)
                                 <li class="menu_tab @if(Request::path() === route('page.show', ['slug' => $rules->slug])) active @endif">
                                     <a href="{{ route('page.show', ['slug' => $rules->slug]) }}" title="{{ trans('template.front.header.history') }}">
                                         <i class="fa fa-gavel"></i> {{ trans('template.front.header.rules') }}

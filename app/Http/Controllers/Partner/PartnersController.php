@@ -236,7 +236,7 @@ class PartnersController extends Controller
             // we store the photo
             if ($logo = $request->file('logo')) {
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $logo->getRealPath(),
                     $partner->imageName('logo'),
                     $logo->getClientOriginalExtension(),
@@ -400,7 +400,7 @@ class PartnersController extends Controller
             // we store the logo
             if ($logo = $request->file('logo')) {
                 // we optimize, resize and save the image
-                $file_name = ImageManager::optimizeAndResize(
+                $file_name = ImageManager::storeResizeAndRename(
                     $logo->getRealPath(),
                     $partner->imageName('logo'),
                     $logo->getClientOriginalExtension(),

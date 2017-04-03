@@ -21,10 +21,10 @@ use Validation;
 
 class HomeController extends Controller
 {
-
+    
     private $news;
     private $slide;
-
+    
     /**
      * Create a new home controller instance.
      *
@@ -36,7 +36,7 @@ class HomeController extends Controller
         $this->news = $news;
         $this->slide = $slide;
     }
-
+    
     /**
      * @param Request $request
      * @return $this|\Illuminate\Http\RedirectResponse
@@ -47,10 +47,10 @@ class HomeController extends Controller
         if (!Permission::hasPermission('home.page.view')) {
             return redirect()->route('dashboard.index');
         }
-
+        
         // SEO Meta settings
         $this->seo_meta['page_title'] = trans('seo.back.home.page.edit');
-
+        
         // we define the slides table list columns
         $columns = [
             [
@@ -97,7 +97,7 @@ class HomeController extends Controller
                 ],
             ],
         ];
-
+        
         // we set the routes used in the table list
         $routes = [
             'index'   => [
@@ -117,26 +117,26 @@ class HomeController extends Controller
                 'params' => [],
             ],
         ];
-
+        
         // we instantiate the query
         $query = $this->slide->getModel()->query();
-
+        
         // we prepare the confirm config
         $confirm_config = [
             'action'     => trans('home.page.action.slide.delete'),
             'attributes' => ['title'],
         ];
-
+        
         $search_config = [
             [
                 'key'      => trans('home.page.label.title'),
                 'database' => 'slides.title',
             ],
         ];
-
+        
         // we enable the lines choice
         $enable_lines_choice = true;
-
+        
         // we format the data for the needs of the view
         $tableListData = TableList::prepare(
             $query,
@@ -147,13 +147,13 @@ class HomeController extends Controller
             $search_config,
             $enable_lines_choice
         );
-
+        
         // we get the json home content
         $home = null;
         if (is_file(storage_path('app/home/content.json'))) {
             $home = json_decode(file_get_contents(storage_path('app/home/content.json')));
         }
-
+        
         // prepare data for the view
         $data = [
             'seo_meta'      => $this->seo_meta,
@@ -162,11 +162,11 @@ class HomeController extends Controller
             'video_link'    => isset($home->video_link) ? $home->video_link : null,
             'tableListData' => $tableListData,
         ];
-
+        
         // return the view with data
         return view('pages.back.home-page-edit')->with($data);
     }
-
+    
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
@@ -183,10 +183,10 @@ class HomeController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }
-
+        
         // we sanitize the entries
         $request->replace(InputSanitizer::sanitize($request->all()));
-
+        
         // we check inputs validity
         $rules = [
             'title'       => 'required|string',
@@ -197,47 +197,42 @@ class HomeController extends Controller
         if (!Validation::check($request->all(), $rules)) {
             // we flash the request
             $request->flash();
-
+            
             return redirect()->back();
         }
-
+        
         try {
             // we store the content into a json file
             file_put_contents(
                 storage_path('app/home/content.json'),
                 json_encode($request->except('_token', '_method'))
             );
-
+            
             Modal::alert([
                 trans('home.message.update.success'),
             ], 'success');
-
+            
             return redirect()->back();
         } catch (\Exception $e) {
-
+            
             // we log the error
             CustomLog::error($e);
-
+            
             // we notify the current user
             Modal::alert([
                 trans('home.message.update.failure'),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
-
+            
             return redirect()->back();
         }
     }
-
+    
     /**
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show()
     {
-        // SEO Meta settings
-        $this->seo_meta['page_title'] = trans('seo.front.home.show.title');
-        $this->seo_meta['meta_desc'] = trans('seo.front.home.show.description');
-        $this->seo_meta['meta_keywords'] = trans('seo.front.home.show.keywords');
-
         // we get the two last news
         $last_news = $this->news
             ->where('released_at', '<=', Carbon::now()->format('Y-m-d H:i:s'))
@@ -245,7 +240,7 @@ class HomeController extends Controller
             ->orderBy('released_at', 'desc')
             ->take(2)
             ->get();
-
+        
         // we convert in html the markdown content of each news
         if ($last_news) {
             $parsedown = new Parsedown();
@@ -253,19 +248,25 @@ class HomeController extends Controller
                 $n->content = isset($n->content) ? $parsedown->text($n->content) : null;
             }
         }
-
+        
         // we get the slides
         $slides = $this->slide->orderBy('position', 'asc')->where('active', true)->get();
         JavaScript::put([
             'slides_count' => sizeof($slides),
         ]);
-
+        
+        // we get the first slide
+        $first_slide = null;
+        if (!$slides->isEmpty()) {
+            $first_slide = $slides[0]->imagePath($slides[0]->background_image, 'background_image', '767');
+        }
+        
         // we get the json home content
         $home = [];
         if (is_file(storage_path('app/home/content.json'))) {
             $home = json_decode(file_get_contents(storage_path('app/home/content.json')));
         }
-
+        
         // we parse the markdown content
         $parsedown = new Parsedown();
         $description = isset($home->description) ? $parsedown->text($home->description) : null;
@@ -273,29 +274,40 @@ class HomeController extends Controller
         $description = ImageManager::replaceLibraryImagesAliasesByRealPath($description);
         // we replace the files aliases by real paths
         $description = FileManager::replaceLibraryFilesAliasesByRealPath($description);
-
+        
+        // seo Meta settings
+        $this->seo_meta['page_title'] = trans('seo.front.home.show.title');
+        $this->seo_meta['meta_desc'] = trans('seo.front.home.show.description');
+        $this->seo_meta['meta_keywords'] = trans('seo.front.home.show.keywords');
+        
         // og meta settings
         $this->og_meta['og:title'] = trans('seo.front.home.show.title');
         $this->og_meta['og:description'] = trans('seo.front.home.show.description');
         $this->og_meta['og:url'] = route('home');
-        $this->og_meta['og:image'] = $slides[0]->imagePath($slides[0]->background_image, 'background_image', '767');
+        $this->og_meta['og:image'] = $first_slide;
         $this->og_meta['og:video'] = $home->video_link;
-
+        
+        // twitter meta settings
+        $this->twitter_meta['twitter:title'] = trans('seo.front.home.show.title');
+        $this->twitter_meta['twitter:description'] = trans('seo.front.home.show.description');
+        $this->twitter_meta['twitter:image'] = $first_slide;
+        
         // prepare data for the view
         $data = [
-            'seo_meta'    => $this->seo_meta,
-            'og_meta'     => $this->og_meta,
-            'slides'      => $slides,
-            'last_news'   => $last_news,
-            'title'       => isset($home->title) ? $home->title : null,
-            'description' => $description,
-            'video_link'  => isset($home->video_link) ? $home->video_link : null,
-            'css'         => elixir('css/app.home.css'),
-            'js'          => elixir('js/app.home.js'),
+            'seo_meta'     => $this->seo_meta,
+            'og_meta'      => $this->og_meta,
+            'twitter_meta' => $this->twitter_meta,
+            'slides'       => $slides,
+            'last_news'    => $last_news,
+            'title'        => isset($home->title) ? $home->title : null,
+            'description'  => $description,
+            'video_link'   => isset($home->video_link) ? $home->video_link : null,
+            'css'          => elixir('css/app.home.css'),
+            'js'           => elixir('js/app.home.js'),
         ];
-
+        
         // return the view with data
         return view('pages.front.home')->with($data);
     }
-
+    
 }

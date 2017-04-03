@@ -1,7 +1,7 @@
 // get screen width
 var screen_width = $(window).width();
 
-// cookie policy message
+// cookies notification
 var cookie = {
     set: function (name, value, days) {
         var expires;
@@ -27,33 +27,17 @@ var cookie = {
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     },
     showCookieBar: function () {
-        var cookieBar =
-            '<div id="cookie_bar" class="container-fluid">' +
-            '<div class="container">' +
-            '<div class="display-table">' +
-            '<div class="table-cell text-center">' +
-            '<span>Je comprends que le site <b>' + app.app_name + '</b> utilise des cookies afin d\'améliorer mon expérience utilisateur.</span>' +
-            '<button id="cookie_acceptation" class="btn btn-success">' + app.success_icon + '</i> Fermer</button>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>';
-        $('#footer_color_fill').append(cookieBar);
-        $('#cookie_bar').hide();
         setTimeout(function () {
-            $('#cookie_bar').slideToggle();
+            $('#cookies_notification').slideToggle();
         }, 3000);
     },
     submit: function () {
-        if (!cookie.get('cookie_acceptation')) {
+        if (!cookie.get('cookies_acceptation')) {
             cookie.showCookieBar();
         }
-        $('#cookie_acceptation').click(function () {
-            cookie.set('cookie_acceptation', true, 60);
-            $('#cookie_bar').slideToggle();
-        });
-        $('#cookie_information').click(function () {
-            $(location).attr('href', url_base + 'politique-relative-aux-cookies');
+        $('#accept_cookies').click(function () {
+            cookie.set('cookies_acceptation', true, 60);
+            $('#cookies_notification').slideToggle();
         });
     }
 };

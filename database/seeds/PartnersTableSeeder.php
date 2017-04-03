@@ -31,7 +31,7 @@ class PartnersTableSeeder extends Seeder
             'position' => 1,
             'active'   => true,
         ]);
-        $file_name = \ImageManager::optimizeAndResize(
+        $file_name = \ImageManager::storeResizeAndRename(
             database_path('seeds/files/partners/logo-ville-nantes.png'),
             $slide->imageName('logo'),
             'png',
@@ -50,7 +50,7 @@ class PartnersTableSeeder extends Seeder
             'position' => 2,
             'active'   => true,
         ]);
-        $file_name = \ImageManager::optimizeAndResize(
+        $file_name = \ImageManager::storeResizeAndRename(
             database_path('seeds/files/partners/logo-univ-nantes.png'),
             $slide->imageName('logo'),
             'png',
@@ -69,7 +69,7 @@ class PartnersTableSeeder extends Seeder
             'position' => 3,
             'active'   => true,
         ]);
-        $file_name = \ImageManager::optimizeAndResize(
+        $file_name = \ImageManager::storeResizeAndRename(
             database_path('seeds/files/partners/logo-ffa.png'),
             $slide->imageName('logo'),
             'png',
@@ -88,7 +88,7 @@ class PartnersTableSeeder extends Seeder
             'position' => 4,
             'active'   => true,
         ]);
-        $file_name = \ImageManager::optimizeAndResize(
+        $file_name = \ImageManager::storeResizeAndRename(
             database_path('seeds/files/partners/logo-ffsu.png'),
             $slide->imageName('logo'),
             'png',

@@ -5,10 +5,8 @@ namespace App\Console;
 use App\Console\Commands\Database\DropDatabase;
 use App\Console\Commands\Database\ResetDatabase;
 use App\Console\Commands\Database\UsersAndRelatedTablesClean;
-use App\Console\Commands\Image\ImageGenerate;
-use App\Console\Commands\Install\GenerateRobotTxt;
-use App\Console\Commands\Install\MailcatcherInstall;
-use App\Console\Commands\Install\NpmInstall;
+use App\Console\Commands\Images\ReGenerateImages;
+use App\Console\Commands\Install\GenerateRobotsTxt;
 use App\Console\Commands\Install\ProjectOptimize;
 use App\Console\Commands\Install\StoragePrepare;
 use App\Console\Commands\Install\SymLinksPrepare;
@@ -25,17 +23,16 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         StoragePrepare::class,
-        MailcatcherInstall::class,
         YarnInstall::class,
         SymLinksPrepare::class,
         ProjectOptimize::class,
         UsersAndRelatedTablesClean::class,
         DropDatabase::class,
         ResetDatabase::class,
-        ImageGenerate::class,
-        GenerateRobotTxt::class,
+        ReGenerateImages::class,
+        GenerateRobotsTxt::class,
     ];
-
+    
     /**
      * Define the application's command schedule.
      *
@@ -45,6 +42,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // we schedule the users related tables from expired lines
-        $schedule->command('database:users:clean')->dailyAt('23:00')->sundays();
+        $schedule->command('database:users:clean')->dailyAt('23:00');
     }
 }

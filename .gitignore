@@ -24,10 +24,10 @@ _ide_helper_models.php
 #public
 public/libraries
 public/robots.txt
-public/favicon.ico
 
 #symlinks
 public/img/news
+public/img/pages
 public/img/partners
 public/img/schedules
 public/img/settings
