@@ -232,14 +232,14 @@ class FilesController extends Controller
      */
     public function update($id, Request $request)
     {
-        // we get the image
+        // we get the file
         try {
-            $image = $this->repository->find($id);
+            $file = $this->repository->find($id);
         } catch (Exception $e) {
             
             // we notify the current user
             Modal::alert([
-                trans('libraries.images.message.find.failure', ['id' => $id]),
+                trans('libraries.files.message.find.failure', ['id' => $id]),
                 trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
             ], 'error');
             
@@ -247,7 +247,7 @@ class FilesController extends Controller
         }
         
         // we check the current user permission
-        if ($permission_denied = Permission::hasPermissionJson('libraries.images.update')) {
+        if ($permission_denied = Permission::hasPermissionJson('libraries.files.update')) {
             return response([
                 'message' => [$permission_denied],
             ], 401);
@@ -265,19 +265,19 @@ class FilesController extends Controller
         ];
         if (is_array($errors = Validation::check($request->all(), $rules, true))) {
             return response([
-                'value'   => $image->alias,
+                'value'   => $file->alias,
                 'message' => $errors,
             ], 401);
         }
         
         try {
-            $image->alias = $request->value;
-            $image->save();
+            $file->alias = $request->value;
+            $file->save();
             
             return response([
-                'value'   => $image->alias,
+                'value'   => $file->alias,
                 'message' => [
-                    trans('libraries.images.message.update.success', ['image' => $image->src]),
+                    trans('libraries.files.message.update.success', ['file' => $file->alias]),
                 ],
             ], 200);
         } catch (Exception $e) {
@@ -285,9 +285,9 @@ class FilesController extends Controller
             CustomLog::error($e);
             
             return response([
-                'value'   => $image->alias,
+                'value'   => $file->alias,
                 'message' => [
-                    trans('libraries.images.message.update.failure', ['image' => $image->src]),
+                    trans('libraries.files.message.update.failure', ['file' => $file->alias]),
                     trans('global.message.global.failure.contact.support', ['email' => config('settings.support_email')]),
                 ],
             ], 401);

@@ -462,12 +462,40 @@ $(function () {
                 form.find('.input-change-icon').remove();
                 form.append('<span class="input-change-icon text-success">' + app.success_icon + '</i></span>');
                 // we notify the current user
-                notify(data, 'success');
+                $.notify({
+                    // options
+                    title: app.success_icon,
+                    message: data.message
+                }, {
+                    // settings
+                    type: 'success',
+                    delay: 6000,
+                    allow_dismiss: false,
+                    showProgressbar: true,
+                    animate: {
+                        enter: 'animated bounceInDown',
+                        exit: 'animated bounceOutUp'
+                    }
+                });
                 // we set the value
                 value = data.value;
             }).fail(function (data) {
                 // we notify the current user
-                notify(data.responseJSON, 'error');
+                $.notify({
+                    // options
+                    title: app.error_icon,
+                    message: data.responseJSON.message
+                }, {
+                    // settings
+                    type: 'danger',
+                    delay: 6000,
+                    allow_dismiss: false,
+                    showProgressbar: true,
+                    animate: {
+                        enter: 'animated bounceInDown',
+                        exit: 'animated bounceOutUp'
+                    }
+                });
                 // we set the value
                 value = data.responseJSON.value;
                 // we replace the loading spinner by an error icon

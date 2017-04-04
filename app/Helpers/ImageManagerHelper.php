@@ -17,8 +17,8 @@ class ImageManagerHelper
      * @param string $file_name
      * @param string $extension
      * @param string $storage_path
-     * @param array  $sizes
-     * @param bool   $remove_src
+     * @param array $sizes
+     * @param bool $remove_src
      *
      * @return string
      */
@@ -29,7 +29,8 @@ class ImageManagerHelper
         string $storage_path,
         array $sizes,
         bool $remove_src = true
-    ) {
+    )
+    {
         // we check if the source image exists
         if (!is_file($src_path)) {
             throw new InvalidArgumentException('The source image ' . $src_path . ' does not exists.');
@@ -65,7 +66,7 @@ class ImageManagerHelper
      * @param string $file_name
      * @param string $extension
      * @param string $storage_path
-     * @param array  $sizes
+     * @param array $sizes
      */
     private function resize(string $file_name, string $extension, string $storage_path, array $sizes)
     {
@@ -118,7 +119,7 @@ class ImageManagerHelper
     /**
      * @param string $file_name
      * @param string $storage_path
-     * @param array  $sizes
+     * @param array $sizes
      *
      * @return bool
      * @throws Exception
@@ -135,7 +136,7 @@ class ImageManagerHelper
         // we delete each resized image
         foreach ($sizes as $key => $size) {
             $path = $storage_path . '/' . str_slug($file_name . '-' . $key) . '.' . $extension;
-            // we tcheck if the path exists
+            // we check if the path exists
             if (is_file($path)) {
                 File::delete($path);
                 // we check that the image file has really been deleted
@@ -161,8 +162,8 @@ class ImageManagerHelper
     }
     
     /**
-     * @param string      $public_path
-     * @param string      $file_name
+     * @param string $public_path
+     * @param string $file_name
      * @param string|null $key
      * @param string|null $size
      *
@@ -182,9 +183,6 @@ class ImageManagerHelper
             
             return asset($public_path . '/' . str_slug($name . '-' . $size) . '.' . $ext);
         } catch (Exception $e) {
-            // we log the error
-            CustomLog::info($e);
-            
             return null;
         }
     }

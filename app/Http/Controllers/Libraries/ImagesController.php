@@ -140,7 +140,7 @@ class ImagesController extends Controller
             $count = count($decoded_rejected);
             $errors = Lang::choice('libraries.images.message.file.error.title', $count, ['count' => $count]);
             foreach ($decoded_rejected as $file) {
-                $errors .= '<br/><span class="text-danger"><i class="fa fa-hand-o-right" aria-hidden="true"></i></span> ' . trans('libraries.images.message.file.error.detail', ['name' => $file->name, 'error' => $file->message]);
+                $errors .= '<br/><span class="text-danger"><i class="fa fa-hand-o-right" aria-hidden="true"></i></span> ' . trans('libraries.images.message.file.error.detail', ['name' => $file->name, 'error' => $file->message[0]]);
             };
         }
         if ($success && !$errors) {
@@ -148,6 +148,7 @@ class ImagesController extends Controller
                 trans('libraries.images.message.file.success.congratulations') . ' : ' . $success,
             ], 'success');
         } elseif ($success && $errors) {
+            dd('test');
             Modal::alert([
                 $success . ', ' . trans('libraries.images.message.file.error.however') . ' ' . $errors,
             ], 'error');
@@ -206,10 +207,10 @@ class ImagesController extends Controller
                 // we optimize, resize and save the image
                 $file_name = ImageManager::storeResizeAndRename(
                     $img->getRealPath(),
-                    $image->imageName('image'),
+                    $image->imageName('src'),
                     $img->getClientOriginalExtension(),
                     $image->storagePath(),
-                    $image->availableSizes('image')
+                    $image->availableSizes('src')
                 );
                 // we update the model with the image name
                 $image->src = $file_name;
