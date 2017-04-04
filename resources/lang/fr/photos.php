@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    
     // views
     "page"    => [
         "title"  => [
@@ -21,7 +21,8 @@ return [
         ],
         "info"   => [
             "cover" => "Largeur min : 220px - Hauteur min : 220px - Format : jpg, jpeg, png.",
-            "link"  => "Lien de l'album Google Photo (doit être partagé au public).",
+            "title" => "Respecter la nomenclature suivante : Type événement - Lieu.",
+            "link"  => "Lien de l'album Google Photo (doit être partagé au public). Attention à bien charger les photos sur le compte Google Photo UNA (contacter <u><a href='mailto:communication@una-club.fr'>communication@una-club.fr</a></u>).",
         ],
         "label"  => [
             "cover"                  => "Couverture",
@@ -34,7 +35,7 @@ return [
             "year_placeholder"       => "Sélectionnez une année",
         ],
     ],
-
+    
     // messages
     "message" => [
         "content"    => [

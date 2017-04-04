@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    
     // views
     "page"    => [
         "title"  => [
@@ -21,7 +21,8 @@ return [
         ],
         "info"   => [
             "cover" => "Largeur min : 220px - Hauteur min : 220px - Format : jpg, jpeg, png.",
-            "link"  => "Lien de la vidéo Youtube (doit être partagée au public).",
+            "title" => "Prendre soin de définir un titre évocateur du contenu de la vidéo.",
+            "link"  => "Lien de la vidéo Youtube (doit être partagée au public). Attention à bien charger la vidéo sur le compte Youtube UNA (contacter <u><a href='mailto:communication@una-club.fr'>communication@una-club.fr</a></u>).",
         ],
         "label"  => [
             "cover"                  => "Couverture",
@@ -34,7 +35,7 @@ return [
             "year_placeholder"       => "Sélectionnez une année",
         ],
     ],
-
+    
     // messages
     "message" => [
         "content"    => [

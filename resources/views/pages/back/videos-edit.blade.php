@@ -41,7 +41,7 @@
                         </div>
                         <div class="panel-body">
 
-                            {{-- image --}}
+                            {{-- cover --}}
                             <label for="input_cover">{{ trans('videos.page.label.cover') }}<span class="required">*</span></label>
                             @if(isset($video) && $video->cover)
                                 <div class="form-group image">
@@ -71,6 +71,7 @@
                                     <span class="input-group-addon" for="input_title"><i class="fa fa-tag"></i></span>
                                     <input id="input_title" class="form-control capitalize-first-letter" type="text" name="title" value="{{ old('title') ? old('title') : (isset($video) && $video->title ? $video->title : null) }}" placeholder="{{ trans('videos.page.label.title') }}">
                                 </div>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {!! trans('videos.page.info.title') !!}</p>
                             </div>
 
                             {{-- link --}}
@@ -80,7 +81,7 @@
                                     <span class="input-group-addon" for="input_link"><i class="fa fa-tag"></i></span>
                                     <input id="input_link" class="form-control capitalize-first-letter" type="text" name="link" value="{{ old('link') ? old('link') : (isset($video) && $video->link ? $video->link : null) }}" placeholder="{{ trans('videos.page.label.link') }}">
                                 </div>
-                                <p class="help-block quote">{!! config('settings.info_icon') !!} {{ trans('videos.page.info.link') }}</p>
+                                <p class="help-block quote">{!! config('settings.info_icon') !!} {!! trans('videos.page.info.link') !!}</p>
                             </div>
 
                             {{-- date --}}
