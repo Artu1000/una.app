@@ -79,7 +79,7 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" for="input_link"><i class="fa fa-tag"></i></span>
-                                    <input id="input_link" class="form-control capitalize-first-letter" type="text" name="link" value="{{ old('link') ? old('link') : (isset($photo) && $photo->link ? $photo->link : null) }}" placeholder="{{ trans('photos.page.label.link') }}">
+                                    <input id="input_link" class="form-control" type="text" name="link" value="{{ old('link') ? old('link') : (isset($photo) && $photo->link ? $photo->link : null) }}" placeholder="{{ trans('photos.page.label.link') }}">
                                 </div>
                                 <p class="help-block quote">{!! config('settings.info_icon') !!} {!! trans('photos.page.info.link') !!}</p>
                             </div>
