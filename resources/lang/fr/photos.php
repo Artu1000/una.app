@@ -21,7 +21,7 @@ return [
         ],
         "info"   => [
             "cover" => "Largeur min : 220px - Hauteur min : 220px - Format : jpg, jpeg, png.",
-            "title" => "Respecter la nomenclature suivante : Type événement - Lieu.",
+            "title" => "Respecter la nomenclature suivante : Nom événement - Lieu.",
             "link"  => "Lien de l'album Google Photo (doit être partagé au public). Attention à bien charger les photos sur le compte Google Photo UNA (contacter <u><a href='mailto:communication@una-club.fr'>communication@una-club.fr</a></u>).",
         ],
         "label"  => [

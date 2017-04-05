@@ -31,7 +31,7 @@ return [
         'gifsicle_options' => ['-b', '-O5'],
 
         'jpegoptim_bin'     => env('JPEGOPTIM','/usr/bin/jpegoptim'),
-        'jpegoptim_options' => ['--strip-all', '--all-progressive', '--quiet'],
+        'jpegoptim_options' => ['--strip-all', '--all-progressive', '-m70', '--quiet'],
 //        'jpegoptim_options' => ['--strip-all'],
 
 //        'jpegtran_bin' => '/usr/bin/jpegtran',
