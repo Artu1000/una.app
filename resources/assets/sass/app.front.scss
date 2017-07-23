@@ -593,6 +593,7 @@ html {
                 padding-top: 18px;
 
                 li {
+                  font-size: 14px;
 
                   a {
 
@@ -622,14 +623,15 @@ html {
                     .fa {
                       font-size: 15px;
                     }
+
+                    .icon {
+                      font-size: 25px;
+                    }
                   }
                 }
               }
             }
 
-            .nav.navbar-nav.navbar-right {
-              padding-right: 50px;
-            }
           }
         }
       }
