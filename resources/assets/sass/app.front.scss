@@ -40,6 +40,10 @@ html {
           @include border-radius(0);
           border: none;
 
+          .container {
+            width: 100%;
+          }
+
           .navbar-header {
 
             a.navbar-brand {
