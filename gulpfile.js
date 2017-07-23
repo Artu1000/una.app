@@ -82,7 +82,6 @@ elixir(function (mix) {
         // FRONT
         mix.sass('app.front.scss', 'public/css/app.front.css');
         mix.sass('app.home.scss', 'public/css/app.home.css');
-        mix.sass('app.icons.scss', 'public/css/app.icons.css');
         mix.sass('app.page.scss', 'public/css/app.page.css');
         // mix.sass('app.palmares.scss', 'public/css/app.palmares.css');
         mix.sass('app.news.scss', 'public/css/app.news.css');
@@ -224,7 +223,6 @@ elixir(function (mix) {
         mix.version([
             // css front
             'public/css/app.front.css',
-            'public/css/app.icons.css',
             'public/css/app.auth.css',
             'public/css/app.error.css',
             'public/css/app.home.css',
