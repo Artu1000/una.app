@@ -167,7 +167,7 @@
                               </a>
                           </li>
                           <li class="menu_tab @if(Request::path() === route('page.show', ['slug' => $masters->slug])) active @endif">
-                              <a href="{{ route('page.show', ['slug' => $master->slug]) }}" title="{{ trans('template.front.header.masters') }}">
+                              <a href="{{ route('page.show', ['slug' => $masters->slug]) }}" title="{{ trans('template.front.header.masters') }}">
                                   {{ trans('template.front.header.masters') }}
                               </a>
                           </li>
