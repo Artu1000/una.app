@@ -72,6 +72,8 @@
 {{-- minified versionned css --}}
 <link href="{{ $css or mix('css/app.front.css') }}" rel="stylesheet" />
 
+<link href="{{ $css or mix('css/app.icons.css') }}" rel="stylesheet" />
+
 {{-- google analytics code insertion --}}
 @if($google_analytics_script = config('settings.google_analytics_script'))
     {!! $google_analytics_script !!}
