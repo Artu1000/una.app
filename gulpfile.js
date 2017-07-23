@@ -223,6 +223,7 @@ elixir(function (mix) {
         mix.version([
             // css front
             'public/css/app.front.css',
+            'public/css/app.icons.css',
             'public/css/app.auth.css',
             'public/css/app.error.css',
             'public/css/app.home.css',
