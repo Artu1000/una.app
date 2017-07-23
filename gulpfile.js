@@ -129,7 +129,7 @@ elixir(function (mix) {
         // // copy lato fonts into public folder
         mix.copy(paths.lato + 'fonts/**', 'public/fonts/lato');
         // // copy custom icons fonts into public folder
-        mix.copy(paths.assets + 'fonts/icons', 'public/fonts/icons');
+        mix.copy(paths.assets + 'fonts/icons/**', 'public/fonts/icons');
 
         /***************************************************************************************************************
          * JS
