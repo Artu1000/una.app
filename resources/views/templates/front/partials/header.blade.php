@@ -225,7 +225,7 @@
                     <li class="menu_tab
                         @if(Route::current()->getName() === 'page/schools') active
                         @endif">
-                        <a href="{{ route('page.show', ['slug' => $schools->slug]) }}" title="{{ trans('template.front.header.scholars') }}">
+                        <a href="{{ route('page.show', ['slug' => $schools->slug]) }}" title="{{ trans('template.front.header.schools') }}">
                             <i class="icon icon-school"></i> {{ trans('template.front.header.schools') }}
                         </a>
                     </li>
