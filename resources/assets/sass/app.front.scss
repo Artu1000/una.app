@@ -622,12 +622,12 @@ html {
 
                   a {
 
-                    .fa {
+                    .fa, .icon  {
                       font-size: 15px;
                     }
 
-                    .icon {
-                      font-size: 25px;
+                    {
+                      font-size: 15px;
                     }
                   }
                 }
@@ -1389,7 +1389,6 @@ html {
 .icon {
   line-height: 1;
   display: inline-block;
-  font-size: 18px;
 }
 
 .icon:before {
