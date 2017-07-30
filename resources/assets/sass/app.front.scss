@@ -87,6 +87,10 @@ html {
 
               li {
 
+                a {
+                  padding: 10px 8px;
+                }
+
                 &.open {
 
                   ul {
@@ -595,7 +599,7 @@ html {
                 padding-top: 18px;
 
                 li {
-                  font-size: 14px;
+                  font-size: 13px;
 
                   a {
 
