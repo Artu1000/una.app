@@ -1,6 +1,6 @@
 <?php
 
-namespace Deployer;
+use function Deployer\{host, server, task, run, set, get, add, before, after};
 
 require 'recipe/laravel.php';
 
@@ -10,7 +10,7 @@ require 'recipe/laravel.php';
 
 $servers = [
     'preprod' => [
-        'stage'            => ['preprod', 'all'],
+        'stage'            => 'preprod',
         'host'             => 'vps241083.ovh.net',
         'user'             => 'deploy',
         'path'             => '/var/www/preprod',
@@ -18,12 +18,12 @@ $servers = [
         'http_group'       => 'deploy',
         'private_identity' => '~/.ssh/id_rsa',
         'public_identity'  => '~/.ssh/id_rsa.pub',
-        'repository'       => 'git@github.com:Okipa/una.app.git',
-        'branch'           => 'master',
+        'repository'       => 'git@github.com:mickaeltardy/una.app.git',
+        'branch'           => 'develop',
         'composer_options' => 'install --no-dev --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction',
     ],
     'prod'    => [
-        'stage'            => ['production', 'all'],
+        'stage'            => 'production',
         'host'             => 'vps241083.ovh.net',
         'user'             => 'deploy',
         'path'             => '/var/www/prod/univ-nantes-aviron',
@@ -31,7 +31,7 @@ $servers = [
         'http_group'       => 'deploy',
         'private_identity' => '~/.ssh/id_rsa',
         'public_identity'  => '~/.ssh/id_rsa.pub',
-        'repository'       => 'git@github.com:Okipa/una.app.git',
+        'repository'       => 'git@github.com:mickaeltardy/una.app.git',
         'branch'           => 'master',
         'composer_options' => 'install --no-dev --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction',
     ],
@@ -59,7 +59,8 @@ set('ssh_multiplexing', true);
 // configure servers
 foreach ($servers as $server_env => $server) {
     if (!isset ($server['active']) || (isset($server['active']) && $server['active'])) {
-        server($server_env, $server['host'])
+        host($server_env)
+            ->hostname($server['host'])
             ->user($server['user'])
             ->identityFile($server['public_identity'], $server['private_identity'], null)
             ->set('repository', $server['repository'])

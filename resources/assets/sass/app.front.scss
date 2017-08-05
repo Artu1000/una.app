@@ -40,6 +40,14 @@ html {
           @include border-radius(0);
           border: none;
 
+          .container {
+            width: 100%;
+            .navbar-collapse {
+              padding-right: 0px;
+              padding-left: 0px;
+            }
+          }
+
           .navbar-header {
 
             a.navbar-brand {
@@ -79,6 +87,10 @@ html {
 
               li {
 
+                a {
+                  padding: 10px 6px;
+                }
+
                 &.open {
 
                   ul {
@@ -91,7 +103,7 @@ html {
                       }
 
                       a {
-                        padding: 10px 15px;
+                        padding: 10px 10px;
                         @include lato-light();
 
                         &:hover {
@@ -368,7 +380,7 @@ html {
    * GENERAL
    ********************************************************************************************************************/
   .top_background_image {
-    @include calc("height", "100% - 45px");
+    height: 70%;
     margin-top: -100px;
   }
 
@@ -399,7 +411,6 @@ html {
               .navbar-brand {
                 padding: 7px 25px 7px 20px;
                 height: 80px;
-                margin-right: 30px;
 
                 h1, h2 {
 
@@ -535,7 +546,7 @@ html {
    * GENERAL
    ********************************************************************************************************************/
   .top_background_image {
-    @include calc("height", "100% - 70px");
+    height: 70%;
     margin-top: -50px;
   }
 
@@ -562,7 +573,6 @@ html {
               .navbar-brand {
                 padding: 7px 25px 7px 20px;
                 height: 80px;
-                margin-right: 30px;
 
                 h1, h2 {
 
@@ -589,6 +599,7 @@ html {
                 padding-top: 18px;
 
                 li {
+                  font-size: 13px;
 
                   a {
 
@@ -615,17 +626,15 @@ html {
 
                   a {
 
-                    .fa {
+                    .fa, .icon  {
                       font-size: 15px;
                     }
+
                   }
                 }
               }
             }
 
-            .nav.navbar-nav.navbar-right {
-              padding-right: 50px;
-            }
           }
         }
       }
@@ -642,7 +651,7 @@ html {
   * CONTENT
   *********************************************************************************************************************/
   .text-content {
-    padding: 120px 0;
+    padding: 60px 0;
   }
 
   /*********************************************************************************************************************
@@ -701,7 +710,7 @@ html {
    * GENERAL
    ********************************************************************************************************************/
   .top_background_image {
-    @include calc("height", "100% - 65px");
+    height: 70%;
     margin-top: -50px;
   }
 
@@ -873,7 +882,7 @@ html {
    * GENERAL
    ********************************************************************************************************************/
   .top_background_image {
-    @include calc("height", "100% - 54px");
+    height: 70%;
     margin-top: -50px;
   }
 
@@ -1073,7 +1082,7 @@ html {
    * GENERAL
    ********************************************************************************************************************/
   .top_background_image {
-    @include calc("height", "100% - 58px");
+    height: 70%;
     margin-top: -20px;
   }
 
@@ -1339,6 +1348,7 @@ html {
         }
       }
     }
+
   }
 
   /*********************************************************************************************************************
@@ -1360,4 +1370,56 @@ html {
       margin: 15px 0 0 0;
     }
   }
+
+
+
+  /*********************************************************************************************************************
+  * Icon fonts
+  *********************************************************************************************************************/
+
+
+
+}
+
+@font-face {
+  font-family: "iconfont";
+  src: url("/fonts/icons/iconfont.eot?6518c28c36c4bc59d3148079f9699c77?#iefix") format("embedded-opentype"),
+  url("/fonts/icons/iconfont.woff2?6518c28c36c4bc59d3148079f9699c77") format("woff2"),
+  url("/fonts/icons/iconfont.woff?6518c28c36c4bc59d3148079f9699c77") format("woff");
+}
+.icon {
+  line-height: 1;
+  display: inline-block;
+}
+
+.icon:before {
+  font-family: iconfont !important;
+  font-style: normal;
+  font-weight: normal !important;
+  vertical-align: top;
+}
+
+.icon-boathouse:before {
+  content: "\f101";
+}
+.icon-corporate:before {
+  content: "\f102";
+}
+.icon-custom:before {
+  content: "\f103";
+}
+.icon-exercise:before {
+  content: "\f104";
+}
+.icon-indoor:before {
+  content: "\f105";
+}
+.icon-new:before {
+  content: "\f106";
+}
+.icon-rowing:before {
+  content: "\f107";
+}
+.icon-school:before {
+  content: "\f108";
 }

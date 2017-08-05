@@ -39,6 +39,7 @@ const production = elixir.config.production;
 
 var paths = {
     jquery: './resources/assets/vendor/jquery/',
+    assets: './resources/assets/',
     jquery_easing: './resources/assets/vendor/jquery.easing/',
     glide: './resources/assets/vendor/glidejs/',
     bootstrap: './resources/assets/vendor/bootstrap-sass/assets/',
@@ -127,6 +128,8 @@ elixir(function (mix) {
         mix.copy(paths.fontawesome + 'fonts/**', 'public/fonts/fontawesome');
         // // copy lato fonts into public folder
         mix.copy(paths.lato + 'fonts/**', 'public/fonts/lato');
+        // // copy custom icons fonts into public folder
+        mix.copy(paths.assets + 'fonts/icons/**', 'public/fonts/icons');
 
         /***************************************************************************************************************
          * JS

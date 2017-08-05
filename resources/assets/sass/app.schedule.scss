@@ -76,6 +76,10 @@ html {
             table {
               width: 100%;
               margin: 0;
+
+              tr:nth-of-type(odd) {
+                background-color: #dddddd;
+              }
             }
           }
 
