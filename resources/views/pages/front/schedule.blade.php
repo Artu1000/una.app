@@ -60,7 +60,7 @@
                                                 @foreach($columns[$day] as $public_category_id => $column)
 
                                                     @if(!empty($schedules[$hour][$day][$public_category_id]))
-                                                        <td class="slot
+                                                        <td title="{{ trans('schedules.config.category.' . $public_category_id) }}" class="slot
                                                         {{ config('schedule.public_category.' . $schedules[$hour][$day][$public_category_id]['public_category_id']) }}
                                                         {{ $schedules[$hour][$day][$public_category_id]['status'] or ''}}">
                                                         </td>
