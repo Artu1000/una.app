@@ -11,11 +11,11 @@ require 'recipe/laravel.php';
 $servers = [
     'preprod' => [
         'stage'            => 'preprod',
-        'host'             => 'vps241083.ovh.net',
-        'user'             => 'deploy',
+        'host'             => '51.15.172.104',
+        'user'             => 'mishgunn',
         'path'             => '/var/www/preprod',
-        'http_user'        => 'deploy',
-        'http_group'       => 'deploy',
+        'http_user'        => 'mishgunn',
+        'http_group'       => 'mishgunn',
         'private_identity' => '~/.ssh/id_rsa',
         'public_identity'  => '~/.ssh/id_rsa.pub',
         'repository'       => 'git@github.com:mickaeltardy/una.app.git',
