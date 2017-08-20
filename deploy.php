@@ -1,6 +1,6 @@
 <?php
 
-use function Deployer\{host, server, task, run, set, get, add, before, after};
+use function Deployer\{host, localhost, server, task, run, set, get, add, before, after};
 
 require 'recipe/laravel.php';
 
@@ -35,6 +35,19 @@ $servers = [
         'branch'           => 'master',
         'composer_options' => 'install --no-dev --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction',
     ],
+    'local'    => [
+        'stage'            => 'docker',
+        'host'             => 'localhost',
+        'user'             => 'root',
+        'path'             => '/var/www/preprod',
+        'http_user'        => 'root',
+        'http_group'       => 'root',
+        'private_identity' => '~/.ssh/id_rsa',
+        'public_identity'  => '~/.ssh/id_rsa.pub',
+        'repository'       => 'https://github.com/mickaeltardy/una.app.git',
+        'branch'           => 'master',
+        'composer_options' => 'install --no-dev --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction',
+    ],
 ];
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -59,8 +72,15 @@ set('ssh_multiplexing', true);
 // configure servers
 foreach ($servers as $server_env => $server) {
     if (!isset ($server['active']) || (isset($server['active']) && $server['active'])) {
-        host($server_env)
-            ->hostname($server['host'])
+
+      if($server['host'] == "localhost"){
+        $serverCfg = localhost();
+      }else{
+        $serverCfg = host($server_env)
+            ->hostname($server['host']);
+      }
+
+      $serverCfg
             ->user($server['user'])
             ->identityFile($server['public_identity'], $server['private_identity'], null)
             ->set('repository', $server['repository'])
