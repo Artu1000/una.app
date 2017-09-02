@@ -32,7 +32,14 @@
                     <li>Si vous préférez vous pouvez payer au club par cheque ou en espèces : utilisez code promo CLUB lors de l'inscription</li>
                     <li>Vous pouvez également nous faire en virement : suivez les <a href="http://univ-nantes-aviron.fr/libraries/files/universite-nantes-aviron-una-file-1893796256.pdf">instructions</a> et utilisez code promo RIB lors de l'inscription </li>
                 </ul>
-
+                
+                <h3>Attention aux nouveautés relatives aux certificats médicaux</h3>
+                <ul>
+                    <li>Si vous avez fourni un certificat il y a moins d'un an, il est désormais valable 3 saisons.</li>
+                    <li>En revanche, vous devez répondre au questionnaire <a href="https://www.formulaires.modernisation.gouv.fr/gf/cerfa_15699.do" target="">cerfa en ligne</li>
+                    <li>Et joindre <a href="http://univ-nantes-aviron.fr/libraries/files/universite-nantes-aviron-una-file-5481261731.docx">l'attestation</a> signée lors de l'inscription.</li>
+                </ul>
+                
                 <h3>Des reductions sont proposées pour le tarif Tout public</h3>
                 <ul>
                     <li> -20 euros pour les reinscriptions : code promo ANCIEN</li>
