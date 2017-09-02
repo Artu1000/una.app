@@ -38,7 +38,7 @@ class RegistrationController extends Controller
     public function index()
     {
         // we get the registration prices
-        $prices = $this->repository->where('active', true)->orderBy('price', 'asc')->get();
+        $prices = $this->repository->where('active', true)->orderBy('label', 'asc')->get();
         
         // we get the json registration content
         $registration_page = null;
