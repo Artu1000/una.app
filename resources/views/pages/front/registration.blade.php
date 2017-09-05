@@ -21,7 +21,7 @@
                 
                 <h3>Pour vous inscrire au club vous avez plusieurs options : </h3> 
                 <ul>
-                    <li>Pour les étudiants de l'Université de Nantes et le personnel de l'Université de Nantes vous devez passer par l'inscription au SUAPS (plus d'info <a href="http://www.univ-nantes.fr/les-activites-du-suaps/aviron-115148.kjsp?RH=1184590345081" target="_blank">ici</a>) Vous devez passer par <a href="<a href="https://www.helloasso.com/associations/universite-de-nantes-aviron/adhesions/inscriptions-etudiantes" target="_blank">">l'inscription en ligne UNA</a> avant de vous rendre au SUAPS.</li>
+                    <li>Pour les étudiants de l'Université de Nantes et le personnel de l'Université de Nantes vous devez passer par l'inscription au SUAPS (plus d'info <a href="http://www.univ-nantes.fr/les-activites-du-suaps/aviron-115148.kjsp?RH=1184590345081" target="_blank">ici</a>) Vous devez passer par <a href="https://www.helloasso.com/associations/universite-de-nantes-aviron/adhesions/inscriptions-etudiantes" target="_blank">l'inscription en ligne UNA</a> avant de vous rendre au SUAPS.</li>
                     <li>Pour tous les autres, vous pouvez-vous inscrire en ligne via le <a href="https://www.helloasso.com/associations/universite-de-nantes-aviron/adhesions/adhesions-saison-2017-2018" target="_blank">formulaire de Hello Asso</a></li>
                 </ul>
 
