@@ -33,7 +33,7 @@ return [
             "description"                => "Description",
             "background_image"           => "Image de fond",
             "remove_background_image"    => "Supprimer l'image de fond",
-            "registration_form"          => "Pour vous inscrire ou renouveler votre licence, téléchargez (ci-dessous) notre formulaire d'inscription et déposez-le rempli club, accompagné des pièces demandées.",
+            "registration_form"          => "Pour vous inscrire ou renouveler votre licence, et uniquement si l'inscription en ligne ne marche pas dans votre cas, téléchargez (ci-dessous) notre formulaire d'inscription et déposez-le rempli club, accompagné des pièces demandées.",
             "online_registration"        => "Réalisez votre inscription en ligne en cliquant sur le bouton correspondant à votre situation ci-dessous.",
             "first_registration"         => "Première inscription",
             "renewal_registration"       => "Renouvellement",

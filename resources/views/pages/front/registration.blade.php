@@ -19,18 +19,21 @@
 
                 <hr>
                 
-                <h3>Pour vous inscrire au club vous avez plusieurs options : </h3> 
-                <ul>
-                    <li>Pour les étudiants de l'Université de Nantes et le personnel de l'Université de Nantes vous devez passer par l'inscription au SUAPS (plus d'info <a href="http://www.univ-nantes.fr/les-activites-du-suaps/aviron-115148.kjsp?RH=1184590345081" target="_blank">ici</a>) Vous devez passer par <a href="https://www.helloasso.com/associations/universite-de-nantes-aviron/adhesions/inscriptions-etudiantes" target="_blank">l'inscription en ligne UNA</a> avant de vous rendre au SUAPS.</li>
-                    <li>Pour tous les autres, vous pouvez-vous inscrire en ligne via le <a href="https://www.helloasso.com/associations/universite-de-nantes-aviron/adhesions/adhesions-saison-2017-2018" target="_blank">formulaire de Hello Asso</a></li>
-                </ul>
+                <h3>Pour vous inscrire au club</h3>
+
+		<p>
+		Si vous n'êtes pas étudiant à l'Université de Nantes, vous pouvez désormais vous inscrire en ligne <a href="https://www.helloasso.com/associations/universite-de-nantes-aviron/adhesions/adhesions-saison-2017-2018" target="_blank">ici</a>.
+		</p>
+
+		<p>
+		(Notre prestataire de paiement est helloasso, dont le business model relève de demander un don directement à helloasso à la fin de la transaction.  N'hésitez pas, mais sachez également que le club fera un don au nom de tous nos sociétaires (et basé sur le montant qui passe par leur service).  Votre conscience est donc libre dans tous les cas.)</p>
+
+                <p>Vous êtes étudiant de l'Université de Nantes ?  Passez alors par l'inscription au SUAPS (plus d'info <a href="http://www.univ-nantes.fr/les-activites-du-suaps/aviron-115148.kjsp?RH=1184590345081" target="_blank">ici</a>).  En parallèle, l'inscription UNA en ligne vous reste <a href="https://www.helloasso.com/associations/universite-de-nantes-aviron/adhesions/inscriptions-etudiantes" target="_blank">gratuit</a>, ce qui assure que nous avons toutes vos infos.</p>
 
                 <h3>Plusieurs moyens de paiement sont disponibles </h3>
-                <ul>
-                    <li>Vous pouvez payer directement lors de <a href="https://www.helloasso.com/associations/universite-de-nantes-aviron/adhesions/adhesions-saison-2017-2018" target="_blank">l'inscription en ligne</a></li>
-                    <li>Si vous préférez vous pouvez payer au club par cheque ou en espèces : utilisez code promo CLUB lors de l'inscription</li>
-                    <li>Vous pouvez également nous faire en virement : suivez les <a href="http://univ-nantes-aviron.fr/libraries/files/universite-nantes-aviron-una-file-1893796256.pdf">instructions</a> et utilisez code promo RIB lors de l'inscription </li>
-                </ul>
+
+		<p>
+		    Nous préférons que vous payiez en ligne (voir ci-haut).  Si toutefois ça vous pose un problème, vous pouvez payer par carte bancaire au club (disponible bientôt...) ou par chèque.  Ou, si vraiment nécessaire, en espèces.  Dans ces derniers cas, faites l'inscription en ligne avec code promo "<b>CLUB</b>", ce qui vous rendra l'inscription gratuite.  (Ça sert à nous fournir vos infos et documents.)  Dans tous les cas qui ne sont pas via helloasso (en ligne), le trésorier vous saurez gré d'un petit mot (même confidentiel) de l'empêchement.  Nous voudrions ne gêner personne pendant que nous optimisons l'inscription et la réinscription.</p>
                 
                 <h3>Attention aux nouveautés relatives aux certificats médicaux</h3>
                 <ul>
@@ -40,18 +43,13 @@
                 </ul>
                 
                 <h3>Décharge de responsabilité</h3>
-                <ul>
-                    <li>Veuillez télécharger et signer <a href="http://univ-nantes-aviron.fr/libraries/files/universite-nantes-aviron-una-file-9672610108.pdf" target="_blank">la décharge de responsabilité</a>, et ensuite la joindre au formulaire</li>
-                </ul>
+		<p>Veuillez télécharger et signer <a href="http://univ-nantes-aviron.fr/libraries/files/universite-nantes-aviron-una-file-9672610108.pdf" target="_blank">la décharge de responsabilité</a>, et ensuite la joindre au formulaire.  Toutes les parties n'appliquent pas à tout le monde.</p>
                 
-                <h3>Des reductions sont proposées pour le tarif Tout public</h3>
+                <h3>Des reductions sont proposées pour le tarif tout public</h3>
                 <ul>
-                    <li> -20 euros pour les reinscriptions : code promo ANCIEN</li>
                     <li> -10 euros pour le deuxième membre de famille : code promo DOUBLE</li>
                     <li> -20 euros pour le troisième membre de famille : code promo TRIPLE</li>
                 </ul>
-
-
 
 
                 <h2>{{ trans('registration.page.title.prices') }}</h2>
