@@ -22,18 +22,16 @@
                 <h3>Pour vous inscrire au club</h3>
 
 		<p>
-		Si vous n'êtes pas étudiant à l'Université de Nantes, vous pouvez désormais vous inscrire en ligne <a href="https://www.helloasso.com/associations/universite-de-nantes-aviron/adhesions/adhesions-saison-2017-2018" target="_blank">ici</a>.
+		L'inscription s'effectue pour tout le monde <a href="https://www.helloasso.com/associations/universite-de-nantes-aviron/adhesions/adhesions-saison-2017-2018" target="_blank">ici</a>.  Si vous êtes étudiant ou personnel de l'Université de Nantes, c'est gratuit parce que vous devez également vous inscrire (et payer) auprès du SUAPS.
 		</p>
 
 		<p>
-		(Notre prestataire de paiement est helloasso, dont le business model relève de demander un don directement à helloasso à la fin de la transaction.  N'hésitez pas, mais sachez également que le club fera un don au nom de tous nos sociétaires (et basé sur le montant qui passe par leur service).  Votre conscience est donc libre dans tous les cas.)</p>
-
-                <p>Vous êtes étudiant de l'Université de Nantes ?  Passez alors par l'inscription au SUAPS (plus d'info <a href="http://www.univ-nantes.fr/les-activites-du-suaps/aviron-115148.kjsp?RH=1184590345081" target="_blank">ici</a>).  En parallèle, l'inscription UNA en ligne vous reste <a href="https://www.helloasso.com/associations/universite-de-nantes-aviron/adhesions/inscriptions-etudiantes" target="_blank">gratuit</a>, ce qui assure que nous avons toutes vos infos.</p>
+		Notre prestataire de paiement est helloasso, dont le business model relève de demander un don directement à helloasso à la fin de la transaction.  N'hésitez pas, mais sachez également que le club fera un don au nom de tous nos sociétaires (et basé sur le montant qui passe par leur service).  Votre conscience est donc libre dans tous les cas.</p>
 
                 <h3>Plusieurs moyens de paiement sont disponibles </h3>
 
 		<p>
-		    Nous préférons que vous payiez en ligne (voir ci-haut).  Si toutefois ça vous pose un problème, vous pouvez payer par carte bancaire au club (disponible bientôt...) ou par chèque.  Ou, si vraiment nécessaire, en espèces.  Dans ces derniers cas, faites l'inscription en ligne avec code promo "<b>CLUB</b>", ce qui vous rendra l'inscription gratuite.  (Ça sert à nous fournir vos infos et documents.)  Dans tous les cas qui ne sont pas via helloasso (en ligne), le trésorier vous saurez gré d'un petit mot (même confidentiel) de l'empêchement.  Nous voudrions ne gêner personne pendant que nous optimisons l'inscription et la réinscription.</p>
+		    Nous préférons que vous payiez en ligne (voir ci-haut).  Si toutefois ça vous pose un problème, vous pouvez payer par virement bancaire, par carte bancaire au club (disponible bientôt...) ou par chèque.  Ou, si vraiment nécessaire, en espèces.  Dans ces derniers cas, faites l'inscription en ligne avec code promo "<b>CLUB</b>", ce qui vous rendra l'inscription gratuite.  (Ça sert à nous fournir vos infos et documents.)  Dans tous les cas qui ne sont pas via helloasso (en ligne), le trésorier vous saurez gré d'un petit mot (même confidentiel) de l'empêchement.  Nous voudrions ne gêner personne pendant que nous optimisons l'inscription et la réinscription.</p>
                 
                 <h3>Attention aux nouveautés relatives aux certificats médicaux</h3>
                 <ul>
