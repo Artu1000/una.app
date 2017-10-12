@@ -36,6 +36,11 @@ class PagesComposer
             ->where('slug', 'reglement-interieur')
             ->where('active', true)
             ->first();
+        $view->practical_info = app(PageRepositoryInterface::class)
+            ->getModel()
+            ->where('slug', 'infos-pratiques')
+            ->where('active', true)
+            ->first();
         $view->terms_and_conditions = app(PageRepositoryInterface::class)
             ->getModel()
             ->where('slug', 'mentions-legales')
