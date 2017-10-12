@@ -25,7 +25,7 @@ return [
             "custom"    => "A la demande",
             "indoor"       => "Indoor",
             "indoor_rowing"=> "Indoor Rowing",
-            "crossfit"=> "Crossfit",
+            "crossfit"=> "Crosstrain",
             "explore"      => "Découvrir",
             "openday"      => "Portes ouvertes",
             "summercamp"   => "Stage d'été",
@@ -37,6 +37,7 @@ return [
             "j17"          => "Juniors 17-18 ans",
             "university"   => "Universitaire",
             "masters"      => "Masters & Loisirs",
+            "practical_info"=> "Infos pratiques",
 
         ],
     ],
