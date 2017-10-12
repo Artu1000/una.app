@@ -74,6 +74,11 @@
                                     {{ trans('template.front.header.calendar') }}
                                 </a>
                             </li>
+                            <li class="menu_tab @if(Request::path() === route('page.show', ['slug' => practical_info->slug])) active @endif">
+                                <a href="{{ route('page.show', ['slug' => practical_info->slug]) }}" title="{{ trans('template.front.header.practical_info') }}">
+                                    {{ trans('template.front.header.practical_info') }}
+                                </a>
+                            </li>
                             <li class="divider"></li>
                             <li class="menu_tab @if(Route::current()->getName() === 'photos.index') active @endif">
                                 <a href="{{ route('photos.index') }}" title="{{ trans('template.front.header.photos') }}">
