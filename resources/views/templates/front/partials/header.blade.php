@@ -59,8 +59,8 @@
                             <i class="icon icon-boathouse"></i> {{ trans('template.front.header.club') }}<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li class="menu_tab @if(Route::current()->getName() === 'registration.index') active @endif">
-                                <a href="{{ route('registration.index') }}" title="Inscription">
+                            <li class="menu_tab @if(Request::path() === route('page.show', ['slug' => $registration->slug])) active @endif">
+                                <a href="{{ route('page.show', ['slug' => $registration->slug]) }}" title="{{ trans('template.front.header.registration') }}">
                                     {{ trans('template.front.header.registration') }}
                                 </a>
                             </li>
