@@ -36,6 +36,11 @@ class PagesComposer
             ->where('slug', 'reglement-interieur')
             ->where('active', true)
             ->first();
+        $view->registration = app(PageRepositoryInterface::class)
+            ->getModel()
+            ->where('slug', 'inscription')
+            ->where('active', true)
+            ->first();
         $view->practical_info = app(PageRepositoryInterface::class)
             ->getModel()
             ->where('slug', 'infos-pratiques')
