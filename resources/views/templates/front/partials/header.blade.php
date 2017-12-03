@@ -114,9 +114,9 @@
                                 {{--</a>--}}
                             {{--</li>--}}
                             <li class="divider"></li>
-                            <li class="menu_tab @if(Route::current()->getName() === 'front.leading_team') active @endif">
-                                <a href="{{ route('front.leading_team') }}" title="{{ trans('template.front.header.leading_team') }}">
-                                  {{ trans('template.front.header.leading_team') }}
+                            <li class="menu_tab @if(Request::path() === route('page.show', ['slug' => $leading_team->slug])) active @endif">
+                                <a href="{{ route('page.show', ['slug' => $leading_team->slug]) }}" title="{{ trans('template.front.header.leading_team') }}">
+                                    {{ trans('template.front.header.leading_team') }}
                                 </a>
                             </li>
                             @if(isset($statuses) && $statuses instanceof App\Models\Page)
