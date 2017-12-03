@@ -96,6 +96,11 @@ class PagesComposer
             ->where('slug', 'aviron-crossfit')
             ->where('active', true)
             ->first();
+        $view->avifit = app(PageRepositoryInterface::class)
+            ->getModel()
+            ->where('slug', 'aviron-avifit')
+            ->where('active', true)
+            ->first();
         $view->schools = app(PageRepositoryInterface::class)
             ->getModel()
             ->where('slug', 'scolaires')

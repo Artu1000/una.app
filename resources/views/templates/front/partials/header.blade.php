@@ -224,6 +224,11 @@
                                     {{ trans('template.front.header.crossfit') }}
                                 </a>
                             </li>
+                            <li class="menu_tab @if(Request::path() === route('page.show', ['slug' => $avifit->slug])) active @endif">
+                                <a href="{{ route('page.show', ['slug' => $avifit->slug]) }}" title="{{ trans('template.front.header.avifit') }}">
+                                    {{ trans('template.front.header.avifit') }}
+                                </a>
+                            </li>
                         </ul>
                     </li>
 
