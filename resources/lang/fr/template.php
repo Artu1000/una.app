@@ -13,7 +13,7 @@ return [
             "rules"        => "Règlement intérieur",
             "rowing"       => "Aviron",
             "registration" => "Inscription",
-            "schedules"    => "Horaires",
+            "schedule"     => "Horaires",
             "calendar"     => "Calendrier",
             "e_shop"       => "Boutique",
             "photos"       => "Photos",
