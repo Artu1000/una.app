@@ -1423,3 +1423,51 @@ html {
 .icon-school:before {
   content: "\f108";
 }
+
+
+/*********************************************************************************************************************
+* Schedule override
+*********************************************************************************************************************/
+
+div.schedule {
+  text-align:center; display: grid; 
+  width: 100%;
+  grid-template-columns: 14% 14% 14% 14% 14% 14% 14% ; 
+  grid-template-rows: 14% 14% 14% 14% 14% 14% 14% ;
+}
+div.schedule div.week-day-title {
+  font-size:120%;
+  font-weight:bold;
+  border:1px solid #999999;
+}
+div.schedule div.empty-slot,
+div.schedule div.common-slot,
+div.schedule div.rowing-school-slot,
+div.schedule div.indoor-slot,
+div.schedule div.students-slot,
+div.schedule div.high-perf-slot {
+  border :1px solid #999999;
+}
+div.schedule div.high-perf-slot {
+  background: rgba(255,0,0, 0.3);
+}
+div.schedule div.common-slot {
+  background: rgba(0,0,255,0.3);
+}
+div.schedule div.rowing-school-slot {
+  background: rgba(255,125,70,0.3);
+}
+div.schedule div.indoor-slot {
+  background: rgba(125,0,125,0.3);
+}
+div.schedule div.students-slot {
+  background: rgba(0,255,0,0.3);
+}
+div.schedule .cat {
+  font-style:italic;
+}
+div.schedule .time {
+  font-weight:bold;
+}
+
+
