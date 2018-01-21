@@ -51,6 +51,11 @@ class PagesComposer
             ->where('slug', 'equipe-dirigeante')
             ->where('active', true)
             ->first();
+        $view->horaires = app(PageRepositoryInterface::class)
+            ->getModel()
+            ->where('slug', 'horaires')
+            ->where('active', true)
+            ->first();
         $view->terms_and_conditions = app(PageRepositoryInterface::class)
             ->getModel()
             ->where('slug', 'mentions-legales')
