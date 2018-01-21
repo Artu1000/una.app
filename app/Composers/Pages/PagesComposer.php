@@ -51,7 +51,7 @@ class PagesComposer
             ->where('slug', 'equipe-dirigeante')
             ->where('active', true)
             ->first();
-        $view->horaires = app(PageRepositoryInterface::class)
+        $view->schedule = app(PageRepositoryInterface::class)
             ->getModel()
             ->where('slug', 'horaires')
             ->where('active', true)
