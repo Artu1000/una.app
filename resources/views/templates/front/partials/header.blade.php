@@ -64,9 +64,9 @@
                                     {{ trans('template.front.header.registration') }}
                                 </a>
                             </li>
-                            <li class="menu_tab @if(Route::current()->getName() === 'schedules.index') active @endif">
-                                <a href="{{ route('schedules.index') }}" title="Horaires">
-                                    {{ trans('template.front.header.schedules') }}
+                            <li class="menu_tab @if(Request::path() === route('page.show', ['slug' => $horaires->slug])) active @endif">
+                                <a href="{{ route('page.show', ['slug' => $horaires->slug]) }}" title="{{ trans('template.front.header.horaires') }}">
+                                    {{ trans('template.front.header.horaires') }}
                                 </a>
                             </li>
                             <li class="menu_tab @if(Route::current()->getName() === 'calendar.index') active @endif">
