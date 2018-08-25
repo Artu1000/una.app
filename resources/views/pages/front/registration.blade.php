@@ -21,19 +21,13 @@
                 
                 <h3>Pour vous inscrire au club</h3>
 
-		<p>
-		L'inscription s'effectue pour tout le monde <a href="https://www.helloasso.com/associations/universite-de-nantes-aviron/adhesions/adhesions-saison-2017-2018" target="_blank">ici</a>.  Si vous êtes étudiant ou personnel de l'Université de Nantes, c'est gratuit parce que vous devez également vous inscrire (et payer) auprès du SUAPS.
-		</p>
+		<p> L'inscription s'effectue en ligne, y compris pour
+		les étudiants qui ne sont pas de l'Université de
+		Nantes.  Si vous êtes étudiant ou personnel de
+		l'Université de Nantes vous devez également passer par
+		le SUAPS.  </p>
 
-		<p>
-		Notre prestataire de paiement est helloasso, dont le business model relève de demander un don directement à helloasso à la fin de la transaction.  N'hésitez pas, mais sachez également que le club fera un don au nom de tous nos sociétaires (et basé sur le montant qui passe par leur service).  Votre conscience est donc libre dans tous les cas.</p>
-
-                <h3>Plusieurs moyens de paiement sont disponibles </h3>
-
-		<p>
-		    Nous préférons que vous payiez en ligne (voir ci-haut).  Si toutefois ça vous pose un problème, vous pouvez payer par virement bancaire, par carte bancaire au club (disponible bientôt...) ou par chèque.  Ou, si vraiment nécessaire, en espèces.  Dans ces derniers cas, faites l'inscription en ligne avec code promo "<b>CLUB</b>", ce qui vous rendra l'inscription gratuite.  (Ça sert à nous fournir vos infos et documents.)  Dans tous les cas qui ne sont pas via helloasso (en ligne), le trésorier vous saurez gré d'un petit mot (même confidentiel) de l'empêchement.  Nous voudrions ne gêner personne pendant que nous optimisons l'inscription et la réinscription.</p>
-                
-                <h3>Attention aux nouveautés relatives aux certificats médicaux</h3>
+                <h3>Attention aux certificats médicaux</h3>
                 <ul>
                     <li>Si vous avez fourni un certificat il y a moins d'un an, il est désormais valable 3 saisons.</li>
                     <li>En revanche, vous devez répondre au questionnaire <a href="https://www.formulaires.modernisation.gouv.fr/gf/cerfa_15699.do" target="">cerfa en ligne</li>
@@ -43,13 +37,6 @@
                 <h3>Décharge de responsabilité</h3>
 		<p>Veuillez télécharger et signer <a href="http://univ-nantes-aviron.fr/libraries/files/universite-nantes-aviron-una-file-9672610108.pdf" target="_blank">la décharge de responsabilité</a>, et ensuite la joindre au formulaire.  Toutes les parties n'appliquent pas à tout le monde.</p>
                 
-                <h3>Des reductions sont proposées pour le tarif tout public</h3>
-                <ul>
-                    <li> -10 euros pour le deuxième membre de famille : code promo DOUBLE</li>
-                    <li> -20 euros pour le troisième membre de famille : code promo TRIPLE</li>
-                </ul>
-
-
                 <h2>{{ trans('registration.page.title.prices') }}</h2>
                 <table class="table table-striped table-hover">
                     @foreach($prices as $price)
