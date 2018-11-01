@@ -19,15 +19,15 @@
                 <hr>
 
                 <div class="embed-responsive embed-responsive-4by3 big-container">
-                    <iframe src="https://www.google.com/calendar/embed?src=communication%40una-club.fr&ctz=Europe/Paris" frameborder="0" scrolling="no"></iframe>
+                    <iframe src="https://www.google.com/calendar/embed?src=una.bde.contact%40gmail.com&ctz=Europe/Paris" frameborder="0" scrolling="no"></iframe>
                 </div>
 
                 <div class="responsive-iframe-container small-container">
-                    <iframe src="https://calendar.google.com/calendar/b/1/embed?height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=una.bde.contact%40gmail.com&amp;color=%23875509&amp;ctz=Europe%2FParis" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+                    <iframe src="http://www.google.com/calendar/embed?+showNav=0&showDate=0&showPrint=0&showCalendars=0&mode=AGENDA&height=600&wkst=1&bgcolor=%23FFFFFF&src=una.bde.contact%40gmail.com&ctz=Europe/Paris" frameborder="0"></iframe>
                 </div>
 
             </div>
         </div>
     </div>
-
+    
 @endsection
